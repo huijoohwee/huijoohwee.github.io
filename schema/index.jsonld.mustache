@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@base": "{{host}}/schema/base.jsonld",
+    "@vocab": "{{host}}/schema/vocab.jsonld",
+    "core":  "{{host}}/schema/core.jsonld",
+    "uc":    "{{host}}/schema/uc.jsonld",
+    "wf":    "{{host}}/schema/wf.jsonld",
+    "kg":    "{{host}}/schema/kg.jsonld",
+    "xsd":   "http://www.w3.org/2001/XMLSchema#",
+    "rdf":   "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs":  "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads":"https://www.w3.org/TR/n-quads/#n-quads"
+  },
+
+  "@id": "core:Index:{{index_version}}",
+  "@type": "core:Index",
+
+  "meta": {
+    "title": "{{meta_title}}",
+    "description": "{{meta_description}}",
+    "version": "{{index_version}}",
+    "maintainer": "{{maintainer}}",
+    "license": "{{license}}",
+    "created": "{{created}}",
+    "updated": "{{updated}}"
+  },
+
+  "entries": {
+    "base": {
+      "latest": "{{base_latest}}",
+      "versions": [
+        {{#base_versions}}"{{.}}"{{^last}}, {{/last}}{{/base_versions}}
+      ]
+    },
+    "core": {
+      "latest": "{{core_latest}}",
+      "versions": [
+        {{#core_versions}}"{{.}}"{{^last}}, {{/last}}{{/core_versions}}
+      ]
+    },
+    "uc": {
+      "latest": "{{uc_latest}}",
+      "versions": [
+        {{#uc_versions}}"{{.}}"{{^last}}, {{/last}}{{/uc_versions}}
+      ]
+    },
+    "wf": {
+      "latest": "{{wf_latest}}",
+      "versions": [
+        {{#wf_versions}}"{{.}}"{{^last}}, {{/last}}{{/wf_versions}}
+      ]
+    },
+    "kg": {
+      "latest": "{{kg_latest}}",
+      "versions": [
+        {{#kg_versions}}"{{.}}"{{^last}}, {{/last}}{{/kg_versions}}
+      ]
+    }
+  }
+}

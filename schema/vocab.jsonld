@@ -1,0 +1,78 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+
+  "@id": "core:Vocab:v1.0",
+  "@type": "core:Vocabulary",
+
+  "meta": {
+    "title": "Universal Vocabulary",
+    "description": "A general-purpose default vocabulary for cross-project semantic alignment.",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-09-26",
+    "updated": "2025-09-26"
+  },
+
+  "terms": {
+    "id": {
+      "@id": "core:id",
+      "label": "Identifier",
+      "description": "Unique identifier for an entity"
+    },
+    "label": {
+      "@id": "core:label",
+      "label": "Label",
+      "description": "Human-readable name"
+    },
+    "description": {
+      "@id": "core:description",
+      "label": "Description",
+      "description": "Textual description"
+    },
+    "status": {
+      "@id": "core:status",
+      "label": "Status",
+      "description": "Lifecycle or operational state"
+    },
+    "created": {
+      "@id": "core:created",
+      "label": "Created",
+      "description": "Creation timestamp"
+    },
+    "modified": {
+      "@id": "core:modified",
+      "label": "Modified",
+      "description": "Last modified timestamp"
+    }
+  },
+
+  "universalConcepts": {
+    "automation": {
+      "@id": "uc:automation",
+      "label": "Automation",
+      "description": "Automated execution of steps or workflows"
+    },
+    "processing": {
+      "@id": "uc:processing",
+      "label": "Processing",
+      "description": "Data transformation or analysis step"
+    },
+    "reporting": {
+      "@id": "uc:reporting",
+      "label": "Reporting",
+      "description": "Generation of structured outputs"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+  
+  "@graph": [
+    {
+      "@id": "nqds:SemanticGraph",
+      "@type": "owl:Class",
+      "rdfs:label": "Semantic Graph",
+      "rdfs:comment": "Container for RDF N-Quads representing bounded contexts in NQDS notation",
+      "rdfs:subClassOf": "rdf:Graph",
+      "nqds:syntax": "::{semantic-graph}::",
+      "nqds:namingConvention": "kebab-case",
+      "nqds:examples": [
+        "::user-management::",
+        "::e-commerce-orders::",
+        "::knowledge-graph::"
+      ]
+    },
+    
+    {
+      "@id": "nqds:Subject",
+      "@type": "owl:Class", 
+      "rdfs:label": "Subject Entity",
+      "rdfs:comment": "Subject entity in NQDS triple notation",
+      "rdfs:subClassOf": "rdf:Resource",
+      "nqds:syntax": "(SubjectName)",
+      "nqds:namingConvention": "PascalCase",
+      "nqds:examples": [
+        "(User)",
+        "(Order)",
+        "(WorkflowProcess)"
+      ]
+    },
+    
+    {
+      "@id": "nqds:Predicate",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "Relationship Predicate",
+      "rdfs:comment": "Predicate expressing relationship between subject and object",
+      "rdfs:subPropertyOf": "rdf:Property",
+      "nqds:syntax": "[predicateName]",
+      "nqds:namingConvention": "camelCase",
+      "nqds:examples": [
+        "[hasPermission]",
+        "[belongsTo]",
+        "[creates]"
+      ]
+    },
+    
+    {
+      "@id": "nqds:Object",
+      "@type": "owl:Class",
+      "rdfs:label": "Target Object",
+      "rdfs:comment": "Object or value targeted by the predicate relationship",
+      "nqds:syntax": "{ObjectName} OR {\"literalValue\"} OR {key:value}",
+      "nqds:dataTypes": [
+        "rdf:Resource",
+        "xsd:string", 
+        "xsd:integer",
+        "xsd:boolean",
+        "nqds:PropertyMap"
+      ],
+      "nqds:examples": [
+        "{Order}",
+        "{\"pending\"}",
+        "{id:123,status:\"active\"}"
+      ]
+    },
+    
+    {
+      "@id": "nqds:PropertyMap",
+      "@type": "owl:Class",
+      "rdfs:label": "Property Map",
+      "rdfs:comment": "Key-value property structure within NQDS objects",
+      "nqds:syntax": "{key:value,key2:value2}",
+      "nqds:keyNaming": ["camelCase", "snake_case"],
+      "nqds:valueTypes": [
+        "xsd:string",
+        "xsd:integer", 
+        "xsd:boolean",
+        "rdf:Resource",
+        "nqds:NestedObject"
+      ]
+    },
+    
+    {
+      "@id": "nqds:RelationStrength",
+      "@type": "owl:Class",
+      "rdfs:label": "Relation Strength Indicators",
+      "rdfs:comment": "Symbols indicating cardinality and optionality of relationships",
+      "nqds:strengthTypes": [
+        {"symbol": "->", "meaning": "one-to-one"},
+        {"symbol": "=>", "meaning": "one-to-many"}, 
+        {"symbol": "<->", "meaning": "many-to-many"},
+        {"symbol": "?->", "meaning": "optional-relation"},
+        {"symbol": "!->", "meaning": "required-relation"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:CompactNotation", 
+      "@type": "owl:Class",
+      "rdfs:label": "Compact Notation Forms",
+      "rdfs:comment": "Compressed NQDS notation for high token efficiency",
+      "nqds:forms": [
+        {"type": "ultra-compact", "syntax": "S->p->O"},
+        {"type": "indexing", "syntax": "::ctx::S[p]>O{k:v}"},
+        {"type": "config", "syntax": "compact JSON-style objects"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:ValidationRules",
+      "@type": "owl:Class",
+      "rdfs:label": "NQDS Validation Rules",
+      "rdfs:comment": "Syntax and semantic validation constraints for NQDS",
+      "nqds:rules": [
+        {"rule": "syntaxPattern", "regex": "::[a-z-]+::\\([A-Z][a-zA-Z]*\\)-\\[[a-zA-Z]+\\]->\\{.+\\}"},
+        {"rule": "namingConsistency", "requirement": "Same entity same naming throughout document"},
+        {"rule": "completeness", "requirement": "All components (semantic-graph, subject, predicate, object) required"},
+        {"rule": "semanticConsistency", "requirement": "Predicates must be semantically appropriate for subject-object pairs"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:TokenOptimization",
+      "@type": "owl:Class",
+      "rdfs:label": "Token Optimization Strategies", 
+      "rdfs:comment": "Methods for maximizing semantic concepts per token in NQDS",
+      "nqds:strategies": [
+        {"method": "compactNotation", "efficiency": "7.5+concepts/token"},
+        {"method": "nestedProperties", "benefit": "eliminates redundancy"},
+        {"method": "semanticCompression", "benefit": "maintains meaning while reducing length"}
+      ]
+    }
+  ]
+}

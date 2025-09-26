@@ -1,0 +1,156 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+
+  "@id": "core:Base:v1.0",
+  "@type": "core:Vocabulary",
+
+  "meta": {
+    "title": "Core Vocabulary",
+    "description": "Neutral baseline vocabulary for cross-project alignment: identifiers, lifecycle, provenance, and structural primitives.",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-09-26",
+    "updated": "2025-09-26"
+  },
+
+  "terms": {
+    "id": {
+      "@id": "core:id",
+      "@type": "core:Property",
+      "label": "id",
+      "description": "Canonical identifier (IRI) for an entity",
+      "range": "xsd:anyURI"
+    },
+    "type": {
+      "@id": "core:type",
+      "@type": "core:Property",
+      "label": "type",
+      "description": "Primary type or classification of an entity"
+    },
+    "label": {
+      "@id": "core:label",
+      "@type": "core:Property",
+      "label": "label",
+      "description": "Human-readable short name"
+    },
+    "description": {
+      "@id": "core:description",
+      "@type": "core:Property",
+      "label": "description",
+      "description": "Long-form textual description"
+    },
+    "status": {
+      "@id": "core:status",
+      "@type": "core:Property",
+      "label": "status",
+      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)"
+    },
+    "created": {
+      "@id": "core:created",
+      "@type": "core:Property",
+      "label": "created",
+      "description": "Creation timestamp",
+      "range": "xsd:dateTime"
+    },
+    "modified": {
+      "@id": "core:modified",
+      "@type": "core:Property",
+      "label": "modified",
+      "description": "Last modified timestamp",
+      "range": "xsd:dateTime"
+    },
+    "author": {
+      "@id": "core:author",
+      "@type": "core:Property",
+      "label": "author",
+      "description": "Agent or organization responsible for the entity"
+    },
+    "maintainer": {
+      "@id": "core:maintainer",
+      "@type": "core:Property",
+      "label": "maintainer",
+      "description": "Primary maintainer or steward URI"
+    },
+    "version": {
+      "@id": "core:version",
+      "@type": "core:Property",
+      "label": "version",
+      "description": "Semantic version string"
+    },
+    "license": {
+      "@id": "core:license",
+      "@type": "core:Property",
+      "label": "license",
+      "description": "License IRI"
+    },
+    "extends": {
+      "@id": "core:extends",
+      "@type": "core:Property",
+      "label": "extends",
+      "description": "Reference to a parent or base vocabulary/context"
+    },
+    "example": {
+      "@id": "core:example",
+      "@type": "core:Property",
+      "label": "example",
+      "description": "Usage example or snippet"
+    }
+  },
+
+  "types": {
+    "Vocabulary": {
+      "@id": "core:Vocabulary",
+      "@type": "core:Class",
+      "label": "Vocabulary",
+      "description": "A named collection of term definitions and metadata"
+    },
+    "Concept": {
+      "@id": "core:Concept",
+      "@type": "core:Class",
+      "label": "Concept",
+      "description": "Reusable semantic building block (domain-agnostic)"
+    },
+    "Property": {
+      "@id": "core:Property",
+      "@type": "core:Class",
+      "label": "Property",
+      "description": "Predicate or attribute definition"
+    },
+    "Class": {
+      "@id": "core:Class",
+      "@type": "core:Class",
+      "label": "Class",
+      "description": "Entity class or type definition"
+    },
+    "Directive": {
+      "@id": "core:Directive",
+      "@type": "core:Class",
+      "label": "Directive",
+      "description": "Operational directive or instruction set"
+    }
+  },
+
+  "examples": [
+    {
+      "id": "https://example.org/doc/1",
+      "type": "core:Directive",
+      "label": "Example Directive",
+      "description": "Small artifact demonstrating core term usage",
+      "status": "core:status",
+      "created": "2025-01-01T00:00:00Z",
+      "maintainer": "https://github.com/your-org"
+    }
+  ]
+}

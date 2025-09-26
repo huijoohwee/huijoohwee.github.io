@@ -1,0 +1,118 @@
+name: Publish schema on tag
+
+on:
+  push:
+    tags: ['v*.*.*'] # semantic version tags like v1.2.0
+
+permissions:
+  contents: write
+
+env:
+  PAGES_PUBLISH_DIR: public
+  SCHEMA_DIR: schema
+  PAGES_PATH: 00-CORE/schema   # set to the path you want under the Pages site
+  HOST: https://huijoohwee.github.io
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extract version from tag
+        id: ver
+        run: |
+          # GITHUB_REF is refs/tags/v1.2.0
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Install simple tooling
+        run: |
+          npm init -y
+          npm install --no-audit --no-fund mustache json-minify jsonlint-cli -D
+          # jsonld validator optional; install if you use it in your pipeline
+          # npm install jsonld -D
+
+      - name: Validate JSON-LD sources (light sanity)
+        run: |
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Checking $f"
+            npx jsonlint -q "$f"
+          done
+
+      - name: Prepare public directory and copy sources
+        run: |
+          VERSION=${{ steps.ver.outputs.VERSION }}
+          rm -rf ${PAGES_PUBLISH_DIR}
+          mkdir -p ${PAGES_PUBLISH_DIR}/${PAGES_PATH}
+          cp ${SCHEMA_DIR}/*.jsonld ${PAGES_PUBLISH_DIR}/${PAGES_PATH}/
+
+      - name: Create versioned artifacts (immutable)
+        run: |
+          VERSION=${{ steps.ver.outputs.VERSION }}
+          OUT=${PAGES_PUBLISH_DIR}/${PAGES_PATH}
+          for f in ${OUT}/*.jsonld; do
+            base=$(basename "$f" .jsonld)
+            # skip index.template if present
+            if [ "$base" = "index" ] || [ "$base" = "index.template" ]; then
+              continue
+            fi
+            cp "$f" "${OUT}/${base}.v${VERSION}.jsonld"
+          done
+
+      - name: Render index.jsonld from mustache template
+        run: |
+          VERSION=${{ steps.ver.outputs.VERSION }}
+          OUT=${PAGES_PUBLISH_DIR}/${PAGES_PATH}
+          TEMPLATE=${SCHEMA_DIR}/index.jsonld.mustache
+          # Build the render context JSON
+          cat > render-context.json <<EOF
+{
+  "host": "${{ env.HOST }}",
+  "index_version": "${VERSION}",
+  "meta_title": "Schema Index",
+  "meta_description": "Index manifest mapping logical names to versioned JSON-LD artifacts",
+  "maintainer": "https://github.com/${{ github.repository_owner }}",
+  "license": "https://opensource.org/licenses/MIT",
+  "created": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "base_latest": "${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld",
+  "core_latest": "${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld",
+  "uc_latest": "${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld",
+  "wf_latest": "${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld",
+  "kg_latest": "${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld",
+  "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
+  "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
+  "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
+  "wf_versions": ["${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld"],
+  "kg_versions": ["${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld"]
+}
+EOF
+          # Render using mustache
+          npx mustache render-context.json "$TEMPLATE" > ${OUT}/index.jsonld
+          # Minify JSON (remove whitespace)
+          npx json-minify ${OUT}/index.jsonld | jq -c . > ${OUT}/index.min.jsonld
+          mv ${OUT}/index.min.jsonld ${OUT}/index.jsonld
+          rm -f render-context.json
+
+      - name: Validate rendered index.jsonld
+        run: |
+          npx jsonlint -q ${PAGES_PUBLISH_DIR}/${PAGES_PATH}/index.jsonld
+
+      - name: Commit and deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com

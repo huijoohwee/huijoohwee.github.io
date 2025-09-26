@@ -1,0 +1,110 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+
+  "@id": "kg:Base:v1.0",
+  "@type": "core:Vocabulary",
+
+  "meta": {
+    "title": "Knowledge Graph Namespace (kg)",
+    "description": "Neutral, reusable KG namespace for workflow patterns, graph collections, and KG primitives.",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-09-26",
+    "updated": "2025-09-26"
+  },
+
+  "graphCollections": {
+    "kg:collection": {
+      "@id": "kg:collection",
+      "@type": "core:Class",
+      "label": "GraphCollection",
+      "description": "A named collection of graph artifacts or patterns"
+    },
+    "kg:workflowPattern": {
+      "@id": "kg:workflowPattern",
+      "@type": "core:Class",
+      "label": "WorkflowPattern",
+      "description": "Reusable workflow pattern expressed as a KG fragment"
+    },
+    "kg:entity": {
+      "@id": "kg:entity",
+      "@type": "core:Class",
+      "label": "Entity",
+      "description": "Node representing a concept, resource, or artifact"
+    },
+    "kg:relation": {
+      "@id": "kg:relation",
+      "@type": "core:Class",
+      "label": "Relation",
+      "description": "Typed edge between Entities"
+    },
+    "kg:dataset": {
+      "@id": "kg:dataset",
+      "@type": "core:Class",
+      "label": "Dataset",
+      "description": "Versioned dataset export (TTL, N-Quads, JSON-LD)"
+    }
+  },
+
+  "properties": {
+    "kg:hasStep": {
+      "@id": "kg:hasStep",
+      "@type": "core:Property",
+      "label": "hasStep",
+      "description": "Ordered step reference within a workflow pattern",
+      "range": "rdf:List"
+    },
+    "kg:references": {
+      "@id": "kg:references",
+      "@type": "core:Property",
+      "label": "references",
+      "description": "Reference to another KG artifact or external IRI",
+      "range": "rdf:Resource"
+    },
+    "kg:version": {
+      "@id": "kg:version",
+      "@type": "core:Property",
+      "label": "version",
+      "description": "Semantic version string for the KG artifact"
+    },
+    "kg:createdBy": {
+      "@id": "kg:createdBy",
+      "@type": "core:Property",
+      "label": "createdBy",
+      "description": "Agent or process that created the artifact"
+    },
+    "kg:exportFormat": {
+      "@id": "kg:exportFormat",
+      "@type": "core:Property",
+      "label": "exportFormat",
+      "description": "Export formats available (ttl, nq, jsonld)"
+    }
+  },
+
+  "examples": {
+    "kg:genericPipeline": {
+      "@id": "kg:workflow-patterns/generic-pipeline",
+      "@type": "kg:workflowPattern",
+      "label": "Generic Processing Pipeline",
+      "kg:hasStep": [
+        { "@id": "uc:processing" },
+        { "@id": "uc:automation" },
+        { "@id": "uc:reporting" }
+      ],
+      "kg:version": "1.0.0",
+      "kg:exportFormat": ["ttl", "jsonld"]
+    }
+  }
+}

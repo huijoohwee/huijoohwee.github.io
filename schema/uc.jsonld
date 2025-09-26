@@ -1,0 +1,103 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+
+  "@id": "core:UniversalConcepts:v1.0",
+  "@type": "core:ConceptCollection",
+
+  "meta": {
+    "title": "Universal Concepts (uc)",
+    "description": "Neutral, reusable baseline namespace for cross-project semantic anchors.",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-09-26",
+    "updated": "2025-09-26"
+  },
+
+  "concepts": {
+    "uc:identifier": {
+      "@id": "uc:identifier",
+      "@type": "core:Concept",
+      "label": "Identifier",
+      "description": "A globally unique identifier for an entity"
+    },
+    "uc:label": {
+      "@id": "uc:label",
+      "@type": "core:Concept",
+      "label": "Label",
+      "description": "Human readable name or title"
+    },
+    "uc:description": {
+      "@id": "uc:description",
+      "@type": "core:Concept",
+      "label": "Description",
+      "description": "Long-form textual description"
+    },
+    "uc:status": {
+      "@id": "uc:status",
+      "@type": "core:Concept",
+      "label": "Status",
+      "description": "Operational or lifecycle status (e.g., draft, active, deprecated)"
+    },
+    "uc:automation": {
+      "@id": "uc:automation",
+      "@type": "core:Concept",
+      "label": "Automation",
+      "description": "Automated execution of steps or workflows"
+    },
+    "uc:processing": {
+      "@id": "uc:processing",
+      "@type": "core:Concept",
+      "label": "Processing",
+      "description": "Data transformation, enrichment, or analysis"
+    },
+    "uc:reporting": {
+      "@id": "uc:reporting",
+      "@type": "core:Concept",
+      "label": "Reporting",
+      "description": "Generation of structured outputs or summaries"
+    },
+    "uc:event": {
+      "@id": "uc:event",
+      "@type": "core:Concept",
+      "label": "Event",
+      "description": "A discrete occurrence that may trigger workflows"
+    },
+    "uc:actor": {
+      "@id": "uc:actor",
+      "@type": "core:Concept",
+      "label": "Actor",
+      "description": "Agent, service, or user that performs actions"
+    },
+    "uc:artifact": {
+      "@id": "uc:artifact",
+      "@type": "core:Concept",
+      "label": "Artifact",
+      "description": "Concrete output or resource produced by processes"
+    }
+  },
+
+  "usageExamples": [
+    {
+      "example": {
+        "@context": ["https://raw.githubusercontent.com/huijoohwee/airvio/refs/heads/main/00-CORE/base.jsonld"],
+        "@id": "https://example.org/doc/1",
+        "type": "core:Directive",
+        "name": "uc:reporting",
+        "status": "uc:status"
+      },
+      "note": "Import base context and reference uc: concepts using CURIEs."
+    }
+  ]
+}

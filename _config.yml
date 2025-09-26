@@ -1,0 +1,41 @@
+# GitHub Pages Configuration
+# This file configures GitHub Pages settings
+
+# Enable GitHub Pages
+theme: null
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - .gitignore
+  - .github/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - yarn.lock
+
+# Set the base URL for GitHub Pages
+baseurl: ""
+url: "https://joohwee.github.io"
+
+# Site metadata
+title: "Joohwee - AI & Technology Portfolio"
+description: "Personal portfolio showcasing AI and technology projects"
+author: "Joohwee"
+
+# Enable GitHub Pages features
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Security headers
+strict_front_matter: true
+
+# Performance optimizations
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: all
+  blanklines: false
+  profile: false

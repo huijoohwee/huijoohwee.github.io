@@ -1,0 +1,30 @@
+{
+  "name": "joohwee-github-pages",
+  "version": "1.0.0",
+  "description": "Personal portfolio website hosted on GitHub Pages",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Static site - no build needed'",
+    "test": "echo 'No tests specified'",
+    "deploy": "echo 'Deploy via GitHub Actions'"
+  },
+  "keywords": [
+    "portfolio",
+    "github-pages",
+    "personal-website",
+    "ai",
+    "technology"
+  ],
+  "author": "Joohwee",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huijoohwee/joohwee.github.io"
+  },
+  "homepage": "https://joohwee.github.io",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

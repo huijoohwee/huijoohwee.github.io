@@ -10,7 +10,7 @@ permissions:
 env:
   PAGES_PUBLISH_DIR: public
   SCHEMA_DIR: schema
-  PAGES_PATH: 00-CORE/schema   # set to the path you want under the Pages site
+  PAGES_PATH: schema   # set-to-the-path-under-the-Pages-site
   HOST: https://huijoohwee.github.io
 
 jobs:
@@ -86,23 +86,25 @@ jobs:
   "created": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "base_latest": "${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld",
-  "core_latest": "${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld",
-  "uc_latest": "${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld",
-  "wf_latest": "${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld",
-  "kg_latest": "${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld",
-  "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
-  "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
-  "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
-  "wf_versions": ["${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld"],
-  "kg_versions": ["${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld"]
+          "core_latest": "${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld",
+          "uc_latest": "${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld",
+          "wf_latest": "${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld",
+          "kg_latest": "${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld",
+          "nqds_predicates_latest": "${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld",
+          "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
+          "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
+          "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
+          "wf_versions": ["${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld"],
+          "kg_versions": ["${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld"],
+          "nqds_predicates_versions": ["${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld"]
 }
 EOF
           # Render using mustache
           npx mustache render-context.json "$TEMPLATE" > ${OUT}/index.jsonld
-          # Minify JSON (remove whitespace)
-          npx json-minify ${OUT}/index.jsonld | jq -c . > ${OUT}/index.min.jsonld
+          # Minify JSON (remove whitespace) using jq
+          jq -c . ${OUT}/index.jsonld > ${OUT}/index.min.jsonld
           mv ${OUT}/index.min.jsonld ${OUT}/index.jsonld
-          rm -f render-context.json
+          rm -f render-context.json          
 
       - name: Validate rendered index.jsonld
         run: |

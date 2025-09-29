@@ -1,0 +1,278 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+  },
+  
+  "@graph": [
+    {
+      "@id": "nqds:PredicateRegistry",
+      "@type": "owl:Class",
+      "rdfs:label": "NQDS Predicate Registry",
+      "rdfs:comment": "Registry of all predicates available in NQDS notation system",
+      "nqds:totalPredicates": 87,
+      "nqds:categories": ["action", "relationship", "state", "temporal", "conditional", "quantitative", "communication", "evaluation"]
+    },
+    
+    {
+      "@id": "nqds:ActionPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Action Predicate",
+      "rdfs:comment": "Predicates describing actions and operations",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "action",
+      "nqds:predicates": [
+        {"predicate": "[initiates]", "description": "发起、启动某个过程或项目", "subjectTypes": ["Human", "System"], "objectTypes": ["Project", "Process"], "usagePattern": "工作流启动"},
+        {"predicate": "[defines]", "description": "定义、指定某个概念或规则", "subjectTypes": ["Human", "System"], "objectTypes": ["Requirements", "Rules"], "usagePattern": "规格定义"},
+        {"predicate": "[designs]", "description": "设计、规划某个系统或组件", "subjectTypes": ["Human"], "objectTypes": ["Blueprint", "Architecture"], "usagePattern": "设计活动"},
+        {"predicate": "[specializes]", "description": "专门化、特化某种能力", "subjectTypes": ["Agent"], "objectTypes": ["Capabilities"], "usagePattern": "智能体能力定义"},
+        {"predicate": "[orchestrates]", "description": "编排、协调多个组件或流程", "subjectTypes": ["Coordinator", "System"], "objectTypes": ["Workflow", "Communication"], "usagePattern": "流程编排"},
+        {"predicate": "[registers]", "description": "注册、登记某个服务或能力", "subjectTypes": ["Registry", "System"], "objectTypes": ["Capabilities", "Services"], "usagePattern": "服务注册"},
+        {"predicate": "[triggers]", "description": "触发、激活某个事件或流程", "subjectTypes": ["Event", "Hook"], "objectTypes": ["Workflow", "Process"], "usagePattern": "事件触发"},
+        {"predicate": "[integrates]", "description": "集成、整合多个系统或组件", "subjectTypes": ["System", "Pipeline"], "objectTypes": ["Components", "Services"], "usagePattern": "系统集成"},
+        {"predicate": "[manages]", "description": "管理、维护某个资源或流程", "subjectTypes": ["Manager", "Agent"], "objectTypes": ["Resources", "Strategy"], "usagePattern": "资源管理"},
+        {"predicate": "[monitors]", "description": "监控、观察某个系统或状态", "subjectTypes": ["Monitor", "Agent"], "objectTypes": ["Health", "Metrics"], "usagePattern": "监控观察"},
+        {"predicate": "[implements]", "description": "实现、执行某个策略或模式", "subjectTypes": ["System", "Agent"], "objectTypes": ["Patterns", "Strategy"], "usagePattern": "实现执行"},
+        {"predicate": "[generates]", "description": "生成、创建某个产物或内容", "subjectTypes": ["Agent", "System"], "objectTypes": ["Code", "Tests", "Artifacts"], "usagePattern": "内容生成"},
+        {"predicate": "[executes]", "description": "执行、运行某个任务或检查", "subjectTypes": ["Agent", "System"], "objectTypes": ["Tasks", "Gates"], "usagePattern": "任务执行"},
+        {"predicate": "[produces]", "description": "产出、制造某个结果或制品", "subjectTypes": ["Agent", "System"], "objectTypes": ["Artifacts", "Results"], "usagePattern": "结果产出"},
+        {"predicate": "[sends]", "description": "发送、传递某个消息或数据", "subjectTypes": ["Agent", "System"], "objectTypes": ["Messages", "Data"], "usagePattern": "消息传递"},
+        {"predicate": "[provisions]", "description": "提供、配置某个资源或服务", "subjectTypes": ["System", "IaC"], "objectTypes": ["Resources", "Services"], "usagePattern": "资源配置"},
+        {"predicate": "[builds]", "description": "构建、编译某个应用或镜像", "subjectTypes": ["Builder", "System"], "objectTypes": ["Images", "Applications"], "usagePattern": "构建编译"},
+        {"predicate": "[deploys]", "description": "部署、发布某个应用或服务", "subjectTypes": ["Agent", "System"], "objectTypes": ["Services", "Applications"], "usagePattern": "部署发布"},
+        {"predicate": "[tracks]", "description": "跟踪、记录某个指标或状态", "subjectTypes": ["Monitor", "System"], "objectTypes": ["Metrics", "Status"], "usagePattern": "数据跟踪"},
+        {"predicate": "[alerts]", "description": "告警、通知某个异常或事件", "subjectTypes": ["Monitor", "System"], "objectTypes": ["Events", "Failures"], "usagePattern": "告警通知"},
+        {"predicate": "[analyzes]", "description": "分析、评估某个数据或状态", "subjectTypes": ["System", "Agent"], "objectTypes": ["Data", "Performance"], "usagePattern": "数据分析"},
+        {"predicate": "[suggests]", "description": "建议、推荐某个改进或方案", "subjectTypes": ["System", "Agent"], "objectTypes": ["Improvements", "Solutions"], "usagePattern": "建议推荐"},
+        {"predicate": "[reports]", "description": "报告、汇报某个状态或结果", "subjectTypes": ["Agent", "System"], "objectTypes": ["Status", "Results"], "usagePattern": "状态报告"},
+        {"predicate": "[demonstrates]", "description": "演示、展示某个流程或模式", "subjectTypes": ["System", "Example"], "objectTypes": ["Patterns", "Workflows"], "usagePattern": "示例展示"},
+        {"predicate": "[retries]", "description": "重试、再次执行某个操作", "subjectTypes": ["System", "Mechanism"], "objectTypes": ["Operations", "Tasks"], "usagePattern": "重试机制"},
+        {"predicate": "[protects]", "description": "保护、防护某个系统或通信", "subjectTypes": ["System", "Breaker"], "objectTypes": ["Communication", "System"], "usagePattern": "系统保护"},
+        {"predicate": "[prevents]", "description": "防止、阻止某个问题或故障", "subjectTypes": ["System", "Pattern"], "objectTypes": ["Failures", "Issues"], "usagePattern": "问题预防"},
+        {"predicate": "[provides]", "description": "提供、供给某个服务或能力", "subjectTypes": ["Agent", "System"], "objectTypes": ["Services", "Capabilities"], "usagePattern": "服务提供"},
+        {"predicate": "[accepts]", "description": "接受、处理某个消息或输入", "subjectTypes": ["Agent", "System"], "objectTypes": ["Messages", "Inputs"], "usagePattern": "输入处理"},
+        {"predicate": "[validates]", "description": "验证、检查某个标准或规则", "subjectTypes": ["Validator", "System"], "objectTypes": ["Standards", "Rules"], "usagePattern": "验证检查"},
+        {"predicate": "[ensures]", "description": "确保、保证某个条件或状态", "subjectTypes": ["System", "Component"], "objectTypes": ["Conditions", "States"], "usagePattern": "条件保证"},
+        {"predicate": "[maintains]", "description": "维护、保持某个状态或一致性", "subjectTypes": ["System", "Component"], "objectTypes": ["States", "Consistency"], "usagePattern": "状态维护"},
+        {"predicate": "[enables]", "description": "启用、使能某个功能或能力", "subjectTypes": ["System", "Component"], "objectTypes": ["Features", "Capabilities"], "usagePattern": "功能启用"},
+        {"predicate": "[routes]", "description": "路由、转发某个消息或请求", "subjectTypes": ["Router", "System"], "objectTypes": ["Messages", "Requests"], "usagePattern": "消息路由"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:RelationshipPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Relationship Predicate",
+      "rdfs:comment": "Predicates describing relationships between entities",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "relationship",
+      "nqds:predicates": [
+        {"predicate": "[contains]", "description": "包含、容纳某个元素或组件", "subjectTypes": ["Container", "Collection"], "objectTypes": ["Elements", "Components"], "usagePattern": "包含关系"},
+        {"predicate": "[connects]", "description": "连接、链接两个实体或组件", "subjectTypes": ["Component", "System"], "objectTypes": ["Components", "Entities"], "usagePattern": "连接关系"},
+        {"predicate": "[targets]", "description": "指向、针对某个目标或对象", "subjectTypes": ["Action", "Relation"], "objectTypes": ["Targets", "Objects"], "usagePattern": "目标关系"},
+        {"predicate": "[applies]", "description": "应用、适用于某个范围或条件", "subjectTypes": ["Rule", "Pattern"], "objectTypes": ["Conditions", "Contexts"], "usagePattern": "适用关系"},
+        {"predicate": "[supports]", "description": "支持、支撑某个功能或特性", "subjectTypes": ["System", "Component"], "objectTypes": ["Features", "Capabilities"], "usagePattern": "支持关系"},
+        {"predicate": "[includes]", "description": "包括、涵盖某些项目或内容", "subjectTypes": ["Collection", "Set"], "objectTypes": ["Items", "Contents"], "usagePattern": "包括关系"},
+        {"predicate": "[serves]", "description": "服务、充当某个角色或功能", "subjectTypes": ["Component", "System"], "objectTypes": ["Roles", "Functions"], "usagePattern": "服务关系"},
+        {"predicate": "[uses]", "description": "使用、利用某个工具或资源", "subjectTypes": ["User", "System"], "objectTypes": ["Tools", "Resources"], "usagePattern": "使用关系"},
+        {"predicate": "[requires]", "description": "需要、依赖某个条件或资源", "subjectTypes": ["Process", "System"], "objectTypes": ["Conditions", "Resources"], "usagePattern": "依赖关系"},
+        {"predicate": "[binds]", "description": "绑定、关联某个配置或上下文", "subjectTypes": ["Registry", "System"], "objectTypes": ["Context", "Configuration"], "usagePattern": "绑定关系"},
+        {"predicate": "[maps]", "description": "映射、对应某个关系或结构", "subjectTypes": ["Mapper", "Registry"], "objectTypes": ["Relationships", "Structures"], "usagePattern": "映射关系"},
+        {"predicate": "[owns]", "description": "拥有、控制某个资源或组件", "subjectTypes": ["Owner", "Subject"], "objectTypes": ["Resources", "Components"], "usagePattern": "所有关系"},
+        {"predicate": "[controls]", "description": "控制、管理某个过程或组件", "subjectTypes": ["Controller", "Subject"], "objectTypes": ["Processes", "Components"], "usagePattern": "控制关系"},
+        {"predicate": "[encompasses]", "description": "包围、涵盖某个范围或领域", "subjectTypes": ["Container", "Scope"], "objectTypes": ["Ranges", "Domains"], "usagePattern": "涵盖关系"},
+        {"predicate": "[inherits]", "description": "继承、获得某个属性或特性", "subjectTypes": ["Child", "Subclass"], "objectTypes": ["Properties", "Characteristics"], "usagePattern": "继承关系"},
+        {"predicate": "[references]", "description": "引用、参考某个资源或文档", "subjectTypes": ["System", "Component"], "objectTypes": ["Resources", "Documents"], "usagePattern": "引用关系"},
+        {"predicate": "[links]", "description": "链接、关联两个或多个实体", "subjectTypes": ["Connector", "System"], "objectTypes": ["Entities", "Components"], "usagePattern": "链接关系"},
+        {"predicate": "[attaches]", "description": "附加、连接某个属性或组件", "subjectTypes": ["System", "Component"], "objectTypes": ["Attributes", "Components"], "usagePattern": "附加关系"},
+        {"predicate": "[creates]", "description": "创建、建立某个关系或结构", "subjectTypes": ["Creator", "System"], "objectTypes": ["Relationships", "Structures"], "usagePattern": "创建关系"},
+        {"predicate": "[completes]", "description": "完成、补全某个结构或流程", "subjectTypes": ["Component", "Element"], "objectTypes": ["Structures", "Processes"], "usagePattern": "完成关系"},
+        {"predicate": "[expresses]", "description": "表达、体现某个意义或关系", "subjectTypes": ["Element", "Component"], "objectTypes": ["Meanings", "Relations"], "usagePattern": "表达关系"},
+        {"predicate": "[characterizes]", "description": "特征化、描述某个属性或特点", "subjectTypes": ["System", "Component"], "objectTypes": ["Attributes", "Features"], "usagePattern": "特征关系"},
+        {"predicate": "[covers]", "description": "覆盖、涵盖某个范围或领域", "subjectTypes": ["System", "Component"], "objectTypes": ["Ranges", "Domains"], "usagePattern": "覆盖关系"},
+        {"predicate": "[shows]", "description": "显示、展示某个示例或结果", "subjectTypes": ["System", "Component"], "objectTypes": ["Examples", "Results"], "usagePattern": "展示关系"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:StatePredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "State Predicate",
+      "rdfs:comment": "Predicates describing states and properties",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "state",
+      "nqds:predicates": [
+        {"predicate": "[is]", "description": "是、等于某个值或状态", "subjectTypes": ["Any"], "objectTypes": ["Values", "States"], "usagePattern": "状态定义"},
+        {"predicate": "[has]", "description": "拥有、具备某个属性或特征", "subjectTypes": ["Entity", "System"], "objectTypes": ["Attributes", "Features"], "usagePattern": "属性关系"},
+        {"predicate": "[can]", "description": "能够、具有某种能力或权限", "subjectTypes": ["Agent", "System"], "objectTypes": ["Capabilities", "Permissions"], "usagePattern": "能力状态"},
+        {"predicate": "[must]", "description": "必须、强制某个条件或要求", "subjectTypes": ["Entity", "System"], "objectTypes": ["Conditions", "Requirements"], "usagePattern": "强制约束"},
+        {"predicate": "[may]", "description": "可能、允许某个操作或状态", "subjectTypes": ["Entity", "System"], "objectTypes": ["Operations", "States"], "usagePattern": "可选状态"},
+        {"predicate": "[remains]", "description": "保持、维持某个状态或属性", "subjectTypes": ["Entity", "System"], "objectTypes": ["States", "Attributes"], "usagePattern": "状态保持"},
+        {"predicate": "[becomes]", "description": "变成、转换为某个状态", "subjectTypes": ["Entity", "System"], "objectTypes": ["States", "Values"], "usagePattern": "状态转换"},
+        {"predicate": "[functions]", "description": "功能、作为某个角色运行", "subjectTypes": ["Component", "System"], "objectTypes": ["Roles", "Functions"], "usagePattern": "功能状态"},
+        {"predicate": "[acts]", "description": "行为、表现为某种方式", "subjectTypes": ["Agent", "Component"], "objectTypes": ["Behaviors", "Roles"], "usagePattern": "行为状态"},
+        {"predicate": "[stays]", "description": "停留、持续某个状态", "subjectTypes": ["Entity", "System"], "objectTypes": ["States", "Conditions"], "usagePattern": "状态持续"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:TemporalPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Temporal Predicate",
+      "rdfs:comment": "Predicates describing temporal relationships",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "temporal",
+      "nqds:predicates": [
+        {"predicate": "[before]", "description": "在...之前发生或存在", "subjectTypes": ["Event", "Process"], "objectTypes": ["Events", "Times"], "usagePattern": "时序关系"},
+        {"predicate": "[after]", "description": "在...之后发生或存在", "subjectTypes": ["Event", "Process"], "objectTypes": ["Events", "Times"], "usagePattern": "时序关系"},
+        {"predicate": "[during]", "description": "在...期间发生或存在", "subjectTypes": ["Event", "Process"], "objectTypes": ["Periods", "Phases"], "usagePattern": "时间范围"},
+        {"predicate": "[when]", "description": "当...时候发生或满足", "subjectTypes": ["Condition", "Event"], "objectTypes": ["Conditions", "Events"], "usagePattern": "条件时机"},
+        {"predicate": "[then]", "description": "然后、接下来执行", "subjectTypes": ["Step", "Process"], "objectTypes": ["Steps", "Actions"], "usagePattern": "顺序关系"},
+        {"predicate": "[next]", "description": "下一个、紧接着的", "subjectTypes": ["Step", "Phase"], "objectTypes": ["Steps", "Phases"], "usagePattern": "序列关系"},
+        {"predicate": "[finally]", "description": "最终、最后执行", "subjectTypes": ["Process", "Workflow"], "objectTypes": ["Actions", "Results"], "usagePattern": "终结关系"},
+        {"predicate": "[leads-to]", "description": "导致、引向某个结果", "subjectTypes": ["Event", "Action"], "objectTypes": ["Results", "Events"], "usagePattern": "因果关系"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:ConditionalPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Conditional Predicate",
+      "rdfs:comment": "Predicates describing conditional relationships",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "conditional",
+      "nqds:predicates": [
+        {"predicate": "[if]", "description": "如果、假设某个条件成立", "subjectTypes": ["Condition", "Rule"], "objectTypes": ["Conditions", "States"], "usagePattern": "条件判断"},
+        {"predicate": "[unless]", "description": "除非、如果不满足条件", "subjectTypes": ["Condition", "Rule"], "objectTypes": ["Conditions", "States"], "usagePattern": "否定条件"},
+        {"predicate": "[while]", "description": "当...时、在...期间", "subjectTypes": ["Process", "State"], "objectTypes": ["Conditions", "States"], "usagePattern": "持续条件"},
+        {"predicate": "[until]", "description": "直到、直至某个条件满足", "subjectTypes": ["Process", "State"], "objectTypes": ["Conditions", "States"], "usagePattern": "结束条件"},
+        {"predicate": "[or]", "description": "或者、选择性条件", "subjectTypes": ["Option", "Choice"], "objectTypes": ["Options", "Alternatives"], "usagePattern": "选择条件"},
+        {"predicate": "[and]", "description": "并且、同时满足", "subjectTypes": ["Condition", "Requirement"], "objectTypes": ["Conditions", "Requirements"], "usagePattern": "组合条件"},
+        {"predicate": "[not]", "description": "不是、否定某个条件", "subjectTypes": ["State", "Condition"], "objectTypes": ["States", "Conditions"], "usagePattern": "否定条件"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:QuantitativePredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Quantitative Predicate",
+      "rdfs:comment": "Predicates describing quantitative relationships",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "quantitative",
+      "nqds:predicates": [
+        {"predicate": "[measures]", "description": "测量、度量某个指标或值", "subjectTypes": ["Metric", "System"], "objectTypes": ["Values", "Measurements"], "usagePattern": "度量关系"},
+        {"predicate": "[scores]", "description": "评分、给出某个分数", "subjectTypes": ["Evaluator", "System"], "objectTypes": ["Scores", "Ratings"], "usagePattern": "评分关系"},
+        {"predicate": "[ranks]", "description": "排名、排序某个位置", "subjectTypes": ["Ranker", "System"], "objectTypes": ["Positions", "Orders"], "usagePattern": "排序关系"},
+        {"predicate": "[weights]", "description": "权重、分配某个重要性", "subjectTypes": ["Criteria", "Factor"], "objectTypes": ["Weights", "Values"], "usagePattern": "权重关系"},
+        {"predicate": "[counts]", "description": "计数、统计某个数量", "subjectTypes": ["Counter", "System"], "objectTypes": ["Numbers", "Quantities"], "usagePattern": "计数关系"},
+        {"predicate": "[totals]", "description": "总计、汇总某个数值", "subjectTypes": ["Calculator", "System"], "objectTypes": ["Totals", "Sums"], "usagePattern": "汇总关系"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:CommunicationPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Communication Predicate",
+      "rdfs:comment": "Predicates describing communication relationships",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "communication",
+      "nqds:predicates": [
+        {"predicate": "[communicates]", "description": "通信、交流某个信息", "subjectTypes": ["Agent", "System"], "objectTypes": ["Information", "Messages"], "usagePattern": "通信交流"},
+        {"predicate": "[broadcasts]", "description": "广播、向多个接收者发送", "subjectTypes": ["Sender", "System"], "objectTypes": ["Messages", "Information"], "usagePattern": "广播通信"},
+        {"predicate": "[receives]", "description": "接收、获得某个消息或数据", "subjectTypes": ["Receiver", "System"], "objectTypes": ["Messages", "Data"], "usagePattern": "接收通信"},
+        {"predicate": "[forwards]", "description": "转发、传递某个消息", "subjectTypes": ["Router", "Intermediary"], "objectTypes": ["Messages", "Requests"], "usagePattern": "转发通信"},
+        {"predicate": "[responds]", "description": "响应、回应某个请求或消息", "subjectTypes": ["Responder", "System"], "objectTypes": ["Responses", "Messages"], "usagePattern": "响应通信"},
+        {"predicate": "[publishes]", "description": "发布、公开某个信息或事件", "subjectTypes": ["Publisher", "System"], "objectTypes": ["Information", "Events"], "usagePattern": "发布通信"},
+        {"predicate": "[subscribes]", "description": "订阅、监听某个事件或消息", "subjectTypes": ["Subscriber", "System"], "objectTypes": ["Events", "Messages"], "usagePattern": "订阅通信"},
+        {"predicate": "[notifies]", "description": "通知、告知某个事件或状态", "subjectTypes": ["Notifier", "System"], "objectTypes": ["Events", "States"], "usagePattern": "通知通信"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:EvaluationPredicate",
+      "@type": "owl:Class",
+      "rdfs:label": "Evaluation Predicate",
+      "rdfs:comment": "Predicates describing evaluation and assessment relationships",
+      "rdfs:subClassOf": "nqds:Predicate",
+      "nqds:category": "evaluation",
+      "nqds:predicates": [
+        {"predicate": "[evaluates]", "description": "评估、评价某个对象或性能", "subjectTypes": ["Evaluator", "System"], "objectTypes": ["Objects", "Performance"], "usagePattern": "评估活动"},
+        {"predicate": "[assesses]", "description": "评定、判断某个质量或状态", "subjectTypes": ["Assessor", "System"], "objectTypes": ["Quality", "States"], "usagePattern": "评定活动"},
+        {"predicate": "[compares]", "description": "比较、对比多个选项或结果", "subjectTypes": ["Comparator", "System"], "objectTypes": ["Options", "Results"], "usagePattern": "比较活动"},
+        {"predicate": "[optimizes]", "description": "优化、改进某个性能或效率", "subjectTypes": ["Optimizer", "System"], "objectTypes": ["Performance", "Efficiency"], "usagePattern": "优化活动"},
+        {"predicate": "[improves]", "description": "改进、提升某个质量或能力", "subjectTypes": ["Improver", "System"], "objectTypes": ["Quality", "Capabilities"], "usagePattern": "改进活动"},
+        {"predicate": "[enhances]", "description": "增强、强化某个功能或特性", "subjectTypes": ["Enhancer", "System"], "objectTypes": ["Functions", "Features"], "usagePattern": "增强活动"}
+      ]
+    },
+    
+    {
+      "@id": "nqds:UsageStatistics",
+      "@type": "owl:Class",
+      "rdfs:label": "Predicate Usage Statistics",
+      "rdfs:comment": "Statistics about predicate usage in NQDS",
+      "nqds:totalPredicates": 87,
+      "nqds:categoryDistribution": {
+        "action": 32,
+        "relationship": 22,
+        "state": 10,
+        "temporal": 8,
+        "conditional": 7,
+        "quantitative": 6,
+        "communication": 8,
+        "evaluation": 6
+      },
+      "nqds:mostUsedPredicates": ["[defines]", "[manages]", "[provides]", "[contains]", "[enables]"],
+      "nqds:complexityLevels": {
+        "simple": 45,
+        "medium": 28,
+        "complex": 14
+      }
+    },
+    
+    {
+      "@id": "nqds:SemanticRelationships",
+      "@type": "owl:Class",
+      "rdfs:label": "Semantic Relationships",
+      "rdfs:comment": "Semantic relationships between predicates",
+      "nqds:synonymGroups": [
+        ["[creates]", "[generates]", "[produces]"],
+        ["[manages]", "[controls]", "[maintains]"],
+        ["[provides]", "[supplies]", "[offers]"]
+      ],
+      "nqds:antonymPairs": [
+        ["[enables]", "[prevents]"],
+        ["[includes]", "[excludes]"],
+        ["[accepts]", "[rejects]"]
+      ],
+      "nqds:hierarchicalRelations": [
+        {"from": "[contains]", "to": "[includes]", "then": "[covers]"},
+        {"from": "[manages]", "to": "[controls]", "then": "[owns]"}
+      ],
+      "nqds:temporalChains": [
+        {"sequence": ["[before]", "[during]", "[after]"]},
+        {"sequence": ["[initiates]", "[executes]", "[completes]"]}
+      ]
+    },
+    
+    {
+      "@id": "nqds:PatternTemplates",
+      "@type": "owl:Class",
+      "rdfs:label": "Pattern Templates",
+      "rdfs:comment": "Common usage patterns for predicates",
+      "nqds:creationPattern": "::creation::(Subject)-[creates|generates|produces]->{Artifact}",
+      "nqds:managementPattern": "::management::(Manager)-[manages|controls|maintains]->{Resource}",
+      "nqds:communicationPattern": "::communication::(Sender)-[sends|communicates|notifies]->{Receiver}",
+      "nqds:evaluationPattern": "::evaluation::(Evaluator)-[evaluates|assesses|measures]->{Target}",
+      "nqds:relationshipPattern": "::relationship::(Entity1)-[contains|includes|supports]->{Entity2}",
+      "nqds:temporalPattern": "::temporal::(Event1)-[before|after|leads-to]->{Event2}"
+    }
+  ]
+}

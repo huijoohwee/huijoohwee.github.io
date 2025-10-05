@@ -1,0 +1,202 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+
+  "@id": "jdbl:DirectiveMetadataContext:v1.0",
+  "@type": "core:ContextDefinition",
+
+  "meta": {
+    "title": "JDBL - Directive Metadata Layer Schema",
+    "description": "JSON-based Directive Block Language for execution instructions, validation rules, and workflow metadata",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-10-05",
+    "updated": "2025-10-05",
+    "layer": "directive-metadata",
+    "responsibilities": [
+      "execution-directives",
+      "validation-rules", 
+      "quality-gates",
+      "workflow-metadata"
+    ]
+  },
+
+  "@graph": [
+    {
+      "@id": "jdbl:Directive",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Directive",
+      "rdfs:comment": "Base class for all execution directives and instructions"
+    },
+    {
+      "@id": "jdbl:ExecutionDirective",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Directive",
+      "rdfs:label": "Execution Directive",
+      "rdfs:comment": "Directive that specifies how to execute a task or operation"
+    },
+    {
+      "@id": "jdbl:ValidationRule",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Directive",
+      "rdfs:label": "Validation Rule",
+      "rdfs:comment": "Rule that defines validation constraints and conditions"
+    },
+    {
+      "@id": "jdbl:QualityGate",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Directive",
+      "rdfs:label": "Quality Gate",
+      "rdfs:comment": "Threshold or checkpoint that must be met for quality assurance"
+    },
+    {
+      "@id": "jdbl:WorkflowMetadata",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Directive",
+      "rdfs:label": "Workflow Metadata",
+      "rdfs:comment": "Metadata that describes workflow configuration and properties"
+    },
+    {
+      "@id": "jdbl:Constraint",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Constraint",
+      "rdfs:comment": "Limitation or restriction applied to execution"
+    },
+    {
+      "@id": "jdbl:TimeoutConstraint",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Constraint",
+      "rdfs:label": "Timeout Constraint",
+      "rdfs:comment": "Time-based limitation for execution duration"
+    },
+    {
+      "@id": "jdbl:RetryConstraint",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:Constraint",
+      "rdfs:label": "Retry Constraint",
+      "rdfs:comment": "Limitation on number of retry attempts"
+    },
+    {
+      "@id": "jdbl:PreCondition",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Pre-condition",
+      "rdfs:comment": "Condition that must be satisfied before execution"
+    },
+    {
+      "@id": "jdbl:PostCondition",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Post-condition",
+      "rdfs:comment": "Condition that must be satisfied after execution"
+    }
+  ],
+
+  "properties": [
+    {
+      "@id": "jdbl:hasDirective",
+      "@type": "rdf:Property",
+      "rdfs:label": "has directive",
+      "rdfs:comment": "Associates an entity with a directive",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "jdbl:Directive"
+    },
+    {
+      "@id": "jdbl:hasConstraint",
+      "@type": "rdf:Property",
+      "rdfs:label": "has constraint",
+      "rdfs:comment": "Associates a directive with a constraint",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "jdbl:Constraint"
+    },
+    {
+      "@id": "jdbl:hasPreCondition",
+      "@type": "rdf:Property",
+      "rdfs:label": "has pre-condition",
+      "rdfs:comment": "Associates a directive with a pre-condition",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "jdbl:PreCondition"
+    },
+    {
+      "@id": "jdbl:hasPostCondition",
+      "@type": "rdf:Property",
+      "rdfs:label": "has post-condition",
+      "rdfs:comment": "Associates a directive with a post-condition",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "jdbl:PostCondition"
+    },
+    {
+      "@id": "jdbl:timeout",
+      "@type": "rdf:Property",
+      "rdfs:label": "timeout",
+      "rdfs:comment": "Specifies timeout duration for execution",
+      "rdfs:domain": "jdbl:TimeoutConstraint",
+      "rdfs:range": "xsd:duration"
+    },
+    {
+      "@id": "jdbl:maxRetries",
+      "@type": "rdf:Property",
+      "rdfs:label": "max retries",
+      "rdfs:comment": "Specifies maximum number of retry attempts",
+      "rdfs:domain": "jdbl:RetryConstraint",
+      "rdfs:range": "xsd:nonNegativeInteger"
+    },
+    {
+      "@id": "jdbl:priority",
+      "@type": "rdf:Property",
+      "rdfs:label": "priority",
+      "rdfs:comment": "Specifies execution priority level",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:owner",
+      "@type": "rdf:Property",
+      "rdfs:label": "owner",
+      "rdfs:comment": "Specifies the owner or responsible agent",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:traceId",
+      "@type": "rdf:Property",
+      "rdfs:label": "trace ID",
+      "rdfs:comment": "Unique identifier for tracing execution",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:range": "xsd:string"
+    }
+  ],
+
+  "examples": [
+    {
+      "@type": "jdbl:ExecutionDirective",
+      "@id": "jdbl:example:implement-feature",
+      "jdbl:hasConstraint": [
+        {
+          "@type": "jdbl:TimeoutConstraint",
+          "jdbl:timeout": "PT30S"
+        },
+        {
+          "@type": "jdbl:RetryConstraint",
+          "jdbl:maxRetries": 3
+        }
+      ],
+      "jdbl:hasPreCondition": [
+        "dependencies-resolved",
+        "resources-available"
+      ],
+      "jdbl:hasPostCondition": [
+        "artifacts-generated",
+        "tests-executed"
+      ],
+      "jdbl:priority": "high",
+      "jdbl:owner": "BackendDevAgent",
+      "jdbl:traceId": "task-12345"
+    }
+  ]
+}

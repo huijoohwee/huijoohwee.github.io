@@ -1,0 +1,254 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+
+  "@id": "hbs:TemplatingEngineContext:v1.0",
+  "@type": "core:ContextDefinition",
+
+  "meta": {
+    "title": "HBS - Templating Engine Layer Schema",
+    "description": "Handlebars-based Templating Language for dynamic content generation and reusable components",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-10-05",
+    "updated": "2025-10-05",
+    "layer": "templating-engine",
+    "responsibilities": [
+      "dynamic-content-generation",
+      "reusable-component-templates",
+      "conditional-rendering-logic",
+      "iteration-and-composition"
+    ]
+  },
+
+  "@graph": [
+    {
+      "@id": "hbs:Template",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Template",
+      "rdfs:comment": "Base class for all Handlebars templates and template components"
+    },
+    {
+      "@id": "hbs:ComponentTemplate",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:Template",
+      "rdfs:label": "Component Template",
+      "rdfs:comment": "Reusable template component that can be included in other templates"
+    },
+    {
+      "@id": "hbs:LayoutTemplate",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:Template",
+      "rdfs:label": "Layout Template",
+      "rdfs:comment": "Template that defines the overall structure and layout"
+    },
+    {
+      "@id": "hbs:PartialTemplate",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:Template",
+      "rdfs:label": "Partial Template",
+      "rdfs:comment": "Template fragment that can be included in other templates"
+    },
+    {
+      "@id": "hbs:Helper",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Helper",
+      "rdfs:comment": "Function that provides additional functionality within templates"
+    },
+    {
+      "@id": "hbs:BlockHelper",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:Helper",
+      "rdfs:label": "Block Helper",
+      "rdfs:comment": "Helper that operates on a block of template content"
+    },
+    {
+      "@id": "hbs:ConditionalHelper",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:BlockHelper",
+      "rdfs:label": "Conditional Helper",
+      "rdfs:comment": "Helper that provides conditional rendering logic"
+    },
+    {
+      "@id": "hbs:IterationHelper",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "hbs:BlockHelper",
+      "rdfs:label": "Iteration Helper",
+      "rdfs:comment": "Helper that provides iteration and looping functionality"
+    },
+    {
+      "@id": "hbs:Context",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Context",
+      "rdfs:comment": "Data context available to templates during rendering"
+    },
+    {
+      "@id": "hbs:Variable",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Variable",
+      "rdfs:comment": "Variable or data binding within a template"
+    },
+    {
+      "@id": "hbs:Expression",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Expression",
+      "rdfs:comment": "Expression that evaluates to a value within a template"
+    },
+    {
+      "@id": "hbs:Comment",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Comment",
+      "rdfs:comment": "Comment or annotation within a template"
+    }
+  ],
+
+  "properties": [
+    {
+      "@id": "hbs:hasTemplate",
+      "@type": "rdf:Property",
+      "rdfs:label": "has template",
+      "rdfs:comment": "Associates an entity with a template",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "hbs:Template"
+    },
+    {
+      "@id": "hbs:hasHelper",
+      "@type": "rdf:Property",
+      "rdfs:label": "has helper",
+      "rdfs:comment": "Associates a template with a helper function",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:Helper"
+    },
+    {
+      "@id": "hbs:hasContext",
+      "@type": "rdf:Property",
+      "rdfs:label": "has context",
+      "rdfs:comment": "Associates a template with a data context",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:Context"
+    },
+    {
+      "@id": "hbs:hasVariable",
+      "@type": "rdf:Property",
+      "rdfs:label": "has variable",
+      "rdfs:comment": "Associates a template with a variable or data binding",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:Variable"
+    },
+    {
+      "@id": "hbs:includes",
+      "@type": "rdf:Property",
+      "rdfs:label": "includes",
+      "rdfs:comment": "Indicates that a template includes another template or partial",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:Template"
+    },
+    {
+      "@id": "hbs:extends",
+      "@type": "rdf:Property",
+      "rdfs:label": "extends",
+      "rdfs:comment": "Indicates that a template extends a layout template",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:LayoutTemplate"
+    },
+    {
+      "@id": "hbs:renders",
+      "@type": "rdf:Property",
+      "rdfs:label": "renders",
+      "rdfs:comment": "Indicates that a template renders specific content",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "hbs:iteratesOver",
+      "@type": "rdf:Property",
+      "rdfs:label": "iterates over",
+      "rdfs:comment": "Indicates that a template iterates over a collection",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "hbs:conditionalOn",
+      "@type": "rdf:Property",
+      "rdfs:label": "conditional on",
+      "rdfs:comment": "Indicates that template content is conditional on a value",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "hbs:Expression"
+    },
+    {
+      "@id": "hbs:templateName",
+      "@type": "rdf:Property",
+      "rdfs:label": "template name",
+      "rdfs:comment": "Specifies the name identifier of a template",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "hbs:helperName",
+      "@type": "rdf:Property",
+      "rdfs:label": "helper name",
+      "rdfs:comment": "Specifies the name identifier of a helper function",
+      "rdfs:domain": "hbs:Helper",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "hbs:variableName",
+      "@type": "rdf:Property",
+      "rdfs:label": "variable name",
+      "rdfs:comment": "Specifies the name identifier of a variable",
+      "rdfs:domain": "hbs:Variable",
+      "rdfs:range": "xsd:string"
+    }
+  ],
+
+  "examples": [
+    {
+      "@type": "hbs:ComponentTemplate",
+      "@id": "hbs:example:agent-coordination",
+      "hbs:templateName": "agent-coordination.hbs",
+      "hbs:hasHelper": [
+        {
+          "@type": "hbs:IterationHelper",
+          "hbs:helperName": "each",
+          "hbs:iteratesOver": "workflow.agents"
+        },
+        {
+          "@type": "hbs:ConditionalHelper",
+          "hbs:helperName": "if",
+          "hbs:conditionalOn": "this.capabilities"
+        }
+      ],
+      "hbs:includes": [
+        {
+          "@type": "hbs:PartialTemplate",
+          "hbs:templateName": "task-template"
+        },
+        {
+          "@type": "hbs:PartialTemplate",
+          "hbs:templateName": "dependency-resolver"
+        }
+      ],
+      "hbs:hasVariable": [
+        {
+          "@type": "hbs:Variable",
+          "hbs:variableName": "this.id"
+        },
+        {
+          "@type": "hbs:Variable",
+          "hbs:variableName": "this.type"
+        },
+        {
+          "@type": "hbs:Variable",
+          "hbs:variableName": "this.capabilities"
+        }
+      ]
+    }
+  ]
+}

@@ -1,148 +1,234 @@
 {
   "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@base": "https://huijoohwee.github.io/schema/nqds.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  
+
+  "@id": "nqds:SemanticPayloadContext:v1.0",
+  "@type": "core:ContextDefinition",
+
+  "meta": {
+    "title": "NQDS - Semantic Payload Layer Schema",
+    "description": "N-Quads-based Semantic Language for relationships, knowledge graphs, and data flow modeling",
+    "version": "1.0.0",
+    "maintainer": "https://github.com/huijoohwee",
+    "license": "https://opensource.org/licenses/MIT",
+    "created": "2025-10-05",
+    "updated": "2025-10-05",
+    "layer": "semantic-payload",
+    "responsibilities": [
+      "agent-relationships",
+      "data-flow-transformations",
+      "knowledge-graph-construction",
+      "semantic-dependencies"
+    ]
+  },
+
   "@graph": [
     {
       "@id": "nqds:SemanticGraph",
-      "@type": "owl:Class",
+      "@type": "rdfs:Class",
       "rdfs:label": "Semantic Graph",
-      "rdfs:comment": "Container for RDF N-Quads representing bounded contexts in NQDS notation",
-      "rdfs:subClassOf": "rdf:Graph",
-      "nqds:syntax": "::{semantic-graph}::",
-      "nqds:namingConvention": "kebab-case",
-      "nqds:examples": [
-        "::user-management::",
-        "::e-commerce-orders::",
-        "::knowledge-graph::"
-      ]
+      "rdfs:comment": "Base class for semantic knowledge graphs and relationship networks"
     },
-    
     {
-      "@id": "nqds:Subject",
-      "@type": "owl:Class", 
-      "rdfs:label": "Subject Entity",
-      "rdfs:comment": "Subject entity in NQDS triple notation",
-      "rdfs:subClassOf": "rdf:Resource",
-      "nqds:syntax": "(SubjectName)",
-      "nqds:namingConvention": "PascalCase",
-      "nqds:examples": [
-        "(User)",
-        "(Order)",
-        "(WorkflowProcess)"
-      ]
+      "@id": "nqds:Agent",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Agent",
+      "rdfs:comment": "Autonomous entity that can perform actions and interact with other agents"
     },
-    
     {
-      "@id": "nqds:Predicate",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "Relationship Predicate",
-      "rdfs:comment": "Predicate expressing relationship between subject and object",
-      "rdfs:subPropertyOf": "rdf:Property",
-      "nqds:syntax": "[predicateName]",
-      "nqds:namingConvention": "camelCase",
-      "nqds:examples": [
-        "[hasPermission]",
-        "[belongsTo]",
-        "[creates]"
-      ]
+      "@id": "nqds:Relationship",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Relationship",
+      "rdfs:comment": "Connection or association between entities in the semantic graph"
     },
-    
     {
-      "@id": "nqds:Object",
-      "@type": "owl:Class",
-      "rdfs:label": "Target Object",
-      "rdfs:comment": "Object or value targeted by the predicate relationship",
-      "nqds:syntax": "{ObjectName} OR {\"literalValue\"} OR {key:value}",
-      "nqds:dataTypes": [
-        "rdf:Resource",
-        "xsd:string", 
-        "xsd:integer",
-        "xsd:boolean",
-        "nqds:PropertyMap"
+      "@id": "nqds:DataFlow",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Data Flow",
+      "rdfs:comment": "Movement and transformation of data through system components"
+    },
+    {
+      "@id": "nqds:KnowledgeNode",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Knowledge Node",
+      "rdfs:comment": "Node in the knowledge graph representing a concept or entity"
+    },
+    {
+      "@id": "nqds:SemanticEdge",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Semantic Edge",
+      "rdfs:comment": "Edge in the knowledge graph representing a relationship or connection"
+    },
+    {
+      "@id": "nqds:Dependency",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dependency",
+      "rdfs:comment": "Requirement or prerequisite relationship between entities"
+    },
+    {
+      "@id": "nqds:Transformation",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Transformation",
+      "rdfs:comment": "Process that changes or converts data from one form to another"
+    },
+    {
+      "@id": "nqds:Context",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Context",
+      "rdfs:comment": "Contextual information that provides meaning to semantic relationships"
+    },
+    {
+      "@id": "nqds:Scope",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Scope",
+      "rdfs:comment": "Boundary or domain within which semantic relationships are defined"
+    }
+  ],
+
+  "properties": [
+    {
+      "@id": "nqds:analyzes",
+      "@type": "rdf:Property",
+      "rdfs:label": "analyzes",
+      "rdfs:comment": "Indicates that an agent analyzes or examines an entity",
+      "rdfs:domain": "nqds:Agent",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:produces",
+      "@type": "rdf:Property",
+      "rdfs:label": "produces",
+      "rdfs:comment": "Indicates that an agent produces or generates an output",
+      "rdfs:domain": "nqds:Agent",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:requires",
+      "@type": "rdf:Property",
+      "rdfs:label": "requires",
+      "rdfs:comment": "Indicates a dependency or requirement relationship",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:flowsTo",
+      "@type": "rdf:Property",
+      "rdfs:label": "flows to",
+      "rdfs:comment": "Indicates data flow direction between components",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:defines",
+      "@type": "rdf:Property",
+      "rdfs:label": "defines",
+      "rdfs:comment": "Indicates that an entity defines or specifies another",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:describes",
+      "@type": "rdf:Property",
+      "rdfs:label": "describes",
+      "rdfs:comment": "Indicates that an entity describes or characterizes another",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:specifies",
+      "@type": "rdf:Property",
+      "rdfs:label": "specifies",
+      "rdfs:comment": "Indicates that an entity specifies details or requirements",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:implements",
+      "@type": "rdf:Property",
+      "rdfs:label": "implements",
+      "rdfs:comment": "Indicates that an entity implements or realizes another",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:validates",
+      "@type": "rdf:Property",
+      "rdfs:label": "validates",
+      "rdfs:comment": "Indicates that an entity validates or verifies another",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:returns",
+      "@type": "rdf:Property",
+      "rdfs:label": "returns",
+      "rdfs:comment": "Indicates that an entity returns or provides output",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:hasComponent",
+      "@type": "rdf:Property",
+      "rdfs:label": "has component",
+      "rdfs:comment": "Indicates that an entity has a component or part",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "nqds:hasDependency",
+      "@type": "rdf:Property",
+      "rdfs:label": "has dependency",
+      "rdfs:comment": "Indicates that an entity has a dependency",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "nqds:Dependency"
+    },
+    {
+      "@id": "nqds:hasDataFlow",
+      "@type": "rdf:Property",
+      "rdfs:label": "has data flow",
+      "rdfs:comment": "Indicates that an entity has an associated data flow",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "nqds:DataFlow"
+    }
+  ],
+
+  "examples": [
+    {
+      "@type": "nqds:SemanticGraph",
+      "@id": "nqds:example:task-execution",
+      "rdfs:comment": "Example semantic graph for task execution workflow",
+      "nqds:hasComponent": [
+        {
+          "@type": "nqds:Agent",
+          "@id": "nqds:example:PlannerAgent",
+          "nqds:analyzes": "nqds:example:Requirements",
+          "nqds:produces": "nqds:example:DesignDocument"
+        },
+        {
+          "@type": "nqds:KnowledgeNode",
+          "@id": "nqds:example:DesignDocument",
+          "nqds:hasComponent": [
+            "nqds:example:APISpec",
+            "nqds:example:DataModel",
+            "nqds:example:Architecture"
+          ]
+        }
       ],
-      "nqds:examples": [
-        "{Order}",
-        "{\"pending\"}",
-        "{id:123,status:\"active\"}"
-      ]
-    },
-    
-    {
-      "@id": "nqds:PropertyMap",
-      "@type": "owl:Class",
-      "rdfs:label": "Property Map",
-      "rdfs:comment": "Key-value property structure within NQDS objects",
-      "nqds:syntax": "{key:value,key2:value2}",
-      "nqds:keyNaming": ["camelCase", "snake_case"],
-      "nqds:valueTypes": [
-        "xsd:string",
-        "xsd:integer", 
-        "xsd:boolean",
-        "rdf:Resource",
-        "nqds:NestedObject"
-      ]
-    },
-    
-    {
-      "@id": "nqds:RelationStrength",
-      "@type": "owl:Class",
-      "rdfs:label": "Relation Strength Indicators",
-      "rdfs:comment": "Symbols indicating cardinality and optionality of relationships",
-      "nqds:strengthTypes": [
-        {"symbol": "->", "meaning": "one-to-one"},
-        {"symbol": "=>", "meaning": "one-to-many"}, 
-        {"symbol": "<->", "meaning": "many-to-many"},
-        {"symbol": "?->", "meaning": "optional-relation"},
-        {"symbol": "!->", "meaning": "required-relation"}
-      ]
-    },
-    
-    {
-      "@id": "nqds:CompactNotation", 
-      "@type": "owl:Class",
-      "rdfs:label": "Compact Notation Forms",
-      "rdfs:comment": "Compressed NQDS notation for high token efficiency",
-      "nqds:forms": [
-        {"type": "ultra-compact", "syntax": "S->p->O"},
-        {"type": "indexing", "syntax": "::ctx::S[p]>O{k:v}"},
-        {"type": "config", "syntax": "compact JSON-style objects"}
-      ]
-    },
-    
-    {
-      "@id": "nqds:ValidationRules",
-      "@type": "owl:Class",
-      "rdfs:label": "NQDS Validation Rules",
-      "rdfs:comment": "Syntax and semantic validation constraints for NQDS",
-      "nqds:rules": [
-        {"rule": "syntaxPattern", "regex": "::[a-z-]+::\\([A-Z][a-zA-Z]*\\)-\\[[a-zA-Z]+\\]->\\{.+\\}"},
-        {"rule": "namingConsistency", "requirement": "Same entity same naming throughout document"},
-        {"rule": "completeness", "requirement": "All components (semantic-graph, subject, predicate, object) required"},
-        {"rule": "semanticConsistency", "requirement": "Predicates must be semantically appropriate for subject-object pairs"}
-      ]
-    },
-    
-    {
-      "@id": "nqds:TokenOptimization",
-      "@type": "owl:Class",
-      "rdfs:label": "Token Optimization Strategies", 
-      "rdfs:comment": "Methods for maximizing semantic concepts per token in NQDS",
-      "nqds:strategies": [
-        {"method": "compactNotation", "efficiency": "7.5+concepts/token"},
-        {"method": "nestedProperties", "benefit": "eliminates redundancy"},
-        {"method": "semanticCompression", "benefit": "maintains meaning while reducing length"}
-      ]
+      "nqds:hasDataFlow": {
+        "@type": "nqds:DataFlow",
+        "@id": "nqds:example:user-input-flow",
+        "nqds:flowsTo": [
+          "nqds:example:ValidationLayer",
+          "nqds:example:BusinessLogic",
+          "nqds:example:DataStore"
+        ]
+      }
     }
   ]
 }

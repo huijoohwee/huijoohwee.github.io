@@ -1,23 +1,25 @@
 {
   "@context": {
     "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/uc-vocab#",
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
 
-    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
     "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
 
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
 
     "ConceptCollection": "core:ConceptCollection",
     "Concept": "core:Concept",

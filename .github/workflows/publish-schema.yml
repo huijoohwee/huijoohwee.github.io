@@ -91,12 +91,20 @@ jobs:
           "wf_latest": "${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld",
           "kg_latest": "${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld",
           "nqds_predicates_latest": "${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld",
+          "jjnhm_latest": "${{ env.HOST }}/${PAGES_PATH}/jjnhm.v${VERSION}.jsonld",
+          "mmd_latest": "${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld",
+          "hbs_latest": "${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld",
+          "jdbl_latest": "${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld",
           "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
           "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
           "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
           "wf_versions": ["${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld"],
           "kg_versions": ["${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld"],
-          "nqds_predicates_versions": ["${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld"]
+          "nqds_predicates_versions": ["${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld"],
+          "jjnhm_versions": ["${{ env.HOST }}/${PAGES_PATH}/jjnhm.v${VERSION}.jsonld"],
+          "mmd_versions": ["${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld"],
+          "hbs_versions": ["${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld"],
+          "jdbl_versions": ["${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld"]
 }
 EOF
           # Render using mustache

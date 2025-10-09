@@ -1,19 +1,53 @@
 {
   "@context": {
+    "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/base.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "ContextDefinition": "core:ContextDefinition",
+    "Vocabulary": "core:Vocabulary",
+    "Concept": "core:Concept",
+    "Property": "core:Property",
+    "Class": "core:Class",
+    "Directive": "core:Directive",
+
+    "id": { "@id": "core:id", "@type": "@id" },
+    "type": { "@id": "core:type", "@type": "@id" },
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+    "status": "core:status",
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "modified": { "@id": "core:modified", "@type": "xsd:dateTime" },
+    "author": { "@id": "core:author", "@type": "@id" },
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "version": "core:version",
+    "license": { "@id": "core:license", "@type": "@id" },
+    "extends": { "@id": "core:extends", "@type": "@id" },
+    "example": "core:example",
+
+    "terms": { "@id": "core:hasTerm", "@container": "@index" },
+    "types": { "@id": "core:hasType", "@container": "@index" },
+    "examples": { "@id": "core:examples", "@container": "@list" }
   },
 
-  "@id": "core:Base:v1.0",
-  "@type": "core:Vocabulary",
+  "@id": "https://huijoohwee.github.io/schema/core.jsonld#Core:v1.0",
+  "@type": "Vocabulary",
 
   "meta": {
     "title": "Core Vocabulary",
@@ -21,89 +55,89 @@
     "version": "1.0.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "created": "2025-09-26T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z"
   },
 
   "terms": {
     "id": {
       "@id": "core:id",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "id",
       "description": "Canonical identifier (IRI) for an entity",
       "range": "xsd:anyURI"
     },
     "type": {
       "@id": "core:type",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "type",
       "description": "Primary type or classification of an entity"
     },
     "label": {
       "@id": "core:label",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "label",
       "description": "Human-readable short name"
     },
     "description": {
       "@id": "core:description",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "description",
       "description": "Long-form textual description"
     },
     "status": {
       "@id": "core:status",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "status",
       "description": "Lifecycle or operational state (e.g., draft, active, deprecated)"
     },
     "created": {
       "@id": "core:created",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "created",
       "description": "Creation timestamp",
       "range": "xsd:dateTime"
     },
     "modified": {
       "@id": "core:modified",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "modified",
       "description": "Last modified timestamp",
       "range": "xsd:dateTime"
     },
     "author": {
       "@id": "core:author",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "author",
       "description": "Agent or organization responsible for the entity"
     },
     "maintainer": {
       "@id": "core:maintainer",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "maintainer",
       "description": "Primary maintainer or steward URI"
     },
     "version": {
       "@id": "core:version",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "version",
       "description": "Semantic version string"
     },
     "license": {
       "@id": "core:license",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "license",
       "description": "License IRI"
     },
     "extends": {
       "@id": "core:extends",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "extends",
       "description": "Reference to a parent or base vocabulary/context"
     },
     "example": {
       "@id": "core:example",
-      "@type": "core:Property",
+      "@type": "Property",
       "label": "example",
       "description": "Usage example or snippet"
     }
@@ -112,31 +146,31 @@
   "types": {
     "Vocabulary": {
       "@id": "core:Vocabulary",
-      "@type": "core:Class",
+      "@type": "Class",
       "label": "Vocabulary",
       "description": "A named collection of term definitions and metadata"
     },
     "Concept": {
       "@id": "core:Concept",
-      "@type": "core:Class",
+      "@type": "Class",
       "label": "Concept",
       "description": "Reusable semantic building block (domain-agnostic)"
     },
     "Property": {
       "@id": "core:Property",
-      "@type": "core:Class",
+      "@type": "Class",
       "label": "Property",
       "description": "Predicate or attribute definition"
     },
     "Class": {
       "@id": "core:Class",
-      "@type": "core:Class",
+      "@type": "Class",
       "label": "Class",
       "description": "Entity class or type definition"
     },
     "Directive": {
       "@id": "core:Directive",
-      "@type": "core:Class",
+      "@type": "Class",
       "label": "Directive",
       "description": "Operational directive or instruction set"
     }

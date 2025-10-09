@@ -1,103 +1,148 @@
 {
   "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@version": 1.1,
+    "@base": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/uc-vocab#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "ConceptCollection": "core:ConceptCollection",
+    "Concept": "core:Concept",
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+
+    "concepts": { "@id": "uc:hasConcept", "@container": "@index" },
+
+    "id": { "@id": "core:id", "@type": "@id" },
+    "type": { "@id": "core:type", "@type": "@id" },
+    "version": "core:version",
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "license": { "@id": "core:license", "@type": "@id" },
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
+
+    "example": "core:example",
+    "notes": "rdfs:comment"
   },
 
-  "@id": "core:UniversalConcepts:v1.0",
-  "@type": "core:ConceptCollection",
+  "@id": "https://huijoohwee.github.io/schema/uc.jsonld#UniversalConcepts:v1.1",
+  "@type": "ConceptCollection",
 
   "meta": {
     "title": "Universal Concepts (uc)",
-    "description": "Neutral, reusable baseline namespace for cross-project semantic anchors.",
-    "version": "1.0.0",
+    "description": "Neutral, reusable baseline namespace for cross-project semantic anchors used across JJNHM layers",
+    "version": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "created": "2025-09-26T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z"
   },
 
   "concepts": {
-    "uc:identifier": {
-      "@id": "uc:identifier",
-      "@type": "core:Concept",
+    "identifier": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#identifier",
+      "@type": "Concept",
       "label": "Identifier",
-      "description": "A globally unique identifier for an entity"
+      "description": "A globally unique identifier or CURIE for an entity; used as canonical reference across contexts"
     },
-    "uc:label": {
-      "@id": "uc:label",
-      "@type": "core:Concept",
+    "label": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#label",
+      "@type": "Concept",
       "label": "Label",
-      "description": "Human readable name or title"
+      "description": "Human-readable short name or title"
     },
-    "uc:description": {
-      "@id": "uc:description",
-      "@type": "core:Concept",
+    "description": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#description",
+      "@type": "Concept",
       "label": "Description",
-      "description": "Long-form textual description"
+      "description": "Long-form textual description or documentation"
     },
-    "uc:status": {
-      "@id": "uc:status",
-      "@type": "core:Concept",
+    "status": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#status",
+      "@type": "Concept",
       "label": "Status",
-      "description": "Operational or lifecycle status (e.g., draft, active, deprecated)"
+      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)"
     },
-    "uc:automation": {
-      "@id": "uc:automation",
-      "@type": "core:Concept",
+    "automation": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#automation",
+      "@type": "Concept",
       "label": "Automation",
-      "description": "Automated execution of steps or workflows"
+      "description": "Automated execution of steps, tasks, or workflows"
     },
-    "uc:processing": {
-      "@id": "uc:processing",
-      "@type": "core:Concept",
+    "processing": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#processing",
+      "@type": "Concept",
       "label": "Processing",
-      "description": "Data transformation, enrichment, or analysis"
+      "description": "Data transformation, enrichment, or analysis activity"
     },
-    "uc:reporting": {
-      "@id": "uc:reporting",
-      "@type": "core:Concept",
+    "reporting": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#reporting",
+      "@type": "Concept",
       "label": "Reporting",
-      "description": "Generation of structured outputs or summaries"
+      "description": "Generation of structured outputs, summaries, or documentation"
     },
-    "uc:event": {
-      "@id": "uc:event",
-      "@type": "core:Concept",
+    "event": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#event",
+      "@type": "Concept",
       "label": "Event",
-      "description": "A discrete occurrence that may trigger workflows"
+      "description": "A discrete occurrence that may trigger workflows or state changes"
     },
-    "uc:actor": {
-      "@id": "uc:actor",
-      "@type": "core:Concept",
+    "actor": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#actor",
+      "@type": "Concept",
       "label": "Actor",
-      "description": "Agent, service, or user that performs actions"
+      "description": "Agent, service, or user that performs actions or holds responsibilities"
     },
-    "uc:artifact": {
-      "@id": "uc:artifact",
-      "@type": "core:Concept",
+    "artifact": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#artifact",
+      "@type": "Concept",
       "label": "Artifact",
-      "description": "Concrete output or resource produced by processes"
+      "description": "Concrete output or resource produced by processes; stored, versioned, and referenced"
+    },
+    "trace": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#trace",
+      "@type": "Concept",
+      "label": "Trace",
+      "description": "Identifier or pointer used for provenance and execution tracing across layers"
+    },
+    "kpi": {
+      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#kpi",
+      "@type": "Concept",
+      "label": "KPI",
+      "description": "Key performance indicator used to gate validation and measure system effectiveness"
     }
   },
 
   "usageExamples": [
     {
       "example": {
-        "@context": ["https://raw.githubusercontent.com/huijoohwee/airvio/refs/heads/main/00-CORE/base.jsonld"],
+        "@context": [
+          "https://www.w3.org/2013/json-ld-context/rdfa11",
+          "https://huijoohwee.github.io/schema/base.jsonld",
+          "https://huijoohwee.github.io/schema/uc.jsonld"
+        ],
         "@id": "https://example.org/doc/1",
-        "type": "core:Directive",
-        "name": "uc:reporting",
-        "status": "uc:status"
+        "type": "https://huijoohwee.github.io/schema/jdbl.jsonld#Directive",
+        "label": "Example Directive",
+        "description": "Demonstrates referencing uc concepts and core terms",
+        "status": "https://huijoohwee.github.io/schema/uc.jsonld#status",
+        "maintainer": "https://github.com/your-org",
+        "created": "2025-01-01T00:00:00Z"
       },
-      "note": "Import base context and reference uc: concepts using CURIEs."
+      "notes": "Import base and uc contexts, reference concepts by CURIE or full IRI, and use uc:trace for cross-layer tracing"
     }
   ]
 }

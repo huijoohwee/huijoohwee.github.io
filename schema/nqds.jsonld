@@ -1,30 +1,88 @@
 {
   "@context": {
+    "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/nqds-vocab#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "ContextDefinition": "core:ContextDefinition",
+    "SemanticGraph": "nqds:SemanticGraph",
+    "Agent": "nqds:Agent",
+    "Relationship": "nqds:Relationship",
+    "DataFlow": "nqds:DataFlow",
+    "KnowledgeNode": "nqds:KnowledgeNode",
+    "SemanticEdge": "nqds:SemanticEdge",
+    "Dependency": "nqds:Dependency",
+    "Transformation": "nqds:Transformation",
+    "Context": "nqds:Context",
+    "Scope": "nqds:Scope",
+
+    "meta": "core:metadata",
+    "title": "rdfs:label",
+    "description": "rdfs:comment",
+    "version": "core:version",
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "license": { "@id": "core:license", "@type": "@id" },
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
+
+    "hasComponent": { "@id": "nqds:hasComponent", "@type": "@id", "@container": "@set" },
+    "analyzes": { "@id": "nqds:analyzes", "@type": "@id" },
+    "produces": { "@id": "nqds:produces", "@type": "@id" },
+    "requires": { "@id": "nqds:requires", "@type": "@id", "@container": "@set" },
+    "flowsTo": { "@id": "nqds:flowsTo", "@type": "@id", "@container": "@list" },
+    "defines": { "@id": "nqds:defines", "@type": "@id" },
+    "describes": { "@id": "nqds:describes", "@type": "@id" },
+    "specifies": { "@id": "nqds:specifies", "@type": "@id" },
+    "implements": { "@id": "nqds:implements", "@type": "@id" },
+    "validates": { "@id": "nqds:validates", "@type": "@id" },
+    "returns": { "@id": "nqds:returns", "@type": "@id" },
+    "hasDependency": { "@id": "nqds:hasDependency", "@type": "@id", "@container": "@set" },
+    "hasDataFlow": { "@id": "nqds:hasDataFlow", "@type": "@id" },
+
+    "traceId": { "@id": "nqds:traceId", "@type": "xsd:string" },
+    "provenance": { "@id": "nqds:provenance", "@type": "@id" },
+    "role": { "@id": "nqds:role", "@type": "xsd:string" },
+    "priority": { "@id": "nqds:priority", "@type": "xsd:string" },
+
+    "validatorHints": "nqds:validatorHints",
+    "examples": "nqds:examples",
+    "examplePath": "nqds:examplePath"
   },
 
-  "@id": "nqds:SemanticPayloadContext:v1.0",
-  "@type": "core:ContextDefinition",
+  "@id": "https://huijoohwee.github.io/schema/nqds.jsonld#SemanticPayloadContext:v1.2",
+  "@type": "ContextDefinition",
 
   "meta": {
-    "title": "NQDS - Semantic Payload Layer Schema",
-    "description": "N-Quads-based Semantic Language for relationships, knowledge graphs, and data flow modeling",
-    "version": "1.0.0",
+    "title": "NQDS Semantic Payload Context",
+    "description": "N-Quads-style semantic payload context for relationships, knowledge graphs, journey tracing and data-flow modeling; includes validator guidance and example pointers",
+    "version": "1.2.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-10-05",
-    "updated": "2025-10-05",
+    "created": "2025-10-05T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z",
     "layer": "semantic-payload",
     "responsibilities": [
       "agent-relationships",
       "data-flow-transformations",
       "knowledge-graph-construction",
-      "semantic-dependencies"
+      "semantic-dependencies",
+      "journey-tracing",
+      "provenance-linking"
     ]
   },
 
@@ -39,31 +97,31 @@
       "@id": "nqds:Agent",
       "@type": "rdfs:Class",
       "rdfs:label": "Agent",
-      "rdfs:comment": "Autonomous entity that can perform actions and interact with other agents"
+      "rdfs:comment": "Autonomous entity that performs actions and interacts with other agents"
     },
     {
       "@id": "nqds:Relationship",
       "@type": "rdfs:Class",
       "rdfs:label": "Relationship",
-      "rdfs:comment": "Connection or association between entities in the semantic graph"
+      "rdfs:comment": "Typed connection between entities in the semantic graph"
     },
     {
       "@id": "nqds:DataFlow",
       "@type": "rdfs:Class",
       "rdfs:label": "Data Flow",
-      "rdfs:comment": "Movement and transformation of data through system components"
+      "rdfs:comment": "Movement and transformation of data through components"
     },
     {
       "@id": "nqds:KnowledgeNode",
       "@type": "rdfs:Class",
       "rdfs:label": "Knowledge Node",
-      "rdfs:comment": "Node in the knowledge graph representing a concept or entity"
+      "rdfs:comment": "Node representing a concept, resource, or artifact"
     },
     {
       "@id": "nqds:SemanticEdge",
       "@type": "rdfs:Class",
       "rdfs:label": "Semantic Edge",
-      "rdfs:comment": "Edge in the knowledge graph representing a relationship or connection"
+      "rdfs:comment": "Edge representing a relationship or inference link"
     },
     {
       "@id": "nqds:Dependency",
@@ -75,19 +133,19 @@
       "@id": "nqds:Transformation",
       "@type": "rdfs:Class",
       "rdfs:label": "Transformation",
-      "rdfs:comment": "Process that changes or converts data from one form to another"
+      "rdfs:comment": "Process that converts data from one form to another"
     },
     {
       "@id": "nqds:Context",
       "@type": "rdfs:Class",
       "rdfs:label": "Context",
-      "rdfs:comment": "Contextual information that provides meaning to semantic relationships"
+      "rdfs:comment": "Contextual metadata that gives meaning to semantic relationships"
     },
     {
       "@id": "nqds:Scope",
       "@type": "rdfs:Class",
       "rdfs:label": "Scope",
-      "rdfs:comment": "Boundary or domain within which semantic relationships are defined"
+      "rdfs:comment": "Boundary or domain within which semantics apply"
     }
   ],
 
@@ -195,39 +253,71 @@
       "rdfs:comment": "Indicates that an entity has an associated data flow",
       "rdfs:domain": "rdfs:Resource",
       "rdfs:range": "nqds:DataFlow"
+    },
+    {
+      "@id": "nqds:traceId",
+      "@type": "rdf:Property",
+      "rdfs:label": "trace id",
+      "rdfs:comment": "Trace identifier linking NQDS nodes to JDBL directives or runtime traces",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "nqds:provenance",
+      "@type": "rdf:Property",
+      "rdfs:label": "provenance",
+      "rdfs:comment": "Provenance pointer for graph construction (activity/agent)",
+      "rdfs:domain": "nqds:SemanticGraph",
+      "rdfs:range": "@id"
     }
   ],
+
+  "validatorHints": {
+    "graphIntegrity": "Check node uniqueness, typed edges, acyclicity where required, and traceId linkage to JDBL directives",
+    "flowCompleteness": "Ensure flows (flowsTo lists) are complete and terminal nodes identified; validate that transforms reference Transformation nodes",
+    "provenance": "Verify provenance pointers resolve to known agents or activities and include timestamps",
+    "recommendedTools": [
+      "nqds-parser",
+      "graph-validator",
+      "nqds-journey-analyzer",
+      "rdf-validate",
+      "directive-trace-validator"
+    ]
+  },
 
   "examples": [
     {
       "@type": "nqds:SemanticGraph",
-      "@id": "nqds:example:task-execution",
-      "rdfs:comment": "Example semantic graph for task execution workflow",
-      "nqds:hasComponent": [
+      "@id": "https://huijoohwee.github.io/schema/examples/nqds/task-execution",
+      "description": "Example semantic graph for task execution workflow",
+      "hasComponent": [
         {
           "@type": "nqds:Agent",
-          "@id": "nqds:example:PlannerAgent",
-          "nqds:analyzes": "nqds:example:Requirements",
-          "nqds:produces": "nqds:example:DesignDocument"
+          "@id": "https://huijoohwee.github.io/agents/PlannerAgent",
+          "analyzes": "https://huijoohwee.github.io/schema/examples/nqds/Requirements",
+          "produces": "https://huijoohwee.github.io/schema/examples/nqds/DesignDocument"
         },
         {
           "@type": "nqds:KnowledgeNode",
-          "@id": "nqds:example:DesignDocument",
-          "nqds:hasComponent": [
-            "nqds:example:APISpec",
-            "nqds:example:DataModel",
-            "nqds:example:Architecture"
+          "@id": "https://huijoohwee.github.io/schema/examples/nqds/DesignDocument",
+          "hasComponent": [
+            "https://huijoohwee.github.io/schema/examples/nqds/APISpec",
+            "https://huijoohwee.github.io/schema/examples/nqds/DataModel",
+            "https://huijoohwee.github.io/schema/examples/nqds/Architecture"
           ]
         }
       ],
-      "nqds:hasDataFlow": {
+      "hasDataFlow": {
         "@type": "nqds:DataFlow",
-        "@id": "nqds:example:user-input-flow",
-        "nqds:flowsTo": [
-          "nqds:example:ValidationLayer",
-          "nqds:example:BusinessLogic",
-          "nqds:example:DataStore"
-        ]
+        "@id": "https://huijoohwee.github.io/schema/examples/nqds/user-input-flow",
+        "flowsTo": [
+          "https://huijoohwee.github.io/schema/examples/nqds/ValidationLayer",
+          "https://huijoohwee.github.io/schema/examples/nqds/BusinessLogic",
+          "https://huijoohwee.github.io/schema/examples/nqds/DataStore"
+        ],
+        "traceId": "flow-req-001",
+        "provenance": "https://huijoohwee.github.io/agents/PlannerAgent",
+        "description": "User input transforms through validation, business logic and persistence"
       }
     }
   ]

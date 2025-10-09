@@ -1,50 +1,79 @@
 {
   "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@version": 1.1,
+    "@base": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "Vocabulary": "core:Vocabulary",
+    "Concept": "core:Concept",
+    "Property": "core:Property",
+
+    "id": { "@id": "core:id", "@type": "@id" },
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+    "status": "uc:status",
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "modified": { "@id": "core:modified", "@type": "xsd:dateTime" },
+
+    "terms": { "@id": "vocab:terms", "@container": "@index" },
+    "universalConcepts": { "@id": "vocab:universalConcepts", "@container": "@index" },
+    "examples": { "@id": "vocab:examples", "@container": "@list" }
   },
 
-  "@id": "core:Vocab:v1.0",
-  "@type": "core:Vocabulary",
+  "@id": "https://huijoohwee.github.io/schema/vocab.jsonld#Vocab:v1.1",
+  "@type": "Vocabulary",
 
   "meta": {
     "title": "Universal Vocabulary",
-    "description": "A general-purpose default vocabulary for cross-project semantic alignment.",
-    "version": "1.0.0",
+    "description": "General-purpose default vocabulary and convenience CURIEs for JJNHM schemas; aligns core, uc and kg namespaces for cross-project semantic consistency",
+    "version": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "created": "2025-09-26T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z"
   },
 
   "terms": {
     "id": {
       "@id": "core:id",
       "label": "Identifier",
-      "description": "Unique identifier for an entity"
+      "description": "Canonical IRI or CURIE used as primary identifier for an entity"
+    },
+    "type": {
+      "@id": "core:type",
+      "label": "Type",
+      "description": "Primary type or classification (use core:Class or JSON-LD @type)"
     },
     "label": {
       "@id": "core:label",
       "label": "Label",
-      "description": "Human-readable name"
+      "description": "Human-readable short name"
     },
     "description": {
       "@id": "core:description",
       "label": "Description",
-      "description": "Textual description"
+      "description": "Long-form documentation or summary"
     },
     "status": {
-      "@id": "core:status",
+      "@id": "uc:status",
       "label": "Status",
-      "description": "Lifecycle or operational state"
+      "description": "Lifecycle or operational state (draft, active, deprecated)"
     },
     "created": {
       "@id": "core:created",
@@ -55,6 +84,26 @@
       "@id": "core:modified",
       "label": "Modified",
       "description": "Last modified timestamp"
+    },
+    "maintainer": {
+      "@id": "core:maintainer",
+      "label": "Maintainer",
+      "description": "Primary steward or owner URI"
+    },
+    "version": {
+      "@id": "core:version",
+      "label": "Version",
+      "description": "Semantic version identifier"
+    },
+    "license": {
+      "@id": "core:license",
+      "label": "License",
+      "description": "License IRI for the artifact"
+    },
+    "usesType": {
+      "@id": "vocab:usesType",
+      "label": "Uses Type",
+      "description": "Convenience property to declare expected JSON-LD types in templates or payloads"
     }
   },
 
@@ -62,17 +111,49 @@
     "automation": {
       "@id": "uc:automation",
       "label": "Automation",
-      "description": "Automated execution of steps or workflows"
+      "description": "Automated execution of steps, workflows, or agents"
     },
     "processing": {
       "@id": "uc:processing",
       "label": "Processing",
-      "description": "Data transformation or analysis step"
+      "description": "Data transformation, enrichment, validation or analysis"
     },
     "reporting": {
       "@id": "uc:reporting",
       "label": "Reporting",
-      "description": "Generation of structured outputs"
+      "description": "Generation of structured outputs, summaries or documentation"
+    },
+    "actor": {
+      "@id": "uc:actor",
+      "label": "Actor",
+      "description": "Agent, user, or service performing actions"
+    },
+    "artifact": {
+      "@id": "uc:artifact",
+      "label": "Artifact",
+      "description": "Produced resource such as a file, document, or endpoint"
+    },
+    "trace": {
+      "@id": "uc:trace",
+      "label": "Trace",
+      "description": "Trace identifier used for linking runtime traces and provenance across layers"
+    },
+    "kpi": {
+      "@id": "uc:kpi",
+      "label": "KPI",
+      "description": "Key performance indicator used to gate validations and measure outcomes"
     }
-  }
+  },
+
+  "examples": [
+    {
+      "id": "https://example.org/artifact/1",
+      "type": "https://huijoohwee.github.io/schema/jdbl.jsonld#ExecutionDirective",
+      "label": "Sample Directive",
+      "description": "Example using vocab CURIEs and uc concepts",
+      "status": "uc:status",
+      "created": "2025-01-01T00:00:00Z",
+      "maintainer": "https://github.com/your-org"
+    }
+  ]
 }

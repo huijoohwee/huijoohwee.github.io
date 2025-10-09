@@ -1,0 +1,453 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/JJNHM.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm#",
+
+    "TechnicalSpecification": "core:TechnicalSpecification",
+    "Layer": "jjnhm:Layer",
+    "Responsibility": "jjnhm:Responsibility",
+    "Constraint": "jjnhm:Constraint",
+    "Contract": "jjnhm:Contract",
+    "ValidatorHint": "jjnhm:ValidatorHint",
+    "ExamplePointer": "jjnhm:ExamplePointer",
+    "MigrationStep": "jjnhm:MigrationStep",
+    "Metric": "jjnhm:Metric",
+    "Tool": "jjnhm:Tool",
+    "Benefit": "jjnhm:Benefit",
+
+    "name": "rdfs:label",
+    "description": "rdfs:comment",
+    "version": "core:version",
+    "purpose": "core:purpose",
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+
+    "layers": { "@id": "jjnhm:hasLayer", "@container": "@list" },
+    "contracts": { "@id": "jjnhm:hasContract", "@container": "@list" },
+    "validators": { "@id": "jjnhm:hasValidator", "@container": "@list" },
+    "examples": { "@id": "jjnhm:hasExample", "@container": "@list" },
+    "tools": { "@id": "jjnhm:hasTool", "@container": "@list" },
+    "metrics": { "@id": "jjnhm:hasMetric", "@container": "@list" },
+    "migrationGuide": { "@id": "jjnhm:hasMigrationStep", "@container": "@list" },
+    "benefits": { "@id": "jjnhm:hasBenefit", "@container": "@list" },
+
+    "format": "jjnhm:format",
+    "responsibilities": { "@id": "jjnhm:responsibilities", "@container": "@list" },
+    "constraints": { "@id": "jjnhm:constraints", "@container": "@list" },
+
+    "validatorHints": { "@id": "jjnhm:validatorHints", "@container": "@list" },
+    "examplePointer": "jjnhm:examplePointer",
+    "contractType": "jjnhm:contractType",
+    "enforcementLevel": "jjnhm:enforcementLevel",
+    "kpiTarget": "jjnhm:kpiTarget",
+    "recommendedTools": { "@id": "jjnhm:recommendedTools", "@container": "@list" }
+  },
+
+  "@id": "https://huijoohwee.github.io/schema/JJNHM.jsonld",
+  "@type": "TechnicalSpecification",
+  "name": "Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture (JJNHM)",
+  "version": "2.3.0",
+  "purpose": "Multi-Agent Orchestration for Rapid MVP Prototyping; defines layers, contracts, constraints, validators, examples, tooling, metrics and migration guidance",
+  "created": "2025-10-09T00:00:00Z",
+
+  "layers": [
+    {
+      "@id": "jjnhm:JSONLDLayer",
+      "@type": "Layer",
+      "name": "JSONLD",
+      "description": "Ontology alignment, universal semantic index and vocabulary mapping; language-agnostic type system",
+      "format": "RDF/JSON-LD",
+      "responsibilities": [
+        "define-types",
+        "map-vocabularies",
+        "establish-type-hierarchy",
+        "create-centralized-semantic-index",
+        "prevent-duplication-of-concepts"
+      ],
+      "constraints": [
+        "NO execution logic",
+        "NO data processing",
+        "MAINTAIN universal applicability"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate @context resolution, check type consistency and vocabulary alignment",
+          "recommendedTools": ["jsonld.js", "rdf-validate", "universal-ontology-validator"]
+        }
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/jsonld/mvp-project-definition.jsonld",
+        "examplePath": "/schema/examples/jsonld/mvp-project-definition.jsonld"
+      }
+    },
+    {
+      "@id": "jjnhm:JDBLLayer",
+      "@type": "Layer",
+      "name": "JDBL",
+      "description": "Directive orchestration for multi-agent workflows; active verbs and function-calling semantics",
+      "format": "JSON Blocks (JDBL)",
+      "responsibilities": [
+        "specify-execution-directives",
+        "orchestrate-multi-agent-actions",
+        "express-active-verbs",
+        "define-validation-rules",
+        "record-workflow-metadata"
+      ],
+      "constraints": [
+        "NO semantic relationships (no KG constructs)",
+        "NO template rendering",
+        "USE active-verbs for function-calling"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "lint directive syntax, ensure metadata completeness, validate active-verb usage and token-efficiency",
+          "recommendedTools": ["json-schema", "jdbl-active-verb-linter", "directive-constraint-linter"]
+        }
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/jdbl/launch-mvp-sprint.json",
+        "examplePath": "/schema/examples/jdbl/launch-mvp-sprint.json"
+      }
+    },
+    {
+      "@id": "jjnhm:NQDSLayer",
+      "@type": "Layer",
+      "name": "NQDS",
+      "description": "Semantic payloads and knowledge graph construction for journey tracing and dependency mapping",
+      "format": "N-Quads style NQDS",
+      "responsibilities": [
+        "model-relationships",
+        "trace-user-journeys",
+        "build-centralized-knowledge-graphs",
+        "map-dependency-flows",
+        "identify-memoization-critical-paths"
+      ],
+      "constraints": [
+        "NO type definitions (refer to JSONLD)",
+        "NO directive orchestration (refer to JDBL)"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "check graph integrity, relationship consistency, and flow completeness; validate memoization markers",
+          "recommendedTools": ["nqds-parser", "graph-validator", "nqds-journey-analyzer"]
+        }
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/nqds/mvp-user-journey.nqds",
+        "examplePath": "/schema/examples/nqds/mvp-user-journey.nqds"
+      }
+    },
+    {
+      "@id": "jjnhm:HBSLayer",
+      "@type": "Layer",
+      "name": "HBS",
+      "description": "Template rendering layer supporting memoization and reusable component templates for MVP UI/content",
+      "format": "Handlebars",
+      "responsibilities": [
+        "generate-dynamic-content",
+        "compose-reusable-templates",
+        "implement-conditional-rendering",
+        "support-memoization-and-precompilation"
+      ],
+      "constraints": [
+        "NO business logic processing",
+        "NO semantic model definitions",
+        "MAINTAIN template modularity and cache-hints"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate handlebars syntax, partial resolution and memoization usage",
+          "recommendedTools": ["handlebars-lint", "hbs-memoization-checker", "template-tester"]
+        }
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/hbs/mvp-dashboard.hbs",
+        "examplePath": "/schema/examples/hbs/mvp-dashboard.hbs"
+      }
+    },
+    {
+      "@id": "jjnhm:MMDLayer",
+      "@type": "Layer",
+      "name": "MMD",
+      "description": "Visualization layer for diagrams and architecture views using Mermaid-like syntax to increase comprehension",
+      "format": "Mermaid (MMD)",
+      "responsibilities": [
+        "generate-user-journey-diagrams",
+        "render-dependency-graphs",
+        "produce-architecture-visuals",
+        "display-kpi-metric-dashboards"
+      ],
+      "constraints": [
+        "FOCUS on clarity and visual contracts",
+        "NO execution logic",
+        "DO NOT embed runtime-sensitive data"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate diagram syntax, visual contract completeness and linkage to JSONLD types",
+          "recommendedTools": ["mermaid-builder", "mmd-architecture-validator"]
+        }
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/mmd/mvp-architecture.mmd",
+        "examplePath": "/schema/examples/mmd/mvp-architecture.mmd"
+      }
+    }
+  ],
+
+  "contracts": [
+    {
+      "@id": "jjnhm:TypeContract",
+      "@type": "Contract",
+      "contractType": "TypeContract",
+      "description": "JSONLD defines canonical types referenced by JDBL and NQDS; JDBL and NQDS must reference JSONLD @ids for types",
+      "enforcementLevel": "required",
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "verify that type references in JDBL and NQDS resolve to JSONLD @ids and are present in the universal index",
+          "recommendedTools": ["jsonld-universal-validator", "type-reference-checker"]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:DirectiveContract",
+      "@type": "Contract",
+      "contractType": "DirectiveContract",
+      "description": "JDBL directives supply execution semantics consumed by NQDS; active verbs must map to function-call handlers",
+      "enforcementLevel": "required",
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "ensure JDBL active-verbs are present in directive registry and that NQDS entries reference directive trace-ids",
+          "recommendedTools": ["jdbl-active-verb-linter", "directive-trace-validator"]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:DataContract",
+      "@type": "Contract",
+      "contractType": "DataContract",
+      "description": "NQDS data nodes provide binding points for HBS templates; templates must declare required data paths",
+      "enforcementLevel": "required",
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate NQDS→HBS bindings and ensure required paths exist and are typed by JSONLD",
+          "recommendedTools": ["nqds-journey-analyzer", "hbs-data-binding-checker"]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:VisualContract",
+      "@type": "Contract",
+      "contractType": "VisualContract",
+      "description": "MMD visuals must reference JSONLD types and NQDS flows to ensure diagrams accurately reflect semantics",
+      "enforcementLevel": "recommended",
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "ensure MMD diagrams reference canonical JSONLD type ids when representing components and flows",
+          "recommendedTools": ["mmd-architecture-validator", "visual-contract-checker"]
+        }
+      ]
+    }
+  ],
+
+  "validators": [
+    {
+      "@id": "jjnhm:jjnhm-validate",
+      "@type": "Tool",
+      "name": "jjnhm-validate",
+      "description": "Unified CLI wrapper that runs layer validators, cross-layer contract checks and KPI gates; returns machine-readable diagnostic report",
+      "recommendedTools": [
+        "jsonld.js", "rdf-validate",
+        "json-schema", "jdbl-active-verb-linter",
+        "nqds-parser", "graph-validator",
+        "handlebars-lint", "mermaid-builder",
+        "token-density-meter", "parse-time-profiler", "clarity-scorer"
+      ],
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "tools/cli/README.md",
+        "examplePath": "/schema/tools/cli/README.md"
+      }
+    }
+  ],
+
+  "examples": [
+    {
+      "@type": "ExamplePointer",
+      "description": "JSONLD canonical types for MVP project",
+      "examplePath": "/schema/examples/jsonld/mvp-project-definition.jsonld"
+    },
+    {
+      "@type": "ExamplePointer",
+      "description": "JDBL launch sprint directive",
+      "examplePath": "/schema/examples/jdbl/launch-mvp-sprint.json"
+    },
+    {
+      "@type": "ExamplePointer",
+      "description": "NQDS user journey payload",
+      "examplePath": "/schema/examples/nqds/mvp-user-journey.nqds"
+    },
+    {
+      "@type": "ExamplePointer",
+      "description": "HBS dashboard template with memoization",
+      "examplePath": "/schema/examples/hbs/mvp-dashboard.hbs"
+    },
+    {
+      "@type": "ExamplePointer",
+      "description": "MMD architecture and timeline diagram",
+      "examplePath": "/schema/examples/mmd/mvp-architecture.mmd"
+    }
+  ],
+
+  "metrics": [
+    {
+      "@id": "jjnhm:TokenDensity",
+      "@type": "Metric",
+      "name": "TokenDensity",
+      "description": "Concepts per token target used to optimize LLM parsing and cost",
+      "kpiTarget": "C1: >=5.1 concepts/token; C2: >=7.5 concepts/token"
+    },
+    {
+      "@id": "jjnhm:ParseTime",
+      "@type": "Metric",
+      "name": "ParseTime",
+      "description": "Average parse time across layers",
+      "kpiTarget": "<1.5ms"
+    },
+    {
+      "@id": "jjnhm:SemanticClarity",
+      "@type": "Metric",
+      "name": "SemanticClarity",
+      "description": "Human/computer comprehension score for canonical artifacts",
+      "kpiTarget": ">90% comprehension"
+    },
+    {
+      "@id": "jjnhm:Redundancy",
+      "@type": "Metric",
+      "name": "Redundancy",
+      "description": "Zero redundancy enforcement between layers",
+      "kpiTarget": "Zero duplicate definitions between layers"
+    }
+  ],
+
+  "tools": [
+    {
+      "@type": "Tool",
+      "name": "ontology-gen",
+      "description": "Scaffolds JSONLD type modules from minimal declarations",
+      "recommendedTools": ["jsonld.js"]
+    },
+    {
+      "@type": "Tool",
+      "name": "directive-gen",
+      "description": "Generates JDBL directive templates with active verbs and metadata",
+      "recommendedTools": ["jdbl-active-verb-linter"]
+    },
+    {
+      "@type": "Tool",
+      "name": "graph-builder",
+      "description": "Constructs NQDS graphs and runs integrity checks",
+      "recommendedTools": ["nqds-parser", "graph-validator"]
+    },
+    {
+      "@type": "Tool",
+      "name": "template-scaffold",
+      "description": "Creates memoized HBS partials and template tests",
+      "recommendedTools": ["handlebars-lint", "hbs-memoization-checker"]
+    },
+    {
+      "@type": "Tool",
+      "name": "mermaid-builder",
+      "description": "Renders MMD diagrams and validates visual contracts",
+      "recommendedTools": ["mmd-architecture-validator"]
+    }
+  ],
+
+  "migrationGuide": [
+    {
+      "@type": "MigrationStep",
+      "name": "step-1-separate-concerns",
+      "description": "Extract types into JSONLD, move directives into JDBL, isolate semantics in NQDS, create HBS templates and MMD diagrams"
+    },
+    {
+      "@type": "MigrationStep",
+      "name": "step-2-validate-separation",
+      "description": "Run jjnhm-validate to ensure no overlapping responsibilities and enforce contracts"
+    },
+    {
+      "@type": "MigrationStep",
+      "name": "step-3-optimize-for-kpis",
+      "description": "Tune token-density, precompile contexts/templates, index graphs and enable memoization for critical paths"
+    }
+  ],
+
+  "benefits": [
+    {
+      "@type": "Benefit",
+      "name": "SeparationOfConcerns",
+      "description": "Single well-defined responsibility per layer reduces coupling and simplifies validation"
+    },
+    {
+      "@type": "Benefit",
+      "name": "Modularity",
+      "description": "Layers can be developed, tested and optimized independently"
+    },
+    {
+      "@type": "Benefit",
+      "name": "Extensibility",
+      "description": "New capabilities and layers (e.g., analytics) can be added without breaking contracts"
+    },
+    {
+      "@type": "Benefit",
+      "name": "Performance",
+      "description": "Token-density and memoization patterns reduce LLM cost and latency"
+    },
+    {
+      "@type": "Benefit",
+      "name": "VisualClarity",
+      "description": "MMD visuals improve stakeholder alignment and documentation comprehension"
+    }
+  ],
+
+  "releaseNotes": {
+    "version": "2.3.0",
+    "summary": "JJNHM canonical context and registry document including layer definitions, contracts, validator hints, example pointers and migration guidance for Rapid MVP workflows",
+    "changes": [
+      "Added MMD visualization layer and contracts",
+      "Expanded KPI metrics and validator hints",
+      "Included example pointers for each layer",
+      "Published jjnhm-validate as canonical CLI entrypoint"
+    ],
+    "compatibility": "Backwards compatible with JJNH 2.x; new MMD types are additive"
+  }
+}

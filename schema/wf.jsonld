@@ -1,198 +1,273 @@
 {
   "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@version": 1.1,
+    "@base": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/wf-vocab#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "Workflow": "wf:Workflow",
+    "Step": "wf:Step",
+    "Trigger": "wf:Trigger",
+    "Actor": "wf:Actor",
+    "Condition": "wf:Condition",
+    "Transition": "wf:Transition",
+    "Execution": "wf:Execution",
+
+    "meta": "core:metadata",
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+    "version": "core:version",
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "license": { "@id": "core:license", "@type": "@id" },
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
+
+    "hasStep": { "@id": "wf:hasStep", "@container": "@list", "@type": "@id" },
+    "next": { "@id": "wf:next", "@type": "@id", "@container": "@set" },
+    "triggeredBy": { "@id": "wf:triggeredBy", "@type": "@id" },
+    "actor": { "@id": "wf:actor", "@type": "@id" },
+    "condition": { "@id": "wf:condition", "@type": "@id" },
+    "status": { "@id": "wf:status", "@type": "xsd:string" },
+    "startTime": { "@id": "wf:startTime", "@type": "xsd:dateTime" },
+    "endTime": { "@id": "wf:endTime", "@type": "xsd:dateTime" },
+    "duration": { "@id": "wf:duration", "@type": "xsd:duration" },
+    "retries": { "@id": "wf:retries", "@type": "xsd:integer" },
+    "dependsOn": { "@id": "wf:dependsOn", "@type": "@id", "@container": "@set" },
+    "outcome": { "@id": "wf:outcome", "@type": "@id" },
+    "input": { "@id": "wf:input", "@type": "@id" },
+    "output": { "@id": "wf:output", "@type": "@id" },
+
+    "trace": { "@id": "uc:trace", "@type": "xsd:string" },
+    "docs": "rdfs:seeAlso"
   },
 
-  "@id": "wf:Base:v1.0",
+  "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Base:v1.1",
   "@type": "core:Vocabulary",
 
   "meta": {
     "title": "Workflow Vocabulary (wf)",
-    "description": "Neutral baseline vocabulary for describing workflows, orchestration, steps, triggers, and runtime states.",
-    "version": "1.0.0",
+    "description": "Baseline vocabulary to describe workflows, orchestration, steps, triggers, runtime states and traceability across JJNHM layers",
+    "version": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "created": "2025-09-26T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z"
   },
 
   "classes": {
     "wf:Workflow": {
-      "@id": "wf:Workflow",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Workflow",
       "@type": "core:Class",
       "label": "Workflow",
-      "description": "A defined sequence of steps or stages to accomplish a goal"
+      "description": "A defined sequence of steps or stages to accomplish a goal; may include metadata, KPI gates and provenance"
     },
     "wf:Step": {
-      "@id": "wf:Step",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Step",
       "@type": "core:Class",
       "label": "Step",
       "description": "An individual action, task, or operation within a workflow"
     },
     "wf:Trigger": {
-      "@id": "wf:Trigger",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Trigger",
       "@type": "core:Class",
       "label": "Trigger",
       "description": "An event or condition that initiates a workflow or step"
     },
     "wf:Actor": {
-      "@id": "wf:Actor",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Actor",
       "@type": "core:Class",
       "label": "Actor",
       "description": "Agent, service, or user that performs or initiates steps"
     },
     "wf:Condition": {
-      "@id": "wf:Condition",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Condition",
       "@type": "core:Class",
       "label": "Condition",
       "description": "Predicate evaluated to control flow (guards, pre/post conditions)"
     },
     "wf:Transition": {
-      "@id": "wf:Transition",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Transition",
       "@type": "core:Class",
       "label": "Transition",
       "description": "Link between steps indicating order and/or conditional routing"
     },
     "wf:Execution": {
-      "@id": "wf:Execution",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#Execution",
       "@type": "core:Class",
       "label": "Execution",
-      "description": "A runtime instance of a workflow or step"
+      "description": "A runtime instance of a workflow or step; includes timestamps, status and trace pointers"
     }
   },
 
   "properties": {
     "wf:hasStep": {
-      "@id": "wf:hasStep",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#hasStep",
       "@type": "core:Property",
       "label": "hasStep",
       "description": "Ordered reference to steps within a workflow",
       "range": "rdf:List"
     },
     "wf:next": {
-      "@id": "wf:next",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#next",
       "@type": "core:Property",
       "label": "next",
-      "description": "Reference to the next step or steps"
+      "description": "Reference to the next step or steps; may be conditional"
     },
     "wf:triggeredBy": {
-      "@id": "wf:triggeredBy",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#triggeredBy",
       "@type": "core:Property",
       "label": "triggeredBy",
       "description": "Event or condition that triggered the workflow or step"
     },
     "wf:actor": {
-      "@id": "wf:actor",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#actor",
       "@type": "core:Property",
       "label": "actor",
-      "description": "Actor responsible for the step"
+      "description": "Actor responsible for the step (referencing uc:actor or JSON-LD agent types)"
     },
     "wf:condition": {
-      "@id": "wf:condition",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#condition",
       "@type": "core:Property",
       "label": "condition",
-      "description": "Guard or predicate controlling transitions"
+      "description": "Guard or predicate controlling transitions; may reference jdbl:PreCondition or jdbl:ValidationRule"
     },
     "wf:status": {
-      "@id": "wf:status",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#status",
       "@type": "core:Property",
       "label": "status",
       "description": "Execution state (e.g., pending, running, succeeded, failed)",
       "range": "xsd:string"
     },
     "wf:startTime": {
-      "@id": "wf:startTime",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#startTime",
       "@type": "core:Property",
       "label": "startTime",
       "description": "Start timestamp for execution",
       "range": "xsd:dateTime"
     },
     "wf:endTime": {
-      "@id": "wf:endTime",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#endTime",
       "@type": "core:Property",
       "label": "endTime",
       "description": "End timestamp for execution",
       "range": "xsd:dateTime"
     },
     "wf:duration": {
-      "@id": "wf:duration",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#duration",
       "@type": "core:Property",
       "label": "duration",
       "description": "Elapsed time for step or execution",
       "range": "xsd:duration"
     },
     "wf:retries": {
-      "@id": "wf:retries",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#retries",
       "@type": "core:Property",
       "label": "retries",
       "description": "Retry policy or count for a step",
       "range": "xsd:integer"
     },
     "wf:dependsOn": {
-      "@id": "wf:dependsOn",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#dependsOn",
       "@type": "core:Property",
       "label": "dependsOn",
-      "description": "Dependencies required before the step can execute"
+      "description": "Dependencies required before the step can execute; reference step IRIs or NQDS dependency nodes"
     },
     "wf:outcome": {
-      "@id": "wf:outcome",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#outcome",
       "@type": "core:Property",
       "label": "outcome",
-      "description": "Result or artifact produced by the step"
+      "description": "Result or artifact produced by the step (reference uc:artifact or KG nodes)"
     },
     "wf:input": {
-      "@id": "wf:input",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#input",
       "@type": "core:Property",
       "label": "input",
       "description": "Input references or parameters for the step"
     },
     "wf:output": {
-      "@id": "wf:output",
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#output",
       "@type": "core:Property",
       "label": "output",
       "description": "Output references or artifacts produced by the step"
+    },
+    "wf:trace": {
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#trace",
+      "@type": "core:Property",
+      "label": "trace",
+      "description": "Trace identifier (uc:trace) linking workflow execution to JDBL directives, NQDS flows and provenance",
+      "range": "xsd:string"
+    },
+    "wf:docs": {
+      "@id": "https://huijoohwee.github.io/schema/wf.jsonld#docs",
+      "@type": "core:Property",
+      "label": "docs",
+      "description": "Documentation or reference URL for the workflow or step",
+      "range": "xsd:anyURI"
     }
   },
 
-  "examples": {
-    "wf:examplePipeline": {
-      "@id": "wf:workflow-patterns/example-pipeline",
+  "validatorHints": {
+    "workflowStructure": "Validate ordered steps, next transitions, and dependency graphs; ensure no unreachable steps and verify dependsOn references resolve",
+    "runtimeIntegrity": "Check executions contain startTime/endTime when status is terminal and verify retries and durations conform to jdbl constraints",
+    "contractLinks": "Ensure wf:trace values map to jdbl:traceId and NQDS trace nodes for end-to-end observability",
+    "recommendedTools": [
+      "workflow-linter",
+      "jjnhm-validate",
+      "nqds-journey-analyzer",
+      "directive-trace-validator"
+    ]
+  },
+
+  "examples": [
+    {
+      "@id": "https://huijoohwee.github.io/schema/examples/wf/example-pipeline",
       "@type": "wf:Workflow",
       "label": "Example Pipeline",
-      "wf:hasStep": [
+      "hasStep": [
         {
-          "@id": "wf:step-1",
+          "@id": "https://huijoohwee.github.io/schema/examples/wf/step-1",
           "@type": "wf:Step",
           "label": "Detect Event",
-          "wf:triggeredBy": "uc:event",
-          "wf:actor": "uc:actor"
+          "triggeredBy": "https://huijoohwee.github.io/schema/uc.jsonld#event",
+          "actor": "https://huijoohwee.github.io/agents/SensorAgent",
+          "trace": "trace-detect-001"
         },
         {
-          "@id": "wf:step-2",
+          "@id": "https://huijoohwee.github.io/schema/examples/wf/step-2",
           "@type": "wf:Step",
           "label": "Process Data",
-          "wf:dependsOn": ["wf:step-1"],
-          "wf:actor": "uc:artifact"
+          "dependsOn": ["https://huijoohwee.github.io/schema/examples/wf/step-1"],
+          "actor": "https://huijoohwee.github.io/agents/ProcessorAgent",
+          "input": "https://huijoohwee.github.io/schema/examples/nqds/user-input-flow",
+          "output": "https://huijoohwee.github.io/schema/examples/nqds/processed-output",
+          "trace": "trace-process-001"
         },
         {
-          "@id": "wf:step-3",
+          "@id": "https://huijoohwee.github.io/schema/examples/wf/step-3",
           "@type": "wf:Step",
           "label": "Generate Report",
-          "wf:dependsOn": ["wf:step-2"],
-          "wf:actor": "uc:artifact",
-          "wf:outcome": "uc:reporting"
+          "dependsOn": ["https://huijoohwee.github.io/schema/examples/wf/step-2"],
+          "actor": "https://huijoohwee.github.io/agents/ReporterAgent",
+          "outcome": "https://huijoohwee.github.io/schema/examples/artifacts/report-v1",
+          "trace": "trace-report-001"
         }
       ],
-      "wf:version": "1.0.0"
+      "version": "1.0.0",
+      "docs": "https://huijoohwee.github.io/docs/workflows/example-pipeline.md"
     }
-  }
+  ]
 }

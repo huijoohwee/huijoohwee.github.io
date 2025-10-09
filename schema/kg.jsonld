@@ -1,58 +1,92 @@
 {
   "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@version": 1.1,
+    "@base": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/kg.jsonld#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "Vocabulary": "core:Vocabulary",
+    "WorkflowPattern": "kg:WorkflowPattern",
+    "GraphCollection": "kg:GraphCollection",
+    "Entity": "kg:Entity",
+    "Relation": "kg:Relation",
+    "Dataset": "kg:Dataset",
+
+    "meta": "core:metadata",
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+    "version": "core:version",
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "license": { "@id": "core:license", "@type": "@id" },
+    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
+    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
+
+    "graphCollections": { "@id": "kg:hasCollection", "@container": "@index" },
+    "graphType": { "@id": "kg:graphType", "@type": "@id" },
+    "hasStep": { "@id": "kg:hasStep", "@container": "@list", "@type": "@id" },
+    "references": { "@id": "kg:references", "@type": "@id", "@container": "@set" },
+    "versionId": { "@id": "kg:version", "@type": "xsd:string" },
+    "createdBy": { "@id": "kg:createdBy", "@type": "@id" },
+    "exportFormat": { "@id": "kg:exportFormat", "@container": "@list" },
+
+    "validatorHints": "kg:validatorHints",
+    "examples": "kg:examples"
   },
 
-  "@id": "kg:Base:v1.0",
-  "@type": "core:Vocabulary",
+  "@id": "https://huijoohwee.github.io/schema/kg.jsonld#Base:v1.1",
+  "@type": "Vocabulary",
 
   "meta": {
     "title": "Knowledge Graph Namespace (kg)",
-    "description": "Neutral, reusable KG namespace for workflow patterns, graph collections, and KG primitives.",
-    "version": "1.0.0",
+    "description": "Reusable KG namespace for workflow patterns, graph collections, and KG primitives; includes validator guidance and example pointers",
+    "version": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "created": "2025-09-26T00:00:00Z",
+    "updated": "2025-10-09T00:00:00Z"
   },
 
   "graphCollections": {
     "kg:collection": {
-      "@id": "kg:collection",
-      "@type": "core:Class",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#collection",
+      "@type": "GraphCollection",
       "label": "GraphCollection",
       "description": "A named collection of graph artifacts or patterns"
     },
     "kg:workflowPattern": {
-      "@id": "kg:workflowPattern",
-      "@type": "core:Class",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#workflowPattern",
+      "@type": "WorkflowPattern",
       "label": "WorkflowPattern",
       "description": "Reusable workflow pattern expressed as a KG fragment"
     },
     "kg:entity": {
-      "@id": "kg:entity",
-      "@type": "core:Class",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#entity",
+      "@type": "Entity",
       "label": "Entity",
       "description": "Node representing a concept, resource, or artifact"
     },
     "kg:relation": {
-      "@id": "kg:relation",
-      "@type": "core:Class",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#relation",
+      "@type": "Relation",
       "label": "Relation",
       "description": "Typed edge between Entities"
     },
     "kg:dataset": {
-      "@id": "kg:dataset",
-      "@type": "core:Class",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#dataset",
+      "@type": "Dataset",
       "label": "Dataset",
       "description": "Versioned dataset export (TTL, N-Quads, JSON-LD)"
     }
@@ -60,51 +94,78 @@
 
   "properties": {
     "kg:hasStep": {
-      "@id": "kg:hasStep",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#hasStep",
       "@type": "core:Property",
       "label": "hasStep",
       "description": "Ordered step reference within a workflow pattern",
       "range": "rdf:List"
     },
     "kg:references": {
-      "@id": "kg:references",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#references",
       "@type": "core:Property",
       "label": "references",
       "description": "Reference to another KG artifact or external IRI",
       "range": "rdf:Resource"
     },
     "kg:version": {
-      "@id": "kg:version",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#version",
       "@type": "core:Property",
       "label": "version",
       "description": "Semantic version string for the KG artifact"
     },
     "kg:createdBy": {
-      "@id": "kg:createdBy",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#createdBy",
       "@type": "core:Property",
       "label": "createdBy",
       "description": "Agent or process that created the artifact"
     },
     "kg:exportFormat": {
-      "@id": "kg:exportFormat",
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#exportFormat",
       "@type": "core:Property",
       "label": "exportFormat",
       "description": "Export formats available (ttl, nq, jsonld)"
+    },
+    "kg:checksum": {
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#checksum",
+      "@type": "core:Property",
+      "label": "checksum",
+      "description": "Content checksum for dataset integrity (e.g., sha256)",
+      "range": "xsd:string"
+    },
+    "kg:provenance": {
+      "@id": "https://huijoohwee.github.io/schema/kg.jsonld#provenance",
+      "@type": "core:Property",
+      "label": "provenance",
+      "description": "Provenance pointer (activity/agent) for graph construction",
+      "range": "@id"
     }
+  },
+
+  "validatorHints": {
+    "graphIntegrity": "Check node uniqueness, edge typing, and acyclicity where required; verify export formats and checksums",
+    "contractVerification": "Ensure workflowPattern steps reference uc:Concepts or core types and that edges map to JDBL directives or NQDS relations when representing flows",
+    "recommendedTools": [
+      "nqds-parser",
+      "graph-validator",
+      "rdf-validate",
+      "kg-diff-checker"
+    ]
   },
 
   "examples": {
     "kg:genericPipeline": {
-      "@id": "kg:workflow-patterns/generic-pipeline",
+      "@id": "https://huijoohwee.github.io/schema/kg/workflow-patterns/generic-pipeline",
       "@type": "kg:workflowPattern",
       "label": "Generic Processing Pipeline",
-      "kg:hasStep": [
-        { "@id": "uc:processing" },
-        { "@id": "uc:automation" },
-        { "@id": "uc:reporting" }
+      "hasStep": [
+        { "@id": "https://huijoohwee.github.io/schema/uc.jsonld#data-processing" },
+        { "@id": "https://huijoohwee.github.io/schema/uc.jsonld#automation" },
+        { "@id": "https://huijoohwee.github.io/schema/uc.jsonld#reporting" }
       ],
-      "kg:version": "1.0.0",
-      "kg:exportFormat": ["ttl", "jsonld"]
+      "versionId": "1.0.0",
+      "exportFormat": ["ttl", "jsonld"],
+      "createdBy": "https://github.com/huijoohwee",
+      "description": "Canonical pipeline pattern linking data processing to automation and reporting."
     }
   }
 }

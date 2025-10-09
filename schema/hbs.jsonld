@@ -1,30 +1,75 @@
 {
   "@context": {
+    "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/hbs-vocab#",
+
+    "base": "https://huijoohwee.github.io/schema/base.jsonld",
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "ContextDefinition": "core:ContextDefinition",
+    "Template": "hbs:Template",
+    "PartialTemplate": "hbs:PartialTemplate",
+    "ComponentTemplate": "hbs:ComponentTemplate",
+    "LayoutTemplate": "hbs:LayoutTemplate",
+    "Helper": "hbs:Helper",
+    "BlockHelper": "hbs:BlockHelper",
+    "ConditionalHelper": "hbs:ConditionalHelper",
+    "IterationHelper": "hbs:IterationHelper",
+    "Context": "hbs:Context",
+    "Variable": "hbs:Variable",
+    "Expression": "hbs:Expression",
+    "Comment": "hbs:Comment",
+
+    "templateName": { "@id": "hbs:templateName", "@type": "xsd:string" },
+    "hasTemplate": { "@id": "hbs:hasTemplate", "@type": "@id" },
+    "hasHelper": { "@id": "hbs:hasHelper", "@type": "@id", "@container": "@set" },
+    "hasContext": { "@id": "hbs:hasContext", "@type": "@id" },
+    "hasVariable": { "@id": "hbs:hasVariable", "@type": "@id", "@container": "@set" },
+    "includes": { "@id": "hbs:includes", "@type": "@id", "@container": "@set" },
+    "extends": { "@id": "hbs:extends", "@type": "@id" },
+    "renders": { "@id": "hbs:renders", "@type": "@id" },
+    "iteratesOver": { "@id": "hbs:iteratesOver", "@type": "@id" },
+    "conditionalOn": { "@id": "hbs:conditionalOn", "@type": "@id" },
+    "helperName": { "@id": "hbs:helperName", "@type": "xsd:string" },
+    "variableName": { "@id": "hbs:variableName", "@type": "xsd:string" },
+    "memoize": { "@id": "hbs:memoize", "@type": "xsd:boolean" },
+    "cacheKey": { "@id": "hbs:cacheKey", "@type": "xsd:string" },
+    "usesType": { "@id": "hbs:usesType", "@type": "@id", "@container": "@set" },
+    "docs": "rdfs:seeAlso"
   },
 
-  "@id": "hbs:TemplatingEngineContext:v1.0",
-  "@type": "core:ContextDefinition",
+  "@id": "https://huijoohwee.github.io/schema/hbs.jsonld#TemplatingEngineContext:v1.1",
+  "@type": "ContextDefinition",
 
   "meta": {
-    "title": "HBS - Templating Engine Layer Schema",
-    "description": "Handlebars-based Templating Language for dynamic content generation and reusable components",
-    "version": "1.0.0",
+    "title": "HBS Templating Engine Context",
+    "description": "Handlebars templating layer context mapping templates, partials, helpers and memoization hints to JSON-LD terms; includes validator guidance and example pointers",
+    "version": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
     "created": "2025-10-05",
-    "updated": "2025-10-05",
+    "updated": "2025-10-09",
     "layer": "templating-engine",
     "responsibilities": [
       "dynamic-content-generation",
       "reusable-component-templates",
       "conditional-rendering-logic",
-      "iteration-and-composition"
+      "iteration-and-composition",
+      "memoization-and-cache-hints"
     ]
   },
 
@@ -33,7 +78,7 @@
       "@id": "hbs:Template",
       "@type": "rdfs:Class",
       "rdfs:label": "Template",
-      "rdfs:comment": "Base class for all Handlebars templates and template components"
+      "rdfs:comment": "Base class for Handlebars templates and template components"
     },
     {
       "@id": "hbs:ComponentTemplate",
@@ -47,41 +92,41 @@
       "@type": "rdfs:Class",
       "rdfs:subClassOf": "hbs:Template",
       "rdfs:label": "Layout Template",
-      "rdfs:comment": "Template that defines the overall structure and layout"
+      "rdfs:comment": "Template that defines overall structure and layout"
     },
     {
       "@id": "hbs:PartialTemplate",
       "@type": "rdfs:Class",
       "rdfs:subClassOf": "hbs:Template",
       "rdfs:label": "Partial Template",
-      "rdfs:comment": "Template fragment that can be included in other templates"
+      "rdfs:comment": "Template fragment included in other templates"
     },
     {
       "@id": "hbs:Helper",
       "@type": "rdfs:Class",
       "rdfs:label": "Helper",
-      "rdfs:comment": "Function that provides additional functionality within templates"
+      "rdfs:comment": "Function providing functionality inside templates"
     },
     {
       "@id": "hbs:BlockHelper",
       "@type": "rdfs:Class",
       "rdfs:subClassOf": "hbs:Helper",
       "rdfs:label": "Block Helper",
-      "rdfs:comment": "Helper that operates on a block of template content"
+      "rdfs:comment": "Helper operating on a block of template content"
     },
     {
       "@id": "hbs:ConditionalHelper",
       "@type": "rdfs:Class",
       "rdfs:subClassOf": "hbs:BlockHelper",
       "rdfs:label": "Conditional Helper",
-      "rdfs:comment": "Helper that provides conditional rendering logic"
+      "rdfs:comment": "Helper providing conditional rendering logic"
     },
     {
       "@id": "hbs:IterationHelper",
       "@type": "rdfs:Class",
       "rdfs:subClassOf": "hbs:BlockHelper",
       "rdfs:label": "Iteration Helper",
-      "rdfs:comment": "Helper that provides iteration and looping functionality"
+      "rdfs:comment": "Helper providing iteration and looping functionality"
     },
     {
       "@id": "hbs:Context",
@@ -205,50 +250,110 @@
       "rdfs:comment": "Specifies the name identifier of a variable",
       "rdfs:domain": "hbs:Variable",
       "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "hbs:memoize",
+      "@type": "rdf:Property",
+      "rdfs:label": "memoize",
+      "rdfs:comment": "Memoization hint for templates/partials/helpers",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "xsd:boolean"
+    },
+    {
+      "@id": "hbs:cacheKey",
+      "@type": "rdf:Property",
+      "rdfs:label": "cache key",
+      "rdfs:comment": "Suggested cache key identifier for memoized templates",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "hbs:usesType",
+      "@type": "rdf:Property",
+      "rdfs:label": "uses type",
+      "rdfs:comment": "Indicates JSON-LD types the template expects in its context",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "xsd:anyURI"
+    },
+    {
+      "@id": "hbs:docs",
+      "@type": "rdf:Property",
+      "rdfs:label": "docs",
+      "rdfs:comment": "Documentation or reference URL for template or helper",
+      "rdfs:domain": "hbs:Template",
+      "rdfs:range": "xsd:anyURI"
+    }
+  ],
+
+  "validatorHints": [
+    {
+      "@type": "core:Concept",
+      "label": "hbs-syntax-and-partials",
+      "description": "Validate Handlebars syntax, existence of declared partials, partial/partialName consistency, and precompilation success",
+      "recommendedTools": ["handlebars-lint", "template-tester"]
+    },
+    {
+      "@type": "core:Concept",
+      "label": "hbs-memoization",
+      "description": "Ensure memoize hints and cacheKey values are present for critical-path templates and conform to token-efficiency guidance",
+      "recommendedTools": ["hbs-memoization-checker", "token-density-meter"]
+    },
+    {
+      "@type": "core:Concept",
+      "label": "hbs-data-bindings",
+      "description": "Verify usesType references resolve to JSON-LD types and that declared variables exist in example contexts",
+      "recommendedTools": ["jsonld.js", "hbs-data-binding-checker"]
     }
   ],
 
   "examples": [
     {
       "@type": "hbs:ComponentTemplate",
-      "@id": "hbs:example:agent-coordination",
-      "hbs:templateName": "agent-coordination.hbs",
-      "hbs:hasHelper": [
+      "@id": "https://huijoohwee.github.io/schema/examples/hbs/agent-coordination",
+      "templateName": "agent-coordination.hbs",
+      "hasHelper": [
         {
           "@type": "hbs:IterationHelper",
-          "hbs:helperName": "each",
-          "hbs:iteratesOver": "workflow.agents"
+          "helperName": "each",
+          "iteratesOver": "workflow.agents"
         },
         {
           "@type": "hbs:ConditionalHelper",
-          "hbs:helperName": "if",
-          "hbs:conditionalOn": "this.capabilities"
+          "helperName": "if",
+          "conditionalOn": "this.capabilities"
         }
       ],
-      "hbs:includes": [
+      "includes": [
         {
           "@type": "hbs:PartialTemplate",
-          "hbs:templateName": "task-template"
+          "templateName": "task-template"
         },
         {
           "@type": "hbs:PartialTemplate",
-          "hbs:templateName": "dependency-resolver"
+          "templateName": "dependency-resolver"
         }
       ],
-      "hbs:hasVariable": [
+      "hasVariable": [
         {
           "@type": "hbs:Variable",
-          "hbs:variableName": "this.id"
+          "variableName": "this.id"
         },
         {
           "@type": "hbs:Variable",
-          "hbs:variableName": "this.type"
+          "variableName": "this.type"
         },
         {
           "@type": "hbs:Variable",
-          "hbs:variableName": "this.capabilities"
+          "variableName": "this.capabilities"
         }
-      ]
+      ],
+      "memoize": true,
+      "cacheKey": "agent-coord-v1",
+      "usesType": [
+        "https://huijoohwee.github.io/schema/vocab.jsonld#Agent",
+        "https://schema.org/Person"
+      ],
+      "docs": "https://handlebarsjs.com/guide/partials.html"
     }
   ]
 }

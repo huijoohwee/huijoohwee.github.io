@@ -1,28 +1,53 @@
 {
   "@context": {
+    "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/base.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+
     "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc":   "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf":   "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg":   "https://huijoohwee.github.io/schema/kg.jsonld",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+
+    "ContextDefinition": "core:ContextDefinition",
+    "meta": "core:metadata",
+    "universalConcepts": { "@id": "uc:hasConcept", "@container": "@list" },
+    "knowledgeGraphs": { "@id": "kg:hasGraph", "@container": "@list" },
+
+    "label": "rdfs:label",
+    "description": "rdfs:comment",
+    "version": "core:version",
+    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
+    "license": { "@id": "core:license", "@type": "@id" },
+    "created": { "@id": "core:created", "@type": "xsd:date" },
+    "updated": { "@id": "core:updated", "@type": "xsd:date" },
+
+    "steps": { "@id": "kg:steps", "@container": "@list" }
   },
 
-  "@id": "core:BaseContext:v1.0",
-  "@type": "core:ContextDefinition",
+  "@id": "https://huijoohwee.github.io/schema/base.jsonld#CoreContext:v1.0",
+  "@type": "ContextDefinition",
 
   "meta": {
     "title": "Universal Base Semantic Context",
-    "description": "Universal base semantic context for multi-domain use",
+    "description": "Universal base semantic context for multi-domain use, including pointers to authoritative JSON-LD, HBS and MMD layer contexts and validator guidance",
     "version": "1.0.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
     "created": "2025-09-26",
-    "updated": "2025-09-26"
+    "updated": "2025-10-09"
   },
 
   "universalConcepts": [
@@ -55,7 +80,45 @@
         "uc:data-processing",
         "uc:automation",
         "uc:reporting"
-      ]
+      ],
+      "description": "Canonical pipeline pattern linking data processing to automation and reporting."
     }
-  ]
+  ],
+
+  "layerPointers": {
+    "jsonld": {
+      "context": "https://www.w3.org/2013/json-ld-context/rdfa11",
+      "purpose": "Authoritative base context for common JSON-LD prefixes and RDF terms; use as fallback for term resolution"
+    },
+    "hbs": {
+      "context": "https://huijoohwee.github.io/schema/hbs.jsonld",
+      "purpose": "HBS JSON-LD mapping for templates, helpers and memoization hints",
+      "docs": "https://handlebarsjs.com"
+    },
+    "mmd": {
+      "context": "https://huijoohwee.github.io/schema/mmd.jsonld",
+      "purpose": "MMD JSON-LD mapping for diagrams (nodes, edges, subgraphs) and visual contract references",
+      "docs": "https://mermaid.js.org"
+    }
+  },
+
+  "validatorHints": {
+    "resolveContexts": "Always resolve external contexts (W3C and huijoohwee) before running validators",
+    "ciIntegration": "Run jsonld context resolution and jjnhm-validate in CI to prevent broken references",
+    "recommendedTools": [
+      "jsonld.js",
+      "rdf-validate",
+      "handlebars-lint",
+      "mermaid-cli",
+      "jjnhm-validate"
+    ]
+  },
+
+  "examplePointers": {
+    "jsonldExample": "/schema/examples/jsonld/mvp-project-definition.jsonld",
+    "jdblExample": "/schema/examples/jdbl/launch-mvp-sprint.json",
+    "nqdsExample": "/schema/examples/nqds/mvp-user-journey.nqds",
+    "hbsExample": "/schema/examples/hbs/mvp-dashboard.hbs",
+    "mmdExample": "/schema/examples/mmd/mvp-architecture.mmd"
+  }
 }

@@ -9,6 +9,13 @@
     "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
     "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
 
+    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
+    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
+    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
+    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
+    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
+
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",

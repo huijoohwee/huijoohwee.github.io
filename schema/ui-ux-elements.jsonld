@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+
+    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
+    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
+    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
+    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
+    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
+
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+
+    "UIElementList": "core:UIElementList",
+    "uiElements": { "@id": "core:hasUIElement", "@type": "@id", "@container": "@list" },
+    "label": "rdfs:label",
+    "description": "rdfs:comment"
+  },
+  "@id": "https://huijoohwee.github.io/schema/project-ui-ux-elements.jsonld",
+  "@type": "UIElementList",
+  "uiElements": [
+    "uiux:animation-frame",
+    "uiux:button",
+    "uiux:component-structure",
+    "uiux:container",
+    "uiux:control",
+    "uiux:design-token",
+    "uiux:div-element",
+    "uiux:element",
+    "uiux:floating-control",
+    "uiux:h1-element",
+    "uiux:header",
+    "uiux:main-header",
+    "uiux:p-element",
+    "uiux:page-header",
+    "uiux:panel",
+    "uiux:progress-display",
+    "uiux:progress-indicator",
+    "uiux:render-cycle",
+    "uiux:section",
+    "uiux:sidebar",
+    "uiux:subtitle",
+    "uiux:theme",
+    "uiux:title-section",
+    "uiux:toggle-button",
+    "uiux:ui-element",
+    "uiux:width",
+    "uiux:wrapper-div"
+  ]
+}

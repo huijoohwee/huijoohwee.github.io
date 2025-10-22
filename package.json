@@ -21,10 +21,18 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/huijoohwee/joohwee.github.io"
+    "url": "git+https://github.com/huijoohwee/joohwee.github.io.git"
   },
   "homepage": "https://joohwee.github.io",
   "engines": {
     "node": ">=14.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/huijoohwee/joohwee.github.io/issues"
+  },
+  "devDependencies": {
+    "json-minify": "^1.0.0",
+    "jsonlint-cli": "^1.0.1",
+    "mustache": "^4.2.0"
   }
 }

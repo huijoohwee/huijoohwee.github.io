@@ -85,6 +85,48 @@
       "versions": [
         {{#jdbl_versions}}"{{.}}"{{^last}}, {{/last}}{{/jdbl_versions}}
       ]
+    },
+    "actions": {
+      "latest": "{{actions_latest}}",
+      "versions": [
+        {{#actions_versions}}"{{.}}"{{^last}}, {{/last}}{{/actions_versions}}
+      ]
+    },
+    "agents": {
+      "latest": "{{agents_latest}}",
+      "versions": [
+        {{#agents_versions}}"{{.}}"{{^last}}, {{/last}}{{/agents_versions}}
+      ]
+    },
+    "features": {
+      "latest": "{{features_latest}}",
+      "versions": [
+        {{#features_versions}}"{{.}}"{{^last}}, {{/last}}{{/features_versions}}
+      ]
+    },
+    "project-areas": {
+      "latest": "{{project_areas_latest}}",
+      "versions": [
+        {{#project_areas_versions}}"{{.}}"{{^last}}, {{/last}}{{/project_areas_versions}}
+      ]
+    },
+    "project-issues": {
+      "latest": "{{project_issues_latest}}",
+      "versions": [
+        {{#project_issues_versions}}"{{.}}"{{^last}}, {{/last}}{{/project_issues_versions}}
+      ]
+    },
+    "ui-ux-elements": {
+      "latest": "{{ui_ux_elements_latest}}",
+      "versions": [
+        {{#ui_ux_elements_versions}}"{{.}}"{{^last}}, {{/last}}{{/ui_ux_elements_versions}}
+      ]
+    },
+    "vocab": {
+      "latest": "{{vocab_latest}}",
+      "versions": [
+        {{#vocab_versions}}"{{.}}"{{^last}}, {{/last}}{{/vocab_versions}}
+      ]
     }
   }
 }

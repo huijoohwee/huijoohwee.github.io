@@ -95,6 +95,13 @@ jobs:
           "mmd_latest": "${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld",
           "hbs_latest": "${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld",
           "jdbl_latest": "${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld",
+          "actions_latest": "${{ env.HOST }}/${PAGES_PATH}/actions.v${VERSION}.jsonld",
+          "agents_latest": "${{ env.HOST }}/${PAGES_PATH}/agents.v${VERSION}.jsonld",
+          "features_latest": "${{ env.HOST }}/${PAGES_PATH}/features.v${VERSION}.jsonld",
+          "project_areas_latest": "${{ env.HOST }}/${PAGES_PATH}/project-areas.v${VERSION}.jsonld",
+          "project_issues_latest": "${{ env.HOST }}/${PAGES_PATH}/project-issues.v${VERSION}.jsonld",
+          "ui_ux_elements_latest": "${{ env.HOST }}/${PAGES_PATH}/ui-ux-elements.v${VERSION}.jsonld",
+          "vocab_latest": "${{ env.HOST }}/${PAGES_PATH}/vocab.v${VERSION}.jsonld",
           "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
           "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
           "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
@@ -104,7 +111,14 @@ jobs:
           "jjnhm_versions": ["${{ env.HOST }}/${PAGES_PATH}/jjnhm.v${VERSION}.jsonld"],
           "mmd_versions": ["${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld"],
           "hbs_versions": ["${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld"],
-          "jdbl_versions": ["${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld"]
+          "jdbl_versions": ["${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld"],
+          "actions_versions": ["${{ env.HOST }}/${PAGES_PATH}/actions.v${VERSION}.jsonld"],
+          "agents_versions": ["${{ env.HOST }}/${PAGES_PATH}/agents.v${VERSION}.jsonld"],
+          "features_versions": ["${{ env.HOST }}/${PAGES_PATH}/features.v${VERSION}.jsonld"],
+          "project_areas_versions": ["${{ env.HOST }}/${PAGES_PATH}/project-areas.v${VERSION}.jsonld"],
+          "project_issues_versions": ["${{ env.HOST }}/${PAGES_PATH}/project-issues.v${VERSION}.jsonld"],
+          "ui_ux_elements_versions": ["${{ env.HOST }}/${PAGES_PATH}/ui-ux-elements.v${VERSION}.jsonld"],
+          "vocab_versions": ["${{ env.HOST }}/${PAGES_PATH}/vocab.v${VERSION}.jsonld"]
 }
 EOF
           # Render using mustache

@@ -1,142 +1,355 @@
-name: Publish schema on tag
+name: Publish Schema (JJNHM-Compliant)
 
 on:
   push:
-    tags: ['v*.*.*'] # semantic version tags like v1.2.0
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 env:
-  PAGES_PUBLISH_DIR: public
   SCHEMA_DIR: schema
-  PAGES_PATH: schema   # set-to-the-path-under-the-Pages-site
-  HOST: https://huijoohwee.github.io
+  VALIDATION_DIR: validation
 
 jobs:
+  pre-publish-validation:
+    runs-on: ubuntu-latest
+    name: Pre-Publish Validation
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install validation dependencies
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: npm ci --only=production
+
+      - name: Run comprehensive validation
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          echo "🔍 Running pre-publish validation..."
+          node validate-jsonld.js
+          node test-suite.js
+
+      - name: Validate JJNHM compliance
+        run: |
+          echo "📋 Validating JJNHM layer compliance..."
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Checking JJNHM compliance for $f"
+            # Check for required JJNHM metadata
+            if ! grep -q '"@context"' "$f"; then
+              echo "❌ Missing @context in $f"
+              exit 1
+            fi
+            if ! grep -q '"meta"' "$f"; then
+              echo "❌ Missing meta section in $f"
+              exit 1
+            fi
+          done
+          echo "✅ JJNHM compliance validated"
+
   publish:
     runs-on: ubuntu-latest
+    needs: pre-publish-validation
+    name: Publish Schema to GitHub Pages
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Extract version from tag
-        id: ver
+      - name: Extract version
+        id: version
         run: |
-          # GITHUB_REF is refs/tags/v1.2.0
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Install simple tooling
+      - name: Install publishing tools
         run: |
-          npm init -y
-          npm install --no-audit --no-fund mustache json-minify jsonlint-cli -D
-          # jsonld validator optional; install if you use it in your pipeline
-          # npm install jsonld -D
+          npm install -g mustache json-minify jsonlint-cli
 
-      - name: Validate JSON-LD sources (light sanity)
+      - name: Validate JSON-LD syntax
         run: |
+          echo "🔍 Validating JSON-LD syntax..."
           for f in ${SCHEMA_DIR}/*.jsonld; do
-            echo "Checking $f"
-            npx jsonlint -q "$f"
+            echo "Validating $f"
+            jsonlint -q "$f"
           done
 
-      - name: Prepare public directory and copy sources
+      - name: Prepare publication directories
         run: |
-          VERSION=${{ steps.ver.outputs.VERSION }}
-          rm -rf ${PAGES_PUBLISH_DIR}
-          mkdir -p ${PAGES_PUBLISH_DIR}/${PAGES_PATH}
-          cp ${SCHEMA_DIR}/*.jsonld ${PAGES_PUBLISH_DIR}/${PAGES_PATH}/
+          mkdir -p public/schema
+          mkdir -p public/v${{ steps.version.outputs.VERSION }}
+          mkdir -p public/docs
+          mkdir -p public/validation
 
-      - name: Create versioned artifacts (immutable)
+      - name: Copy schema files with JJNHM metadata
         run: |
-          VERSION=${{ steps.ver.outputs.VERSION }}
-          OUT=${PAGES_PUBLISH_DIR}/${PAGES_PATH}
-          for f in ${OUT}/*.jsonld; do
-            base=$(basename "$f" .jsonld)
-            # skip index.template if present
-            if [ "$base" = "index" ] || [ "$base" = "index.template" ]; then
-              continue
-            fi
-            cp "$f" "${OUT}/${base}.v${VERSION}.jsonld"
+          echo "📁 Copying schema files..."
+          cp ${SCHEMA_DIR}/*.jsonld public/schema/
+          cp ${SCHEMA_DIR}/*.jsonld public/v${{ steps.version.outputs.VERSION }}/
+
+      - name: Generate JJNHM layer documentation
+        run: |
+          echo "📚 Generating JJNHM layer documentation..."
+          cat > public/docs/jjnhm-layers.md << 'EOF'
+          # JJNHM Layer Architecture Documentation
+          
+          ## Layer Responsibilities
+          
+          ### JSONLD Layer
+          - **Purpose**: Semantic web compatibility and RDF conversion
+          - **Responsibilities**: Context definitions, vocabulary mappings, ontology structures
+          - **Files**: base.jsonld, vocab.jsonld, core.jsonld, uc.jsonld, wf.jsonld, kg.jsonld
+          
+          ### JDBL Layer  
+          - **Purpose**: Directive-based orchestration and automation
+          - **Responsibilities**: Action definitions, workflow orchestration, agent coordination
+          - **Files**: jjnhm.jsonld, actions.jsonld, agents.jsonld
+          
+          ### NQDS Layer
+          - **Purpose**: Semantic graph processing and data flow
+          - **Responsibilities**: N-Quads generation, graph traversal, semantic queries
+          - **Files**: nqds.jsonld
+          
+          ### HBS Layer
+          - **Purpose**: Template-based content generation
+          - **Responsibilities**: Dynamic content rendering, template processing
+          - **Files**: hbs.jsonld
+          
+          ### MMD Layer
+          - **Purpose**: Diagram and visualization generation
+          - **Responsibilities**: Mermaid diagram generation, visual documentation
+          - **Files**: mmd.jsonld
+          
+          ## Version: ${{ steps.version.outputs.VERSION }}
+          ## Published: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          EOF
+
+      - name: Create versioned artifacts with provenance
+        run: |
+          cd public/v${{ steps.version.outputs.VERSION }}
+          
+          # Create provenance metadata
+          cat > provenance.json << EOF
+          {
+            "@context": "https://huijoohwee.github.io/schema/base.jsonld",
+            "@type": "ProvenanceRecord",
+            "version": "${{ steps.version.outputs.VERSION }}",
+            "published": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "publisher": "https://github.com/huijoohwee",
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "jjnhm": {
+              "architecture": "JSONLD-JDBL-NQDS-HBS-MMD",
+              "compliance": "v1.0",
+              "layers": {
+                "jsonld": "semantic-web-compatibility",
+                "jdbl": "directive-orchestration", 
+                "nqds": "semantic-graph-processing",
+                "hbs": "template-generation",
+                "mmd": "diagram-visualization"
+              }
+            }
+          }
+          EOF
+          
+          # Create compressed archives
+          tar -czf ../schema-v${{ steps.version.outputs.VERSION }}.tar.gz *.jsonld provenance.json
+          zip -r ../schema-v${{ steps.version.outputs.VERSION }}.zip *.jsonld provenance.json
+
+      - name: Render schema index with JJNHM metadata
+        run: |
+          export VERSION=${{ steps.version.outputs.VERSION }}
+          export BASE_URL="https://huijoohwee.github.io"
+          export SCHEMA_URL="$BASE_URL/schema"
+          export PUBLISHED_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          export COMMIT_SHA=${{ github.sha }}
+          export REPOSITORY=${{ github.repository }}
+          
+          # Set all schema URLs
+          export VOCAB_URL="$SCHEMA_URL/vocab.jsonld"
+          export CORE_URL="$SCHEMA_URL/core.jsonld"
+          export UC_URL="$SCHEMA_URL/uc.jsonld"
+          export WF_URL="$SCHEMA_URL/wf.jsonld"
+          export KG_URL="$SCHEMA_URL/kg.jsonld"
+          export JJNHM_URL="$SCHEMA_URL/jjnhm.jsonld"
+          export NQDS_URL="$SCHEMA_URL/nqds.jsonld"
+          export JDBL_URL="$SCHEMA_URL/jdbl.jsonld"
+          export HBS_URL="$SCHEMA_URL/hbs.jsonld"
+          export MMD_URL="$SCHEMA_URL/mmd.jsonld"
+          export ACTIONS_URL="$SCHEMA_URL/actions.jsonld"
+          export AGENTS_URL="$SCHEMA_URL/agents.jsonld"
+          export FEATURES_URL="$SCHEMA_URL/features.jsonld"
+          export PROJECT_AREAS_URL="$SCHEMA_URL/project-areas.jsonld"
+          export PROJECT_ISSUES_URL="$SCHEMA_URL/project-issues.jsonld"
+          export UI_UX_ELEMENTS_URL="$SCHEMA_URL/ui-ux-elements.jsonld"
+          
+          # Render index if template exists
+          if [ -f "${SCHEMA_DIR}/index.jsonld.mustache" ]; then
+            mustache <(env | jq -R 'split("=") | {(.[0]): .[1]}' | jq -s add) ${SCHEMA_DIR}/index.jsonld.mustache > public/schema/index.jsonld
+          else
+            # Create a basic index.jsonld
+            cat > public/schema/index.jsonld << EOF
+          {
+            "@context": "https://huijoohwee.github.io/schema/base.jsonld",
+            "@id": "https://huijoohwee.github.io/schema/",
+            "@type": "SchemaCollection",
+            "meta": {
+              "title": "HuiJooHwee Schema Collection",
+              "description": "JJNHM-compliant JSON-LD schema collection",
+              "version": "$VERSION",
+              "published": "$PUBLISHED_DATE",
+              "publisher": "https://github.com/huijoohwee",
+              "license": "MIT",
+              "repository": "$REPOSITORY",
+              "commit": "$COMMIT_SHA"
+            },
+            "jjnhm": {
+              "architecture": "JSONLD-JDBL-NQDS-HBS-MMD",
+              "layers": {
+                "jsonld": ["$VOCAB_URL", "$CORE_URL", "$UC_URL", "$WF_URL", "$KG_URL"],
+                "jdbl": ["$JJNHM_URL", "$ACTIONS_URL", "$AGENTS_URL"],
+                "nqds": ["$NQDS_URL"],
+                "hbs": ["$HBS_URL"],
+                "mmd": ["$MMD_URL"]
+              }
+            },
+            "schemas": [
+              "$VOCAB_URL", "$CORE_URL", "$UC_URL", "$WF_URL", "$KG_URL",
+              "$JJNHM_URL", "$NQDS_URL", "$JDBL_URL", "$HBS_URL", "$MMD_URL",
+              "$ACTIONS_URL", "$AGENTS_URL", "$FEATURES_URL",
+              "$PROJECT_AREAS_URL", "$PROJECT_ISSUES_URL", "$UI_UX_ELEMENTS_URL"
+            ]
+          }
+          EOF
+          fi
+
+      - name: Validate published schemas
+        run: |
+          echo "🔍 Final validation of published schemas..."
+          jsonlint -q public/schema/index.jsonld
+          for f in public/schema/*.jsonld; do
+            jsonlint -q "$f"
           done
 
-      - name: Render index.jsonld from mustache template
+      - name: Generate publication report
         run: |
-          VERSION=${{ steps.ver.outputs.VERSION }}
-          OUT=${PAGES_PUBLISH_DIR}/${PAGES_PATH}
-          TEMPLATE=${SCHEMA_DIR}/index.jsonld.mustache
-          # Build the render context JSON
-          cat > render-context.json <<EOF
-{
-  "host": "${{ env.HOST }}",
-  "index_version": "${VERSION}",
-  "meta_title": "Schema Index",
-  "meta_description": "Index manifest mapping logical names to versioned JSON-LD artifacts",
-  "maintainer": "https://github.com/${{ github.repository_owner }}",
-  "license": "https://opensource.org/licenses/MIT",
-  "created": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "base_latest": "${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld",
-          "core_latest": "${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld",
-          "uc_latest": "${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld",
-          "wf_latest": "${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld",
-          "kg_latest": "${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld",
-          "nqds_predicates_latest": "${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld",
-          "jjnhm_latest": "${{ env.HOST }}/${PAGES_PATH}/jjnhm.v${VERSION}.jsonld",
-          "mmd_latest": "${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld",
-          "hbs_latest": "${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld",
-          "jdbl_latest": "${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld",
-          "actions_latest": "${{ env.HOST }}/${PAGES_PATH}/actions.v${VERSION}.jsonld",
-          "agents_latest": "${{ env.HOST }}/${PAGES_PATH}/agents.v${VERSION}.jsonld",
-          "features_latest": "${{ env.HOST }}/${PAGES_PATH}/features.v${VERSION}.jsonld",
-          "project_areas_latest": "${{ env.HOST }}/${PAGES_PATH}/project-areas.v${VERSION}.jsonld",
-          "project_issues_latest": "${{ env.HOST }}/${PAGES_PATH}/project-issues.v${VERSION}.jsonld",
-          "ui_ux_elements_latest": "${{ env.HOST }}/${PAGES_PATH}/ui-ux-elements.v${VERSION}.jsonld",
-          "vocab_latest": "${{ env.HOST }}/${PAGES_PATH}/vocab.v${VERSION}.jsonld",
-          "base_versions": ["${{ env.HOST }}/${PAGES_PATH}/base.v${VERSION}.jsonld"],
-          "core_versions": ["${{ env.HOST }}/${PAGES_PATH}/core.v${VERSION}.jsonld"],
-          "uc_versions": ["${{ env.HOST }}/${PAGES_PATH}/uc.v${VERSION}.jsonld"],
-          "wf_versions": ["${{ env.HOST }}/${PAGES_PATH}/wf.v${VERSION}.jsonld"],
-          "kg_versions": ["${{ env.HOST }}/${PAGES_PATH}/kg.v${VERSION}.jsonld"],
-          "nqds_predicates_versions": ["${{ env.HOST }}/${PAGES_PATH}/nqds-predicates.v${VERSION}.jsonld"],
-          "jjnhm_versions": ["${{ env.HOST }}/${PAGES_PATH}/jjnhm.v${VERSION}.jsonld"],
-          "mmd_versions": ["${{ env.HOST }}/${PAGES_PATH}/mmd.v${VERSION}.jsonld"],
-          "hbs_versions": ["${{ env.HOST }}/${PAGES_PATH}/hbs.v${VERSION}.jsonld"],
-          "jdbl_versions": ["${{ env.HOST }}/${PAGES_PATH}/jdbl.v${VERSION}.jsonld"],
-          "actions_versions": ["${{ env.HOST }}/${PAGES_PATH}/actions.v${VERSION}.jsonld"],
-          "agents_versions": ["${{ env.HOST }}/${PAGES_PATH}/agents.v${VERSION}.jsonld"],
-          "features_versions": ["${{ env.HOST }}/${PAGES_PATH}/features.v${VERSION}.jsonld"],
-          "project_areas_versions": ["${{ env.HOST }}/${PAGES_PATH}/project-areas.v${VERSION}.jsonld"],
-          "project_issues_versions": ["${{ env.HOST }}/${PAGES_PATH}/project-issues.v${VERSION}.jsonld"],
-          "ui_ux_elements_versions": ["${{ env.HOST }}/${PAGES_PATH}/ui-ux-elements.v${VERSION}.jsonld"],
-          "vocab_versions": ["${{ env.HOST }}/${PAGES_PATH}/vocab.v${VERSION}.jsonld"]
-}
-EOF
-          # Render using mustache
-          npx mustache render-context.json "$TEMPLATE" > ${OUT}/index.jsonld
-          # Minify JSON (remove whitespace) using jq
-          jq -c . ${OUT}/index.jsonld > ${OUT}/index.min.jsonld
-          mv ${OUT}/index.min.jsonld ${OUT}/index.jsonld
-          rm -f render-context.json          
+          echo "📊 Generating publication report..."
+          cat > public/publication-report.json << EOF
+          {
+            "version": "${{ steps.version.outputs.VERSION }}",
+            "published": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "commit": "${{ github.sha }}",
+            "repository": "${{ github.repository }}",
+            "schemas_published": $(ls public/schema/*.jsonld | wc -l),
+            "jjnhm_compliance": "v1.0",
+            "validation_status": "passed",
+            "artifacts": [
+              "schema-v${{ steps.version.outputs.VERSION }}.tar.gz",
+              "schema-v${{ steps.version.outputs.VERSION }}.zip"
+            ]
+          }
+          EOF
 
-      - name: Validate rendered index.jsonld
-        run: |
-          npx jsonlint -q ${PAGES_PUBLISH_DIR}/${PAGES_PATH}/index.jsonld
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
 
-      - name: Commit and deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          path: './public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Schema Release ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## JJNHM-Compliant Schema Release ${{ steps.version.outputs.VERSION }}
+            
+            ### 🏗️ Architecture
+            - **JSONLD Layer**: Semantic web compatibility and RDF conversion
+            - **JDBL Layer**: Directive-based orchestration and automation  
+            - **NQDS Layer**: Semantic graph processing and data flow
+            - **HBS Layer**: Template-based content generation
+            - **MMD Layer**: Diagram and visualization generation
+            
+            ### 📦 Artifacts
+            - [schema-v${{ steps.version.outputs.VERSION }}.tar.gz](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/schema-v${{ steps.version.outputs.VERSION }}.tar.gz)
+            - [schema-v${{ steps.version.outputs.VERSION }}.zip](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/schema-v${{ steps.version.outputs.VERSION }}.zip)
+            
+            ### 🌐 Live Schema
+            - **Base URL**: https://huijoohwee.github.io/schema/
+            - **Index**: https://huijoohwee.github.io/schema/index.jsonld
+            - **Documentation**: https://huijoohwee.github.io/docs/jjnhm-layers.md
+            
+            Published: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            Commit: ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+  post-publish-verification:
+    runs-on: ubuntu-latest
+    needs: publish
+    name: Post-Publish Verification
+    
+    steps:
+      - name: Verify published schemas
+        run: |
+          echo "🔍 Verifying published schemas are accessible..."
+          
+          # Wait for deployment to propagate
+          sleep 30
+          
+          # Test schema accessibility
+          schemas=(
+            "https://huijoohwee.github.io/schema/index.jsonld"
+            "https://huijoohwee.github.io/schema/base.jsonld"
+            "https://huijoohwee.github.io/schema/vocab.jsonld"
+          )
+          
+          for schema in "${schemas[@]}"; do
+            echo "Testing $schema"
+            if curl -f -s "$schema" > /dev/null; then
+              echo "✅ $schema is accessible"
+            else
+              echo "❌ $schema is not accessible"
+              exit 1
+            fi
+          done
+          
+          echo "🎉 All schemas successfully published and verified!"

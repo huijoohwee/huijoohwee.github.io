@@ -1,198 +1,193 @@
 {
-  "@context": {
-    "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+      
+      "ContextDefinition": "core:ContextDefinition",
+      "Vocabulary": "rdfs:Class",
+      "Concept": "skos:Concept", 
+      "Property": "rdf:Property",
+      "Class": "rdfs:Class",
+      "Directive": "core:Directive",
+      
+      "domain": { "@id": "rdfs:domain", "@type": "@id" },
+      "range": { "@id": "rdfs:range", "@type": "@id" },
+      "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id" },
+      "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id" },
+      
+      "terms": { "@id": "core:hasTerm", "@container": "@index" },
+      "types": { "@id": "core:hasType", "@container": "@index" },
+      "examples": { "@id": "core:examples", "@container": "@list" }
+    }
+  ],
 
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
-    "ContextDefinition": "core:ContextDefinition",
-    "Vocabulary": "core:Vocabulary",
-    "Concept": "core:Concept",
-    "Property": "core:Property",
-    "Class": "core:Class",
-    "Directive": "core:Directive",
-
-    "id": { "@id": "core:id", "@type": "@id" },
-    "type": { "@id": "core:type", "@type": "@id" },
-    "label": "rdfs:label",
-    "description": "rdfs:comment",
-    "status": "core:status",
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-    "modified": { "@id": "core:modified", "@type": "xsd:dateTime" },
-    "author": { "@id": "core:author", "@type": "@id" },
-    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
-    "version": "core:version",
-    "license": { "@id": "core:license", "@type": "@id" },
-    "extends": { "@id": "core:extends", "@type": "@id" },
-    "example": "core:example",
-
-    "terms": { "@id": "core:hasTerm", "@container": "@index" },
-    "types": { "@id": "core:hasType", "@container": "@index" },
-    "examples": { "@id": "core:examples", "@container": "@list" }
-  },
-
-  "@id": "https://huijoohwee.github.io/schema/core.jsonld#Core:v1.0",
-  "@type": "Vocabulary",
+  "@id": "https://huijoohwee.github.io/schema/core.jsonld",
+  "@type": ["owl:Ontology", "schema:Dataset"],
 
   "meta": {
-    "title": "Core Vocabulary",
-    "description": "Neutral baseline vocabulary for cross-project alignment: identifiers, lifecycle, provenance, and structural primitives.",
-    "version": "1.0.0",
-    "maintainer": "https://github.com/huijoohwee",
+    "@type": "schema:Dataset",
+    "title": "Core Vocabulary Ontology",
+    "description": "Foundational RDF vocabulary providing baseline classes and properties for cross-project semantic alignment",
+    "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26T00:00:00Z",
-    "updated": "2025-10-09T00:00:00Z"
+    "conformsTo": [
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://www.w3.org/TR/owl2-overview/",
+      "https://www.w3.org/2004/02/skos/"
+    ],
+    "versionInfo": "1.1.0",
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2024-12-19T00:00:00Z",
+    "maintainer": "https://huijoohwee.github.io"
   },
 
-  "terms": {
-    "id": {
+  "@graph": [
+    {
       "@id": "core:id",
-      "@type": "Property",
-      "label": "id",
+      "@type": "rdf:Property",
+      "label": "identifier",
       "description": "Canonical identifier (IRI) for an entity",
+      "domain": "owl:Thing",
       "range": "xsd:anyURI"
     },
-    "type": {
+    {
       "@id": "core:type",
-      "@type": "Property",
+      "@type": "rdf:Property",
       "label": "type",
-      "description": "Primary type or classification of an entity"
+      "description": "Primary type or classification of an entity",
+      "domain": "owl:Thing",
+      "range": "rdfs:Class"
     },
-    "label": {
+    {
       "@id": "core:label",
-      "@type": "Property",
+      "@type": "rdf:Property",
       "label": "label",
-      "description": "Human-readable short name"
+      "description": "Human-readable short name",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
     },
-    "description": {
+    {
       "@id": "core:description",
-      "@type": "Property",
-      "label": "description",
-      "description": "Long-form textual description"
+      "@type": "rdf:Property",
+      "label": "description", 
+      "description": "Long-form textual description",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
     },
-    "status": {
+    {
       "@id": "core:status",
-      "@type": "Property",
+      "@type": "rdf:Property",
       "label": "status",
-      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)"
+      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
     },
-    "created": {
+    {
       "@id": "core:created",
-      "@type": "Property",
+      "@type": "rdf:Property",
       "label": "created",
       "description": "Creation timestamp",
+      "domain": "owl:Thing",
       "range": "xsd:dateTime"
     },
-    "modified": {
+    {
       "@id": "core:modified",
-      "@type": "Property",
+      "@type": "rdf:Property",
       "label": "modified",
       "description": "Last modified timestamp",
+      "domain": "owl:Thing",
       "range": "xsd:dateTime"
     },
-    "author": {
-      "@id": "core:author",
-      "@type": "Property",
-      "label": "author",
-      "description": "Agent or organization responsible for the entity"
-    },
-    "maintainer": {
-      "@id": "core:maintainer",
-      "@type": "Property",
-      "label": "maintainer",
-      "description": "Primary maintainer or steward URI"
-    },
-    "version": {
-      "@id": "core:version",
-      "@type": "Property",
-      "label": "version",
-      "description": "Semantic version string"
-    },
-    "license": {
-      "@id": "core:license",
-      "@type": "Property",
-      "label": "license",
-      "description": "License IRI"
-    },
-    "extends": {
-      "@id": "core:extends",
-      "@type": "Property",
-      "label": "extends",
-      "description": "Reference to a parent or base vocabulary/context"
-    },
-    "example": {
-      "@id": "core:example",
-      "@type": "Property",
-      "label": "example",
-      "description": "Usage example or snippet"
-    }
-  },
-
-  "types": {
-    "Vocabulary": {
-      "@id": "core:Vocabulary",
-      "@type": "Class",
-      "label": "Vocabulary",
-      "description": "A named collection of term definitions and metadata"
-    },
-    "Concept": {
-      "@id": "core:Concept",
-      "@type": "Class",
-      "label": "Concept",
-      "description": "Reusable semantic building block (domain-agnostic)"
-    },
-    "Property": {
-      "@id": "core:Property",
-      "@type": "Class",
-      "label": "Property",
-      "description": "Predicate or attribute definition"
-    },
-    "Class": {
-      "@id": "core:Class",
-      "@type": "Class",
-      "label": "Class",
-      "description": "Entity class or type definition"
-    },
-    "Directive": {
-      "@id": "core:Directive",
-      "@type": "Class",
-      "label": "Directive",
-      "description": "Operational directive or instruction set"
-    }
-  },
-
-  "examples": [
     {
-      "id": "https://example.org/doc/1",
-      "type": "core:Directive",
-      "label": "Example Directive",
-      "description": "Small artifact demonstrating core term usage",
-      "status": "core:status",
-      "created": "2025-01-01T00:00:00Z",
-      "maintainer": "https://github.com/your-org"
+      "@id": "core:author",
+      "@type": "rdf:Property",
+      "label": "author",
+      "description": "Agent or organization responsible for the entity",
+      "domain": "owl:Thing",
+      "range": "foaf:Agent"
+    },
+    {
+      "@id": "core:maintainer",
+      "@type": "rdf:Property",
+      "label": "maintainer",
+      "description": "Primary maintainer or steward URI",
+      "domain": "owl:Thing",
+      "range": "foaf:Agent"
+    },
+    {
+      "@id": "core:version",
+      "@type": "rdf:Property",
+      "label": "version",
+      "description": "Semantic version string",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:license",
+      "@type": "rdf:Property",
+      "label": "license",
+      "description": "License IRI",
+      "domain": "owl:Thing",
+      "range": "xsd:anyURI"
+    },
+    {
+      "@id": "core:extends",
+      "@type": "rdf:Property",
+      "label": "extends",
+      "description": "Reference to a parent or base vocabulary/context",
+      "domain": "owl:Thing",
+      "range": "owl:Thing"
+    },
+    {
+      "@id": "core:example",
+      "@type": "rdf:Property",
+      "label": "example",
+      "description": "Usage example or snippet",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:Vocabulary",
+      "@type": "rdfs:Class",
+      "label": "Vocabulary",
+      "description": "A named collection of term definitions and metadata",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Concept",
+      "@type": "rdfs:Class",
+      "label": "Concept",
+      "description": "Reusable semantic building block (domain-agnostic)",
+      "subClassOf": "skos:Concept"
+    },
+    {
+      "@id": "core:Property",
+      "@type": "rdfs:Class",
+      "label": "Property",
+      "description": "Predicate or attribute definition",
+      "subClassOf": "rdf:Property"
+    },
+    {
+      "@id": "core:Class",
+      "@type": "rdfs:Class",
+      "label": "Class",
+      "description": "Entity class or type definition",
+      "subClassOf": "rdfs:Class"
+    },
+    {
+      "@id": "core:Directive",
+      "@type": "rdfs:Class",
+      "label": "Directive",
+      "description": "Operational directive or instruction set",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:ContextDefinition",
+      "@type": "rdfs:Class",
+      "label": "Context Definition",
+      "description": "JSON-LD context definition providing semantic mappings",
+      "subClassOf": "owl:Thing"
     }
   ]
 }

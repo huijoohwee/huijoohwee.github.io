@@ -1,42 +1,37 @@
 {
-  "@context": {
-    "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
-
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
-    "AreaList": "core:AreaList",
-    "areas": { "@id": "core:hasArea", "@type": "@id", "@container": "@list" },
-    "label": "rdfs:label",
-    "description": "rdfs:comment"
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "area": "https://huijoohwee.github.io/schema/project-areas.jsonld#",
+      "org": "http://www.w3.org/ns/org#",
+      
+      "AreaCollection": "area:AreaCollection",
+      "Area": "area:Area",
+      "areas": "area:hasArea",
+      "label": "skos:prefLabel",
+      "description": "skos:definition"
+    }
+  ],
+  
+  "meta": {
+    "@id": "https://huijoohwee.github.io/schema/project-areas.jsonld",
+    "@type": "owl:Ontology",
+    "dcterms:creator": "Hui Joo Hwee",
+    "owl:versionInfo": "2.3.0",
+    "dcterms:created": "2024-12-19",
+    "dcterms:modified": "2024-12-19",
+    "rdfs:comment": "Project area vocabulary for domain organization and categorization",
+    "owl:imports": "https://huijoohwee.github.io/schema/base.jsonld"
   },
-  "@id": "https://huijoohwee.github.io/schema/project-areas.jsonld",
-  "@type": "AreaList",
-  "areas": [
-    "area:abstraction",
+  
+  "@graph": [
+    {
+      "@id": "area:AreaCollection",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "Project Area Vocabulary Collection",
+      "skos:definition": "Comprehensive collection of project areas for domain organization and categorization",
+      "skos:hasTopConcept": [
+        "area:abstraction",
     "area:access",
     "area:adapter",
     "area:alignment",
@@ -363,7 +358,9 @@
     "area:workflow",
     "area:workspace",
     "area:wrapper-function",
-    "area:zero-console-spam",
-    "area:zero-error-build"
+        "area:zero-console-spam",
+        "area:zero-error-build"
+      ]
+    }
   ]
 }

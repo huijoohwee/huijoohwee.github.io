@@ -1,0 +1,26 @@
+{
+  "name": "jsonld-schema-validation",
+  "version": "1.0.0",
+  "description": "Validation suite for JSON-LD schema files",
+  "main": "validate-jsonld.js",
+  "scripts": {
+    "validate": "node validate-jsonld.js",
+    "test": "node test-suite.js",
+    "test:verbose": "node test-suite.js --verbose",
+    "validate:ci": "node validate-jsonld.js && node test-suite.js"
+  },
+  "keywords": [
+    "jsonld",
+    "rdf",
+    "schema",
+    "validation",
+    "semantic-web"
+  ],
+  "author": "Hui Joo Hwee",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,36 +1,281 @@
-# This is a basic workflow to help you get started with Actions
+name: Continuous Integration
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [ main, master ]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  SCHEMA_DIR: schema
+  VALIDATION_DIR: validation
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  lint-and-format:
     runs-on: ubuntu-latest
+    name: Lint and Format Check
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, w0r1d!
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Check JSON-LD formatting
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "🔍 Checking JSON-LD file formatting..."
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Checking format of $f"
+            if ! jq empty "$f" 2>/dev/null; then
+              echo "❌ Invalid JSON in $f"
+              exit 1
+            fi
+            # Check if file is properly formatted
+            if ! jq --tab . "$f" | diff -q "$f" - >/dev/null; then
+              echo "⚠️ $f could be better formatted"
+            else
+              echo "✅ $f is properly formatted"
+            fi
+          done
+
+      - name: Validate schema file names
+        run: |
+          echo "📝 Validating schema file naming conventions..."
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            basename=$(basename "$f" .jsonld)
+            if [[ ! "$basename" =~ ^[a-z0-9-]+$ ]]; then
+              echo "❌ Invalid filename: $f (should be lowercase with hyphens)"
+              exit 1
+            fi
+          done
+          echo "✅ All filenames follow conventions"
+
+  schema-validation:
+    runs-on: ubuntu-latest
+    name: Schema Validation
+    needs: lint-and-format
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install validation dependencies
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          if [ -f package.json ]; then
+            npm ci --only=production
+          else
+            echo "No package.json found in validation directory"
+          fi
+
+      - name: Run JSON-LD syntax validation
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          if [ -f validate-jsonld.js ]; then
+            echo "🔍 Running JSON-LD syntax validation..."
+            node validate-jsonld.js
+          else
+            echo "⚠️ No validation script found, running basic JSON validation"
+            for f in ../${SCHEMA_DIR}/*.jsonld; do
+              echo "Validating $f"
+              npx jsonlint -q "$f"
+            done
+          fi
+
+      - name: Run comprehensive test suite
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          if [ -f test-suite.js ]; then
+            echo "🧪 Running comprehensive schema test suite..."
+            node test-suite.js
+          else
+            echo "⚠️ No test suite found, skipping comprehensive tests"
+          fi
+
+  security-check:
+    runs-on: ubuntu-latest
+    name: Security Check
+    needs: lint-and-format
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for sensitive data
+        run: |
+          echo "🔒 Checking for sensitive data in schema files..."
+          
+          # Check for potential secrets
+          if grep -r -i "password\|secret\|key\|token" ${SCHEMA_DIR}/ --include="*.jsonld"; then
+            echo "⚠️ Potential sensitive data found in schema files"
+            echo "Please review the above matches"
+          else
+            echo "✅ No obvious sensitive data found"
+          fi
+          
+          # Check for suspicious URLs
+          if grep -r "javascript:\|data:\|file:" ${SCHEMA_DIR}/ --include="*.jsonld"; then
+            echo "❌ Suspicious URL schemes found"
+            exit 1
+          else
+            echo "✅ No suspicious URL schemes found"
+          fi
+
+      - name: Validate external references
+        run: |
+          echo "🌐 Checking external references..."
+          
+          # Extract URLs from schema files and check if they're HTTPS
+          urls=$(grep -r -o 'https\?://[^"]*' ${SCHEMA_DIR}/ --include="*.jsonld" | cut -d: -f2- | sort -u)
+          
+          for url in $urls; do
+            if [[ $url == http://* ]]; then
+              echo "⚠️ HTTP URL found: $url (consider HTTPS)"
+            fi
+          done
+          
+          echo "✅ External reference check completed"
+
+  compatibility-test:
+    runs-on: ubuntu-latest
+    name: Compatibility Test
+    needs: schema-validation
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install JSON-LD processor
+        run: npm install -g jsonld
+
+      - name: Test JSON-LD processing
+        run: |
+          echo "🔄 Testing JSON-LD processing compatibility..."
+          
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Testing JSON-LD processing for $f"
+            
+            # Test expansion
+            if node -e "
+              const jsonld = require('jsonld');
+              const fs = require('fs');
+              const doc = JSON.parse(fs.readFileSync('$f', 'utf8'));
+              jsonld.expand(doc)
+                .then(() => console.log('✅ Expansion successful'))
+                .catch(err => {
+                  console.error('❌ Expansion failed:', err.message);
+                  process.exit(1);
+                });
+            "; then
+              echo "✅ $f: JSON-LD expansion successful"
+            else
+              echo "❌ $f: JSON-LD expansion failed"
+              exit 1
+            fi
+          done
+
+      - name: Test RDF conversion
+        run: |
+          echo "🔄 Testing RDF conversion..."
+          
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Testing RDF conversion for $f"
+            
+            if node -e "
+              const jsonld = require('jsonld');
+              const fs = require('fs');
+              const doc = JSON.parse(fs.readFileSync('$f', 'utf8'));
+              jsonld.toRDF(doc, {format: 'application/n-quads'})
+                .then(() => console.log('✅ RDF conversion successful'))
+                .catch(err => {
+                  console.error('❌ RDF conversion failed:', err.message);
+                  process.exit(1);
+                });
+            "; then
+              echo "✅ $f: RDF conversion successful"
+            else
+              echo "❌ $f: RDF conversion failed"
+              exit 1
+            fi
+          done
+
+  generate-report:
+    runs-on: ubuntu-latest
+    name: Generate CI Report
+    needs: [lint-and-format, schema-validation, security-check, compatibility-test]
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate CI summary
+        run: |
+          echo "## 📊 Continuous Integration Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Job Status" >> $GITHUB_STEP_SUMMARY
+          echo "- **Lint and Format**: ${{ needs.lint-and-format.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Schema Validation**: ${{ needs.schema-validation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Security Check**: ${{ needs.security-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Compatibility Test**: ${{ needs.compatibility-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Schema Files Processed" >> $GITHUB_STEP_SUMMARY
+          echo "$(ls ${SCHEMA_DIR}/*.jsonld | wc -l) JSON-LD schema files validated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Generated**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const jobs = {
+              'lint-and-format': '${{ needs.lint-and-format.result }}',
+              'schema-validation': '${{ needs.schema-validation.result }}',
+              'security-check': '${{ needs.security-check.result }}',
+              'compatibility-test': '${{ needs.compatibility-test.result }}'
+            };
+            
+            const allPassed = Object.values(jobs).every(status => status === 'success');
+            const statusIcon = allPassed ? '✅' : '❌';
+            
+            const comment = `## ${statusIcon} CI Report
+            
+            ### Job Results
+            ${Object.entries(jobs).map(([job, status]) => 
+              `- **${job}**: ${status === 'success' ? '✅' : '❌'} ${status}`
+            ).join('\n')}
+            
+            ### Summary
+            ${allPassed ? 
+              '🎉 All checks passed! The schema changes are ready for review.' : 
+              '⚠️ Some checks failed. Please review the job logs for details.'}
+            
+            **Generated**: ${new Date().toISOString()}`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });}]}]}

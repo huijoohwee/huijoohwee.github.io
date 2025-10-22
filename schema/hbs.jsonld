@@ -59,11 +59,12 @@
   "meta": {
     "title": "HBS Templating Engine Context",
     "description": "Handlebars templating layer context mapping templates, partials, helpers and memoization hints to JSON-LD terms; includes validator guidance and example pointers",
-    "version": "1.1.0",
+    "creator": "https://github.com/huijoohwee",
+    "versionInfo": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
     "created": "2025-10-05",
-    "updated": "2025-10-09",
+    "modified": "2025-10-09",
     "layer": "templating-engine",
     "responsibilities": [
       "dynamic-content-generation",

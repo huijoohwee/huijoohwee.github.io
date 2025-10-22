@@ -774,632 +774,578 @@
     <!-- 主容器 -->
     <div class="main-container">
         <!-- 左侧边栏 -->
-        <div class="sidebar" id="sidebar">
-            <!-- 商品分类 -->
+        <aside class="sidebar">
             <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-icon category-icon">📂</span>
+                <div class="section-title">
+                    <div class="section-icon category-icon">📦</div>
                     商品分类
-                </h3>
+                </div>
                 <ul class="category-list">
-                    <li class="category-item active" data-category="all">
+                    <li class="category-item active" onclick="filterByCategory('all')">
                         <span>全部商品</span>
-                        <span class="category-count">1,234</span>
+                        <span class="category-count">156</span>
                     </li>
-                    <li class="category-item" data-category="electronics">
+                    <li class="category-item" onclick="filterByCategory('electronics')">
                         <span>数码电子</span>
-                        <span class="category-count">456</span>
+                        <span class="category-count">45</span>
                     </li>
-                    <li class="category-item" data-category="fashion">
-                        <span>服装时尚</span>
-                        <span class="category-count">789</span>
+                    <li class="category-item" onclick="filterByCategory('clothing')">
+                        <span>服装配饰</span>
+                        <span class="category-count">38</span>
                     </li>
-                    <li class="category-item" data-category="home">
-                        <span>家居生活</span>
-                        <span class="category-count">321</span>
+                    <li class="category-item" onclick="filterByCategory('home')">
+                        <span>家居用品</span>
+                        <span class="category-count">29</span>
                     </li>
-                    <li class="category-item" data-category="books">
-                        <span>图书文具</span>
-                        <span class="category-count">234</span>
+                    <li class="category-item" onclick="filterByCategory('beauty')">
+                        <span>美妆护肤</span>
+                        <span class="category-count">24</span>
                     </li>
-                    <li class="category-item" data-category="sports">
+                    <li class="category-item" onclick="filterByCategory('sports')">
                         <span>运动户外</span>
-                        <span class="category-count">167</span>
+                        <span class="category-count">20</span>
                     </li>
                 </ul>
             </div>
 
-            <!-- 价格筛选 -->
             <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-icon filter-icon">💰</span>
-                    价格筛选
-                </h3>
+                <div class="section-title">
+                    <div class="section-icon filter-icon">💰</div>
+                    价格区间
+                </div>
                 <div class="price-filter">
                     <input type="number" class="price-input" placeholder="最低价" id="minPrice">
                     <input type="number" class="price-input" placeholder="最高价" id="maxPrice">
                 </div>
-                <button class="filter-btn" onclick="applyPriceFilter()">应用筛选</button>
+                <button class="filter-btn" onclick="filterByPrice()">应用筛选</button>
             </div>
 
-            <!-- AI智能推荐 -->
             <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-icon ai-icon">🤖</span>
-                    AI智能推荐
-                </h3>
                 <div class="ai-panel">
-                    <div class="ai-title">🎯 个性化推荐</div>
+                    <div class="ai-title">🤖 AI 智能推荐</div>
                     <div class="ai-stats">
-                        <span>匹配度: 87%</span>
-                        <span>Token: 2,340</span>
+                        <span>今日推荐</span>
+                        <span>12件商品</span>
                     </div>
-                    <button class="ai-btn" onclick="generateRecommendations()">生成推荐</button>
+                    <div class="ai-stats">
+                        <span>节省预算</span>
+                        <span style="color: var(--success-color);">¥2,340</span>
+                    </div>
+                    <button class="ai-btn" onclick="showAIRecommendations()">查看AI推荐</button>
                 </div>
             </div>
-        </div>
+        </aside>
 
         <!-- 主内容区 -->
-        <div class="content-area">
+        <main class="content-area">
             <div class="content-header">
                 <h1 class="content-title">热门商品</h1>
                 <div class="view-controls">
-                    <button class="view-btn active" onclick="setView('grid')">网格</button>
-                    <button class="view-btn" onclick="setView('list')">列表</button>
-                    <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                    <button class="view-btn active" onclick="changeView('grid')">网格</button>
+                    <button class="view-btn" onclick="changeView('list')">列表</button>
+                    <select class="sort-select" onchange="sortProducts(this.value)">
                         <option value="default">默认排序</option>
-                        <option value="price-low">价格从低到高</option>
-                        <option value="price-high">价格从高到低</option>
-                        <option value="rating">评分最高</option>
-                        <option value="newest">最新上架</option>
+                        <option value="price-asc">价格从低到高</option>
+                        <option value="price-desc">价格从高到低</option>
+                        <option value="sales">销量优先</option>
+                        <option value="rating">评分优先</option>
                     </select>
                 </div>
             </div>
 
-            <!-- 商品网格 -->
             <div class="product-grid" id="productGrid">
-                <!-- 商品卡片将通过JavaScript动态生成 -->
+                <!-- 商品将通过JavaScript动态加载 -->
             </div>
-        </div>
+        </main>
     </div>
 
     <!-- 购物车侧边栏 -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h3 class="cart-title">购物车</h3>
-            <button class="close-cart" onclick="toggleCart()">×</button>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
         </div>
-        
         <div class="cart-items" id="cartItems">
-            <!-- 购物车商品将通过JavaScript动态生成 -->
+            <!-- 购物车商品将通过JavaScript动态加载 -->
         </div>
-        
         <div class="cart-footer">
             <div class="cart-total">
                 <span>总计:</span>
-                <span id="cartTotal">¥0.00</span>
+                <span id="cartTotal">¥1,234</span>
             </div>
-            <button class="checkout-btn" onclick="checkout()">立即结算</button>
+            <button class="checkout-btn" onclick="checkout()">去结算</button>
         </div>
     </div>
 
     <!-- Token预算显示 -->
     <div class="token-display">
-        <div class="token-title">💎 Token预算使用</div>
+        <div class="token-title">💰 预算使用情况</div>
         <div class="token-item">
-            <span>商品推荐</span>
-            <span id="recommendationTokens">8,500</span>
+            <span>已使用:</span>
+            <span id="usedTokens">¥2,340</span>
         </div>
         <div class="token-item">
-            <span>搜索优化</span>
-            <span id="searchTokens">3,200</span>
-        </div>
-        <div class="token-item">
-            <span>用户分析</span>
-            <span id="analyticsTokens">5,800</span>
-        </div>
-        <div class="token-item">
-            <span>库存管理</span>
-            <span id="inventoryTokens">4,100</span>
+            <span>剩余:</span>
+            <span id="remainingTokens">¥7,660</span>
         </div>
         <div class="token-item token-total">
-            <span>总使用</span>
-            <span id="totalTokens">21,600 / 53,000</span>
+            <span>总预算:</span>
+            <span id="totalTokens">¥10,000</span>
         </div>
     </div>
 
     <script>
-        // 动态字段配置
-        const dynamicFields = {
-            TOKEN_BUDGET_TOTAL: {
-                value: 53000,
-                efficiency_target: 0.85,
-                optimization_strategy: "智能推荐+缓存优化"
-            },
-            ECOMMERCE_CATEGORIES: {
-                electronics: { name: "数码电子", count: 456, tokens: 8500 },
-                fashion: { name: "服装时尚", count: 789, tokens: 6200 },
-                home: { name: "家居生活", count: 321, tokens: 4800 },
-                books: { name: "图书文具", count: 234, tokens: 3200 },
-                sports: { name: "运动户外", count: 167, tokens: 2800 }
-            },
-            AI_RECOMMENDATION: {
-                algorithm: "协同过滤+深度学习",
-                accuracy: 0.87,
-                token_cost_per_recommendation: 15
-            },
-            LEAN_STARTUP_METRICS: {
-                conversion_rate: 0.034,
-                customer_acquisition_cost: 45,
-                lifetime_value: 280
-            }
-        };
-
-        // 模拟商品数据
+        // 商品数据
         const products = [
             {
                 id: 1,
-                title: "iPhone 15 Pro Max",
-                description: "最新款苹果手机，A17 Pro芯片，钛金属设计",
+                name: "iPhone 15 Pro Max",
+                description: "A17 Pro芯片，钛金属设计，专业级摄像系统",
                 price: 9999,
                 originalPrice: 10999,
                 category: "electronics",
-                image: "📱",
                 rating: 4.8,
-                badge: "热销"
+                sales: 1250,
+                badge: "热销",
+                emoji: "📱"
             },
             {
                 id: 2,
-                title: "Nike Air Max 270",
-                description: "经典运动鞋，舒适透气，多色可选",
-                price: 899,
-                originalPrice: 1299,
-                category: "sports",
-                image: "👟",
-                rating: 4.6,
-                badge: "限时特价"
+                name: "MacBook Air M3",
+                description: "M3芯片，13英寸，轻薄便携，续航18小时",
+                price: 8999,
+                originalPrice: 9999,
+                category: "electronics",
+                rating: 4.9,
+                sales: 890,
+                badge: "新品",
+                emoji: "💻"
             },
             {
                 id: 3,
-                title: "MacBook Pro 16英寸",
-                description: "M3 Max芯片，专业级性能，创作者首选",
-                price: 19999,
-                originalPrice: 21999,
+                name: "AirPods Pro 2",
+                description: "主动降噪，空间音频，USB-C充电",
+                price: 1899,
+                originalPrice: 2199,
                 category: "electronics",
-                image: "💻",
-                rating: 4.9,
-                badge: "新品"
+                rating: 4.7,
+                sales: 2100,
+                badge: "限时",
+                emoji: "🎧"
             },
             {
                 id: 4,
-                title: "Zara 羊毛大衣",
-                description: "秋冬新款，100%羊毛，时尚保暖",
-                price: 1299,
-                originalPrice: 1899,
-                category: "fashion",
-                image: "🧥",
-                rating: 4.4,
-                badge: "秋冬新品"
+                name: "时尚羽绒服",
+                description: "冬季保暖，轻薄设计，多色可选",
+                price: 599,
+                originalPrice: 899,
+                category: "clothing",
+                rating: 4.5,
+                sales: 567,
+                badge: "特价",
+                emoji: "🧥"
             },
             {
                 id: 5,
-                title: "戴森V15吸尘器",
-                description: "无线吸尘器，强劲吸力，智能检测",
-                price: 3999,
-                originalPrice: 4499,
+                name: "智能扫地机器人",
+                description: "激光导航，自动充电，APP控制",
+                price: 1299,
+                originalPrice: 1699,
                 category: "home",
-                image: "🔌",
-                rating: 4.7,
-                badge: "推荐"
+                rating: 4.6,
+                sales: 445,
+                badge: "推荐",
+                emoji: "🤖"
             },
             {
                 id: 6,
-                title: "《深度学习》",
-                description: "Ian Goodfellow著，AI领域经典教材",
-                price: 128,
-                originalPrice: 168,
-                category: "books",
-                image: "📚",
-                rating: 4.5,
-                badge: "畅销"
+                name: "SK-II神仙水",
+                description: "护肤精华，改善肤质，抗衰老",
+                price: 1299,
+                originalPrice: 1599,
+                category: "beauty",
+                rating: 4.8,
+                sales: 678,
+                badge: "明星",
+                emoji: "💄"
+            },
+            {
+                id: 7,
+                name: "Nike运动鞋",
+                description: "透气舒适，专业运动，时尚设计",
+                price: 699,
+                originalPrice: 899,
+                category: "sports",
+                rating: 4.4,
+                sales: 1234,
+                badge: "运动",
+                emoji: "👟"
+            },
+            {
+                id: 8,
+                name: "iPad Air",
+                description: "M1芯片，10.9英寸，支持Apple Pencil",
+                price: 4399,
+                originalPrice: 4999,
+                category: "electronics",
+                rating: 4.7,
+                sales: 756,
+                badge: "学习",
+                emoji: "📱"
             }
         ];
 
         // 购物车数据
-        let cart = [
-            { id: 1, title: "iPhone 15 Pro Max", price: 9999, quantity: 1, image: "📱" },
-            { id: 2, title: "Nike Air Max 270", price: 899, quantity: 2, image: "👟" },
-            { id: 5, title: "戴森V15吸尘器", price: 3999, quantity: 1, image: "🔌" }
-        ];
-
-        // 当前筛选状态
+        let cart = [];
+        let wishlist = [];
         let currentCategory = 'all';
-        let currentSort = 'default';
         let currentView = 'grid';
+        let currentSort = 'default';
 
         // 初始化页面
-        function initializePage() {
+        document.addEventListener('DOMContentLoaded', function() {
             renderProducts();
             renderCart();
             updateCartBadge();
             updateTokenDisplay();
-            setupEventListeners();
-        }
+        });
 
-        // 渲染商品列表
+        // 渲染商品
         function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            let filteredProducts = products;
-
-            // 分类筛选
-            if (currentCategory !== 'all') {
-                filteredProducts = products.filter(p => p.category === currentCategory);
-            }
-
-            // 排序
-            switch (currentSort) {
-                case 'price-low':
-                    filteredProducts.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    filteredProducts.sort((a, b) => b.price - a.price);
-                    break;
-                case 'rating':
-                    filteredProducts.sort((a, b) => b.rating - a.rating);
-                    break;
-            }
-
-            grid.innerHTML = filteredProducts.map(product => `
-                <div class="product-card" onclick="viewProduct(${product.id})">
+            const productGrid = document.getElementById('productGrid');
+            let filteredProducts = filterProducts();
+            filteredProducts = sortProductsList(filteredProducts);
+            
+            productGrid.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
                     <div class="product-image">
-                        ${product.image}
+                        ${product.emoji}
                         ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">${product.title}</h3>
-                        <p class="product-description">${product.description}</p>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
                         <div class="product-price">
-                            <span class="current-price">¥${product.price.toLocaleString()}</span>
-                            ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice.toLocaleString()}</span>` : ''}
-                            ${product.originalPrice ? `<span class="discount">-${Math.round((1 - product.price / product.originalPrice) * 100)}%</span>` : ''}
+                            <span class="current-price">¥${product.price}</span>
+                            ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice}</span>` : ''}
+                            ${product.originalPrice ? `<span class="discount">-${Math.round((1 - product.price/product.originalPrice) * 100)}%</span>` : ''}
                         </div>
                         <div class="product-actions">
-                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">加入购物车</button>
-                            <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlistItem(${product.id})">❤️</button>
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">加入购物车</button>
+                            <button class="wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}" onclick="toggleWishlistItem(${product.id})">
+                                ${wishlist.includes(product.id) ? '❤️' : '🤍'}
+                            </button>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+                productGrid.appendChild(productCard);
+            });
         }
 
-        // 渲染购物车
-        function renderCart() {
-            const cartItems = document.getElementById('cartItems');
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-image">${item.image}</div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-title">${item.title}</div>
-                        <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
-                        <div class="quantity-controls">
-                            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                            <input type="number" class="qty-input" value="${item.quantity}" min="1" onchange="setQuantity(${item.id}, this.value)">
-                            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                            <button class="qty-btn" onclick="removeFromCart(${item.id})" style="margin-left: 8px; color: var(--cart-red);">🗑️</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('cartTotal').textContent = `¥${total.toLocaleString()}`;
+        // 筛选商品
+        function filterProducts() {
+            let filtered = products;
+            
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(product => product.category === currentCategory);
+            }
+            
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            
+            if (minPrice) {
+                filtered = filtered.filter(product => product.price >= parseInt(minPrice));
+            }
+            
+            if (maxPrice) {
+                filtered = filtered.filter(product => product.price <= parseInt(maxPrice));
+            }
+            
+            return filtered;
         }
 
-        // 更新购物车徽章
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.textContent = totalItems;
+        // 排序商品
+        function sortProductsList(products) {
+            const sorted = [...products];
+            
+            switch (currentSort) {
+                case 'price-asc':
+                    return sorted.sort((a, b) => a.price - b.price);
+                case 'price-desc':
+                    return sorted.sort((a, b) => b.price - a.price);
+                case 'sales':
+                    return sorted.sort((a, b) => b.sales - a.sales);
+                case 'rating':
+                    return sorted.sort((a, b) => b.rating - a.rating);
+                default:
+                    return sorted;
+            }
         }
 
-        // 更新Token显示
-        function updateTokenDisplay() {
-            const totalUsed = 8500 + 3200 + 5800 + 4100;
-            document.getElementById('totalTokens').textContent = `${totalUsed.toLocaleString()} / ${dynamicFields.TOKEN_BUDGET_TOTAL.value.toLocaleString()}`;
-        }
-
-        // 设置事件监听器
-        function setupEventListeners() {
-            // 分类点击
+        // 分类筛选
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // 更新分类选中状态
             document.querySelectorAll('.category-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    currentCategory = item.dataset.category;
-                    renderProducts();
-                });
+                item.classList.remove('active');
             });
+            event.target.closest('.category-item').classList.add('active');
+            
+            renderProducts();
+        }
 
-            // 搜索功能
-            document.getElementById('searchInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchProducts();
-                }
-            });
+        // 价格筛选
+        function filterByPrice() {
+            renderProducts();
+        }
+
+        // 排序
+        function sortProducts(sortType) {
+            currentSort = sortType;
+            renderProducts();
         }
 
         // 搜索商品
         function searchProducts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            if (!query) return;
-
-            const results = products.filter(p => 
-                p.title.toLowerCase().includes(query) || 
-                p.description.toLowerCase().includes(query)
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
             );
-
-            const grid = document.getElementById('productGrid');
-            if (results.length === 0) {
-                grid.innerHTML = '<div class="loading">未找到相关商品</div>';
-            } else {
-                grid.innerHTML = results.map(product => `
-                    <div class="product-card" onclick="viewProduct(${product.id})">
-                        <div class="product-image">
-                            ${product.image}
-                            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+            
+            if (filtered.length === 0) {
+                productGrid.innerHTML = '<div class="loading">未找到相关商品</div>';
+                return;
+            }
+            
+            filtered.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        ${product.emoji}
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">
+                            <span class="current-price">¥${product.price}</span>
+                            ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice}</span>` : ''}
+                            ${product.originalPrice ? `<span class="discount">-${Math.round((1 - product.price/product.originalPrice) * 100)}%</span>` : ''}
                         </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${product.title}</h3>
-                            <p class="product-description">${product.description}</p>
-                            <div class="product-price">
-                                <span class="current-price">¥${product.price.toLocaleString()}</span>
-                                ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice.toLocaleString()}</span>` : ''}
-                            </div>
-                            <div class="product-actions">
-                                <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">加入购物车</button>
-                                <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlistItem(${product.id})">❤️</button>
-                            </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">加入购物车</button>
+                            <button class="wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}" onclick="toggleWishlistItem(${product.id})">
+                                ${wishlist.includes(product.id) ? '❤️' : '🤍'}
+                            </button>
                         </div>
                     </div>
-                `).join('');
-            }
-
-            // 更新搜索Token使用
-            const currentTokens = parseInt(document.getElementById('searchTokens').textContent);
-            document.getElementById('searchTokens').textContent = (currentTokens + 25).toLocaleString();
-            updateTokenDisplay();
-        }
-
-        // 排序商品
-        function sortProducts() {
-            currentSort = document.getElementById('sortSelect').value;
-            renderProducts();
-        }
-
-        // 设置视图模式
-        function setView(view) {
-            currentView = view;
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const grid = document.getElementById('productGrid');
-            if (view === 'list') {
-                grid.style.gridTemplateColumns = '1fr';
-            } else {
-                grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
-            }
+                `;
+                productGrid.appendChild(productCard);
+            });
         }
 
         // 添加到购物车
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
-
+            
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({
-                    id: product.id,
-                    title: product.title,
-                    price: product.price,
-                    quantity: 1,
-                    image: product.image
+                    ...product,
+                    quantity: 1
                 });
             }
-
+            
             renderCart();
             updateCartBadge();
-            showNotification(`${product.title} 已添加到购物车`, 'success');
+            updateTokenDisplay();
+            
+            // 显示添加成功提示
+            showNotification('商品已添加到购物车！');
         }
 
-        // 更新商品数量
+        // 渲染购物车
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="loading">购物车为空</div>';
+                return;
+            }
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-image">${item.emoji}</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">¥${item.price}</div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <input type="number" class="qty-input" value="${item.quantity}" onchange="setQuantity(${item.id}, this.value)">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            updateCartTotal();
+        }
+
+        // 更新购物车数量
         function updateQuantity(productId, change) {
             const item = cart.find(item => item.id === productId);
             if (item) {
-                item.quantity = Math.max(1, item.quantity + change);
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(item => item.id !== productId);
+                }
                 renderCart();
                 updateCartBadge();
+                updateTokenDisplay();
             }
         }
 
-        // 设置商品数量
+        // 设置购物车数量
         function setQuantity(productId, quantity) {
             const item = cart.find(item => item.id === productId);
             if (item) {
                 item.quantity = Math.max(1, parseInt(quantity) || 1);
                 renderCart();
                 updateCartBadge();
+                updateTokenDisplay();
             }
         }
 
-        // 从购物车移除
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            renderCart();
-            updateCartBadge();
+        // 更新购物车徽标
+        function updateCartBadge() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartBadge').textContent = totalItems;
         }
 
-        // 切换购物车显示
+        // 更新购物车总计
+        function updateCartTotal() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cartTotal').textContent = `¥${total.toLocaleString()}`;
+        }
+
+        // 切换购物车
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
             cartSidebar.classList.toggle('open');
         }
 
-        // 结算
-        function checkout() {
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            showNotification(`订单总额: ¥${total.toLocaleString()}，正在跳转到支付页面...`, 'info');
-            
-            setTimeout(() => {
-                cart = [];
-                renderCart();
-                updateCartBadge();
-                toggleCart();
-                showNotification('支付成功！感谢您的购买', 'success');
-            }, 2000);
-        }
-
-        // 生成AI推荐
-        function generateRecommendations() {
-            showNotification('🤖 AI正在分析您的偏好...', 'info');
-            
-            setTimeout(() => {
-                // 模拟AI推荐逻辑
-                const recommendedProducts = products.slice(0, 3);
-                const grid = document.getElementById('productGrid');
-                
-                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 20px; background: var(--surface-color); border-radius: 8px; margin-bottom: 20px;"><h3>🎯 AI为您推荐</h3><p style="color: var(--text-secondary); margin-top: 8px;">基于您的浏览历史和偏好分析</p></div>' + 
-                    recommendedProducts.map(product => `
-                        <div class="product-card" onclick="viewProduct(${product.id})" style="border: 2px solid var(--ecommerce-orange);">
-                            <div class="product-image">
-                                ${product.image}
-                                <div class="product-badge" style="background: var(--ecommerce-orange);">AI推荐</div>
-                            </div>
-                            <div class="product-info">
-                                <h3 class="product-title">${product.title}</h3>
-                                <p class="product-description">${product.description}</p>
-                                <div class="product-price">
-                                    <span class="current-price">¥${product.price.toLocaleString()}</span>
-                                    ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice.toLocaleString()}</span>` : ''}
-                                </div>
-                                <div class="product-actions">
-                                    <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">加入购物车</button>
-                                    <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlistItem(${product.id})">❤️</button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                
-                // 更新推荐Token使用
-                const currentTokens = parseInt(document.getElementById('recommendationTokens').textContent);
-                document.getElementById('recommendationTokens').textContent = (currentTokens + 150).toLocaleString();
-                updateTokenDisplay();
-                
-                showNotification('✨ AI推荐已生成！匹配度87%', 'success');
-            }, 1500);
-        }
-
-        // 应用价格筛选
-        function applyPriceFilter() {
-            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-            const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
-            
-            const filteredProducts = products.filter(p => p.price >= minPrice && p.price <= maxPrice);
-            
-            const grid = document.getElementById('productGrid');
-            if (filteredProducts.length === 0) {
-                grid.innerHTML = '<div class="loading">该价格范围内暂无商品</div>';
-            } else {
-                grid.innerHTML = filteredProducts.map(product => `
-                    <div class="product-card" onclick="viewProduct(${product.id})">
-                        <div class="product-image">
-                            ${product.image}
-                            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${product.title}</h3>
-                            <p class="product-description">${product.description}</p>
-                            <div class="product-price">
-                                <span class="current-price">¥${product.price.toLocaleString()}</span>
-                                ${product.originalPrice ? `<span class="original-price">¥${product.originalPrice.toLocaleString()}</span>` : ''}
-                            </div>
-                            <div class="product-actions">
-                                <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">加入购物车</button>
-                                <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlistItem(${product.id})">❤️</button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // 查看商品详情
-        function viewProduct(productId) {
-            const product = products.find(p => p.id === productId);
-            showNotification(`正在查看 ${product.title} 详情...`, 'info');
-        }
-
-        // 切换收藏
-        function toggleWishlistItem(productId) {
-            showNotification('已添加到收藏夹', 'success');
-        }
-
         // 切换收藏夹
         function toggleWishlist() {
-            showNotification('收藏夹功能开发中...', 'info');
+            showNotification('收藏夹功能开发中...');
+        }
+
+        // 切换收藏项
+        function toggleWishlistItem(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+            } else {
+                wishlist.push(productId);
+            }
+            renderProducts();
+            showNotification(wishlist.includes(productId) ? '已添加到收藏夹' : '已从收藏夹移除');
         }
 
         // 显示用户中心
         function showProfile() {
-            showNotification('用户中心功能开发中...', 'info');
+            showNotification('用户中心功能开发中...');
+        }
+
+        // 显示AI推荐
+        function showAIRecommendations() {
+            showNotification('AI推荐功能开发中...');
+        }
+
+        // 结算
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('购物车为空！');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            showNotification(`结算成功！总金额：¥${total.toLocaleString()}`);
+            
+            // 清空购物车
+            cart = [];
+            renderCart();
+            updateCartBadge();
+            updateTokenDisplay();
+            toggleCart();
+        }
+
+        // 切换视图
+        function changeView(viewType) {
+            currentView = viewType;
+            
+            // 更新视图按钮状态
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            showNotification(`已切换到${viewType === 'grid' ? '网格' : '列表'}视图`);
+        }
+
+        // 更新Token显示
+        function updateTokenDisplay() {
+            const used = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = 10000;
+            const remaining = total - used;
+            
+            document.getElementById('usedTokens').textContent = `¥${used.toLocaleString()}`;
+            document.getElementById('remainingTokens').textContent = `¥${remaining.toLocaleString()}`;
+            document.getElementById('totalTokens').textContent = `¥${total.toLocaleString()}`;
         }
 
         // 显示通知
-        function showNotification(message, type) {
+        function showNotification(message) {
+            // 创建通知元素
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
                 top: 80px;
                 right: 20px;
-                background: ${type === 'success' ? 'var(--success-color)' : type === 'error' ? 'var(--error-color)' : 'var(--primary-color)'};
+                background: var(--success-color);
                 color: white;
                 padding: 12px 20px;
-                border-radius: var(--border-radius);
+                border-radius: 6px;
                 box-shadow: var(--shadow);
-                z-index: 10000;
+                z-index: 1001;
                 font-size: 14px;
                 font-weight: 500;
-                opacity: 0;
-                transform: translateX(100%);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                max-width: 300px;
+                animation: slideIn 0.3s ease-out;
             `;
             notification.textContent = message;
+            
             document.body.appendChild(notification);
             
+            // 3秒后移除通知
             setTimeout(() => {
-                notification.style.opacity = '1';
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
-                }, 300);
+                notification.remove();
             }, 3000);
         }
-
-        // 初始化页面
-        initializePage();
-        
-        console.log('🛒 AIRVIO 智能电商平台已启动');
-        console.log('📊 动态字段配置:', dynamicFields);
-        console.log('🎯 AI推荐算法:', dynamicFields.AI_RECOMMENDATION);
     </script>
 </body>
 </html>

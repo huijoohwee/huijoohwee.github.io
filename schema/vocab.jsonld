@@ -1,60 +1,113 @@
 {
-  "@context": {
-    "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "vocab": "https://huijoohwee.github.io/schema/vocab.jsonld#",
+      
+      "Vocabulary": "rdfs:Class",
+      "Concept": "skos:Concept",
+      "Property": "rdf:Property",
+      "Class": "rdfs:Class",
+      
+      "domain": { "@id": "rdfs:domain", "@type": "@id" },
+      "range": { "@id": "rdfs:range", "@type": "@id" },
+      "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id" },
+      "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id" },
+      "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
+      "isDefinedBy": { "@id": "rdfs:isDefinedBy", "@type": "@id" },
+      
+      "terms": { "@id": "vocab:terms", "@container": "@index" },
+      "universalConcepts": { "@id": "vocab:universalConcepts", "@container": "@index" },
+      "examples": { "@id": "vocab:examples", "@container": "@list" },
+      "classes": { "@id": "vocab:classes", "@container": "@index" },
+      "properties": { "@id": "vocab:properties", "@container": "@index" }
+    }
+  ],
 
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
-    "Vocabulary": "core:Vocabulary",
-    "Concept": "core:Concept",
-    "Property": "core:Property",
-
-    "id": { "@id": "core:id", "@type": "@id" },
-    "label": "rdfs:label",
-    "description": "rdfs:comment",
-    "status": "uc:status",
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-    "modified": { "@id": "core:modified", "@type": "xsd:dateTime" },
-
-    "terms": { "@id": "vocab:terms", "@container": "@index" },
-    "universalConcepts": { "@id": "vocab:universalConcepts", "@container": "@index" },
-    "examples": { "@id": "vocab:examples", "@container": "@list" }
-  },
-
-  "@id": "https://huijoohwee.github.io/schema/vocab.jsonld#Vocab:v1.1",
-  "@type": "Vocabulary",
+  "@id": "https://huijoohwee.github.io/schema/vocab.jsonld",
+  "@type": ["owl:Ontology", "schema:Dataset"],
 
   "meta": {
-    "title": "Universal Vocabulary",
-    "description": "General-purpose default vocabulary and convenience CURIEs for JJNHM schemas; aligns core, uc and kg namespaces for cross-project semantic consistency",
-    "version": "1.1.0",
-    "maintainer": "https://github.com/huijoohwee",
+    "@type": "schema:Dataset",
+    "title": "Universal Vocabulary Ontology",
+    "description": "RDF-compliant vocabulary providing standardized classes and properties for JJNHM semantic architecture",
+    "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26T00:00:00Z",
-    "updated": "2025-10-09T00:00:00Z"
+    "conformsTo": [
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://www.w3.org/TR/owl2-overview/",
+      "https://www.w3.org/2004/02/skos/"
+    ],
+    "versionInfo": "1.1.0",
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2024-12-19T00:00:00Z",
+    "maintainer": "https://huijoohwee.github.io"
+  },
+
+  "classes": {
+    "Entity": {
+      "@id": "vocab:Entity",
+      "@type": "rdfs:Class",
+      "label": "Entity",
+      "description": "Base class for all identifiable entities in the JJNHM architecture",
+      "subClassOf": "owl:Thing"
+    },
+    "Directive": {
+      "@id": "vocab:Directive", 
+      "@type": "rdfs:Class",
+      "label": "Directive",
+      "description": "Executable instruction or command within JDBL layer",
+      "subClassOf": "vocab:Entity"
+    },
+    "Agent": {
+      "@id": "vocab:Agent",
+      "@type": "rdfs:Class", 
+      "label": "Agent",
+      "description": "Autonomous entity capable of performing actions",
+      "subClassOf": "vocab:Entity"
+    },
+    "Workflow": {
+      "@id": "vocab:Workflow",
+      "@type": "rdfs:Class",
+      "label": "Workflow", 
+      "description": "Structured sequence of steps or processes",
+      "subClassOf": "vocab:Entity"
+    }
+  },
+
+  "properties": {
+    "hasId": {
+      "@id": "vocab:hasId",
+      "@type": "rdf:Property",
+      "label": "has identifier",
+      "description": "Associates an entity with its unique identifier",
+      "domain": "vocab:Entity",
+      "range": "xsd:anyURI"
+    },
+    "hasLabel": {
+      "@id": "vocab:hasLabel", 
+      "@type": "rdf:Property",
+      "label": "has label",
+      "description": "Associates an entity with a human-readable label",
+      "domain": "vocab:Entity",
+      "range": "xsd:string"
+    },
+    "hasDescription": {
+      "@id": "vocab:hasDescription",
+      "@type": "rdf:Property", 
+      "label": "has description",
+      "description": "Associates an entity with descriptive text",
+      "domain": "vocab:Entity",
+      "range": "xsd:string"
+    },
+    "hasStatus": {
+      "@id": "vocab:hasStatus",
+      "@type": "rdf:Property",
+      "label": "has status", 
+      "description": "Associates an entity with its current status",
+      "domain": "vocab:Entity",
+      "range": "xsd:string"
+    }
   },
 
   "terms": {

@@ -1,139 +1,130 @@
 {
-  "@context": {
-    "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "uc": "https://huijoohwee.github.io/schema/uc.jsonld#",
+      
+      "ConceptScheme": "skos:ConceptScheme",
+      "Concept": "skos:Concept",
+      "Collection": "skos:Collection",
+      
+      "prefLabel": "skos:prefLabel",
+      "altLabel": "skos:altLabel",
+      "definition": "skos:definition",
+      "note": "skos:note",
+      "broader": { "@id": "skos:broader", "@type": "@id" },
+      "narrower": { "@id": "skos:narrower", "@type": "@id" },
+      "related": { "@id": "skos:related", "@type": "@id" },
+      "inScheme": { "@id": "skos:inScheme", "@type": "@id" },
+      "topConceptOf": { "@id": "skos:topConceptOf", "@type": "@id" },
+      
+      "concepts": { "@id": "uc:hasConcept", "@container": "@index" },
+      "example": "core:example",
+      "notes": "rdfs:comment"
+    }
+  ],
 
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
-    "ConceptCollection": "core:ConceptCollection",
-    "Concept": "core:Concept",
-    "label": "rdfs:label",
-    "description": "rdfs:comment",
-
-    "concepts": { "@id": "uc:hasConcept", "@container": "@index" },
-
-    "id": { "@id": "core:id", "@type": "@id" },
-    "type": { "@id": "core:type", "@type": "@id" },
-    "version": "core:version",
-    "maintainer": { "@id": "core:maintainer", "@type": "@id" },
-    "license": { "@id": "core:license", "@type": "@id" },
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
-
-    "example": "core:example",
-    "notes": "rdfs:comment"
-  },
-
-  "@id": "https://huijoohwee.github.io/schema/uc.jsonld#UniversalConcepts:v1.1",
-  "@type": "ConceptCollection",
+  "@id": "https://huijoohwee.github.io/schema/uc.jsonld",
+  "@type": ["skos:ConceptScheme", "schema:Dataset"],
 
   "meta": {
-    "title": "Universal Concepts (uc)",
-    "description": "Neutral, reusable baseline namespace for cross-project semantic anchors used across JJNHM layers",
-    "version": "1.1.0",
-    "maintainer": "https://github.com/huijoohwee",
+    "@type": "schema:Dataset",
+    "title": "Universal Concepts Vocabulary",
+    "description": "SKOS-compliant concept scheme providing reusable semantic anchors for cross-project alignment in JJNHM architecture",
+    "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26T00:00:00Z",
-    "updated": "2025-10-09T00:00:00Z"
+    "conformsTo": [
+      "https://www.w3.org/2004/02/skos/",
+      "https://www.w3.org/TR/rdf11-concepts/"
+    ],
+    "versionInfo": "1.1.0",
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2024-12-19T00:00:00Z",
+    "maintainer": "https://huijoohwee.github.io"
   },
 
-  "concepts": {
-    "identifier": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#identifier",
-      "@type": "Concept",
-      "label": "Identifier",
-      "description": "A globally unique identifier or CURIE for an entity; used as canonical reference across contexts"
+  "@graph": [
+    {
+      "@id": "uc:entity",
+      "@type": "skos:Concept",
+      "prefLabel": "Entity",
+      "definition": "A fundamental unit of existence or identity within a system",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "A user, a document, a process, or any identifiable object",
+      "note": "Base concept for all identifiable objects in the system"
     },
-    "label": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#label",
-      "@type": "Concept",
-      "label": "Label",
-      "description": "Human-readable short name or title"
+    {
+      "@id": "uc:action",
+      "@type": "skos:Concept",
+      "prefLabel": "Action",
+      "definition": "A discrete operation or behavior that can be performed",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Create, read, update, delete, process, validate",
+      "note": "Represents verbs or operations in the system"
     },
-    "description": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#description",
-      "@type": "Concept",
-      "label": "Description",
-      "description": "Long-form textual description or documentation"
+    {
+      "@id": "uc:state",
+      "@type": "skos:Concept",
+      "prefLabel": "State",
+      "definition": "A condition or mode of being at a particular point in time",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Active, inactive, pending, completed, error",
+      "note": "Represents the current condition of an entity"
     },
-    "status": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#status",
-      "@type": "Concept",
-      "label": "Status",
-      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)"
+    {
+      "@id": "uc:relationship",
+      "@type": "skos:Concept",
+      "prefLabel": "Relationship",
+      "definition": "A connection or association between two or more entities",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Parent-child, dependency, ownership, membership",
+      "note": "Defines how entities are connected to each other"
     },
-    "automation": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#automation",
-      "@type": "Concept",
-      "label": "Automation",
-      "description": "Automated execution of steps, tasks, or workflows"
+    {
+      "@id": "uc:context",
+      "@type": "skos:Concept",
+      "prefLabel": "Context",
+      "definition": "The circumstances or environment in which something exists or occurs",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Development environment, user session, project scope",
+      "note": "Provides situational information for proper interpretation"
     },
-    "processing": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#processing",
-      "@type": "Concept",
-      "label": "Processing",
-      "description": "Data transformation, enrichment, or analysis activity"
+    {
+      "@id": "uc:constraint",
+      "@type": "skos:Concept",
+      "prefLabel": "Constraint",
+      "definition": "A limitation or restriction that must be observed",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Business rules, validation rules, access permissions",
+      "note": "Defines boundaries and limitations within the system"
     },
-    "reporting": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#reporting",
-      "@type": "Concept",
-      "label": "Reporting",
-      "description": "Generation of structured outputs, summaries, or documentation"
+    {
+      "@id": "uc:pattern",
+      "@type": "skos:Concept",
+      "prefLabel": "Pattern",
+      "definition": "A reusable solution or template for common problems",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Design patterns, architectural patterns, workflow patterns",
+      "note": "Represents proven solutions that can be applied repeatedly"
     },
-    "event": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#event",
-      "@type": "Concept",
-      "label": "Event",
-      "description": "A discrete occurrence that may trigger workflows or state changes"
-    },
-    "actor": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#actor",
-      "@type": "Concept",
-      "label": "Actor",
-      "description": "Agent, service, or user that performs actions or holds responsibilities"
-    },
-    "artifact": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#artifact",
-      "@type": "Concept",
-      "label": "Artifact",
-      "description": "Concrete output or resource produced by processes; stored, versioned, and referenced"
-    },
-    "trace": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#trace",
-      "@type": "Concept",
-      "label": "Trace",
-      "description": "Identifier or pointer used for provenance and execution tracing across layers"
-    },
-    "kpi": {
-      "@id": "https://huijoohwee.github.io/schema/uc.jsonld#kpi",
-      "@type": "Concept",
-      "label": "KPI",
-      "description": "Key performance indicator used to gate validation and measure system effectiveness"
+    {
+      "@id": "uc:layer",
+      "@type": "skos:Concept",
+      "prefLabel": "Layer",
+      "definition": "A level of abstraction or organization within a hierarchical structure",
+      "inScheme": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "topConceptOf": "https://huijoohwee.github.io/schema/uc.jsonld",
+      "example": "Presentation layer, business logic layer, data layer",
+      "note": "Represents different levels of abstraction in system architecture"
     }
-  },
+  ],
 
   "usageExamples": [
     {

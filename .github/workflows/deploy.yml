@@ -1,10 +1,13 @@
-name: Deploy to GitHub Pages
+name: Deploy Schema Documentation to Pages
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: ["main", "master"]
+    paths:
+      - 'schema/**'
+      - 'docs/**'
+      - '_config.yml'
+      - 'README.md'
   workflow_dispatch:
 
 permissions:
@@ -12,30 +15,214 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
+currency:
   group: "pages"
   cancel-in-progress: false
+
+env:
+  SCHEMA_DIR: schema
+  DOCS_DIR: docs
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Build Documentation Site
+    
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build site
+      - name: Generate schema documentation
         run: |
-          echo "Building static site..."
-          # Add any build steps here if needed
-          # For now, we'll just use the HTML files as-is
+          echo "📚 Generating schema documentation..."
+          
+          # Create docs directory if it doesn't exist
+          mkdir -p ${DOCS_DIR}
+          
+          # Generate schema index
+          cat > ${DOCS_DIR}/schema-index.md << 'EOF'
+          ---
+          layout: default
+          title: Schema Documentation
+          ---
+          
+          # JSON-LD Schema Collection
+          
+          This documentation provides an overview of the JJNHM-compliant JSON-LD schema collection.
+          
+          ## Architecture Overview
+          
+          The schema collection follows the **JJNHM** (JSONLD-JDBL-NQDS-HBS-MMD) architecture:
+          
+          ### Layer Responsibilities
+          
+          - **JSONLD Layer**: Semantic web compatibility and RDF conversion
+          - **JDBL Layer**: Directive-based orchestration and automation
+          - **NQDS Layer**: Semantic graph processing and data flow
+          - **HBS Layer**: Template-based content generation
+          - **MMD Layer**: Diagram and visualization generation
+          
+          ## Schema Files
+          
+          EOF
+          
+          # List all schema files
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            filename=$(basename "$f")
+            name=$(basename "$f" .jsonld)
+            echo "- [\`$filename\`](../schema/$filename) - $name schema" >> ${DOCS_DIR}/schema-index.md
+          done
+          
+          cat >> ${DOCS_DIR}/schema-index.md << 'EOF'
+          
+          ## Usage
+          
+          ### Direct Access
+          
+          All schemas are available at: `https://huijoohwee.github.io/schema/`
+          
+          ### JSON-LD Context
+          
+          Use the base context in your JSON-LD documents:
+          
+          ```json
+          {
+            "@context": "https://huijoohwee.github.io/schema/base.jsonld",
+            "@type": "YourType",
+            "property": "value"
+          }
+          ```
+          
+          ### RDF Conversion
+          
+          All schemas are compatible with standard JSON-LD processors for RDF conversion:
+          
+          ```javascript
+          const jsonld = require('jsonld');
+          
+          // Expand JSON-LD
+          const expanded = await jsonld.expand(document);
+          
+          // Convert to RDF
+          const nquads = await jsonld.toRDF(document, {format: 'application/n-quads'});
+          ```
+          
+          ## Validation
+          
+          Schemas are continuously validated for:
+          - JSON-LD syntax compliance
+          - RDF conversion compatibility
+          - SPARQL query optimization
+          - JJNHM architecture compliance
+          
+          EOF
+
+      - name: Generate schema metadata
+        run: |
+          echo "📊 Generating schema metadata..."
+          
+          cat > ${DOCS_DIR}/metadata.json << EOF
+          {
+            "generated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "commit": "${{ github.sha }}",
+            "repository": "${{ github.repository }}",
+            "schemas": [
+          EOF
+          
+          first=true
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            filename=$(basename "$f")
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo "," >> ${DOCS_DIR}/metadata.json
+            fi
+            echo -n "      \"$filename\"" >> ${DOCS_DIR}/metadata.json
+          done
+          
+          cat >> ${DOCS_DIR}/metadata.json << EOF
+          
+            ],
+            "jjnhm": {
+              "architecture": "JSONLD-JDBL-NQDS-HBS-MMD",
+              "compliance": "v1.0"
+            }
+          }
+          EOF
+
+      - name: Create Jekyll configuration
+        run: |
+          if [ ! -f _config.yml ]; then
+            cat > _config.yml << 'EOF'
+          title: HuiJooHwee Schema Collection
+          description: JJNHM-compliant JSON-LD schema collection for semantic web applications
+          baseurl: ""
+          url: "https://huijoohwee.github.io"
+          
+          markdown: kramdown
+          highlighter: rouge
+          theme: minima
+          
+          plugins:
+            - jekyll-feed
+            - jekyll-sitemap
+          
+          collections:
+            schemas:
+              output: true
+              permalink: /:collection/:name/
+          
+          defaults:
+            - scope:
+                path: "schema"
+                type: "schemas"
+              values:
+                layout: "schema"
+          
+          exclude:
+            - validation/
+            - node_modules/
+            - .github/
+          EOF
+          fi
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Validate built site
+        run: |
+          echo "🔍 Validating built site..."
+          
+          # Check that schema files are accessible
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            filename=$(basename "$f")
+            if [ ! -f "_site/schema/$filename" ]; then
+              echo "❌ Schema file $filename not found in built site"
+              exit 1
+            fi
+          done
+          
+          # Check that documentation was generated
+          if [ ! -f "_site/docs/schema-index.html" ]; then
+            echo "❌ Schema documentation not generated"
+            exit 1
+          fi
+          
+          echo "✅ Site validation completed"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
 
   deploy:
     environment:
@@ -43,8 +230,41 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    name: Deploy to GitHub Pages
+    
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  post-deploy-verification:
+    runs-on: ubuntu-latest
+    needs: deploy
+    name: Post-Deploy Verification
+    
+    steps:
+      - name: Verify deployment
+        run: |
+          echo "🔍 Verifying deployment..."
+          
+          # Wait for deployment to propagate
+          sleep 30
+          
+          # Test main pages
+          pages=(
+            "https://huijoohwee.github.io/"
+            "https://huijoohwee.github.io/docs/schema-index.html"
+            "https://huijoohwee.github.io/schema/base.jsonld"
+          )
+          
+          for page in "${pages[@]}"; do
+            echo "Testing $page"
+            if curl -f -s "$page" > /dev/null; then
+              echo "✅ $page is accessible"
+            else
+              echo "❌ $page is not accessible"
+              exit 1
+            fi
+          done
+          
+          echo "🎉 Deployment verification completed successfully!"

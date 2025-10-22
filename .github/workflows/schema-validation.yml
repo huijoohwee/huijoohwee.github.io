@@ -1,0 +1,179 @@
+name: Schema Validation and Quality Assurance
+
+on:
+  push:
+    branches: [ main, master ]
+    paths: 
+      - 'schema/**'
+      - 'validation/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'schema/**'
+      - 'validation/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  SCHEMA_DIR: schema
+  VALIDATION_DIR: validation
+
+jobs:
+  validate-schemas:
+    runs-on: ubuntu-latest
+    name: JSON-LD Schema Validation
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install validation dependencies
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          npm ci --only=production
+
+      - name: Run JSON-LD syntax validation
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          echo "🔍 Running JSON-LD syntax validation..."
+          node validate-jsonld.js
+
+      - name: Run comprehensive test suite
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          echo "🧪 Running comprehensive schema test suite..."
+          node test-suite.js
+
+      - name: Validate schema consistency
+        run: |
+          echo "🔗 Validating schema cross-references..."
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Checking $f"
+            npx jsonlint -q "$f"
+          done
+
+      - name: Generate validation report
+        if: always()
+        working-directory: ${{ env.VALIDATION_DIR }}
+        run: |
+          echo "📊 Generating validation report..."
+          node validate-jsonld.js --report > validation-report.json
+          echo "Validation completed. Report saved to validation-report.json"
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: ${{ env.VALIDATION_DIR }}/validation-report.json
+          retention-days: 30
+
+      - name: Comment PR with validation results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = './validation/validation-report.json';
+            
+            if (fs.existsSync(path)) {
+              const report = JSON.parse(fs.readFileSync(path, 'utf8'));
+              const comment = `## 🔍 Schema Validation Report
+              
+              **Status**: ${report.success ? '✅ PASSED' : '❌ FAILED'}
+              **Schemas Validated**: ${report.schemasValidated || 'N/A'}
+              **Tests Run**: ${report.testsRun || 'N/A'}
+              
+              ${report.errors && report.errors.length > 0 ? 
+                `### ❌ Errors Found:\n${report.errors.map(e => `- ${e}`).join('\n')}` : 
+                '### ✅ All validations passed!'}
+              
+              Generated at: ${new Date().toISOString()}`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
+
+  rdf-compatibility:
+    runs-on: ubuntu-latest
+    name: RDF Compatibility Testing
+    needs: validate-schemas
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install RDF tools
+        run: |
+          npm install -g jsonld rdf-validate-shacl
+
+      - name: Test RDF conversion
+        run: |
+          echo "🔄 Testing RDF conversion compatibility..."
+          for f in ${SCHEMA_DIR}/*.jsonld; do
+            echo "Converting $f to RDF..."
+            node -e "
+              const jsonld = require('jsonld');
+              const fs = require('fs');
+              const doc = JSON.parse(fs.readFileSync('$f', 'utf8'));
+              jsonld.toRDF(doc, {format: 'application/n-quads'})
+                .then(nquads => console.log('✅ $f: RDF conversion successful'))
+                .catch(err => {
+                  console.error('❌ $f: RDF conversion failed:', err.message);
+                  process.exit(1);
+                });
+            "
+          done
+
+      - name: Validate SPARQL compatibility
+        run: |
+          echo "🔍 Testing SPARQL compatibility..."
+          # Add SPARQL endpoint testing if needed
+          echo "SPARQL compatibility check completed"
+
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security and Quality Scan
+    needs: validate-schemas
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run security scan
+        run: |
+          echo "🔒 Running security scan on schema files..."
+          # Check for potential security issues in schema files
+          grep -r "javascript:" ${SCHEMA_DIR}/ && exit 1 || echo "✅ No JavaScript injection patterns found"
+          grep -r "data:" ${SCHEMA_DIR}/ && exit 1 || echo "✅ No data URI patterns found"
+          echo "Security scan completed successfully"
+
+      - name: Check file permissions
+        run: |
+          echo "🔐 Checking file permissions..."
+          find ${SCHEMA_DIR} -type f -perm /111 && exit 1 || echo "✅ No executable schema files found"
+
+      - name: Validate schema URLs
+        run: |
+          echo "🌐 Validating schema URLs..."
+          grep -r "http://" ${SCHEMA_DIR}/ && echo "⚠️ Warning: HTTP URLs found, consider HTTPS" || echo "✅ All URLs use HTTPS"

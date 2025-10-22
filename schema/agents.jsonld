@@ -1,64 +1,43 @@
 {
-  "@context": {
-    "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
-
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
-    "AgentList": "core:AgentList",
-    "agents": { "@id": "core:hasAgent", "@type": "@id", "@container": "@list" },
-    "label": "rdfs:label",
-    "description": "rdfs:comment"
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      
+      "AgentCollection": "agent:AgentCollection",
+      "Agent": "agent:Agent",
+      "agents": "agent:hasAgent",
+      "label": "skos:prefLabel",
+      "description": "skos:definition"
+    }
+  ],
+  
+  "meta": {
+    "@id": "https://huijoohwee.github.io/schema/agents.jsonld",
+    "@type": "owl:Ontology",
+    "dcterms:creator": "Hui Joo Hwee",
+    "owl:versionInfo": "2.3.0",
+    "dcterms:created": "2024-12-19",
+    "dcterms:modified": "2024-12-19",
+    "rdfs:comment": "Agent vocabulary for JJNHM multi-agent orchestration system",
+    "owl:imports": "https://huijoohwee.github.io/schema/base.jsonld"
   },
-  "@id": "https://huijoohwee.github.io/schema/agents.jsonld",
-  "@type": "AgentList",
-  "agents": [
-    "agent:cache-manager",
-    "agent:coder",
-    "agent:compiler",
-    "agent:conflict-resolver",
-    "agent:constructor",
-    "agent:debouncer",
-    "agent:developer",
-    "agent:iterator",
-    "agent:memoizer",
-    "agent:memory-manager",
-    "agent:memory-orchestrator",
-    "agent:metrics-collector",
-    "agent:optimizer",
-    "agent:orchestrator",
-    "agent:other-key-agents",
-    "agent:project-builder",
-    "agent:renderer",
-    "agent:resource-manager",
-    "agent:stability-monitor",
-    "agent:sync-manager",
-    "agent:tester",
-    "agent:timeout-manager",
-    "agent:transformer",
-    "agent:worker"
+  
+  "@graph": [
+    {
+      "@id": "agent:AgentCollection",
+      "@type": "foaf:Group",
+      "skos:prefLabel": "Agent Vocabulary Collection",
+      "skos:definition": "Comprehensive collection of agents for JJNHM architecture and multi-agent orchestration",
+      "foaf:member": [
+        "agent:cache-manager", "agent:coder", "agent:compiler", "agent:conflict-resolver",
+        "agent:constructor", "agent:debouncer", "agent:developer", "agent:iterator",
+        "agent:memoizer", "agent:memory-manager", "agent:memory-orchestrator", "agent:metrics-collector",
+        "agent:optimizer", "agent:orchestrator", "agent:other-key-agents", "agent:project-builder",
+        "agent:renderer", "agent:resource-manager", "agent:stability-monitor", "agent:sync-manager",
+        "agent:tester", "agent:timeout-manager", "agent:transformer", "agent:worker"
+      ]
+    }
   ]
 }

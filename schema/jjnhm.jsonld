@@ -1,70 +1,76 @@
 {
-  "@context": {
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld#",
+      "arch": "http://www.w3.org/ns/org#",
+      "prov": "http://www.w3.org/ns/prov#",
+      
+      "TechnicalSpecification": "jjnhm:TechnicalSpecification",
+      "Layer": "jjnhm:Layer",
+      "Responsibility": "jjnhm:Responsibility",
+      "Constraint": "jjnhm:Constraint",
+      "Contract": "jjnhm:Contract",
+      "ValidatorHint": "jjnhm:ValidatorHint",
+      "ExamplePointer": "jjnhm:ExamplePointer",
+      "MigrationStep": "jjnhm:MigrationStep",
+      "Metric": "jjnhm:Metric",
+      "Tool": "jjnhm:Tool",
+      "Benefit": "jjnhm:Benefit",
 
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+      "name": "rdfs:label",
+      "description": "rdfs:comment",
+      "version": "owl:versionInfo",
+      "purpose": "jjnhm:purpose",
+      "created": { "@id": "dcterms:created", "@type": "xsd:dateTime" },
 
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+      "layers": { "@id": "jjnhm:hasLayer", "@container": "@list" },
+      "contracts": { "@id": "jjnhm:hasContract", "@container": "@list" },
+      "validators": { "@id": "jjnhm:hasValidator", "@container": "@list" },
+      "examples": { "@id": "jjnhm:hasExample", "@container": "@list" },
+      "tools": { "@id": "jjnhm:hasTool", "@container": "@list" },
+      "metrics": { "@id": "jjnhm:hasMetric", "@container": "@list" },
+      "migrationGuide": { "@id": "jjnhm:hasMigrationStep", "@container": "@list" },
+      "benefits": { "@id": "jjnhm:hasBenefit", "@container": "@list" },
 
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+      "format": "jjnhm:format",
+      "responsibilities": { "@id": "jjnhm:responsibilities", "@container": "@list" },
+      "constraints": { "@id": "jjnhm:constraints", "@container": "@list" },
 
-    "TechnicalSpecification": "core:TechnicalSpecification",
-    "Layer": "jjnhm:Layer",
-    "Responsibility": "jjnhm:Responsibility",
-    "Constraint": "jjnhm:Constraint",
-    "Contract": "jjnhm:Contract",
-    "ValidatorHint": "jjnhm:ValidatorHint",
-    "ExamplePointer": "jjnhm:ExamplePointer",
-    "MigrationStep": "jjnhm:MigrationStep",
-    "Metric": "jjnhm:Metric",
-    "Tool": "jjnhm:Tool",
-    "Benefit": "jjnhm:Benefit",
+      "validatorHints": { "@id": "jjnhm:validatorHints", "@container": "@list" },
+      "examplePointer": "jjnhm:examplePointer",
+      "contractType": "jjnhm:contractType",
+      "enforcementLevel": "jjnhm:enforcementLevel",
+      "kpiTarget": "jjnhm:kpiTarget",
+      "recommendedTools": { "@id": "jjnhm:recommendedTools", "@container": "@list" }
+    }
+  ],
 
-    "name": "rdfs:label",
-    "description": "rdfs:comment",
-    "version": "core:version",
-    "purpose": "core:purpose",
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-
-    "layers": { "@id": "jjnhm:hasLayer", "@container": "@list" },
-    "contracts": { "@id": "jjnhm:hasContract", "@container": "@list" },
-    "validators": { "@id": "jjnhm:hasValidator", "@container": "@list" },
-    "examples": { "@id": "jjnhm:hasExample", "@container": "@list" },
-    "tools": { "@id": "jjnhm:hasTool", "@container": "@list" },
-    "metrics": { "@id": "jjnhm:hasMetric", "@container": "@list" },
-    "migrationGuide": { "@id": "jjnhm:hasMigrationStep", "@container": "@list" },
-    "benefits": { "@id": "jjnhm:hasBenefit", "@container": "@list" },
-
-    "format": "jjnhm:format",
-    "responsibilities": { "@id": "jjnhm:responsibilities", "@container": "@list" },
-    "constraints": { "@id": "jjnhm:constraints", "@container": "@list" },
-
-    "validatorHints": { "@id": "jjnhm:validatorHints", "@container": "@list" },
-    "examplePointer": "jjnhm:examplePointer",
-    "contractType": "jjnhm:contractType",
-    "enforcementLevel": "jjnhm:enforcementLevel",
-    "kpiTarget": "jjnhm:kpiTarget",
-    "recommendedTools": { "@id": "jjnhm:recommendedTools", "@container": "@list" }
+  "@id": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+  "@type": ["owl:Ontology", "schema:Dataset", "jjnhm:TechnicalSpecification"],
+  
+  "meta": {
+    "@type": "schema:Dataset",
+    "title": "JJNHM Architecture Specification",
+    "description": "Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture vocabulary for multi-agent orchestration and rapid MVP prototyping",
+    "creator": "https://huijoohwee.github.io",
+    "license": "https://opensource.org/licenses/MIT",
+    "conformsTo": [
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://www.w3.org/TR/owl2-overview/",
+      "https://www.w3.org/ns/org",
+      "https://www.w3.org/ns/prov"
+    ],
+    "versionInfo": "2.3.0",
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2024-12-19T00:00:00Z",
+    "maintainer": "https://huijoohwee.github.io"
   },
-
-  "@id": "https://huijoohwee.github.io/schema/JJNHM.jsonld",
-  "@type": "TechnicalSpecification",
+  
   "name": "Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture (JJNHM)",
   "version": "2.3.0",
   "purpose": "Multi-Agent Orchestration for Rapid MVP Prototyping; defines layers, contracts, constraints, validators, examples, tooling, metrics and migration guidance",
-  "created": "2025-10-09T00:00:00Z",
+  "created": "2024-01-01T00:00:00Z",
 
   "layers": [
     {

@@ -3,31 +3,35 @@
     "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/base.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
-
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "action": "https://huijoohwee.github.io/schema/actions.jsonld#",
-    "agent": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "area": "https://huijoohwee.github.io/schema/areas.jsonld#",
-    "feature": "https://huijoohwee.github.io/schema/features.jsonld#",
-    "issue": "https://huijoohwee.github.io/schema/issues.jsonld#",
-    "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
-
+    
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "schema": "https://schema.org/",
+    
+    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld#",
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld#",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld#",
+    "actions": "https://huijoohwee.github.io/schema/actions.jsonld#",
+    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "features": "https://huijoohwee.github.io/schema/features.jsonld#",
+    "project-areas": "https://huijoohwee.github.io/schema/project-areas.jsonld#",
+    "project-issues": "https://huijoohwee.github.io/schema/project-issues.jsonld#",
+    "ui-ux-elements": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
+    "vocab": "https://huijoohwee.github.io/schema/vocab.jsonld#",
+    
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld#",
     "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld#",
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld#",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld#",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld#",
+    
     "ContextDefinition": "core:ContextDefinition",
     "meta": "core:metadata",
     "universalConcepts": { "@id": "uc:hasConcept", "@container": "@list" },
@@ -35,11 +39,16 @@
 
     "label": "rdfs:label",
     "description": "rdfs:comment",
+    "title": "dcterms:title",
+    "created": { "@id": "dcterms:created", "@type": "xsd:dateTime" },
+    "modified": { "@id": "dcterms:modified", "@type": "xsd:dateTime" },
+    "creator": { "@id": "dcterms:creator", "@type": "@id" },
+    "license": { "@id": "dcterms:license", "@type": "@id" },
+    "conformsTo": { "@id": "dcterms:conformsTo", "@type": "@id" },
+    "versionInfo": "owl:versionInfo",
     "version": "core:version",
     "maintainer": { "@id": "core:maintainer", "@type": "@id" },
-    "license": { "@id": "core:license", "@type": "@id" },
-    "created": { "@id": "core:created", "@type": "xsd:date" },
-    "updated": { "@id": "core:updated", "@type": "xsd:date" },
+    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
 
     "steps": { "@id": "kg:steps", "@container": "@list" }
   },
@@ -48,13 +57,20 @@
   "@type": "ContextDefinition",
 
   "meta": {
+    "@type": "schema:Dataset",
     "title": "Universal Base Semantic Context",
-    "description": "Universal base semantic context for multi-domain use, including pointers to authoritative JSON-LD, HBS and MMD layer contexts and validator guidance",
-    "version": "1.0.0",
-    "maintainer": "https://github.com/huijoohwee",
+    "description": "Foundational JSON-LD context providing universal semantic mappings for all schema files in the JJNHM architecture",
+    "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
-    "created": "2025-09-26",
-    "updated": "2025-10-09"
+    "conformsTo": [
+      "https://www.w3.org/TR/json-ld11/",
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld"
+    ],
+    "versionInfo": "1.1.0",
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2024-12-19T00:00:00Z",
+    "maintainer": "https://huijoohwee.github.io"
   },
 
   "universalConcepts": [

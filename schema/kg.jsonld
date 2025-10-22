@@ -55,11 +55,12 @@
   "meta": {
     "title": "Knowledge Graph Namespace (kg)",
     "description": "Reusable KG namespace for workflow patterns, graph collections, and KG primitives; includes validator guidance and example pointers",
-    "version": "1.1.0",
+    "creator": "https://github.com/huijoohwee",
+    "versionInfo": "1.1.0",
     "maintainer": "https://github.com/huijoohwee",
     "license": "https://opensource.org/licenses/MIT",
     "created": "2025-09-26T00:00:00Z",
-    "updated": "2025-10-09T00:00:00Z"
+    "modified": "2025-10-09T00:00:00Z"
   },
 
   "graphCollections": {

@@ -1,0 +1,153 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-components.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "WBSTCNVS Project Components Schema",
+    "description": "React component definitions for canvas-code conversion and bidirectional sync UI",
+    "version": "2.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT",
+    "conformsTo": [
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "responsibilities": [
+      "canvas-ui-component-mapping",
+      "workflow-interface-definitions",
+      "sync-ui-orchestration",
+      "conversion-panel-management",
+      "wbstcnvs-component-architecture"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "project:CanvasCore",
+      "@type": "project:Component",
+      "rdfs:label": "CanvasCore",
+      "dcterms:description": "Core canvas rendering component with ReactFlow integration",
+      "wbstcnvs:canvasType": "flow-canvas",
+      "wbstcnvs:syncCapability": "bidirectional",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:CanvasToolsPanel",
+      "@type": "project:Component",
+      "rdfs:label": "CanvasToolsPanel",
+      "dcterms:description": "Canvas tools and component library panel for drag-drop operations",
+      "wbstcnvs:canvasType": "tools-panel",
+      "wbstcnvs:syncCapability": "canvas-to-code",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:ConflictResolutionDialog",
+      "@type": "project:Component",
+      "rdfs:label": "ConflictResolutionDialog",
+      "dcterms:description": "Dialog component for resolving bidirectional sync conflicts",
+      "wbstcnvs:conflictStrategy": "user-resolution",
+      "wbstcnvs:syncCapability": "conflict-resolution",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:DocumentNode",
+      "@type": "project:Component",
+      "rdfs:label": "DocumentNode",
+      "dcterms:description": "Canvas node for document formats with preview and metadata",
+      "wbstcnvs:canvasType": "document-node",
+      "wbstcnvs:conversionType": "document-to-code",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:FlowCanvas",
+      "@type": "project:Component",
+      "rdfs:label": "FlowCanvas",
+      "dcterms:description": "Main flow canvas component with ReactFlow provider and state management",
+      "wbstcnvs:canvasType": "flow-canvas",
+      "wbstcnvs:syncCapability": "bidirectional",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Coordination"
+    },
+    {
+      "@id": "project:FloatingCodeEditor",
+      "@type": "project:Component",
+      "rdfs:label": "FloatingCodeEditor",
+      "dcterms:description": "Floating code editor with bidirectional sync capabilities",
+      "wbstcnvs:syncCapability": "code-to-canvas",
+      "wbstcnvs:conversionType": "code-to-visual",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:FormatConversionPanel",
+      "@type": "project:Component",
+      "rdfs:label": "FormatConversionPanel",
+      "dcterms:description": "Panel for format conversion operations and workflow orchestration",
+      "wbstcnvs:conversionType": "multi-format",
+      "wbstcnvs:syncCapability": "format-conversion",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:InfiniteCanvas",
+      "@type": "project:Component",
+      "rdfs:label": "InfiniteCanvas",
+      "dcterms:description": "Infinite canvas component for unlimited workspace design",
+      "wbstcnvs:canvasType": "infinite-canvas",
+      "wbstcnvs:syncCapability": "canvas-to-code",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:InteractiveMediaNode",
+      "@type": "project:Component",
+      "rdfs:label": "InteractiveMediaNode",
+      "dcterms:description": "Canvas node for interactive widgets and dynamic content",
+      "wbstcnvs:canvasType": "media-node",
+      "wbstcnvs:conversionType": "media-to-code",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:Model3DNode",
+      "@type": "project:Component",
+      "rdfs:label": "Model3DNode",
+      "dcterms:description": "Canvas node for 3D model viewing with rotation and zoom controls",
+      "wbstcnvs:canvasType": "3d-node",
+      "wbstcnvs:conversionType": "3d-to-code",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:Workspace",
+      "@type": "project:Component",
+      "rdfs:label": "Workspace",
+      "dcterms:description": "Main workspace interface orchestrating canvas and code synchronization",
+      "wbstcnvs:syncCapability": "workspace-orchestration",
+      "wbstcnvs:conversionType": "bidirectional",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Coordination"
+    },
+    {
+      "@id": "project:WorkspaceSidebar",
+      "@type": "project:Component",
+      "rdfs:label": "WorkspaceSidebar",
+      "dcterms:description": "Workspace sidebar for import-export and workspace management",
+      "wbstcnvs:syncCapability": "workspace-management",
+      "wbstcnvs:conversionType": "import-export",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    }
+  ]
+}

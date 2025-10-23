@@ -1,0 +1,113 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-types.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "WBSTCNVS Project Types Schema",
+    "description": "TypeScript type definitions for canvas-code conversion and sync operations",
+    "version": "2.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT",
+    "conformsTo": [
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "responsibilities": [
+      "sync-type-definitions",
+      "conversion-type-mapping",
+      "workflow-type-orchestration",
+      "bidirectional-sync-types",
+      "wbstcnvs-type-architecture"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "project:ConflictResolutionStrategy",
+      "@type": "project:Type",
+      "rdfs:label": "ConflictResolutionStrategy",
+      "dcterms:description": "Type for conflict resolution strategies in bidirectional synchronization",
+      "wbstcnvs:conflictStrategy": "strategy-type",
+      "wbstcnvs:syncCapability": "conflict-resolution",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:ConversionFormat",
+      "@type": "project:Type",
+      "rdfs:label": "ConversionFormat",
+      "dcterms:description": "Type for supported conversion formats between canvas and code",
+      "wbstcnvs:conversionType": "format-type",
+      "wbstcnvs:syncCapability": "format-conversion",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:ConversionProgress",
+      "@type": "project:Type",
+      "rdfs:label": "ConversionProgress",
+      "dcterms:description": "Type for tracking conversion operation progress and status",
+      "wbstcnvs:conversionType": "progress-type",
+      "wbstcnvs:syncCapability": "progress-tracking",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:NodeType",
+      "@type": "project:Type",
+      "rdfs:label": "NodeType",
+      "dcterms:description": "Type for different canvas node types and their conversion mappings",
+      "wbstcnvs:canvasType": "node-type",
+      "wbstcnvs:conversionType": "node-mapping",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncDirection",
+      "@type": "project:Type",
+      "rdfs:label": "SyncDirection",
+      "dcterms:description": "Type for synchronization direction between canvas and code",
+      "wbstcnvs:syncDirection": "direction-type",
+      "wbstcnvs:syncCapability": "directional-sync",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncMode",
+      "@type": "project:Type",
+      "rdfs:label": "SyncMode",
+      "dcterms:description": "Type for synchronization modes including manual, automatic, and real-time",
+      "wbstcnvs:syncCapability": "mode-type",
+      "wbstcnvs:conflictStrategy": "mode-selection",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncStatus",
+      "@type": "project:Type",
+      "rdfs:label": "SyncStatus",
+      "dcterms:description": "Type for synchronization operation status and state tracking",
+      "wbstcnvs:syncCapability": "status-type",
+      "wbstcnvs:conversionType": "status-tracking",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:WorkflowStage",
+      "@type": "project:Type",
+      "rdfs:label": "WorkflowStage",
+      "dcterms:description": "Type for workflow execution stages in conversion and sync operations",
+      "wbstcnvs:conversionType": "stage-type",
+      "wbstcnvs:syncCapability": "workflow-stages",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    }
+  ]
+}

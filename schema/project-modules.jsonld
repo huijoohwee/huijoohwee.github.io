@@ -1,0 +1,93 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-modules.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "WBSTCNVS Project Modules Schema",
+    "description": "Service modules for canvas-code conversion and workflow synchronization",
+    "version": "2.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT",
+    "conformsTo": [
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "responsibilities": [
+      "sync-module-orchestration",
+      "conversion-service-management",
+      "workflow-module-coordination",
+      "bidirectional-sync-services",
+      "wbstcnvs-module-architecture"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "project:ConversionWorkflowOrchestrator",
+      "@type": "project:Module",
+      "rdfs:label": "ConversionWorkflowOrchestrator",
+      "dcterms:description": "Orchestrates multi-step conversion workflows between canvas and code formats",
+      "wbstcnvs:conversionType": "workflow-orchestration",
+      "wbstcnvs:syncCapability": "format-pipeline",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Coordination"
+    },
+    {
+      "@id": "project:UnifiedWorkflowSystem",
+      "@type": "project:Module",
+      "rdfs:label": "UnifiedWorkflowSystem",
+      "dcterms:description": "Unified system for canvas-code synchronization with conflict prevention",
+      "wbstcnvs:syncDirection": "bidirectional",
+      "wbstcnvs:conflictStrategy": "unified-resolution",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Coordination"
+    },
+    {
+      "@id": "project:WorkflowCanvasCodeManager",
+      "@type": "project:Module",
+      "rdfs:label": "WorkflowCanvasCodeManager",
+      "dcterms:description": "Manages bidirectional synchronization between canvas and code implementations",
+      "wbstcnvs:syncDirection": "bidirectional",
+      "wbstcnvs:conversionType": "canvas-code-sync",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:WorkflowSyncCore",
+      "@type": "project:Module",
+      "rdfs:label": "WorkflowSyncCore",
+      "dcterms:description": "Core synchronization engine for workflow operations and state management",
+      "wbstcnvs:syncDirection": "core-sync",
+      "wbstcnvs:conflictStrategy": "core-resolution",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:WorkflowSyncOperations",
+      "@type": "project:Module",
+      "rdfs:label": "WorkflowSyncOperations",
+      "dcterms:description": "Handles synchronization operations between canvas and code with orchestration",
+      "wbstcnvs:syncDirection": "operational-sync",
+      "wbstcnvs:conversionType": "sync-operations",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:WorkflowSynchronizer",
+      "@type": "project:Module",
+      "rdfs:label": "WorkflowSynchronizer",
+      "dcterms:description": "Main synchronizer for workflow state and canvas-code bidirectional sync",
+      "wbstcnvs:syncDirection": "bidirectional",
+      "wbstcnvs:conflictStrategy": "workflow-synchronizer",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Coordination"
+    }
+  ]
+}

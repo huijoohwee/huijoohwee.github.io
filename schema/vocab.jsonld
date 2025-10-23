@@ -38,19 +38,40 @@
       "https://www.w3.org/TR/owl2-overview/",
       "https://www.w3.org/2004/02/skos/"
     ],
-    "versionInfo": "1.1.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
-    "maintainer": "https://huijoohwee.github.io"
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "maintainer": "https://huijoohwee.github.io",
+    "jjnhm": {
+          "v": "3.0.0",
+          "lyr": "JSONLD",
+          "cmplx": "C1-MVP-Prod",
+          "gov": "Core-SG",
+          "kpi": {
+                "tok-dens": "≥7.0-c/t",
+                "sem-clar": "≥97%",
+                "parse-t": "≤0.5ms",
+                "val-succ": "≥99%",
+                "sch-comp": "100%"
+          }
+    }
   },
 
   "classes": {
-    "Entity": {
-      "@id": "vocab:Entity",
+    "Agent": {
+      "@id": "vocab:Agent",
+      "@type": "rdfs:Class", 
+      "label": "Agent",
+      "description": "Autonomous entity capable of performing actions",
+      "subClassOf": "vocab:Entity"
+    },
+    "CanvasConverter": {
+      "@id": "vocab:CanvasConverter",
       "@type": "rdfs:Class",
-      "label": "Entity",
-      "description": "Base class for all identifiable entities in the JJNHM architecture",
-      "subClassOf": "owl:Thing"
+      "label": "Canvas Converter",
+      "description": "Component for visual-to-code transformation",
+      "subClassOf": "vocab:Entity"
     },
     "Directive": {
       "@id": "vocab:Directive", 
@@ -59,11 +80,18 @@
       "description": "Executable instruction or command within JDBL layer",
       "subClassOf": "vocab:Entity"
     },
-    "Agent": {
-      "@id": "vocab:Agent",
-      "@type": "rdfs:Class", 
-      "label": "Agent",
-      "description": "Autonomous entity capable of performing actions",
+    "Entity": {
+      "@id": "vocab:Entity",
+      "@type": "rdfs:Class",
+      "label": "Entity",
+      "description": "Base class for all identifiable entities in the JJNHM architecture",
+      "subClassOf": "owl:Thing"
+    },
+    "SyncManager": {
+      "@id": "vocab:SyncManager",
+      "@type": "rdfs:Class",
+      "label": "Sync Manager",
+      "description": "Bidirectional synchronization coordinator",
       "subClassOf": "vocab:Entity"
     },
     "Workflow": {
@@ -76,6 +104,22 @@
   },
 
   "properties": {
+    "hasConflictResolution": {
+      "@id": "vocab:hasConflictResolution",
+      "@type": "rdf:Property",
+      "label": "has conflict resolution",
+      "description": "Associates sync operation with conflict resolution strategy",
+      "domain": "vocab:SyncManager",
+      "range": "xsd:string"
+    },
+    "hasDescription": {
+      "@id": "vocab:hasDescription",
+      "@type": "rdf:Property", 
+      "label": "has description",
+      "description": "Associates an entity with descriptive text",
+      "domain": "vocab:Entity",
+      "range": "xsd:string"
+    },
     "hasId": {
       "@id": "vocab:hasId",
       "@type": "rdf:Property",
@@ -92,20 +136,20 @@
       "domain": "vocab:Entity",
       "range": "xsd:string"
     },
-    "hasDescription": {
-      "@id": "vocab:hasDescription",
-      "@type": "rdf:Property", 
-      "label": "has description",
-      "description": "Associates an entity with descriptive text",
-      "domain": "vocab:Entity",
-      "range": "xsd:string"
-    },
     "hasStatus": {
       "@id": "vocab:hasStatus",
       "@type": "rdf:Property",
       "label": "has status", 
       "description": "Associates an entity with its current status",
       "domain": "vocab:Entity",
+      "range": "xsd:string"
+    },
+    "hasSyncDirection": {
+      "@id": "vocab:hasSyncDirection",
+      "@type": "rdf:Property",
+      "label": "has sync direction",
+      "description": "Specifies synchronization direction (bidirectional, canvas-to-code, code-to-canvas)",
+      "domain": "vocab:SyncManager",
       "range": "xsd:string"
     }
   },
@@ -169,10 +213,35 @@
   },
 
   "universalConcepts": {
+    "actor": {
+      "@id": "uc:actor",
+      "label": "Actor",
+      "description": "Agent, user, or service performing actions"
+    },
+    "artifact": {
+      "@id": "uc:artifact",
+      "label": "Artifact",
+      "description": "Produced resource such as a file, document, or endpoint"
+    },
     "automation": {
       "@id": "uc:automation",
       "label": "Automation",
       "description": "Automated execution of steps, workflows, or agents"
+    },
+    "bidirectional-sync": {
+      "@id": "uc:bidirectional-sync",
+      "label": "Bidirectional Sync",
+      "description": "Canvas↔Code synchronization with conflict resolution"
+    },
+    "canvas-conversion": {
+      "@id": "uc:canvas-conversion",
+      "label": "Canvas Conversion",
+      "description": "Visual-to-code transformation pipeline"
+    },
+    "kpi": {
+      "@id": "uc:kpi",
+      "label": "KPI",
+      "description": "Key performance indicator used to gate validations and measure outcomes"
     },
     "processing": {
       "@id": "uc:processing",
@@ -184,25 +253,15 @@
       "label": "Reporting",
       "description": "Generation of structured outputs, summaries or documentation"
     },
-    "actor": {
-      "@id": "uc:actor",
-      "label": "Actor",
-      "description": "Agent, user, or service performing actions"
-    },
-    "artifact": {
-      "@id": "uc:artifact",
-      "label": "Artifact",
-      "description": "Produced resource such as a file, document, or endpoint"
-    },
     "trace": {
       "@id": "uc:trace",
       "label": "Trace",
       "description": "Trace identifier used for linking runtime traces and provenance across layers"
     },
-    "kpi": {
-      "@id": "uc:kpi",
-      "label": "KPI",
-      "description": "Key performance indicator used to gate validations and measure outcomes"
+    "workflow-orchestration": {
+      "@id": "uc:workflow-orchestration",
+      "label": "Workflow Orchestration",
+      "description": "Multi-step process coordination and management"
     }
   },
 

@@ -37,10 +37,24 @@
       "https://www.w3.org/2004/02/skos/",
       "https://www.w3.org/TR/rdf11-concepts/"
     ],
-    "versionInfo": "1.1.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
-    "maintainer": "https://huijoohwee.github.io"
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "maintainer": "https://huijoohwee.github.io",
+    "jjnhm": {
+          "v": "3.0.0",
+          "lyr": "JSONLD",
+          "cmplx": "C1-MVP-Prod",
+          "gov": "Core-SG",
+          "kpi": {
+                "tok-dens": "≥7.0-c/t",
+                "sem-clar": "≥97%",
+                "parse-t": "≤0.5ms",
+                "val-succ": "≥99%",
+                "sch-comp": "100%"
+          }
+    }
   },
 
   "@graph": [

@@ -1,61 +1,73 @@
 {
   "@context": {
     "@version": 1.1,
-    "@base": "https://huijoohwee.github.io/schema/base.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
-
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "@base": "sch:base.jsonld",
+    "@vocab": "sch:vocab.jsonld",
+    "core": "sch:core.jsonld",
+    "uc": "sch:uc.jsonld",
+    "wf": "sch:wf.jsonld",
+    "kg": "sch:kg.jsonld",
+    "rdf": "rdf:",
+    "rdfs": "http://www.w3.org/2000/01/rdf-sch#",
+    "xsd": "xsd:",
     "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jjnhm": "sch:jjnhm.jsonld",
     "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
+    "jdbl": "sch:jdbl.jsonld",
+    "nqds": "sch:nqds.jsonld",
+    "hbs": "sch:hbs.jsonld",
+    "mmd": "sch:mmd.jsonld",
     "PredicateRegistry": "nqds:PredicateRegistry",
     "PredicateClass": "nqds:PredicateClass",
     "Predicate": "nqds:Predicate",
     "Category": "nqds:Category",
-
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "category": "nqds:category",
-    "predicates": { "@id": "nqds:predicates", "@container": "@list" },
-    "subjectTypes": { "@id": "nqds:subjectTypes", "@container": "@list" },
-    "objectTypes": { "@id": "nqds:objectTypes", "@container": "@list" },
+    "predicates": {
+      "@id": "nqds:predicates",
+      "@container": "@list"
+    },
+    "subjectTypes": {
+      "@id": "nqds:subjectTypes",
+      "@container": "@list"
+    },
+    "objectTypes": {
+      "@id": "nqds:objectTypes",
+      "@container": "@list"
+    },
     "usagePattern": "nqds:usagePattern",
-    "description": "rdfs:comment",
+    "desc": "rdfs:comment",
     "totalPredicates": "nqds:totalPredicates",
     "categoryDistribution": "nqds:categoryDistribution",
-    "mostUsedPredicates": { "@id": "nqds:mostUsedPredicates", "@container": "@list" },
+    "mostUsedPredicates": {
+      "@id": "nqds:mostUsedPredicates",
+      "@container": "@list"
+    },
     "version": "core:version",
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" },
+    "created": {
+      "@id": "core:created",
+      "@type": "xsd:dateTime"
+    },
+    "updated": {
+      "@id": "core:updated",
+      "@type": "xsd:dateTime"
+    },
     "examples": "nqds:examples",
-    "pattern": "nqds:pattern",
+    "ptn": "nqds:ptn",
     "docs": "rdfs:seeAlso"
   },
-
-  "@id": "https://huijoohwee.github.io/schema/nqds-predicates.jsonld#Registry:v1.1",
+  "@id": "sch:nqds-predicates.jsonld#Registry:v1.1",
   "@type": "PredicateRegistry",
   "label": "NQDS Predicate Registry",
-  "comment": "Registry of predicates for NQDS semantic payloads, organized by category with usage patterns and validator guidance",
+  "comment": "Registry of predicates for NQDS semantic payloads,organized by category with usage patterns and validator guidance",
   "version": "1.1.0",
   "created": "2025-09-26T00:00:00Z",
   "updated": "2025-10-09T00:00:00Z",
   "totalPredicates": 87,
   "categoryDistribution": {
     "action": 32,
-    "relationship": 22,
+    "rel": 22,
     "state": 10,
     "temporal": 8,
     "conditional": 7,
@@ -63,159 +75,663 @@
     "communication": 8,
     "evaluation": 6
   },
-  "mostUsedPredicates": ["[defines]", "[manages]", "[provides]", "[contains]", "[enables]"],
-
+  "mostUsedPredicates": [
+    "[defines]",
+    "[manages]",
+    "[provides]",
+    "[contains]",
+    "[enables]"
+  ],
   "predicates": [
     {
       "@type": "PredicateClass",
       "label": "Action Predicates",
       "category": "action",
-      "description": "Predicates that express actions, operations or orchestration steps",
+      "desc": "Predicates express actions,operations or orch steps",
       "predicates": [
-        { "predicate": "[initiates]", "description": "Starts or triggers a process or project", "subjectTypes": ["Agent", "System"], "objectTypes": ["Process", "Project"], "usagePattern": "workflow initiation" },
-        { "predicate": "[defines]", "description": "Defines or specifies a concept, rule, or requirement", "subjectTypes": ["Agent", "System"], "objectTypes": ["Requirements", "Rules"], "usagePattern": "specification" },
-        { "predicate": "[designs]", "description": "Designs or architects a system or component", "subjectTypes": ["Human"], "objectTypes": ["Blueprint", "Architecture"], "usagePattern": "design activities" },
-        { "predicate": "[orchestrates]", "description": "Coordinates multiple components, agents or flows", "subjectTypes": ["Coordinator", "System"], "objectTypes": ["Workflow", "Process"], "usagePattern": "flow orchestration" },
-        { "predicate": "[executes]", "description": "Performs or runs a task or check", "subjectTypes": ["Agent", "System"], "objectTypes": ["Task", "Gate"], "usagePattern": "task execution" },
-        { "predicate": "[deploys]", "description": "Deploys or releases components or services", "subjectTypes": ["Agent", "System"], "objectTypes": ["Service", "Application"], "usagePattern": "deployment" },
-        { "predicate": "[generates]", "description": "Generates artifacts such as code, tests, or documents", "subjectTypes": ["Agent", "System"], "objectTypes": ["Code", "Tests", "Artifact"], "usagePattern": "artifact generation" }
+        {
+          "predicate": "[initiates]",
+          "desc": "Starts or triggers process or project",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "Process",
+            "Project"
+          ],
+          "usagePattern": "workflow initiation"
+        },
+        {
+          "predicate": "[defines]",
+          "desc": "Defines or specifies concept,rule,or req",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "Requirements",
+            "Rules"
+          ],
+          "usagePattern": "spec"
+        },
+        {
+          "predicate": "[designs]",
+          "desc": "Designs or architects system or comp",
+          "subjectTypes": [
+            "Human"
+          ],
+          "objectTypes": [
+            "Blueprint",
+            "arch"
+          ],
+          "usagePattern": "design activities"
+        },
+        {
+          "predicate": "[orchestrates]",
+          "desc": "Coordinates multiple components,agents or flows",
+          "subjectTypes": [
+            "Coordinator",
+            "System"
+          ],
+          "objectTypes": [
+            "Workflow",
+            "Process"
+          ],
+          "usagePattern": "flow orch"
+        },
+        {
+          "predicate": "[executes]",
+          "desc": "Performs or runs task or check",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "Task",
+            "Gate"
+          ],
+          "usagePattern": "task exec"
+        },
+        {
+          "predicate": "[deploys]",
+          "desc": "Deploys or releases components or services",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "svc",
+            "Application"
+          ],
+          "usagePattern": "deploy"
+        },
+        {
+          "predicate": "[generates]",
+          "desc": "Generates artifacts e.g. code,tests,or documents",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "Code",
+            "Tests",
+            "Artifact"
+          ],
+          "usagePattern": "artifact generation"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
-      "label": "Relationship Predicates",
-      "category": "relationship",
-      "description": "Predicates that model structural or semantic relationships between entities",
+      "label": "rel Predicates",
+      "category": "rel",
+      "desc": "Predicates model structural or semantic relationships between entities",
       "predicates": [
-        { "predicate": "[contains]", "description": "Contains or includes elements", "subjectTypes": ["Container", "Collection"], "objectTypes": ["Element", "Component"], "usagePattern": "containment relationships" },
-        { "predicate": "[connects]", "description": "Connects two components or systems", "subjectTypes": ["Component", "System"], "objectTypes": ["Component", "System"], "usagePattern": "connectivity modeling" },
-        { "predicate": "[supports]", "description": "Provides support for a feature or capability", "subjectTypes": ["System", "Component"], "objectTypes": ["Feature", "Capability"], "usagePattern": "support relationships" },
-        { "predicate": "[includes]", "description": "Includes items or content", "subjectTypes": ["Collection"], "objectTypes": ["Item"], "usagePattern": "inclusion" },
-        { "predicate": "[references]", "description": "References an external resource or document", "subjectTypes": ["System", "Component"], "objectTypes": ["Resource", "Document"], "usagePattern": "citations and links" },
-        { "predicate": "[owns]", "description": "Ownership or control of a resource", "subjectTypes": ["Owner"], "objectTypes": ["Resource"], "usagePattern": "ownership" }
+        {
+          "predicate": "[contains]",
+          "desc": "Contains or includes elements",
+          "subjectTypes": [
+            "Container",
+            "Collection"
+          ],
+          "objectTypes": [
+            "Element",
+            "comp"
+          ],
+          "usagePattern": "containment relationships"
+        },
+        {
+          "predicate": "[connects]",
+          "desc": "Connects two components or systems",
+          "subjectTypes": [
+            "comp",
+            "System"
+          ],
+          "objectTypes": [
+            "comp",
+            "System"
+          ],
+          "usagePattern": "connectivity modeling"
+        },
+        {
+          "predicate": "[supports]",
+          "desc": "Provides support for function or impl",
+          "subjectTypes": [
+            "System",
+            "comp"
+          ],
+          "objectTypes": [
+            "Feature",
+            "cap"
+          ],
+          "usagePattern": "support relationships"
+        },
+        {
+          "predicate": "[includes]",
+          "desc": "Includes items or content",
+          "subjectTypes": [
+            "Collection"
+          ],
+          "objectTypes": [
+            "Item"
+          ],
+          "usagePattern": "inclusion"
+        },
+        {
+          "predicate": "[references]",
+          "desc": "References external resource or document",
+          "subjectTypes": [
+            "System",
+            "comp"
+          ],
+          "objectTypes": [
+            "Resource",
+            "Document"
+          ],
+          "usagePattern": "citations and links"
+        },
+        {
+          "predicate": "[owns]",
+          "desc": "Ownership or control of resource",
+          "subjectTypes": [
+            "Owner"
+          ],
+          "objectTypes": [
+            "Resource"
+          ],
+          "usagePattern": "ownership"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "State Predicates",
       "category": "state",
-      "description": "Predicates that describe states, capabilities, permissions and invariant properties",
+      "desc": "Predicates describe states,capabilities,permissions and invariant properties",
       "predicates": [
-        { "predicate": "[is]", "description": "Equals or has value/state", "subjectTypes": ["Any"], "objectTypes": ["Value", "State"], "usagePattern": "state assertions" },
-        { "predicate": "[has]", "description": "Has an attribute or property", "subjectTypes": ["Entity", "System"], "objectTypes": ["Attribute"], "usagePattern": "attribute ownership" },
-        { "predicate": "[can]", "description": "Indicates capability or permission", "subjectTypes": ["Agent", "System"], "objectTypes": ["Capability", "Permission"], "usagePattern": "capability assertions" },
-        { "predicate": "[must]", "description": "Mandatory condition or requirement", "subjectTypes": ["Entity"], "objectTypes": ["Condition", "Requirement"], "usagePattern": "enforcement" },
-        { "predicate": "[becomes]", "description": "Transitions to a new state", "subjectTypes": ["Entity"], "objectTypes": ["State"], "usagePattern": "state transition" }
+        {
+          "predicate": "[is]",
+          "desc": "Equals or has value/state",
+          "subjectTypes": [
+            "Any"
+          ],
+          "objectTypes": [
+            "Value",
+            "State"
+          ],
+          "usagePattern": "state assertions"
+        },
+        {
+          "predicate": "[has]",
+          "desc": "Has attribute or property",
+          "subjectTypes": [
+            "Entity",
+            "System"
+          ],
+          "objectTypes": [
+            "Attribute"
+          ],
+          "usagePattern": "attribute ownership"
+        },
+        {
+          "predicate": "[can]",
+          "desc": "Indicates impl or permission",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "cap",
+            "Permission"
+          ],
+          "usagePattern": "cap assertions"
+        },
+        {
+          "predicate": "[must]",
+          "desc": "Mandatory condition or req",
+          "subjectTypes": [
+            "Entity"
+          ],
+          "objectTypes": [
+            "Condition",
+            "req"
+          ],
+          "usagePattern": "enforcement"
+        },
+        {
+          "predicate": "[becomes]",
+          "desc": "Transitions to new state",
+          "subjectTypes": [
+            "Entity"
+          ],
+          "objectTypes": [
+            "State"
+          ],
+          "usagePattern": "state transition"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "Temporal Predicates",
       "category": "temporal",
-      "description": "Predicates that express temporal ordering or relationships",
+      "desc": "Predicates express temporal ordering or relationships",
       "predicates": [
-        { "predicate": "[before]", "description": "Occurs before another event", "subjectTypes": ["Event", "Process"], "objectTypes": ["Event", "Time"], "usagePattern": "temporal ordering" },
-        { "predicate": "[after]", "description": "Occurs after another event", "subjectTypes": ["Event", "Process"], "objectTypes": ["Event", "Time"], "usagePattern": "temporal ordering" },
-        { "predicate": "[during]", "description": "Occurs during a period or phase", "subjectTypes": ["Event", "Process"], "objectTypes": ["Period", "Phase"], "usagePattern": "temporal scoping" },
-        { "predicate": "[then]", "description": "Then, next in sequence", "subjectTypes": ["Step", "Process"], "objectTypes": ["Step", "Action"], "usagePattern": "sequence chaining" },
-        { "predicate": "[leads-to]", "description": "Leads to a result or event", "subjectTypes": ["Action", "Event"], "objectTypes": ["Result", "Event"], "usagePattern": "causal chains" }
+        {
+          "predicate": "[before]",
+          "desc": "Occurs before another event",
+          "subjectTypes": [
+            "Event",
+            "Process"
+          ],
+          "objectTypes": [
+            "Event",
+            "Time"
+          ],
+          "usagePattern": "temporal ordering"
+        },
+        {
+          "predicate": "[after]",
+          "desc": "Occurs after another event",
+          "subjectTypes": [
+            "Event",
+            "Process"
+          ],
+          "objectTypes": [
+            "Event",
+            "Time"
+          ],
+          "usagePattern": "temporal ordering"
+        },
+        {
+          "predicate": "[during]",
+          "desc": "Occurs during period or phase",
+          "subjectTypes": [
+            "Event",
+            "Process"
+          ],
+          "objectTypes": [
+            "Period",
+            "Phase"
+          ],
+          "usagePattern": "temporal scoping"
+        },
+        {
+          "predicate": "[then]",
+          "desc": "Then,next in sequence",
+          "subjectTypes": [
+            "Step",
+            "Process"
+          ],
+          "objectTypes": [
+            "Step",
+            "Action"
+          ],
+          "usagePattern": "sequence chaining"
+        },
+        {
+          "predicate": "[leads-to]",
+          "desc": "Leads to result or event",
+          "subjectTypes": [
+            "Action",
+            "Event"
+          ],
+          "objectTypes": [
+            "Result",
+            "Event"
+          ],
+          "usagePattern": "causal chains"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "Conditional Predicates",
       "category": "conditional",
-      "description": "Predicates used to express conditional logic and guards",
+      "desc": "Predicates used to express conditional logic and guards",
       "predicates": [
-        { "predicate": "[if]", "description": "If condition holds then...", "subjectTypes": ["Condition", "Rule"], "objectTypes": ["Condition", "State"], "usagePattern": "conditional branching" },
-        { "predicate": "[unless]", "description": "Unless condition holds", "subjectTypes": ["Condition"], "objectTypes": ["Condition"], "usagePattern": "negated conditions" },
-        { "predicate": "[while]", "description": "While condition true", "subjectTypes": ["Process", "State"], "objectTypes": ["Condition"], "usagePattern": "looping/guarded execution" },
-        { "predicate": "[until]", "description": "Until condition satisfied", "subjectTypes": ["Process"], "objectTypes": ["Condition"], "usagePattern": "termination guard" },
-        { "predicate": "[and]", "description": "Logical AND of conditions", "subjectTypes": ["Condition"], "objectTypes": ["Condition"], "usagePattern": "composite guards" }
+        {
+          "predicate": "[if]",
+          "desc": "If condition holds then...",
+          "subjectTypes": [
+            "Condition",
+            "Rule"
+          ],
+          "objectTypes": [
+            "Condition",
+            "State"
+          ],
+          "usagePattern": "conditional branching"
+        },
+        {
+          "predicate": "[unless]",
+          "desc": "Unless condition holds",
+          "subjectTypes": [
+            "Condition"
+          ],
+          "objectTypes": [
+            "Condition"
+          ],
+          "usagePattern": "negated conditions"
+        },
+        {
+          "predicate": "[while]",
+          "desc": "While condition true",
+          "subjectTypes": [
+            "Process",
+            "State"
+          ],
+          "objectTypes": [
+            "Condition"
+          ],
+          "usagePattern": "looping/guarded exec"
+        },
+        {
+          "predicate": "[until]",
+          "desc": "Until condition satisfied",
+          "subjectTypes": [
+            "Process"
+          ],
+          "objectTypes": [
+            "Condition"
+          ],
+          "usagePattern": "term guard"
+        },
+        {
+          "predicate": "[and]",
+          "desc": "Logical AND of conditions",
+          "subjectTypes": [
+            "Condition"
+          ],
+          "objectTypes": [
+            "Condition"
+          ],
+          "usagePattern": "composite guards"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "Quantitative Predicates",
       "category": "quantitative",
-      "description": "Predicates representing measures, counts, and numeric evaluations",
+      "desc": "Predicates representing measures,counts,and numeric evaluations",
       "predicates": [
-        { "predicate": "[measures]", "description": "Measures a metric or value", "subjectTypes": ["Metric", "System"], "objectTypes": ["Value", "Measurement"], "usagePattern": "metric reporting" },
-        { "predicate": "[scores]", "description": "Assigns a score or rating", "subjectTypes": ["Evaluator"], "objectTypes": ["Score"], "usagePattern": "scoring" },
-        { "predicate": "[counts]", "description": "Counts occurrences or items", "subjectTypes": ["Counter"], "objectTypes": ["Number"], "usagePattern": "counting" },
-        { "predicate": "[totals]", "description": "Totals or aggregates values", "subjectTypes": ["Aggregator"], "objectTypes": ["Totals"], "usagePattern": "aggregation" }
+        {
+          "predicate": "[measures]",
+          "desc": "Measures metric or value",
+          "subjectTypes": [
+            "Metric",
+            "System"
+          ],
+          "objectTypes": [
+            "Value",
+            "Measurement"
+          ],
+          "usagePattern": "metric reporting"
+        },
+        {
+          "predicate": "[scores]",
+          "desc": "Assigns score or rating",
+          "subjectTypes": [
+            "Evaluator"
+          ],
+          "objectTypes": [
+            "Score"
+          ],
+          "usagePattern": "scoring"
+        },
+        {
+          "predicate": "[counts]",
+          "desc": "Counts occurrences or items",
+          "subjectTypes": [
+            "Counter"
+          ],
+          "objectTypes": [
+            "Number"
+          ],
+          "usagePattern": "counting"
+        },
+        {
+          "predicate": "[totals]",
+          "desc": "Totals or aggregates values",
+          "subjectTypes": [
+            "Aggregator"
+          ],
+          "objectTypes": [
+            "Totals"
+          ],
+          "usagePattern": "aggr"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "Communication Predicates",
       "category": "communication",
-      "description": "Predicates for messaging, publishing and subscriptions",
+      "desc": "Predicates for messaging,publishing and subscriptions",
       "predicates": [
-        { "predicate": "[sends]", "description": "Sends a message or data", "subjectTypes": ["Agent", "System"], "objectTypes": ["Message", "Data"], "usagePattern": "message transmission" },
-        { "predicate": "[broadcasts]", "description": "Broadcasts to many receivers", "subjectTypes": ["Sender"], "objectTypes": ["Message"], "usagePattern": "pub-sub broadcast" },
-        { "predicate": "[receives]", "description": "Receives a message or data", "subjectTypes": ["Receiver"], "objectTypes": ["Message", "Data"], "usagePattern": "message receipt" },
-        { "predicate": "[publishes]", "description": "Publishes events or information", "subjectTypes": ["Publisher"], "objectTypes": ["Event"], "usagePattern": "event publishing" },
-        { "predicate": "[subscribes]", "description": "Subscribes to events or feeds", "subjectTypes": ["Subscriber"], "objectTypes": ["Event"], "usagePattern": "event subscription" }
+        {
+          "predicate": "[sends]",
+          "desc": "Sends message or data",
+          "subjectTypes": [
+            "Agent",
+            "System"
+          ],
+          "objectTypes": [
+            "Message",
+            "Data"
+          ],
+          "usagePattern": "message transmission"
+        },
+        {
+          "predicate": "[broadcasts]",
+          "desc": "Broadcasts to many receivers",
+          "subjectTypes": [
+            "Sender"
+          ],
+          "objectTypes": [
+            "Message"
+          ],
+          "usagePattern": "pub-sub broadcast"
+        },
+        {
+          "predicate": "[receives]",
+          "desc": "Receives message or data",
+          "subjectTypes": [
+            "Receiver"
+          ],
+          "objectTypes": [
+            "Message",
+            "Data"
+          ],
+          "usagePattern": "message receipt"
+        },
+        {
+          "predicate": "[publishes]",
+          "desc": "Publishes events or information",
+          "subjectTypes": [
+            "Publisher"
+          ],
+          "objectTypes": [
+            "Event"
+          ],
+          "usagePattern": "event publishing"
+        },
+        {
+          "predicate": "[subscribes]",
+          "desc": "Subscribes to events or feeds",
+          "subjectTypes": [
+            "Subscriber"
+          ],
+          "objectTypes": [
+            "Event"
+          ],
+          "usagePattern": "event subscription"
+        }
       ]
     },
     {
       "@type": "PredicateClass",
       "label": "Evaluation Predicates",
       "category": "evaluation",
-      "description": "Predicates for assessment, comparison and optimization",
+      "desc": "Predicates for assessment,comparison and optim",
       "predicates": [
-        { "predicate": "[evaluates]", "description": "Evaluates or assesses an object", "subjectTypes": ["Evaluator"], "objectTypes": ["Object", "Performance"], "usagePattern": "evaluation" },
-        { "predicate": "[assesses]", "description": "Assesses quality or state", "subjectTypes": ["Assessor"], "objectTypes": ["Quality"], "usagePattern": "quality assessment" },
-        { "predicate": "[compares]", "description": "Compares alternatives or results", "subjectTypes": ["Comparator"], "objectTypes": ["Options"], "usagePattern": "comparison" },
-        { "predicate": "[optimizes]", "description": "Optimizes for performance or cost", "subjectTypes": ["Optimizer"], "objectTypes": ["Performance"], "usagePattern": "optimization" }
+        {
+          "predicate": "[evaluates]",
+          "desc": "Evaluates or assesses object",
+          "subjectTypes": [
+            "Evaluator"
+          ],
+          "objectTypes": [
+            "Object",
+            "perf"
+          ],
+          "usagePattern": "evaluation"
+        },
+        {
+          "predicate": "[assesses]",
+          "desc": "Assesses quality or state",
+          "subjectTypes": [
+            "Assessor"
+          ],
+          "objectTypes": [
+            "Quality"
+          ],
+          "usagePattern": "quality assessment"
+        },
+        {
+          "predicate": "[compares]",
+          "desc": "Compares alternatives or results",
+          "subjectTypes": [
+            "Comparator"
+          ],
+          "objectTypes": [
+            "Options"
+          ],
+          "usagePattern": "comparison"
+        },
+        {
+          "predicate": "[optimizes]",
+          "desc": "Optimizes for speed or cost",
+          "subjectTypes": [
+            "Optimizer"
+          ],
+          "objectTypes": [
+            "perf"
+          ],
+          "usagePattern": "opt"
+        }
       ]
     }
   ],
-
   "patternTemplates": {
     "creationPattern": "::creation::(Subject)-[creates|generates|produces]->{Artifact}",
-    "managementPattern": "::management::(Manager)-[manages|controls|maintains]->{Resource}",
+    "managementPattern": "::mgmt::(Manager)-[manages|controls|maintains]->{Resource}",
     "communicationPattern": "::communication::(Sender)-[sends|communicates|notifies]->{Receiver}",
     "evaluationPattern": "::evaluation::(Evaluator)-[evaluates|assesses|measures]->{Target}",
-    "relationshipPattern": "::relationship::(Entity1)-[contains|includes|supports]->{Entity2}",
+    "relationshipPattern": "::rel::(Entity1)-[contains|includes|supports]->{Entity2}",
     "temporalPattern": "::temporal::(Event1)-[before|after|leads-to]->{Event2}"
   },
-
   "semanticRelationships": {
     "synonymGroups": [
-      ["[creates]", "[generates]", "[produces]"],
-      ["[manages]", "[controls]", "[maintains]"],
-      ["[provides]", "[supplies]", "[offers]"]
+      [
+        "[creates]",
+        "[generates]",
+        "[produces]"
+      ],
+      [
+        "[manages]",
+        "[controls]",
+        "[maintains]"
+      ],
+      [
+        "[provides]",
+        "[supplies]",
+        "[offers]"
+      ]
     ],
     "antonymPairs": [
-      ["[enables]", "[prevents]"],
-      ["[includes]", "[excludes]"],
-      ["[accepts]", "[rejects]"]
+      [
+        "[enables]",
+        "[prevents]"
+      ],
+      [
+        "[includes]",
+        "[excludes]"
+      ],
+      [
+        "[accepts]",
+        "[rejects]"
+      ]
     ],
     "hierarchicalRelations": [
-      { "from": "[contains]", "to": "[includes]", "then": "[covers]" },
-      { "from": "[manages]", "to": "[controls]", "then": "[owns]" }
+      {
+        "from": "[contains]",
+        "to": "[includes]",
+        "then": "[covers]"
+      },
+      {
+        "from": "[manages]",
+        "to": "[controls]",
+        "then": "[owns]"
+      }
     ],
     "temporalChains": [
-      { "sequence": ["[before]", "[during]", "[after]"] },
-      { "sequence": ["[initiates]", "[executes]", "[completes]"] }
+      {
+        "sequence": [
+          "[before]",
+          "[during]",
+          "[after]"
+        ]
+      },
+      {
+        "sequence": [
+          "[initiates]",
+          "[executes]",
+          "[completes]"
+        ]
+      }
     ]
   },
-
   "validatorHints": {
     "resolveIRIs": "Ensure predicate IRIs or CURIEs resolve when merged with base/vocab contexts; canonicalize bracketed form to stable IRIs in tooling.",
-    "usageValidation": "Validate subjectTypes and objectTypes against JSON-LD type contexts (core, uc, vocab); run nqds-parser and graph-validator on sample payloads.",
-    "consistencyChecks": "Detect synonym groups, enforce preferred predicate canonicalization, and flag antonyms used together inconsistently.",
-    "recommendedTools": ["nqds-parser", "graph-validator", "jsonld.js", "kg-diff-checker", "predicate-usage-analyzer"]
+    "usageValidation": "Validate subjectTypes and objectTypes against JSON-LD type contexts (core,uc,vocab); run nqds-parser and graph-validator on sample payloads.",
+    "consistencyChecks": "Detect synonym groups,enforce preferred predicate canonicalization,and flag antonyms used together inconsistently.",
+    "recommendedTools": [
+      "nqds-parser",
+      "graph-validator",
+      "jsonld.js",
+      "kg-diff-checker",
+      "predicate-usage-analyzer"
+    ]
   },
-
   "examples": [
     {
       "@type": "nqds:SemanticGraph",
-      "label": "Orchestration Example",
-      "description": "Agent orchestrates a workflow and generates an artifact; diagram and trace linkage shown in examples",
-      "examplePath": "/schema/examples/nqds/orchestration-example.nqds",
+      "label": "orch Example",
+      "desc": "Agent aligns workflow and makes artifact; diagram and trace linkage shown in examples",
+      "examplePath": "/sch/examples/nqds/orch-example.nqds",
       "triples": [
         "::orchestrator::(Orchestrator)-[orchestrates]->{Workflow}",
         "::workflow::(Workflow)-[executes]->{Task}",
@@ -223,10 +739,245 @@
       ]
     }
   ],
-
   "releaseNotes": {
     "version": "1.1.0",
-    "summary": "Normalized predicate registry, clearer categories, pattern templates, synonym/antonym groups and validator guidance; added recommended tooling",
-    "compatibility": "Backwards compatible with previous bracketed predicate notation; tooling should canonicalize to IRIs for runtime."
+    "summary": "Normalized predicate registry,clearer categories,ptn templates,synonym/antonym groups and validator guidance; added recommended tooling",
+    "compat": "Backwards compatible with previous bracketed predicate notation; tooling should canonicalize to IRIs for runtime."
+  },
+  "resp": "//huijoohwee.github.io/sch/nqds-predicates.jsonld#registry",
+  "jjnhm": {
+    "version": "3.0.0",
+    "layer": "JSONLD",
+    "complexity": "C1-MVP-Production",
+    "governance": "Core-sch-Governance",
+    "kpiTargets": {
+      "token-density": "≥7.0-concepts/token",
+      "semantic-clarity": "≥97%",
+      "parse-time": "≤0.5ms",
+      "val-success": "≥99%",
+      "sch-compliance": "100%"
+    }
+  },
+  "activeVerbs": [
+    "execute",
+    "validate",
+    "optimize",
+    "monitor"
+  ],
+  "kpiTarget": "perf-eff≥90%",
+  "characteristics": [
+    "composable",
+    "traceable",
+    "optimizable"
+  ],
+  "semanticCluster": {
+    "cluster": "general-processing",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "system-coordination",
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ]
+  },
+  "kpiTargets": {
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ],
+    "composite": "enterprise-readiness≥95%"
+  },
+  "responsibilityMatrix": {
+    "primary": "system-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience"
+    ],
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting"
+    ],
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation"
+    ]
+  },
+  "characteristicVectors": {
+    "functional": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ],
+    "quality": [
+      "reliable",
+      "efficient",
+      "maintainable",
+      "scalable"
+    ],
+    "operational": [
+      "monitorable",
+      "debuggable",
+      "recoverable",
+      "upgradeable"
+    ],
+    "architectural": [
+      "modular",
+      "composable",
+      "extensible",
+      "interoperable"
+    ]
+  },
+  "implementationPatterns": {
+    "design": [
+      "factory",
+      "adapter",
+      "observer",
+      "strategy",
+      "command"
+    ],
+    "architectural": [
+      "microservices",
+      "event-driven",
+      "pipeline",
+      "layered",
+      "hexagonal"
+    ],
+    "integration": [
+      "api-gateway",
+      "message-queue",
+      "event-bus",
+      "service-mesh",
+      "circuit-breaker"
+    ],
+    "data": [
+      "repository",
+      "unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga"
+    ]
+  },
+  "governanceMetadata": {
+    "compliance": [
+      "JJNHM-v3.0.0",
+      "JSON-LD-1.1",
+      "RDF-1.1",
+      "SPARQL-1.1"
+    ],
+    "quality": [
+      "ISO-25010",
+      "NIST-CSF",
+      "OWASP-ASVS",
+      "W3C-WCAG"
+    ],
+    "security": [
+      "RBAC",
+      "ABAC",
+      "OAuth2",
+      "JWT",
+      "TLS-1.3"
+    ],
+    "monitoring": [
+      "OpenTelemetry",
+      "Prometheus",
+      "Grafana",
+      "ELK-Stack"
+    ]
+  },
+  "qualityGates": {
+    "performance": [
+      "latency≤200ms",
+      "throughput≥1K/s",
+      "cpu≤80%",
+      "memory≤2GB"
+    ],
+    "reliability": [
+      "uptime≥99.9%",
+      "mtbf≥720h",
+      "mttr≤15min",
+      "error-rate≤0.1%"
+    ],
+    "security": [
+      "vulnerability-scan=pass",
+      "penetration-test=pass",
+      "compliance-audit=pass"
+    ],
+    "maintainability": [
+      "code-coverage≥80%",
+      "complexity≤10",
+      "duplication≤5%",
+      "documentation≥90%"
+    ]
+  },
+  "orchestrationDirectives": {
+    "execution": [
+      "parallel-processing",
+      "load-balancing",
+      "auto-scaling",
+      "circuit-breaking"
+    ],
+    "coordination": [
+      "event-choreography",
+      "saga-orchestration",
+      "workflow-engine",
+      "state-machine"
+    ],
+    "monitoring": [
+      "health-checks",
+      "metrics-collection",
+      "alerting",
+      "tracing"
+    ],
+    "recovery": [
+      "backup-restore",
+      "disaster-recovery",
+      "failover",
+      "rollback"
+    ]
+  },
+  "validationRules": {
+    "structural": [
+      "schema-validation",
+      "type-checking",
+      "constraint-validation",
+      "referential-integrity"
+    ],
+    "semantic": [
+      "business-rules",
+      "domain-constraints",
+      "workflow-validation",
+      "state-consistency"
+    ],
+    "quality": [
+      "performance-benchmarks",
+      "security-scans",
+      "accessibility-checks",
+      "usability-tests"
+    ],
+    "compliance": [
+      "regulatory-compliance",
+      "standard-conformance",
+      "policy-enforcement",
+      "audit-requirements"
+    ]
   }
 }

@@ -6,30 +6,38 @@
       "prov": "http://www.w3.org/ns/prov#",
       "time": "http://www.w3.org/2006/time#",
       
+      "CanvasSyncDirective": "jdbl:CanvasSyncDirective",
+      "ConflictResolutionRule": "jdbl:ConflictResolutionRule",
+      "Constraint": "jdbl:Constraint",
+      "ConversionGate": "jdbl:ConversionGate",
       "Directive": "jdbl:Directive",
       "ExecutionDirective": "jdbl:ExecutionDirective",
-      "ValidationRule": "jdbl:ValidationRule",
-      "QualityGate": "jdbl:QualityGate",
-      "WorkflowMetadata": "jdbl:WorkflowMetadata",
-      "Constraint": "jdbl:Constraint",
-      "TimeoutConstraint": "jdbl:TimeoutConstraint",
-      "RetryConstraint": "jdbl:RetryConstraint",
-      "PreCondition": "jdbl:PreCondition",
       "PostCondition": "jdbl:PostCondition",
+      "PreCondition": "jdbl:PreCondition",
+      "QualityGate": "jdbl:QualityGate",
+      "RetryConstraint": "jdbl:RetryConstraint",
+      "SyncValidationRule": "jdbl:SyncValidationRule",
+      "TimeoutConstraint": "jdbl:TimeoutConstraint",
+      "ValidationRule": "jdbl:ValidationRule",
+      "WorkflowMetadata": "jdbl:WorkflowMetadata",
       
-      "hasDirective": { "@id": "jdbl:hasDirective", "@type": "@id", "@container": "@set" },
-      "hasConstraint": { "@id": "jdbl:hasConstraint", "@type": "@id", "@container": "@set" },
-      "hasPreCondition": { "@id": "jdbl:hasPreCondition", "@type": "@id", "@container": "@set" },
-      "hasPostCondition": { "@id": "jdbl:hasPostCondition", "@type": "@id", "@container": "@set" },
-      "timeout": { "@id": "time:hasDuration", "@type": "xsd:duration" },
-      "maxRetries": { "@id": "jdbl:maxRetries", "@type": "xsd:nonNegativeInteger" },
-      "priority": { "@id": "jdbl:priority", "@type": "xsd:string" },
-      "owner": { "@id": "prov:wasAttributedTo", "@type": "@id" },
-      "traceId": { "@id": "jdbl:traceId", "@type": "xsd:string" },
       "activeVerbs": { "@id": "jdbl:activeVerbs", "@container": "@list" },
+      "canvasToCodeSync": { "@id": "jdbl:canvasToCodeSync", "@type": "@id" },
+      "codeToCanvasSync": { "@id": "jdbl:codeToCanvasSync", "@type": "@id" },
+      "conflictStrategy": { "@id": "jdbl:conflictStrategy", "@type": "xsd:string" },
+      "docs": "rdfs:seeAlso",
       "functionCalls": { "@id": "jdbl:functionCalls", "@container": "@list" },
+      "hasConstraint": { "@id": "jdbl:hasConstraint", "@type": "@id", "@container": "@set" },
+      "hasDirective": { "@id": "jdbl:hasDirective", "@type": "@id", "@container": "@set" },
+      "hasPostCondition": { "@id": "jdbl:hasPostCondition", "@type": "@id", "@container": "@set" },
+      "hasPreCondition": { "@id": "jdbl:hasPreCondition", "@type": "@id", "@container": "@set" },
       "kpiTargets": { "@id": "jdbl:kpiTargets", "@container": "@index" },
-      "docs": "rdfs:seeAlso"
+      "maxRetries": { "@id": "jdbl:maxRetries", "@type": "xsd:nonNegativeInteger" },
+      "owner": { "@id": "prov:wasAttributedTo", "@type": "@id" },
+      "priority": { "@id": "jdbl:priority", "@type": "xsd:string" },
+      "syncDirection": { "@id": "jdbl:syncDirection", "@type": "xsd:string" },
+      "timeout": { "@id": "time:hasDuration", "@type": "xsd:duration" },
+      "traceId": { "@id": "jdbl:traceId", "@type": "xsd:string" }
     }
   ],
 
@@ -38,28 +46,43 @@
 
   "meta": {
     "@type": "schema:Dataset",
-    "title": "JDBL Directive Block Language Vocabulary",
-    "description": "JSON-based Directive Block Language vocabulary for execution directives, active verbs, validation rules, quality gates and workflow metadata in JJNHM architecture",
+    "title": "JDBL Canvas-Code Directive Block Language Vocabulary",
+    "description": "JSON-based Directive Block Language vocabulary for canvas-code synchronization directives, bidirectional workflows, and WBSTCNVS orchestration",
     "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
     "conformsTo": [
       "https://www.w3.org/TR/rdf11-concepts/",
       "https://www.w3.org/TR/owl2-overview/",
       "https://www.w3.org/TR/prov-o/",
-      "https://www.w3.org/2006/time"
+      "https://www.w3.org/2006/time",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
     ],
-    "versionInfo": "1.1.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
     "maintainer": "https://huijoohwee.github.io",
+    "jjnhm": {
+          "v": "3.0.0",
+          "lyr": "JSONLD",
+          "cmplx": "C1-MVP-Prod",
+          "gov": "Core-SG",
+          "kpi": {
+                "tok-dens": "≥7.0-c/t",
+                "sem-clar": "≥97%",
+                "parse-t": "≤0.5ms",
+                "val-succ": "≥99%",
+                "sch-comp": "100%"
+          }
+    },
     "layer": "directive-metadata",
     "responsibilities": [
-      "execution-directives",
-      "validation-rules",
-      "quality-gates",
-      "workflow-metadata",
-      "multi-agent-orchestration",
-      "function-calling"
+      "canvas-code-sync-directives",
+      "bidirectional-workflow-orchestration",
+      "conflict-resolution-rules",
+      "conversion-validation-gates",
+      "multi-agent-canvas-orchestration",
+      "sync-operation-tracing"
     ]
   },
 
@@ -90,6 +113,34 @@
       "rdfs:subClassOf": "jdbl:Directive",
       "rdfs:label": "Quality Gate",
       "rdfs:comment": "Threshold or checkpoint that must be met for quality assurance"
+    },
+    {
+      "@id": "jdbl:CanvasSyncDirective",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:ExecutionDirective",
+      "rdfs:label": "Canvas Sync Directive",
+      "rdfs:comment": "Directive for canvas-code synchronization operations"
+    },
+    {
+      "@id": "jdbl:ConflictResolutionRule",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:ValidationRule",
+      "rdfs:label": "Conflict Resolution Rule",
+      "rdfs:comment": "Rule for resolving synchronization conflicts between canvas and code"
+    },
+    {
+      "@id": "jdbl:ConversionGate",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:QualityGate",
+      "rdfs:label": "Conversion Gate",
+      "rdfs:comment": "Quality gate for canvas-code conversion validation"
+    },
+    {
+      "@id": "jdbl:SyncValidationRule",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": "jdbl:ValidationRule",
+      "rdfs:label": "Sync Validation Rule",
+      "rdfs:comment": "Validation rule for bidirectional synchronization operations"
     },
     {
       "@id": "jdbl:WorkflowMetadata",
@@ -222,12 +273,44 @@
       "rdfs:range": "xsd:string"
     },
     {
+      "@id": "jdbl:canvasToCodeSync",
+      "@type": "rdf:Property",
+      "rdfs:label": "canvas to code sync",
+      "rdfs:comment": "Reference to canvas-to-code synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:range": "@id"
+    },
+    {
+      "@id": "jdbl:codeToCanvasSync",
+      "@type": "rdf:Property",
+      "rdfs:label": "code to canvas sync",
+      "rdfs:comment": "Reference to code-to-canvas synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:range": "@id"
+    },
+    {
+      "@id": "jdbl:conflictStrategy",
+      "@type": "rdf:Property",
+      "rdfs:label": "conflict strategy",
+      "rdfs:comment": "Strategy for resolving synchronization conflicts",
+      "rdfs:domain": "jdbl:ConflictResolutionRule",
+      "rdfs:range": "xsd:string"
+    },
+    {
       "@id": "jdbl:kpiTargets",
       "@type": "rdf:Property",
       "rdfs:label": "kpi targets",
       "rdfs:comment": "KPIs associated with directive execution (time-to-market, token-density, semantic-clarity)",
       "rdfs:domain": "jdbl:WorkflowMetadata",
       "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "jdbl:syncDirection",
+      "@type": "rdf:Property",
+      "rdfs:label": "sync direction",
+      "rdfs:comment": "Direction of synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:range": "xsd:string"
     },
     {
       "@id": "jdbl:docs",

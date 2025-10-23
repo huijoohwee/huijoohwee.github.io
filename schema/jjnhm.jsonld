@@ -51,25 +51,30 @@
   
   "meta": {
     "@type": "schema:Dataset",
-    "title": "JJNHM Architecture Specification",
-    "description": "Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture vocabulary for multi-agent orchestration and rapid MVP prototyping",
+    "title": "JJNHM Architecture Specification with WBSTCNVS Integration",
+    "description": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture for canvas-code synchronization, bidirectional workflows, and WBSTCNVS project orchestration",
     "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
     "conformsTo": [
       "https://www.w3.org/TR/rdf11-concepts/",
       "https://www.w3.org/TR/owl2-overview/",
       "https://www.w3.org/ns/org",
-      "https://www.w3.org/ns/prov"
+      "https://www.w3.org/ns/prov",
+      "https://huijoohwee.github.io/schema/DMAG.jsonld",
+      "https://huijoohwee.github.io/schema/FLOW.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
     ],
-    "versionInfo": "2.3.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
-    "maintainer": "https://huijoohwee.github.io"
+    "modified": "2025-10-23T02:00:00Z",
+    "maintainer": "https://huijoohwee.github.io",
+    "generator": "JJNHM-Schema-Generator-v3.0.0",
+    "semVer": "20251023-v3.0.0"
   },
   
-  "name": "Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture (JJNHM)",
-  "version": "2.3.0",
-  "purpose": "Multi-Agent Orchestration for Rapid MVP Prototyping; defines layers, contracts, constraints, validators, examples, tooling, metrics and migration guidance",
+  "name": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture with WBSTCNVS Integration (JJNHM)",
+  "version": "3.0.0",
+  "purpose": "Canvas-Code Synchronization Architecture for WBSTCNVS with bidirectional workflows, visual-to-code transformation, and multi-agent orchestration; defines layers, contracts, constraints, validators, examples, tooling, metrics, and migration guidance",
   "created": "2024-01-01T00:00:00Z",
 
   "layers": [
@@ -108,14 +113,15 @@
       "@id": "jjnhm:JDBLLayer",
       "@type": "Layer",
       "name": "JDBL",
-      "description": "Directive orchestration for multi-agent workflows; active verbs and function-calling semantics",
+      "description": "Directive orchestration for canvas-code workflows; active verbs and bidirectional sync semantics",
       "format": "JSON Blocks (JDBL)",
       "responsibilities": [
         "specify-execution-directives",
-        "orchestrate-multi-agent-actions",
+        "orchestrate-canvas-code-sync",
         "express-active-verbs",
         "define-validation-rules",
-        "record-workflow-metadata"
+        "record-workflow-metadata",
+        "manage-bidirectional-operations"
       ],
       "constraints": [
         "NO semantic relationships (no KG constructs)",
@@ -139,14 +145,15 @@
       "@id": "jjnhm:NQDSLayer",
       "@type": "Layer",
       "name": "NQDS",
-      "description": "Semantic payloads and knowledge graph construction for journey tracing and dependency mapping",
+      "description": "Semantic payloads and knowledge graph construction for canvas-code journey tracing and sync dependency mapping",
       "format": "N-Quads style NQDS",
       "responsibilities": [
         "model-relationships",
-        "trace-user-journeys",
+        "trace-canvas-code-journeys",
         "build-centralized-knowledge-graphs",
-        "map-dependency-flows",
-        "identify-memoization-critical-paths"
+        "map-sync-dependency-flows",
+        "identify-memoization-critical-paths",
+        "track-bidirectional-operations"
       ],
       "constraints": [
         "NO type definitions (refer to JSONLD)",
@@ -445,15 +452,92 @@
     }
   ],
 
+  "governanceIntegration": {
+    "@type": "jjnhm:GovernanceFramework",
+    "dmag": {
+      "@id": "https://huijoohwee.github.io/schema/DMAG.jsonld",
+      "@type": "jjnhm:DistributedModularArchitectureGovernance",
+      "description": "DMAG patterns integrated across JJNHM layers for modular architecture governance",
+      "patterns": [
+        "ModulePattern", "AdapterPattern", "ServiceFactory", 
+        "ActorInstance", "ResiliencePrimitive", "CoordinationPattern"
+      ],
+      "layerMapping": {
+        "JSONLD": "ModulePattern + ServiceFactory",
+        "JDBL": "ActorInstance + CoordinationPattern", 
+        "NQDS": "AdapterPattern + ResiliencePrimitive",
+        "HBS": "ModulePattern + ServiceFactory",
+        "MMD": "CoordinationPattern + ResiliencePrimitive"
+      },
+      "kpiTargets": {
+        "moduleCohesion": "≥85%",
+        "adapterEfficiency": "≥90%",
+        "serviceCreationTime": "≤100ms",
+        "actorConcurrencyEfficiency": "≥95%",
+        "resilienceRecoveryTime": "≤500ms",
+        "coordinationLatency": "≤50ms"
+      }
+    },
+    "flow": {
+      "@id": "https://huijoohwee.github.io/schema/FLOW.jsonld",
+      "@type": "jjnhm:UniversalFlowGovernance",
+      "description": "FLOW patterns for universal flow governance across multi-agent orchestration",
+      "patterns": [
+        "DataFlowPattern", "ControlFlowPattern", "StateFlowPattern",
+        "ErrorFlowPattern", "EventFlowPattern", "ResourceFlowPattern",
+        "TokenFlowPattern", "StreamingPattern", "PipelinePattern", "OrchestrationPattern"
+      ],
+      "layerMapping": {
+        "JSONLD": "DataFlowPattern + TokenFlowPattern",
+        "JDBL": "ControlFlowPattern + OrchestrationPattern",
+        "NQDS": "StateFlowPattern + EventFlowPattern",
+        "HBS": "StreamingPattern + PipelinePattern",
+        "MMD": "ResourceFlowPattern + ErrorFlowPattern"
+      },
+      "kpiTargets": {
+        "dataFlowEfficiency": "≥90%",
+        "controlFlowLatency": "≤100ms",
+        "stateTransitionReliability": "≥99%",
+        "errorRecoverySuccessRate": "≥95%",
+        "eventProcessingThroughput": "≥1000/sec",
+        "resourceUtilizationEfficiency": "≥85%",
+        "tokenDensity": "≥6.5 concepts/token",
+        "streamingThroughput": "≥10MB/sec",
+        "pipelineEfficiency": "≥95%",
+        "orchestrationSuccessRate": "≥99%"
+      }
+    },
+    "enhancedValidation": {
+      "@type": "jjnhm:EnhancedValidationPipeline",
+      "description": "Comprehensive validation pipeline with DMAG and FLOW governance checks",
+      "validationRules": [
+        "dmag-pattern-compliance",
+        "flow-governance-adherence", 
+        "jjnhm-layer-integration",
+        "semantic-web-compatibility",
+        "performance-optimization"
+      ],
+      "qualityGates": {
+        "dmagCompliance": "≥80%",
+        "flowGovernance": "≥80%", 
+        "jjnhmIntegration": "≥80%",
+        "semanticWebCompatibility": "≥80%",
+        "performanceOptimization": "≥80%"
+      }
+    }
+  },
+
   "releaseNotes": {
-    "version": "2.3.0",
-    "summary": "JJNHM canonical context and registry document including layer definitions, contracts, validator hints, example pointers and migration guidance for Rapid MVP workflows",
+    "version": "2.4.0",
+    "summary": "Enhanced JJNHM with DMAG & FLOW governance integration for distributed modular architecture and universal flow patterns",
     "changes": [
-      "Added MMD visualization layer and contracts",
-      "Expanded KPI metrics and validator hints",
-      "Included example pointers for each layer",
-      "Published jjnhm-validate as canonical CLI entrypoint"
+      "Integrated DMAG distributed modular architecture governance patterns",
+      "Added FLOW universal flow governance for multi-agent orchestration",
+      "Enhanced validation pipeline with comprehensive quality gates",
+      "Updated layer mappings to include governance patterns",
+      "Improved KPI targets for token density (≥6.5 concepts/token)",
+      "Added governance framework integration with pattern mapping"
     ],
-    "compatibility": "Backwards compatible with JJNH 2.x; new MMD types are additive"
+    "compatibility": "Backwards compatible with JJNHM 2.3.x; governance patterns are additive enhancements"
   }
 }

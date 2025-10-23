@@ -1,0 +1,103 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-interfaces.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "WBSTCNVS Project Interfaces Schema",
+    "description": "TypeScript interface definitions for canvas-code conversion and sync contracts",
+    "version": "2.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT",
+    "conformsTo": [
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "responsibilities": [
+      "sync-interface-contracts",
+      "conversion-type-definitions",
+      "workflow-interface-orchestration",
+      "bidirectional-sync-contracts",
+      "wbstcnvs-interface-architecture"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "project:CanvasNode",
+      "@type": "project:Interface",
+      "rdfs:label": "CanvasNode",
+      "dcterms:description": "Interface for canvas node elements with position, size, and content properties",
+      "wbstcnvs:canvasType": "node-interface",
+      "wbstcnvs:conversionType": "node-to-component",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:CanvasCoreProps",
+      "@type": "project:Interface",
+      "rdfs:label": "CanvasCoreProps",
+      "dcterms:description": "Props interface for CanvasCore component with display nodes and configuration",
+      "wbstcnvs:canvasType": "props-interface",
+      "wbstcnvs:syncCapability": "component-props",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncConflict",
+      "@type": "project:Interface",
+      "rdfs:label": "SyncConflict",
+      "dcterms:description": "Interface for synchronization conflict data and resolution metadata",
+      "wbstcnvs:conflictStrategy": "conflict-interface",
+      "wbstcnvs:syncCapability": "conflict-resolution",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncResult",
+      "@type": "project:Interface",
+      "rdfs:label": "SyncResult",
+      "dcterms:description": "Interface for synchronization operation results and status information",
+      "wbstcnvs:syncCapability": "result-interface",
+      "wbstcnvs:conversionType": "sync-result",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:SyncStats",
+      "@type": "project:Interface",
+      "rdfs:label": "SyncStats",
+      "dcterms:description": "Interface for synchronization statistics and performance metrics",
+      "wbstcnvs:syncCapability": "stats-interface",
+      "wbstcnvs:conflictStrategy": "metrics-tracking",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:UnifiedWorkflowOptions",
+      "@type": "project:Interface",
+      "rdfs:label": "UnifiedWorkflowOptions",
+      "dcterms:description": "Interface for unified workflow system configuration and options",
+      "wbstcnvs:syncDirection": "workflow-options",
+      "wbstcnvs:conversionType": "workflow-config",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+    {
+      "@id": "project:UnifiedWorkflowResult",
+      "@type": "project:Interface",
+      "rdfs:label": "UnifiedWorkflowResult",
+      "dcterms:description": "Interface for unified workflow operation results and output data",
+      "wbstcnvs:syncCapability": "workflow-result",
+      "wbstcnvs:conversionType": "workflow-output",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    }
+  ]
+}

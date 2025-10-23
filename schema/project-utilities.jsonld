@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "description": "skos:definition"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-utilities.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "Project Utilities Schema",
+    "description": "Utility functions and helpers for project operations",
+    "version": "1.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT"
+  },
+  "@graph": [
+    {
+      "@id": "project:useEventListener",
+      "@type": "project:Utility",
+      "rdfs:label": "useEventListener",
+      "description": "Utility function for event listener management"
+    }
+  ]
+}

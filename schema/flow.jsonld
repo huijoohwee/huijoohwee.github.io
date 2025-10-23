@@ -1,0 +1,872 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "dmag": "https://huijoohwee.github.io/schema/DMAG.jsonld",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "owl": "http://www.w3.org/2002/07/owl#"
+  },
+
+  "@id": "flow:UniversalFlowGovernance",
+  "@type": "jjnhm:FlowGovernanceSchema",
+
+  "meta": {
+    "title": "FLOW: Universal Flow Governance Schema",
+    "description": "Comprehensive schema for universal flow patterns enabling multi-agent orchestration, data transformation, and workflow coordination",
+    "versionInfo": "3.0.0",
+    "maintainer": "JJNHM Architecture Team",
+    "license": "MIT",
+    "creator": "FLOW Governance Working Group",
+    "created": "2024-12-19T00:00:00Z",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "generator": "JJNHM-Schema-Generator-v3.0.0"
+  },
+
+  "jjnhm": {
+    "version": "2.4.0",
+    "layer": "JSONLD",
+    "complexity": "C1-MVP-Production",
+    "governance": "FLOW-Universal-Flow-Governance",
+    "kpi-targets": {
+      "data-flow-efficiency": "≥92%",
+      "control-flow-latency": "≤200ms",
+      "state-transition-reliability": "≥99.5%",
+      "error-recovery-success-rate": "≥95%",
+      "event-processing-throughput": "≥1000-events/sec",
+      "resource-utilization-efficiency": "≥88%",
+      "token-density": "≥6.5-concepts/token",
+      "streaming-throughput": "≥10MB/sec",
+      "pipeline-efficiency": "≥90%",
+      "orchestration-success-rate": "≥98%"
+    }
+  },
+
+  "@graph": [
+    {
+      "@id": "flow:AIWorkflowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "AI Workflow Pattern",
+      "dcterms:description": "Orchestrates AI-assisted programming workflows with multi-agent coordination",
+      "flow:responsibility": "ai-programming-workflow-coordination",
+      "flow:characteristics": ["ai-orchestratable", "multi-agent-coordinated", "context-aware", "adaptive"],
+      "flow:kpiTarget": "ai-workflow-efficiency ≥95%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "multi-agent-ai-workflow-orchestration",
+        "flow:governance": "ai-workflow-optimization-strategies",
+        "flow:validation": "ai-workflow-efficiency-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CanvasConversionFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Canvas Conversion Flow Pattern",
+      "dcterms:description": "Manages bidirectional canvas-code conversion with synchronization",
+      "flow:responsibility": "canvas-code-conversion-management",
+      "flow:characteristics": ["bidirectional", "synchronizable", "visual-aware", "code-preserving"],
+      "flow:kpiTarget": "canvas-conversion-accuracy ≥88%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "bidirectional-canvas-code-conversion-with-sync",
+        "flow:governance": "conversion-accuracy-strategies",
+        "flow:validation": "conversion-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CodeAnalysisFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Code Analysis Flow Pattern",
+      "dcterms:description": "Manages code analysis workflows with semantic understanding and suggestion generation",
+      "flow:responsibility": "code-analysis-workflow-management",
+      "flow:characteristics": ["semantic-aware", "suggestion-generating", "multi-dimensional", "context-preserving"],
+      "flow:kpiTarget": "code-analysis-accuracy ≥92%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "semantic-code-analysis-with-suggestion-generation",
+        "flow:governance": "code-analysis-quality-strategies",
+        "flow:validation": "analysis-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CodeGenerationFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Code Generation Flow Pattern",
+      "dcterms:description": "Orchestrates code generation workflows with template systems and format conversion",
+      "flow:responsibility": "code-generation-workflow-orchestration",
+      "flow:characteristics": ["template-driven", "format-convertible", "quality-validated", "context-aware"],
+      "flow:kpiTarget": "code-generation-quality ≥90%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "template-driven-code-generation-with-validation",
+        "flow:governance": "code-generation-quality-strategies",
+        "flow:validation": "generation-quality-testing"
+      }
+    },
+
+    {
+      "@id": "flow:ControlFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Control Flow Pattern",
+      "dcterms:description": "Orchestrates workflow execution with conditional branching and parallel processing",
+      "flow:responsibility": "workflow-execution-orchestration",
+      "flow:characteristics": ["sequential", "conditional", "parallel", "composable"],
+      "flow:kpiTarget": "control-flow-latency ≤200ms",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "conditional-branching-and-parallel-execution",
+        "flow:governance": "execution-path-optimization",
+        "flow:validation": "latency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "flow:DataFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Data Flow Pattern",
+      "dcterms:description": "Manages data transformation through extract-transform-load pipelines",
+      "flow:responsibility": "data-transformation-management",
+      "flow:characteristics": ["extractable", "transformable", "loadable", "traceable"],
+      "flow:kpiTarget": "data-flow-efficiency ≥92%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "etl-pipeline-for-data-processing",
+        "flow:governance": "data-quality-assurance",
+        "flow:validation": "transformation-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "flow:ErrorFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Error Flow Pattern",
+      "dcterms:description": "Handles error propagation and recovery with systematic error management",
+      "flow:responsibility": "error-handling-and-recovery",
+      "flow:characteristics": ["catchable", "recoverable", "reportable", "traceable"],
+      "flow:kpiTarget": "error-recovery-success-rate ≥95%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "error-propagation-and-recovery-mechanisms",
+        "flow:governance": "error-handling-strategies",
+        "flow:validation": "recovery-success-rate-testing"
+      }
+    },
+
+    {
+      "@id": "flow:EventFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Event Flow Pattern",
+      "dcterms:description": "Coordinates event-driven communication through publish-subscribe mechanisms",
+      "flow:responsibility": "event-driven-coordination",
+      "flow:characteristics": ["publishable", "subscribable", "filterable", "routable"],
+      "flow:kpiTarget": "event-processing-throughput ≥1000-events/sec",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "publish-subscribe-event-system",
+        "flow:governance": "event-routing-optimization",
+        "flow:validation": "throughput-performance-testing"
+      }
+    },
+
+    {
+      "@id": "flow:FlowGovernanceMetrics",
+      "@type": "flow:MetricsFramework",
+      "rdfs:label": "Flow Governance Metrics",
+      "dcterms:description": "Comprehensive metrics for evaluating flow pattern implementation",
+      "flow:metrics": [
+        {
+          "@id": "flow:AIWorkflowEfficiencyMetric",
+          "flow:name": "AI Workflow Efficiency",
+          "flow:target": "≥95%",
+          "flow:measurement": "ai-programming-workflow-performance-analysis"
+        },
+        {
+          "@id": "flow:CanvasConversionAccuracyMetric",
+          "flow:name": "Canvas Conversion Accuracy",
+          "flow:target": "≥88%",
+          "flow:measurement": "bidirectional-conversion-accuracy-testing"
+        },
+        {
+          "@id": "flow:CodeAnalysisAccuracyMetric",
+          "flow:name": "Code Analysis Accuracy",
+          "flow:target": "≥92%",
+          "flow:measurement": "semantic-analysis-accuracy-testing"
+        },
+        {
+          "@id": "flow:CodeGenerationQualityMetric",
+          "flow:name": "Code Generation Quality",
+          "flow:target": "≥90%",
+          "flow:measurement": "generated-code-quality-validation"
+        },
+        {
+          "@id": "flow:ControlFlowLatencyMetric",
+          "flow:name": "Control Flow Latency",
+          "flow:target": "≤200ms",
+          "flow:measurement": "execution-path-timing-analysis"
+        },
+        {
+          "@id": "flow:DataFlowEfficiencyMetric",
+          "flow:name": "Data Flow Efficiency",
+          "flow:target": "≥92%",
+          "flow:measurement": "etl-pipeline-performance-analysis"
+        },
+        {
+          "@id": "flow:ErrorRecoverySuccessMetric",
+          "flow:name": "Error Recovery Success Rate",
+          "flow:target": "≥95%",
+          "flow:measurement": "error-handling-effectiveness-analysis"
+        },
+        {
+          "@id": "flow:EventProcessingThroughputMetric",
+          "flow:name": "Event Processing Throughput",
+          "flow:target": "≥1000-events/sec",
+          "flow:measurement": "event-system-performance-benchmarking"
+        },
+        {
+          "@id": "flow:OrchestrationSuccessRateMetric",
+          "flow:name": "Orchestration Success Rate",
+          "flow:target": "≥98%",
+          "flow:measurement": "workflow-coordination-reliability-testing"
+        },
+        {
+          "@id": "flow:PipelineEfficiencyMetric",
+          "flow:name": "Pipeline Efficiency",
+          "flow:target": "≥90%",
+          "flow:measurement": "pipeline-stage-optimization-analysis"
+        },
+        {
+          "@id": "flow:ResourceUtilizationEfficiencyMetric",
+          "flow:name": "Resource Utilization Efficiency",
+          "flow:target": "≥88%",
+          "flow:measurement": "resource-allocation-optimization-analysis"
+        },
+        {
+          "@id": "flow:StateTransitionReliabilityMetric",
+          "flow:name": "State Transition Reliability",
+          "flow:target": "≥99.5%",
+          "flow:measurement": "state-machine-reliability-testing"
+        },
+        {
+          "@id": "flow:StreamingThroughputMetric",
+          "flow:name": "Streaming Throughput",
+          "flow:target": "≥10MB/sec",
+          "flow:measurement": "streaming-performance-benchmarking"
+        },
+        {
+          "@id": "flow:TokenDensityMetric",
+          "flow:name": "Token Density",
+          "flow:target": "≥6.5-concepts/token",
+          "flow:measurement": "semantic-compression-effectiveness-analysis"
+        },
+        {
+          "@id": "flow:WorkflowSyncConsistencyMetric",
+          "flow:name": "Workflow Synchronization Consistency",
+          "flow:target": "≥99%",
+          "flow:measurement": "multi-workflow-synchronization-consistency-analysis"
+        }
+      ]
+    },
+
+    {
+      "@id": "flow:FlowOrchestrationAgents",
+      "@type": "flow:AgentFramework",
+      "rdfs:label": "Flow Orchestration Agents",
+      "dcterms:description": "Multi-agent system for coordinating universal flow patterns",
+      "flow:agents": [
+        {
+          "@id": "flow:AIWorkflowAgent",
+          "flow:responsibilities": ["orchestrate-ai-programming-workflows", "coordinate-multi-agent-ai-tasks", "manage-ai-context", "optimize-ai-workflow-efficiency"]
+        },
+        {
+          "@id": "flow:CanvasConversionFlowAgent",
+          "flow:responsibilities": ["manage-canvas-code-conversion", "coordinate-bidirectional-sync", "preserve-visual-context", "maintain-code-integrity"]
+        },
+        {
+          "@id": "flow:CodeAnalysisFlowAgent",
+          "flow:responsibilities": ["manage-code-analysis-workflows", "coordinate-semantic-analysis", "generate-code-suggestions", "preserve-analysis-context"]
+        },
+        {
+          "@id": "flow:CodeGenerationFlowAgent",
+          "flow:responsibilities": ["orchestrate-code-generation-workflows", "manage-template-systems", "coordinate-format-conversion", "validate-generated-code"]
+        },
+        {
+          "@id": "flow:ControlFlowAgent",
+          "flow:responsibilities": ["evaluate-conditions", "execute-parallel-branches", "synchronize-completion", "handle-exceptions"]
+        },
+        {
+          "@id": "flow:DataFlowAgent",
+          "flow:responsibilities": ["extract-data-sources", "transform-to-target-format", "load-into-destination", "validate-data-integrity"]
+        },
+        {
+          "@id": "flow:EventFlowAgent",
+          "flow:responsibilities": ["publish-workflow-events", "subscribe-to-triggers", "filter-relevant-events", "route-to-handlers"]
+        },
+        {
+          "@id": "flow:OrchestrationAgent",
+          "flow:responsibilities": ["coordinate-workflow-execution", "manage-compensation-logic", "ensure-consistency", "audit-execution-traces"]
+        },
+        {
+          "@id": "flow:PipelineAgent",
+          "flow:responsibilities": ["chain-processing-stages", "monitor-stage-performance", "optimize-throughput", "handle-stage-failures"]
+        },
+        {
+          "@id": "flow:ResourceFlowAgent",
+          "flow:responsibilities": ["allocate-compute-resources", "manage-memory-pools", "monitor-utilization", "release-unused-resources"]
+        },
+        {
+          "@id": "flow:StateFlowAgent",
+          "flow:responsibilities": ["track-workflow-state", "manage-transitions", "persist-checkpoints", "recover-from-failures"]
+        },
+        {
+          "@id": "flow:StreamingAgent",
+          "flow:responsibilities": ["process-data-streams", "manage-buffers", "handle-backpressure", "scale-processing-capacity"]
+        },
+        {
+          "@id": "flow:TokenFlowAgent",
+          "flow:responsibilities": ["analyze-semantic-density", "optimize-token-usage", "compress-representations", "measure-efficiency"]
+        },
+        {
+          "@id": "flow:WorkflowSynchronizationAgent",
+          "flow:responsibilities": ["synchronize-multiple-workflows", "resolve-workflow-conflicts", "maintain-state-consistency", "coordinate-event-driven-sync"]
+        }
+      ]
+    },
+
+    {
+      "@id": "flow:FlowTaxonomy",
+      "@type": "flow:TaxonomyFramework",
+      "rdfs:label": "Universal Flow Taxonomy",
+      "dcterms:description": "Hierarchical classification of flow patterns for systematic governance",
+      "flow:categories": {
+        "data-flows": ["DataFlowPattern", "StreamingPattern"],
+        "control-flows": ["ControlFlowPattern", "OrchestrationPattern"],
+        "state-flows": ["StateFlowPattern", "EventFlowPattern"],
+        "resource-flows": ["ResourceFlowPattern", "TokenFlowPattern"],
+        "pipeline-flows": ["PipelinePattern"],
+        "ai-flows": ["AIWorkflowPattern", "CodeAnalysisFlowPattern", "CodeGenerationFlowPattern"],
+        "conversion-flows": ["CanvasConversionFlowPattern"],
+        "synchronization-flows": ["WorkflowSynchronizationPattern"]
+      }
+    },
+
+    {
+      "@id": "flow:OrchestrationPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Orchestration Pattern",
+      "dcterms:description": "Coordinates complex multi-step workflows with compensation and recovery",
+      "flow:responsibility": "complex-workflow-coordination",
+      "flow:characteristics": ["orchestratable", "compensatable", "recoverable", "auditable"],
+      "flow:kpiTarget": "orchestration-success-rate ≥98%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "workflow-orchestration-with-compensation",
+        "flow:governance": "orchestration-reliability-strategies",
+        "flow:validation": "success-rate-testing"
+      }
+    },
+
+    {
+      "@id": "flow:PipelinePattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Pipeline Pattern",
+      "dcterms:description": "Chains operations efficiently through composable pipeline stages",
+      "flow:responsibility": "operation-chaining",
+      "flow:characteristics": ["chainable", "composable", "monitorable", "optimizable"],
+      "flow:kpiTarget": "pipeline-efficiency ≥90%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "composable-pipeline-stages-with-monitoring",
+        "flow:governance": "pipeline-optimization-strategies",
+        "flow:validation": "efficiency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "flow:ResourceFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Resource Flow Pattern",
+      "dcterms:description": "Manages resource allocation and lifecycle with efficient utilization",
+      "flow:responsibility": "resource-allocation-management",
+      "flow:characteristics": ["allocatable", "releasable", "poolable", "monitorable"],
+      "flow:kpiTarget": "resource-utilization-efficiency ≥88%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "resource-pooling-and-lifecycle-management",
+        "flow:governance": "resource-optimization-strategies",
+        "flow:validation": "utilization-efficiency-testing"
+      }
+    },
+
+    {
+      "@id": "flow:StateFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "State Flow Pattern",
+      "dcterms:description": "Manages state transitions through finite state machines with recovery capabilities",
+      "flow:responsibility": "state-transition-management",
+      "flow:characteristics": ["stateful", "transitionable", "recoverable", "auditable"],
+      "flow:kpiTarget": "state-transition-reliability ≥99.5%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "finite-state-machine-for-workflow-states",
+        "flow:governance": "state-consistency-management",
+        "flow:validation": "transition-reliability-testing"
+      }
+    },
+
+    {
+      "@id": "flow:StreamingPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Streaming Pattern",
+      "dcterms:description": "Processes large datasets efficiently with streaming and backpressure management",
+      "flow:responsibility": "large-dataset-processing",
+      "flow:characteristics": ["streamable", "bufferable", "backpressure-aware", "scalable"],
+      "flow:kpiTarget": "streaming-throughput ≥10MB/sec",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "streaming-data-processing-with-backpressure",
+        "flow:governance": "streaming-performance-optimization",
+        "flow:validation": "throughput-benchmarking"
+      }
+    },
+
+    {
+      "@id": "flow:TokenFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Token Flow Pattern",
+      "dcterms:description": "Optimizes token density and semantic flow for efficient communication",
+      "flow:responsibility": "token-density-optimization",
+      "flow:characteristics": ["compressible", "optimizable", "measurable", "improvable"],
+      "flow:kpiTarget": "token-density ≥6.5-concepts/token",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "semantic-compression-and-token-optimization",
+        "flow:governance": "semantic-efficiency-strategies",
+        "flow:validation": "token-density-analysis"
+      }
+    },
+
+    {
+      "@id": "flow:UniversalKPITargets",
+      "@type": "flow:KPIFramework",
+      "rdfs:label": "Universal Flow KPI Targets",
+      "dcterms:description": "Comprehensive KPI targets for universal flow governance",
+      "flow:targets": {
+        "flow-efficiency": "≥90% across all flow patterns",
+        "latency-optimization": "≤200ms for control flows",
+        "throughput-maximization": "≥1000 operations/sec",
+        "error-resilience": "≥95% recovery success rate",
+        "resource-optimization": "≥88% utilization efficiency",
+        "semantic-density": "≥6.5 concepts/token",
+        "scalability-factor": "≥10x capacity scaling",
+        "ai-workflow-efficiency": "≥95% for AI programming workflows",
+        "code-analysis-accuracy": "≥92% for semantic analysis",
+        "code-generation-quality": "≥90% for generated code",
+        "canvas-conversion-accuracy": "≥88% for bidirectional conversion",
+        "workflow-sync-consistency": "≥99% for multi-workflow synchronization"
+      }
+    },
+
+    {
+      "@id": "flow:WorkflowSynchronizationPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Workflow Synchronization Pattern",
+      "dcterms:description": "Handles error propagation and recovery with systematic error management",
+      "flow:responsibility": "error-handling-and-recovery",
+      "flow:characteristics": ["catchable", "recoverable", "reportable", "traceable"],
+      "flow:kpiTarget": "error-recovery-success-rate ≥95%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "error-propagation-and-recovery-mechanisms",
+        "flow:governance": "error-handling-strategies",
+        "flow:validation": "recovery-success-rate-testing"
+      }
+    },
+
+    {
+      "@id": "flow:EventFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Event Flow Pattern",
+      "dcterms:description": "Coordinates event-driven communication through publish-subscribe mechanisms",
+      "flow:responsibility": "event-driven-coordination",
+      "flow:characteristics": ["publishable", "subscribable", "filterable", "routable"],
+      "flow:kpiTarget": "event-processing-throughput ≥1000-events/sec",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "publish-subscribe-event-system",
+        "flow:governance": "event-routing-optimization",
+        "flow:validation": "throughput-performance-testing"
+      }
+    },
+
+    {
+      "@id": "flow:ResourceFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Resource Flow Pattern",
+      "dcterms:description": "Manages resource allocation and lifecycle with efficient utilization",
+      "flow:responsibility": "resource-allocation-management",
+      "flow:characteristics": ["allocatable", "releasable", "poolable", "monitorable"],
+      "flow:kpiTarget": "resource-utilization-efficiency ≥88%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "resource-pooling-and-lifecycle-management",
+        "flow:governance": "resource-optimization-strategies",
+        "flow:validation": "utilization-efficiency-testing"
+      }
+    },
+
+    {
+      "@id": "flow:TokenFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Token Flow Pattern",
+      "dcterms:description": "Optimizes token density and semantic flow for efficient communication",
+      "flow:responsibility": "token-density-optimization",
+      "flow:characteristics": ["compressible", "optimizable", "measurable", "improvable"],
+      "flow:kpiTarget": "token-density ≥6.5-concepts/token",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "semantic-compression-and-token-optimization",
+        "flow:governance": "semantic-efficiency-strategies",
+        "flow:validation": "token-density-analysis"
+      }
+    },
+
+    {
+      "@id": "flow:StreamingPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Streaming Pattern",
+      "dcterms:description": "Processes large datasets efficiently with streaming and backpressure management",
+      "flow:responsibility": "large-dataset-processing",
+      "flow:characteristics": ["streamable", "bufferable", "backpressure-aware", "scalable"],
+      "flow:kpiTarget": "streaming-throughput ≥10MB/sec",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "streaming-data-processing-with-backpressure",
+        "flow:governance": "streaming-performance-optimization",
+        "flow:validation": "throughput-benchmarking"
+      }
+    },
+
+    {
+      "@id": "flow:PipelinePattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Pipeline Pattern",
+      "dcterms:description": "Chains operations efficiently through composable pipeline stages",
+      "flow:responsibility": "operation-chaining",
+      "flow:characteristics": ["chainable", "composable", "monitorable", "optimizable"],
+      "flow:kpiTarget": "pipeline-efficiency ≥90%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "composable-pipeline-stages-with-monitoring",
+        "flow:governance": "pipeline-optimization-strategies",
+        "flow:validation": "efficiency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "flow:OrchestrationPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Orchestration Pattern",
+      "dcterms:description": "Coordinates complex multi-step workflows with compensation and recovery",
+      "flow:responsibility": "complex-workflow-coordination",
+      "flow:characteristics": ["orchestratable", "compensatable", "recoverable", "auditable"],
+      "flow:kpiTarget": "orchestration-success-rate ≥98%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "workflow-orchestration-with-compensation",
+        "flow:governance": "orchestration-reliability-strategies",
+        "flow:validation": "success-rate-testing"
+      }
+    },
+
+    {
+      "@id": "flow:AIWorkflowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "AI Workflow Pattern",
+      "dcterms:description": "Orchestrates AI-assisted programming workflows with multi-agent coordination",
+      "flow:responsibility": "ai-programming-workflow-coordination",
+      "flow:characteristics": ["ai-orchestratable", "multi-agent-coordinated", "context-aware", "adaptive"],
+      "flow:kpiTarget": "ai-workflow-efficiency ≥95%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "multi-agent-ai-workflow-orchestration",
+        "flow:governance": "ai-workflow-optimization-strategies",
+        "flow:validation": "ai-workflow-efficiency-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CodeAnalysisFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Code Analysis Flow Pattern",
+      "dcterms:description": "Manages code analysis workflows with semantic understanding and suggestion generation",
+      "flow:responsibility": "code-analysis-workflow-management",
+      "flow:characteristics": ["semantic-aware", "suggestion-generating", "multi-dimensional", "context-preserving"],
+      "flow:kpiTarget": "code-analysis-accuracy ≥92%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "semantic-code-analysis-with-suggestion-generation",
+        "flow:governance": "code-analysis-quality-strategies",
+        "flow:validation": "analysis-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CodeGenerationFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Code Generation Flow Pattern",
+      "dcterms:description": "Orchestrates code generation workflows with template systems and format conversion",
+      "flow:responsibility": "code-generation-workflow-orchestration",
+      "flow:characteristics": ["template-driven", "format-convertible", "quality-validated", "context-aware"],
+      "flow:kpiTarget": "code-generation-quality ≥90%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "template-driven-code-generation-with-validation",
+        "flow:governance": "code-generation-quality-strategies",
+        "flow:validation": "generation-quality-testing"
+      }
+    },
+
+    {
+      "@id": "flow:CanvasConversionFlowPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Canvas Conversion Flow Pattern",
+      "dcterms:description": "Manages bidirectional canvas-code conversion with synchronization",
+      "flow:responsibility": "canvas-code-conversion-management",
+      "flow:characteristics": ["bidirectional", "synchronizable", "visual-aware", "code-preserving"],
+      "flow:kpiTarget": "canvas-conversion-accuracy ≥88%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "bidirectional-canvas-code-conversion-with-sync",
+        "flow:governance": "conversion-accuracy-strategies",
+        "flow:validation": "conversion-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "flow:WorkflowSynchronizationPattern",
+      "@type": "flow:FlowPattern",
+      "rdfs:label": "Workflow Synchronization Pattern",
+      "dcterms:description": "Synchronizes multiple AI workflows with conflict resolution and state consistency",
+      "flow:responsibility": "multi-workflow-synchronization",
+      "flow:characteristics": ["conflict-resolvable", "state-consistent", "event-driven", "recoverable"],
+      "flow:kpiTarget": "sync-consistency ≥99%",
+      "flow:implementation": {
+        "@type": "flow:FlowImplementation",
+        "flow:approach": "event-driven-workflow-synchronization-with-conflict-resolution",
+        "flow:governance": "synchronization-consistency-strategies",
+        "flow:validation": "consistency-reliability-testing"
+      }
+    },
+
+    {
+      "@id": "flow:FlowOrchestrationAgents",
+      "@type": "flow:AgentFramework",
+      "rdfs:label": "Flow Orchestration Agents",
+      "dcterms:description": "Multi-agent system for coordinating universal flow patterns",
+      "flow:agents": [
+        {
+          "@id": "flow:DataFlowAgent",
+          "flow:responsibilities": ["extract-data-sources", "transform-to-target-format", "load-into-destination", "validate-data-integrity"]
+        },
+        {
+          "@id": "flow:ControlFlowAgent",
+          "flow:responsibilities": ["evaluate-conditions", "execute-parallel-branches", "synchronize-completion", "handle-exceptions"]
+        },
+        {
+          "@id": "flow:StateFlowAgent",
+          "flow:responsibilities": ["track-workflow-state", "manage-transitions", "persist-checkpoints", "recover-from-failures"]
+        },
+        {
+          "@id": "flow:EventFlowAgent",
+          "flow:responsibilities": ["publish-workflow-events", "subscribe-to-triggers", "filter-relevant-events", "route-to-handlers"]
+        },
+        {
+          "@id": "flow:ResourceFlowAgent",
+          "flow:responsibilities": ["allocate-compute-resources", "manage-memory-pools", "monitor-utilization", "release-unused-resources"]
+        },
+        {
+          "@id": "flow:TokenFlowAgent",
+          "flow:responsibilities": ["analyze-semantic-density", "optimize-token-usage", "compress-representations", "measure-efficiency"]
+        },
+        {
+          "@id": "flow:StreamingAgent",
+          "flow:responsibilities": ["process-data-streams", "manage-buffers", "handle-backpressure", "scale-processing-capacity"]
+        },
+        {
+          "@id": "flow:PipelineAgent",
+          "flow:responsibilities": ["chain-processing-stages", "monitor-stage-performance", "optimize-throughput", "handle-stage-failures"]
+        },
+        {
+          "@id": "flow:OrchestrationAgent",
+          "flow:responsibilities": ["coordinate-workflow-execution", "manage-compensation-logic", "ensure-consistency", "audit-execution-traces"]
+        },
+        {
+          "@id": "flow:AIWorkflowAgent",
+          "flow:responsibilities": ["orchestrate-ai-programming-workflows", "coordinate-multi-agent-ai-tasks", "manage-ai-context", "optimize-ai-workflow-efficiency"]
+        },
+        {
+          "@id": "flow:CodeAnalysisFlowAgent",
+          "flow:responsibilities": ["manage-code-analysis-workflows", "coordinate-semantic-analysis", "generate-code-suggestions", "preserve-analysis-context"]
+        },
+        {
+          "@id": "flow:CodeGenerationFlowAgent",
+          "flow:responsibilities": ["orchestrate-code-generation-workflows", "manage-template-systems", "coordinate-format-conversion", "validate-generated-code"]
+        },
+        {
+          "@id": "flow:CanvasConversionFlowAgent",
+          "flow:responsibilities": ["manage-canvas-code-conversion", "coordinate-bidirectional-sync", "preserve-visual-context", "maintain-code-integrity"]
+        },
+        {
+          "@id": "flow:WorkflowSynchronizationAgent",
+          "flow:responsibilities": ["synchronize-multiple-workflows", "resolve-workflow-conflicts", "maintain-state-consistency", "coordinate-event-driven-sync"]
+        }
+      ]
+    },
+
+    {
+      "@id": "flow:UniversalKPITargets",
+      "@type": "flow:KPIFramework",
+      "rdfs:label": "Universal Flow KPI Targets",
+      "dcterms:description": "Comprehensive KPI targets for universal flow governance",
+      "flow:targets": {
+        "flow-efficiency": "≥90% across all flow patterns",
+        "latency-optimization": "≤200ms for control flows",
+        "throughput-maximization": "≥1000 operations/sec",
+        "error-resilience": "≥95% recovery success rate",
+        "resource-optimization": "≥88% utilization efficiency",
+        "semantic-density": "≥6.5 concepts/token",
+        "scalability-factor": "≥10x capacity scaling",
+        "ai-workflow-efficiency": "≥95% for AI programming workflows",
+        "code-analysis-accuracy": "≥92% for semantic analysis",
+        "code-generation-quality": "≥90% for generated code",
+        "canvas-conversion-accuracy": "≥88% for bidirectional conversion",
+        "workflow-sync-consistency": "≥99% for multi-workflow synchronization"
+      }
+    },
+
+    {
+      "@id": "flow:FlowTaxonomy",
+      "@type": "flow:TaxonomyFramework",
+      "rdfs:label": "Universal Flow Taxonomy",
+      "dcterms:description": "Hierarchical classification of flow patterns for systematic governance",
+      "flow:categories": {
+        "data-flows": ["DataFlowPattern", "StreamingPattern"],
+        "control-flows": ["ControlFlowPattern", "OrchestrationPattern"],
+        "state-flows": ["StateFlowPattern", "EventFlowPattern"],
+        "resource-flows": ["ResourceFlowPattern", "TokenFlowPattern"],
+        "pipeline-flows": ["PipelinePattern"],
+        "ai-flows": ["AIWorkflowPattern", "CodeAnalysisFlowPattern", "CodeGenerationFlowPattern"],
+        "conversion-flows": ["CanvasConversionFlowPattern"],
+        "synchronization-flows": ["WorkflowSynchronizationPattern"]
+      }
+    },
+
+    {
+      "@id": "flow:FlowGovernanceMetrics",
+      "@type": "flow:MetricsFramework",
+      "rdfs:label": "Flow Governance Metrics",
+      "dcterms:description": "Comprehensive metrics for evaluating flow pattern implementation",
+      "flow:metrics": [
+        {
+          "@id": "flow:DataFlowEfficiencyMetric",
+          "flow:name": "Data Flow Efficiency",
+          "flow:target": "≥92%",
+          "flow:measurement": "etl-pipeline-performance-analysis"
+        },
+        {
+          "@id": "flow:ControlFlowLatencyMetric",
+          "flow:name": "Control Flow Latency",
+          "flow:target": "≤200ms",
+          "flow:measurement": "execution-path-timing-analysis"
+        },
+        {
+          "@id": "flow:StateTransitionReliabilityMetric",
+          "flow:name": "State Transition Reliability",
+          "flow:target": "≥99.5%",
+          "flow:measurement": "state-machine-reliability-testing"
+        },
+        {
+          "@id": "flow:ErrorRecoverySuccessMetric",
+          "flow:name": "Error Recovery Success Rate",
+          "flow:target": "≥95%",
+          "flow:measurement": "error-handling-effectiveness-analysis"
+        },
+        {
+          "@id": "flow:EventProcessingThroughputMetric",
+          "flow:name": "Event Processing Throughput",
+          "flow:target": "≥1000-events/sec",
+          "flow:measurement": "event-system-performance-benchmarking"
+        },
+        {
+          "@id": "flow:ResourceUtilizationEfficiencyMetric",
+          "flow:name": "Resource Utilization Efficiency",
+          "flow:target": "≥88%",
+          "flow:measurement": "resource-allocation-optimization-analysis"
+        },
+        {
+          "@id": "flow:TokenDensityMetric",
+          "flow:name": "Token Density",
+          "flow:target": "≥6.5-concepts/token",
+          "flow:measurement": "semantic-compression-effectiveness-analysis"
+        },
+        {
+          "@id": "flow:StreamingThroughputMetric",
+          "flow:name": "Streaming Throughput",
+          "flow:target": "≥10MB/sec",
+          "flow:measurement": "streaming-performance-benchmarking"
+        },
+        {
+          "@id": "flow:PipelineEfficiencyMetric",
+          "flow:name": "Pipeline Efficiency",
+          "flow:target": "≥90%",
+          "flow:measurement": "pipeline-stage-optimization-analysis"
+        },
+        {
+          "@id": "flow:OrchestrationSuccessRateMetric",
+          "flow:name": "Orchestration Success Rate",
+          "flow:target": "≥98%",
+          "flow:measurement": "workflow-coordination-reliability-testing"
+        },
+        {
+          "@id": "flow:AIWorkflowEfficiencyMetric",
+          "flow:name": "AI Workflow Efficiency",
+          "flow:target": "≥95%",
+          "flow:measurement": "ai-programming-workflow-performance-analysis"
+        },
+        {
+          "@id": "flow:CodeAnalysisAccuracyMetric",
+          "flow:name": "Code Analysis Accuracy",
+          "flow:target": "≥92%",
+          "flow:measurement": "semantic-analysis-accuracy-testing"
+        },
+        {
+          "@id": "flow:CodeGenerationQualityMetric",
+          "flow:name": "Code Generation Quality",
+          "flow:target": "≥90%",
+          "flow:measurement": "generated-code-quality-validation"
+        },
+        {
+          "@id": "flow:CanvasConversionAccuracyMetric",
+          "flow:name": "Canvas Conversion Accuracy",
+          "flow:target": "≥88%",
+          "flow:measurement": "bidirectional-conversion-accuracy-testing"
+        },
+        {
+          "@id": "flow:WorkflowSyncConsistencyMetric",
+          "flow:name": "Workflow Synchronization Consistency",
+          "flow:target": "≥99%",
+          "flow:measurement": "multi-workflow-synchronization-consistency-analysis"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/",
+    "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "owl": "http://www.w3.org/2002/07/owl#"
+  },
+
+  "@id": "dmag:DistributedModularArchitectureGovernance",
+  "@type": "jjnhm:ArchitectureGovernanceSchema",
+
+  "meta": {
+    "title": "DMAG: Distributed Modular Architecture Governance Schema",
+    "description": "Comprehensive schema for distributed modular architecture governance patterns, enabling scalable multi-agent coordination and resilient system design",
+    "versionInfo": "3.0.0",
+    "maintainer": "JJNHM Architecture Team",
+    "license": "MIT",
+    "creator": "DMAG Architecture Working Group",
+    "created": "2024-12-19T00:00:00Z",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "generator": "JJNHM-Schema-Generator-v3.0.0"
+  },
+
+  "jjnhm": {
+    "version": "2.4.0",
+    "layer": "JSONLD",
+    "complexity": "C1-MVP-Production",
+    "governance": "DMAG-Distributed-Modular-Architecture",
+    "kpi-targets": {
+      "module-cohesion": "≥90%",
+      "adapter-efficiency": "≥95%",
+      "service-creation-time": "≤100ms",
+      "actor-concurrency-efficiency": "≥85%",
+      "resilience-recovery-time": "≤30s",
+      "coordination-latency": "≤50ms",
+      "ai-workflow-efficiency": "≥88%",
+      "code-analysis-accuracy": "≥95%",
+      "code-generation-quality": "≥90%",
+      "canvas-conversion-accuracy": "≥92%",
+      "quality-validation-accuracy": "≥98%"
+    }
+  },
+
+  "@graph": [
+    {
+      "@id": "dmag:ActorInstance",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Actor Instance Pattern",
+      "dcterms:description": "Executes concurrent operations with isolated state and message-based communication",
+      "dmag:responsibility": "concurrent-execution",
+      "dmag:characteristics": ["concurrent", "isolated", "message-driven", "fault-tolerant"],
+      "dmag:kpiTarget": "concurrency-efficiency ≥85%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "parallel-processing-actors",
+        "dmag:governance": "actor-lifecycle-management",
+        "dmag:validation": "concurrency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:AdapterPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Adapter Pattern",
+      "dcterms:description": "Provides interface translation between incompatible components or layers",
+      "dmag:responsibility": "interface-translation",
+      "dmag:characteristics": ["translatable", "compatible", "efficient", "maintainable"],
+      "dmag:kpiTarget": "adapter-efficiency ≥95%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "layer-translation-adapters",
+        "dmag:governance": "consistent-data-transformation",
+        "dmag:validation": "efficiency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:AIWorkflowPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "AI Workflow Pattern",
+      "dcterms:description": "Orchestrates AI-assisted development workflows with intelligent agent coordination",
+      "dmag:responsibility": "ai-workflow-orchestration",
+      "dmag:characteristics": ["intelligent", "adaptive", "orchestrated", "context-aware"],
+      "dmag:kpiTarget": "ai-workflow-efficiency ≥88%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "multi-agent-ai-coordination",
+        "dmag:governance": "intelligent-workflow-management",
+        "dmag:validation": "ai-efficiency-benchmarking"
+      }
+    },
+
+    {
+      "@id": "dmag:CanvasConversionPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Canvas Conversion Pattern",
+      "dcterms:description": "Enables bidirectional conversion between visual canvas representations and code",
+      "dmag:responsibility": "visual-code-synchronization",
+      "dmag:characteristics": ["bidirectional", "visual", "synchronized", "consistent"],
+      "dmag:kpiTarget": "conversion-accuracy ≥92%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "bidirectional-transformation-engine",
+        "dmag:governance": "visual-code-consistency",
+        "dmag:validation": "conversion-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:CodeAnalysisPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Code Analysis Pattern",
+      "dcterms:description": "Implements comprehensive code analysis with multi-dimensional quality assessment",
+      "dmag:responsibility": "code-quality-analysis",
+      "dmag:characteristics": ["analytical", "comprehensive", "actionable", "metrics-driven"],
+      "dmag:kpiTarget": "analysis-accuracy ≥95%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "multi-analyzer-composition",
+        "dmag:governance": "quality-metrics-aggregation",
+        "dmag:validation": "analysis-accuracy-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:CodeGenerationPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Code Generation Pattern",
+      "dcterms:description": "Generates high-quality code from templates, specifications, and AI-driven patterns",
+      "dmag:responsibility": "automated-code-generation",
+      "dmag:characteristics": ["generative", "template-driven", "format-aware", "optimized"],
+      "dmag:kpiTarget": "generation-quality ≥90%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "template-engine-with-ai-enhancement",
+        "dmag:governance": "code-quality-validation",
+        "dmag:validation": "generated-code-quality-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:CoordinationPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Coordination Pattern",
+      "dcterms:description": "Synchronizes multi-component workflows with minimal latency",
+      "dmag:responsibility": "workflow-synchronization",
+      "dmag:characteristics": ["coordinated", "synchronized", "efficient", "observable"],
+      "dmag:kpiTarget": "coordination-latency ≤50ms",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "event-driven-coordination",
+        "dmag:governance": "workflow-orchestration",
+        "dmag:validation": "latency-performance-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:DistributedArchitecture",
+      "@type": "dmag:ArchitectureFramework",
+      "rdfs:label": "Distributed Modular Architecture",
+      "dcterms:description": "Comprehensive framework for building scalable, resilient distributed systems",
+      "dmag:patterns": [
+        "dmag:ActorInstance",
+        "dmag:AdapterPattern",
+        "dmag:AIWorkflowPattern",
+        "dmag:CanvasConversionPattern",
+        "dmag:CodeAnalysisPattern",
+        "dmag:CodeGenerationPattern",
+        "dmag:CoordinationPattern",
+        "dmag:ModulePattern",
+        "dmag:QualityValidationPattern",
+        "dmag:ResiliencePrimitive",
+        "dmag:ServiceFactory"
+      ],
+      "dmag:governancePrinciples": {
+        "modularity": "each-component-encapsulates-specific-concerns",
+        "adaptability": "interfaces-enable-component-evolution",
+        "scalability": "patterns-support-horizontal-scaling",
+        "resilience": "failures-isolated-and-recoverable",
+        "coordination": "components-communicate-through-defined-protocols"
+      }
+    },
+
+    {
+      "@id": "dmag:GovernanceMetrics",
+      "@type": "dmag:MetricsFramework",
+      "rdfs:label": "DMAG Governance Metrics",
+      "dcterms:description": "Comprehensive metrics for evaluating DMAG pattern implementation",
+      "dmag:metrics": [
+        {
+          "@id": "dmag:AdapterEfficiencyMetric", 
+          "dmag:name": "Adapter Efficiency Score",
+          "dmag:target": "≥95%",
+          "dmag:measurement": "translation-performance-analysis"
+        },
+        {
+          "@id": "dmag:AIWorkflowEfficiencyMetric",
+          "dmag:name": "AI Workflow Efficiency",
+          "dmag:target": "≥88%",
+          "dmag:measurement": "ai-agent-coordination-performance-analysis"
+        },
+        {
+          "@id": "dmag:CanvasConversionAccuracyMetric",
+          "dmag:name": "Canvas Conversion Accuracy",
+          "dmag:target": "≥92%",
+          "dmag:measurement": "bidirectional-conversion-fidelity-testing"
+        },
+        {
+          "@id": "dmag:CodeAnalysisAccuracyMetric",
+          "dmag:name": "Code Analysis Accuracy",
+          "dmag:target": "≥95%",
+          "dmag:measurement": "analysis-result-validation-testing"
+        },
+        {
+          "@id": "dmag:CodeGenerationQualityMetric",
+          "dmag:name": "Code Generation Quality",
+          "dmag:target": "≥90%",
+          "dmag:measurement": "generated-code-quality-assessment"
+        },
+        {
+          "@id": "dmag:ConcurrencyEfficiencyMetric",
+          "dmag:name": "Actor Concurrency Efficiency",
+          "dmag:target": "≥85%",
+          "dmag:measurement": "parallel-processing-throughput-analysis"
+        },
+        {
+          "@id": "dmag:CoordinationLatencyMetric",
+          "dmag:name": "Coordination Latency",
+          "dmag:target": "≤50ms", 
+          "dmag:measurement": "inter-component-communication-timing"
+        },
+        {
+          "@id": "dmag:ModuleCohesionMetric",
+          "dmag:name": "Module Cohesion Score",
+          "dmag:target": "≥90%",
+          "dmag:measurement": "intra-module-coupling-analysis"
+        },
+        {
+          "@id": "dmag:QualityValidationAccuracyMetric",
+          "dmag:name": "Quality Validation Accuracy",
+          "dmag:target": "≥98%",
+          "dmag:measurement": "validation-pipeline-effectiveness-analysis"
+        },
+        {
+          "@id": "dmag:ResilienceRecoveryMetric",
+          "dmag:name": "Resilience Recovery Time", 
+          "dmag:target": "≤30s",
+          "dmag:measurement": "failure-recovery-duration-testing"
+        },
+        {
+          "@id": "dmag:ServiceCreationMetric",
+          "dmag:name": "Service Creation Time",
+          "dmag:target": "≤100ms",
+          "dmag:measurement": "instantiation-latency-benchmarking"
+        }
+      ]
+    },
+
+    {
+      "@id": "dmag:LayerAlignment",
+      "@type": "dmag:ArchitectureMapping",
+      "rdfs:label": "JJNHM Layer Alignment",
+      "dcterms:description": "Maps DMAG patterns to JJNHM architecture layers",
+      "dmag:mappings": {
+        "JSONLD": "ontology-module-definitions",
+        "JDBL": "orchestration-adapter-patterns", 
+        "NQDS": "service-factory-relationships",
+        "HBS": "actor-instance-templates",
+        "MMD": "resilience-coordination-visualization"
+      }
+    },
+
+    {
+      "@id": "dmag:ModulePattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Module Pattern",
+      "dcterms:description": "Encapsulates specific functionality with well-defined interfaces and high cohesion",
+      "dmag:responsibility": "encapsulate-domain-logic",
+      "dmag:characteristics": ["cohesive", "encapsulated", "testable", "reusable"],
+      "dmag:kpiTarget": "module-cohesion ≥90%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "isolated-responsibility-modules",
+        "dmag:governance": "layer-specific-responsibilities",
+        "dmag:validation": "cohesion-metrics-analysis"
+      }
+    },
+
+    {
+      "@id": "dmag:QualityValidationPattern",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Quality Validation Pattern",
+      "dcterms:description": "Implements comprehensive quality gates and validation pipelines for AI-generated content",
+      "dmag:responsibility": "quality-assurance-validation",
+      "dmag:characteristics": ["validating", "comprehensive", "gate-driven", "compliant"],
+      "dmag:kpiTarget": "validation-accuracy ≥98%",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "multi-stage-validation-pipeline",
+        "dmag:governance": "quality-gate-enforcement",
+        "dmag:validation": "validation-pipeline-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:ResiliencePrimitive",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Resilience Primitive Pattern",
+      "dcterms:description": "Implements fault tolerance mechanisms for graceful failure handling",
+      "dmag:responsibility": "fault-tolerance",
+      "dmag:characteristics": ["resilient", "recoverable", "monitored", "self-healing"],
+      "dmag:kpiTarget": "failure-recovery-time ≤30s",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "circuit-breaker-retry-mechanisms",
+        "dmag:governance": "fault-tolerance-strategies",
+        "dmag:validation": "failure-recovery-testing"
+      }
+    },
+
+    {
+      "@id": "dmag:ServiceFactory",
+      "@type": "dmag:ArchitecturePattern",
+      "rdfs:label": "Service Factory Pattern",
+      "dcterms:description": "Creates and manages service instances with optimized resource allocation",
+      "dmag:responsibility": "service-instantiation",
+      "dmag:characteristics": ["creatable", "manageable", "optimizable", "scalable"],
+      "dmag:kpiTarget": "service-creation-time ≤100ms",
+      "dmag:implementation": {
+        "@type": "dmag:ImplementationStrategy",
+        "dmag:approach": "dynamic-service-instantiation",
+        "dmag:governance": "resource-optimization",
+        "dmag:validation": "creation-time-benchmarking"
+      }
+    }
+  ]
+}

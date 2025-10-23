@@ -1,0 +1,556 @@
+{
+  "@context": {
+    "@base": "https://huijoohwee.github.io/schema/code-analysis.jsonld",
+    "@vocab": "https://huijoohwee.github.io/schema/code-analysis#",
+    
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    
+    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
+    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
+    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
+    
+    "ca": "https://huijoohwee.github.io/schema/code-analysis#",
+    
+    "CodeAnalyzer": "ca:CodeAnalyzer",
+    "SemanticAnalyzer": "ca:SemanticAnalyzer",
+    "StructuralAnalyzer": "ca:StructuralAnalyzer",
+    "QualityAnalyzer": "ca:QualityAnalyzer",
+    "PerformanceAnalyzer": "ca:PerformanceAnalyzer",
+    "SecurityAnalyzer": "ca:SecurityAnalyzer",
+    "SuggestionGenerator": "ca:SuggestionGenerator",
+    "AnalysisResult": "ca:AnalysisResult",
+    "CodeSuggestion": "ca:CodeSuggestion",
+    "AnalysisContext": "ca:AnalysisContext",
+    "MultiDimensionalAnalysis": "ca:MultiDimensionalAnalysis",
+    
+    "analyzerType": "ca:analyzerType",
+    "analysisScope": "ca:analysisScope",
+    "analysisDepth": "ca:analysisDepth",
+    "suggestionType": "ca:suggestionType",
+    "confidenceScore": "ca:confidenceScore",
+    "analysisMetrics": "ca:analysisMetrics",
+    "suggestionPriority": "ca:suggestionPriority",
+    "contextScope": "ca:contextScope",
+    "dimensionality": "ca:dimensionality"
+  },
+  
+  "@graph": [
+    {
+      "@id": "ca:AnalysisContext",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Analysis Context",
+      "dcterms:description": "Context information for code analysis including project, file, and user context",
+      "rdfs:subClassOf": "ai:ProgrammingContext",
+      "ca:contextTypes": [
+        "project-context",
+        "file-context",
+        "function-context",
+        "user-intent-context",
+        "historical-context"
+      ],
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:AnalysisResult",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Analysis Result",
+      "dcterms:description": "Result of code analysis with findings, metrics, and recommendations",
+      "rdfs:subClassOf": "core:Concept",
+      "ca:resultComponents": [
+        "analysis-findings",
+        "quality-metrics",
+        "improvement-recommendations",
+        "confidence-scores",
+        "priority-rankings"
+      ],
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:analysisDepth",
+      "@type": "rdf:Property",
+      "rdfs:label": "Analysis Depth",
+      "dcterms:description": "Depth level of code analysis (surface, intermediate, deep)",
+      "rdfs:domain": "ca:CodeAnalyzer",
+      "rdfs:range": "xsd:string",
+      "ca:allowedValues": ["surface", "intermediate", "deep"],
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:analysisMetrics",
+      "@type": "rdf:Property",
+      "rdfs:label": "Analysis Metrics",
+      "dcterms:description": "Metrics collected during code analysis",
+      "rdfs:domain": "ca:AnalysisResult",
+      "rdfs:range": "xsd:string",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:analysisScope",
+      "@type": "rdf:Property",
+      "rdfs:label": "Analysis Scope",
+      "dcterms:description": "Scope of code analysis (file, module, project, system)",
+      "rdfs:domain": "ca:CodeAnalyzer",
+      "rdfs:range": "xsd:string",
+      "ca:allowedValues": ["file", "module", "project", "system"],
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:PerformanceAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Performance Analyzer",
+      "dcterms:description": "Analyzes code performance, efficiency, and optimization opportunities",
+      "rdfs:subClassOf": "ca:CodeAnalyzer",
+      "ca:analysisTypes": [
+        "performance-bottleneck-detection",
+        "algorithmic-complexity-analysis",
+        "resource-usage-analysis",
+        "optimization-opportunity-identification",
+        "scalability-assessment"
+      ],
+      "ca:kpiTarget": "performance-accuracy ≥88%",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Service"
+    },
+
+    {
+      "@id": "ca:QualityAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Quality Analyzer",
+      "dcterms:description": "Analyzes code quality, maintainability, and best practices compliance",
+      "rdfs:subClassOf": "ca:CodeAnalyzer",
+      "ca:analysisTypes": [
+        "code-quality-assessment",
+        "maintainability-analysis",
+        "best-practices-compliance",
+        "technical-debt-analysis",
+        "refactoring-opportunities"
+      ],
+      "ca:kpiTarget": "quality-accuracy ≥90%",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Resilience"
+    },
+
+    {
+      "@id": "ca:SecurityAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Security Analyzer",
+      "dcterms:description": "Analyzes code security vulnerabilities and compliance with security standards",
+      "rdfs:subClassOf": "ca:CodeAnalyzer",
+      "ca:analysisTypes": [
+        "vulnerability-detection",
+        "security-pattern-analysis",
+        "compliance-checking",
+        "threat-modeling",
+        "security-best-practices-validation"
+      ],
+      "ca:kpiTarget": "security-accuracy ≥96%",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Resilience"
+    },
+
+    {
+      "@id": "ca:SemanticAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Semantic Analyzer",
+      "dcterms:description": "Analyzes code semantics, meaning, and intent with deep understanding",
+      "rdfs:subClassOf": "ca:CodeAnalyzer",
+      "ca:analysisTypes": [
+        "semantic-meaning-analysis",
+        "intent-recognition",
+        "context-understanding",
+        "relationship-mapping",
+        "dependency-analysis"
+      ],
+      "ca:kpiTarget": "semantic-accuracy ≥95%",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Actor"
+    },
+
+    {
+      "@id": "ca:StructuralAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Structural Analyzer",
+      "dcterms:description": "Analyzes code structure, architecture, and organizational patterns",
+      "rdfs:subClassOf": "ca:CodeAnalyzer",
+      "ca:analysisTypes": [
+        "architectural-pattern-analysis",
+        "code-organization-analysis",
+        "module-structure-analysis",
+        "dependency-structure-analysis",
+        "design-pattern-recognition"
+      ],
+      "ca:kpiTarget": "structural-accuracy ≥92%",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:suggestionPriority",
+      "@type": "rdf:Property",
+      "rdfs:label": "suggestion priority",
+      "dcterms:description": "Priority level of the code suggestion",
+      "rdfs:domain": "ca:CodeSuggestion",
+      "rdfs:range": "xsd:string"
+    },
+
+    {
+      "@id": "ca:SuggestionGenerator",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Suggestion Generator",
+      "dcterms:description": "Generates intelligent code suggestions based on analysis results",
+      "rdfs:subClassOf": "ai:AIAgent",
+      "ca:suggestionTypes": [
+        "improvement-suggestions",
+        "refactoring-suggestions",
+        "optimization-suggestions",
+        "security-fix-suggestions",
+        "best-practice-suggestions"
+      ],
+      "ca:kpiTarget": "suggestion-relevance ≥93%",
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Factory"
+    },
+
+    {
+      "@id": "ca:suggestionType",
+      "@type": "rdf:Property",
+      "rdfs:label": "suggestion type",
+      "dcterms:description": "Type of code suggestion being provided",
+      "rdfs:domain": "ca:CodeSuggestion",
+      "rdfs:range": "xsd:string"
+    },
+
+    {
+      "@id": "ca:analyzerType",
+      "@type": "rdf:Property",
+      "rdfs:label": "Analyzer Type",
+      "dcterms:description": "Type of code analyzer (semantic, structural, quality, performance, security)",
+      "rdfs:domain": "ca:CodeAnalyzer",
+      "rdfs:range": "xsd:string",
+      "ca:allowedValues": ["semantic", "structural", "quality", "performance", "security"],
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:CodeAnalysisKPITargets",
+      "@type": "core:Concept",
+      "rdfs:label": "Code Analysis KPI Targets",
+      "dcterms:description": "Key Performance Indicator targets for code analysis operations",
+      "ca:targets": {
+        "semantic-accuracy": "≥95%",
+        "structural-accuracy": "≥92%",
+        "quality-accuracy": "≥90%",
+        "performance-accuracy": "≥88%",
+        "security-accuracy": "≥96%",
+        "suggestion-relevance": "≥93%",
+        "multi-dimensional-accuracy": "≥91%",
+        "analysis-speed": "≤2s-per-file",
+        "suggestion-generation-speed": "≤1s-per-suggestion"
+      },
+      "ai:jjnhmLayer": "MMD",
+      "ai:dmagPattern": "Coordination"
+    },
+
+    {
+      "@id": "ca:CodeAnalysisMetrics",
+      "@type": "core:Concept",
+      "rdfs:label": "Code Analysis Metrics",
+      "dcterms:description": "Comprehensive metrics for evaluating code analysis performance and quality",
+      "ca:metrics": {
+        "accuracy-metrics": ["semantic-accuracy", "structural-accuracy", "quality-accuracy", "performance-accuracy", "security-accuracy"],
+        "performance-metrics": ["analysis-speed", "suggestion-generation-speed", "memory-usage", "cpu-utilization"],
+        "quality-metrics": ["suggestion-relevance", "false-positive-rate", "coverage-completeness", "user-satisfaction"],
+        "efficiency-metrics": ["throughput", "latency", "resource-utilization", "scalability-factor"]
+      },
+      "ai:jjnhmLayer": "MMD",
+      "ai:dmagPattern": "Coordination"
+    },
+
+    {
+      "@id": "ca:CodeAnalysisOntology",
+      "@type": "core:Vocabulary",
+      "rdfs:label": "Code Analysis Ontology",
+      "dcterms:description": "Comprehensive ontology for AI-powered code analysis, suggestion generation, and multi-dimensional analysis",
+      "dcterms:created": "2024-12-22",
+      "dcterms:modified": "2024-12-22",
+      "dcterms:creator": "SOLO Coding Assistant",
+      "core:version": "1.0.0",
+      "core:license": "MIT",
+      "core:imports": [
+        "https://huijoohwee.github.io/schema/core.jsonld",
+        "https://huijoohwee.github.io/schema/ai-programming.jsonld",
+        "https://huijoohwee.github.io/schema/agents.jsonld",
+        "https://huijoohwee.github.io/schema/dmag.jsonld",
+        "https://huijoohwee.github.io/schema/flow.jsonld"
+      ],
+      "ai:jjnhmLayer": "JSONLD",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:CodeAnalysisWorkflow",
+      "@type": "core:Concept",
+      "rdfs:label": "Code Analysis Workflow",
+      "dcterms:description": "Comprehensive workflow for AI-powered code analysis and suggestion generation",
+      "ca:workflowSteps": [
+        "context-gathering",
+        "multi-dimensional-analysis",
+        "result-synthesis",
+        "suggestion-generation",
+        "quality-validation",
+        "result-presentation"
+      ],
+      "ca:kpiTarget": "workflow-completion ≤5s",
+      "ai:jjnhmLayer": "MMD",
+      "ai:dmagPattern": "Coordination"
+    },
+
+    {
+      "@id": "ca:CodeAnalyzer",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Code Analyzer",
+      "dcterms:description": "Base class for AI-powered code analyzers with semantic understanding",
+      "rdfs:subClassOf": "ai:AIAgent",
+      "ca:analyzerCapabilities": [
+        "semantic-understanding",
+        "pattern-recognition",
+        "context-awareness",
+        "suggestion-generation",
+        "multi-dimensional-analysis"
+      ],
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Service"
+    },
+
+    {
+      "@id": "ca:CodeSuggestion",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Code Suggestion",
+      "dcterms:description": "Specific code improvement suggestion with implementation details",
+      "rdfs:subClassOf": "core:Concept",
+      "ca:suggestionComponents": [
+        "suggestion-description",
+        "implementation-code",
+        "rationale",
+        "impact-assessment",
+        "priority-level"
+      ],
+      "ai:jjnhmLayer": "HBS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:confidenceScore",
+      "@type": "rdf:Property",
+      "rdfs:label": "Confidence Score",
+      "dcterms:description": "Confidence score for analysis results or suggestions (0.0-1.0)",
+      "rdfs:domain": ["ca:AnalysisResult", "ca:CodeSuggestion"],
+      "rdfs:range": "xsd:float",
+      "ca:valueRange": "0.0-1.0",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:contextScope",
+      "@type": "rdf:Property",
+      "rdfs:label": "Context Scope",
+      "dcterms:description": "Scope of context information for analysis",
+      "rdfs:domain": "ca:AnalysisContext",
+      "rdfs:range": "xsd:string",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:dimensionality",
+      "@type": "rdf:Property",
+      "rdfs:label": "Dimensionality",
+      "dcterms:description": "Number of analysis dimensions considered",
+      "rdfs:domain": "ca:MultiDimensionalAnalysis",
+      "rdfs:range": "xsd:integer",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Module"
+    },
+
+    {
+      "@id": "ca:MultiDimensionalAnalysis",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Multi-Dimensional Analysis",
+      "dcterms:description": "Comprehensive analysis across multiple dimensions (semantic, structural, quality, performance, security)",
+      "rdfs:subClassOf": "core:Concept",
+      "ca:analysisDimensions": [
+        "semantic-dimension",
+        "structural-dimension",
+        "quality-dimension",
+        "performance-dimension",
+        "security-dimension"
+      ],
+      "ca:kpiTarget": "multi-dimensional-accuracy ≥91%",
+      "ai:jjnhmLayer": "MMD",
+      "ai:dmagPattern": "Coordination"
+    },
+
+    {
+      "@id": "ca:analyzerType",
+      "@type": "rdf:Property",
+      "rdfs:label": "analyzer type",
+      "dcterms:description": "Type of code analyzer being used",
+      "rdfs:domain": "ca:CodeAnalyzer",
+      "rdfs:range": "xsd:string"
+    },
+
+    {
+      "@id": "ca:analysisScope",
+      "@type": "rdf:Property",
+      "rdfs:label": "analysis scope",
+      "dcterms:description": "Scope of the code analysis (file, function, project, etc.)",
+      "rdfs:domain": "ca:AnalysisResult",
+      "rdfs:range": "xsd:string"
+    },
+
+    {
+      "@id": "ca:analysisDepth",
+      "@type": "rdf:Property",
+      "rdfs:label": "analysis depth",
+      "dcterms:description": "Depth level of the analysis performed",
+      "rdfs:domain": "ca:CodeAnalyzer",
+      "rdfs:range": "xsd:integer"
+    },
+
+
+
+    {
+      "@id": "ca:CodeAnalysisWorkflow",
+      "@type": "flow:AIWorkflowPattern",
+      "rdfs:label": "Code Analysis Workflow",
+      "dcterms:description": "Comprehensive workflow for AI-powered code analysis",
+      "flow:workflowSteps": [
+        {
+          "@id": "ca:ContextGathering",
+          "flow:stepType": "context-analysis",
+          "flow:agent": "ca:AnalysisContext",
+          "flow:responsibility": "gather-and-analyze-code-context"
+        },
+        {
+          "@id": "ca:MultiDimensionalAnalysisExecution",
+          "flow:stepType": "multi-dimensional-analysis",
+          "flow:agent": "ca:MultiDimensionalAnalysis",
+          "flow:responsibility": "execute-comprehensive-code-analysis"
+        },
+        {
+          "@id": "ca:SuggestionGeneration",
+          "flow:stepType": "suggestion-generation",
+          "flow:agent": "ca:SuggestionGenerator",
+          "flow:responsibility": "generate-intelligent-code-suggestions"
+        },
+        {
+          "@id": "ca:ResultAggregation",
+          "flow:stepType": "result-aggregation",
+          "flow:agent": "ca:AnalysisResult",
+          "flow:responsibility": "aggregate-and-format-analysis-results"
+        }
+      ],
+      "ai:jjnhmLayer": "JDBL",
+      "ai:dmagPattern": "Coordination"
+    },
+
+    {
+      "@id": "ca:CodeAnalysisKPITargets",
+      "@type": "ai:QualityValidation",
+      "rdfs:label": "Code Analysis KPI Targets",
+      "dcterms:description": "Key Performance Indicator targets for code analysis systems",
+      "ai:targets": {
+        "semantic-analysis-accuracy": "≥95%",
+        "structural-analysis-accuracy": "≥92%",
+        "quality-analysis-accuracy": "≥90%",
+        "performance-analysis-accuracy": "≥88%",
+        "security-analysis-accuracy": "≥96%",
+        "suggestion-relevance": "≥93%",
+        "multi-dimensional-accuracy": "≥91%",
+        "analysis-response-time": "≤500ms",
+        "suggestion-generation-time": "≤200ms"
+      }
+    },
+
+    {
+      "@id": "ca:CodeAnalysisMetrics",
+      "@type": "ai:QualityValidation",
+      "rdfs:label": "Code Analysis Metrics",
+      "dcterms:description": "Comprehensive metrics for evaluating code analysis performance",
+      "ai:metrics": [
+        {
+          "@id": "ca:SemanticAnalysisAccuracyMetric",
+          "ai:name": "Semantic Analysis Accuracy",
+          "ai:target": "≥95%",
+          "ai:measurement": "semantic-understanding-precision-testing"
+        },
+        {
+          "@id": "ca:StructuralAnalysisAccuracyMetric",
+          "ai:name": "Structural Analysis Accuracy",
+          "ai:target": "≥92%",
+          "ai:measurement": "architectural-pattern-recognition-testing"
+        },
+        {
+          "@id": "ca:QualityAnalysisAccuracyMetric",
+          "ai:name": "Quality Analysis Accuracy",
+          "ai:target": "≥90%",
+          "ai:measurement": "code-quality-assessment-validation"
+        },
+        {
+          "@id": "ca:PerformanceAnalysisAccuracyMetric",
+          "ai:name": "Performance Analysis Accuracy",
+          "ai:target": "≥88%",
+          "ai:measurement": "performance-bottleneck-detection-testing"
+        },
+        {
+          "@id": "ca:SecurityAnalysisAccuracyMetric",
+          "ai:name": "Security Analysis Accuracy",
+          "ai:target": "≥96%",
+          "ai:measurement": "vulnerability-detection-precision-testing"
+        },
+        {
+          "@id": "ca:SuggestionRelevanceMetric",
+          "ai:name": "Suggestion Relevance",
+          "ai:target": "≥93%",
+          "ai:measurement": "suggestion-quality-and-applicability-testing"
+        },
+        {
+          "@id": "ca:MultiDimensionalAccuracyMetric",
+          "ai:name": "Multi-Dimensional Analysis Accuracy",
+          "ai:target": "≥91%",
+          "ai:measurement": "comprehensive-analysis-precision-testing"
+        },
+        {
+          "@id": "ca:AnalysisResponseTimeMetric",
+          "ai:name": "Analysis Response Time",
+          "ai:target": "≤500ms",
+          "ai:measurement": "analysis-performance-benchmarking"
+        },
+        {
+          "@id": "ca:SuggestionGenerationTimeMetric",
+          "ai:name": "Suggestion Generation Time",
+          "ai:target": "≤200ms",
+          "ai:measurement": "suggestion-generation-performance-testing"
+        }
+      ]
+    }
+  ]
+}

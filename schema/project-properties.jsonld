@@ -1,0 +1,40 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "description": "skos:definition"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-properties.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "Project Properties Schema",
+    "description": "Property definitions for project data structures",
+    "versionInfo": "3.0.0",
+    "creator": "Hui Joo Hwee",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT"
+  },
+  "@graph": [
+    {
+      "@id": "project:loaded",
+      "@type": "project:Property",
+      "rdfs:label": "loaded",
+      "description": "Property indicating whether a resource has been loaded"
+    },
+    {
+      "@id": "project:percentage",
+      "@type": "project:Property",
+      "rdfs:label": "percentage",
+      "description": "Property representing a percentage value"
+    },
+    {
+      "@id": "project:total",
+      "@type": "project:Property",
+      "rdfs:label": "total",
+      "description": "Property representing a total count or amount"
+    }
+  ]
+}

@@ -18,7 +18,29 @@
       
       "terms": { "@id": "core:hasTerm", "@container": "@index" },
       "types": { "@id": "core:hasType", "@container": "@index" },
-      "examples": { "@id": "core:examples", "@container": "@list" }
+      "examples": { "@id": "core:examples", "@container": "@list" },
+      
+      "AIAgent": "core:AIAgent",
+      "BidirectionalSync": "core:BidirectionalSync",
+      "CanvasConversion": "core:CanvasConversion",
+      "CodeAnalysis": "core:CodeAnalysis",
+      "CodeGeneration": "core:CodeGeneration",
+      "ConflictResolution": "core:ConflictResolution",
+      "QualityValidation": "core:QualityValidation",
+      "SyncManager": "core:SyncManager",
+      "WorkflowOrchestration": "core:WorkflowOrchestration",
+      
+      "aiProgramming": "core:aiProgramming",
+      "analysisType": "core:analysisType",
+      "capability": "core:capability",
+      "conflictStrategy": "core:conflictStrategy",
+      "conversionDirection": "core:conversionDirection",
+      "dmagPattern": "core:dmagPattern",
+      "jjnhmLayer": "core:jjnhmLayer",
+      "orchestrationPattern": "core:orchestrationPattern",
+      "qualityThreshold": "core:qualityThreshold",
+      "syncDirection": "core:syncDirection",
+      "targetFormat": "core:targetFormat"
     }
   ],
 
@@ -27,60 +49,189 @@
 
   "meta": {
     "@type": "schema:Dataset",
-    "title": "Core Vocabulary Ontology",
-    "description": "Foundational RDF vocabulary providing baseline classes and properties for cross-project semantic alignment",
+    "title": "Core WBSTCNVS Vocabulary Ontology v3.0.0",
+    "description": "Foundational RDF vocabulary for canvas-code synchronization, bidirectional workflows, and WBSTCNVS project orchestration with JJNHM v3.0.0 compliance",
     "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
     "conformsTo": [
       "https://www.w3.org/TR/rdf11-concepts/",
       "https://www.w3.org/TR/owl2-overview/",
-      "https://www.w3.org/2004/02/skos/"
+      "https://www.w3.org/2004/02/skos/",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld",
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld"
     ],
-    "versionInfo": "1.1.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
-    "maintainer": "https://huijoohwee.github.io"
+    "modified": "2025-10-23T02:00:00Z",
+    "maintainer": "https://huijoohwee.github.io",
+    "semVer": "20251023-v3.0.0",
+    "jjnhm": {
+      "v": "3.0.0",
+      "lyr": "JSONLD",
+      "cmplx": "C1-MVP-Prod",
+      "gov": "Core-SG",
+      "kpi": {
+        "tok-dens": "≥7.0-c/t",
+        "sem-clar": "≥97%",
+        "parse-t": "≤0.5ms",
+        "val-succ": "≥99%",
+        "sch-comp": "100%"
+      }
+    }
   },
 
   "@graph": [
     {
-      "@id": "core:id",
+      "@id": "core:AIAgent",
+      "@type": "rdfs:Class",
+      "label": "AI Agent",
+      "description": "Intelligent agent capable of autonomous code analysis, generation, and optimization",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:BidirectionalSync",
+      "@type": "rdfs:Class",
+      "label": "Bidirectional Sync",
+      "description": "Bidirectional synchronization between canvas and code representations",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:CanvasConversion",
+      "@type": "rdfs:Class",
+      "label": "Canvas Conversion",
+      "description": "Bidirectional conversion between visual canvas representations and executable code",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Class",
+      "@type": "rdfs:Class",
+      "label": "Class",
+      "description": "Entity class or type definition",
+      "subClassOf": "rdfs:Class"
+    },
+    {
+      "@id": "core:CodeAnalysis",
+      "@type": "rdfs:Class",
+      "label": "Code Analysis",
+      "description": "Multi-dimensional analysis of source code including best practices, performance, and security",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:CodeGeneration",
+      "@type": "rdfs:Class",
+      "label": "Code Generation",
+      "description": "Automated generation of source code from templates, canvas data, or specifications",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:ConflictResolution",
+      "@type": "rdfs:Class",
+      "label": "Conflict Resolution",
+      "description": "Resolution strategies for synchronization conflicts between canvas and code",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Concept",
+      "@type": "rdfs:Class",
+      "label": "Concept",
+      "description": "Reusable semantic building block (domain-agnostic)",
+      "subClassOf": "skos:Concept"
+    },
+    {
+      "@id": "core:ContextDefinition",
+      "@type": "rdfs:Class",
+      "label": "Context Definition",
+      "description": "JSON-LD context definition providing semantic mappings",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Directive",
+      "@type": "rdfs:Class",
+      "label": "Directive",
+      "description": "Operational directive or instruction set",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Property",
+      "@type": "rdfs:Class",
+      "label": "Property",
+      "description": "Predicate or attribute definition",
+      "subClassOf": "rdf:Property"
+    },
+    {
+      "@id": "core:QualityValidation",
+      "@type": "rdfs:Class",
+      "label": "Quality Validation",
+      "description": "Automated validation of code quality, performance metrics, and compliance standards",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:SyncManager",
+      "@type": "rdfs:Class",
+      "label": "Sync Manager",
+      "description": "Manager for coordinating bidirectional synchronization operations",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:Vocabulary",
+      "@type": "rdfs:Class",
+      "label": "Vocabulary",
+      "description": "A named collection of term definitions and metadata",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:WorkflowOrchestration",
+      "@type": "rdfs:Class",
+      "label": "Workflow Orchestration",
+      "description": "Coordination of multi-agent workflows for rapid development and deployment",
+      "subClassOf": "owl:Thing"
+    },
+    {
+      "@id": "core:aiProgramming",
       "@type": "rdf:Property",
-      "label": "identifier",
-      "description": "Canonical identifier (IRI) for an entity",
+      "label": "AI programming context",
+      "description": "Context reference for AI-assisted programming capabilities",
       "domain": "owl:Thing",
       "range": "xsd:anyURI"
     },
     {
-      "@id": "core:type",
+      "@id": "core:analysisType",
       "@type": "rdf:Property",
-      "label": "type",
-      "description": "Primary type or classification of an entity",
-      "domain": "owl:Thing",
-      "range": "rdfs:Class"
-    },
-    {
-      "@id": "core:label",
-      "@type": "rdf:Property",
-      "label": "label",
-      "description": "Human-readable short name",
-      "domain": "owl:Thing",
+      "label": "analysis type",
+      "description": "Type of code analysis (bestPractices, performance, security, accessibility, refactoring)",
+      "domain": "core:CodeAnalysis",
       "range": "xsd:string"
     },
     {
-      "@id": "core:description",
+      "@id": "core:author",
       "@type": "rdf:Property",
-      "label": "description", 
-      "description": "Long-form textual description",
+      "label": "author",
+      "description": "Agent or organization responsible for the entity",
       "domain": "owl:Thing",
+      "range": "foaf:Agent"
+    },
+    {
+      "@id": "core:capability",
+      "@type": "rdf:Property",
+      "label": "capability",
+      "description": "Specific capability or skill of an AI agent",
+      "domain": "core:AIAgent",
       "range": "xsd:string"
     },
     {
-      "@id": "core:status",
+      "@id": "core:conflictStrategy",
       "@type": "rdf:Property",
-      "label": "status",
-      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)",
-      "domain": "owl:Thing",
+      "label": "conflict strategy",
+      "description": "Strategy for resolving synchronization conflicts (merge, overwrite, manual)",
+      "domain": "core:ConflictResolution",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:conversionDirection",
+      "@type": "rdf:Property",
+      "label": "conversion direction",
+      "description": "Direction of canvas conversion (canvas-to-code, code-to-canvas, bidirectional)",
+      "domain": "core:CanvasConversion",
       "range": "xsd:string"
     },
     {
@@ -92,34 +243,58 @@
       "range": "xsd:dateTime"
     },
     {
-      "@id": "core:modified",
+      "@id": "core:description",
       "@type": "rdf:Property",
-      "label": "modified",
-      "description": "Last modified timestamp",
+      "label": "description", 
+      "description": "Long-form textual description",
       "domain": "owl:Thing",
-      "range": "xsd:dateTime"
+      "range": "xsd:string"
     },
     {
-      "@id": "core:author",
+      "@id": "core:dmagPattern",
       "@type": "rdf:Property",
-      "label": "author",
-      "description": "Agent or organization responsible for the entity",
+      "label": "DMAG pattern",
+      "description": "DMAG architecture pattern reference",
       "domain": "owl:Thing",
-      "range": "foaf:Agent"
+      "range": "xsd:anyURI"
     },
     {
-      "@id": "core:maintainer",
+      "@id": "core:example",
       "@type": "rdf:Property",
-      "label": "maintainer",
-      "description": "Primary maintainer or steward URI",
+      "label": "example",
+      "description": "Usage example or snippet",
       "domain": "owl:Thing",
-      "range": "foaf:Agent"
+      "range": "xsd:string"
     },
     {
-      "@id": "core:version",
+      "@id": "core:extends",
       "@type": "rdf:Property",
-      "label": "version",
-      "description": "Semantic version string",
+      "label": "extends",
+      "description": "Reference to a parent or base vocabulary/context",
+      "domain": "owl:Thing",
+      "range": "owl:Thing"
+    },
+    {
+      "@id": "core:id",
+      "@type": "rdf:Property",
+      "label": "identifier",
+      "description": "Canonical identifier (IRI) for an entity",
+      "domain": "owl:Thing",
+      "range": "xsd:anyURI"
+    },
+    {
+      "@id": "core:jjnhmLayer",
+      "@type": "rdf:Property",
+      "label": "JJNHM layer",
+      "description": "JJNHM architecture layer (JSONLD, JDBL, NQDS, HBS, MMD)",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:label",
+      "@type": "rdf:Property",
+      "label": "label",
+      "description": "Human-readable short name",
       "domain": "owl:Thing",
       "range": "xsd:string"
     },
@@ -132,62 +307,76 @@
       "range": "xsd:anyURI"
     },
     {
-      "@id": "core:extends",
+      "@id": "core:maintainer",
       "@type": "rdf:Property",
-      "label": "extends",
-      "description": "Reference to a parent or base vocabulary/context",
+      "label": "maintainer",
+      "description": "Primary maintainer or steward URI",
       "domain": "owl:Thing",
-      "range": "owl:Thing"
+      "range": "foaf:Agent"
     },
     {
-      "@id": "core:example",
+      "@id": "core:modified",
       "@type": "rdf:Property",
-      "label": "example",
-      "description": "Usage example or snippet",
+      "label": "modified",
+      "description": "Last modified timestamp",
+      "domain": "owl:Thing",
+      "range": "xsd:dateTime"
+    },
+    {
+      "@id": "core:orchestrationPattern",
+      "@type": "rdf:Property",
+      "label": "orchestration pattern",
+      "description": "Pattern used for workflow orchestration (parallel, sequential, conditional)",
+      "domain": "core:WorkflowOrchestration",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:qualityThreshold",
+      "@type": "rdf:Property",
+      "label": "quality threshold",
+      "description": "Threshold value for quality validation metrics",
+      "domain": "core:QualityValidation",
+      "range": "xsd:decimal"
+    },
+    {
+      "@id": "core:syncDirection",
+      "@type": "rdf:Property",
+      "label": "sync direction",
+      "description": "Direction of synchronization (canvas-to-code, code-to-canvas, bidirectional)",
+      "domain": "core:BidirectionalSync",
+      "range": "xsd:string"
+    },
+    {
+      "@id": "core:status",
+      "@type": "rdf:Property",
+      "label": "status",
+      "description": "Lifecycle or operational state (e.g., draft, active, deprecated)",
       "domain": "owl:Thing",
       "range": "xsd:string"
     },
     {
-      "@id": "core:Vocabulary",
-      "@type": "rdfs:Class",
-      "label": "Vocabulary",
-      "description": "A named collection of term definitions and metadata",
-      "subClassOf": "owl:Thing"
+      "@id": "core:targetFormat",
+      "@type": "rdf:Property",
+      "label": "target format",
+      "description": "Target format for code generation (typescript, javascript, tsx, markdown, html, jsonld)",
+      "domain": "core:CodeGeneration",
+      "range": "xsd:string"
     },
     {
-      "@id": "core:Concept",
-      "@type": "rdfs:Class",
-      "label": "Concept",
-      "description": "Reusable semantic building block (domain-agnostic)",
-      "subClassOf": "skos:Concept"
+      "@id": "core:type",
+      "@type": "rdf:Property",
+      "label": "type",
+      "description": "Primary type or classification of an entity",
+      "domain": "owl:Thing",
+      "range": "rdfs:Class"
     },
     {
-      "@id": "core:Property",
-      "@type": "rdfs:Class",
-      "label": "Property",
-      "description": "Predicate or attribute definition",
-      "subClassOf": "rdf:Property"
-    },
-    {
-      "@id": "core:Class",
-      "@type": "rdfs:Class",
-      "label": "Class",
-      "description": "Entity class or type definition",
-      "subClassOf": "rdfs:Class"
-    },
-    {
-      "@id": "core:Directive",
-      "@type": "rdfs:Class",
-      "label": "Directive",
-      "description": "Operational directive or instruction set",
-      "subClassOf": "owl:Thing"
-    },
-    {
-      "@id": "core:ContextDefinition",
-      "@type": "rdfs:Class",
-      "label": "Context Definition",
-      "description": "JSON-LD context definition providing semantic mappings",
-      "subClassOf": "owl:Thing"
+      "@id": "core:version",
+      "@type": "rdf:Property",
+      "label": "version",
+      "description": "Semantic version string",
+      "domain": "owl:Thing",
+      "range": "xsd:string"
     }
   ]
 }

@@ -1,0 +1,152 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-hooks.jsonld",
+  "@type": "skos:ConceptScheme",
+  "meta": {
+    "title": "WBSTCNVS Project Hooks Schema",
+    "description": "React hooks for canvas-code synchronization and workflow state management",
+    "version": "2.0.0",
+    "created": "2025-01-09T00:00:00Z",
+    "license": "MIT",
+    "conformsTo": [
+      "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "responsibilities": [
+      "sync-hook-orchestration",
+      "canvas-code-state-management",
+      "bidirectional-sync-coordination",
+      "workflow-hook-integration",
+      "wbstcnvs-hook-architecture"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "project:useBidirectionalSync",
+      "@type": "project:Hook",
+      "rdfs:label": "useBidirectionalSync",
+      "dcterms:description": "Hook managing bidirectional synchronization between canvas and code with conflict resolution",
+      "wbstcnvs:syncDirection": "bidirectional",
+      "wbstcnvs:conflictStrategy": "unified-workflow-system",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useCanvasStore",
+      "@type": "project:Hook",
+      "rdfs:label": "useCanvasStore",
+      "dcterms:description": "Hook for canvas state management and node/edge operations",
+      "wbstcnvs:canvasType": "state-management",
+      "wbstcnvs:syncCapability": "canvas-state",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:useCleanupManager",
+      "@type": "project:Hook",
+      "rdfs:label": "useCleanupManager",
+      "dcterms:description": "Hook for managing component cleanup and memory optimization",
+      "wbstcnvs:syncCapability": "cleanup-management",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useDragAndDrop",
+      "@type": "project:Hook",
+      "rdfs:label": "useDragAndDrop",
+      "dcterms:description": "Hook for canvas drag-and-drop operations and component placement",
+      "wbstcnvs:canvasType": "interaction",
+      "wbstcnvs:syncCapability": "canvas-interaction",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useEnhancedSettingsSync",
+      "@type": "project:Hook",
+      "rdfs:label": "useEnhancedSettingsSync",
+      "dcterms:description": "Hook for enhanced settings synchronization across workspace",
+      "wbstcnvs:syncDirection": "settings-sync",
+      "wbstcnvs:conflictStrategy": "merge-with-validation",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useFlowCanvasState",
+      "@type": "project:Hook",
+      "rdfs:label": "useFlowCanvasState",
+      "dcterms:description": "Hook for ReactFlow canvas state management and operations",
+      "wbstcnvs:canvasType": "flow-canvas",
+      "wbstcnvs:syncCapability": "canvas-state",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:useRealTimeSync",
+      "@type": "project:Hook",
+      "rdfs:label": "useRealTimeSync",
+      "dcterms:description": "Hook for real-time synchronization and collaborative editing",
+      "wbstcnvs:syncDirection": "real-time",
+      "wbstcnvs:conflictStrategy": "operational-transform",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useVirtualization",
+      "@type": "project:Hook",
+      "rdfs:label": "useVirtualization",
+      "dcterms:description": "Hook for canvas virtualization and performance optimization",
+      "wbstcnvs:canvasType": "virtualization",
+      "wbstcnvs:syncCapability": "performance-optimization",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Service"
+    },
+    {
+      "@id": "project:useWorkspaceEditor",
+      "@type": "project:Hook",
+      "rdfs:label": "useWorkspaceEditor",
+      "dcterms:description": "Hook for workspace editor state and code synchronization",
+      "wbstcnvs:syncDirection": "code-to-canvas",
+      "wbstcnvs:conversionType": "code-editor",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:useWorkspaceSettings",
+      "@type": "project:Hook",
+      "rdfs:label": "useWorkspaceSettings",
+      "dcterms:description": "Hook for workspace settings management and persistence",
+      "wbstcnvs:syncCapability": "settings-management",
+      "wbstcnvs:conflictStrategy": "user-preference",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    },
+    {
+      "@id": "project:useWorkspaceSync",
+      "@type": "project:Hook",
+      "rdfs:label": "useWorkspaceSync",
+      "dcterms:description": "Hook for workspace-level synchronization orchestration",
+      "wbstcnvs:syncDirection": "workspace-level",
+      "wbstcnvs:conflictStrategy": "workspace-orchestration",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "Coordination"
+    },
+    {
+      "@id": "project:useWorkspaceUI",
+      "@type": "project:Hook",
+      "rdfs:label": "useWorkspaceUI",
+      "dcterms:description": "Hook for workspace UI state and interaction management",
+      "wbstcnvs:canvasType": "ui-state",
+      "wbstcnvs:syncCapability": "ui-synchronization",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:dmagPattern": "State"
+    }
+  ]
+}

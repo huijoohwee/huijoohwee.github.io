@@ -1,0 +1,50 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "project": "https://huijoohwee.github.io/schema/project-handlers.jsonld#",
+      "Handler": "project:Handler",
+      "hasHandler": "project:hasHandler",
+      "label": "skos:prefLabel",
+      "description": "skos:definition"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/project-handlers.jsonld",
+  "@type": "owl:Ontology",
+  "meta": {
+    "title": "Project Handlers Vocabulary",
+    "description": "Handler definitions for project components",
+    "creator": "Hui Joo Hwee",
+    "versionInfo": "3.0.0",
+    "created": "2024-12-19",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "license": "MIT"
+  },
+  "@graph": [
+    {
+      "@id": "project:handleGlobalError",
+      "@type": "project:Handler",
+      "label": "handleGlobalError",
+      "description": "Handler for global error management"
+    },
+    {
+      "@id": "project:handleGlobalRejection",
+      "@type": "project:Handler",
+      "label": "handleGlobalRejection",
+      "description": "Handler for global promise rejections"
+    },
+    {
+      "@id": "project:handleKeyDown",
+      "@type": "project:Handler",
+      "label": "handleKeyDown",
+      "description": "Handler for keyboard events"
+    },
+    {
+      "@id": "project:handleFilesDrop",
+      "@type": "project:Handler",
+      "label": "handleFilesDrop",
+      "description": "Handler for dropped files from UI"
+    }
+  ]
+}

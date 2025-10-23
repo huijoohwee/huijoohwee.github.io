@@ -1,174 +1,642 @@
 {
   "@context": [
-    "https://huijoohwee.github.io/schema/base.jsonld",
+    "sch:base.jsonld",
     {
-      "issue": "https://huijoohwee.github.io/schema/project-issues.jsonld#",
+      "issue": "sch:project-issues.jsonld#",
       "itsm": "http://www.w3.org/ns/itsm#",
-      
       "IssueCollection": "issue:IssueCollection",
       "Issue": "issue:Issue",
       "issues": "issue:hasIssue",
       "label": "skos:prefLabel",
-      "description": "skos:definition"
+      "desc": "skos:definition"
     }
   ],
-  
   "meta": {
-    "@id": "https://huijoohwee.github.io/schema/project-issues.jsonld",
-    "@type": "owl:Ontology",
+    "@id": "sch:project-issues.jsonld",
+    "@type": "owl:onto",
     "dcterms:creator": "Hui Joo Hwee",
     "owl:versionInfo": "2.3.0",
     "dcterms:created": "2024-12-19",
     "dcterms:modified": "2024-12-19",
-    "rdfs:comment": "Issue vocabulary for project problem tracking and resolution",
-    "owl:imports": "https://huijoohwee.github.io/schema/base.jsonld"
+    "cmt": "Issue vocab for project problem tracking and resolution",
+    "owl:imports": "sch:base.jsonld"
   },
-  
   "@graph": [
     {
       "@id": "issue:IssueCollection",
       "@type": "skos:ConceptScheme",
-      "skos:prefLabel": "Issue Vocabulary Collection",
+      "skos:prefLabel": "Issue vocab Collection",
       "skos:definition": "Comprehensive collection of issues for project problem tracking and resolution",
       "skos:hasTopConcept": [
-    "issue:abort",
-    "issue:access",
-    "issue:alert",
-    "issue:anti-pattern",
-    "issue:any-type",
-    "issue:argument",
-    "issue:auto-sync-effect",
-    "issue:behavior",
-    "issue:blank",
-    "issue:blocking",
-    "issue:break",
-    "issue:broken",
-    "issue:broken-code",
-    "issue:broken-structure",
-    "issue:bug",
-    "issue:bypass",
-    "issue:cascade",
-    "issue:casing",
-    "issue:cast",
-    "issue:catch",
-    "issue:circular-dependency",
-    "issue:circular-reference",
-    "issue:closing-brace",
-    "issue:closing-parenthesis",
-    "issue:compilation-error",
-    "issue:conflict",
-    "issue:confusion",
-    "issue:corrupt",
-    "issue:count",
-    "issue:crash",
-    "issue:cut-off",
-    "issue:dead-zone",
-    "issue:deadlock",
-    "issue:deprecation",
-    "issue:dirty",
-    "issue:disable",
-    "issue:downtime",
-    "issue:duplicate",
-    "issue:enable",
-    "issue:enum",
-    "issue:expire",
-    "issue:fail",
-    "issue:flow",
-    "issue:fragment",
-    "issue:hang",
-    "issue:hardcode",
-    "issue:hidden",
-    "issue:illegitimate",
-    "issue:inactive",
-    "issue:incomplete",
-    "issue:inconsistency",
-    "issue:incorrect",
-    "issue:infinite-loop",
-    "issue:intermittent",
-    "issue:invalid",
-    "issue:invalidate",
-    "issue:leftover",
-    "issue:legacy",
-    "issue:linter-error",
-    "issue:loading",
-    "issue:log-spam",
-    "issue:logic",
-    "issue:masking",
-    "issue:maximum-update-depth-exceeded",
-    "issue:memory-leak",
-    "issue:memory-pressure",
-    "issue:method-error",
-    "issue:mishandle",
-    "issue:mismatch",
-    "issue:missing",
-    "issue:missing-return-type",
-    "issue:module-resolution-failure",
-    "issue:non-deterministic",
-    "issue:non-exist",
-    "issue:not-supported",
-    "issue:not-working",
-    "issue:null",
-    "issue:old",
-    "issue:other-key-issues",
-    "issue:overhead",
-    "issue:overlap",
-    "issue:overload",
-    "issue:partial",
-    "issue:problem",
-    "issue:progress-flow",
-    "issue:race-condition",
-    "issue:recalculate",
-    "issue:recreate",
-    "issue:recursive-call",
-    "issue:recursive-function",
-    "issue:redundancy",
-    "issue:re-export",
-    "issue:re-occurence",
-    "issue:re-rendering",
-    "issue:regression",
-    "issue:rejection",
-    "issue:resource-count-collection",
-    "issue:return",
-    "issue:root-cause",
-    "issue:runtime-error",
-    "issue:scatter",
-    "issue:seamlessness",
-    "issue:signature",
-    "issue:skip",
-    "issue:stale-code",
-    "issue:stray-statement",
-    "issue:stuck",
-    "issue:syntax-error",
-    "issue:technical-debt",
-    "issue:temporal-dead-zone",
-    "issue:temporary",
-    "issue:threat-detection-and-response",
-    "issue:threshold",
-    "issue:timeout",
-    "issue:timing-issue",
-    "issue:trace",
-    "issue:type-error",
-    "issue:typescript-error",
-    "issue:unassigned",
-    "issue:uncaught",
-    "issue:undefined",
-    "issue:underlying-issue",
-    "issue:unnamed",
-    "issue:unnecessary",
-    "issue:unrecognized",
-    "issue:unreleased",
-    "issue:unsafe",
-    "issue:unsupported",
-    "issue:untracked",
-    "issue:unused",
-    "issue:unusual",
-    "issue:valid",
-    "issue:version",
-    "issue:violation",
+        "issue:abort",
+        "issue:access",
+        "issue:alert",
+        "issue:anti-ptn",
+        "issue:any-type",
+        "issue:argument",
+        "issue:auto-sync-effect",
+        "issue:behavior",
+        "issue:blank",
+        "issue:blocking",
+        "issue:break",
+        "issue:broken",
+        "issue:broken-code",
+        "issue:broken-structure",
+        "issue:bug",
+        "issue:bypass",
+        "issue:cascade",
+        "issue:casing",
+        "issue:cast",
+        "issue:catch",
+        "issue:circular-dependency",
+        "issue:circular-ref",
+        "issue:closing-brace",
+        "issue:closing-parenthesis",
+        "issue:compilation-error",
+        "issue:conflict",
+        "issue:confusion",
+        "issue:corrupt",
+        "issue:count",
+        "issue:crash",
+        "issue:cut-off",
+        "issue:dead-zone",
+        "issue:deadlock",
+        "issue:deprecation",
+        "issue:dirty",
+        "issue:disable",
+        "issue:downtime",
+        "issue:duplicate",
+        "issue:enable",
+        "issue:enum",
+        "issue:expire",
+        "issue:fail",
+        "issue:flow",
+        "issue:fragment",
+        "issue:hang",
+        "issue:hardcode",
+        "issue:hidden",
+        "issue:illegitimate",
+        "issue:inactive",
+        "issue:incomplete",
+        "issue:inconsistency",
+        "issue:incorrect",
+        "issue:infinite-loop",
+        "issue:intermittent",
+        "issue:invalid",
+        "issue:invalidate",
+        "issue:leftover",
+        "issue:legacy",
+        "issue:linter-error",
+        "issue:loading",
+        "issue:log-spam",
+        "issue:logic",
+        "issue:masking",
+        "issue:maximum-update-depth-exceeded",
+        "issue:memory-leak",
+        "issue:memory-pressure",
+        "issue:method-error",
+        "issue:mishandle",
+        "issue:mismatch",
+        "issue:missing",
+        "issue:missing-return-type",
+        "issue:mod-resolution-failure",
+        "issue:non-deterministic",
+        "issue:non-exist",
+        "issue:not-supported",
+        "issue:not-working",
+        "issue:null",
+        "issue:old",
+        "issue:other-key-issues",
+        "issue:overhead",
+        "issue:overlap",
+        "issue:overload",
+        "issue:partial",
+        "issue:problem",
+        "issue:progress-flow",
+        "issue:race-condition",
+        "issue:recalculate",
+        "issue:recreate",
+        "issue:recursive-call",
+        "issue:recursive-function",
+        "issue:redundancy",
+        "issue:re-export",
+        "issue:re-occurence",
+        "issue:re-rendering",
+        "issue:regression",
+        "issue:rejection",
+        "issue:resource-count-collection",
+        "issue:return",
+        "issue:root-cause",
+        "issue:runtime-error",
+        "issue:scatter",
+        "issue:seamlessness",
+        "issue:signature",
+        "issue:skip",
+        "issue:stale-code",
+        "issue:stray-statement",
+        "issue:stuck",
+        "issue:syntax-error",
+        "issue:technical-debt",
+        "issue:temporal-dead-zone",
+        "issue:temporary",
+        "issue:threat-detection-and-response",
+        "issue:threshold",
+        "issue:timeout",
+        "issue:timing-issue",
+        "issue:trace",
+        "issue:type-error",
+        "issue:typescript-error",
+        "issue:unassigned",
+        "issue:uncaught",
+        "issue:undefined",
+        "issue:underlying-issue",
+        "issue:unnamed",
+        "issue:unnecessary",
+        "issue:unrecognized",
+        "issue:unreleased",
+        "issue:unsafe",
+        "issue:unsupported",
+        "issue:untracked",
+        "issue:unused",
+        "issue:unusual",
+        "issue:valid",
+        "issue:version",
+        "issue:violation",
         "issue:warn",
         "issue:wrong",
         "issue:zombie"
-      ]
+      ],
+      "resp": "issuecollection",
+      "activeVerbs": [
+        "execute",
+        "validate",
+        "optimize",
+        "monitor"
+      ],
+      "kpiTarget": "perf-eff≥90%",
+      "characteristics": [
+        "composable",
+        "traceable",
+        "optimizable"
+      ],
+      "jjnhm": {
+        "v": "3.0.0",
+        "lyr": "JSONLD",
+        "cmplx": "C1-MVP-Prod",
+        "gov": "Core-SG",
+        "kpi": {
+          "tok-dens": "≥7.0-c/t",
+          "sem-clar": "≥97%",
+          "parse-t": "≤0.5ms",
+          "val-succ": "≥99%",
+          "sch-comp": "100%"
+        }
+      },
+      "semanticCluster": {
+        "cluster": "general-processing",
+        "concepts": [
+          "execute",
+          "validate",
+          "optimize",
+          "monitor",
+          "coordinate",
+          "transform",
+          "integrate",
+          "configure"
+        ],
+        "kpi": "performance≥90%",
+        "responsibility": "system-coordination",
+        "characteristics": [
+          "executable",
+          "validatable",
+          "optimizable",
+          "monitorable"
+        ]
+      },
+      "kpiTargets": {
+        "primary": "performance≥90%",
+        "secondary": [
+          "parse-time≤0.5ms",
+          "token-density≥7.0c/t",
+          "semantic-clarity≥97%",
+          "validation-success≥99%",
+          "schema-compliance=100%"
+        ],
+        "composite": "enterprise-readiness≥95%"
+      },
+      "responsibilityMatrix": {
+        "primary": "system-coordination",
+        "secondary": [
+          "quality-assurance",
+          "performance-optimization",
+          "error-resilience"
+        ],
+        "governance": [
+          "compliance-enforcement",
+          "audit-trail-maintenance",
+          "metric-reporting"
+        ],
+        "orchestration": [
+          "multi-agent-coordination",
+          "workflow-synchronization",
+          "resource-allocation"
+        ]
+      },
+      "characteristicVectors": {
+        "functional": [
+          "executable",
+          "validatable",
+          "optimizable",
+          "monitorable"
+        ],
+        "quality": [
+          "reliable",
+          "efficient",
+          "maintainable",
+          "scalable"
+        ],
+        "operational": [
+          "monitorable",
+          "debuggable",
+          "recoverable",
+          "upgradeable"
+        ],
+        "architectural": [
+          "modular",
+          "composable",
+          "extensible",
+          "interoperable"
+        ]
+      },
+      "implementationPatterns": {
+        "design": [
+          "factory",
+          "adapter",
+          "observer",
+          "strategy",
+          "command"
+        ],
+        "architectural": [
+          "microservices",
+          "event-driven",
+          "pipeline",
+          "layered",
+          "hexagonal"
+        ],
+        "integration": [
+          "api-gateway",
+          "message-queue",
+          "event-bus",
+          "service-mesh",
+          "circuit-breaker"
+        ],
+        "data": [
+          "repository",
+          "unit-of-work",
+          "cqrs",
+          "event-sourcing",
+          "saga"
+        ]
+      },
+      "governanceMetadata": {
+        "compliance": [
+          "JJNHM-v3.0.0",
+          "JSON-LD-1.1",
+          "RDF-1.1",
+          "SPARQL-1.1"
+        ],
+        "quality": [
+          "ISO-25010",
+          "NIST-CSF",
+          "OWASP-ASVS",
+          "W3C-WCAG"
+        ],
+        "security": [
+          "RBAC",
+          "ABAC",
+          "OAuth2",
+          "JWT",
+          "TLS-1.3"
+        ],
+        "monitoring": [
+          "OpenTelemetry",
+          "Prometheus",
+          "Grafana",
+          "ELK-Stack"
+        ]
+      },
+      "qualityGates": {
+        "performance": [
+          "latency≤200ms",
+          "throughput≥1K/s",
+          "cpu≤80%",
+          "memory≤2GB"
+        ],
+        "reliability": [
+          "uptime≥99.9%",
+          "mtbf≥720h",
+          "mttr≤15min",
+          "error-rate≤0.1%"
+        ],
+        "security": [
+          "vulnerability-scan=pass",
+          "penetration-test=pass",
+          "compliance-audit=pass"
+        ],
+        "maintainability": [
+          "code-coverage≥80%",
+          "complexity≤10",
+          "duplication≤5%",
+          "documentation≥90%"
+        ]
+      },
+      "orchestrationDirectives": {
+        "execution": [
+          "parallel-processing",
+          "load-balancing",
+          "auto-scaling",
+          "circuit-breaking"
+        ],
+        "coordination": [
+          "event-choreography",
+          "saga-orchestration",
+          "workflow-engine",
+          "state-machine"
+        ],
+        "monitoring": [
+          "health-checks",
+          "metrics-collection",
+          "alerting",
+          "tracing"
+        ],
+        "recovery": [
+          "backup-restore",
+          "disaster-recovery",
+          "failover",
+          "rollback"
+        ]
+      },
+      "validationRules": {
+        "structural": [
+          "schema-validation",
+          "type-checking",
+          "constraint-validation",
+          "referential-integrity"
+        ],
+        "semantic": [
+          "business-rules",
+          "domain-constraints",
+          "workflow-validation",
+          "state-consistency"
+        ],
+        "quality": [
+          "performance-benchmarks",
+          "security-scans",
+          "accessibility-checks",
+          "usability-tests"
+        ],
+        "compliance": [
+          "regulatory-compliance",
+          "standard-conformance",
+          "policy-enforcement",
+          "audit-requirements"
+        ]
+      }
     }
-  ]
+  ],
+  "jjnhm": {
+    "version": "3.0.0",
+    "layer": "JSONLD",
+    "complexity": "C1-MVP-Production",
+    "governance": "Core-sch-Governance",
+    "kpiTargets": {
+      "token-density": "≥7.0-concepts/token",
+      "semantic-clarity": "≥97%",
+      "parse-time": "≤0.5ms",
+      "val-success": "≥99%",
+      "sch-compliance": "100%"
+    }
+  },
+  "activeVerbs": [
+    "execute",
+    "validate",
+    "optimize",
+    "monitor",
+    "coordinate",
+    "transform",
+    "integrate",
+    "configure",
+    "deploy",
+    "maintain"
+  ],
+  "semanticCluster": {
+    "cluster": "general-processing",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "system-coordination",
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ]
+  },
+  "kpiTargets": {
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ],
+    "composite": "enterprise-readiness≥95%"
+  },
+  "responsibilityMatrix": {
+    "primary": "system-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience"
+    ],
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting"
+    ],
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation"
+    ]
+  },
+  "characteristicVectors": {
+    "functional": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ],
+    "quality": [
+      "reliable",
+      "efficient",
+      "maintainable",
+      "scalable"
+    ],
+    "operational": [
+      "monitorable",
+      "debuggable",
+      "recoverable",
+      "upgradeable"
+    ],
+    "architectural": [
+      "modular",
+      "composable",
+      "extensible",
+      "interoperable"
+    ]
+  },
+  "implementationPatterns": {
+    "design": [
+      "factory",
+      "adapter",
+      "observer",
+      "strategy",
+      "command"
+    ],
+    "architectural": [
+      "microservices",
+      "event-driven",
+      "pipeline",
+      "layered",
+      "hexagonal"
+    ],
+    "integration": [
+      "api-gateway",
+      "message-queue",
+      "event-bus",
+      "service-mesh",
+      "circuit-breaker"
+    ],
+    "data": [
+      "repository",
+      "unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga"
+    ]
+  },
+  "governanceMetadata": {
+    "compliance": [
+      "JJNHM-v3.0.0",
+      "JSON-LD-1.1",
+      "RDF-1.1",
+      "SPARQL-1.1"
+    ],
+    "quality": [
+      "ISO-25010",
+      "NIST-CSF",
+      "OWASP-ASVS",
+      "W3C-WCAG"
+    ],
+    "security": [
+      "RBAC",
+      "ABAC",
+      "OAuth2",
+      "JWT",
+      "TLS-1.3"
+    ],
+    "monitoring": [
+      "OpenTelemetry",
+      "Prometheus",
+      "Grafana",
+      "ELK-Stack"
+    ]
+  },
+  "qualityGates": {
+    "performance": [
+      "latency≤200ms",
+      "throughput≥1K/s",
+      "cpu≤80%",
+      "memory≤2GB"
+    ],
+    "reliability": [
+      "uptime≥99.9%",
+      "mtbf≥720h",
+      "mttr≤15min",
+      "error-rate≤0.1%"
+    ],
+    "security": [
+      "vulnerability-scan=pass",
+      "penetration-test=pass",
+      "compliance-audit=pass"
+    ],
+    "maintainability": [
+      "code-coverage≥80%",
+      "complexity≤10",
+      "duplication≤5%",
+      "documentation≥90%"
+    ]
+  },
+  "orchestrationDirectives": {
+    "execution": [
+      "parallel-processing",
+      "load-balancing",
+      "auto-scaling",
+      "circuit-breaking"
+    ],
+    "coordination": [
+      "event-choreography",
+      "saga-orchestration",
+      "workflow-engine",
+      "state-machine"
+    ],
+    "monitoring": [
+      "health-checks",
+      "metrics-collection",
+      "alerting",
+      "tracing"
+    ],
+    "recovery": [
+      "backup-restore",
+      "disaster-recovery",
+      "failover",
+      "rollback"
+    ]
+  },
+  "validationRules": {
+    "structural": [
+      "schema-validation",
+      "type-checking",
+      "constraint-validation",
+      "referential-integrity"
+    ],
+    "semantic": [
+      "business-rules",
+      "domain-constraints",
+      "workflow-validation",
+      "state-consistency"
+    ],
+    "quality": [
+      "performance-benchmarks",
+      "security-scans",
+      "accessibility-checks",
+      "usability-tests"
+    ],
+    "compliance": [
+      "regulatory-compliance",
+      "standard-conformance",
+      "policy-enforcement",
+      "audit-requirements"
+    ]
+  }
 }

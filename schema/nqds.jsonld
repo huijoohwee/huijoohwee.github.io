@@ -16,20 +16,28 @@
       "Transformation": "nqds:Transformation",
       "Context": "nqds:Context",
       "Scope": "nqds:Scope",
+      "CanvasCodeSync": "nqds:CanvasCodeSync",
+      "BidirectionalFlow": "nqds:BidirectionalFlow",
+      "ConflictResolution": "nqds:ConflictResolution",
       
-      "hasComponent": { "@id": "nqds:hasComponent", "@type": "@id", "@container": "@set" },
       "analyzes": { "@id": "nqds:analyzes", "@type": "@id" },
-      "produces": { "@id": "nqds:produces", "@type": "@id" },
-      "requires": { "@id": "nqds:requires", "@type": "@id", "@container": "@set" },
-      "flowsTo": { "@id": "nqds:flowsTo", "@type": "@id", "@container": "@list" },
+      "canvasToCode": { "@id": "nqds:canvasToCode", "@type": "@id" },
+      "codeToCanvas": { "@id": "nqds:codeToCanvas", "@type": "@id" },
       "defines": { "@id": "nqds:defines", "@type": "@id" },
       "describes": { "@id": "nqds:describes", "@type": "@id" },
-      "specifies": { "@id": "nqds:specifies", "@type": "@id" },
-      "implements": { "@id": "nqds:implements", "@type": "@id" },
-      "validates": { "@id": "nqds:validates", "@type": "@id" },
-      "returns": { "@id": "nqds:returns", "@type": "@id" },
-      "hasDependency": { "@id": "nqds:hasDependency", "@type": "@id", "@container": "@set" },
+      "flowsTo": { "@id": "nqds:flowsTo", "@type": "@id", "@container": "@list" },
+      "hasComponent": { "@id": "nqds:hasComponent", "@type": "@id", "@container": "@set" },
+      "hasConflictStrategy": { "@id": "nqds:hasConflictStrategy", "@type": "@id" },
       "hasDataFlow": { "@id": "nqds:hasDataFlow", "@type": "@id" },
+      "hasDependency": { "@id": "nqds:hasDependency", "@type": "@id", "@container": "@set" },
+      "hasSyncDirection": { "@id": "nqds:hasSyncDirection", "@type": "xsd:string" },
+      "implements": { "@id": "nqds:implements", "@type": "@id" },
+      "produces": { "@id": "nqds:produces", "@type": "@id" },
+      "requires": { "@id": "nqds:requires", "@type": "@id", "@container": "@set" },
+      "returns": { "@id": "nqds:returns", "@type": "@id" },
+      "specifies": { "@id": "nqds:specifies", "@type": "@id" },
+      "syncsWith": { "@id": "nqds:syncsWith", "@type": "@id" },
+      "validates": { "@id": "nqds:validates", "@type": "@id" },
       
       "traceId": { "@id": "nqds:traceId", "@type": "xsd:string" },
       "provenance": { "@id": "prov:wasGeneratedBy", "@type": "@id" },
@@ -48,8 +56,8 @@
 
   "meta": {
     "@type": "schema:Dataset",
-    "title": "NQDS Semantic Graph Processing Vocabulary",
-    "description": "N-Quads-style semantic payload vocabulary for knowledge graphs, agent relationships, data flow modeling, and provenance tracking in JJNHM architecture",
+    "title": "NQDS Canvas-Code Semantic Graph Vocabulary",
+    "description": "N-Quads-style semantic payload vocabulary for WBSTCNVS canvas-code synchronization, bidirectional workflows, and visual-to-code transformation tracking",
     "creator": "https://huijoohwee.github.io",
     "license": "https://opensource.org/licenses/MIT",
     "conformsTo": [
@@ -58,18 +66,32 @@
       "https://www.w3.org/TR/prov-o/",
       "https://www.w3.org/TR/n-quads/"
     ],
-    "versionInfo": "1.2.0",
+    "versionInfo": "3.0.0",
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2024-12-19T00:00:00Z",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
     "maintainer": "https://huijoohwee.github.io",
+    "jjnhm": {
+          "v": "3.0.0",
+          "lyr": "JSONLD",
+          "cmplx": "C1-MVP-Prod",
+          "gov": "Core-SG",
+          "kpi": {
+                "tok-dens": "≥7.0-c/t",
+                "sem-clar": "≥97%",
+                "parse-t": "≤0.5ms",
+                "val-succ": "≥99%",
+                "sch-comp": "100%"
+          }
+    },
     "layer": "semantic-payload",
     "responsibilities": [
-      "agent-relationships",
-      "data-flow-transformations",
-      "knowledge-graph-construction",
-      "semantic-dependencies",
-      "journey-tracing",
-      "provenance-linking"
+      "canvas-code-relationships",
+      "bidirectional-sync-flows",
+      "visual-transformation-graphs",
+      "sync-dependencies",
+      "canvas-code-journey-tracing",
+      "conflict-resolution-provenance"
     ]
   },
 

@@ -1,29 +1,30 @@
 {
   "@context": [
-    "https://huijoohwee.github.io/schema/base.jsonld",
+    "sch:base.jsonld",
     {
-      "uiux": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld#",
+      "uiux": "sch:ui-ux-elements.jsonld#",
       "ui": "http://www.w3.org/ns/ui#",
-      
       "UIElementCollection": "uiux:UIElementCollection",
       "UIElement": "uiux:UIElement",
       "uiElements": "uiux:hasUIElement",
       "label": "skos:prefLabel",
-      "description": "skos:definition"
+      "desc": "skos:definition"
     }
   ],
-  
+  "@id": "sch:ui-ux-elements.jsonld",
   "meta": {
-    "@id": "https://huijoohwee.github.io/schema/ui-ux-elements.jsonld",
-    "@type": "owl:Ontology",
+    "@id": "sch:ui-ux-elements.jsonld",
+    "@type": "owl:onto",
     "dcterms:creator": "Hui Joo Hwee",
-    "owl:versionInfo": "2.3.0",
+    "versionInfo": "3.0.0",
     "dcterms:created": "2024-12-19",
-    "dcterms:modified": "2024-12-19",
-    "rdfs:comment": "UI/UX element vocabulary for interface design and user experience",
-    "owl:imports": "https://huijoohwee.github.io/schema/base.jsonld"
+    "dcterms:modified": "2025-10-23T02:00:00Z",
+    "cmt": "UI/UX element vocab for iface design and user experience with JJNHM v3.0.0 compliance",
+    "owl:imports": "sch:base.jsonld",
+    "semVer": "20251023-v3.0.0",
+    "title": "UI/UX Elements Schema v3.0.0",
+    "description": "Comprehensive UI/UX element vocabulary with design token integration and WBSTCNVS canvas-code synchronization support"
   },
-  
   "@graph": [
     {
       "@id": "uiux:UIElementCollection",
@@ -31,14 +32,721 @@
       "skos:prefLabel": "UI/UX Element Vocabulary Collection",
       "skos:definition": "Comprehensive collection of UI/UX elements for interface design and user experience",
       "skos:hasTopConcept": [
-        "uiux:animation-frame", "uiux:button", "uiux:component-structure", "uiux:container",
-        "uiux:control", "uiux:design-token", "uiux:div-element", "uiux:element",
-        "uiux:floating-control", "uiux:h1-element", "uiux:header", "uiux:main-header",
-        "uiux:p-element", "uiux:page-header", "uiux:panel", "uiux:progress-display",
-        "uiux:progress-indicator", "uiux:render-cycle", "uiux:section", "uiux:sidebar",
-        "uiux:subtitle", "uiux:theme", "uiux:title-section", "uiux:toggle-button",
-        "uiux:ui-element", "uiux:width", "uiux:wrapper-div"
-      ]
+        "uiux:animation-frame",
+        "uiux:button",
+        "uiux:comp-structure",
+        "uiux:container",
+        "uiux:control",
+        "uiux:design-token",
+        "uiux:div-element",
+        "uiux:element",
+        "uiux:floating-control",
+        "uiux:h1-element",
+        "uiux:header",
+        "uiux:main-header",
+        "uiux:p-element",
+        "uiux:page-header",
+        "uiux:panel",
+        "uiux:progress-display",
+        "uiux:progress-indicator",
+        "uiux:render-cycle",
+        "uiux:section",
+        "uiux:sidebar",
+        "uiux:subtitle",
+        "uiux:theme",
+        "uiux:title-section",
+        "uiux:toggle-button",
+        "uiux:ui-element",
+        "uiux:width",
+        "uiux:wrapper-div"
+      ],
+      "resp": "uielementcollection",
+      "activeVerbs": [
+        "execute",
+        "validate",
+        "optimize",
+        "monitor"
+      ],
+      "kpiTarget": "perf-eff≥90%",
+      "characteristics": [
+        "composable",
+        "traceable",
+        "optimizable"
+      ],
+      "jjnhm": {
+        "v": "3.0.0",
+        "lyr": "JSONLD",
+        "cmplx": "C1-MVP-Prod",
+        "gov": "Core-SG",
+        "kpi": {
+          "tok-dens": "≥7.0-c/t",
+          "sem-clar": "≥97%",
+          "parse-t": "≤0.5ms",
+          "val-succ": "≥99%",
+          "sch-comp": "100%"
+        }
+      },
+      "semanticCluster": {
+        "cluster": "general-processing",
+        "concepts": [
+          "execute",
+          "validate",
+          "optimize",
+          "monitor",
+          "coordinate",
+          "transform",
+          "integrate",
+          "configure"
+        ],
+        "kpi": "performance≥90%",
+        "responsibility": "system-coordination",
+        "characteristics": [
+          "executable",
+          "validatable",
+          "optimizable",
+          "monitorable"
+        ]
+      },
+      "kpiTargets": {
+        "primary": "performance≥90%",
+        "secondary": [
+          "parse-time≤0.5ms",
+          "token-density≥7.0c/t",
+          "semantic-clarity≥97%",
+          "validation-success≥99%",
+          "schema-compliance=100%"
+        ],
+        "composite": "enterprise-readiness≥95%"
+      },
+      "responsibilityMatrix": {
+        "primary": "system-coordination",
+        "secondary": [
+          "quality-assurance",
+          "performance-optimization",
+          "error-resilience"
+        ],
+        "governance": [
+          "compliance-enforcement",
+          "audit-trail-maintenance",
+          "metric-reporting"
+        ],
+        "orchestration": [
+          "multi-agent-coordination",
+          "workflow-synchronization",
+          "resource-allocation"
+        ]
+      },
+      "characteristicVectors": {
+        "functional": [
+          "executable",
+          "validatable",
+          "optimizable",
+          "monitorable"
+        ],
+        "quality": [
+          "reliable",
+          "efficient",
+          "maintainable",
+          "scalable"
+        ],
+        "operational": [
+          "monitorable",
+          "debuggable",
+          "recoverable",
+          "upgradeable"
+        ],
+        "architectural": [
+          "modular",
+          "composable",
+          "extensible",
+          "interoperable"
+        ]
+      },
+      "implementationPatterns": {
+        "design": [
+          "factory",
+          "adapter",
+          "observer",
+          "strategy",
+          "command"
+        ],
+        "architectural": [
+          "microservices",
+          "event-driven",
+          "pipeline",
+          "layered",
+          "hexagonal"
+        ],
+        "integration": [
+          "api-gateway",
+          "message-queue",
+          "event-bus",
+          "service-mesh",
+          "circuit-breaker"
+        ],
+        "data": [
+          "repository",
+          "unit-of-work",
+          "cqrs",
+          "event-sourcing",
+          "saga"
+        ]
+      },
+      "governanceMetadata": {
+        "compliance": [
+          "JJNHM-v3.0.0",
+          "JSON-LD-1.1",
+          "RDF-1.1",
+          "SPARQL-1.1"
+        ],
+        "quality": [
+          "ISO-25010",
+          "NIST-CSF",
+          "OWASP-ASVS",
+          "W3C-WCAG"
+        ],
+        "security": [
+          "RBAC",
+          "ABAC",
+          "OAuth2",
+          "JWT",
+          "TLS-1.3"
+        ],
+        "monitoring": [
+          "OpenTelemetry",
+          "Prometheus",
+          "Grafana",
+          "ELK-Stack"
+        ]
+      },
+      "qualityGates": {
+        "performance": [
+          "latency≤200ms",
+          "throughput≥1K/s",
+          "cpu≤80%",
+          "memory≤2GB"
+        ],
+        "reliability": [
+          "uptime≥99.9%",
+          "mtbf≥720h",
+          "mttr≤15min",
+          "error-rate≤0.1%"
+        ],
+        "security": [
+          "vulnerability-scan=pass",
+          "penetration-test=pass",
+          "compliance-audit=pass"
+        ],
+        "maintainability": [
+          "code-coverage≥80%",
+          "complexity≤10",
+          "duplication≤5%",
+          "documentation≥90%"
+        ]
+      },
+      "orchestrationDirectives": {
+        "execution": [
+          "parallel-processing",
+          "load-balancing",
+          "auto-scaling",
+          "circuit-breaking"
+        ],
+        "coordination": [
+          "event-choreography",
+          "saga-orchestration",
+          "workflow-engine",
+          "state-machine"
+        ],
+        "monitoring": [
+          "health-checks",
+          "metrics-collection",
+          "alerting",
+          "tracing"
+        ],
+        "recovery": [
+          "backup-restore",
+          "disaster-recovery",
+          "failover",
+          "rollback"
+        ]
+      },
+      "validationRules": {
+        "structural": [
+          "schema-validation",
+          "type-checking",
+          "constraint-validation",
+          "referential-integrity"
+        ],
+        "semantic": [
+          "business-rules",
+          "domain-constraints",
+          "workflow-validation",
+          "state-consistency"
+        ],
+        "quality": [
+          "performance-benchmarks",
+          "security-scans",
+          "accessibility-checks",
+          "usability-tests"
+        ],
+        "compliance": [
+          "regulatory-compliance",
+          "standard-conformance",
+          "policy-enforcement",
+          "audit-requirements"
+        ]
+      }
+    },
+    {
+      "@id": "uiux:animation-frame",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Animation Frame",
+      "skos:definition": "Temporal frame for animation sequences with timing control",
+      "uiux:category": "animation",
+      "uiux:properties": ["duration", "easing", "keyframes"]
+    },
+    {
+      "@id": "uiux:button",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Button",
+      "skos:definition": "Interactive element for user actions and form submission",
+      "uiux:category": "control",
+      "uiux:properties": ["onClick", "disabled", "variant", "size"]
+    },
+    {
+      "@id": "uiux:comp-structure",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Component Structure",
+      "skos:definition": "Hierarchical organization pattern for component composition",
+      "uiux:category": "layout",
+      "uiux:properties": ["children", "props", "state"]
+    },
+    {
+      "@id": "uiux:container",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Container",
+      "skos:definition": "Layout wrapper for content organization and spacing",
+      "uiux:category": "layout",
+      "uiux:properties": ["maxWidth", "padding", "margin"]
+    },
+    {
+      "@id": "uiux:control",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Control",
+      "skos:definition": "Interactive UI element for user input and manipulation",
+      "uiux:category": "control",
+      "uiux:properties": ["value", "onChange", "validation"]
+    },
+    {
+      "@id": "uiux:design-token",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Design Token",
+      "skos:definition": "Atomic design value for consistent visual properties",
+      "uiux:category": "token",
+      "uiux:properties": ["value", "type", "category"]
+    },
+    {
+      "@id": "uiux:div-element",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Div Element",
+      "skos:definition": "Generic container element for content grouping",
+      "uiux:category": "layout",
+      "uiux:properties": ["className", "style", "children"]
+    },
+    {
+      "@id": "uiux:element",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Element",
+      "skos:definition": "Base UI element with fundamental properties",
+      "uiux:category": "base",
+      "uiux:properties": ["id", "className", "attributes"]
+    },
+    {
+      "@id": "uiux:floating-control",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Floating Control",
+      "skos:definition": "Overlay control element positioned above content",
+      "uiux:category": "overlay",
+      "uiux:properties": ["position", "zIndex", "trigger"]
+    },
+    {
+      "@id": "uiux:h1-element",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "H1 Element",
+      "skos:definition": "Primary heading element for content hierarchy",
+      "uiux:category": "typography",
+      "uiux:properties": ["text", "level", "styling"]
+    },
+    {
+      "@id": "uiux:header",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Header",
+      "skos:definition": "Top section element for navigation and branding",
+      "uiux:category": "layout",
+      "uiux:properties": ["navigation", "logo", "actions"]
+    },
+    {
+      "@id": "uiux:main-header",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Main Header",
+      "skos:definition": "Primary application header with global navigation",
+      "uiux:category": "layout",
+      "uiux:properties": ["brand", "menu", "user-actions"]
+    },
+    {
+      "@id": "uiux:p-element",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Paragraph Element",
+      "skos:definition": "Text block element for content presentation",
+      "uiux:category": "typography",
+      "uiux:properties": ["text", "formatting", "spacing"]
+    },
+    {
+      "@id": "uiux:page-header",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Page Header",
+      "skos:definition": "Page-specific header with title and actions",
+      "uiux:category": "layout",
+      "uiux:properties": ["title", "breadcrumb", "actions"]
+    },
+    {
+      "@id": "uiux:panel",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Panel",
+      "skos:definition": "Content area with defined boundaries and styling",
+      "uiux:category": "layout",
+      "uiux:properties": ["content", "border", "background"]
+    },
+    {
+      "@id": "uiux:progress-display",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Progress Display",
+      "skos:definition": "Visual indicator for task completion status",
+      "uiux:category": "feedback",
+      "uiux:properties": ["value", "max", "format"]
+    },
+    {
+      "@id": "uiux:progress-indicator",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Progress Indicator",
+      "skos:definition": "Loading state indicator for async operations",
+      "uiux:category": "feedback",
+      "uiux:properties": ["type", "size", "color"]
+    },
+    {
+      "@id": "uiux:render-cycle",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Render Cycle",
+      "skos:definition": "Component lifecycle phase for DOM updates",
+      "uiux:category": "lifecycle",
+      "uiux:properties": ["phase", "dependencies", "effects"]
+    },
+    {
+      "@id": "uiux:section",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Section",
+      "skos:definition": "Content grouping element with semantic meaning",
+      "uiux:category": "layout",
+      "uiux:properties": ["heading", "content", "role"]
+    },
+    {
+      "@id": "uiux:sidebar",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Sidebar",
+      "skos:definition": "Side navigation or content panel",
+      "uiux:category": "navigation",
+      "uiux:properties": ["position", "collapsible", "content"]
+    },
+    {
+      "@id": "uiux:subtitle",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Subtitle",
+      "skos:definition": "Secondary heading for content hierarchy",
+      "uiux:category": "typography",
+      "uiux:properties": ["text", "level", "relation"]
+    },
+    {
+      "@id": "uiux:theme",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Theme",
+      "skos:definition": "Design system configuration for visual consistency",
+      "uiux:category": "system",
+      "uiux:properties": ["colors", "typography", "spacing"]
+    },
+    {
+      "@id": "uiux:title-section",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Title Section",
+      "skos:definition": "Dedicated area for page or section titles",
+      "uiux:category": "layout",
+      "uiux:properties": ["title", "subtitle", "actions"]
+    },
+    {
+      "@id": "uiux:toggle-button",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Toggle Button",
+      "skos:definition": "Binary state control for on/off functionality",
+      "uiux:category": "control",
+      "uiux:properties": ["checked", "onChange", "label"]
+    },
+    {
+      "@id": "uiux:ui-element",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "UI Element",
+      "skos:definition": "Generic user interface component base class",
+      "uiux:category": "base",
+      "uiux:properties": ["type", "props", "state"]
+    },
+    {
+      "@id": "uiux:width",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Width",
+      "skos:definition": "Dimensional property for element sizing",
+      "uiux:category": "dimension",
+      "uiux:properties": ["value", "unit", "responsive"]
+    },
+    {
+      "@id": "uiux:wrapper-div",
+      "@type": "uiux:UIElement",
+      "skos:prefLabel": "Wrapper Div",
+      "skos:definition": "Container element for layout and styling purposes",
+      "uiux:category": "layout",
+      "uiux:properties": ["children", "className", "style"]
     }
-  ]
+  ],
+  "jjnhm": {
+    "version": "3.0.0",
+    "layer": "JSONLD",
+    "complexity": "C1-MVP-Production",
+    "governance": "Core-sch-Governance",
+    "kpiTargets": {
+      "token-density": "≥7.0-concepts/token",
+      "semantic-clarity": "≥97%",
+      "parse-time": "≤0.5ms",
+      "val-success": "≥99%",
+      "sch-compliance": "100%"
+    }
+  },
+  "activeVerbs": [
+    "execute",
+    "validate",
+    "optimize",
+    "monitor",
+    "coordinate",
+    "transform",
+    "integrate",
+    "configure",
+    "deploy",
+    "maintain"
+  ],
+  "semanticCluster": {
+    "cluster": "general-processing",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "system-coordination",
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ]
+  },
+  "kpiTargets": {
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ],
+    "composite": "enterprise-readiness≥95%"
+  },
+  "responsibilityMatrix": {
+    "primary": "system-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience"
+    ],
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting"
+    ],
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation"
+    ]
+  },
+  "characteristicVectors": {
+    "functional": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ],
+    "quality": [
+      "reliable",
+      "efficient",
+      "maintainable",
+      "scalable"
+    ],
+    "operational": [
+      "monitorable",
+      "debuggable",
+      "recoverable",
+      "upgradeable"
+    ],
+    "architectural": [
+      "modular",
+      "composable",
+      "extensible",
+      "interoperable"
+    ]
+  },
+  "implementationPatterns": {
+    "design": [
+      "factory",
+      "adapter",
+      "observer",
+      "strategy",
+      "command"
+    ],
+    "architectural": [
+      "microservices",
+      "event-driven",
+      "pipeline",
+      "layered",
+      "hexagonal"
+    ],
+    "integration": [
+      "api-gateway",
+      "message-queue",
+      "event-bus",
+      "service-mesh",
+      "circuit-breaker"
+    ],
+    "data": [
+      "repository",
+      "unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga"
+    ]
+  },
+  "governanceMetadata": {
+    "compliance": [
+      "JJNHM-v3.0.0",
+      "JSON-LD-1.1",
+      "RDF-1.1",
+      "SPARQL-1.1"
+    ],
+    "quality": [
+      "ISO-25010",
+      "NIST-CSF",
+      "OWASP-ASVS",
+      "W3C-WCAG"
+    ],
+    "security": [
+      "RBAC",
+      "ABAC",
+      "OAuth2",
+      "JWT",
+      "TLS-1.3"
+    ],
+    "monitoring": [
+      "OpenTelemetry",
+      "Prometheus",
+      "Grafana",
+      "ELK-Stack"
+    ]
+  },
+  "qualityGates": {
+    "performance": [
+      "latency≤200ms",
+      "throughput≥1K/s",
+      "cpu≤80%",
+      "memory≤2GB"
+    ],
+    "reliability": [
+      "uptime≥99.9%",
+      "mtbf≥720h",
+      "mttr≤15min",
+      "error-rate≤0.1%"
+    ],
+    "security": [
+      "vulnerability-scan=pass",
+      "penetration-test=pass",
+      "compliance-audit=pass"
+    ],
+    "maintainability": [
+      "code-coverage≥80%",
+      "complexity≤10",
+      "duplication≤5%",
+      "documentation≥90%"
+    ]
+  },
+  "orchestrationDirectives": {
+    "execution": [
+      "parallel-processing",
+      "load-balancing",
+      "auto-scaling",
+      "circuit-breaking"
+    ],
+    "coordination": [
+      "event-choreography",
+      "saga-orchestration",
+      "workflow-engine",
+      "state-machine"
+    ],
+    "monitoring": [
+      "health-checks",
+      "metrics-collection",
+      "alerting",
+      "tracing"
+    ],
+    "recovery": [
+      "backup-restore",
+      "disaster-recovery",
+      "failover",
+      "rollback"
+    ]
+  },
+  "validationRules": {
+    "structural": [
+      "schema-validation",
+      "type-checking",
+      "constraint-validation",
+      "referential-integrity"
+    ],
+    "semantic": [
+      "business-rules",
+      "domain-constraints",
+      "workflow-validation",
+      "state-consistency"
+    ],
+    "quality": [
+      "performance-benchmarks",
+      "security-scans",
+      "accessibility-checks",
+      "usability-tests"
+    ],
+    "compliance": [
+      "regulatory-compliance",
+      "standard-conformance",
+      "policy-enforcement",
+      "audit-requirements"
+    ]
+  }
 }

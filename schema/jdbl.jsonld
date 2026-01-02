@@ -2,10 +2,6 @@
   "@context": [
     "https://huijoohwee.github.io/schema/base.jsonld",
     {
-      "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld#",
-      "prov": "http://www.w3.org/ns/prov#",
-      "time": "http://www.w3.org/2006/time#",
-      
       "CanvasSyncDirective": "jdbl:CanvasSyncDirective",
       "ConflictResolutionRule": "jdbl:ConflictResolutionRule",
       "Constraint": "jdbl:Constraint",
@@ -20,333 +16,198 @@
       "TimeoutConstraint": "jdbl:TimeoutConstraint",
       "ValidationRule": "jdbl:ValidationRule",
       "WorkflowMetadata": "jdbl:WorkflowMetadata",
-      
-      "activeVerbs": { "@id": "jdbl:activeVerbs", "@container": "@list" },
-      "canvasToCodeSync": { "@id": "jdbl:canvasToCodeSync", "@type": "@id" },
-      "codeToCanvasSync": { "@id": "jdbl:codeToCanvasSync", "@type": "@id" },
-      "conflictStrategy": { "@id": "jdbl:conflictStrategy", "@type": "xsd:string" },
+      "activeVerbs": {
+        "@container": "@list",
+        "@id": "jdbl:activeVerbs"
+      },
+      "canvasToCodeSync": {
+        "@id": "jdbl:canvasToCodeSync",
+        "@type": "@id"
+      },
+      "codeToCanvasSync": {
+        "@id": "jdbl:codeToCanvasSync",
+        "@type": "@id"
+      },
+      "conflictStrategy": {
+        "@id": "jdbl:conflictStrategy",
+        "@type": "xsd:string"
+      },
       "docs": "rdfs:seeAlso",
-      "functionCalls": { "@id": "jdbl:functionCalls", "@container": "@list" },
-      "hasConstraint": { "@id": "jdbl:hasConstraint", "@type": "@id", "@container": "@set" },
-      "hasDirective": { "@id": "jdbl:hasDirective", "@type": "@id", "@container": "@set" },
-      "hasPostCondition": { "@id": "jdbl:hasPostCondition", "@type": "@id", "@container": "@set" },
-      "hasPreCondition": { "@id": "jdbl:hasPreCondition", "@type": "@id", "@container": "@set" },
-      "kpiTargets": { "@id": "jdbl:kpiTargets", "@container": "@index" },
-      "maxRetries": { "@id": "jdbl:maxRetries", "@type": "xsd:nonNegativeInteger" },
-      "owner": { "@id": "prov:wasAttributedTo", "@type": "@id" },
-      "priority": { "@id": "jdbl:priority", "@type": "xsd:string" },
-      "syncDirection": { "@id": "jdbl:syncDirection", "@type": "xsd:string" },
-      "timeout": { "@id": "time:hasDuration", "@type": "xsd:duration" },
-      "traceId": { "@id": "jdbl:traceId", "@type": "xsd:string" }
+      "functionCalls": {
+        "@container": "@list",
+        "@id": "jdbl:functionCalls"
+      },
+      "hasConstraint": {
+        "@container": "@set",
+        "@id": "jdbl:hasConstraint",
+        "@type": "@id"
+      },
+      "hasDirective": {
+        "@container": "@set",
+        "@id": "jdbl:hasDirective",
+        "@type": "@id"
+      },
+      "hasPostCondition": {
+        "@container": "@set",
+        "@id": "jdbl:hasPostCondition",
+        "@type": "@id"
+      },
+      "hasPreCondition": {
+        "@container": "@set",
+        "@id": "jdbl:hasPreCondition",
+        "@type": "@id"
+      },
+      "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld#",
+      "kpiTargets": {
+        "@container": "@index",
+        "@id": "jdbl:kpiTargets"
+      },
+      "maxRetries": {
+        "@id": "jdbl:maxRetries",
+        "@type": "xsd:nonNegativeInteger"
+      },
+      "owner": {
+        "@id": "prov:wasAttributedTo",
+        "@type": "@id"
+      },
+      "priority": {
+        "@id": "jdbl:priority",
+        "@type": "xsd:string"
+      },
+      "prov": "http://www.w3.org/ns/prov#",
+      "syncDirection": {
+        "@id": "jdbl:syncDirection",
+        "@type": "xsd:string"
+      },
+      "time": "http://www.w3.org/2006/time#",
+      "timeout": {
+        "@id": "time:hasDuration",
+        "@type": "xsd:duration"
+      },
+      "traceId": {
+        "@id": "jdbl:traceId",
+        "@type": "xsd:string"
+      }
     }
   ],
-
-  "@id": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-  "@type": ["owl:Ontology", "schema:Dataset"],
-
-  "meta": {
-    "@type": "schema:Dataset",
-    "title": "JDBL Canvas-Code Directive Block Language Vocabulary",
-    "description": "JSON-based Directive Block Language vocabulary for canvas-code synchronization directives, bidirectional workflows, and WBSTCNVS orchestration",
-    "creator": "https://huijoohwee.github.io",
-    "license": "https://opensource.org/licenses/MIT",
-    "conformsTo": [
-      "https://www.w3.org/TR/rdf11-concepts/",
-      "https://www.w3.org/TR/owl2-overview/",
-      "https://www.w3.org/TR/prov-o/",
-      "https://www.w3.org/2006/time",
-      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
-    ],
-    "versionInfo": "3.0.0",
-    "created": "2024-01-01T00:00:00Z",
-    "modified": "2025-10-23T02:00:00Z",
-    "semVer": "20251023-v3.0.0",
-    "maintainer": "https://huijoohwee.github.io",
-    "jjnhm": {
-          "v": "3.0.0",
-          "lyr": "JSONLD",
-          "cmplx": "C1-MVP-Prod",
-          "gov": "Core-SG",
-          "kpi": {
-                "tok-dens": "≥7.0-c/t",
-                "sem-clar": "≥97%",
-                "parse-t": "≤0.5ms",
-                "val-succ": "≥99%",
-                "sch-comp": "100%"
-          }
-    },
-    "layer": "directive-metadata",
-    "responsibilities": [
-      "canvas-code-sync-directives",
-      "bidirectional-workflow-orchestration",
-      "conflict-resolution-rules",
-      "conversion-validation-gates",
-      "multi-agent-canvas-orchestration",
-      "sync-operation-tracing"
-    ]
-  },
-
   "@graph": [
-    {
-      "@id": "jdbl:Directive",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Directive",
-      "rdfs:comment": "Base class for execution directives and instruction sets"
-    },
-    {
-      "@id": "jdbl:ExecutionDirective",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Directive",
-      "rdfs:label": "Execution Directive",
-      "rdfs:comment": "Directive specifying how to execute a task or operation; recommended to include activeVerbs and traceId"
-    },
-    {
-      "@id": "jdbl:ValidationRule",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Directive",
-      "rdfs:label": "Validation Rule",
-      "rdfs:comment": "Rule that defines validation constraints and conditions"
-    },
-    {
-      "@id": "jdbl:QualityGate",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Directive",
-      "rdfs:label": "Quality Gate",
-      "rdfs:comment": "Threshold or checkpoint that must be met for quality assurance"
-    },
     {
       "@id": "jdbl:CanvasSyncDirective",
       "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:ExecutionDirective",
+      "rdfs:comment": "Directive for canvas-code synchronization operations",
       "rdfs:label": "Canvas Sync Directive",
-      "rdfs:comment": "Directive for canvas-code synchronization operations"
+      "rdfs:subClassOf": "jdbl:ExecutionDirective"
     },
     {
       "@id": "jdbl:ConflictResolutionRule",
       "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:ValidationRule",
+      "rdfs:comment": "Rule for resolving synchronization conflicts between canvas and code",
       "rdfs:label": "Conflict Resolution Rule",
-      "rdfs:comment": "Rule for resolving synchronization conflicts between canvas and code"
-    },
-    {
-      "@id": "jdbl:ConversionGate",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:QualityGate",
-      "rdfs:label": "Conversion Gate",
-      "rdfs:comment": "Quality gate for canvas-code conversion validation"
-    },
-    {
-      "@id": "jdbl:SyncValidationRule",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:ValidationRule",
-      "rdfs:label": "Sync Validation Rule",
-      "rdfs:comment": "Validation rule for bidirectional synchronization operations"
-    },
-    {
-      "@id": "jdbl:WorkflowMetadata",
-      "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Directive",
-      "rdfs:label": "Workflow Metadata",
-      "rdfs:comment": "Metadata that describes workflow configuration, ownership and traceability"
+      "rdfs:subClassOf": "jdbl:ValidationRule"
     },
     {
       "@id": "jdbl:Constraint",
       "@type": "rdfs:Class",
-      "rdfs:label": "Constraint",
-      "rdfs:comment": "Limitation or restriction applied to execution"
+      "rdfs:comment": "Limitation or restriction applied to execution",
+      "rdfs:label": "Constraint"
     },
     {
-      "@id": "jdbl:TimeoutConstraint",
+      "@id": "jdbl:ConversionGate",
       "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Constraint",
-      "rdfs:label": "Timeout Constraint",
-      "rdfs:comment": "Time-based limitation for execution duration"
+      "rdfs:comment": "Quality gate for canvas-code conversion validation",
+      "rdfs:label": "Conversion Gate",
+      "rdfs:subClassOf": "jdbl:QualityGate"
     },
     {
-      "@id": "jdbl:RetryConstraint",
+      "@id": "jdbl:Directive",
       "@type": "rdfs:Class",
-      "rdfs:subClassOf": "jdbl:Constraint",
-      "rdfs:label": "Retry Constraint",
-      "rdfs:comment": "Limitation on number of retry attempts"
+      "rdfs:comment": "Base class for execution directives and instruction sets",
+      "rdfs:label": "Directive"
     },
     {
-      "@id": "jdbl:PreCondition",
+      "@id": "jdbl:ExecutionDirective",
       "@type": "rdfs:Class",
-      "rdfs:label": "Pre-condition",
-      "rdfs:comment": "Condition that must be satisfied before execution"
+      "rdfs:comment": "Directive specifying how to execute a task or operation; recommended to include activeVerbs and traceId",
+      "rdfs:label": "Execution Directive",
+      "rdfs:subClassOf": "jdbl:Directive"
     },
     {
       "@id": "jdbl:PostCondition",
       "@type": "rdfs:Class",
-      "rdfs:label": "Post-condition",
-      "rdfs:comment": "Condition that must be satisfied after execution"
+      "rdfs:comment": "Condition that must be satisfied after execution",
+      "rdfs:label": "Post-condition"
+    },
+    {
+      "@id": "jdbl:PreCondition",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Condition that must be satisfied before execution",
+      "rdfs:label": "Pre-condition"
+    },
+    {
+      "@id": "jdbl:QualityGate",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Threshold or checkpoint that must be met for quality assurance",
+      "rdfs:label": "Quality Gate",
+      "rdfs:subClassOf": "jdbl:Directive"
+    },
+    {
+      "@id": "jdbl:RetryConstraint",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Limitation on number of retry attempts",
+      "rdfs:label": "Retry Constraint",
+      "rdfs:subClassOf": "jdbl:Constraint"
+    },
+    {
+      "@id": "jdbl:SyncValidationRule",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Validation rule for bidirectional synchronization operations",
+      "rdfs:label": "Sync Validation Rule",
+      "rdfs:subClassOf": "jdbl:ValidationRule"
+    },
+    {
+      "@id": "jdbl:TimeoutConstraint",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Time-based limitation for execution duration",
+      "rdfs:label": "Timeout Constraint",
+      "rdfs:subClassOf": "jdbl:Constraint"
+    },
+    {
+      "@id": "jdbl:ValidationRule",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Rule that defines validation constraints and conditions",
+      "rdfs:label": "Validation Rule",
+      "rdfs:subClassOf": "jdbl:Directive"
+    },
+    {
+      "@id": "jdbl:WorkflowMetadata",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Metadata that describes workflow configuration, ownership and traceability",
+      "rdfs:label": "Workflow Metadata",
+      "rdfs:subClassOf": "jdbl:Directive"
     }
   ],
-
-  "properties": [
-    {
-      "@id": "jdbl:hasDirective",
-      "@type": "rdf:Property",
-      "rdfs:label": "has directive",
-      "rdfs:comment": "Associates an entity with a directive",
-      "rdfs:domain": "rdfs:Resource",
-      "rdfs:range": "jdbl:Directive"
-    },
-    {
-      "@id": "jdbl:hasConstraint",
-      "@type": "rdf:Property",
-      "rdfs:label": "has constraint",
-      "rdfs:comment": "Associates a directive with a constraint",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "jdbl:Constraint"
-    },
-    {
-      "@id": "jdbl:hasPreCondition",
-      "@type": "rdf:Property",
-      "rdfs:label": "has pre-condition",
-      "rdfs:comment": "Associates a directive with a pre-condition",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "jdbl:PreCondition"
-    },
-    {
-      "@id": "jdbl:hasPostCondition",
-      "@type": "rdf:Property",
-      "rdfs:label": "has post-condition",
-      "rdfs:comment": "Associates a directive with a post-condition",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "jdbl:PostCondition"
-    },
-    {
-      "@id": "jdbl:timeout",
-      "@type": "rdf:Property",
-      "rdfs:label": "timeout",
-      "rdfs:comment": "Specifies timeout duration for execution",
-      "rdfs:domain": "jdbl:TimeoutConstraint",
-      "rdfs:range": "xsd:duration"
-    },
-    {
-      "@id": "jdbl:maxRetries",
-      "@type": "rdf:Property",
-      "rdfs:label": "max retries",
-      "rdfs:comment": "Specifies maximum number of retry attempts",
-      "rdfs:domain": "jdbl:RetryConstraint",
-      "rdfs:range": "xsd:nonNegativeInteger"
-    },
-    {
-      "@id": "jdbl:priority",
-      "@type": "rdf:Property",
-      "rdfs:label": "priority",
-      "rdfs:comment": "Specifies execution priority level",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:owner",
-      "@type": "rdf:Property",
-      "rdfs:label": "owner",
-      "rdfs:comment": "Specifies the owner or responsible agent",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "@id"
-    },
-    {
-      "@id": "jdbl:traceId",
-      "@type": "rdf:Property",
-      "rdfs:label": "trace ID",
-      "rdfs:comment": "Unique identifier for tracing execution",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:activeVerbs",
-      "@type": "rdf:Property",
-      "rdfs:label": "active verbs",
-      "rdfs:comment": "List of active verbs used for function-calling semantics",
-      "rdfs:domain": "jdbl:ExecutionDirective",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:functionCalls",
-      "@type": "rdf:Property",
-      "rdfs:label": "function calls",
-      "rdfs:comment": "Canonical function-call identifiers referenced by directives",
-      "rdfs:domain": "jdbl:ExecutionDirective",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:canvasToCodeSync",
-      "@type": "rdf:Property",
-      "rdfs:label": "canvas to code sync",
-      "rdfs:comment": "Reference to canvas-to-code synchronization operation",
-      "rdfs:domain": "jdbl:CanvasSyncDirective",
-      "rdfs:range": "@id"
-    },
-    {
-      "@id": "jdbl:codeToCanvasSync",
-      "@type": "rdf:Property",
-      "rdfs:label": "code to canvas sync",
-      "rdfs:comment": "Reference to code-to-canvas synchronization operation",
-      "rdfs:domain": "jdbl:CanvasSyncDirective",
-      "rdfs:range": "@id"
-    },
-    {
-      "@id": "jdbl:conflictStrategy",
-      "@type": "rdf:Property",
-      "rdfs:label": "conflict strategy",
-      "rdfs:comment": "Strategy for resolving synchronization conflicts",
-      "rdfs:domain": "jdbl:ConflictResolutionRule",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:kpiTargets",
-      "@type": "rdf:Property",
-      "rdfs:label": "kpi targets",
-      "rdfs:comment": "KPIs associated with directive execution (time-to-market, token-density, semantic-clarity)",
-      "rdfs:domain": "jdbl:WorkflowMetadata",
-      "rdfs:range": "rdfs:Resource"
-    },
-    {
-      "@id": "jdbl:syncDirection",
-      "@type": "rdf:Property",
-      "rdfs:label": "sync direction",
-      "rdfs:comment": "Direction of synchronization operation",
-      "rdfs:domain": "jdbl:CanvasSyncDirective",
-      "rdfs:range": "xsd:string"
-    },
-    {
-      "@id": "jdbl:docs",
-      "@type": "rdf:Property",
-      "rdfs:label": "docs",
-      "rdfs:comment": "Documentation or reference URL for directives",
-      "rdfs:domain": "jdbl:Directive",
-      "rdfs:range": "xsd:anyURI"
-    }
+  "@id": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+  "@type": [
+    "owl:Ontology",
+    "schema:Dataset"
   ],
-
-  "validatorHints": [
-    {
-      "@type": "core:Concept",
-      "label": "jdbl-syntax",
-      "description": "Validate JSON syntax, schema conformance, presence of required fields (activeVerbs, traceId for ExecutionDirective), and type resolution against JSONLD context",
-      "recommendedTools": ["json-schema", "jdbl-active-verb-linter", "jsonld.js"]
-    },
-    {
-      "@type": "core:Concept",
-      "label": "jdbl-contracts",
-      "description": "Ensure directives reference JSONLD types (TypeContract) and that NQDS payloads reference directive traceIds (DirectiveContract)",
-      "recommendedTools": ["type-reference-checker", "directive-trace-validator", "nqds-journey-analyzer"]
-    },
-    {
-      "@type": "core:Concept",
-      "label": "jdbl-kpis",
-      "description": "Validate KPI targets (token-density, time-to-market) and ensure directives include kpiTargets when applicable",
-      "recommendedTools": ["token-density-meter", "mvp-readiness-checker"]
-    }
-  ],
-
   "examples": [
     {
-      "@type": "jdbl:ExecutionDirective",
       "@id": "https://huijoohwee.github.io/schema/examples/jdbl/implement-feature",
+      "@type": "jdbl:ExecutionDirective",
+      "jdbl:activeVerbs": [
+        "initialize",
+        "generate",
+        "validate",
+        "deploy"
+      ],
+      "jdbl:docs": "https://huijoohwee.github.io/docs/jdbl/implement-feature.md",
+      "jdbl:functionCalls": [
+        "initialize-project-structure",
+        "generate-core-components",
+        "validate-integration-points",
+        "deploy-to-staging"
+      ],
       "jdbl:hasConstraint": [
         {
           "@type": "jdbl:TimeoutConstraint",
@@ -357,25 +218,232 @@
           "jdbl:maxRetries": 3
         }
       ],
-      "jdbl:hasPreCondition": [
-        "https://huijoohwee.github.io/schema/examples/jdbl/conditions/dependencies-resolved",
-        "https://huijoohwee.github.io/schema/examples/jdbl/conditions/resources-available"
-      ],
       "jdbl:hasPostCondition": [
         "https://huijoohwee.github.io/schema/examples/jdbl/outcomes/artifacts-generated",
         "https://huijoohwee.github.io/schema/examples/jdbl/outcomes/tests-executed"
       ],
-      "jdbl:priority": "high",
-      "jdbl:owner": "https://huijoohwee.github.io/agents/BackendDevAgent",
-      "jdbl:traceId": "task-12345",
-      "jdbl:activeVerbs": ["initialize", "generate", "validate", "deploy"],
-      "jdbl:functionCalls": ["initialize-project-structure", "generate-core-components", "validate-integration-points", "deploy-to-staging"],
+      "jdbl:hasPreCondition": [
+        "https://huijoohwee.github.io/schema/examples/jdbl/conditions/dependencies-resolved",
+        "https://huijoohwee.github.io/schema/examples/jdbl/conditions/resources-available"
+      ],
       "jdbl:kpiTargets": {
+        "semantic-clarity": ">90%",
         "time-to-market": "PT168H",
-        "token-density": ">=5.1 concepts/token",
-        "semantic-clarity": ">90%"
+        "token-density": ">=5.1 concepts/token"
       },
-      "jdbl:docs": "https://huijoohwee.github.io/docs/jdbl/implement-feature.md"
+      "jdbl:owner": "https://huijoohwee.github.io/agents/BackendDevAgent",
+      "jdbl:priority": "high",
+      "jdbl:traceId": "task-12345"
+    }
+  ],
+  "meta": {
+    "@type": "schema:Dataset",
+    "conformsTo": [
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://www.w3.org/TR/owl2-overview/",
+      "https://www.w3.org/TR/prov-o/",
+      "https://www.w3.org/2006/time",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "created": "2024-01-01T00:00:00Z",
+    "creator": "https://huijoohwee.github.io",
+    "description": "JSON-based Directive Block Language vocabulary for canvas-code synchronization directives, bidirectional workflows, and WBSTCNVS orchestration",
+    "jjnhm": {
+      "cmplx": "C1-MVP-Prod",
+      "gov": "Core-SG",
+      "kpi": {
+        "parse-t": "≤0.5ms",
+        "sch-comp": "100%",
+        "sem-clar": "≥97%",
+        "tok-dens": "≥7.0-c/t",
+        "val-succ": "≥99%"
+      },
+      "lyr": "JSONLD",
+      "v": "3.0.0"
+    },
+    "layer": "directive-metadata",
+    "license": "https://opensource.org/licenses/MIT",
+    "maintainer": "https://huijoohwee.github.io",
+    "modified": "2025-10-23T02:00:00Z",
+    "responsibilities": [
+      "canvas-code-sync-directives",
+      "bidirectional-workflow-orchestration",
+      "conflict-resolution-rules",
+      "conversion-validation-gates",
+      "multi-agent-canvas-orchestration",
+      "sync-operation-tracing"
+    ],
+    "semVer": "20251023-v3.0.0",
+    "title": "JDBL Canvas-Code Directive Block Language Vocabulary",
+    "versionInfo": "3.0.0"
+  },
+  "properties": [
+    {
+      "@id": "jdbl:activeVerbs",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of active verbs used for function-calling semantics",
+      "rdfs:domain": "jdbl:ExecutionDirective",
+      "rdfs:label": "active verbs",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:canvasToCodeSync",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Reference to canvas-to-code synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:label": "canvas to code sync",
+      "rdfs:range": "@id"
+    },
+    {
+      "@id": "jdbl:codeToCanvasSync",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Reference to code-to-canvas synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:label": "code to canvas sync",
+      "rdfs:range": "@id"
+    },
+    {
+      "@id": "jdbl:conflictStrategy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Strategy for resolving synchronization conflicts",
+      "rdfs:domain": "jdbl:ConflictResolutionRule",
+      "rdfs:label": "conflict strategy",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:docs",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Documentation or reference URL for directives",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "docs",
+      "rdfs:range": "xsd:anyURI"
+    },
+    {
+      "@id": "jdbl:functionCalls",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Canonical function-call identifiers referenced by directives",
+      "rdfs:domain": "jdbl:ExecutionDirective",
+      "rdfs:label": "function calls",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:hasConstraint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Associates a directive with a constraint",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "has constraint",
+      "rdfs:range": "jdbl:Constraint"
+    },
+    {
+      "@id": "jdbl:hasDirective",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Associates an entity with a directive",
+      "rdfs:domain": "rdfs:Resource",
+      "rdfs:label": "has directive",
+      "rdfs:range": "jdbl:Directive"
+    },
+    {
+      "@id": "jdbl:hasPostCondition",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Associates a directive with a post-condition",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "has post-condition",
+      "rdfs:range": "jdbl:PostCondition"
+    },
+    {
+      "@id": "jdbl:hasPreCondition",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Associates a directive with a pre-condition",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "has pre-condition",
+      "rdfs:range": "jdbl:PreCondition"
+    },
+    {
+      "@id": "jdbl:kpiTargets",
+      "@type": "rdf:Property",
+      "rdfs:comment": "KPIs associated with directive execution (time-to-market, token-density, semantic-clarity)",
+      "rdfs:domain": "jdbl:WorkflowMetadata",
+      "rdfs:label": "kpi targets",
+      "rdfs:range": "rdfs:Resource"
+    },
+    {
+      "@id": "jdbl:maxRetries",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies maximum number of retry attempts",
+      "rdfs:domain": "jdbl:RetryConstraint",
+      "rdfs:label": "max retries",
+      "rdfs:range": "xsd:nonNegativeInteger"
+    },
+    {
+      "@id": "jdbl:owner",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies the owner or responsible agent",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "owner",
+      "rdfs:range": "@id"
+    },
+    {
+      "@id": "jdbl:priority",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies execution priority level",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "priority",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:syncDirection",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Direction of synchronization operation",
+      "rdfs:domain": "jdbl:CanvasSyncDirective",
+      "rdfs:label": "sync direction",
+      "rdfs:range": "xsd:string"
+    },
+    {
+      "@id": "jdbl:timeout",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies timeout duration for execution",
+      "rdfs:domain": "jdbl:TimeoutConstraint",
+      "rdfs:label": "timeout",
+      "rdfs:range": "xsd:duration"
+    },
+    {
+      "@id": "jdbl:traceId",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique identifier for tracing execution",
+      "rdfs:domain": "jdbl:Directive",
+      "rdfs:label": "trace ID",
+      "rdfs:range": "xsd:string"
+    }
+  ],
+  "validatorHints": [
+    {
+      "@type": "core:Concept",
+      "description": "Validate JSON syntax, schema conformance, presence of required fields (activeVerbs, traceId for ExecutionDirective), and type resolution against JSONLD context",
+      "label": "jdbl-syntax",
+      "recommendedTools": [
+        "json-schema",
+        "jdbl-active-verb-linter",
+        "jsonld.js"
+      ]
+    },
+    {
+      "@type": "core:Concept",
+      "description": "Ensure directives reference JSONLD types (TypeContract) and that NQDS payloads reference directive traceIds (DirectiveContract)",
+      "label": "jdbl-contracts",
+      "recommendedTools": [
+        "type-reference-checker",
+        "directive-trace-validator",
+        "nqds-journey-analyzer"
+      ]
+    },
+    {
+      "@type": "core:Concept",
+      "description": "Validate KPI targets (token-density, time-to-market) and ensure directives include kpiTargets when applicable",
+      "label": "jdbl-kpis",
+      "recommendedTools": [
+        "token-density-meter",
+        "mvp-readiness-checker"
+      ]
     }
   ]
 }

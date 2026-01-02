@@ -19,8 +19,8 @@ schemaFiles.forEach(file => {
     if (!parsed.meta) errors.push(file + ': Missing meta section');
     
     // Check version info
-    if (parsed.meta && parsed.meta.versionInfo !== '3.0.0') {
-      errors.push(file + ': Version should be 3.0.0, found ' + parsed.meta.versionInfo);
+    if (parsed.meta && parsed.meta.version !== '3.0.0') {
+      errors.push(file + ': Version should be 3.0.0, found ' + parsed.meta.version);
     }
     
     validCount++;

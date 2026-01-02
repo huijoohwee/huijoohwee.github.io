@@ -1,0 +1,21 @@
+{
+  "circuitBreakerThreshold": 5,
+  "circuitBreakerTimeout": 30000,
+  "circuitBreakerResetTimeout": 60000,
+  "maxRetries": 3,
+  "baseDelay": 1000,
+  "maxDelay": 30000,
+  "backoffMultiplier": 2,
+  "jitterEnabled": true,
+  "healthCheckInterval": 5000,
+  "healthCheckTimeout": 3000,
+  "healthCheckRetries": 2,
+  "performanceThresholds": {
+    "responseTime": 1000,
+    "errorRate": 0.05,
+    "throughput": 100,
+    "availability": 0.99
+  },
+  "recoveryTimeout": 120000,
+  "gracefulShutdownTimeout": 30000
+}

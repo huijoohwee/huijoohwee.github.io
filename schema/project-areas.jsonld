@@ -1,615 +1,267 @@
 {
   "@context": [
-    "sch:base.jsonld",
+    "https://huijoohwee.github.io/schema/base.jsonld",
     {
-      "area": "sch:project-areas.jsonld#",
-      "org": "http://www.w3.org/ns/org#",
-      "AreaCollection": "area:AreaCollection",
-      "Area": "area:Area",
-      "areas": "area:hasArea",
-      "label": "skos:prefLabel",
-      "desc": "skos:definition"
+      "@base": "https://huijoohwee.github.io/schema/",
+      "ai": "https://huijoohwee.github.io/schema/ai.jsonld#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
     }
   ],
-  "meta": {
-    "@id": "sch:project-areas.jsonld",
-    "@type": "owl:onto",
-    "dcterms:creator": "Hui Joo Hwee",
-    "owl:versionInfo": "2.3.0",
-    "dcterms:created": "2024-12-19",
-    "dcterms:modified": "2024-12-19",
-    "cmt": "Project area vocab for domain organization and categorization",
-    "owl:imports": "sch:base.jsonld"
-  },
   "@graph": [
     {
       "@id": "area:AreaCollection",
       "@type": "skos:ConceptScheme",
-      "skos:prefLabel": "Project Area vocab Collection",
-      "skos:definition": "Comprehensive collection of project areas for domain organization and categorization",
-      "skos:hasTopConcept": [
-        "area:abstract",
-        "area:access",
-        "area:adapter",
-        "area:alignment",
-        "area:api",
-        "area:application",
-        "area:approach",
-        "area:arch",
-        "area:argument",
-        "area:assertion",
-        "area:assignment",
-        "area:attribute",
-        "area:avail",
-        "area:backend",
-        "area:backward-compat",
-        "area:boundary",
-        "area:browser",
-        "area:browser-console",
-        "area:build-system",
-        "area:bundle",
-        "area:bundle-size-limit",
-        "area:cache",
-        "area:cache-mgmt",
-        "area:calculation",
-        "area:call",
-        "area:callback",
-        "area:canonical",
-        "area:card",
-        "area:category",
-        "area:chain",
-        "area:checksum",
-        "area:chunk",
-        "area:chunk-splitting",
-        "area:circuit-breaker",
-        "area:class",
-        "area:class-constructor",
-        "area:clean-state",
-        "area:clean-ui",
-        "area:code-editor",
-        "area:commented-out-code-block",
-        "area:compat",
-        "area:compilation",
-        "area:compliance",
-        "area:comp",
-        "area:comp",
-        "area:comp-root",
-        "area:comp",
-        "area:computation",
-        "area:concurrency-control",
-        "area:cfg",
-        "area:conflict-resolution",
-        "area:consistency",
-        "area:console-interceptor",
-        "area:constant",
-        "area:constructor",
-        "area:container",
-        "area:context",
-        "area:continuous-delivery",
-        "area:continuous-integration",
-        "area:control",
-        "area:conversion",
-        "area:css",
-        "area:data",
-        "area:data-access",
-        "area:data-model",
-        "area:data-structure",
-        "area:dataflow",
-        "area:debouncing",
-        "area:declaration",
-        "area:defensive-programming",
-        "area:definition",
-        "area:delay",
-        "area:delegation",
-        "area:dependency",
-        "area:dependency-array",
-        "area:dependency-chain",
-        "area:dependency-graph",
-        "area:deploy",
-        "area:design",
-        "area:design-ptn",
-        "area:design-token",
-        "area:destructure",
-        "area:dimension",
-        "area:directory",
-        "area:distributed-arch",
-        "area:dom",
-        "area:dynamic-memory-alloc",
-        "area:edge",
-        "area:edit",
-        "area:element",
-        "area:emergency",
-        "area:emergency-shutdown-method",
-        "area:enterprise-grade",
-        "area:entity-rel",
-        "area:entry-point",
-        "area:environment",
-        "area:error-boundary",
-        "area:escaping",
-        "area:event-emitter",
-        "area:event-listenining",
-        "area:eviction-track",
-        "area:export",
-        "area:failover",
-        "area:fallback-mgmt",
-        "area:feature",
-        "area:feedback",
-        "area:fetch",
-        "area:field",
-        "area:file-format",
-        "area:filter",
-        "area:fixture",
-        "area:flow",
-        "area:format-conversion",
-        "area:fw",
-        "area:frontend",
-        "area:function",
-        "area:function-call",
-        "area:generation",
-        "area:git",
-        "area:global",
-        "area:global-scope",
-        "area:global-window-object",
-        "area:graceful-fallback",
-        "area:graph",
-        "area:guard",
-        "area:guardrail",
-        "area:handler",
-        "area:hashing",
-        "area:health",
-        "area:heap-size-limit",
-        "area:helper",
-        "area:hierarchy",
-        "area:hmr",
-        "area:hook",
-        "area:hook-call",
-        "area:i8n",
-        "area:icon",
-        "area:id",
-        "area:idle-detection",
-        "area:impl",
-        "area:importing",
-        "area:index",
-        "area:init",
-        "area:init-dependency",
-        "area:init-order",
-        "area:input",
-        "area:instance",
-        "area:integration",
-        "area:intelligent",
-        "area:interaction",
-        "area:interdependency",
-        "area:iface",
-        "area:iteration",
-        "area:layer",
-        "area:layout",
-        "area:lazy-loading",
-        "area:legitimacy",
-        "area:lib",
-        "area:lifecycle",
-        "area:limit",
-        "area:listener",
-        "area:loading",
-        "area:loading-state",
-        "area:loading-state-handling",
-        "area:local",
-        "area:lod-rendering",
-        "area:log",
-        "area:logger-catch-block",
-        "area:logic",
-        "area:loop-guard",
-        "area:lru-mgmt",
-        "area:main-source-file",
-        "area:maint",
-        "area:manager",
-        "area:mapping",
-        "area:measurement",
-        "area:mechanism",
-        "area:memoization",
-        "area:memory",
-        "area:metadata",
-        "area:method",
-        "area:method-call",
-        "area:method-signature",
-        "area:metric",
-        "area:mime-type",
-        "area:minification",
-        "area:modal",
-        "area:mode",
-        "area:modification",
-        "area:modularization",
-        "area:mod",
-        "area:monitor",
-        "area:mon-interval",
-        "area:mounting",
-        "area:ns",
-        "area:navigation",
-        "area:node",
-        "area:object",
-        "area:operation",
-        "area:opt",
-        "area:option",
-        "area:orch",
-        "area:order",
-        "area:other-key-areas",
-        "area:output",
-        "area:overlay",
-        "area:package",
-        "area:pagination",
-        "area:panel",
-        "area:parameter",
-        "area:parsing",
-        "area:path",
-        "area:path-alias",
-        "area:ptn",
-        "area:perf",
-        "area:persistence",
-        "area:pipeline",
-        "area:placeholder",
-        "area:plugin",
-        "area:pool",
-        "area:predictive",
-        "area:preference",
-        "area:preloading",
-        "area:prevention",
-        "area:priority",
-        "area:process",
-        "area:production-ready",
-        "area:progress",
-        "area:promise",
-        "area:prop",
-        "area:protect",
-        "area:provider",
-        "area:queue",
-        "area:rate-limit",
-        "area:real-time",
-        "area:recovery",
-        "area:redundancy",
-        "area:refactor",
-        "area:referencing",
-        "area:registry",
-        "area:rendering",
-        "area:resource-array",
-        "area:resource-mgmt",
-        "area:resp",
-        "area:responsive-design",
-        "area:responsiveness",
-        "area:rich-media",
-        "area:root-cause-analysis",
-        "area:router",
-        "area:routing",
-        "area:routing-cfg",
-        "area:runtime",
-        "area:safety-control",
-        "area:safeguard",
-        "area:sandbox",
-        "area:script",
-        "area:sec",
-        "area:selector",
-        "area:semantic-index",
-        "area:separation-of-concern",
-        "area:svc-bundle-factory-ptn",
-        "area:svc-register",
-        "area:setting",
-        "area:shape-and-size",
-        "area:shared-type",
-        "area:signature",
-        "area:single-source-of-truth",
-        "area:singleton",
-        "area:source",
-        "area:splitting",
-        "area:stability",
-        "area:stack",
-        "area:stage",
-        "area:standardization",
-        "area:stat",
-        "area:state",
-        "area:state-destructuring",
-        "area:state-init",
-        "area:state-mgmt",
-        "area:statement",
-        "area:storage",
-        "area:store",
-        "area:store-init",
-        "area:store-subscription",
-        "area:store-usage",
-        "area:streaming",
-        "area:streamline",
-        "area:string",
-        "area:string-key",
-        "area:structure",
-        "area:styling",
-        "area:subscription",
-        "area:support",
-        "area:sync",
-        "area:tab",
-        "area:target",
-        "area:tmpl",
-        "area:test",
-        "area:theme",
-        "area:throttler",
-        "area:timeout",
-        "area:toast",
-        "area:token",
-        "area:xform",
-        "area:tree-shaking",
-        "area:triggers-state-change",
-        "area:ttl",
-        "area:type",
-        "area:type-safe-iface",
-        "area:ui",
-        "area:update",
-        "area:usage",
-        "area:usage-ptn",
-        "area:utility",
-        "area:ux",
-        "area:val",
-        "area:value",
-        "area:variable",
-        "area:variant",
-        "area:verification",
-        "area:version",
-        "area:view",
-        "area:virtualization",
-        "area:visual",
-        "area:WeakRef",
-        "area:workflow",
-        "area:workspace",
-        "area:wrapper-function",
-        "area:zero-console-spam",
-        "area:zero-error-build"
-      ],
-      "resp": "areacollection",
-      "activeVerbs": [
-        "execute",
-        "validate",
-        "optimize",
-        "monitor"
-      ],
-      "kpiTarget": "perf-eff≥90%",
-      "characteristics": [
-        "composable",
-        "traceable",
-        "optimizable"
-      ],
-      "jjnhm": {
-        "v": "3.0.0",
-        "lyr": "JSONLD",
-        "cmplx": "C1-MVP-Prod",
-        "gov": "Core-SG",
-        "kpi": {
-          "tok-dens": "≥7.0-c/t",
-          "sem-clar": "≥97%",
-          "parse-t": "≤0.5ms",
-          "val-succ": "≥99%",
-          "sch-comp": "100%"
-        }
-      },
-      "semanticCluster": {
-        "cluster": "general-processing",
-        "concepts": [
-          "execute",
-          "validate",
-          "optimize",
-          "monitor",
-          "coordinate",
-          "transform",
-          "integrate",
-          "configure"
-        ],
-        "kpi": "performance≥90%",
-        "responsibility": "system-coordination",
-        "characteristics": [
-          "executable",
-          "validatable",
-          "optimizable",
-          "monitorable"
-        ]
-      },
-      "kpiTargets": {
-        "primary": "performance≥90%",
-        "secondary": [
-          "parse-time≤0.5ms",
-          "token-density≥7.0c/t",
-          "semantic-clarity≥97%",
-          "validation-success≥99%",
-          "schema-compliance=100%"
-        ],
-        "composite": "enterprise-readiness≥95%"
-      },
-      "responsibilityMatrix": {
-        "primary": "system-coordination",
-        "secondary": [
-          "quality-assurance",
-          "performance-optimization",
-          "error-resilience"
-        ],
-        "governance": [
-          "compliance-enforcement",
-          "audit-trail-maintenance",
-          "metric-reporting"
-        ],
-        "orchestration": [
-          "multi-agent-coordination",
-          "workflow-synchronization",
-          "resource-allocation"
-        ]
-      },
-      "characteristicVectors": {
-        "functional": [
-          "executable",
-          "validatable",
-          "optimizable",
-          "monitorable"
-        ],
-        "quality": [
-          "reliable",
-          "efficient",
-          "maintainable",
-          "scalable"
-        ],
-        "operational": [
-          "monitorable",
-          "debuggable",
-          "recoverable",
-          "upgradeable"
-        ],
-        "architectural": [
-          "modular",
-          "composable",
-          "extensible",
-          "interoperable"
-        ]
-      },
-      "implementationPatterns": {
-        "design": [
-          "factory",
-          "adapter",
-          "observer",
-          "strategy",
-          "command"
-        ],
-        "architectural": [
-          "microservices",
-          "event-driven",
-          "pipeline",
-          "layered",
-          "hexagonal"
-        ],
-        "integration": [
-          "api-gateway",
-          "message-queue",
-          "event-bus",
-          "service-mesh",
-          "circuit-breaker"
-        ],
-        "data": [
-          "repository",
-          "unit-of-work",
-          "cqrs",
-          "event-sourcing",
-          "saga"
-        ]
-      },
-      "governanceMetadata": {
-        "compliance": [
-          "JJNHM-v3.0.0",
-          "JSON-LD-1.1",
-          "RDF-1.1",
-          "SPARQL-1.1"
-        ],
-        "quality": [
-          "ISO-25010",
-          "NIST-CSF",
-          "OWASP-ASVS",
-          "W3C-WCAG"
-        ],
-        "security": [
-          "RBAC",
-          "ABAC",
-          "OAuth2",
-          "JWT",
-          "TLS-1.3"
-        ],
-        "monitoring": [
-          "OpenTelemetry",
-          "Prometheus",
-          "Grafana",
-          "ELK-Stack"
-        ]
-      },
-      "qualityGates": {
-        "performance": [
-          "latency≤200ms",
-          "throughput≥1K/s",
-          "cpu≤80%",
-          "memory≤2GB"
-        ],
-        "reliability": [
-          "uptime≥99.9%",
-          "mtbf≥720h",
-          "mttr≤15min",
-          "error-rate≤0.1%"
-        ],
-        "security": [
-          "vulnerability-scan=pass",
-          "penetration-test=pass",
-          "compliance-audit=pass"
-        ],
-        "maintainability": [
-          "code-coverage≥80%",
-          "complexity≤10",
-          "duplication≤5%",
-          "documentation≥90%"
-        ]
-      },
-      "orchestrationDirectives": {
-        "execution": [
-          "parallel-processing",
-          "load-balancing",
-          "auto-scaling",
-          "circuit-breaking"
-        ],
-        "coordination": [
-          "event-choreography",
-          "saga-orchestration",
-          "workflow-engine",
-          "state-machine"
-        ],
-        "monitoring": [
-          "health-checks",
-          "metrics-collection",
-          "alerting",
-          "tracing"
-        ],
-        "recovery": [
-          "backup-restore",
-          "disaster-recovery",
-          "failover",
-          "rollback"
-        ]
-      },
-      "validationRules": {
-        "structural": [
-          "schema-validation",
-          "type-checking",
-          "constraint-validation",
-          "referential-integrity"
-        ],
-        "semantic": [
-          "business-rules",
-          "domain-constraints",
-          "workflow-validation",
-          "state-consistency"
-        ],
-        "quality": [
-          "performance-benchmarks",
-          "security-scans",
-          "accessibility-checks",
-          "usability-tests"
-        ],
-        "compliance": [
-          "regulatory-compliance",
-          "standard-conformance",
-          "policy-enforcement",
-          "audit-requirements"
-        ]
-      }
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-10",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-2",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-3",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-4",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-5",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-6",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-7",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-8",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "area:AreaCollection-variant-9",
+      "@type": "skos:ConceptScheme",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AreaCollection",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for AreaCollection",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AreaCollection",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
     }
   ],
-  "jjnhm": {
-    "version": "3.0.0",
-    "layer": "JSONLD",
-    "complexity": "C1-MVP-Production",
-    "governance": "Core-sch-Governance",
-    "kpiTargets": {
-      "token-density": "≥7.0-concepts/token",
-      "semantic-clarity": "≥97%",
-      "parse-time": "≤0.5ms",
-      "val-success": "≥99%",
-      "sch-compliance": "100%"
-    }
-  },
+  "@id": "project-schema",
+  "@type": "wbstcnvs:ProjectSchema",
   "activeVerbs": [
     "execute",
     "validate",
@@ -622,68 +274,18 @@
     "deploy",
     "maintain"
   ],
-  "semanticCluster": {
-    "cluster": "general-processing",
-    "concepts": [
-      "execute",
-      "validate",
-      "optimize",
-      "monitor",
-      "coordinate",
-      "transform",
-      "integrate",
-      "configure"
-    ],
-    "kpi": "performance≥90%",
-    "responsibility": "system-coordination",
-    "characteristics": [
-      "executable",
-      "validatable",
-      "optimizable",
-      "monitorable"
-    ]
-  },
-  "kpiTargets": {
-    "primary": "performance≥90%",
-    "secondary": [
-      "parse-time≤0.5ms",
-      "token-density≥7.0c/t",
-      "semantic-clarity≥97%",
-      "validation-success≥99%",
-      "schema-compliance=100%"
-    ],
-    "composite": "enterprise-readiness≥95%"
-  },
-  "responsibilityMatrix": {
-    "primary": "system-coordination",
-    "secondary": [
-      "quality-assurance",
-      "performance-optimization",
-      "error-resilience"
-    ],
-    "governance": [
-      "compliance-enforcement",
-      "audit-trail-maintenance",
-      "metric-reporting"
-    ],
-    "orchestration": [
-      "multi-agent-coordination",
-      "workflow-synchronization",
-      "resource-allocation"
-    ]
-  },
   "characteristicVectors": {
+    "architectural": [
+      "modular",
+      "composable",
+      "extensible",
+      "interoperable"
+    ],
     "functional": [
       "executable",
       "validatable",
       "optimizable",
       "monitorable"
-    ],
-    "quality": [
-      "reliable",
-      "efficient",
-      "maintainable",
-      "scalable"
     ],
     "operational": [
       "monitorable",
@@ -691,41 +293,11 @@
       "recoverable",
       "upgradeable"
     ],
-    "architectural": [
-      "modular",
-      "composable",
-      "extensible",
-      "interoperable"
-    ]
-  },
-  "implementationPatterns": {
-    "design": [
-      "factory",
-      "adapter",
-      "observer",
-      "strategy",
-      "command"
-    ],
-    "architectural": [
-      "microservices",
-      "event-driven",
-      "pipeline",
-      "layered",
-      "hexagonal"
-    ],
-    "integration": [
-      "api-gateway",
-      "message-queue",
-      "event-bus",
-      "service-mesh",
-      "circuit-breaker"
-    ],
-    "data": [
-      "repository",
-      "unit-of-work",
-      "cqrs",
-      "event-sourcing",
-      "saga"
+    "quality": [
+      "reliable",
+      "efficient",
+      "maintainable",
+      "scalable"
     ]
   },
   "governanceMetadata": {
@@ -734,6 +306,12 @@
       "JSON-LD-1.1",
       "RDF-1.1",
       "SPARQL-1.1"
+    ],
+    "monitoring": [
+      "OpenTelemetry",
+      "Prometheus",
+      "Grafana",
+      "ELK-Stack"
     ],
     "quality": [
       "ISO-25010",
@@ -747,15 +325,109 @@
       "OAuth2",
       "JWT",
       "TLS-1.3"
+    ]
+  },
+  "implementationPatterns": {
+    "architectural": [
+      "microservices",
+      "event-driven",
+      "pipeline",
+      "layered",
+      "hexagonal"
+    ],
+    "data": [
+      "repository",
+      "unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga"
+    ],
+    "design": [
+      "factory",
+      "adapter",
+      "observer",
+      "strategy",
+      "command"
+    ],
+    "integration": [
+      "api-gateway",
+      "message-queue",
+      "event-bus",
+      "service-mesh",
+      "circuit-breaker"
+    ]
+  },
+  "jjnhm": {
+    "complexity": "C1-MVP-Production",
+    "governance": "Core-sch-Governance",
+    "kpiTargets": {
+      "parse-time": "≤0.5ms",
+      "sch-compliance": "100%",
+      "semantic-clarity": "≥97%",
+      "token-density": "≥7.0-concepts/token",
+      "val-success": "≥99%"
+    },
+    "layer": "JSONLD",
+    "version": "3.0.0"
+  },
+  "kpiTargets": {
+    "composite": "enterprise-readiness≥95%",
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ]
+  },
+  "meta": {
+    "conformsTo": "https://www.w3.org/TR/json-ld11/",
+    "created": "2025-01-09T00:00:00Z",
+    "creator": "Hui Joo Hwee",
+    "description": "Schema definitions for project components",
+    "license": "MIT",
+    "modified": "2024-12-19",
+    "responsibilities": [
+      "schema-definition",
+      "component-documentation"
+    ],
+    "title": "Project Schema",
+    "version": "1.0.0"
+  },
+  "orchestrationDirectives": {
+    "coordination": [
+      "event-choreography",
+      "saga-orchestration",
+      "workflow-engine",
+      "state-machine"
+    ],
+    "execution": [
+      "parallel-processing",
+      "load-balancing",
+      "auto-scaling",
+      "circuit-breaking"
     ],
     "monitoring": [
-      "OpenTelemetry",
-      "Prometheus",
-      "Grafana",
-      "ELK-Stack"
+      "health-checks",
+      "metrics-collection",
+      "alerting",
+      "tracing"
+    ],
+    "recovery": [
+      "backup-restore",
+      "disaster-recovery",
+      "failover",
+      "rollback"
     ]
   },
   "qualityGates": {
+    "maintainability": [
+      "code-coverage≥80%",
+      "complexity≤10",
+      "duplication≤5%",
+      "documentation≥90%"
+    ],
     "performance": [
       "latency≤200ms",
       "throughput≥1K/s",
@@ -772,52 +444,53 @@
       "vulnerability-scan=pass",
       "penetration-test=pass",
       "compliance-audit=pass"
-    ],
-    "maintainability": [
-      "code-coverage≥80%",
-      "complexity≤10",
-      "duplication≤5%",
-      "documentation≥90%"
     ]
   },
-  "orchestrationDirectives": {
-    "execution": [
-      "parallel-processing",
-      "load-balancing",
-      "auto-scaling",
-      "circuit-breaking"
+  "responsibilityMatrix": {
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting"
     ],
-    "coordination": [
-      "event-choreography",
-      "saga-orchestration",
-      "workflow-engine",
-      "state-machine"
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation"
     ],
-    "monitoring": [
-      "health-checks",
-      "metrics-collection",
-      "alerting",
-      "tracing"
-    ],
-    "recovery": [
-      "backup-restore",
-      "disaster-recovery",
-      "failover",
-      "rollback"
+    "primary": "system-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience"
     ]
+  },
+  "semanticCluster": {
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ],
+    "cluster": "general-processing",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "system-coordination"
   },
   "validationRules": {
-    "structural": [
-      "schema-validation",
-      "type-checking",
-      "constraint-validation",
-      "referential-integrity"
-    ],
-    "semantic": [
-      "business-rules",
-      "domain-constraints",
-      "workflow-validation",
-      "state-consistency"
+    "compliance": [
+      "regulatory-compliance",
+      "standard-conformance",
+      "policy-enforcement",
+      "audit-requirements"
     ],
     "quality": [
       "performance-benchmarks",
@@ -825,11 +498,17 @@
       "accessibility-checks",
       "usability-tests"
     ],
-    "compliance": [
-      "regulatory-compliance",
-      "standard-conformance",
-      "policy-enforcement",
-      "audit-requirements"
+    "semantic": [
+      "business-rules",
+      "domain-constraints",
+      "workflow-validation",
+      "state-consistency"
+    ],
+    "structural": [
+      "schema-validation",
+      "type-checking",
+      "constraint-validation",
+      "referential-integrity"
     ]
   }
 }

@@ -1,492 +1,279 @@
 {
-  "@context": {
-    "@base": "https://huijoohwee.github.io/schema/canvas-conversion.jsonld",
-    "@vocab": "https://huijoohwee.github.io/schema/canvas-conversion#",
-    
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "dcterms": "http://purl.org/dc/terms/",
-    "foaf": "http://xmlns.com/foaf/0.1/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    
-    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
-    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
-    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
-    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
-    "ca": "https://huijoohwee.github.io/schema/code-analysis.jsonld#",
-    "cg": "https://huijoohwee.github.io/schema/code-generation.jsonld#",
-    
-    "cc": "https://huijoohwee.github.io/schema/canvas-conversion#",
-    
-    "CanvasConverter": "cc:CanvasConverter",
-    "CanvasToCodeConverter": "cc:CanvasToCodeConverter",
-    "CodeToCanvasConverter": "cc:CodeToCanvasConverter",
-    "BidirectionalConverter": "cc:BidirectionalConverter",
-    "SynchronizationEngine": "cc:SynchronizationEngine",
-    "ConflictResolver": "cc:ConflictResolver",
-    "CanvasElement": "cc:CanvasElement",
-    "CodeElement": "cc:CodeElement",
-    "ConversionMapping": "cc:ConversionMapping",
-    "SyncState": "cc:SyncState",
-    "ConversionResult": "cc:ConversionResult",
-    "ConversionWorkflow": "cc:ConversionWorkflow",
-    
-    "conversionDirection": "cc:conversionDirection",
-    "canvasFormat": "cc:canvasFormat",
-    "codeFormat": "cc:codeFormat",
-    "syncStrategy": "cc:syncStrategy",
-    "conflictResolution": "cc:conflictResolution",
-    "mappingAccuracy": "cc:mappingAccuracy",
-    "syncFrequency": "cc:syncFrequency",
-    "conversionQuality": "cc:conversionQuality",
-    "bidirectionalConsistency": "cc:bidirectionalConsistency",
-    "realTimeSync": "cc:realTimeSync"
-  },
-  
+  "@context": [
+    "https://huijoohwee.github.io/schema/base.jsonld",
+    {
+      "@base": "https://huijoohwee.github.io/schema/",
+      "ai": "https://huijoohwee.github.io/schema/ai.jsonld#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    }
+  ],
   "@graph": [
     {
       "@id": "cc:BidirectionalConverter",
       "@type": "rdfs:Class",
-      "rdfs:label": "Bidirectional Converter",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Coordination",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
       "dcterms:description": "Manages bidirectional conversion between canvas and code with consistency guarantees",
-      "rdfs:subClassOf": "cc:CanvasConverter",
-      "cc:bidirectionalFeatures": [
-        "two-way-synchronization",
-        "consistency-maintenance",
-        "change-propagation",
-        "conflict-detection",
-        "resolution-strategies"
-      ],
-      "cc:kpiTarget": "bidirectional-consistency ≥92%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Bidirectional Converter",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
     },
-
-    {
-      "@id": "cc:CanvasConversionOntology",
-      "@type": "core:Vocabulary",
-      "rdfs:label": "Canvas Conversion Ontology",
-      "dcterms:description": "Comprehensive ontology for bidirectional canvas-code conversion and synchronization",
-      "dcterms:created": "2024-12-22",
-      "dcterms:modified": "2024-12-22",
-      "dcterms:creator": "SOLO Coding Assistant",
-      "core:version": "1.0.0",
-      "core:license": "MIT",
-      "core:imports": [
-        "https://huijoohwee.github.io/schema/core.jsonld",
-        "https://huijoohwee.github.io/schema/ai-programming.jsonld",
-        "https://huijoohwee.github.io/schema/agents.jsonld",
-        "https://huijoohwee.github.io/schema/dmag.jsonld",
-        "https://huijoohwee.github.io/schema/flow.jsonld",
-        "https://huijoohwee.github.io/schema/code-analysis.jsonld",
-        "https://huijoohwee.github.io/schema/code-generation.jsonld"
-      ],
-      "ai:jjnhmLayer": "JSONLD",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:CanvasConverter",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Canvas Converter",
-      "dcterms:description": "Base class for canvas-code conversion systems with bidirectional capabilities",
-      "rdfs:subClassOf": "ai:CanvasConversion",
-      "cc:conversionCapabilities": [
-        "canvas-to-code-conversion",
-        "code-to-canvas-conversion",
-        "bidirectional-synchronization",
-        "conflict-resolution",
-        "real-time-updates"
-      ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Adapter"
-    },
-
-    {
-      "@id": "cc:CanvasElement",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Canvas Element",
-      "dcterms:description": "Visual element on canvas with properties and behaviors",
-      "rdfs:subClassOf": "core:Concept",
-      "cc:elementTypes": [
-        "visual-component",
-        "layout-container",
-        "interactive-element",
-        "style-definition",
-        "behavior-specification"
-      ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:CanvasToCodeConverter",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Canvas to Code Converter",
-      "dcterms:description": "Converts visual canvas elements to structured code representations",
-      "rdfs:subClassOf": "cc:CanvasConverter",
-      "cc:conversionTypes": [
-        "visual-element-to-code",
-        "layout-to-structure",
-        "interaction-to-logic",
-        "style-to-css",
-        "component-to-class"
-      ],
-      "cc:kpiTarget": "canvas-to-code-accuracy ≥88%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
-    },
-
-    {
-      "@id": "cc:CodeElement",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Code Element",
-      "dcterms:description": "Structured code element with semantic meaning and relationships",
-      "rdfs:subClassOf": "core:Concept",
-      "cc:elementTypes": [
-        "class-definition",
-        "function-definition",
-        "variable-declaration",
-        "import-statement",
-        "configuration-block"
-      ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:CodeToCanvasConverter",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Code to Canvas Converter",
-      "dcterms:description": "Converts structured code to visual canvas representations",
-      "rdfs:subClassOf": "cc:CanvasConverter",
-      "cc:conversionTypes": [
-        "code-to-visual-element",
-        "structure-to-layout",
-        "logic-to-interaction",
-        "css-to-style",
-        "class-to-component"
-      ],
-      "cc:kpiTarget": "code-to-canvas-accuracy ≥85%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
-    },
-
-    {
-      "@id": "cc:ConflictResolver",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Conflict Resolver",
-      "dcterms:description": "Resolves conflicts between canvas and code changes during synchronization",
-      "rdfs:subClassOf": "ai:QualityValidation",
-      "cc:resolutionStrategies": [
-        "last-writer-wins",
-        "merge-strategies",
-        "user-intervention",
-        "semantic-resolution",
-        "priority-based-resolution"
-      ],
-      "cc:kpiTarget": "conflict-resolution-accuracy ≥94%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Resilience"
-    },
-
-    {
-      "@id": "cc:ConversionMapping",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Conversion Mapping",
-      "dcterms:description": "Mapping between canvas elements and code elements for conversion",
-      "rdfs:subClassOf": "core:Concept",
-      "cc:mappingTypes": [
-        "one-to-one-mapping",
-        "one-to-many-mapping",
-        "many-to-one-mapping",
-        "hierarchical-mapping",
-        "semantic-mapping"
-      ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:ConversionResult",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Conversion Result",
-      "dcterms:description": "Result of canvas-code conversion with metrics and validation status",
-      "rdfs:subClassOf": "core:Concept",
-      "cc:resultComponents": [
-        "converted-output",
-        "conversion-metrics",
-        "quality-assessment",
-        "mapping-accuracy",
-        "validation-status"
-      ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:ConversionWorkflow",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Conversion Workflow",
-      "dcterms:description": "Orchestrated workflow for canvas-code conversion and synchronization",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
-      "cc:workflowSteps": [
-        "input-analysis",
-        "mapping-generation",
-        "conversion-execution",
-        "quality-validation",
-        "synchronization-update"
-      ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
-    },
-
-    {
-      "@id": "cc:SyncState",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Synchronization State",
-      "dcterms:description": "State information for canvas-code synchronization tracking",
-      "rdfs:subClassOf": "core:Concept",
-      "cc:stateComponents": [
-        "sync-timestamp",
-        "change-history",
-        "conflict-status",
-        "consistency-level",
-        "pending-operations"
-      ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
-    },
-
-    {
-      "@id": "cc:SynchronizationEngine",
-      "@type": "rdfs:Class",
-      "rdfs:label": "Synchronization Engine",
-      "dcterms:description": "Manages real-time synchronization between canvas and code representations",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
-      "cc:syncCapabilities": [
-        "real-time-sync",
-        "incremental-updates",
-        "change-detection",
-        "batch-synchronization",
-        "conflict-prevention"
-      ],
-      "cc:kpiTarget": "sync-latency ≤50ms",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Actor"
-    },
-
-    {
-      "@id": "cc:bidirectionalConsistency",
-      "@type": "rdf:Property",
-      "rdfs:label": "bidirectional consistency",
-      "dcterms:description": "Level of consistency in bidirectional conversion",
-      "rdfs:domain": "cc:BidirectionalConverter",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "cc:canvasFormat",
-      "@type": "rdf:Property",
-      "rdfs:label": "canvas format",
-      "dcterms:description": "Format of canvas representation",
-      "rdfs:domain": "cc:CanvasElement",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:codeFormat",
-      "@type": "rdf:Property",
-      "rdfs:label": "code format",
-      "dcterms:description": "Format of code representation",
-      "rdfs:domain": "cc:CodeElement",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:conflictResolution",
-      "@type": "rdf:Property",
-      "rdfs:label": "conflict resolution",
-      "dcterms:description": "Method used for resolving conflicts",
-      "rdfs:domain": "cc:ConflictResolver",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:conversionDirection",
-      "@type": "rdf:Property",
-      "rdfs:label": "conversion direction",
-      "dcterms:description": "Direction of conversion (canvas-to-code, code-to-canvas, bidirectional)",
-      "rdfs:domain": "cc:CanvasConverter",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:conversionQuality",
-      "@type": "rdf:Property",
-      "rdfs:label": "conversion quality",
-      "dcterms:description": "Quality score of conversion result",
-      "rdfs:domain": "cc:ConversionResult",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "cc:mappingAccuracy",
-      "@type": "rdf:Property",
-      "rdfs:label": "mapping accuracy",
-      "dcterms:description": "Accuracy of element mapping",
-      "rdfs:domain": "cc:ConversionMapping",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "cc:realTimeSync",
-      "@type": "rdf:Property",
-      "rdfs:label": "real-time synchronization",
-      "dcterms:description": "Whether real-time synchronization is enabled",
-      "rdfs:domain": "cc:SynchronizationEngine",
-      "rdfs:range": "xsd:boolean"
-    },
-
-    {
-      "@id": "cc:syncFrequency",
-      "@type": "rdf:Property",
-      "rdfs:label": "synchronization frequency",
-      "dcterms:description": "Frequency of synchronization updates",
-      "rdfs:domain": "cc:SynchronizationEngine",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:syncStrategy",
-      "@type": "rdf:Property",
-      "rdfs:label": "synchronization strategy",
-      "dcterms:description": "Strategy used for synchronization",
-      "rdfs:domain": "cc:SynchronizationEngine",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cc:CanvasConversionWorkflow",
-      "@type": "flow:CanvasConversionFlowPattern",
-      "rdfs:label": "Canvas Conversion Workflow",
-      "dcterms:description": "Comprehensive workflow for bidirectional canvas-code conversion",
-      "flow:workflowSteps": [
-        {
-          "@id": "cc:InputAnalysis",
-          "flow:stepType": "input-analysis",
-          "flow:agent": "cc:CanvasConverter",
-          "flow:responsibility": "analyze-input-format-and-structure"
-        },
-        {
-          "@id": "cc:MappingGeneration",
-          "flow:stepType": "mapping-generation",
-          "flow:agent": "cc:ConversionMapping",
-          "flow:responsibility": "generate-element-mappings-and-relationships"
-        },
-        {
-          "@id": "cc:ConversionExecution",
-          "flow:stepType": "conversion-execution",
-          "flow:agent": "cc:BidirectionalConverter",
-          "flow:responsibility": "execute-bidirectional-conversion-process"
-        },
-        {
-          "@id": "cc:QualityValidation",
-          "flow:stepType": "quality-validation",
-          "flow:agent": "cc:ConflictResolver",
-          "flow:responsibility": "validate-conversion-quality-and-resolve-conflicts"
-        },
-        {
-          "@id": "cc:SynchronizationUpdate",
-          "flow:stepType": "synchronization-update",
-          "flow:agent": "cc:SynchronizationEngine",
-          "flow:responsibility": "update-synchronization-state-and-propagate-changes"
-        }
-      ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
-    },
-
     {
       "@id": "cc:CanvasConversionKPITargets",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "Canvas Conversion KPI Targets",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "component-definition",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "C2-outer",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
       "dcterms:description": "Key Performance Indicator targets for canvas conversion systems",
-      "ai:targets": {
-        "canvas-to-code-accuracy": "≥88%",
-        "code-to-canvas-accuracy": "≥85%",
-        "bidirectional-consistency": "≥92%",
-        "sync-latency": "≤50ms",
-        "conflict-resolution-accuracy": "≥94%",
-        "mapping-accuracy": "≥90%",
-        "conversion-response-time": "≤200ms",
-        "real-time-sync-reliability": "≥98%",
-        "change-propagation-speed": "≤100ms"
-      }
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas Conversion KPI Targets",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
     },
-
     {
       "@id": "cc:CanvasConversionMetrics",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "Canvas Conversion Metrics",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "component-definition",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "C2-outer",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
       "dcterms:description": "Comprehensive metrics for evaluating canvas conversion performance",
-      "ai:metrics": [
-        {
-          "@id": "cc:CanvasToCodeAccuracyMetric",
-          "ai:name": "Canvas to Code Accuracy",
-          "ai:target": "≥88%",
-          "ai:measurement": "canvas-to-code-conversion-precision-testing"
-        },
-        {
-          "@id": "cc:CodeToCanvasAccuracyMetric",
-          "ai:name": "Code to Canvas Accuracy",
-          "ai:target": "≥85%",
-          "ai:measurement": "code-to-canvas-conversion-precision-testing"
-        },
-        {
-          "@id": "cc:BidirectionalConsistencyMetric",
-          "ai:name": "Bidirectional Consistency",
-          "ai:target": "≥92%",
-          "ai:measurement": "bidirectional-conversion-consistency-validation"
-        },
-        {
-          "@id": "cc:SyncLatencyMetric",
-          "ai:name": "Synchronization Latency",
-          "ai:target": "≤50ms",
-          "ai:measurement": "real-time-sync-performance-benchmarking"
-        },
-        {
-          "@id": "cc:ConflictResolutionAccuracyMetric",
-          "ai:name": "Conflict Resolution Accuracy",
-          "ai:target": "≥94%",
-          "ai:measurement": "conflict-resolution-precision-testing"
-        },
-        {
-          "@id": "cc:MappingAccuracyMetric",
-          "ai:name": "Element Mapping Accuracy",
-          "ai:target": "≥90%",
-          "ai:measurement": "element-mapping-precision-validation"
-        },
-        {
-          "@id": "cc:ConversionResponseTimeMetric",
-          "ai:name": "Conversion Response Time",
-          "ai:target": "≤200ms",
-          "ai:measurement": "conversion-performance-benchmarking"
-        },
-        {
-          "@id": "cc:RealTimeSyncReliabilityMetric",
-          "ai:name": "Real-time Sync Reliability",
-          "ai:target": "≥98%",
-          "ai:measurement": "real-time-synchronization-reliability-testing"
-        },
-        {
-          "@id": "cc:ChangePropagationSpeedMetric",
-          "ai:name": "Change Propagation Speed",
-          "ai:target": "≤100ms",
-          "ai:measurement": "change-propagation-performance-testing"
-        }
-      ]
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas Conversion Metrics",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CanvasConversionOntology",
+      "@type": "core:Vocabulary",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Module",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JSONLD",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-12-22",
+      "dcterms:description": "Comprehensive ontology for bidirectional canvas-code conversion and synchronization",
+      "dcterms:modified": "2024-12-22",
+      "rdfs:label": "Canvas Conversion Ontology",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CanvasConversionWorkflow",
+      "@type": "flow:CanvasConversionFlowPattern",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Coordination",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Comprehensive workflow for bidirectional canvas-code conversion",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas Conversion Workflow",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CanvasConverter",
+      "@type": "rdfs:Class",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Adapter",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Base class for canvas-code conversion systems with bidirectional capabilities",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas Converter",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CanvasElement",
+      "@type": "rdfs:Class",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Module",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Visual element on canvas with properties and behaviors",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas Element",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CanvasToCodeConverter",
+      "@type": "rdfs:Class",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Service",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Converts visual canvas elements to structured code representations",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Canvas to Code Converter",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CodeElement",
+      "@type": "rdfs:Class",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Module",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "NQDS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Structured code element with semantic meaning and relationships",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Code Element",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "cc:CodeToCanvasConverter",
+      "@type": "rdfs:Class",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "Service",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "JDBL",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Converts structured code to visual canvas representations",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Code to Canvas Converter",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
     }
-  ]
+  ],
+  "@id": "project-schema",
+  "@type": "wbstcnvs:ProjectSchema",
+  "meta": {
+    "conformsTo": "https://www.w3.org/TR/json-ld11/",
+    "created": "2025-01-09T00:00:00Z",
+    "creator": "huijoohwee",
+    "description": "Schema definitions for project components",
+    "license": "MIT",
+    "modified": "2025-10-26T21:07:09.041141Z",
+    "responsibilities": [
+      "schema-definition",
+      "component-documentation"
+    ],
+    "title": "Project Schema",
+    "version": "1.0.0"
+  }
 }

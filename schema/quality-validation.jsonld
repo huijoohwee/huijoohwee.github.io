@@ -2,46 +2,6 @@
   "@context": {
     "@base": "https://huijoohwee.github.io/schema/quality-validation.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/quality-validation#",
-    
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "dcterms": "http://purl.org/dc/terms/",
-    "foaf": "http://xmlns.com/foaf/0.1/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    
-    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
-    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
-    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
-    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
-    "ca": "https://huijoohwee.github.io/schema/code-analysis.jsonld#",
-    "cg": "https://huijoohwee.github.io/schema/code-generation.jsonld#",
-    "cc": "https://huijoohwee.github.io/schema/canvas-conversion.jsonld#",
-    "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#",
-    
-    "qv": "https://huijoohwee.github.io/schema/quality-validation#",
-    
-    "meta": {
-      "@type": "core:SchemaMetadata",
-      "dcterms:title": "WBSTCNVS Quality Validation Vocabulary",
-      "dcterms:description": "Canvas-code quality validation, bidirectional sync validation, and WBSTCNVS quality orchestration",
-      "dcterms:conformsTo": [
-        "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-        "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
-      ],
-      "dcterms:versionInfo": "2.0.0",
-      "dcterms:created": "2024-01-01",
-      "dcterms:modified": "2024-12-19",
-      "responsibilities": [
-        "canvas-code-quality-validation",
-        "bidirectional-sync-quality-gates",
-        "conversion-validation-orchestration",
-        "multi-agent-quality-coordination",
-        "sync-operation-quality-metrics",
-        "wbstcnvs-compliance-validation"
-      ]
-    },
-    
     "CanvasQualityValidator": "qv:CanvasQualityValidator",
     "ComplianceChecker": "qv:ComplianceChecker",
     "ConversionQualityGate": "qv:ConversionQualityGate",
@@ -51,42 +11,82 @@
     "QualityMetric": "qv:QualityMetric",
     "QualityOrchestrator": "qv:QualityOrchestrator",
     "QualityReport": "qv:QualityReport",
+    "QualityThreshold": "qv:QualityThreshold",
     "QualityValidator": "qv:QualityValidator",
     "SecurityValidator": "qv:SecurityValidator",
     "SyncQualityValidator": "qv:SyncQualityValidator",
     "ValidationPipeline": "qv:ValidationPipeline",
-    "QualityThreshold": "qv:QualityThreshold",
     "ValidationRule": "qv:ValidationRule",
-    
+    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
+    "ca": "https://huijoohwee.github.io/schema/code-analysis.jsonld#",
     "canvasQualityScore": "qv:canvasQualityScore",
+    "cc": "https://huijoohwee.github.io/schema/canvas-conversion.jsonld#",
+    "cg": "https://huijoohwee.github.io/schema/code-generation.jsonld#",
     "complianceLevel": "qv:complianceLevel",
     "conversionQualityScore": "qv:conversionQualityScore",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
+    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "meta": {
+      "@type": "core:SchemaMetadata",
+      "dcterms:conformsTo": [
+        "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+        "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+      ],
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Canvas-code quality validation, bidirectional sync validation, and WBSTCNVS quality orchestration",
+      "dcterms:modified": "2024-12-19",
+      "dcterms:title": "WBSTCNVS Quality Validation Vocabulary",
+      "dcterms:versionInfo": "2.0.0",
+      "responsibilities": [
+        "canvas-code-quality-validation",
+        "bidirectional-sync-quality-gates",
+        "conversion-validation-orchestration",
+        "multi-agent-quality-coordination",
+        "sync-operation-quality-metrics",
+        "wbstcnvs-compliance-validation"
+      ]
+    },
     "performanceScore": "qv:performanceScore",
     "qualityLevel": "qv:qualityLevel",
     "qualityScore": "qv:qualityScore",
+    "qv": "https://huijoohwee.github.io/schema/quality-validation#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "securityScore": "qv:securityScore",
     "syncQualityScore": "qv:syncQualityScore",
     "thresholdValue": "qv:thresholdValue",
     "validationCriteria": "qv:validationCriteria",
     "validationResult": "qv:validationResult",
     "validationStatus": "qv:validationStatus",
-    "validationType": "qv:validationType"
+    "validationType": "qv:validationType",
+    "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  
   "@graph": [
     {
       "@id": "qv:AssessmentAccuracyMetric",
+      "ai:measurement": "quality-assessment-precision-testing",
       "ai:name": "Quality Assessment Accuracy",
-      "ai:target": "≥93%",
-      "ai:measurement": "quality-assessment-precision-testing"
+      "ai:target": "≥93%"
     },
-
+    {
+      "@id": "qv:canvasQualityScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Canvas-code conversion quality assessment score",
+      "rdfs:domain": "qv:CanvasQualityValidator",
+      "rdfs:label": "canvas quality score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:CanvasQualityValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Canvas Quality Validator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Validates canvas-code conversion quality and visual consistency",
-      "rdfs:subClassOf": "qv:QualityValidator",
       "qv:canvasValidationAspects": [
         "visual-consistency-validation",
         "canvas-code-mapping-accuracy",
@@ -95,16 +95,15 @@
         "accessibility-validation"
       ],
       "qv:kpiTarget": "canvas-quality-accuracy ≥91%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Canvas Quality Validator",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
       "@id": "qv:ComplianceChecker",
       "@type": "rdfs:Class",
-      "rdfs:label": "Compliance Checker",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Validates code compliance with standards, guidelines, and organizational policies",
-      "rdfs:subClassOf": "qv:QualityValidator",
       "qv:complianceTypes": [
         "coding-standards-compliance",
         "security-policy-compliance",
@@ -113,39 +112,35 @@
         "organizational-policy-compliance"
       ],
       "qv:kpiTarget": "compliance-detection-accuracy ≥96%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Compliance Checker",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
       "@id": "qv:ComplianceDetectionAccuracyMetric",
+      "ai:measurement": "compliance-validation-precision-testing",
       "ai:name": "Compliance Detection Accuracy",
-      "ai:target": "≥96%",
-      "ai:measurement": "compliance-validation-precision-testing"
+      "ai:target": "≥96%"
     },
-
-    {
-      "@id": "qv:ComplianceValidation",
-      "flow:stepType": "compliance-validation",
-      "flow:agent": "qv:ComplianceChecker",
-      "flow:responsibility": "validate-compliance-with-standards-and-policies"
-    },
-
     {
       "@id": "qv:complianceLevel",
       "@type": "rdf:Property",
-      "rdfs:label": "compliance level",
       "dcterms:description": "Level of compliance with standards and policies",
       "rdfs:domain": "qv:ComplianceChecker",
+      "rdfs:label": "compliance level",
       "rdfs:range": "xsd:decimal"
     },
-
+    {
+      "@id": "qv:ComplianceValidation",
+      "flow:agent": "qv:ComplianceChecker",
+      "flow:responsibility": "validate-compliance-with-standards-and-policies",
+      "flow:stepType": "compliance-validation"
+    },
     {
       "@id": "qv:ConversionQualityGate",
       "@type": "rdfs:Class",
-      "rdfs:label": "Conversion Quality Gate",
+      "ai:dmagPattern": "Resilience",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Quality gate for canvas-code conversion validation and approval",
-      "rdfs:subClassOf": "qv:QualityGate",
       "qv:conversionGateTypes": [
         "canvas-to-code-gate",
         "code-to-canvas-gate",
@@ -154,44 +149,56 @@
         "semantic-mapping-gate"
       ],
       "qv:kpiTarget": "conversion-gate-pass-rate ≥93%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Resilience"
+      "rdfs:label": "Conversion Quality Gate",
+      "rdfs:subClassOf": "qv:QualityGate"
     },
-
+    {
+      "@id": "qv:conversionQualityScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Canvas-code conversion quality assessment score",
+      "rdfs:domain": "qv:ConversionQualityGate",
+      "rdfs:label": "conversion quality score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:GatePassRateMetric",
+      "ai:measurement": "quality-gate-success-rate-tracking",
       "ai:name": "Quality Gate Pass Rate",
-      "ai:target": "≥95%",
-      "ai:measurement": "quality-gate-success-rate-tracking"
+      "ai:target": "≥95%"
     },
-
     {
       "@id": "qv:OrchestrationEfficiencyMetric",
+      "ai:measurement": "quality-orchestration-performance-testing",
       "ai:name": "Quality Orchestration Efficiency",
-      "ai:target": "≥92%",
-      "ai:measurement": "quality-orchestration-performance-testing"
+      "ai:target": "≥92%"
     },
-
     {
       "@id": "qv:PerformancePredictionAccuracyMetric",
+      "ai:measurement": "performance-validation-precision-testing",
       "ai:name": "Performance Prediction Accuracy",
-      "ai:target": "≥89%",
-      "ai:measurement": "performance-validation-precision-testing"
+      "ai:target": "≥89%"
     },
-
+    {
+      "@id": "qv:performanceScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Performance assessment score",
+      "rdfs:domain": "qv:PerformanceValidator",
+      "rdfs:label": "performance score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:PerformanceValidation",
-      "flow:stepType": "performance-validation",
       "flow:agent": "qv:PerformanceValidator",
-      "flow:responsibility": "validate-performance-characteristics-and-efficiency"
+      "flow:responsibility": "validate-performance-characteristics-and-efficiency",
+      "flow:stepType": "performance-validation"
     },
-
     {
       "@id": "qv:PerformanceValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Performance Validator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Validates code performance characteristics and identifies optimization opportunities",
-      "rdfs:subClassOf": "qv:QualityValidator",
+      "qv:kpiTarget": "performance-prediction-accuracy ≥89%",
       "qv:performanceAspects": [
         "execution-time-validation",
         "memory-usage-validation",
@@ -199,31 +206,27 @@
         "scalability-validation",
         "bottleneck-detection"
       ],
-      "qv:kpiTarget": "performance-prediction-accuracy ≥89%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Performance Validator",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
       "@id": "qv:PipelineExecutionTimeMetric",
+      "ai:measurement": "validation-pipeline-performance-benchmarking",
       "ai:name": "Pipeline Execution Time",
-      "ai:target": "≤5-minutes",
-      "ai:measurement": "validation-pipeline-performance-benchmarking"
+      "ai:target": "≤5-minutes"
     },
-
     {
       "@id": "qv:QualityAnalysis",
-      "flow:stepType": "quality-analysis",
       "flow:agent": "qv:QualityAssessment",
-      "flow:responsibility": "analyze-code-quality-across-multiple-dimensions"
+      "flow:responsibility": "analyze-code-quality-across-multiple-dimensions",
+      "flow:stepType": "quality-analysis"
     },
-
     {
       "@id": "qv:QualityAssessment",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Assessment",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Comprehensive assessment of code quality across multiple dimensions",
-      "rdfs:subClassOf": "qv:QualityValidator",
       "qv:assessmentDimensions": [
         "functional-correctness",
         "performance-efficiency",
@@ -232,16 +235,15 @@
         "architectural-compliance"
       ],
       "qv:kpiTarget": "assessment-accuracy ≥93%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Quality Assessment",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
       "@id": "qv:QualityGate",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Gate",
+      "ai:dmagPattern": "Resilience",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Automated quality gate that enforces quality thresholds and standards",
-      "rdfs:subClassOf": "qv:QualityValidator",
       "qv:gateTypes": [
         "pre-commit-gate",
         "pre-merge-gate",
@@ -250,23 +252,29 @@
         "release-quality-gate"
       ],
       "qv:kpiTarget": "gate-pass-rate ≥95%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Resilience"
+      "rdfs:label": "Quality Gate",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
       "@id": "qv:QualityGateEvaluation",
-      "flow:stepType": "quality-gate-evaluation",
       "flow:agent": "qv:QualityGate",
-      "flow:responsibility": "evaluate-quality-gates-and-enforce-thresholds"
+      "flow:responsibility": "evaluate-quality-gates-and-enforce-thresholds",
+      "flow:stepType": "quality-gate-evaluation"
     },
-
+    {
+      "@id": "qv:qualityLevel",
+      "@type": "rdf:Property",
+      "dcterms:description": "Overall quality level assessment",
+      "rdfs:domain": "qv:QualityAssessment",
+      "rdfs:label": "quality level",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:QualityMetric",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Metric",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "NQDS",
       "dcterms:description": "Quantifiable measure of quality aspects with thresholds and targets",
-      "rdfs:subClassOf": "core:Concept",
       "qv:metricTypes": [
         "code-coverage-metric",
         "complexity-metric",
@@ -274,16 +282,16 @@
         "reliability-metric",
         "performance-metric"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
+      "rdfs:label": "Quality Metric",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "qv:QualityOrchestrator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Orchestrator",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Orchestrates comprehensive quality validation across multiple validators and pipelines",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
+      "qv:kpiTarget": "orchestration-efficiency ≥92%",
       "qv:orchestrationCapabilities": [
         "multi-validator-coordination",
         "pipeline-orchestration",
@@ -291,17 +299,15 @@
         "quality-gate-management",
         "continuous-quality-monitoring"
       ],
-      "qv:kpiTarget": "orchestration-efficiency ≥92%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
+      "rdfs:label": "Quality Orchestrator",
+      "rdfs:subClassOf": "ai:WorkflowOrchestration"
     },
-
     {
       "@id": "qv:QualityReport",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Report",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "NQDS",
       "dcterms:description": "Comprehensive report of quality validation results with metrics and recommendations",
-      "rdfs:subClassOf": "core:Concept",
       "qv:reportComponents": [
         "quality-summary",
         "metric-details",
@@ -309,30 +315,35 @@
         "improvement-recommendations",
         "trend-analysis"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
+      "rdfs:label": "Quality Report",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "qv:QualityReportGenerationTimeMetric",
+      "ai:measurement": "report-generation-performance-testing",
       "ai:name": "Quality Report Generation Time",
-      "ai:target": "≤30-seconds",
-      "ai:measurement": "report-generation-performance-testing"
+      "ai:target": "≤30-seconds"
     },
-
     {
       "@id": "qv:QualityReporting",
-      "flow:stepType": "quality-reporting",
       "flow:agent": "qv:QualityReport",
-      "flow:responsibility": "generate-comprehensive-quality-reports-and-recommendations"
+      "flow:responsibility": "generate-comprehensive-quality-reports-and-recommendations",
+      "flow:stepType": "quality-reporting"
     },
-
+    {
+      "@id": "qv:qualityScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Overall quality score from validation",
+      "rdfs:domain": "qv:QualityReport",
+      "rdfs:label": "quality score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:QualityThreshold",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Threshold",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "NQDS",
       "dcterms:description": "Configurable threshold values for quality metrics and validation criteria",
-      "rdfs:subClassOf": "core:Concept",
       "qv:thresholdTypes": [
         "minimum-threshold",
         "maximum-threshold",
@@ -340,101 +351,93 @@
         "warning-threshold",
         "critical-threshold"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
+      "rdfs:label": "Quality Threshold",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "qv:QualityValidationKPITargets",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "Quality Validation KPI Targets",
-      "dcterms:description": "Key Performance Indicator targets for quality validation systems",
       "ai:targets": {
-        "gate-pass-rate": "≥95%",
-        "pipeline-execution-time": "≤5-minutes",
         "assessment-accuracy": "≥93%",
         "compliance-detection-accuracy": "≥96%",
-        "performance-prediction-accuracy": "≥89%",
-        "security-vulnerability-detection": "≥94%",
+        "gate-pass-rate": "≥95%",
         "orchestration-efficiency": "≥92%",
-        "validation-response-time": "≤500ms",
-        "quality-report-generation-time": "≤30-seconds"
-      }
+        "performance-prediction-accuracy": "≥89%",
+        "pipeline-execution-time": "≤5-minutes",
+        "quality-report-generation-time": "≤30-seconds",
+        "security-vulnerability-detection": "≥94%",
+        "validation-response-time": "≤500ms"
+      },
+      "dcterms:description": "Key Performance Indicator targets for quality validation systems",
+      "rdfs:label": "Quality Validation KPI Targets"
     },
-
     {
       "@id": "qv:QualityValidationMetrics",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "Quality Validation Metrics",
-      "dcterms:description": "Comprehensive metrics for evaluating quality validation performance",
       "ai:metrics": [
         {
-          "@id": "qv:GatePassRateMetric",
-          "ai:name": "Quality Gate Pass Rate",
-          "ai:target": "≥95%",
-          "ai:measurement": "quality-gate-success-rate-tracking"
-        },
-        {
-          "@id": "qv:PipelineExecutionTimeMetric",
-          "ai:name": "Pipeline Execution Time",
-          "ai:target": "≤5-minutes",
-          "ai:measurement": "validation-pipeline-performance-benchmarking"
-        },
-        {
           "@id": "qv:AssessmentAccuracyMetric",
+          "ai:measurement": "quality-assessment-precision-testing",
           "ai:name": "Quality Assessment Accuracy",
-          "ai:target": "≥93%",
-          "ai:measurement": "quality-assessment-precision-testing"
+          "ai:target": "≥93%"
         },
         {
           "@id": "qv:ComplianceDetectionAccuracyMetric",
+          "ai:measurement": "compliance-validation-precision-testing",
           "ai:name": "Compliance Detection Accuracy",
-          "ai:target": "≥96%",
-          "ai:measurement": "compliance-validation-precision-testing"
+          "ai:target": "≥96%"
         },
         {
-          "@id": "qv:PerformancePredictionAccuracyMetric",
-          "ai:name": "Performance Prediction Accuracy",
-          "ai:target": "≥89%",
-          "ai:measurement": "performance-validation-precision-testing"
-        },
-        {
-          "@id": "qv:SecurityVulnerabilityDetectionMetric",
-          "ai:name": "Security Vulnerability Detection",
-          "ai:target": "≥94%",
-          "ai:measurement": "security-validation-precision-testing"
+          "@id": "qv:GatePassRateMetric",
+          "ai:measurement": "quality-gate-success-rate-tracking",
+          "ai:name": "Quality Gate Pass Rate",
+          "ai:target": "≥95%"
         },
         {
           "@id": "qv:OrchestrationEfficiencyMetric",
+          "ai:measurement": "quality-orchestration-performance-testing",
           "ai:name": "Quality Orchestration Efficiency",
-          "ai:target": "≥92%",
-          "ai:measurement": "quality-orchestration-performance-testing"
+          "ai:target": "≥92%"
         },
         {
-          "@id": "qv:ValidationResponseTimeMetric",
-          "ai:name": "Validation Response Time",
-          "ai:target": "≤500ms",
-          "ai:measurement": "validation-performance-benchmarking"
+          "@id": "qv:PerformancePredictionAccuracyMetric",
+          "ai:measurement": "performance-validation-precision-testing",
+          "ai:name": "Performance Prediction Accuracy",
+          "ai:target": "≥89%"
+        },
+        {
+          "@id": "qv:PipelineExecutionTimeMetric",
+          "ai:measurement": "validation-pipeline-performance-benchmarking",
+          "ai:name": "Pipeline Execution Time",
+          "ai:target": "≤5-minutes"
         },
         {
           "@id": "qv:QualityReportGenerationTimeMetric",
+          "ai:measurement": "report-generation-performance-testing",
           "ai:name": "Quality Report Generation Time",
-          "ai:target": "≤30-seconds",
-          "ai:measurement": "report-generation-performance-testing"
+          "ai:target": "≤30-seconds"
+        },
+        {
+          "@id": "qv:SecurityVulnerabilityDetectionMetric",
+          "ai:measurement": "security-validation-precision-testing",
+          "ai:name": "Security Vulnerability Detection",
+          "ai:target": "≥94%"
+        },
+        {
+          "@id": "qv:ValidationResponseTimeMetric",
+          "ai:measurement": "validation-performance-benchmarking",
+          "ai:name": "Validation Response Time",
+          "ai:target": "≤500ms"
         }
-      ]
+      ],
+      "dcterms:description": "Comprehensive metrics for evaluating quality validation performance",
+      "rdfs:label": "Quality Validation Metrics"
     },
-
     {
       "@id": "qv:QualityValidationOntology",
       "@type": "core:Vocabulary",
-      "rdfs:label": "Quality Validation Ontology",
-      "dcterms:description": "Comprehensive ontology for AI-powered quality validation, gates, and metrics",
-      "dcterms:created": "2024-12-22",
-      "dcterms:modified": "2024-12-22",
-      "dcterms:creator": "SOLO Coding Assistant",
-      "core:version": "1.0.0",
-      "core:license": "MIT",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "JSONLD",
       "core:imports": [
         "https://huijoohwee.github.io/schema/core.jsonld",
         "https://huijoohwee.github.io/schema/ai-programming.jsonld",
@@ -445,63 +448,66 @@
         "https://huijoohwee.github.io/schema/code-generation.jsonld",
         "https://huijoohwee.github.io/schema/canvas-conversion.jsonld"
       ],
-      "ai:jjnhmLayer": "JSONLD",
-      "ai:dmagPattern": "Module"
+      "core:license": "MIT",
+      "core:version": "1.0.0",
+      "dcterms:created": "2024-12-22",
+      "dcterms:creator": "SOLO Coding Assistant",
+      "dcterms:description": "Comprehensive ontology for AI-powered quality validation, gates, and metrics",
+      "dcterms:modified": "2024-12-22",
+      "rdfs:label": "Quality Validation Ontology"
     },
-
     {
       "@id": "qv:QualityValidationWorkflow",
       "@type": "flow:QualityValidationFlowPattern",
-      "rdfs:label": "Quality Validation Workflow",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Comprehensive workflow for AI-powered quality validation",
       "flow:workflowSteps": [
         {
-          "@id": "qv:QualityAnalysis",
-          "flow:stepType": "quality-analysis",
-          "flow:agent": "qv:QualityAssessment",
-          "flow:responsibility": "analyze-code-quality-across-multiple-dimensions"
-        },
-        {
           "@id": "qv:ComplianceValidation",
-          "flow:stepType": "compliance-validation",
           "flow:agent": "qv:ComplianceChecker",
-          "flow:responsibility": "validate-compliance-with-standards-and-policies"
+          "flow:responsibility": "validate-compliance-with-standards-and-policies",
+          "flow:stepType": "compliance-validation"
         },
         {
           "@id": "qv:PerformanceValidation",
-          "flow:stepType": "performance-validation",
           "flow:agent": "qv:PerformanceValidator",
-          "flow:responsibility": "validate-performance-characteristics-and-efficiency"
+          "flow:responsibility": "validate-performance-characteristics-and-efficiency",
+          "flow:stepType": "performance-validation"
         },
         {
-          "@id": "qv:SecurityValidation",
-          "flow:stepType": "security-validation",
-          "flow:agent": "qv:SecurityValidator",
-          "flow:responsibility": "validate-security-aspects-and-vulnerability-detection"
+          "@id": "qv:QualityAnalysis",
+          "flow:agent": "qv:QualityAssessment",
+          "flow:responsibility": "analyze-code-quality-across-multiple-dimensions",
+          "flow:stepType": "quality-analysis"
         },
         {
           "@id": "qv:QualityGateEvaluation",
-          "flow:stepType": "quality-gate-evaluation",
           "flow:agent": "qv:QualityGate",
-          "flow:responsibility": "evaluate-quality-gates-and-enforce-thresholds"
+          "flow:responsibility": "evaluate-quality-gates-and-enforce-thresholds",
+          "flow:stepType": "quality-gate-evaluation"
         },
         {
           "@id": "qv:QualityReporting",
-          "flow:stepType": "quality-reporting",
           "flow:agent": "qv:QualityReport",
-          "flow:responsibility": "generate-comprehensive-quality-reports-and-recommendations"
+          "flow:responsibility": "generate-comprehensive-quality-reports-and-recommendations",
+          "flow:stepType": "quality-reporting"
+        },
+        {
+          "@id": "qv:SecurityValidation",
+          "flow:agent": "qv:SecurityValidator",
+          "flow:responsibility": "validate-security-aspects-and-vulnerability-detection",
+          "flow:stepType": "security-validation"
         }
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
+      "rdfs:label": "Quality Validation Workflow"
     },
-
     {
       "@id": "qv:QualityValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Validator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Base class for AI-powered quality validation systems with comprehensive assessment capabilities",
-      "rdfs:subClassOf": "ai:QualityValidation",
       "qv:validationCapabilities": [
         "code-quality-validation",
         "performance-validation",
@@ -509,23 +515,30 @@
         "compliance-validation",
         "architectural-validation"
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Quality Validator",
+      "rdfs:subClassOf": "ai:QualityValidation"
     },
-
+    {
+      "@id": "qv:securityScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Security assessment score",
+      "rdfs:domain": "qv:SecurityValidator",
+      "rdfs:label": "security score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:SecurityValidation",
-      "flow:stepType": "security-validation",
       "flow:agent": "qv:SecurityValidator",
-      "flow:responsibility": "validate-security-aspects-and-vulnerability-detection"
+      "flow:responsibility": "validate-security-aspects-and-vulnerability-detection",
+      "flow:stepType": "security-validation"
     },
-
     {
       "@id": "qv:SecurityValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Security Validator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Validates code security aspects and identifies potential vulnerabilities",
-      "rdfs:subClassOf": "qv:QualityValidator",
+      "qv:kpiTarget": "security-vulnerability-detection ≥94%",
       "qv:securityAspects": [
         "vulnerability-detection",
         "security-pattern-validation",
@@ -533,17 +546,30 @@
         "data-protection-validation",
         "threat-modeling-validation"
       ],
-      "qv:kpiTarget": "security-vulnerability-detection ≥94%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Security Validator",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
+    {
+      "@id": "qv:SecurityVulnerabilityDetectionMetric",
+      "ai:measurement": "security-validation-precision-testing",
+      "ai:name": "Security Vulnerability Detection",
+      "ai:target": "≥94%"
+    },
+    {
+      "@id": "qv:syncQualityScore",
+      "@type": "rdf:Property",
+      "dcterms:description": "Bidirectional synchronization quality assessment score",
+      "rdfs:domain": "qv:SyncQualityValidator",
+      "rdfs:label": "sync quality score",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "qv:SyncQualityValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Sync Quality Validator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Validates bidirectional synchronization quality between canvas and code",
-      "rdfs:subClassOf": "qv:QualityValidator",
+      "qv:kpiTarget": "sync-quality-accuracy ≥92%",
       "qv:syncValidationAspects": [
         "bidirectional-sync-accuracy",
         "state-consistency-validation",
@@ -551,24 +577,32 @@
         "sync-performance-validation",
         "data-integrity-validation"
       ],
-      "qv:kpiTarget": "sync-quality-accuracy ≥92%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "rdfs:label": "Sync Quality Validator",
+      "rdfs:subClassOf": "qv:QualityValidator"
     },
-
     {
-      "@id": "qv:SecurityVulnerabilityDetectionMetric",
-      "ai:name": "Security Vulnerability Detection",
-      "ai:target": "≥94%",
-      "ai:measurement": "security-validation-precision-testing"
+      "@id": "qv:thresholdValue",
+      "@type": "rdf:Property",
+      "dcterms:description": "Numeric threshold value for quality metrics",
+      "rdfs:domain": "qv:QualityThreshold",
+      "rdfs:label": "threshold value",
+      "rdfs:range": "xsd:decimal"
     },
-
+    {
+      "@id": "qv:validationCriteria",
+      "@type": "rdf:Property",
+      "dcterms:description": "Criteria used for validation assessment",
+      "rdfs:domain": "qv:ValidationRule",
+      "rdfs:label": "validation criteria",
+      "rdfs:range": "xsd:string"
+    },
     {
       "@id": "qv:ValidationPipeline",
       "@type": "rdfs:Class",
-      "rdfs:label": "Validation Pipeline",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Orchestrated pipeline for comprehensive quality validation across multiple dimensions",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
+      "qv:kpiTarget": "pipeline-execution-time ≤5-minutes",
       "qv:pipelineStages": [
         "static-analysis-validation",
         "dynamic-testing-validation",
@@ -576,24 +610,29 @@
         "performance-benchmarking",
         "compliance-checking"
       ],
-      "qv:kpiTarget": "pipeline-execution-time ≤5-minutes",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
+      "rdfs:label": "Validation Pipeline",
+      "rdfs:subClassOf": "ai:WorkflowOrchestration"
     },
-
     {
       "@id": "qv:ValidationResponseTimeMetric",
+      "ai:measurement": "validation-performance-benchmarking",
       "ai:name": "Validation Response Time",
-      "ai:target": "≤500ms",
-      "ai:measurement": "validation-performance-benchmarking"
+      "ai:target": "≤500ms"
     },
-
+    {
+      "@id": "qv:validationResult",
+      "@type": "rdf:Property",
+      "dcterms:description": "Detailed result of validation process",
+      "rdfs:domain": "qv:QualityValidator",
+      "rdfs:label": "validation result",
+      "rdfs:range": "xsd:string"
+    },
     {
       "@id": "qv:ValidationRule",
       "@type": "rdfs:Class",
-      "rdfs:label": "Validation Rule",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "JDBL",
       "dcterms:description": "Configurable rule for quality validation with conditions and actions",
-      "rdfs:subClassOf": "core:Concept",
       "qv:ruleTypes": [
         "syntax-validation-rule",
         "semantic-validation-rule",
@@ -601,115 +640,23 @@
         "security-validation-rule",
         "performance-validation-rule"
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Module"
+      "rdfs:label": "Validation Rule",
+      "rdfs:subClassOf": "core:Concept"
     },
-
-    {
-      "@id": "qv:canvasQualityScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "canvas quality score",
-      "dcterms:description": "Canvas-code conversion quality assessment score",
-      "rdfs:domain": "qv:CanvasQualityValidator",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:conversionQualityScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "conversion quality score",
-      "dcterms:description": "Canvas-code conversion quality assessment score",
-      "rdfs:domain": "qv:ConversionQualityGate",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:performanceScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "performance score",
-      "dcterms:description": "Performance assessment score",
-      "rdfs:domain": "qv:PerformanceValidator",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:qualityLevel",
-      "@type": "rdf:Property",
-      "rdfs:label": "quality level",
-      "dcterms:description": "Overall quality level assessment",
-      "rdfs:domain": "qv:QualityAssessment",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:qualityScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "quality score",
-      "dcterms:description": "Overall quality score from validation",
-      "rdfs:domain": "qv:QualityReport",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:securityScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "security score",
-      "dcterms:description": "Security assessment score",
-      "rdfs:domain": "qv:SecurityValidator",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:syncQualityScore",
-      "@type": "rdf:Property",
-      "rdfs:label": "sync quality score",
-      "dcterms:description": "Bidirectional synchronization quality assessment score",
-      "rdfs:domain": "qv:SyncQualityValidator",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:thresholdValue",
-      "@type": "rdf:Property",
-      "rdfs:label": "threshold value",
-      "dcterms:description": "Numeric threshold value for quality metrics",
-      "rdfs:domain": "qv:QualityThreshold",
-      "rdfs:range": "xsd:decimal"
-    },
-
-    {
-      "@id": "qv:validationCriteria",
-      "@type": "rdf:Property",
-      "rdfs:label": "validation criteria",
-      "dcterms:description": "Criteria used for validation assessment",
-      "rdfs:domain": "qv:ValidationRule",
-      "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "qv:validationResult",
-      "@type": "rdf:Property",
-      "rdfs:label": "validation result",
-      "dcterms:description": "Detailed result of validation process",
-      "rdfs:domain": "qv:QualityValidator",
-      "rdfs:range": "xsd:string"
-    },
-
     {
       "@id": "qv:validationStatus",
       "@type": "rdf:Property",
-      "rdfs:label": "validation status",
       "dcterms:description": "Status of validation (passed, failed, warning)",
       "rdfs:domain": "qv:QualityValidator",
+      "rdfs:label": "validation status",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "qv:validationType",
       "@type": "rdf:Property",
-      "rdfs:label": "validation type",
       "dcterms:description": "Type of validation being performed",
       "rdfs:domain": "qv:QualityValidator",
+      "rdfs:label": "validation type",
       "rdfs:range": "xsd:string"
     }
   ]

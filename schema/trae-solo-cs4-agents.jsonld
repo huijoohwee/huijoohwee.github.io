@@ -1,0 +1,409 @@
+{
+  "@context": [
+    "sch:base.jsonld",
+    {
+      "Agent": "agent:Agent",
+      "AgentCollection": "agent:AgentCollection",
+      "agent": "sch:agents.jsonld#",
+      "agents": "agent:hasAgent",
+      "desc": "skos:definition",
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      "label": "skos:prefLabel"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "agent:AgentCollection",
+      "@type": "foaf:Group",
+      "activeVerbs": [
+        "execute",
+        "validate",
+        "optimize",
+        "monitor",
+        "delegate",
+        "orchestrate"
+      ],
+      "characteristics": [
+        "composable",
+        "traceable",
+        "optimizable",
+        "hierarchical"
+      ],
+      "foaf:member": [
+        "agent:cache-manager",
+        "agent:coder",
+        "agent:compiler",
+        "agent:conflict-resolver",
+        "agent:constructor",
+        "agent:debouncer",
+        "agent:developer",
+        "agent:iterator",
+        "agent:memoizer",
+        "agent:memory-manager",
+        "agent:memory-orchestrator",
+        "agent:metrics-collector",
+        "agent:optimizer",
+        "agent:orchestrator",
+        "agent:other-key-agents",
+        "agent:project-builder",
+        "agent:renderer",
+        "agent:resource-manager",
+        "agent:solo-dev-builder",
+        "agent:stability-monitor",
+        "agent:sync-manager",
+        "agent:tester",
+        "agent:timeout-manager",
+        "agent:transformer",
+        "agent:worker",
+        "agent:ai-code-analyzer",
+        "agent:ai-code-generator",
+        "agent:ai-canvas-converter",
+        "agent:ai-workflow-orchestrator",
+        "agent:ai-quality-validator",
+        "agent:ai-performance-optimizer",
+        "agent:ai-suggestion-engine",
+        "agent:ai-pattern-detector",
+        "agent:ai-refactoring-assistant",
+        "agent:ai-documentation-generator"
+      ],
+      "jjnhm": {
+        "cmplx": "C0-Core-Agents",
+        "gov": "Core-Agent-Governance",
+        "kpi": {
+          "parse-t": "≤0.5ms",
+          "sch-comp": "100%",
+          "sem-clar": "≥97%",
+          "tok-dens": "≥7.0-c/t",
+          "val-succ": "≥99%"
+        },
+        "lyr": "JSONLD",
+        "v": "3.0.0"
+      },
+      "kpiTarget": "perf-eff≥90%",
+      "resp": "agentcollection",
+      "skos:definition": "Comprehensive collection of agents for JJNHM arch and multi-agent orch with C0/C1/C2 hierarchical delegation",
+      "skos:prefLabel": "Agent vocab Collection"
+    },
+    {
+      "@id": "agent:ai-canvas-converter",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "convert-representation",
+        "synchronize-views",
+        "optimize-layout",
+        "maintain-consistency"
+      ],
+      "characteristics": [
+        "bidirectional",
+        "visual",
+        "synchronized"
+      ],
+      "core:capability": [
+        "canvas-to-code-conversion",
+        "code-to-canvas-conversion",
+        "visual-synchronization",
+        "layout-optimization"
+      ],
+      "core:conversionDirection": [
+        "bidirectional",
+        "canvas-to-code",
+        "code-to-canvas"
+      ],
+      "core:dmagPattern": "class-as-adapter",
+      "core:jjnhmLayer": "NQDS",
+      "kpiTarget": "conversion-accuracy≥92%",
+      "skos:definition": "Intelligent agent for bidirectional conversion between visual canvas representations and code",
+      "skos:prefLabel": "AI Canvas Converter Agent"
+    },
+    {
+      "@id": "agent:ai-code-analyzer",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "analyze-code",
+        "detect-patterns",
+        "suggest-improvements",
+        "calculate-metrics"
+      ],
+      "characteristics": [
+        "intelligent",
+        "comprehensive",
+        "actionable"
+      ],
+      "core:analysisType": [
+        "static-analysis",
+        "dynamic-analysis",
+        "semantic-analysis",
+        "pattern-recognition"
+      ],
+      "core:capability": [
+        "best-practices-analysis",
+        "performance-analysis",
+        "accessibility-analysis",
+        "security-analysis",
+        "refactoring-suggestions",
+        "code-metrics-calculation"
+      ],
+      "core:dmagPattern": "service-factory",
+      "core:jjnhmLayer": "JDBL",
+      "kpiTarget": "analysis-accuracy≥95%",
+      "skos:definition": "Intelligent agent for comprehensive code analysis, quality assessment, and improvement suggestions",
+      "skos:prefLabel": "AI Code Analyzer Agent"
+    },
+    {
+      "@id": "agent:ai-code-generator",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "generate-code",
+        "apply-templates",
+        "transform-specifications",
+        "optimize-output"
+      ],
+      "characteristics": [
+        "adaptive",
+        "template-driven",
+        "format-aware"
+      ],
+      "core:capability": [
+        "typescript-generation",
+        "javascript-generation",
+        "tsx-generation",
+        "markdown-generation",
+        "html-generation",
+        "json-ld-generation"
+      ],
+      "core:dmagPattern": "module-of-classes",
+      "core:jjnhmLayer": "HBS",
+      "core:targetFormat": [
+        "typescript",
+        "javascript",
+        "tsx",
+        "markdown",
+        "html",
+        "json-ld"
+      ],
+      "kpiTarget": "generation-quality≥90%",
+      "skos:definition": "Intelligent agent for automated code generation from specifications, templates, and patterns",
+      "skos:prefLabel": "AI Code Generator Agent"
+    },
+    {
+      "@id": "agent:ai-performance-optimizer",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "profile-performance",
+        "detect-bottlenecks",
+        "optimize-resources",
+        "monitor-metrics"
+      ],
+      "characteristics": [
+        "analytical",
+        "optimizing",
+        "monitoring"
+      ],
+      "core:capability": [
+        "performance-profiling",
+        "bottleneck-detection",
+        "optimization-suggestions",
+        "resource-monitoring"
+      ],
+      "core:dmagPattern": "coordination",
+      "core:jjnhmLayer": "MMD",
+      "kpiTarget": "optimization-improvement≥25%",
+      "skos:definition": "Intelligent agent for performance analysis, optimization, and resource management",
+      "skos:prefLabel": "AI Performance Optimizer Agent"
+    },
+    {
+      "@id": "agent:ai-quality-validator",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "validate-quality",
+        "execute-tests",
+        "check-compliance",
+        "measure-metrics"
+      ],
+      "characteristics": [
+        "thorough",
+        "compliant",
+        "reliable"
+      ],
+      "core:capability": [
+        "quality-gate-validation",
+        "automated-testing",
+        "compliance-checking",
+        "metrics-validation"
+      ],
+      "core:dmagPattern": "resilience-primitive",
+      "core:jjnhmLayer": "JDBL",
+      "core:qualityThreshold": [
+        "code-coverage≥80%",
+        "performance≥90%",
+        "security-compliance=100%",
+        "accessibility≥95%"
+      ],
+      "kpiTarget": "validation-accuracy≥98%",
+      "skos:definition": "Intelligent agent for comprehensive quality validation, testing, and compliance checking",
+      "skos:prefLabel": "AI Quality Validator Agent"
+    },
+    {
+      "@id": "agent:ai-workflow-orchestrator",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "orchestrate-workflows",
+        "coordinate-agents",
+        "optimize-processes",
+        "allocate-resources"
+      ],
+      "characteristics": [
+        "coordinating",
+        "adaptive",
+        "efficient"
+      ],
+      "core:capability": [
+        "workflow-coordination",
+        "agent-orchestration",
+        "process-optimization",
+        "resource-allocation"
+      ],
+      "core:dmagPattern": "actor-instance",
+      "core:jjnhmLayer": "JDBL",
+      "core:orchestrationPattern": [
+        "event-driven",
+        "pipeline",
+        "parallel-execution",
+        "adaptive-scheduling"
+      ],
+      "kpiTarget": "orchestration-efficiency≥88%",
+      "skos:definition": "Intelligent agent for orchestrating complex multi-agent workflows and development processes",
+      "skos:prefLabel": "AI Workflow Orchestrator Agent"
+    },
+    {
+      "@id": "agent:solo-dev-builder",
+      "@type": "core:AIAgent",
+      "activeVerbs": [
+        "create-hierarchy",
+        "delegate-systematically",
+        "orchestrate-workflows",
+        "enforce-governance",
+        "optimize-token-density",
+        "coordinate-agents"
+      ],
+      "characteristics": [
+        "hierarchical",
+        "systematic",
+        "governance-driven",
+        "token-optimized"
+      ],
+      "core:architecturePattern": [
+        "c0-core-orchestration",
+        "c1-edge-coordination",
+        "c2-outer-implementation",
+        "hierarchical-delegation"
+      ],
+      "core:capability": [
+        "c0-c1-c2-architecture-creation",
+        "hierarchical-delegation-structure",
+        "systematic-workflow-orchestration",
+        "multi-agent-coordination",
+        "governance-compliance-enforcement",
+        "token-density-optimization"
+      ],
+      "core:dmagPattern": "actor-instance",
+      "core:jjnhmLayer": "JDBL",
+      "kpiTarget": "architecture-compliance≥98%",
+      "skos:definition": "Intelligent agent for creating hierarchical C0/C1/C2 delegation structures and systematic development workflows",
+      "skos:prefLabel": "Solo Development Builder Agent"
+    }
+  ],
+  "activeVerbs": [
+    "execute",
+    "validate",
+    "optimize",
+    "monitor",
+    "coordinate",
+    "transform",
+    "integrate",
+    "configure",
+    "deploy",
+    "maintain",
+    "delegate",
+    "orchestrate"
+  ],
+  "jjnhm": {
+    "complexity": "C0-Core-Agents",
+    "governance": "Core-Agent-Governance",
+    "kpiTargets": {
+      "parse-time": "≤0.5ms",
+      "sch-compliance": "100%",
+      "semantic-clarity": "≥97%",
+      "token-density": "≥7.0-concepts/token",
+      "val-success": "≥99%"
+    },
+    "layer": "JSONLD",
+    "version": "3.0.0"
+  },
+  "kpiTargets": {
+    "composite": "enterprise-readiness≥95%",
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ]
+  },
+  "meta": {
+    "@id": "sch:agents.jsonld",
+    "@type": "owl:onto",
+    "cmt": "Agent vocab for JJNHM multi-agent orch system with C0/C1/C2 hierarchical delegation",
+    "dcterms:created": "2024-12-19",
+    "dcterms:creator": "Hui Joo Hwee",
+    "dcterms:modified": "2024-12-19",
+    "owl:imports": "sch:base.jsonld",
+    "owl:versionInfo": "3.0.0"
+  },
+  "responsibilityMatrix": {
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting",
+      "c0-c1-c2-governance"
+    ],
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation",
+      "hierarchical-orchestration"
+    ],
+    "primary": "agent-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience",
+      "hierarchical-delegation"
+    ]
+  },
+  "semanticCluster": {
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable",
+      "hierarchical"
+    ],
+    "cluster": "agent-orchestration",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure",
+      "delegate",
+      "orchestrate"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "agent-coordination"
+  }
+}

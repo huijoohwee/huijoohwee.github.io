@@ -1,422 +1,267 @@
 {
   "@context": [
-    "sch:base.jsonld",
+    "https://huijoohwee.github.io/schema/base.jsonld",
     {
-      "issue": "sch:project-issues.jsonld#",
-      "itsm": "http://www.w3.org/ns/itsm#",
-      "IssueCollection": "issue:IssueCollection",
-      "Issue": "issue:Issue",
-      "issues": "issue:hasIssue",
-      "label": "skos:prefLabel",
-      "desc": "skos:definition"
+      "@base": "https://huijoohwee.github.io/schema/",
+      "ai": "https://huijoohwee.github.io/schema/ai.jsonld#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
     }
   ],
-  "meta": {
-    "@id": "sch:project-issues.jsonld",
-    "@type": "owl:onto",
-    "dcterms:creator": "Hui Joo Hwee",
-    "owl:versionInfo": "2.3.0",
-    "dcterms:created": "2024-12-19",
-    "dcterms:modified": "2024-12-19",
-    "cmt": "Issue vocab for project problem tracking and resolution",
-    "owl:imports": "sch:base.jsonld"
-  },
   "@graph": [
     {
-      "@id": "issue:IssueCollection",
-      "@type": "skos:ConceptScheme",
-      "skos:prefLabel": "Issue vocab Collection",
-      "skos:definition": "Comprehensive collection of issues for project problem tracking and resolution",
-      "skos:hasTopConcept": [
-        "issue:abort",
-        "issue:access",
-        "issue:alert",
-        "issue:anti-ptn",
-        "issue:any-type",
-        "issue:argument",
-        "issue:auto-sync-effect",
-        "issue:behavior",
-        "issue:blank",
-        "issue:blocking",
-        "issue:break",
-        "issue:broken",
-        "issue:broken-code",
-        "issue:broken-structure",
-        "issue:bug",
-        "issue:bypass",
-        "issue:cascade",
-        "issue:casing",
-        "issue:cast",
-        "issue:catch",
-        "issue:circular-dependency",
-        "issue:circular-ref",
-        "issue:closing-brace",
-        "issue:closing-parenthesis",
-        "issue:compilation-error",
-        "issue:conflict",
-        "issue:confusion",
-        "issue:corrupt",
-        "issue:count",
-        "issue:crash",
-        "issue:cut-off",
-        "issue:dead-zone",
-        "issue:deadlock",
-        "issue:deprecation",
-        "issue:dirty",
-        "issue:disable",
-        "issue:downtime",
-        "issue:duplicate",
-        "issue:enable",
-        "issue:enum",
-        "issue:expire",
-        "issue:fail",
-        "issue:flow",
-        "issue:fragment",
-        "issue:hang",
-        "issue:hardcode",
-        "issue:hidden",
-        "issue:illegitimate",
-        "issue:inactive",
-        "issue:incomplete",
-        "issue:inconsistency",
-        "issue:incorrect",
-        "issue:infinite-loop",
-        "issue:intermittent",
-        "issue:invalid",
-        "issue:invalidate",
-        "issue:leftover",
-        "issue:legacy",
-        "issue:linter-error",
-        "issue:loading",
-        "issue:log-spam",
-        "issue:logic",
-        "issue:masking",
-        "issue:maximum-update-depth-exceeded",
-        "issue:memory-leak",
-        "issue:memory-pressure",
-        "issue:method-error",
-        "issue:mishandle",
-        "issue:mismatch",
-        "issue:missing",
-        "issue:missing-return-type",
-        "issue:mod-resolution-failure",
-        "issue:non-deterministic",
-        "issue:non-exist",
-        "issue:not-supported",
-        "issue:not-working",
-        "issue:null",
-        "issue:old",
-        "issue:other-key-issues",
-        "issue:overhead",
-        "issue:overlap",
-        "issue:overload",
-        "issue:partial",
-        "issue:problem",
-        "issue:progress-flow",
-        "issue:race-condition",
-        "issue:recalculate",
-        "issue:recreate",
-        "issue:recursive-call",
-        "issue:recursive-function",
-        "issue:redundancy",
-        "issue:re-export",
-        "issue:re-occurence",
-        "issue:re-rendering",
-        "issue:regression",
-        "issue:rejection",
-        "issue:resource-count-collection",
-        "issue:return",
-        "issue:root-cause",
-        "issue:runtime-error",
-        "issue:scatter",
-        "issue:seamlessness",
-        "issue:signature",
-        "issue:skip",
-        "issue:stale-code",
-        "issue:stray-statement",
-        "issue:stuck",
-        "issue:syntax-error",
-        "issue:technical-debt",
-        "issue:temporal-dead-zone",
-        "issue:temporary",
-        "issue:threat-detection-and-response",
-        "issue:threshold",
-        "issue:timeout",
-        "issue:timing-issue",
-        "issue:trace",
-        "issue:type-error",
-        "issue:typescript-error",
-        "issue:unassigned",
-        "issue:uncaught",
-        "issue:undefined",
-        "issue:underlying-issue",
-        "issue:unnamed",
-        "issue:unnecessary",
-        "issue:unrecognized",
-        "issue:unreleased",
-        "issue:unsafe",
-        "issue:unsupported",
-        "issue:untracked",
-        "issue:unused",
-        "issue:unusual",
-        "issue:valid",
-        "issue:version",
-        "issue:violation",
-        "issue:warn",
-        "issue:wrong",
-        "issue:zombie"
-      ],
-      "resp": "issuecollection",
-      "activeVerbs": [
-        "execute",
-        "validate",
-        "optimize",
-        "monitor"
-      ],
-      "kpiTarget": "perf-eff≥90%",
-      "characteristics": [
-        "composable",
-        "traceable",
-        "optimizable"
-      ],
-      "jjnhm": {
-        "v": "3.0.0",
-        "lyr": "JSONLD",
-        "cmplx": "C1-MVP-Prod",
-        "gov": "Core-SG",
-        "kpi": {
-          "tok-dens": "≥7.0-c/t",
-          "sem-clar": "≥97%",
-          "parse-t": "≤0.5ms",
-          "val-succ": "≥99%",
-          "sch-comp": "100%"
-        }
-      },
-      "semanticCluster": {
-        "cluster": "general-processing",
-        "concepts": [
-          "execute",
-          "validate",
-          "optimize",
-          "monitor",
-          "coordinate",
-          "transform",
-          "integrate",
-          "configure"
-        ],
-        "kpi": "performance≥90%",
-        "responsibility": "system-coordination",
-        "characteristics": [
-          "executable",
-          "validatable",
-          "optimizable",
-          "monitorable"
-        ]
-      },
-      "kpiTargets": {
-        "primary": "performance≥90%",
-        "secondary": [
-          "parse-time≤0.5ms",
-          "token-density≥7.0c/t",
-          "semantic-clarity≥97%",
-          "validation-success≥99%",
-          "schema-compliance=100%"
-        ],
-        "composite": "enterprise-readiness≥95%"
-      },
-      "responsibilityMatrix": {
-        "primary": "system-coordination",
-        "secondary": [
-          "quality-assurance",
-          "performance-optimization",
-          "error-resilience"
-        ],
-        "governance": [
-          "compliance-enforcement",
-          "audit-trail-maintenance",
-          "metric-reporting"
-        ],
-        "orchestration": [
-          "multi-agent-coordination",
-          "workflow-synchronization",
-          "resource-allocation"
-        ]
-      },
-      "characteristicVectors": {
-        "functional": [
-          "executable",
-          "validatable",
-          "optimizable",
-          "monitorable"
-        ],
-        "quality": [
-          "reliable",
-          "efficient",
-          "maintainable",
-          "scalable"
-        ],
-        "operational": [
-          "monitorable",
-          "debuggable",
-          "recoverable",
-          "upgradeable"
-        ],
-        "architectural": [
-          "modular",
-          "composable",
-          "extensible",
-          "interoperable"
-        ]
-      },
-      "implementationPatterns": {
-        "design": [
-          "factory",
-          "adapter",
-          "observer",
-          "strategy",
-          "command"
-        ],
-        "architectural": [
-          "microservices",
-          "event-driven",
-          "pipeline",
-          "layered",
-          "hexagonal"
-        ],
-        "integration": [
-          "api-gateway",
-          "message-queue",
-          "event-bus",
-          "service-mesh",
-          "circuit-breaker"
-        ],
-        "data": [
-          "repository",
-          "unit-of-work",
-          "cqrs",
-          "event-sourcing",
-          "saga"
-        ]
-      },
-      "governanceMetadata": {
-        "compliance": [
-          "JJNHM-v3.0.0",
-          "JSON-LD-1.1",
-          "RDF-1.1",
-          "SPARQL-1.1"
-        ],
-        "quality": [
-          "ISO-25010",
-          "NIST-CSF",
-          "OWASP-ASVS",
-          "W3C-WCAG"
-        ],
-        "security": [
-          "RBAC",
-          "ABAC",
-          "OAuth2",
-          "JWT",
-          "TLS-1.3"
-        ],
-        "monitoring": [
-          "OpenTelemetry",
-          "Prometheus",
-          "Grafana",
-          "ELK-Stack"
-        ]
-      },
-      "qualityGates": {
-        "performance": [
-          "latency≤200ms",
-          "throughput≥1K/s",
-          "cpu≤80%",
-          "memory≤2GB"
-        ],
-        "reliability": [
-          "uptime≥99.9%",
-          "mtbf≥720h",
-          "mttr≤15min",
-          "error-rate≤0.1%"
-        ],
-        "security": [
-          "vulnerability-scan=pass",
-          "penetration-test=pass",
-          "compliance-audit=pass"
-        ],
-        "maintainability": [
-          "code-coverage≥80%",
-          "complexity≤10",
-          "duplication≤5%",
-          "documentation≥90%"
-        ]
-      },
-      "orchestrationDirectives": {
-        "execution": [
-          "parallel-processing",
-          "load-balancing",
-          "auto-scaling",
-          "circuit-breaking"
-        ],
-        "coordination": [
-          "event-choreography",
-          "saga-orchestration",
-          "workflow-engine",
-          "state-machine"
-        ],
-        "monitoring": [
-          "health-checks",
-          "metrics-collection",
-          "alerting",
-          "tracing"
-        ],
-        "recovery": [
-          "backup-restore",
-          "disaster-recovery",
-          "failover",
-          "rollback"
-        ]
-      },
-      "validationRules": {
-        "structural": [
-          "schema-validation",
-          "type-checking",
-          "constraint-validation",
-          "referential-integrity"
-        ],
-        "semantic": [
-          "business-rules",
-          "domain-constraints",
-          "workflow-validation",
-          "state-consistency"
-        ],
-        "quality": [
-          "performance-benchmarks",
-          "security-scans",
-          "accessibility-checks",
-          "usability-tests"
-        ],
-        "compliance": [
-          "regulatory-compliance",
-          "standard-conformance",
-          "policy-enforcement",
-          "audit-requirements"
-        ]
-      }
+      "@id": "issue:accessibility-issue",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "accessibility-issue",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for accessibility-issue",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "accessibility-issue",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:api-error",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "api-error",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for api-error",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "api-error",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:async-issue",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "async-issue",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for async-issue",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "async-issue",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:authentication-error",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "authentication-error",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for authentication-error",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "authentication-error",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:browser-compatibility",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "browser-compatibility",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for browser-compatibility",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "browser-compatibility",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:build-error",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "build-error",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for build-error",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "build-error",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:cache-issue",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "cache-issue",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for cache-issue",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "cache-issue",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:catch",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "catch",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for catch",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "catch",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:circular-dependency",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "circular-dependency",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for circular-dependency",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "circular-dependency",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "issue:circular-ref",
+      "@type": "skos:Concept",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "closing-brace",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Schema definition for circular-ref",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "circular-ref",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
     }
   ],
-  "jjnhm": {
-    "version": "3.0.0",
-    "layer": "JSONLD",
-    "complexity": "C1-MVP-Production",
-    "governance": "Core-sch-Governance",
-    "kpiTargets": {
-      "token-density": "≥7.0-concepts/token",
-      "semantic-clarity": "≥97%",
-      "parse-time": "≤0.5ms",
-      "val-success": "≥99%",
-      "sch-compliance": "100%"
-    }
-  },
+  "@id": "project-issues",
+  "@type": "skos:ConceptScheme",
   "activeVerbs": [
     "execute",
     "validate",
@@ -429,68 +274,18 @@
     "deploy",
     "maintain"
   ],
-  "semanticCluster": {
-    "cluster": "general-processing",
-    "concepts": [
-      "execute",
-      "validate",
-      "optimize",
-      "monitor",
-      "coordinate",
-      "transform",
-      "integrate",
-      "configure"
-    ],
-    "kpi": "performance≥90%",
-    "responsibility": "system-coordination",
-    "characteristics": [
-      "executable",
-      "validatable",
-      "optimizable",
-      "monitorable"
-    ]
-  },
-  "kpiTargets": {
-    "primary": "performance≥90%",
-    "secondary": [
-      "parse-time≤0.5ms",
-      "token-density≥7.0c/t",
-      "semantic-clarity≥97%",
-      "validation-success≥99%",
-      "schema-compliance=100%"
-    ],
-    "composite": "enterprise-readiness≥95%"
-  },
-  "responsibilityMatrix": {
-    "primary": "system-coordination",
-    "secondary": [
-      "quality-assurance",
-      "performance-optimization",
-      "error-resilience"
-    ],
-    "governance": [
-      "compliance-enforcement",
-      "audit-trail-maintenance",
-      "metric-reporting"
-    ],
-    "orchestration": [
-      "multi-agent-coordination",
-      "workflow-synchronization",
-      "resource-allocation"
-    ]
-  },
   "characteristicVectors": {
+    "architectural": [
+      "modular",
+      "composable",
+      "extensible",
+      "interoperable"
+    ],
     "functional": [
       "executable",
       "validatable",
       "optimizable",
       "monitorable"
-    ],
-    "quality": [
-      "reliable",
-      "efficient",
-      "maintainable",
-      "scalable"
     ],
     "operational": [
       "monitorable",
@@ -498,49 +293,32 @@
       "recoverable",
       "upgradeable"
     ],
-    "architectural": [
-      "modular",
-      "composable",
-      "extensible",
-      "interoperable"
+    "quality": [
+      "reliable",
+      "efficient",
+      "maintainable",
+      "scalable"
     ]
   },
-  "implementationPatterns": {
-    "design": [
-      "factory",
-      "adapter",
-      "observer",
-      "strategy",
-      "command"
-    ],
-    "architectural": [
-      "microservices",
-      "event-driven",
-      "pipeline",
-      "layered",
-      "hexagonal"
-    ],
-    "integration": [
-      "api-gateway",
-      "message-queue",
-      "event-bus",
-      "service-mesh",
-      "circuit-breaker"
-    ],
-    "data": [
-      "repository",
-      "unit-of-work",
-      "cqrs",
-      "event-sourcing",
-      "saga"
-    ]
-  },
+  "characteristics": [
+    "composable",
+    "traceable",
+    "optimizable"
+  ],
+  "created": "2024-01-01",
+  "creator": "huijoohwee",
   "governanceMetadata": {
     "compliance": [
       "JJNHM-v3.0.0",
       "JSON-LD-1.1",
       "RDF-1.1",
       "SPARQL-1.1"
+    ],
+    "monitoring": [
+      "OpenTelemetry",
+      "Prometheus",
+      "Grafana",
+      "ELK-Stack"
     ],
     "quality": [
       "ISO-25010",
@@ -554,15 +332,111 @@
       "OAuth2",
       "JWT",
       "TLS-1.3"
+    ]
+  },
+  "implementationPatterns": {
+    "architectural": [
+      "microservices",
+      "event-driven",
+      "pipeline",
+      "layered",
+      "hexagonal"
+    ],
+    "data": [
+      "repository",
+      "unit-of-work",
+      "cqrs",
+      "event-sourcing",
+      "saga"
+    ],
+    "design": [
+      "factory",
+      "adapter",
+      "observer",
+      "strategy",
+      "command"
+    ],
+    "integration": [
+      "api-gateway",
+      "message-queue",
+      "event-bus",
+      "service-mesh",
+      "circuit-breaker"
+    ]
+  },
+  "jjnhm": {
+    "complexity": "C1-MVP-Production",
+    "governance": "Core-sch-Governance",
+    "kpiTargets": {
+      "parse-time": "≤0.5ms",
+      "schema-compliance": "100%",
+      "semantic-clarity": "≥97%",
+      "token-density": "≥7.0-concepts/token",
+      "validation-success": "≥99%"
+    },
+    "layer": "JSONLD",
+    "version": "3.0.0"
+  },
+  "kpiTarget": "perf-eff≥90%",
+  "kpiTargets": {
+    "composite": "enterprise-readiness≥95%",
+    "primary": "performance≥90%",
+    "secondary": [
+      "parse-time≤0.5ms",
+      "token-density≥7.0c/t",
+      "semantic-clarity≥97%",
+      "validation-success≥99%",
+      "schema-compliance=100%"
+    ]
+  },
+  "meta": {
+    "conformsTo": "https://www.w3.org/TR/json-ld11/",
+    "created": "2025-01-09T00:00:00Z",
+    "creator": "huijoohwee",
+    "description": "Schema definitions for project components",
+    "license": "MIT",
+    "modified": "2025-10-26T21:07:09.045943Z",
+    "responsibilities": [
+      "schema-definition",
+      "component-documentation"
+    ],
+    "title": "Project Schema",
+    "version": "1.0.0"
+  },
+  "modified": "2024-12-25",
+  "orchestrationDirectives": {
+    "coordination": [
+      "event-choreography",
+      "saga-orchestration",
+      "workflow-engine",
+      "state-machine"
+    ],
+    "execution": [
+      "parallel-processing",
+      "load-balancing",
+      "auto-scaling",
+      "circuit-breaking"
     ],
     "monitoring": [
-      "OpenTelemetry",
-      "Prometheus",
-      "Grafana",
-      "ELK-Stack"
+      "health-checks",
+      "metrics-collection",
+      "alerting",
+      "tracing"
+    ],
+    "recovery": [
+      "backup-restore",
+      "disaster-recovery",
+      "failover",
+      "rollback"
     ]
   },
   "qualityGates": {
+    "maintainability": [
+      "code-coverage≥80%",
+      "complexity≤10",
+      "duplication≤5%",
+      "documentation≥90%"
+    ],
     "performance": [
       "latency≤200ms",
       "throughput≥1K/s",
@@ -579,52 +453,200 @@
       "vulnerability-scan=pass",
       "penetration-test=pass",
       "compliance-audit=pass"
-    ],
-    "maintainability": [
-      "code-coverage≥80%",
-      "complexity≤10",
-      "duplication≤5%",
-      "documentation≥90%"
     ]
   },
-  "orchestrationDirectives": {
-    "execution": [
-      "parallel-processing",
-      "load-balancing",
-      "auto-scaling",
-      "circuit-breaking"
+  "resp": "issuecollection",
+  "responsibilityMatrix": {
+    "governance": [
+      "compliance-enforcement",
+      "audit-trail-maintenance",
+      "metric-reporting"
     ],
-    "coordination": [
-      "event-choreography",
-      "saga-orchestration",
-      "workflow-engine",
-      "state-machine"
+    "orchestration": [
+      "multi-agent-coordination",
+      "workflow-synchronization",
+      "resource-allocation"
     ],
-    "monitoring": [
-      "health-checks",
-      "metrics-collection",
-      "alerting",
-      "tracing"
-    ],
-    "recovery": [
-      "backup-restore",
-      "disaster-recovery",
-      "failover",
-      "rollback"
+    "primary": "system-coordination",
+    "secondary": [
+      "quality-assurance",
+      "performance-optimization",
+      "error-resilience"
     ]
   },
+  "semanticCluster": {
+    "characteristics": [
+      "executable",
+      "validatable",
+      "optimizable",
+      "monitorable"
+    ],
+    "cluster": "general-processing",
+    "concepts": [
+      "execute",
+      "validate",
+      "optimize",
+      "monitor",
+      "coordinate",
+      "transform",
+      "integrate",
+      "configure"
+    ],
+    "kpi": "performance≥90%",
+    "responsibility": "system-coordination"
+  },
+  "skos:definition": "Comprehensive schema for categorizing and managing project issues across development lifecycle",
+  "skos:hasTopConcept": [
+    "issue:accessibility-issue",
+    "issue:api-error",
+    "issue:async-issue",
+    "issue:authentication-error",
+    "issue:browser-compatibility",
+    "issue:build-error",
+    "issue:cache-issue",
+    "issue:catch",
+    "issue:circular-dependency",
+    "issue:circular-ref",
+    "issue:closing-brace",
+    "issue:closing-parenthesis",
+    "issue:compilation-error",
+    "issue:conflict",
+    "issue:confusion",
+    "issue:corrupt",
+    "issue:count",
+    "issue:crash",
+    "issue:cut-off",
+    "issue:dead-zone",
+    "issue:deadlock",
+    "issue:deprecation",
+    "issue:dirty",
+    "issue:disable",
+    "issue:downtime",
+    "issue:drag-drop-performance",
+    "issue:drag-drop-visual-feedback",
+    "issue:duplicate",
+    "issue:enable",
+    "issue:enum",
+    "issue:expire",
+    "issue:fail",
+    "issue:floating-editor-alignment",
+    "issue:floating-editor-integration",
+    "issue:floating-editor-synchronization",
+    "issue:flow",
+    "issue:format-conversion-error",
+    "issue:format-conversion-memory-leak",
+    "issue:format-conversion-performance",
+    "issue:fragment",
+    "issue:hang",
+    "issue:hardcode",
+    "issue:hidden",
+    "issue:hoisting",
+    "issue:illegitimate",
+    "issue:inactive",
+    "issue:incomplete",
+    "issue:inconsistency",
+    "issue:incorrect",
+    "issue:infinite-canvas-performance",
+    "issue:infinite-canvas-rendering",
+    "issue:infinite-loop",
+    "issue:intermittent",
+    "issue:invalid",
+    "issue:invalidate",
+    "issue:leftover",
+    "issue:legacy",
+    "issue:lint",
+    "issue:loading",
+    "issue:log-spam",
+    "issue:logic",
+    "issue:masking",
+    "issue:maximum-update-depth-exceeded",
+    "issue:memory-leak",
+    "issue:memory-pressure",
+    "issue:method-error",
+    "issue:mishandle",
+    "issue:mismatch",
+    "issue:missing",
+    "issue:missing-return-type",
+    "issue:mod-resolution-failure",
+    "issue:naming-inconsistency",
+    "issue:non-deterministic",
+    "issue:non-exist",
+    "issue:not-supported",
+    "issue:not-working",
+    "issue:null",
+    "issue:old",
+    "issue:order",
+    "issue:orphaned",
+    "issue:other-key-issues",
+    "issue:overhead",
+    "issue:overlap",
+    "issue:overload",
+    "issue:partial",
+    "issue:problem",
+    "issue:progress-flow",
+    "issue:race-condition",
+    "issue:recalculate",
+    "issue:recreate",
+    "issue:recursive-call",
+    "issue:recursive-function",
+    "issue:redundancy",
+    "issue:re-export",
+    "issue:re-occurence",
+    "issue:regression",
+    "issue:rejection",
+    "issue:re-rendering",
+    "issue:resource-count-collection",
+    "issue:return",
+    "issue:root-cause",
+    "issue:runtime-error",
+    "issue:scatter",
+    "issue:seamlessness",
+    "issue:signature",
+    "issue:skip",
+    "issue:stale-code",
+    "issue:stray-statement",
+    "issue:stuck",
+    "issue:syntax-error",
+    "issue:technical-debt",
+    "issue:temporal-dead-zone",
+    "issue:temporary",
+    "issue:threat-detection-and-response",
+    "issue:threshold",
+    "issue:timeout",
+    "issue:timing-issue",
+    "issue:trace",
+    "issue:type-error",
+    "issue:typescript-error",
+    "issue:unassigned",
+    "issue:uncaught",
+    "issue:undefined",
+    "issue:underlying-issue",
+    "issue:unnamed",
+    "issue:unnecessary",
+    "issue:unrecognized",
+    "issue:unreleased",
+    "issue:unsafe",
+    "issue:unsupported",
+    "issue:untracked",
+    "issue:unused",
+    "issue:unusual",
+    "issue:valid",
+    "issue:version",
+    "issue:violation",
+    "issue:warn",
+    "issue:workspace-integration",
+    "issue:workspace-memory-leak",
+    "issue:workspace-synchronization",
+    "issue:wrong",
+    "issue:zombie"
+  ],
+  "skos:prefLabel": "Project Issues Schema",
   "validationRules": {
-    "structural": [
-      "schema-validation",
-      "type-checking",
-      "constraint-validation",
-      "referential-integrity"
-    ],
-    "semantic": [
-      "business-rules",
-      "domain-constraints",
-      "workflow-validation",
-      "state-consistency"
+    "compliance": [
+      "regulatory-compliance",
+      "standard-conformance",
+      "policy-enforcement",
+      "audit-requirements"
     ],
     "quality": [
       "performance-benchmarks",
@@ -632,11 +654,18 @@
       "accessibility-checks",
       "usability-tests"
     ],
-    "compliance": [
-      "regulatory-compliance",
-      "standard-conformance",
-      "policy-enforcement",
-      "audit-requirements"
+    "semantic": [
+      "business-rules",
+      "domain-constraints",
+      "workflow-validation",
+      "state-consistency"
+    ],
+    "structural": [
+      "schema-validation",
+      "type-checking",
+      "constraint-validation",
+      "referential-integrity"
     ]
-  }
+  },
+  "version": "3.0.0"
 }

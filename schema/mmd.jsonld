@@ -1,111 +1,170 @@
 {
   "@context": {
-    "@version": 1.1,
     "@base": "https://huijoohwee.github.io/schema/base.jsonld",
+    "@version": 1.1,
     "@vocab": "https://huijoohwee.github.io/schema/vocab.jsonld",
-
-    "core": "https://huijoohwee.github.io/schema/core.jsonld",
-    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
-    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
-    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
-
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
-
-    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
-    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
-    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
-    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
-    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
-
     "Diagram": "schema:CreativeWork",
-    "Node": "mmd-vocab:Node",
     "Edge": "mmd-vocab:Edge",
-    "Subgraph": "mmd-vocab:Subgraph",
+    "Node": "mmd-vocab:Node",
     "Sequence": "mmd-vocab:Sequence",
+    "Subgraph": "mmd-vocab:Subgraph",
     "VisualContract": "mmd-vocab:VisualContract",
-
-    "nodeId": { "@id": "mmd-vocab:nodeId", "@type": "xsd:string" },
-    "nodeType": { "@id": "mmd-vocab:nodeType", "@type": "@id" },
-    "label": "rdfs:label",
-    "shape": "mmd-vocab:shape",
-    "style": "mmd-vocab:style",
-    "from": { "@id": "mmd-vocab:from", "@type": "@id" },
-    "to": { "@id": "mmd-vocab:to", "@type": "@id" },
-    "relation": "mmd-vocab:relation",
-    "group": "mmd-vocab:group",
-    "sequenceOrder": { "@id": "mmd-vocab:sequenceOrder", "@type": "xsd:integer" },
-    "referencesType": { "@id": "mmd-vocab:referencesType", "@type": "@id", "@container": "@set" },
-    "refsExample": "prov:wasDerivedFrom",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld",
+    "created": {
+      "@id": "core:created",
+      "@type": "xsd:dateTime"
+    },
     "docs": "prov:wasDerivedFrom",
     "examplePath": "mmd-vocab:examplePath",
-    "created": { "@id": "core:created", "@type": "xsd:dateTime" },
-    "updated": { "@id": "core:updated", "@type": "xsd:dateTime" }
+    "from": {
+      "@id": "mmd-vocab:from",
+      "@type": "@id"
+    },
+    "group": "mmd-vocab:group",
+    "hbs": "https://huijoohwee.github.io/schema/hbs.jsonld",
+    "jdbl": "https://huijoohwee.github.io/schema/jdbl.jsonld",
+    "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
+    "jsonld": "https://www.w3.org/2013/json-ld-context/rdfa11",
+    "kg": "https://huijoohwee.github.io/schema/kg.jsonld",
+    "label": "rdfs:label",
+    "mmd": "https://huijoohwee.github.io/schema/mmd.jsonld",
+    "nodeId": {
+      "@id": "mmd-vocab:nodeId",
+      "@type": "xsd:string"
+    },
+    "nodeType": {
+      "@id": "mmd-vocab:nodeType",
+      "@type": "@id"
+    },
+    "nqds": "https://huijoohwee.github.io/schema/nqds.jsonld",
+    "nquads": "https://www.w3.org/TR/n-quads/#n-quads",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "referencesType": {
+      "@container": "@set",
+      "@id": "mmd-vocab:referencesType",
+      "@type": "@id"
+    },
+    "refsExample": "prov:wasDerivedFrom",
+    "relation": "mmd-vocab:relation",
+    "sequenceOrder": {
+      "@id": "mmd-vocab:sequenceOrder",
+      "@type": "xsd:integer"
+    },
+    "shape": "mmd-vocab:shape",
+    "style": "mmd-vocab:style",
+    "to": {
+      "@id": "mmd-vocab:to",
+      "@type": "@id"
+    },
+    "uc": "https://huijoohwee.github.io/schema/uc.jsonld",
+    "updated": {
+      "@id": "core:updated",
+      "@type": "xsd:dateTime"
+    },
+    "wf": "https://huijoohwee.github.io/schema/wf.jsonld",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-
   "@id": "https://huijoohwee.github.io/schema/mmd.jsonld",
   "@type": "Diagram",
-  "name": "MMD Layer Context",
-  "description": "JSON-LD mapping of Mermaid-like diagram constructs (nodes, edges, subgraphs, sequences) to canonical JSON-LD types and visual contract rules; includes validator guidance and example pointers",
-  "version": "0.2.0",
-  "docs": "https://mermaid.js.org",
   "created": "2025-10-09T00:00:00Z",
-  "updated": "2025-10-09T00:00:00Z",
-
+  "description": "JSON-LD mapping of Mermaid-like diagram constructs (nodes, edges, subgraphs, sequences) to canonical JSON-LD types and visual contract rules; includes validator guidance and example pointers",
+  "docs": "https://mermaid.js.org",
   "examples": [
     {
       "@type": "Diagram",
-      "name": "mvp-architecture",
       "description": "Architecture, agent orchestration and timeline diagram for Rapid MVP",
-      "examplePath": "/schema/examples/mmd/mvp-architecture.mmd",
-      "nodes": [
-        {
-          "@type": "Node",
-          "nodeId": "Orchestrator",
-          "label": "Orchestrator",
-          "nodeType": "https://huijoohwee.github.io/schema/vocab.jsonld#OrchestratorAgent",
-          "shape": "round",
-          "style": "fill:#f9f,stroke:#333,stroke-width:2px",
-          "referencesType": [
-            "https://huijoohwee.github.io/schema/vocab.jsonld#Agent",
-            "https://schema.org/SoftwareSourceCode"
-          ]
-        },
-        {
-          "@type": "Node",
-          "nodeId": "Dashboard",
-          "label": "Dashboard",
-          "nodeType": "https://huijoohwee.github.io/schema/vocab.jsonld#Dashboard",
-          "shape": "box",
-          "style": "fill:#bbf,stroke:#333",
-          "referencesType": [
-            "https://schema.org/WebPage",
-            "https://huijoohwee.github.io/schema/vocab.jsonld#UIComponent"
-          ]
-        }
-      ],
       "edges": [
         {
           "@type": "Edge",
-          "from": "Orchestrator",
-          "to": "Dashboard",
-          "relation": "orchestrates",
           "description": "Orchestrator coordinates agents that affect the dashboard",
-          "refsExample": "https://huijoohwee.github.io/schema/examples/nqds/orchestrator-to-dashboard.nqds"
+          "from": "Orchestrator",
+          "refsExample": "https://huijoohwee.github.io/schema/examples/nqds/orchestrator-to-dashboard.nqds",
+          "relation": "orchestrates",
+          "to": "Dashboard"
+        }
+      ],
+      "examplePath": "/schema/examples/mmd/mvp-architecture.mmd",
+      "name": "mvp-architecture",
+      "nodes": [
+        {
+          "@type": "Node",
+          "label": "Orchestrator",
+          "nodeId": "Orchestrator",
+          "nodeType": "https://huijoohwee.github.io/schema/vocab.jsonld#OrchestratorAgent",
+          "referencesType": [
+            "https://huijoohwee.github.io/schema/vocab.jsonld#Agent",
+            "https://schema.org/SoftwareSourceCode"
+          ],
+          "shape": "round",
+          "style": "fill:#f9f,stroke:#333,stroke-width:2px"
+        },
+        {
+          "@type": "Node",
+          "label": "Dashboard",
+          "nodeId": "Dashboard",
+          "nodeType": "https://huijoohwee.github.io/schema/vocab.jsonld#Dashboard",
+          "referencesType": [
+            "https://schema.org/WebPage",
+            "https://huijoohwee.github.io/schema/vocab.jsonld#UIComponent"
+          ],
+          "shape": "box",
+          "style": "fill:#bbf,stroke:#333"
         }
       ]
     }
   ],
-
+  "name": "MMD Layer Context",
+  "notes": [
+    "Mermaid docs: https://mermaid.js.org",
+    "Store .mmd artifacts in /schema/examples/mmd/ and include a JSON-LD manifest mapping diagram nodeIds to canonical JSON-LD @ids",
+    "Prefer referencing NQDS trace IDs on edges when diagrams represent runtime/instrumented flows to preserve provenance and traceability"
+  ],
+  "updated": "2025-10-09T00:00:00Z",
+  "validatorHints": [
+    {
+      "@type": "core:Concept",
+      "description": "Validate Mermaid/diagram syntax and parseability using mermaid-cli or equivalent",
+      "label": "mmd-syntax",
+      "recommendedTools": [
+        "mermaid-cli"
+      ]
+    },
+    {
+      "@type": "core:Concept",
+      "description": "Ensure nodeId uniqueness within each diagram and consistent nodeId naming across diagram manifests",
+      "label": "mmd-uniqueness",
+      "recommendedTools": [
+        "mmd-architecture-validator",
+        "kg-diff-checker"
+      ]
+    },
+    {
+      "@type": "core:Concept",
+      "description": "Check that nodeType IRIs resolve to JSON-LD contexts or vocabularies and that referenced types exist",
+      "label": "mmd-type-resolution",
+      "recommendedTools": [
+        "jsonld.js",
+        "type-reference-checker"
+      ]
+    },
+    {
+      "@type": "core:Concept",
+      "description": "Verify that edges asserting flows reference NQDS relation IRIs or JDBL traceIds where appropriate to preserve semantic linkage between visuals and runtime artifacts",
+      "label": "mmd-semantic-linkage",
+      "recommendedTools": [
+        "nqds-parser",
+        "directive-trace-validator"
+      ]
+    }
+  ],
+  "version": "0.2.0",
   "visualContracts": [
     {
       "@type": "VisualContract",
-      "name": "DiagramToJSONLD",
       "description": "Diagrams must reference canonical JSON-LD @ids for nodeType when representing system components and flows; edges representing data or control flow should reference NQDS trace IDs or relation IRIs",
       "enforcementLevel": "recommended",
+      "name": "DiagramToJSONLD",
       "validatorHints": {
         "description": "Validate that nodeType IRIs resolve to JSON-LD contexts; verify nodeId uniqueness; ensure edges map to NQDS relations or JDBL directives when representing runtime flows",
         "recommendedTools": [
@@ -117,38 +176,5 @@
         ]
       }
     }
-  ],
-
-  "validatorHints": [
-    {
-      "@type": "core:Concept",
-      "label": "mmd-syntax",
-      "description": "Validate Mermaid/diagram syntax and parseability using mermaid-cli or equivalent",
-      "recommendedTools": ["mermaid-cli"]
-    },
-    {
-      "@type": "core:Concept",
-      "label": "mmd-uniqueness",
-      "description": "Ensure nodeId uniqueness within each diagram and consistent nodeId naming across diagram manifests",
-      "recommendedTools": ["mmd-architecture-validator", "kg-diff-checker"]
-    },
-    {
-      "@type": "core:Concept",
-      "label": "mmd-type-resolution",
-      "description": "Check that nodeType IRIs resolve to JSON-LD contexts or vocabularies and that referenced types exist",
-      "recommendedTools": ["jsonld.js", "type-reference-checker"]
-    },
-    {
-      "@type": "core:Concept",
-      "label": "mmd-semantic-linkage",
-      "description": "Verify that edges asserting flows reference NQDS relation IRIs or JDBL traceIds where appropriate to preserve semantic linkage between visuals and runtime artifacts",
-      "recommendedTools": ["nqds-parser", "directive-trace-validator"]
-    }
-  ],
-
-  "notes": [
-    "Mermaid docs: https://mermaid.js.org",
-    "Store .mmd artifacts in /schema/examples/mmd/ and include a JSON-LD manifest mapping diagram nodeIds to canonical JSON-LD @ids",
-    "Prefer referencing NQDS trace IDs on edges when diagrams represent runtime/instrumented flows to preserve provenance and traceability"
   ]
 }

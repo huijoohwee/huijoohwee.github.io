@@ -2,152 +2,2076 @@
   "@context": [
     "https://huijoohwee.github.io/schema/base.jsonld",
     {
-      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "@base": "https://huijoohwee.github.io/schema/",
+      "ai": "https://huijoohwee.github.io/schema/ai.jsonld#",
       "dcterms": "http://purl.org/dc/terms/",
-      "skos": "http://www.w3.org/2004/02/skos/core#",
-      "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "project:AICodeSuggestionsPanel",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "AIAssistancePanel",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "AI-powered code suggestions panel for intelligent code completion and recommendations",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AICodeSuggestionsPanel",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:Alert",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Alert component for displaying important messages",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "Alert",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:AlertDialog",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "UIPanel",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Alert Dialog component for user confirmations and alerts",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "AlertDialog",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:App",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Main Application Component with Enhanced Memory Management",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "App",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:AudioNode",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "RichMediaNode",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Rich media node for audio file handling and playback in canvas",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AudioNode",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:AutoSyncConfigPanel",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "ConfigPanel",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Auto-sync configuration panel for workspace synchronization settings",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "AutoSyncConfigPanel",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:AutosyncToggle",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Autosync toggle component for canvas-editor synchronization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "AutosyncToggle",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:AutoSyncToggle",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "AutoSync Toggle Component - Controls bidirectional sync between canvas and code editor",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "AutoSyncToggle",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:Badge",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "UIComponent",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "UI badge component for status indicators and labels",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Badge",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "ui-element",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:BatchExportPanel",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "UIPanel",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Batch Export Panel - Multi-format export with progress tracking",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BatchExportPanel",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal",
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:BrowserContainer",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "BrowserContainer component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserContainer",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserErrorBoundary",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced error boundary for browser components with recovery mechanisms",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserErrorBoundary",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserHeader",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "BrowserHeader component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserHeader",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Consolidated browser node component with enhanced security, memory management, and drag-and-drop support",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserNode",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserNodesDemo",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Interactive demo component showcasing all three browser node types with pre-populated URLs",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserNodesDemo",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserSettings",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "BrowserSettings component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserSettings",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:BrowserView",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "BrowserView component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "BrowserView",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:Button",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "UIComponent",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Base button component with variants and icon support",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "Button",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "ui-element",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:CanvasActionButton",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Specialized button for canvas actions and interactions",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "CanvasActionButton",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:CanvasAlignmentSystem",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Canvas alignment system with guides and distribution tools",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasAlignmentSystem",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CanvasCore",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Core canvas component with React Flow integration and performance optimization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasCore",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:CanvasFlowCompatibility",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Test compatibility with canvas-flow-test.json structure",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasFlowCompatibility",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CanvasInteractionManager",
+      "@type": "project:Service",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "InteractionManager",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "Canvas interaction manager for drag-drop and selection operations",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "CanvasInteractionManager",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "standard",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:CanvasTest",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Simple canvas test page for verifying basic functionality",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasTest",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CanvasToolsPanel",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Canvas tools panel with component management and drag-and-drop",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasToolsPanel",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:CanvasToolsTab",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Canvas tools tab with tool grid and canvas actions",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CanvasToolsTab",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ComponentManagementPanel",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Component management panel with palette, visual browser, search/filter, and drag-to-canvas integration",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ComponentManagementPanel",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ComponentPaletteItem",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Component palette item with drag-and-drop and action support",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ComponentPaletteItem",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ComponentsTab",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Components tab with search, categories, and component grid",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ComponentsTab",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ComprehensiveLoggingDashboard",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Comprehensive Logging Dashboard - 6-Tier Logging System",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ComprehensiveLoggingDashboard",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:CustomEdgeAnimated",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced animated custom edge component with media-aware flow visualization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomEdgeAnimated",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CustomEdgeDefault",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced default custom edge with draggable and resizable functionality",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomEdgeDefault",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CustomEdgeSmart",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced smart custom edge component with adaptive routing and intelligent connection patterns",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomEdgeSmart",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CustomNodeCode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Code node component with syntax highlighting and enhanced features",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomNodeCode",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CustomNodeDefault",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced default custom node component with responsive design and resizability",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomNodeDefault",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:CustomNodeText",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Text node component with rich text formatting and enhanced features",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "CustomNodeText",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:DraggableEdge",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced draggable edge component with resizable labels and connection points",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "DraggableEdge",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:DragHandlers",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Drag operation handlers for enhanced drag-drop system",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "DragHandlers",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:DropZoneManager",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Orchestrator",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Drop zone management for enhanced drag-drop system",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "DropZoneManager",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EdgeToolbar",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Edge toolbar component for edge type selection and management",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EdgeToolbar",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedCanvasToolbar",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced canvas toolbar with alignment and responsive controls",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedCanvasToolbar",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedDragDropManager",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Orchestrator",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced drag and drop manager with performance monitoring and visual feedback",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedDragDropManager",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedDraggableNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced draggable node with improved feedback and snapping",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedDraggableNode",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedImportExportWorkflow",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced import/export workflow with multi-format support",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedImportExportWorkflow",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedInfiniteCanvas",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Clean-slate Enhanced Infinite Canvas component with responsive features",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedInfiniteCanvas",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedNavigationControls",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced navigation controls for browser component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedNavigationControls",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:EnhancedPerformanceMonitor",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced performance monitoring component with memory-aware optimization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "EnhancedPerformanceMonitor",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ErrorBoundary",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Error Boundary component for comprehensive error handling and recovery",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ErrorBoundary",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ErrorRecoveryUI",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Error Recovery UI Components - User-friendly error display and recovery interfaces",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ErrorRecoveryUI",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:FallbackChainProgress",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Fallback chain progress visualization component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "FallbackChainProgress",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:FloatingCodeEditor",
+      "@type": "project:Component",
+      "ai:alignmentScore": "95.0",
+      "ai:dmagPattern": "EditorComponent",
+      "ai:enhancementLevel": "comprehensive",
+      "ai:jjnhmLayer": "HBS",
+      "ai:loggingSupport": "enabled",
+      "ai:semanticVersion": "1.0.0",
+      "ai:structureCompliance": "full",
+      "dcterms:created": "2024-01-01",
+      "dcterms:description": "FloatingCodeEditor Component - Enhanced wrapper for FloatingMonacoEditor with workspace integration, drag-drop support, and bidirectional sync",
+      "dcterms:modified": "2024-01-01",
+      "rdfs:label": "FloatingCodeEditor",
+      "wbstcnvs:canvasSupport": "enabled",
+      "wbstcnvs:componentType": "enhanced",
+      "wbstcnvs:dragDropSupport": "enabled",
+      "wbstcnvs:editorIntegration": "supported",
+      "wbstcnvs:formatConversion": "available",
+      "wbstcnvs:importExportCapability": "full",
+      "wbstcnvs:indexStatus": "synchronized",
+      "wbstcnvs:integrationLevel": "full",
+      "wbstcnvs:schemaAlignment": "standardized",
+      "wbstcnvs:workspaceCompatibility": "universal"
+    },
+    {
+      "@id": "project:FloatingMonacoEditor",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Floating Monaco Code Editor with bidirectional synchronization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "FloatingMonacoEditor",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ImageNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced image node with draggable and resizable functionality",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ImageNode",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ImportDisplayWorkflow",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Comprehensive test suite for import-to-display workflow",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ImportDisplayWorkflow",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ImportTab",
+      "@type": "project:Component",
+      "ai:dmagPattern": "ConversionManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Streamlined Import tab component - Simplified file upload and processing",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ImportTab",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:LoadingStrategiesPanel",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Optimized loading strategies panel component for displaying multiple URL loading options",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "LoadingStrategiesPanel",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:LogAnalytics",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Log Analytics Component - Analytics metrics display",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "LogAnalytics",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:LogControls",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Log Controls Component - Control panel for log filtering and actions",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "LogControls",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:LogViewer",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Log Viewer Component - Main log display and details panel",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "LogViewer",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:MemoryManager",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Orchestrator",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Memory management component with cleanup and optimization",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "MemoryManager",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:MemoryMonitor",
+      "@type": "project:Component",
+      "ai:dmagPattern": "ResourceManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Memory monitoring component with cleanup capabilities",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "MemoryMonitor",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:MultiSelection",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "MultiSelection component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "MultiSelection",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:NavigationErrorBoundary",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Error boundary component for navigation controls with recovery mechanisms",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "NavigationErrorBoundary",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:PerformanceAnalyticsDashboard",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Advanced performance analytics dashboard with trend analysis and optimization recommendations",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "PerformanceAnalyticsDashboard",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:PerformanceCharts",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Performance metrics visualization components",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "PerformanceCharts",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:PerformanceDashboard",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Performance monitoring dashboard with real-time metrics, automated cleanup, and optimization recommendations",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "PerformanceDashboard",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:PerformanceMonitor",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Performance monitoring component for drag-drop operations",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "PerformanceMonitor",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:PerformanceMonitoringPanel",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Main performance monitoring panel orchestrating all performance components",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "PerformanceMonitoringPanel",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:ResizableNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced resizable node component with smooth resize handles",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ResizableNode",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ResizeHandle",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Reusable resize handle component for draggable and resizable nodes",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ResizeHandle",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ResponsiveCanvasManager",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Orchestrator",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced responsive canvas manager for improved viewport handling",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ResponsiveCanvasManager",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:ScrollArea",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "ScrollArea component for custom scrollable containers",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "ScrollArea",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:Separator",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Separator component for visual content division",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "Separator",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:StabilityScoreCard",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Stability score display component with predictions and recommendations",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "StabilityScoreCard",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:StandardButton",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Reusable button component with multiple variants for canvas tools",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "StandardButton",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:SyncConfigPanel",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Sync configuration panel for workspace sidebar",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "SyncConfigPanel",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:Tabs",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Tabs component for organizing content into multiple panels",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "Tabs",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TauriBrowserContainer",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "TauriBrowserContainer component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TauriBrowserContainer",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TauriBrowserHeader",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "TauriBrowserHeader component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TauriBrowserHeader",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TauriBrowserNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "TauriBrowserNode component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TauriBrowserNode",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TauriBrowserSettings",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "TauriBrowserSettings component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TauriBrowserSettings",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TauriBrowserView",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "TauriBrowserView component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TauriBrowserView",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:TierAnalysis",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Tier Analysis Component - 6-tier logging system analysis",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "TierAnalysis",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:Tooltip",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Tooltip UI Component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "Tooltip",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:UserFeedbackSystem",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "User Feedback System - Comprehensive feedback collection and error reporting",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "UserFeedbackSystem",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoControls",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Video playback controls component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoControls",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoHeader",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Video node header with editable title and action buttons",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoHeader",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoMetadata",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Video metadata display component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoMetadata",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoNode",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced video node with draggable/resizable functionality and YouTube support",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoNode",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoPlaceholder",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Video placeholder component for empty video nodes",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoPlaceholder",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VideoUploadArea",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Video upload area component with drag and drop support",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VideoUploadArea",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VisualFeedbackManager",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Orchestrator",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Visual feedback management for enhanced drag-drop system",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VisualFeedbackManager",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:VisualFeedbackOverlay",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Visual feedback overlay system for drag-drop operations with animations and collision indicators",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "VisualFeedbackOverlay",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
+    },
+    {
+      "@id": "project:WorkflowControls",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Removed Workflow Controls - Component returns null (UI removed)",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkflowControls",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkflowResetDialog",
+      "@type": "project:Component",
+      "ai:dmagPattern": "UIPanel",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workflow reset confirmation dialog component",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkflowResetDialog",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkflowSteps",
+      "@type": "project:Component",
+      "ai:dmagPattern": "WorkflowManager",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workflow steps component for import/export operations",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkflowSteps",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:Workspace",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Main workspace component with infinite canvas, floating editor, and format conversion",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "Workspace",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceCanvas",
+      "@type": "project:Component",
+      "ai:dmagPattern": "CanvasComponent",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace Canvas - Main canvas area with floating panels",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceCanvas",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceCircuitBreaker",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace Circuit Breaker for defensive programming patterns",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceCircuitBreaker",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceErrorHandling",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Comprehensive error handling and performance optimization utilities for workspace",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceErrorHandling",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceHeader",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace Header - Simple navigation and tool selection",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceHeader",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceLayout",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Main workspace layout component with optimized structure",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceLayout",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceSidebar",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Enhanced workspace sidebar with improved layout and container management",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceSidebar",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceStates",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace state components for error and loading states",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceStates",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceStatusBar",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace status bar component showing canvas and workflow metrics",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceStatusBar",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:WorkspaceToolbar",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "Workspace Toolbar - Core actions and tool selection",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "WorkspaceToolbar",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ],
+      "wbstcnvs:workspaceIntegration": "enhanced-workflow-integration"
+    },
+    {
+      "@id": "project:YouTubeEmbed",
+      "@type": "project:Component",
+      "ai:dmagPattern": "Component",
+      "ai:jjnhmLayer": "HBS",
+      "dcterms:created": "2025-11-10",
+      "dcterms:description": "YouTube embed component with customizable parameters",
+      "dcterms:modified": "2025-11-10",
+      "rdfs:label": "YouTubeEmbed",
+      "wbstcnvs:canvasIntegration": "infinite-canvas-support",
+      "wbstcnvs:conversionSupport": [
+        "json",
+        "markdown",
+        "html",
+        "jsx",
+        "vanilla-js"
+      ]
     }
   ],
   "@id": "https://huijoohwee.github.io/schema/project-components.jsonld",
   "@type": "skos:ConceptScheme",
   "meta": {
-    "title": "WBSTCNVS Project Components Schema",
-    "description": "React component definitions for canvas-code conversion and bidirectional sync UI",
-    "version": "2.0.0",
-    "created": "2025-01-09T00:00:00Z",
-    "license": "MIT",
     "conformsTo": [
       "https://huijoohwee.github.io/schema/jjnhm.jsonld",
       "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
     ],
+    "created": "2025-01-09T00:00:00Z",
+    "creator": "huijoohwee",
+    "description": "React component definitions for canvas-code conversion and bidirectional sync UI",
+    "license": "MIT",
+    "modified": "2025-10-26T21:07:09.042200Z",
     "responsibilities": [
+      "advanced-memory-management",
       "canvas-ui-component-mapping",
-      "workflow-interface-definitions",
-      "sync-ui-orchestration",
+      "chunked-file-processing-implementation",
+      "circular-dependency-elimination",
+      "component-manager-interval-bug-resolution",
       "conversion-panel-management",
-      "wbstcnvs-component-architecture"
-    ]
-  },
-  "@graph": [
-    {
-      "@id": "project:CanvasCore",
-      "@type": "project:Component",
-      "rdfs:label": "CanvasCore",
-      "dcterms:description": "Core canvas rendering component with ReactFlow integration",
-      "wbstcnvs:canvasType": "flow-canvas",
-      "wbstcnvs:syncCapability": "bidirectional",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:CanvasToolsPanel",
-      "@type": "project:Component",
-      "rdfs:label": "CanvasToolsPanel",
-      "dcterms:description": "Canvas tools and component library panel for drag-drop operations",
-      "wbstcnvs:canvasType": "tools-panel",
-      "wbstcnvs:syncCapability": "canvas-to-code",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:ConflictResolutionDialog",
-      "@type": "project:Component",
-      "rdfs:label": "ConflictResolutionDialog",
-      "dcterms:description": "Dialog component for resolving bidirectional sync conflicts",
-      "wbstcnvs:conflictStrategy": "user-resolution",
-      "wbstcnvs:syncCapability": "conflict-resolution",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:DocumentNode",
-      "@type": "project:Component",
-      "rdfs:label": "DocumentNode",
-      "dcterms:description": "Canvas node for document formats with preview and metadata",
-      "wbstcnvs:canvasType": "document-node",
-      "wbstcnvs:conversionType": "document-to-code",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:FlowCanvas",
-      "@type": "project:Component",
-      "rdfs:label": "FlowCanvas",
-      "dcterms:description": "Main flow canvas component with ReactFlow provider and state management",
-      "wbstcnvs:canvasType": "flow-canvas",
-      "wbstcnvs:syncCapability": "bidirectional",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Coordination"
-    },
-    {
-      "@id": "project:FloatingCodeEditor",
-      "@type": "project:Component",
-      "rdfs:label": "FloatingCodeEditor",
-      "dcterms:description": "Floating code editor with bidirectional sync capabilities",
-      "wbstcnvs:syncCapability": "code-to-canvas",
-      "wbstcnvs:conversionType": "code-to-visual",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:FormatConversionPanel",
-      "@type": "project:Component",
-      "rdfs:label": "FormatConversionPanel",
-      "dcterms:description": "Panel for format conversion operations and workflow orchestration",
-      "wbstcnvs:conversionType": "multi-format",
-      "wbstcnvs:syncCapability": "format-conversion",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:InfiniteCanvas",
-      "@type": "project:Component",
-      "rdfs:label": "InfiniteCanvas",
-      "dcterms:description": "Infinite canvas component for unlimited workspace design",
-      "wbstcnvs:canvasType": "infinite-canvas",
-      "wbstcnvs:syncCapability": "canvas-to-code",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:InteractiveMediaNode",
-      "@type": "project:Component",
-      "rdfs:label": "InteractiveMediaNode",
-      "dcterms:description": "Canvas node for interactive widgets and dynamic content",
-      "wbstcnvs:canvasType": "media-node",
-      "wbstcnvs:conversionType": "media-to-code",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:Model3DNode",
-      "@type": "project:Component",
-      "rdfs:label": "Model3DNode",
-      "dcterms:description": "Canvas node for 3D model viewing with rotation and zoom controls",
-      "wbstcnvs:canvasType": "3d-node",
-      "wbstcnvs:conversionType": "3d-to-code",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    },
-    {
-      "@id": "project:Workspace",
-      "@type": "project:Component",
-      "rdfs:label": "Workspace",
-      "dcterms:description": "Main workspace interface orchestrating canvas and code synchronization",
-      "wbstcnvs:syncCapability": "workspace-orchestration",
-      "wbstcnvs:conversionType": "bidirectional",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Coordination"
-    },
-    {
-      "@id": "project:WorkspaceSidebar",
-      "@type": "project:Component",
-      "rdfs:label": "WorkspaceSidebar",
-      "dcterms:description": "Workspace sidebar for import-export and workspace management",
-      "wbstcnvs:syncCapability": "workspace-management",
-      "wbstcnvs:conversionType": "import-export",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
-    }
-  ]
+      "defensive-programming-implementation",
+      "deprecated-manager-cleanup-orchestration",
+      "enhanced-canvas-interaction-management",
+      "enhanced-drag-drop-coordination",
+      "enhanced-floating-editor-synchronization",
+      "enhanced-infinite-canvas-rendering",
+      "enhanced-workspace-orchestration",
+      "error-prevention-orchestration",
+      "floating-editor-integration",
+      "format-conversion-pipeline-orchestration",
+      "import-button-workflow-enhancement",
+      "import-export-speed-optimization",
+      "import-file-size-optimization",
+      "infinite-canvas-z-index-alignment",
+      "infinite-loop-prevention",
+      "intelligent-garbage-collection",
+      "large-file-processing-optimization",
+      "memory-leak-prevention",
+      "multi-format-export-management",
+      "performance-optimization-management",
+      "production-ready-workspace-integration",
+      "sync-ui-orchestration",
+      "system-validation-management",
+      "unified-cleanup-system",
+      "unified-memory-system-integration",
+      "wbstcnvs-component-architecture",
+      "workflow-interface-definitions",
+      "workflow-synchronization-coordination",
+      "workspace-integration-orchestration"
+    ],
+    "title": "WBSTCNVS Project Components Schema",
+    "version": "3.0.0"
+  }
 }

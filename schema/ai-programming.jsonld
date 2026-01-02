@@ -2,293 +2,273 @@
   "@context": {
     "@base": "https://huijoohwee.github.io/schema/ai-programming.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/ai-programming#",
-    
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "dcterms": "http://purl.org/dc/terms/",
-    "foaf": "http://xmlns.com/foaf/0.1/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    
-    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
-    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
-    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
-    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
-    
-    "ai": "https://huijoohwee.github.io/schema/ai-programming#",
-    
     "AIAgent": "ai:AIAgent",
+    "AICapability": "ai:AICapability",
+    "CanvasConversion": "ai:CanvasConversion",
     "CodeAnalysis": "ai:CodeAnalysis",
     "CodeGeneration": "ai:CodeGeneration",
-    "CanvasConversion": "ai:CanvasConversion",
-    "WorkflowOrchestration": "ai:WorkflowOrchestration",
-    "QualityValidation": "ai:QualityValidation",
-    "AICapability": "ai:AICapability",
-    "ProgrammingContext": "ai:ProgrammingContext",
-    "SemanticUnderstanding": "ai:SemanticUnderstanding",
     "MultiAgentCoordination": "ai:MultiAgentCoordination",
-    
-    "capability": "ai:capability",
+    "ProgrammingContext": "ai:ProgrammingContext",
+    "QualityValidation": "ai:QualityValidation",
+    "SemanticUnderstanding": "ai:SemanticUnderstanding",
+    "WorkflowOrchestration": "ai:WorkflowOrchestration",
+    "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "ai": "https://huijoohwee.github.io/schema/ai-programming#",
+    "aiProgramming": "ai:aiProgramming",
     "analysisType": "ai:analysisType",
-    "generationType": "ai:generationType",
+    "capability": "ai:capability",
+    "contextAwareness": "ai:contextAwareness",
     "conversionDirection": "ai:conversionDirection",
+    "coordinationLevel": "ai:coordinationLevel",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
+    "dmagPattern": "ai:dmagPattern",
+    "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "generationType": "ai:generationType",
+    "jjnhmLayer": "ai:jjnhmLayer",
     "orchestrationPattern": "ai:orchestrationPattern",
     "qualityThreshold": "ai:qualityThreshold",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "semanticDepth": "ai:semanticDepth",
-    "contextAwareness": "ai:contextAwareness",
-    "coordinationLevel": "ai:coordinationLevel",
-    "aiProgramming": "ai:aiProgramming",
-    "jjnhmLayer": "ai:jjnhmLayer",
-    "dmagPattern": "ai:dmagPattern"
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  
   "@graph": [
     {
       "@id": "ai:AIAgent",
       "@type": "rdfs:Class",
-      "rdfs:label": "AI Agent",
-      "dcterms:description": "Intelligent agent capable of AI-assisted programming tasks with semantic understanding",
-      "rdfs:subClassOf": "agents:Agent",
       "ai:capabilities": [
         "semantic-code-analysis",
         "intelligent-code-generation",
         "context-aware-suggestions",
         "multi-agent-coordination"
       ],
+      "ai:dmagPattern": "Actor",
       "ai:jjnhmLayer": "JSONLD",
-      "ai:dmagPattern": "Actor"
+      "dcterms:description": "Intelligent agent capable of AI-assisted programming tasks with semantic understanding",
+      "rdfs:label": "AI Agent",
+      "rdfs:subClassOf": "agents:Agent"
     },
-
     {
       "@id": "ai:AICapability",
       "@type": "rdfs:Class",
-      "rdfs:label": "AI Capability",
-      "dcterms:description": "Specific AI capability for programming assistance",
-      "rdfs:subClassOf": "core:Property",
       "ai:capabilityTypes": [
         "semantic-understanding",
         "code-generation",
         "pattern-recognition",
         "context-awareness",
         "multi-modal-processing"
-      ]
+      ],
+      "dcterms:description": "Specific AI capability for programming assistance",
+      "rdfs:label": "AI Capability",
+      "rdfs:subClassOf": "core:Property"
     },
-
+    {
+      "@id": "ai:aiProgramming",
+      "@type": "rdf:Property",
+      "dcterms:description": "AI programming capability or feature",
+      "rdfs:label": "AI programming",
+      "rdfs:range": "xsd:boolean"
+    },
     {
       "@id": "ai:AIProgrammingKPITargets",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "AI Programming KPI Targets",
-      "dcterms:description": "Key Performance Indicator targets for AI-assisted programming",
       "ai:targets": {
-        "semantic-understanding-accuracy": "≥95%",
-        "code-generation-quality": "≥90%",
         "analysis-accuracy": "≥92%",
         "canvas-conversion-accuracy": "≥88%",
-        "workflow-orchestration-efficiency": "≥95%",
-        "multi-agent-coordination-success": "≥98%",
+        "code-generation-quality": "≥90%",
         "context-awareness-precision": "≥93%",
-        "quality-validation-accuracy": "≥96%"
-      }
+        "multi-agent-coordination-success": "≥98%",
+        "quality-validation-accuracy": "≥96%",
+        "semantic-understanding-accuracy": "≥95%",
+        "workflow-orchestration-efficiency": "≥95%"
+      },
+      "dcterms:description": "Key Performance Indicator targets for AI-assisted programming",
+      "rdfs:label": "AI Programming KPI Targets"
     },
-
+    {
+      "@id": "ai:AIProgrammingKPITargets",
+      "@type": "ai:QualityValidation",
+      "ai:targets": {
+        "analysis-accuracy": "≥92%",
+        "canvas-conversion-accuracy": "≥88%",
+        "code-generation-quality": "≥90%",
+        "context-awareness-precision": "≥93%",
+        "multi-agent-coordination-success": "≥98%",
+        "quality-validation-accuracy": "≥96%",
+        "semantic-understanding-accuracy": "≥95%",
+        "workflow-orchestration-efficiency": "≥95%"
+      },
+      "dcterms:description": "Key Performance Indicator targets for AI-assisted programming",
+      "rdfs:label": "AI Programming KPI Targets"
+    },
     {
       "@id": "ai:AIProgrammingMetrics",
       "@type": "ai:QualityValidation",
-      "rdfs:label": "AI Programming Metrics",
-      "dcterms:description": "Comprehensive metrics for AI-assisted programming evaluation",
       "ai:metrics": [
         {
           "@id": "ai:AnalysisAccuracyMetric",
+          "ai:measurement": "code-analysis-precision-testing",
           "ai:name": "Analysis Accuracy",
-          "ai:target": "≥92%",
-          "ai:measurement": "code-analysis-precision-testing"
+          "ai:target": "≥92%"
         },
         {
           "@id": "ai:CanvasConversionAccuracyMetric",
+          "ai:measurement": "bidirectional-conversion-accuracy-testing",
           "ai:name": "Canvas Conversion Accuracy",
-          "ai:target": "≥88%",
-          "ai:measurement": "bidirectional-conversion-accuracy-testing"
+          "ai:target": "≥88%"
         },
         {
           "@id": "ai:CodeGenerationQualityMetric",
+          "ai:measurement": "generated-code-quality-analysis",
           "ai:name": "Code Generation Quality",
-          "ai:target": "≥90%",
-          "ai:measurement": "generated-code-quality-analysis"
+          "ai:target": "≥90%"
         },
         {
           "@id": "ai:ContextAwarenessPrecisionMetric",
+          "ai:measurement": "context-understanding-accuracy-analysis",
           "ai:name": "Context Awareness Precision",
-          "ai:target": "≥93%",
-          "ai:measurement": "context-understanding-accuracy-analysis"
+          "ai:target": "≥93%"
         },
         {
           "@id": "ai:MultiAgentCoordinationSuccessMetric",
+          "ai:measurement": "agent-coordination-reliability-testing",
           "ai:name": "Multi-Agent Coordination Success",
-          "ai:target": "≥98%",
-          "ai:measurement": "agent-coordination-reliability-testing"
+          "ai:target": "≥98%"
         },
         {
           "@id": "ai:QualityValidationAccuracyMetric",
+          "ai:measurement": "validation-system-precision-testing",
           "ai:name": "Quality Validation Accuracy",
-          "ai:target": "≥96%",
-          "ai:measurement": "validation-system-precision-testing"
+          "ai:target": "≥96%"
         },
         {
           "@id": "ai:SemanticUnderstandingAccuracyMetric",
+          "ai:measurement": "semantic-comprehension-testing",
           "ai:name": "Semantic Understanding Accuracy",
-          "ai:target": "≥95%",
-          "ai:measurement": "semantic-comprehension-testing"
+          "ai:target": "≥95%"
         },
         {
           "@id": "ai:WorkflowOrchestrationEfficiencyMetric",
+          "ai:measurement": "multi-agent-workflow-performance-analysis",
           "ai:name": "Workflow Orchestration Efficiency",
-          "ai:target": "≥95%",
-          "ai:measurement": "multi-agent-workflow-performance-analysis"
+          "ai:target": "≥95%"
         }
-      ]
+      ],
+      "dcterms:description": "Comprehensive metrics for AI-assisted programming evaluation",
+      "rdfs:label": "AI Programming Metrics"
     },
-
+    {
+      "@id": "ai:AIProgrammingMetrics",
+      "@type": "ai:QualityValidation",
+      "ai:metrics": [
+        {
+          "@id": "ai:AnalysisAccuracyMetric",
+          "ai:measurement": "code-analysis-precision-testing",
+          "ai:name": "Analysis Accuracy",
+          "ai:target": "≥92%"
+        },
+        {
+          "@id": "ai:CanvasConversionAccuracyMetric",
+          "ai:measurement": "bidirectional-conversion-accuracy-testing",
+          "ai:name": "Canvas Conversion Accuracy",
+          "ai:target": "≥88%"
+        },
+        {
+          "@id": "ai:CodeGenerationQualityMetric",
+          "ai:measurement": "generated-code-quality-analysis",
+          "ai:name": "Code Generation Quality",
+          "ai:target": "≥90%"
+        },
+        {
+          "@id": "ai:ContextAwarenessPrecisionMetric",
+          "ai:measurement": "context-understanding-accuracy-analysis",
+          "ai:name": "Context Awareness Precision",
+          "ai:target": "≥93%"
+        },
+        {
+          "@id": "ai:MultiAgentCoordinationSuccessMetric",
+          "ai:measurement": "agent-coordination-reliability-testing",
+          "ai:name": "Multi-Agent Coordination Success",
+          "ai:target": "≥98%"
+        },
+        {
+          "@id": "ai:QualityValidationAccuracyMetric",
+          "ai:measurement": "validation-system-precision-testing",
+          "ai:name": "Quality Validation Accuracy",
+          "ai:target": "≥96%"
+        },
+        {
+          "@id": "ai:SemanticUnderstandingAccuracyMetric",
+          "ai:measurement": "semantic-comprehension-testing",
+          "ai:name": "Semantic Understanding Accuracy",
+          "ai:target": "≥95%"
+        },
+        {
+          "@id": "ai:WorkflowOrchestrationEfficiencyMetric",
+          "ai:measurement": "multi-agent-workflow-performance-analysis",
+          "ai:name": "Workflow Orchestration Efficiency",
+          "ai:target": "≥95%"
+        }
+      ],
+      "dcterms:description": "Comprehensive metrics for AI-assisted programming evaluation",
+      "rdfs:label": "AI Programming Metrics"
+    },
     {
       "@id": "ai:AIProgrammingOntology",
       "@type": "core:Vocabulary",
-      "rdfs:label": "AI-Assisted Programming Ontology",
-      "dcterms:description": "Core ontology for AI-assisted programming with multi-agent coordination and semantic understanding",
-      "dcterms:created": "2024-12-22",
-      "dcterms:modified": "2024-12-22",
-      "dcterms:creator": "SOLO Coding Assistant",
-      "core:version": "1.0.0",
-      "core:license": "MIT",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "JSONLD",
       "core:imports": [
         "https://huijoohwee.github.io/schema/core.jsonld",
         "https://huijoohwee.github.io/schema/agents.jsonld",
         "https://huijoohwee.github.io/schema/dmag.jsonld",
         "https://huijoohwee.github.io/schema/flow.jsonld"
       ],
-      "ai:jjnhmLayer": "JSONLD",
-      "ai:dmagPattern": "Module"
+      "core:license": "MIT",
+      "core:version": "1.0.0",
+      "dcterms:created": "2024-12-22",
+      "dcterms:creator": "SOLO Coding Assistant",
+      "dcterms:description": "Core ontology for AI-assisted programming with multi-agent coordination and semantic understanding",
+      "dcterms:modified": "2024-12-22",
+      "rdfs:label": "AI-Assisted Programming Ontology"
     },
-
-    {
-      "@id": "ai:AIProgrammingKPITargets",
-      "@type": "ai:QualityValidation",
-      "rdfs:label": "AI Programming KPI Targets",
-      "dcterms:description": "Key Performance Indicator targets for AI-assisted programming",
-      "ai:targets": {
-        "semantic-understanding-accuracy": "≥95%",
-        "code-generation-quality": "≥90%",
-        "analysis-accuracy": "≥92%",
-        "canvas-conversion-accuracy": "≥88%",
-        "workflow-orchestration-efficiency": "≥95%",
-        "multi-agent-coordination-success": "≥98%",
-        "context-awareness-precision": "≥93%",
-        "quality-validation-accuracy": "≥96%"
-      }
-    },
-
-    {
-      "@id": "ai:AIProgrammingMetrics",
-      "@type": "ai:QualityValidation",
-      "rdfs:label": "AI Programming Metrics",
-      "dcterms:description": "Comprehensive metrics for AI-assisted programming evaluation",
-      "ai:metrics": [
-        {
-          "@id": "ai:SemanticUnderstandingAccuracyMetric",
-          "ai:name": "Semantic Understanding Accuracy",
-          "ai:target": "≥95%",
-          "ai:measurement": "semantic-comprehension-testing"
-        },
-        {
-          "@id": "ai:CodeGenerationQualityMetric",
-          "ai:name": "Code Generation Quality",
-          "ai:target": "≥90%",
-          "ai:measurement": "generated-code-quality-analysis"
-        },
-        {
-          "@id": "ai:AnalysisAccuracyMetric",
-          "ai:name": "Analysis Accuracy",
-          "ai:target": "≥92%",
-          "ai:measurement": "code-analysis-precision-testing"
-        },
-        {
-          "@id": "ai:CanvasConversionAccuracyMetric",
-          "ai:name": "Canvas Conversion Accuracy",
-          "ai:target": "≥88%",
-          "ai:measurement": "bidirectional-conversion-accuracy-testing"
-        },
-        {
-          "@id": "ai:WorkflowOrchestrationEfficiencyMetric",
-          "ai:name": "Workflow Orchestration Efficiency",
-          "ai:target": "≥95%",
-          "ai:measurement": "multi-agent-workflow-performance-analysis"
-        },
-        {
-          "@id": "ai:MultiAgentCoordinationSuccessMetric",
-          "ai:name": "Multi-Agent Coordination Success",
-          "ai:target": "≥98%",
-          "ai:measurement": "agent-coordination-reliability-testing"
-        },
-        {
-          "@id": "ai:ContextAwarenessPrecisionMetric",
-          "ai:name": "Context Awareness Precision",
-          "ai:target": "≥93%",
-          "ai:measurement": "context-understanding-accuracy-analysis"
-        },
-        {
-          "@id": "ai:QualityValidationAccuracyMetric",
-          "ai:name": "Quality Validation Accuracy",
-          "ai:target": "≥96%",
-          "ai:measurement": "validation-system-precision-testing"
-        }
-      ]
-    },
-
-    {
-      "@id": "ai:aiProgramming",
-      "@type": "rdf:Property",
-      "rdfs:label": "AI programming",
-      "dcterms:description": "AI programming capability or feature",
-      "rdfs:range": "xsd:boolean"
-    },
-
     {
       "@id": "ai:analysisType",
       "@type": "rdf:Property",
-      "rdfs:label": "analysis type",
       "dcterms:description": "Type of code analysis being performed",
       "rdfs:domain": "ai:CodeAnalysis",
+      "rdfs:label": "analysis type",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:CanvasConversion",
       "@type": "rdfs:Class",
-      "rdfs:label": "Canvas Conversion",
-      "dcterms:description": "Bidirectional conversion between visual canvas and code representations",
-      "rdfs:subClassOf": "core:Concept",
       "ai:conversionDirections": [
         "canvas-to-code",
         "code-to-canvas",
         "bidirectional-sync",
         "visual-code-mapping"
       ],
+      "ai:dmagPattern": "Adapter",
       "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Adapter"
+      "dcterms:description": "Bidirectional conversion between visual canvas and code representations",
+      "rdfs:label": "Canvas Conversion",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "ai:capability",
       "@type": "rdf:Property",
-      "rdfs:label": "capability",
       "dcterms:description": "Specific AI capability possessed by an agent or system",
       "rdfs:domain": "ai:AIAgent",
+      "rdfs:label": "capability",
       "rdfs:range": "ai:AICapability"
     },
-
     {
       "@id": "ai:CodeAnalysis",
       "@type": "rdfs:Class",
-      "rdfs:label": "Code Analysis",
-      "dcterms:description": "AI-powered code analysis with semantic understanding and suggestion generation",
-      "rdfs:subClassOf": "core:Concept",
       "ai:analysisTypes": [
         "semantic-analysis",
         "structural-analysis",
@@ -296,16 +276,16 @@
         "performance-analysis",
         "security-analysis"
       ],
+      "ai:dmagPattern": "Service",
       "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "dcterms:description": "AI-powered code analysis with semantic understanding and suggestion generation",
+      "rdfs:label": "Code Analysis",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "ai:CodeGeneration",
       "@type": "rdfs:Class",
-      "rdfs:label": "Code Generation",
-      "dcterms:description": "AI-driven code generation with template systems and format conversion",
-      "rdfs:subClassOf": "core:Concept",
+      "ai:dmagPattern": "Factory",
       "ai:generationTypes": [
         "template-based-generation",
         "context-aware-generation",
@@ -314,115 +294,105 @@
         "refactoring-generation"
       ],
       "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Factory"
+      "dcterms:description": "AI-driven code generation with template systems and format conversion",
+      "rdfs:label": "Code Generation",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "ai:contextAwareness",
       "@type": "rdf:Property",
-      "rdfs:label": "context awareness",
       "dcterms:description": "Level of context awareness in AI processing",
       "rdfs:domain": "ai:ProgrammingContext",
+      "rdfs:label": "context awareness",
       "rdfs:range": "xsd:decimal"
     },
-
     {
       "@id": "ai:conversionDirection",
       "@type": "rdf:Property",
-      "rdfs:label": "conversion direction",
       "dcterms:description": "Direction of canvas-code conversion",
       "rdfs:domain": "ai:CanvasConversion",
+      "rdfs:label": "conversion direction",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:coordinationLevel",
       "@type": "rdf:Property",
-      "rdfs:label": "coordination level",
       "dcterms:description": "Level of multi-agent coordination",
       "rdfs:domain": "ai:MultiAgentCoordination",
+      "rdfs:label": "coordination level",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:dmagPattern",
       "@type": "rdf:Property",
-      "rdfs:label": "DMAG pattern",
       "dcterms:description": "DMAG architecture pattern assignment",
+      "rdfs:label": "DMAG pattern",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:generationType",
       "@type": "rdf:Property",
-      "rdfs:label": "generation type",
       "dcterms:description": "Type of code generation being performed",
       "rdfs:domain": "ai:CodeGeneration",
+      "rdfs:label": "generation type",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:jjnhmLayer",
       "@type": "rdf:Property",
-      "rdfs:label": "JJNHM layer",
       "dcterms:description": "JJNHM architecture layer assignment",
+      "rdfs:label": "JJNHM layer",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:MultiAgentCoordination",
       "@type": "rdfs:Class",
-      "rdfs:label": "Multi-Agent Coordination",
-      "dcterms:description": "Coordination mechanisms for multiple AI agents in programming tasks",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
       "ai:coordinationMechanisms": [
         "task-delegation",
         "result-aggregation",
         "conflict-resolution",
         "consensus-building",
         "load-balancing"
-      ]
+      ],
+      "dcterms:description": "Coordination mechanisms for multiple AI agents in programming tasks",
+      "rdfs:label": "Multi-Agent Coordination",
+      "rdfs:subClassOf": "ai:WorkflowOrchestration"
     },
-
     {
       "@id": "ai:orchestrationPattern",
       "@type": "rdf:Property",
-      "rdfs:label": "orchestration pattern",
       "dcterms:description": "Pattern used for workflow orchestration",
       "rdfs:domain": "ai:WorkflowOrchestration",
+      "rdfs:label": "orchestration pattern",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "ai:ProgrammingContext",
       "@type": "rdfs:Class",
-      "rdfs:label": "Programming Context",
-      "dcterms:description": "Context information for AI-assisted programming tasks",
-      "rdfs:subClassOf": "core:Concept",
       "ai:contextTypes": [
         "project-context",
         "file-context",
         "function-context",
         "semantic-context",
         "user-intent-context"
-      ]
+      ],
+      "dcterms:description": "Context information for AI-assisted programming tasks",
+      "rdfs:label": "Programming Context",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "ai:qualityThreshold",
       "@type": "rdf:Property",
-      "rdfs:label": "quality threshold",
       "dcterms:description": "Minimum quality threshold for validation",
       "rdfs:domain": "ai:QualityValidation",
+      "rdfs:label": "quality threshold",
       "rdfs:range": "xsd:decimal"
     },
-
     {
       "@id": "ai:QualityValidation",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Validation",
-      "dcterms:description": "AI-powered quality validation with metrics and thresholds",
-      "rdfs:subClassOf": "core:Concept",
+      "ai:dmagPattern": "Resilience",
+      "ai:jjnhmLayer": "JDBL",
       "ai:validationTypes": [
         "code-quality-validation",
         "performance-validation",
@@ -430,40 +400,37 @@
         "maintainability-validation",
         "compliance-validation"
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Resilience"
+      "dcterms:description": "AI-powered quality validation with metrics and thresholds",
+      "rdfs:label": "Quality Validation",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "ai:semanticDepth",
       "@type": "rdf:Property",
-      "rdfs:label": "semantic depth",
       "dcterms:description": "Depth of semantic understanding",
       "rdfs:domain": "ai:SemanticUnderstanding",
+      "rdfs:label": "semantic depth",
       "rdfs:range": "xsd:integer"
     },
-
     {
       "@id": "ai:SemanticUnderstanding",
       "@type": "rdfs:Class",
-      "rdfs:label": "Semantic Understanding",
-      "dcterms:description": "AI semantic understanding capabilities for code comprehension",
-      "rdfs:subClassOf": "ai:AICapability",
       "ai:understandingLevels": [
         "syntactic-understanding",
         "semantic-understanding",
         "pragmatic-understanding",
         "contextual-understanding",
         "intentional-understanding"
-      ]
+      ],
+      "dcterms:description": "AI semantic understanding capabilities for code comprehension",
+      "rdfs:label": "Semantic Understanding",
+      "rdfs:subClassOf": "ai:AICapability"
     },
-
     {
       "@id": "ai:WorkflowOrchestration",
       "@type": "rdfs:Class",
-      "rdfs:label": "Workflow Orchestration",
-      "dcterms:description": "Multi-agent workflow orchestration for AI-assisted programming",
-      "rdfs:subClassOf": "core:Concept",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "NQDS",
       "ai:orchestrationPatterns": [
         "multi-agent-coordination",
         "workflow-synchronization",
@@ -471,8 +438,9 @@
         "result-aggregation",
         "conflict-resolution"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Coordination"
+      "dcterms:description": "Multi-agent workflow orchestration for AI-assisted programming",
+      "rdfs:label": "Workflow Orchestration",
+      "rdfs:subClassOf": "core:Concept"
     }
   ]
 }

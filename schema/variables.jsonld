@@ -2,24 +2,94 @@
   "@context": [
     "https://huijoohwee.github.io/schema/base.jsonld",
     {
+      "description": "skos:definition",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "description": "skos:definition",
       "wbstcnvs": "https://huijoohwee.github.io/schema/wbstcnvs.jsonld#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "project:canvasState",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable tracking current canvas design state and modifications",
+      "rdfs:label": "canvasState",
+      "wbstcnvs:syncDirection": "canvas-to-code"
+    },
+    {
+      "@id": "project:codeState",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable tracking current code implementation state and changes",
+      "rdfs:label": "codeState",
+      "wbstcnvs:syncDirection": "code-to-canvas"
+    },
+    {
+      "@id": "project:conversionProgress",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable tracking canvas-code conversion operation progress",
+      "rdfs:label": "conversionProgress",
+      "wbstcnvs:conversionType": "bidirectional"
+    },
+    {
+      "@id": "project:currentStage",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable indicating current stage of WBSTCNVS operation workflow",
+      "rdfs:label": "currentStage"
+    },
+    {
+      "@id": "project:isConverting",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Boolean variable indicating if canvas-code conversion is in progress",
+      "rdfs:label": "isConverting",
+      "wbstcnvs:conversionType": "bidirectional"
+    },
+    {
+      "@id": "project:isSyncing",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Boolean variable indicating if bidirectional synchronization is active",
+      "rdfs:label": "isSyncing",
+      "wbstcnvs:syncDirection": "bidirectional"
+    },
+    {
+      "@id": "project:progress",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable tracking general progress of WBSTCNVS operations",
+      "rdfs:label": "progress"
+    },
+    {
+      "@id": "project:syncConflicts",
+      "@type": "project:Variable",
+      "ai:dmagPattern": "State",
+      "ai:jjnhmLayer": "NQDS",
+      "description": "Variable tracking detected conflicts during bidirectional synchronization",
+      "rdfs:label": "syncConflicts",
+      "wbstcnvs:conflictStrategy": "merge-with-user-resolution"
     }
   ],
   "@id": "https://huijoohwee.github.io/schema/variables.jsonld",
   "@type": "skos:ConceptScheme",
   "meta": {
-    "title": "WBSTCNVS Variables Schema",
-    "description": "Variable definitions for canvas-code conversion, bidirectional sync, and WBSTCNVS state management",
-    "version": "2.0.0",
-    "created": "2025-01-09T00:00:00Z",
-    "license": "MIT",
     "conformsTo": [
       "https://huijoohwee.github.io/schema/jjnhm.jsonld",
       "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
     ],
+    "created": "2025-01-09T00:00:00Z",
+    "description": "Variable definitions for canvas-code conversion, bidirectional sync, and WBSTCNVS state management",
+    "license": "MIT",
     "responsibilities": [
       "canvas-code-variable-management",
       "bidirectional-sync-state-tracking",
@@ -27,78 +97,8 @@
       "wbstcnvs-state-orchestration",
       "multi-agent-variable-coordination",
       "sync-operation-state-management"
-    ]
-  },
-  "@graph": [
-    {
-      "@id": "project:canvasState",
-      "@type": "project:Variable",
-      "rdfs:label": "canvasState",
-      "description": "Variable tracking current canvas design state and modifications",
-      "wbstcnvs:syncDirection": "canvas-to-code",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:codeState",
-      "@type": "project:Variable",
-      "rdfs:label": "codeState",
-      "description": "Variable tracking current code implementation state and changes",
-      "wbstcnvs:syncDirection": "code-to-canvas",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:conversionProgress",
-      "@type": "project:Variable",
-      "rdfs:label": "conversionProgress",
-      "description": "Variable tracking canvas-code conversion operation progress",
-      "wbstcnvs:conversionType": "bidirectional",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:currentStage",
-      "@type": "project:Variable",
-      "rdfs:label": "currentStage",
-      "description": "Variable indicating current stage of WBSTCNVS operation workflow",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:isConverting",
-      "@type": "project:Variable",
-      "rdfs:label": "isConverting",
-      "description": "Boolean variable indicating if canvas-code conversion is in progress",
-      "wbstcnvs:conversionType": "bidirectional",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:isSyncing",
-      "@type": "project:Variable",
-      "rdfs:label": "isSyncing",
-      "description": "Boolean variable indicating if bidirectional synchronization is active",
-      "wbstcnvs:syncDirection": "bidirectional",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:progress",
-      "@type": "project:Variable",
-      "rdfs:label": "progress",
-      "description": "Variable tracking general progress of WBSTCNVS operations",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    },
-    {
-      "@id": "project:syncConflicts",
-      "@type": "project:Variable",
-      "rdfs:label": "syncConflicts",
-      "description": "Variable tracking detected conflicts during bidirectional synchronization",
-      "wbstcnvs:conflictStrategy": "merge-with-user-resolution",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "State"
-    }
-  ]
+    ],
+    "title": "WBSTCNVS Variables Schema",
+    "version": "2.0.0"
+  }
 }

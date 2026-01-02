@@ -2,250 +2,131 @@
   "@context": [
     "https://huijoohwee.github.io/schema/base.jsonld",
     {
-      "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld#",
-      "arch": "http://www.w3.org/ns/org#",
-      "prov": "http://www.w3.org/ns/prov#",
-      
-      "TechnicalSpecification": "jjnhm:TechnicalSpecification",
-      "Layer": "jjnhm:Layer",
-      "Responsibility": "jjnhm:Responsibility",
+      "Benefit": "jjnhm:Benefit",
       "Constraint": "jjnhm:Constraint",
       "Contract": "jjnhm:Contract",
-      "ValidatorHint": "jjnhm:ValidatorHint",
       "ExamplePointer": "jjnhm:ExamplePointer",
-      "MigrationStep": "jjnhm:MigrationStep",
+      "Layer": "jjnhm:Layer",
       "Metric": "jjnhm:Metric",
+      "MigrationStep": "jjnhm:MigrationStep",
+      "Responsibility": "jjnhm:Responsibility",
+      "TechnicalSpecification": "jjnhm:TechnicalSpecification",
       "Tool": "jjnhm:Tool",
-      "Benefit": "jjnhm:Benefit",
-
-      "name": "rdfs:label",
-      "description": "rdfs:comment",
-      "version": "owl:versionInfo",
-      "purpose": "jjnhm:purpose",
-      "created": { "@id": "dcterms:created", "@type": "xsd:dateTime" },
-
-      "layers": { "@id": "jjnhm:hasLayer", "@container": "@list" },
-      "contracts": { "@id": "jjnhm:hasContract", "@container": "@list" },
-      "validators": { "@id": "jjnhm:hasValidator", "@container": "@list" },
-      "examples": { "@id": "jjnhm:hasExample", "@container": "@list" },
-      "tools": { "@id": "jjnhm:hasTool", "@container": "@list" },
-      "metrics": { "@id": "jjnhm:hasMetric", "@container": "@list" },
-      "migrationGuide": { "@id": "jjnhm:hasMigrationStep", "@container": "@list" },
-      "benefits": { "@id": "jjnhm:hasBenefit", "@container": "@list" },
-
-      "format": "jjnhm:format",
-      "responsibilities": { "@id": "jjnhm:responsibilities", "@container": "@list" },
-      "constraints": { "@id": "jjnhm:constraints", "@container": "@list" },
-
-      "validatorHints": { "@id": "jjnhm:validatorHints", "@container": "@list" },
-      "examplePointer": "jjnhm:examplePointer",
+      "ValidatorHint": "jjnhm:ValidatorHint",
+      "arch": "http://www.w3.org/ns/org#",
+      "benefits": {
+        "@container": "@list",
+        "@id": "jjnhm:hasBenefit"
+      },
+      "constraints": {
+        "@container": "@list",
+        "@id": "jjnhm:constraints"
+      },
       "contractType": "jjnhm:contractType",
+      "contracts": {
+        "@container": "@list",
+        "@id": "jjnhm:hasContract"
+      },
+      "created": {
+        "@id": "dcterms:created",
+        "@type": "xsd:dateTime"
+      },
+      "description": "rdfs:comment",
       "enforcementLevel": "jjnhm:enforcementLevel",
+      "examplePointer": "jjnhm:examplePointer",
+      "examples": {
+        "@container": "@list",
+        "@id": "jjnhm:hasExample"
+      },
+      "format": "jjnhm:format",
+      "jjnhm": "https://huijoohwee.github.io/schema/jjnhm.jsonld#",
       "kpiTarget": "jjnhm:kpiTarget",
-      "recommendedTools": { "@id": "jjnhm:recommendedTools", "@container": "@list" }
+      "layers": {
+        "@container": "@list",
+        "@id": "jjnhm:hasLayer"
+      },
+      "metrics": {
+        "@container": "@list",
+        "@id": "jjnhm:hasMetric"
+      },
+      "migrationGuide": {
+        "@container": "@list",
+        "@id": "jjnhm:hasMigrationStep"
+      },
+      "name": "rdfs:label",
+      "prov": "http://www.w3.org/ns/prov#",
+      "purpose": "jjnhm:purpose",
+      "recommendedTools": {
+        "@container": "@list",
+        "@id": "jjnhm:recommendedTools"
+      },
+      "responsibilities": {
+        "@container": "@list",
+        "@id": "jjnhm:responsibilities"
+      },
+      "tools": {
+        "@container": "@list",
+        "@id": "jjnhm:hasTool"
+      },
+      "validatorHints": {
+        "@container": "@list",
+        "@id": "jjnhm:validatorHints"
+      },
+      "validators": {
+        "@container": "@list",
+        "@id": "jjnhm:hasValidator"
+      },
+      "version": "owl:versionInfo"
     }
   ],
-
   "@id": "https://huijoohwee.github.io/schema/jjnhm.jsonld",
-  "@type": ["owl:Ontology", "schema:Dataset", "jjnhm:TechnicalSpecification"],
-  
-  "meta": {
-    "@type": "schema:Dataset",
-    "title": "JJNHM Architecture Specification with WBSTCNVS Integration",
-    "description": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture for canvas-code synchronization, bidirectional workflows, and WBSTCNVS project orchestration",
-    "creator": "https://huijoohwee.github.io",
-    "license": "https://opensource.org/licenses/MIT",
-    "conformsTo": [
-      "https://www.w3.org/TR/rdf11-concepts/",
-      "https://www.w3.org/TR/owl2-overview/",
-      "https://www.w3.org/ns/org",
-      "https://www.w3.org/ns/prov",
-      "https://huijoohwee.github.io/schema/DMAG.jsonld",
-      "https://huijoohwee.github.io/schema/FLOW.jsonld",
-      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
-    ],
-    "versionInfo": "3.0.0",
-    "created": "2024-01-01T00:00:00Z",
-    "modified": "2025-10-23T02:00:00Z",
-    "maintainer": "https://huijoohwee.github.io",
-    "generator": "JJNHM-Schema-Generator-v3.0.0",
-    "semVer": "20251023-v3.0.0"
-  },
-  
-  "name": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture with WBSTCNVS Integration (JJNHM)",
-  "version": "3.0.0",
-  "purpose": "Canvas-Code Synchronization Architecture for WBSTCNVS with bidirectional workflows, visual-to-code transformation, and multi-agent orchestration; defines layers, contracts, constraints, validators, examples, tooling, metrics, and migration guidance",
-  "created": "2024-01-01T00:00:00Z",
-
-  "layers": [
+  "@type": [
+    "owl:Ontology",
+    "schema:Dataset",
+    "jjnhm:TechnicalSpecification"
+  ],
+  "benefits": [
     {
-      "@id": "jjnhm:JSONLDLayer",
-      "@type": "Layer",
-      "name": "JSONLD",
-      "description": "Ontology alignment, universal semantic index and vocabulary mapping; language-agnostic type system",
-      "format": "RDF/JSON-LD",
-      "responsibilities": [
-        "define-types",
-        "map-vocabularies",
-        "establish-type-hierarchy",
-        "create-centralized-semantic-index",
-        "prevent-duplication-of-concepts"
-      ],
-      "constraints": [
-        "NO execution logic",
-        "NO data processing",
-        "MAINTAIN universal applicability"
-      ],
-      "validatorHints": [
-        {
-          "@type": "ValidatorHint",
-          "description": "validate @context resolution, check type consistency and vocabulary alignment",
-          "recommendedTools": ["jsonld.js", "rdf-validate", "universal-ontology-validator"]
-        }
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "examples/jsonld/mvp-project-definition.jsonld",
-        "examplePath": "/schema/examples/jsonld/mvp-project-definition.jsonld"
-      }
+      "@type": "Benefit",
+      "description": "Single well-defined responsibility per layer reduces coupling and simplifies validation",
+      "name": "SeparationOfConcerns"
     },
     {
-      "@id": "jjnhm:JDBLLayer",
-      "@type": "Layer",
-      "name": "JDBL",
-      "description": "Directive orchestration for canvas-code workflows; active verbs and bidirectional sync semantics",
-      "format": "JSON Blocks (JDBL)",
-      "responsibilities": [
-        "specify-execution-directives",
-        "orchestrate-canvas-code-sync",
-        "express-active-verbs",
-        "define-validation-rules",
-        "record-workflow-metadata",
-        "manage-bidirectional-operations"
-      ],
-      "constraints": [
-        "NO semantic relationships (no KG constructs)",
-        "NO template rendering",
-        "USE active-verbs for function-calling"
-      ],
-      "validatorHints": [
-        {
-          "@type": "ValidatorHint",
-          "description": "lint directive syntax, ensure metadata completeness, validate active-verb usage and token-efficiency",
-          "recommendedTools": ["json-schema", "jdbl-active-verb-linter", "directive-constraint-linter"]
-        }
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "examples/jdbl/launch-mvp-sprint.json",
-        "examplePath": "/schema/examples/jdbl/launch-mvp-sprint.json"
-      }
+      "@type": "Benefit",
+      "description": "Layers can be developed, tested and optimized independently",
+      "name": "Modularity"
     },
     {
-      "@id": "jjnhm:NQDSLayer",
-      "@type": "Layer",
-      "name": "NQDS",
-      "description": "Semantic payloads and knowledge graph construction for canvas-code journey tracing and sync dependency mapping",
-      "format": "N-Quads style NQDS",
-      "responsibilities": [
-        "model-relationships",
-        "trace-canvas-code-journeys",
-        "build-centralized-knowledge-graphs",
-        "map-sync-dependency-flows",
-        "identify-memoization-critical-paths",
-        "track-bidirectional-operations"
-      ],
-      "constraints": [
-        "NO type definitions (refer to JSONLD)",
-        "NO directive orchestration (refer to JDBL)"
-      ],
-      "validatorHints": [
-        {
-          "@type": "ValidatorHint",
-          "description": "check graph integrity, relationship consistency, and flow completeness; validate memoization markers",
-          "recommendedTools": ["nqds-parser", "graph-validator", "nqds-journey-analyzer"]
-        }
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "examples/nqds/mvp-user-journey.nqds",
-        "examplePath": "/schema/examples/nqds/mvp-user-journey.nqds"
-      }
+      "@type": "Benefit",
+      "description": "New capabilities and layers (e.g., analytics) can be added without breaking contracts",
+      "name": "Extensibility"
     },
     {
-      "@id": "jjnhm:HBSLayer",
-      "@type": "Layer",
-      "name": "HBS",
-      "description": "Template rendering layer supporting memoization and reusable component templates for MVP UI/content",
-      "format": "Handlebars",
-      "responsibilities": [
-        "generate-dynamic-content",
-        "compose-reusable-templates",
-        "implement-conditional-rendering",
-        "support-memoization-and-precompilation"
-      ],
-      "constraints": [
-        "NO business logic processing",
-        "NO semantic model definitions",
-        "MAINTAIN template modularity and cache-hints"
-      ],
-      "validatorHints": [
-        {
-          "@type": "ValidatorHint",
-          "description": "validate handlebars syntax, partial resolution and memoization usage",
-          "recommendedTools": ["handlebars-lint", "hbs-memoization-checker", "template-tester"]
-        }
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "examples/hbs/mvp-dashboard.hbs",
-        "examplePath": "/schema/examples/hbs/mvp-dashboard.hbs"
-      }
+      "@type": "Benefit",
+      "description": "Token-density and memoization patterns reduce LLM cost and latency",
+      "name": "Performance"
     },
     {
-      "@id": "jjnhm:MMDLayer",
-      "@type": "Layer",
-      "name": "MMD",
-      "description": "Visualization layer for diagrams and architecture views using Mermaid-like syntax to increase comprehension",
-      "format": "Mermaid (MMD)",
-      "responsibilities": [
-        "generate-user-journey-diagrams",
-        "render-dependency-graphs",
-        "produce-architecture-visuals",
-        "display-kpi-metric-dashboards"
-      ],
-      "constraints": [
-        "FOCUS on clarity and visual contracts",
-        "NO execution logic",
-        "DO NOT embed runtime-sensitive data"
-      ],
-      "validatorHints": [
-        {
-          "@type": "ValidatorHint",
-          "description": "validate diagram syntax, visual contract completeness and linkage to JSONLD types",
-          "recommendedTools": ["mermaid-builder", "mmd-architecture-validator"]
-        }
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "examples/mmd/mvp-architecture.mmd",
-        "examplePath": "/schema/examples/mmd/mvp-architecture.mmd"
-      }
+      "@type": "Benefit",
+      "description": "MMD visuals improve stakeholder alignment and documentation comprehension",
+      "name": "VisualClarity"
     }
   ],
-
   "contracts": [
     {
-      "@id": "jjnhm:TypeContract",
+      "@id": "jjnhm:DataContract",
       "@type": "Contract",
-      "contractType": "TypeContract",
-      "description": "JSONLD defines canonical types referenced by JDBL and NQDS; JDBL and NQDS must reference JSONLD @ids for types",
+      "contractType": "DataContract",
+      "description": "NQDS data nodes provide binding points for HBS templates; templates must declare required data paths",
       "enforcementLevel": "required",
       "validatorHints": [
         {
           "@type": "ValidatorHint",
-          "description": "verify that type references in JDBL and NQDS resolve to JSONLD @ids and are present in the universal index",
-          "recommendedTools": ["jsonld-universal-validator", "type-reference-checker"]
+          "description": "validate NQDS→HBS bindings and ensure required paths exist and are typed by JSONLD",
+          "recommendedTools": [
+            "nqds-journey-analyzer",
+            "hbs-data-binding-checker"
+          ]
         }
       ]
     },
@@ -259,21 +140,27 @@
         {
           "@type": "ValidatorHint",
           "description": "ensure JDBL active-verbs are present in directive registry and that NQDS entries reference directive trace-ids",
-          "recommendedTools": ["jdbl-active-verb-linter", "directive-trace-validator"]
+          "recommendedTools": [
+            "jdbl-active-verb-linter",
+            "directive-trace-validator"
+          ]
         }
       ]
     },
     {
-      "@id": "jjnhm:DataContract",
+      "@id": "jjnhm:TypeContract",
       "@type": "Contract",
-      "contractType": "DataContract",
-      "description": "NQDS data nodes provide binding points for HBS templates; templates must declare required data paths",
+      "contractType": "TypeContract",
+      "description": "JSONLD defines canonical types referenced by JDBL and NQDS; JDBL and NQDS must reference JSONLD @ids for types",
       "enforcementLevel": "required",
       "validatorHints": [
         {
           "@type": "ValidatorHint",
-          "description": "validate NQDS→HBS bindings and ensure required paths exist and are typed by JSONLD",
-          "recommendedTools": ["nqds-journey-analyzer", "hbs-data-binding-checker"]
+          "description": "verify that type references in JDBL and NQDS resolve to JSONLD @ids and are present in the universal index",
+          "recommendedTools": [
+            "jsonld-universal-validator",
+            "type-reference-checker"
+          ]
         }
       ]
     },
@@ -287,33 +174,15 @@
         {
           "@type": "ValidatorHint",
           "description": "ensure MMD diagrams reference canonical JSONLD type ids when representing components and flows",
-          "recommendedTools": ["mmd-architecture-validator", "visual-contract-checker"]
+          "recommendedTools": [
+            "mmd-architecture-validator",
+            "visual-contract-checker"
+          ]
         }
       ]
     }
   ],
-
-  "validators": [
-    {
-      "@id": "jjnhm:jjnhm-validate",
-      "@type": "Tool",
-      "name": "jjnhm-validate",
-      "description": "Unified CLI wrapper that runs layer validators, cross-layer contract checks and KPI gates; returns machine-readable diagnostic report",
-      "recommendedTools": [
-        "jsonld.js", "rdf-validate",
-        "json-schema", "jdbl-active-verb-linter",
-        "nqds-parser", "graph-validator",
-        "handlebars-lint", "mermaid-builder",
-        "token-density-meter", "parse-time-profiler", "clarity-scorer"
-      ],
-      "examplePointer": {
-        "@type": "ExamplePointer",
-        "description": "tools/cli/README.md",
-        "examplePath": "/schema/tools/cli/README.md"
-      }
-    }
-  ],
-
+  "created": "2024-01-01T00:00:00Z",
   "examples": [
     {
       "@type": "ExamplePointer",
@@ -341,195 +210,338 @@
       "examplePath": "/schema/examples/mmd/mvp-architecture.mmd"
     }
   ],
-
-  "metrics": [
-    {
-      "@id": "jjnhm:TokenDensity",
-      "@type": "Metric",
-      "name": "TokenDensity",
-      "description": "Concepts per token target used to optimize LLM parsing and cost",
-      "kpiTarget": "C1: >=5.1 concepts/token; C2: >=7.5 concepts/token"
-    },
-    {
-      "@id": "jjnhm:ParseTime",
-      "@type": "Metric",
-      "name": "ParseTime",
-      "description": "Average parse time across layers",
-      "kpiTarget": "<1.5ms"
-    },
-    {
-      "@id": "jjnhm:SemanticClarity",
-      "@type": "Metric",
-      "name": "SemanticClarity",
-      "description": "Human/computer comprehension score for canonical artifacts",
-      "kpiTarget": ">90% comprehension"
-    },
-    {
-      "@id": "jjnhm:Redundancy",
-      "@type": "Metric",
-      "name": "Redundancy",
-      "description": "Zero redundancy enforcement between layers",
-      "kpiTarget": "Zero duplicate definitions between layers"
-    }
-  ],
-
-  "tools": [
-    {
-      "@type": "Tool",
-      "name": "ontology-gen",
-      "description": "Scaffolds JSONLD type modules from minimal declarations",
-      "recommendedTools": ["jsonld.js"]
-    },
-    {
-      "@type": "Tool",
-      "name": "directive-gen",
-      "description": "Generates JDBL directive templates with active verbs and metadata",
-      "recommendedTools": ["jdbl-active-verb-linter"]
-    },
-    {
-      "@type": "Tool",
-      "name": "graph-builder",
-      "description": "Constructs NQDS graphs and runs integrity checks",
-      "recommendedTools": ["nqds-parser", "graph-validator"]
-    },
-    {
-      "@type": "Tool",
-      "name": "template-scaffold",
-      "description": "Creates memoized HBS partials and template tests",
-      "recommendedTools": ["handlebars-lint", "hbs-memoization-checker"]
-    },
-    {
-      "@type": "Tool",
-      "name": "mermaid-builder",
-      "description": "Renders MMD diagrams and validates visual contracts",
-      "recommendedTools": ["mmd-architecture-validator"]
-    }
-  ],
-
-  "migrationGuide": [
-    {
-      "@type": "MigrationStep",
-      "name": "step-1-separate-concerns",
-      "description": "Extract types into JSONLD, move directives into JDBL, isolate semantics in NQDS, create HBS templates and MMD diagrams"
-    },
-    {
-      "@type": "MigrationStep",
-      "name": "step-2-validate-separation",
-      "description": "Run jjnhm-validate to ensure no overlapping responsibilities and enforce contracts"
-    },
-    {
-      "@type": "MigrationStep",
-      "name": "step-3-optimize-for-kpis",
-      "description": "Tune token-density, precompile contexts/templates, index graphs and enable memoization for critical paths"
-    }
-  ],
-
-  "benefits": [
-    {
-      "@type": "Benefit",
-      "name": "SeparationOfConcerns",
-      "description": "Single well-defined responsibility per layer reduces coupling and simplifies validation"
-    },
-    {
-      "@type": "Benefit",
-      "name": "Modularity",
-      "description": "Layers can be developed, tested and optimized independently"
-    },
-    {
-      "@type": "Benefit",
-      "name": "Extensibility",
-      "description": "New capabilities and layers (e.g., analytics) can be added without breaking contracts"
-    },
-    {
-      "@type": "Benefit",
-      "name": "Performance",
-      "description": "Token-density and memoization patterns reduce LLM cost and latency"
-    },
-    {
-      "@type": "Benefit",
-      "name": "VisualClarity",
-      "description": "MMD visuals improve stakeholder alignment and documentation comprehension"
-    }
-  ],
-
   "governanceIntegration": {
     "@type": "jjnhm:GovernanceFramework",
     "dmag": {
       "@id": "https://huijoohwee.github.io/schema/DMAG.jsonld",
       "@type": "jjnhm:DistributedModularArchitectureGovernance",
       "description": "DMAG patterns integrated across JJNHM layers for modular architecture governance",
-      "patterns": [
-        "ModulePattern", "AdapterPattern", "ServiceFactory", 
-        "ActorInstance", "ResiliencePrimitive", "CoordinationPattern"
-      ],
-      "layerMapping": {
-        "JSONLD": "ModulePattern + ServiceFactory",
-        "JDBL": "ActorInstance + CoordinationPattern", 
-        "NQDS": "AdapterPattern + ResiliencePrimitive",
-        "HBS": "ModulePattern + ServiceFactory",
-        "MMD": "CoordinationPattern + ResiliencePrimitive"
-      },
       "kpiTargets": {
-        "moduleCohesion": "≥85%",
-        "adapterEfficiency": "≥90%",
-        "serviceCreationTime": "≤100ms",
         "actorConcurrencyEfficiency": "≥95%",
+        "adapterEfficiency": "≥90%",
+        "coordinationLatency": "≤50ms",
+        "moduleCohesion": "≥85%",
         "resilienceRecoveryTime": "≤500ms",
-        "coordinationLatency": "≤50ms"
-      }
+        "serviceCreationTime": "≤100ms"
+      },
+      "layerMapping": {
+        "HBS": "ModulePattern + ServiceFactory",
+        "JDBL": "ActorInstance + CoordinationPattern",
+        "JSONLD": "ModulePattern + ServiceFactory",
+        "MMD": "CoordinationPattern + ResiliencePrimitive",
+        "NQDS": "AdapterPattern + ResiliencePrimitive"
+      },
+      "patterns": [
+        "ModulePattern",
+        "AdapterPattern",
+        "ServiceFactory",
+        "ActorInstance",
+        "ResiliencePrimitive",
+        "CoordinationPattern"
+      ]
+    },
+    "enhancedValidation": {
+      "@type": "jjnhm:EnhancedValidationPipeline",
+      "description": "Comprehensive validation pipeline with DMAG and FLOW governance checks",
+      "qualityGates": {
+        "dmagCompliance": "≥80%",
+        "flowGovernance": "≥80%",
+        "jjnhmIntegration": "≥80%",
+        "performanceOptimization": "≥80%",
+        "semanticWebCompatibility": "≥80%"
+      },
+      "validationRules": [
+        "dmag-pattern-compliance",
+        "flow-governance-adherence",
+        "jjnhm-layer-integration",
+        "semantic-web-compatibility",
+        "performance-optimization"
+      ]
     },
     "flow": {
       "@id": "https://huijoohwee.github.io/schema/FLOW.jsonld",
       "@type": "jjnhm:UniversalFlowGovernance",
       "description": "FLOW patterns for universal flow governance across multi-agent orchestration",
-      "patterns": [
-        "DataFlowPattern", "ControlFlowPattern", "StateFlowPattern",
-        "ErrorFlowPattern", "EventFlowPattern", "ResourceFlowPattern",
-        "TokenFlowPattern", "StreamingPattern", "PipelinePattern", "OrchestrationPattern"
-      ],
-      "layerMapping": {
-        "JSONLD": "DataFlowPattern + TokenFlowPattern",
-        "JDBL": "ControlFlowPattern + OrchestrationPattern",
-        "NQDS": "StateFlowPattern + EventFlowPattern",
-        "HBS": "StreamingPattern + PipelinePattern",
-        "MMD": "ResourceFlowPattern + ErrorFlowPattern"
-      },
       "kpiTargets": {
-        "dataFlowEfficiency": "≥90%",
         "controlFlowLatency": "≤100ms",
-        "stateTransitionReliability": "≥99%",
+        "dataFlowEfficiency": "≥90%",
         "errorRecoverySuccessRate": "≥95%",
         "eventProcessingThroughput": "≥1000/sec",
-        "resourceUtilizationEfficiency": "≥85%",
-        "tokenDensity": "≥6.5 concepts/token",
-        "streamingThroughput": "≥10MB/sec",
+        "orchestrationSuccessRate": "≥99%",
         "pipelineEfficiency": "≥95%",
-        "orchestrationSuccessRate": "≥99%"
-      }
-    },
-    "enhancedValidation": {
-      "@type": "jjnhm:EnhancedValidationPipeline",
-      "description": "Comprehensive validation pipeline with DMAG and FLOW governance checks",
-      "validationRules": [
-        "dmag-pattern-compliance",
-        "flow-governance-adherence", 
-        "jjnhm-layer-integration",
-        "semantic-web-compatibility",
-        "performance-optimization"
-      ],
-      "qualityGates": {
-        "dmagCompliance": "≥80%",
-        "flowGovernance": "≥80%", 
-        "jjnhmIntegration": "≥80%",
-        "semanticWebCompatibility": "≥80%",
-        "performanceOptimization": "≥80%"
-      }
+        "resourceUtilizationEfficiency": "≥85%",
+        "stateTransitionReliability": "≥99%",
+        "streamingThroughput": "≥10MB/sec",
+        "tokenDensity": "≥6.5 concepts/token"
+      },
+      "layerMapping": {
+        "HBS": "StreamingPattern + PipelinePattern",
+        "JDBL": "ControlFlowPattern + OrchestrationPattern",
+        "JSONLD": "DataFlowPattern + TokenFlowPattern",
+        "MMD": "ResourceFlowPattern + ErrorFlowPattern",
+        "NQDS": "StateFlowPattern + EventFlowPattern"
+      },
+      "patterns": [
+        "DataFlowPattern",
+        "ControlFlowPattern",
+        "StateFlowPattern",
+        "ErrorFlowPattern",
+        "EventFlowPattern",
+        "ResourceFlowPattern",
+        "TokenFlowPattern",
+        "StreamingPattern",
+        "PipelinePattern",
+        "OrchestrationPattern"
+      ]
     }
   },
-
+  "layers": [
+    {
+      "@id": "jjnhm:HBSLayer",
+      "@type": "Layer",
+      "constraints": [
+        "NO business logic processing",
+        "NO semantic model definitions",
+        "MAINTAIN template modularity and cache-hints"
+      ],
+      "description": "Template rendering layer supporting memoization and reusable component templates for MVP UI/content",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/hbs/mvp-dashboard.hbs",
+        "examplePath": "/schema/examples/hbs/mvp-dashboard.hbs"
+      },
+      "format": "Handlebars",
+      "name": "HBS",
+      "responsibilities": [
+        "generate-dynamic-content",
+        "compose-reusable-templates",
+        "implement-conditional-rendering",
+        "support-memoization-and-precompilation"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate handlebars syntax, partial resolution and memoization usage",
+          "recommendedTools": [
+            "handlebars-lint",
+            "hbs-memoization-checker",
+            "template-tester"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:JDBLLayer",
+      "@type": "Layer",
+      "constraints": [
+        "NO semantic relationships (no KG constructs)",
+        "NO template rendering",
+        "USE active-verbs for function-calling"
+      ],
+      "description": "Directive orchestration for canvas-code workflows; active verbs and bidirectional sync semantics",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/jdbl/launch-mvp-sprint.json",
+        "examplePath": "/schema/examples/jdbl/launch-mvp-sprint.json"
+      },
+      "format": "JSON Blocks (JDBL)",
+      "name": "JDBL",
+      "responsibilities": [
+        "specify-execution-directives",
+        "orchestrate-canvas-code-sync",
+        "express-active-verbs",
+        "define-validation-rules",
+        "record-workflow-metadata",
+        "manage-bidirectional-operations"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "lint directive syntax, ensure metadata completeness, validate active-verb usage and token-efficiency",
+          "recommendedTools": [
+            "json-schema",
+            "jdbl-active-verb-linter",
+            "directive-constraint-linter"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:JSONLDLayer",
+      "@type": "Layer",
+      "constraints": [
+        "NO execution logic",
+        "NO data processing",
+        "MAINTAIN universal applicability"
+      ],
+      "description": "Ontology alignment, universal semantic index and vocabulary mapping; language-agnostic type system",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/jsonld/mvp-project-definition.jsonld",
+        "examplePath": "/schema/examples/jsonld/mvp-project-definition.jsonld"
+      },
+      "format": "RDF/JSON-LD",
+      "name": "JSONLD",
+      "responsibilities": [
+        "define-types",
+        "map-vocabularies",
+        "establish-type-hierarchy",
+        "create-centralized-semantic-index",
+        "prevent-duplication-of-concepts"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate @context resolution, check type consistency and vocabulary alignment",
+          "recommendedTools": [
+            "jsonld.js",
+            "rdf-validate",
+            "universal-ontology-validator"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:MMDLayer",
+      "@type": "Layer",
+      "constraints": [
+        "FOCUS on clarity and visual contracts",
+        "NO execution logic",
+        "DO NOT embed runtime-sensitive data"
+      ],
+      "description": "Visualization layer for diagrams and architecture views using Mermaid-like syntax to increase comprehension",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/mmd/mvp-architecture.mmd",
+        "examplePath": "/schema/examples/mmd/mvp-architecture.mmd"
+      },
+      "format": "Mermaid (MMD)",
+      "name": "MMD",
+      "responsibilities": [
+        "generate-user-journey-diagrams",
+        "render-dependency-graphs",
+        "produce-architecture-visuals",
+        "display-kpi-metric-dashboards"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "validate diagram syntax, visual contract completeness and linkage to JSONLD types",
+          "recommendedTools": [
+            "mermaid-builder",
+            "mmd-architecture-validator"
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "jjnhm:NQDSLayer",
+      "@type": "Layer",
+      "constraints": [
+        "NO type definitions (refer to JSONLD)",
+        "NO directive orchestration (refer to JDBL)"
+      ],
+      "description": "Semantic payloads and knowledge graph construction for canvas-code journey tracing and sync dependency mapping",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "examples/nqds/mvp-user-journey.nqds",
+        "examplePath": "/schema/examples/nqds/mvp-user-journey.nqds"
+      },
+      "format": "N-Quads style NQDS",
+      "name": "NQDS",
+      "responsibilities": [
+        "model-relationships",
+        "trace-canvas-code-journeys",
+        "build-centralized-knowledge-graphs",
+        "map-sync-dependency-flows",
+        "identify-memoization-critical-paths",
+        "track-bidirectional-operations"
+      ],
+      "validatorHints": [
+        {
+          "@type": "ValidatorHint",
+          "description": "check graph integrity, relationship consistency, and flow completeness; validate memoization markers",
+          "recommendedTools": [
+            "nqds-parser",
+            "graph-validator",
+            "nqds-journey-analyzer"
+          ]
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "@type": "schema:Dataset",
+    "conformsTo": [
+      "https://www.w3.org/TR/rdf11-concepts/",
+      "https://www.w3.org/TR/owl2-overview/",
+      "https://www.w3.org/ns/org",
+      "https://www.w3.org/ns/prov",
+      "https://huijoohwee.github.io/schema/DMAG.jsonld",
+      "https://huijoohwee.github.io/schema/FLOW.jsonld",
+      "https://huijoohwee.github.io/schema/wbstcnvs.jsonld"
+    ],
+    "created": "2024-01-01T00:00:00Z",
+    "creator": "https://huijoohwee.github.io",
+    "description": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture for canvas-code synchronization, bidirectional workflows, and WBSTCNVS project orchestration",
+    "generator": "JJNHM-Schema-Generator-v3.0.0",
+    "license": "https://opensource.org/licenses/MIT",
+    "maintainer": "https://huijoohwee.github.io",
+    "modified": "2025-10-23T02:00:00Z",
+    "semVer": "20251023-v3.0.0",
+    "title": "JJNHM Architecture Specification with WBSTCNVS Integration",
+    "versionInfo": "3.0.0"
+  },
+  "metrics": [
+    {
+      "@id": "jjnhm:ParseTime",
+      "@type": "Metric",
+      "description": "Average parse time across layers",
+      "kpiTarget": "<1.5ms",
+      "name": "ParseTime"
+    },
+    {
+      "@id": "jjnhm:Redundancy",
+      "@type": "Metric",
+      "description": "Zero redundancy enforcement between layers",
+      "kpiTarget": "Zero duplicate definitions between layers",
+      "name": "Redundancy"
+    },
+    {
+      "@id": "jjnhm:SemanticClarity",
+      "@type": "Metric",
+      "description": "Human/computer comprehension score for canonical artifacts",
+      "kpiTarget": ">90% comprehension",
+      "name": "SemanticClarity"
+    },
+    {
+      "@id": "jjnhm:TokenDensity",
+      "@type": "Metric",
+      "description": "Concepts per token target used to optimize LLM parsing and cost",
+      "kpiTarget": "C1: >=5.1 concepts/token; C2: >=7.5 concepts/token",
+      "name": "TokenDensity"
+    }
+  ],
+  "migrationGuide": [
+    {
+      "@type": "MigrationStep",
+      "description": "Extract types into JSONLD, move directives into JDBL, isolate semantics in NQDS, create HBS templates and MMD diagrams",
+      "name": "step-1-separate-concerns"
+    },
+    {
+      "@type": "MigrationStep",
+      "description": "Run jjnhm-validate to ensure no overlapping responsibilities and enforce contracts",
+      "name": "step-2-validate-separation"
+    },
+    {
+      "@type": "MigrationStep",
+      "description": "Tune token-density, precompile contexts/templates, index graphs and enable memoization for critical paths",
+      "name": "step-3-optimize-for-kpis"
+    }
+  ],
+  "name": "Enhanced Hybrid JSONLD-JDBL-NQDS-HBS-MMD Architecture with WBSTCNVS Integration (JJNHM)",
+  "purpose": "Canvas-Code Synchronization Architecture for WBSTCNVS with bidirectional workflows, visual-to-code transformation, and multi-agent orchestration; defines layers, contracts, constraints, validators, examples, tooling, metrics, and migration guidance",
   "releaseNotes": {
-    "version": "2.4.0",
-    "summary": "Enhanced JJNHM with DMAG & FLOW governance integration for distributed modular architecture and universal flow patterns",
     "changes": [
       "Integrated DMAG distributed modular architecture governance patterns",
       "Added FLOW universal flow governance for multi-agent orchestration",
@@ -538,6 +550,79 @@
       "Improved KPI targets for token density (≥6.5 concepts/token)",
       "Added governance framework integration with pattern mapping"
     ],
-    "compatibility": "Backwards compatible with JJNHM 2.3.x; governance patterns are additive enhancements"
-  }
+    "compatibility": "Backwards compatible with JJNHM 2.3.x; governance patterns are additive enhancements",
+    "summary": "Enhanced JJNHM with DMAG & FLOW governance integration for distributed modular architecture and universal flow patterns",
+    "version": "2.4.0"
+  },
+  "tools": [
+    {
+      "@type": "Tool",
+      "description": "Scaffolds JSONLD type modules from minimal declarations",
+      "name": "ontology-gen",
+      "recommendedTools": [
+        "jsonld.js"
+      ]
+    },
+    {
+      "@type": "Tool",
+      "description": "Generates JDBL directive templates with active verbs and metadata",
+      "name": "directive-gen",
+      "recommendedTools": [
+        "jdbl-active-verb-linter"
+      ]
+    },
+    {
+      "@type": "Tool",
+      "description": "Constructs NQDS graphs and runs integrity checks",
+      "name": "graph-builder",
+      "recommendedTools": [
+        "nqds-parser",
+        "graph-validator"
+      ]
+    },
+    {
+      "@type": "Tool",
+      "description": "Creates memoized HBS partials and template tests",
+      "name": "template-scaffold",
+      "recommendedTools": [
+        "handlebars-lint",
+        "hbs-memoization-checker"
+      ]
+    },
+    {
+      "@type": "Tool",
+      "description": "Renders MMD diagrams and validates visual contracts",
+      "name": "mermaid-builder",
+      "recommendedTools": [
+        "mmd-architecture-validator"
+      ]
+    }
+  ],
+  "validators": [
+    {
+      "@id": "jjnhm:jjnhm-validate",
+      "@type": "Tool",
+      "description": "Unified CLI wrapper that runs layer validators, cross-layer contract checks and KPI gates; returns machine-readable diagnostic report",
+      "examplePointer": {
+        "@type": "ExamplePointer",
+        "description": "tools/cli/README.md",
+        "examplePath": "/schema/tools/cli/README.md"
+      },
+      "name": "jjnhm-validate",
+      "recommendedTools": [
+        "jsonld.js",
+        "rdf-validate",
+        "json-schema",
+        "jdbl-active-verb-linter",
+        "nqds-parser",
+        "graph-validator",
+        "handlebars-lint",
+        "mermaid-builder",
+        "token-density-meter",
+        "parse-time-profiler",
+        "clarity-scorer"
+      ]
+    }
+  ],
+  "version": "3.0.0"
 }

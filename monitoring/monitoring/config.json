@@ -1,0 +1,12 @@
+{
+  "tokenDensityTarget": 7,
+  "semanticClarityTarget": 97,
+  "parseTimeTarget": 0.5,
+  "enterpriseReadinessTarget": 95,
+  "realTimeInterval": 1000,
+  "reportInterval": 60000,
+  "alertThreshold": 5000,
+  "maxRetries": 3,
+  "backoffMultiplier": 2,
+  "circuitBreakerThreshold": 5
+}

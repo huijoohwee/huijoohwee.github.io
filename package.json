@@ -7,7 +7,13 @@
     "start": "node server.js",
     "dev": "node server.js",
     "build": "echo 'Static site - no build needed'",
-    "test": "echo 'No tests specified'",
+    "test": "node validation/test-suite.js",
+    "validate": "node validation/validate-jsonld.js",
+    "validate:dmag": "node validation/validate-dmag.js",
+    "validate:flow": "node validation/validate-flow.js",
+    "validate:jjnhm": "node validation/validate-jjnhm.js",
+    "validate:comprehensive": "node validation/comprehensive-validation.js",
+    "validate:ci": "npm run validate && npm run test && npm run validate:comprehensive",
     "deploy": "echo 'Deploy via GitHub Actions'"
   },
   "keywords": [

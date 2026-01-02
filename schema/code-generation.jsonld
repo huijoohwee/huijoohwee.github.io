@@ -2,53 +2,46 @@
   "@context": {
     "@base": "https://huijoohwee.github.io/schema/code-generation.jsonld",
     "@vocab": "https://huijoohwee.github.io/schema/code-generation#",
-    
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "dcterms": "http://purl.org/dc/terms/",
-    "foaf": "http://xmlns.com/foaf/0.1/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    
-    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
-    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
+    "BoilerplateGenerator": "cg:BoilerplateGenerator",
+    "CodeGenerator": "cg:CodeGenerator",
+    "ContextAwareGenerator": "cg:ContextAwareGenerator",
+    "FormatConverter": "cg:FormatConverter",
+    "GenerationContext": "cg:GenerationContext",
+    "GenerationResult": "cg:GenerationResult",
+    "GenerationTemplate": "cg:GenerationTemplate",
+    "GenerationWorkflow": "cg:GenerationWorkflow",
+    "QualityValidator": "cg:QualityValidator",
+    "RefactoringGenerator": "cg:RefactoringGenerator",
+    "TemplateEngine": "cg:TemplateEngine",
     "agents": "https://huijoohwee.github.io/schema/agents.jsonld#",
+    "ai": "https://huijoohwee.github.io/schema/ai-programming.jsonld#",
+    "ca": "https://huijoohwee.github.io/schema/code-analysis.jsonld#",
+    "cg": "https://huijoohwee.github.io/schema/code-generation#",
+    "contextDepth": "cg:contextDepth",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld#",
+    "dcterms": "http://purl.org/dc/terms/",
     "dmag": "https://huijoohwee.github.io/schema/dmag.jsonld#",
     "flow": "https://huijoohwee.github.io/schema/flow.jsonld#",
-    "ca": "https://huijoohwee.github.io/schema/code-analysis.jsonld#",
-    
-    "cg": "https://huijoohwee.github.io/schema/code-generation#",
-    
-    "CodeGenerator": "cg:CodeGenerator",
-    "TemplateEngine": "cg:TemplateEngine",
-    "FormatConverter": "cg:FormatConverter",
-    "BoilerplateGenerator": "cg:BoilerplateGenerator",
-    "RefactoringGenerator": "cg:RefactoringGenerator",
-    "ContextAwareGenerator": "cg:ContextAwareGenerator",
-    "GenerationTemplate": "cg:GenerationTemplate",
-    "GenerationResult": "cg:GenerationResult",
-    "GenerationContext": "cg:GenerationContext",
-    "QualityValidator": "cg:QualityValidator",
-    "GenerationWorkflow": "cg:GenerationWorkflow",
-    
-    "generatorType": "cg:generatorType",
-    "templateType": "cg:templateType",
-    "targetFormat": "cg:targetFormat",
-    "sourceFormat": "cg:sourceFormat",
-    "generationStrategy": "cg:generationStrategy",
-    "qualityLevel": "cg:qualityLevel",
-    "contextDepth": "cg:contextDepth",
-    "templateVariables": "cg:templateVariables",
+    "foaf": "http://xmlns.com/foaf/0.1/",
     "generationMetrics": "cg:generationMetrics",
-    "validationRules": "cg:validationRules"
+    "generationStrategy": "cg:generationStrategy",
+    "generatorType": "cg:generatorType",
+    "qualityLevel": "cg:qualityLevel",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "sourceFormat": "cg:sourceFormat",
+    "targetFormat": "cg:targetFormat",
+    "templateType": "cg:templateType",
+    "templateVariables": "cg:templateVariables",
+    "validationRules": "cg:validationRules",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  
   "@graph": [
     {
       "@id": "cg:BoilerplateGenerator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Boilerplate Generator",
-      "dcterms:description": "Generates standard boilerplate code patterns and project scaffolding",
-      "rdfs:subClassOf": "cg:CodeGenerator",
+      "ai:dmagPattern": "Factory",
+      "ai:jjnhmLayer": "HBS",
       "cg:boilerplateTypes": [
         "project-scaffolding",
         "class-templates",
@@ -57,20 +50,94 @@
         "test-templates"
       ],
       "cg:kpiTarget": "boilerplate-generation-speed ≤100ms",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Factory"
+      "dcterms:description": "Generates standard boilerplate code patterns and project scaffolding",
+      "rdfs:label": "Boilerplate Generator",
+      "rdfs:subClassOf": "cg:CodeGenerator"
     },
-
+    {
+      "@id": "cg:CodeGenerationKPITargets",
+      "@type": "ai:QualityValidation",
+      "ai:targets": {
+        "boilerplate-generation-speed": "≤100ms",
+        "context-accuracy": "≥93%",
+        "conversion-accuracy": "≥92%",
+        "generation-quality": "≥90%",
+        "generation-response-time": "≤300ms",
+        "refactoring-quality": "≥95%",
+        "template-compilation-time": "≤50ms",
+        "template-processing-speed": "≥1000-templates/sec",
+        "validation-accuracy": "≥96%"
+      },
+      "dcterms:description": "Key Performance Indicator targets for code generation systems",
+      "rdfs:label": "Code Generation KPI Targets"
+    },
+    {
+      "@id": "cg:CodeGenerationMetrics",
+      "@type": "ai:QualityValidation",
+      "ai:metrics": [
+        {
+          "@id": "cg:BoilerplateGenerationSpeedMetric",
+          "ai:measurement": "boilerplate-generation-performance-testing",
+          "ai:name": "Boilerplate Generation Speed",
+          "ai:target": "≤100ms"
+        },
+        {
+          "@id": "cg:ContextAccuracyMetric",
+          "ai:measurement": "context-aware-generation-precision-testing",
+          "ai:name": "Context Accuracy",
+          "ai:target": "≥93%"
+        },
+        {
+          "@id": "cg:ConversionAccuracyMetric",
+          "ai:measurement": "format-conversion-precision-testing",
+          "ai:name": "Format Conversion Accuracy",
+          "ai:target": "≥92%"
+        },
+        {
+          "@id": "cg:GenerationQualityMetric",
+          "ai:measurement": "generated-code-quality-assessment",
+          "ai:name": "Generation Quality",
+          "ai:target": "≥90%"
+        },
+        {
+          "@id": "cg:GenerationResponseTimeMetric",
+          "ai:measurement": "code-generation-performance-benchmarking",
+          "ai:name": "Generation Response Time",
+          "ai:target": "≤300ms"
+        },
+        {
+          "@id": "cg:RefactoringQualityMetric",
+          "ai:measurement": "refactored-code-quality-validation",
+          "ai:name": "Refactoring Quality",
+          "ai:target": "≥95%"
+        },
+        {
+          "@id": "cg:TemplateCompilationTimeMetric",
+          "ai:measurement": "template-compilation-performance-testing",
+          "ai:name": "Template Compilation Time",
+          "ai:target": "≤50ms"
+        },
+        {
+          "@id": "cg:TemplateProcessingSpeedMetric",
+          "ai:measurement": "template-engine-performance-benchmarking",
+          "ai:name": "Template Processing Speed",
+          "ai:target": "≥1000-templates/sec"
+        },
+        {
+          "@id": "cg:ValidationAccuracyMetric",
+          "ai:measurement": "quality-validation-precision-testing",
+          "ai:name": "Validation Accuracy",
+          "ai:target": "≥96%"
+        }
+      ],
+      "dcterms:description": "Comprehensive metrics for evaluating code generation performance",
+      "rdfs:label": "Code Generation Metrics"
+    },
     {
       "@id": "cg:CodeGenerationOntology",
       "@type": "core:Vocabulary",
-      "rdfs:label": "Code Generation Ontology",
-      "dcterms:description": "Comprehensive ontology for AI-powered code generation, template systems, and format conversion",
-      "dcterms:created": "2024-12-22",
-      "dcterms:modified": "2024-12-22",
-      "dcterms:creator": "SOLO Coding Assistant",
-      "core:version": "1.0.0",
-      "core:license": "MIT",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "JSONLD",
       "core:imports": [
         "https://huijoohwee.github.io/schema/core.jsonld",
         "https://huijoohwee.github.io/schema/ai-programming.jsonld",
@@ -79,16 +146,59 @@
         "https://huijoohwee.github.io/schema/flow.jsonld",
         "https://huijoohwee.github.io/schema/code-analysis.jsonld"
       ],
-      "ai:jjnhmLayer": "JSONLD",
-      "ai:dmagPattern": "Module"
+      "core:license": "MIT",
+      "core:version": "1.0.0",
+      "dcterms:created": "2024-12-22",
+      "dcterms:creator": "SOLO Coding Assistant",
+      "dcterms:description": "Comprehensive ontology for AI-powered code generation, template systems, and format conversion",
+      "dcterms:modified": "2024-12-22",
+      "rdfs:label": "Code Generation Ontology"
     },
-
+    {
+      "@id": "cg:CodeGenerationWorkflow",
+      "@type": "flow:CodeGenerationFlowPattern",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "JDBL",
+      "dcterms:description": "Comprehensive workflow for AI-powered code generation",
+      "flow:workflowSteps": [
+        {
+          "@id": "cg:CodeGeneration",
+          "flow:agent": "cg:ContextAwareGenerator",
+          "flow:responsibility": "generate-code-with-context-awareness",
+          "flow:stepType": "code-generation"
+        },
+        {
+          "@id": "cg:ContextAnalysis",
+          "flow:agent": "cg:GenerationContext",
+          "flow:responsibility": "analyze-generation-context-and-requirements",
+          "flow:stepType": "context-analysis"
+        },
+        {
+          "@id": "cg:QualityValidation",
+          "flow:agent": "cg:QualityValidator",
+          "flow:responsibility": "validate-generated-code-quality",
+          "flow:stepType": "quality-validation"
+        },
+        {
+          "@id": "cg:ResultOptimization",
+          "flow:agent": "cg:GenerationResult",
+          "flow:responsibility": "optimize-and-finalize-generation-results",
+          "flow:stepType": "result-optimization"
+        },
+        {
+          "@id": "cg:TemplateSelection",
+          "flow:agent": "cg:TemplateEngine",
+          "flow:responsibility": "select-and-prepare-generation-templates",
+          "flow:stepType": "template-selection"
+        }
+      ],
+      "rdfs:label": "Code Generation Workflow"
+    },
     {
       "@id": "cg:CodeGenerator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Code Generator",
-      "dcterms:description": "Base class for AI-powered code generators with template and context awareness",
-      "rdfs:subClassOf": "ai:AIAgent",
+      "ai:dmagPattern": "Factory",
+      "ai:jjnhmLayer": "JDBL",
       "cg:generatorCapabilities": [
         "template-based-generation",
         "context-aware-generation",
@@ -96,16 +206,15 @@
         "quality-validation",
         "incremental-generation"
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Factory"
+      "dcterms:description": "Base class for AI-powered code generators with template and context awareness",
+      "rdfs:label": "Code Generator",
+      "rdfs:subClassOf": "ai:AIAgent"
     },
-
     {
       "@id": "cg:ContextAwareGenerator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Context-Aware Generator",
-      "dcterms:description": "Generates code with deep understanding of project context and user intent",
-      "rdfs:subClassOf": "cg:CodeGenerator",
+      "ai:dmagPattern": "Actor",
+      "ai:jjnhmLayer": "NQDS",
       "cg:contextTypes": [
         "project-context-awareness",
         "user-intent-understanding",
@@ -114,25 +223,23 @@
         "style-consistency"
       ],
       "cg:kpiTarget": "context-accuracy ≥93%",
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Actor"
+      "dcterms:description": "Generates code with deep understanding of project context and user intent",
+      "rdfs:label": "Context-Aware Generator",
+      "rdfs:subClassOf": "cg:CodeGenerator"
     },
-
     {
       "@id": "cg:contextDepth",
       "@type": "rdf:Property",
-      "rdfs:label": "context depth",
       "dcterms:description": "Depth of context understanding in generation",
       "rdfs:domain": "cg:GenerationContext",
+      "rdfs:label": "context depth",
       "rdfs:range": "xsd:integer"
     },
-
     {
       "@id": "cg:FormatConverter",
       "@type": "rdfs:Class",
-      "rdfs:label": "Format Converter",
-      "dcterms:description": "Converts code between different formats and languages with semantic preservation",
-      "rdfs:subClassOf": "cg:CodeGenerator",
+      "ai:dmagPattern": "Adapter",
+      "ai:jjnhmLayer": "JDBL",
       "cg:conversionTypes": [
         "language-to-language-conversion",
         "format-to-format-conversion",
@@ -141,16 +248,15 @@
         "structure-mapping"
       ],
       "cg:kpiTarget": "conversion-accuracy ≥92%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Adapter"
+      "dcterms:description": "Converts code between different formats and languages with semantic preservation",
+      "rdfs:label": "Format Converter",
+      "rdfs:subClassOf": "cg:CodeGenerator"
     },
-
     {
       "@id": "cg:GenerationContext",
       "@type": "rdfs:Class",
-      "rdfs:label": "Generation Context",
-      "dcterms:description": "Context information for code generation including project, user, and environmental context",
-      "rdfs:subClassOf": "ai:ProgrammingContext",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "NQDS",
       "cg:contextTypes": [
         "project-context",
         "user-preferences-context",
@@ -158,25 +264,23 @@
         "dependency-context",
         "style-guide-context"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
+      "dcterms:description": "Context information for code generation including project, user, and environmental context",
+      "rdfs:label": "Generation Context",
+      "rdfs:subClassOf": "ai:ProgrammingContext"
     },
-
     {
       "@id": "cg:generationMetrics",
       "@type": "rdf:Property",
-      "rdfs:label": "generation metrics",
       "dcterms:description": "Metrics and measurements from code generation",
       "rdfs:domain": "cg:GenerationResult",
+      "rdfs:label": "generation metrics",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:GenerationResult",
       "@type": "rdfs:Class",
-      "rdfs:label": "Generation Result",
-      "dcterms:description": "Result of code generation with generated code, metrics, and validation status",
-      "rdfs:subClassOf": "core:Concept",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "NQDS",
       "cg:resultComponents": [
         "generated-code",
         "generation-metrics",
@@ -184,25 +288,23 @@
         "validation-status",
         "improvement-suggestions"
       ],
-      "ai:jjnhmLayer": "NQDS",
-      "ai:dmagPattern": "Module"
+      "dcterms:description": "Result of code generation with generated code, metrics, and validation status",
+      "rdfs:label": "Generation Result",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "cg:generationStrategy",
       "@type": "rdf:Property",
-      "rdfs:label": "generation strategy",
       "dcterms:description": "Strategy used for code generation",
       "rdfs:domain": "cg:CodeGenerator",
+      "rdfs:label": "generation strategy",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:GenerationTemplate",
       "@type": "rdfs:Class",
-      "rdfs:label": "Generation Template",
-      "dcterms:description": "Template definition for code generation with variables and logic",
-      "rdfs:subClassOf": "core:Concept",
+      "ai:dmagPattern": "Module",
+      "ai:jjnhmLayer": "HBS",
       "cg:templateComponents": [
         "template-structure",
         "variable-definitions",
@@ -210,16 +312,15 @@
         "iteration-patterns",
         "partial-templates"
       ],
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Module"
+      "dcterms:description": "Template definition for code generation with variables and logic",
+      "rdfs:label": "Generation Template",
+      "rdfs:subClassOf": "core:Concept"
     },
-
     {
       "@id": "cg:GenerationWorkflow",
       "@type": "rdfs:Class",
-      "rdfs:label": "Generation Workflow",
-      "dcterms:description": "Orchestrated workflow for comprehensive code generation",
-      "rdfs:subClassOf": "ai:WorkflowOrchestration",
+      "ai:dmagPattern": "Coordination",
+      "ai:jjnhmLayer": "JDBL",
       "cg:workflowSteps": [
         "context-analysis",
         "template-selection",
@@ -227,25 +328,32 @@
         "quality-validation",
         "result-optimization"
       ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
+      "dcterms:description": "Orchestrated workflow for comprehensive code generation",
+      "rdfs:label": "Generation Workflow",
+      "rdfs:subClassOf": "ai:WorkflowOrchestration"
     },
-
     {
       "@id": "cg:generatorType",
       "@type": "rdf:Property",
-      "rdfs:label": "generator type",
       "dcterms:description": "Type of code generator being used",
       "rdfs:domain": "cg:CodeGenerator",
+      "rdfs:label": "generator type",
       "rdfs:range": "xsd:string"
     },
-
+    {
+      "@id": "cg:qualityLevel",
+      "@type": "rdf:Property",
+      "dcterms:description": "Quality level of generated code",
+      "rdfs:domain": "cg:GenerationResult",
+      "rdfs:label": "quality level",
+      "rdfs:range": "xsd:decimal"
+    },
     {
       "@id": "cg:QualityValidator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Quality Validator",
-      "dcterms:description": "Validates generated code quality against standards and best practices",
-      "rdfs:subClassOf": "ai:QualityValidation",
+      "ai:dmagPattern": "Resilience",
+      "ai:jjnhmLayer": "JDBL",
+      "cg:kpiTarget": "validation-accuracy ≥96%",
       "cg:validationTypes": [
         "syntax-validation",
         "semantic-validation",
@@ -253,26 +361,16 @@
         "performance-validation",
         "security-validation"
       ],
-      "cg:kpiTarget": "validation-accuracy ≥96%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Resilience"
+      "dcterms:description": "Validates generated code quality against standards and best practices",
+      "rdfs:label": "Quality Validator",
+      "rdfs:subClassOf": "ai:QualityValidation"
     },
-
-    {
-      "@id": "cg:qualityLevel",
-      "@type": "rdf:Property",
-      "rdfs:label": "quality level",
-      "dcterms:description": "Quality level of generated code",
-      "rdfs:domain": "cg:GenerationResult",
-      "rdfs:range": "xsd:decimal"
-    },
-
     {
       "@id": "cg:RefactoringGenerator",
       "@type": "rdfs:Class",
-      "rdfs:label": "Refactoring Generator",
-      "dcterms:description": "Generates refactored code with improved structure and maintainability",
-      "rdfs:subClassOf": "cg:CodeGenerator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "JDBL",
+      "cg:kpiTarget": "refactoring-quality ≥95%",
       "cg:refactoringTypes": [
         "extract-method-refactoring",
         "rename-refactoring",
@@ -280,35 +378,35 @@
         "inline-refactoring",
         "extract-interface-refactoring"
       ],
-      "cg:kpiTarget": "refactoring-quality ≥95%",
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Service"
+      "dcterms:description": "Generates refactored code with improved structure and maintainability",
+      "rdfs:label": "Refactoring Generator",
+      "rdfs:subClassOf": "cg:CodeGenerator"
     },
-
     {
       "@id": "cg:sourceFormat",
       "@type": "rdf:Property",
-      "rdfs:label": "source format",
       "dcterms:description": "Source format for code conversion",
       "rdfs:domain": "cg:FormatConverter",
+      "rdfs:label": "source format",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:targetFormat",
       "@type": "rdf:Property",
-      "rdfs:label": "target format",
       "dcterms:description": "Target format for code generation or conversion",
-      "rdfs:domain": ["cg:CodeGenerator", "cg:FormatConverter"],
+      "rdfs:domain": [
+        "cg:CodeGenerator",
+        "cg:FormatConverter"
+      ],
+      "rdfs:label": "target format",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:TemplateEngine",
       "@type": "rdfs:Class",
-      "rdfs:label": "Template Engine",
-      "dcterms:description": "Advanced template engine for dynamic code generation with variable substitution",
-      "rdfs:subClassOf": "cg:CodeGenerator",
+      "ai:dmagPattern": "Service",
+      "ai:jjnhmLayer": "HBS",
+      "cg:kpiTarget": "template-processing-speed ≥1000-templates/sec",
       "cg:templateTypes": [
         "handlebars-templates",
         "mustache-templates",
@@ -316,158 +414,33 @@
         "custom-templates",
         "dynamic-templates"
       ],
-      "cg:kpiTarget": "template-processing-speed ≥1000-templates/sec",
-      "ai:jjnhmLayer": "HBS",
-      "ai:dmagPattern": "Service"
+      "dcterms:description": "Advanced template engine for dynamic code generation with variable substitution",
+      "rdfs:label": "Template Engine",
+      "rdfs:subClassOf": "cg:CodeGenerator"
     },
-
     {
       "@id": "cg:templateType",
       "@type": "rdf:Property",
-      "rdfs:label": "template type",
       "dcterms:description": "Type of template being used for generation",
       "rdfs:domain": "cg:GenerationTemplate",
+      "rdfs:label": "template type",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:templateVariables",
       "@type": "rdf:Property",
-      "rdfs:label": "template variables",
       "dcterms:description": "Variables used in template generation",
       "rdfs:domain": "cg:GenerationTemplate",
+      "rdfs:label": "template variables",
       "rdfs:range": "xsd:string"
     },
-
     {
       "@id": "cg:validationRules",
       "@type": "rdf:Property",
-      "rdfs:label": "validation rules",
       "dcterms:description": "Rules used for quality validation",
       "rdfs:domain": "cg:QualityValidator",
+      "rdfs:label": "validation rules",
       "rdfs:range": "xsd:string"
-    },
-
-    {
-      "@id": "cg:CodeGenerationWorkflow",
-      "@type": "flow:CodeGenerationFlowPattern",
-      "rdfs:label": "Code Generation Workflow",
-      "dcterms:description": "Comprehensive workflow for AI-powered code generation",
-      "flow:workflowSteps": [
-        {
-          "@id": "cg:ContextAnalysis",
-          "flow:stepType": "context-analysis",
-          "flow:agent": "cg:GenerationContext",
-          "flow:responsibility": "analyze-generation-context-and-requirements"
-        },
-        {
-          "@id": "cg:TemplateSelection",
-          "flow:stepType": "template-selection",
-          "flow:agent": "cg:TemplateEngine",
-          "flow:responsibility": "select-and-prepare-generation-templates"
-        },
-        {
-          "@id": "cg:CodeGeneration",
-          "flow:stepType": "code-generation",
-          "flow:agent": "cg:ContextAwareGenerator",
-          "flow:responsibility": "generate-code-with-context-awareness"
-        },
-        {
-          "@id": "cg:QualityValidation",
-          "flow:stepType": "quality-validation",
-          "flow:agent": "cg:QualityValidator",
-          "flow:responsibility": "validate-generated-code-quality"
-        },
-        {
-          "@id": "cg:ResultOptimization",
-          "flow:stepType": "result-optimization",
-          "flow:agent": "cg:GenerationResult",
-          "flow:responsibility": "optimize-and-finalize-generation-results"
-        }
-      ],
-      "ai:jjnhmLayer": "JDBL",
-      "ai:dmagPattern": "Coordination"
-    },
-
-    {
-      "@id": "cg:CodeGenerationKPITargets",
-      "@type": "ai:QualityValidation",
-      "rdfs:label": "Code Generation KPI Targets",
-      "dcterms:description": "Key Performance Indicator targets for code generation systems",
-      "ai:targets": {
-        "generation-quality": "≥90%",
-        "template-processing-speed": "≥1000-templates/sec",
-        "conversion-accuracy": "≥92%",
-        "boilerplate-generation-speed": "≤100ms",
-        "refactoring-quality": "≥95%",
-        "context-accuracy": "≥93%",
-        "validation-accuracy": "≥96%",
-        "generation-response-time": "≤300ms",
-        "template-compilation-time": "≤50ms"
-      }
-    },
-
-    {
-      "@id": "cg:CodeGenerationMetrics",
-      "@type": "ai:QualityValidation",
-      "rdfs:label": "Code Generation Metrics",
-      "dcterms:description": "Comprehensive metrics for evaluating code generation performance",
-      "ai:metrics": [
-        {
-          "@id": "cg:BoilerplateGenerationSpeedMetric",
-          "ai:name": "Boilerplate Generation Speed",
-          "ai:target": "≤100ms",
-          "ai:measurement": "boilerplate-generation-performance-testing"
-        },
-        {
-          "@id": "cg:ContextAccuracyMetric",
-          "ai:name": "Context Accuracy",
-          "ai:target": "≥93%",
-          "ai:measurement": "context-aware-generation-precision-testing"
-        },
-        {
-          "@id": "cg:ConversionAccuracyMetric",
-          "ai:name": "Format Conversion Accuracy",
-          "ai:target": "≥92%",
-          "ai:measurement": "format-conversion-precision-testing"
-        },
-        {
-          "@id": "cg:GenerationQualityMetric",
-          "ai:name": "Generation Quality",
-          "ai:target": "≥90%",
-          "ai:measurement": "generated-code-quality-assessment"
-        },
-        {
-          "@id": "cg:GenerationResponseTimeMetric",
-          "ai:name": "Generation Response Time",
-          "ai:target": "≤300ms",
-          "ai:measurement": "code-generation-performance-benchmarking"
-        },
-        {
-          "@id": "cg:RefactoringQualityMetric",
-          "ai:name": "Refactoring Quality",
-          "ai:target": "≥95%",
-          "ai:measurement": "refactored-code-quality-validation"
-        },
-        {
-          "@id": "cg:TemplateCompilationTimeMetric",
-          "ai:name": "Template Compilation Time",
-          "ai:target": "≤50ms",
-          "ai:measurement": "template-compilation-performance-testing"
-        },
-        {
-          "@id": "cg:TemplateProcessingSpeedMetric",
-          "ai:name": "Template Processing Speed",
-          "ai:target": "≥1000-templates/sec",
-          "ai:measurement": "template-engine-performance-benchmarking"
-        },
-        {
-          "@id": "cg:ValidationAccuracyMetric",
-          "ai:name": "Validation Accuracy",
-          "ai:target": "≥96%",
-          "ai:measurement": "quality-validation-precision-testing"
-        }
-      ]
     }
   ]
 }

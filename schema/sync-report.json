@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-11-12T02:31:31.062Z",
+  "schemaRoot": "/Users/huijoohwee/Documents/GitHub/huijoohwee.github.io/schema",
+  "projectRoots": [
+    "/Users/huijoohwee/Documents/GitHub/airvio/prjt0000-wbstcnvs",
+    "/Users/huijoohwee/Documents/GitHub/airvio/00-root"
+  ],
+  "filesProcessed": 48,
+  "filesSorted": 48,
+  "filesErrors": 0,
+  "ids": {
+    "schemaCount": 1049,
+    "projectCount": 157,
+    "unionCount": 1052,
+    "sharedCount": 154
+  },
+  "alignment": {
+    "globalAlignmentPercent": 14.64,
+    "systemicAlignmentPercent": 98.09,
+    "targetGlobal": ">98%",
+    "targetSystemic": ">98%"
+  }
+}

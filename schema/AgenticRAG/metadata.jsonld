@@ -1,0 +1,121 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:GraphMetadata",
+  "@type": "rdfs:Class",
+  "rdfs:label": [
+    { "@value": "Graph Metadata", "@language": "en-us" },
+    { "@value": "图元数据", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Top-level metadata for a graph document. Must be dataset-agnostic and optional; downstream components may ignore it without breaking structural parsing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "图文档的顶层元数据。必须与数据集无关且可选；下游组件可忽略而不影响结构解析。",
+      "@language": "zh-cn"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "propertyDefinitions": {
+    "schemaVersion": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Schema Version", "@language": "en-us" },
+        { "@value": "模式版本", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "exportedAt": {
+      "@type": "xsd:dateTime",
+      "rdfs:label": [
+        { "@value": "Export Timestamp", "@language": "en-us" },
+        { "@value": "导出时间戳", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "source": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Identifier", "@language": "en-us" },
+        { "@value": "来源标识", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Opaque identifier for the producing system or pipeline stage (for example: 'spreadsheet-export', 'api-import', 'batch-parser').",
+          "@language": "en-us"
+        },
+        {
+          "@value": "生成系统或流水线阶段的不透明标识（例如：'spreadsheet-export'、'api-import'、'batch-parser'）。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "datasetId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Dataset Identifier", "@language": "en-us" },
+        { "@value": "数据集标识", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "graphId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph Identifier", "@language": "en-us" },
+        { "@value": "图标识", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "codebaseId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Codebase Identifier", "@language": "en-us" },
+        { "@value": "代码库标识", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional identifier used when the graph represents a codebase index or software architecture graph.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "当图表示代码库索引或软件架构图时使用的可选标识。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "embeddingConfiguration": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Embedding Configuration", "@language": "en-us" },
+        { "@value": "嵌入配置", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedFields": ["defaultModel", "dimensions", "provider", "method", "seed"]
+    },
+    "jsonLdMapping": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "JSON-LD Mapping Configuration", "@language": "en-us" },
+        { "@value": "JSON-LD 映射配置", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedFields": ["contextEdgeProperties"]
+    },
+    "graphStatistics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Graph Statistics", "@language": "en-us" },
+        { "@value": "图统计", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedFields": ["nodeCount", "edgeCount", "labelDistribution"]
+    }
+  },
+  "validationRules": {
+    "structural_only": true,
+    "no_domain_semantics": true
+  }
+}

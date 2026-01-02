@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:Settings",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Settings", "@language": "en-us" },
+    { "@value": "设置", "@language": "zh-cn" }
+  ]
+}

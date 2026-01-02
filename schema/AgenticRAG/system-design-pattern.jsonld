@@ -1,0 +1,41 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@graph": [
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Radial layout toggle",
+      "actions": [
+        "switch between force-directed and D3 radial layouts on the main canvas",
+        "force 2D canvas render mode when radial layout is enabled so orbits stay visible"
+      ],
+      "outcome": "let curators orbit AgenticRAG graphs around pipeline stages while preserving reproducible node clusters and selection-aware overlays.",
+      "pipeline_phase": "Agentic Reasoning",
+      "ui_anchor": "toolbar:radialLayoutMode",
+      "raci_role": "Curator"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Group polygons toggle",
+      "actions": [
+        "show or hide convex hull polygons around related nodes inferred from JSON-LD array properties",
+        "reuse the same grouping rules in 2D and 3D so visual group surfaces stay aligned with JSON-LD exports"
+      ],
+      "outcome": "make GraphRAG phases, datasets, and artifacts visually scannable without changing schema semantics or hard-coding dataset-specific presets.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "toolbar:polygonGroupsMode",
+      "raci_role": "Curator"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Polygon presets",
+      "actions": [
+        "edit schema.metadata[\"canvas:polygons\"] defaultStyle and per-field overrides from the Main Panel Graph Fields tab",
+        "tune fill, stroke, opacity, dash, groupingLogic, and layer metadata for group polygons used in both 2D and 3D"
+      ],
+      "outcome": "keep 2D/3D canvas group polygons, workflow JSON-LD exports, and AgenticRAG system design docs aligned on the same schema-driven configuration.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "mainPanel:graphFieldsPolygonPresets",
+      "raci_role": "Schema"
+    }
+  ]
+}

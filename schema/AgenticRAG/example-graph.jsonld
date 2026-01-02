@@ -1,0 +1,149 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@type": "kg:Graph",
+  
+  "metadata": {
+    "schema_version": "1.0.0",
+    "export_timestamp": "2025-12-19T10:30:00Z",
+    "source_system": "example_export",
+    "pipeline_phase": "PRODUCE",
+    "graph_statistics": {
+      "node_count": 3,
+      "edge_count": 2,
+      "label_distribution": {
+        "Entity": 2,
+        "Concept": 1
+      }
+    }
+  },
+  
+  "@graph": [
+    {
+      "@type": "kg:Node",
+      "@id": "node:entity_001",
+      "labels": ["Entity", "Organization"],
+      
+      "properties": {
+        "name": "Example Entity",
+        "category": "Organization"
+      },
+      
+      "chunk_text": "Example node text used for retrieval grounding. This content is dataset-agnostic and may describe any entity or concept.",
+      
+      "embedding": [0.12, -0.34, 0.56, 0.78, -0.23, 0.45],
+      
+      "flow:kind": "input",
+      "flow:value": 1.0,
+      
+      "geo": {
+        "lat": 0.0,
+        "lng": 0.0,
+        "display_name": "Example location"
+      },
+      
+      "media_url": "https://example.com/resource",
+      
+      "metadata": {
+        "source": "system:row_abc123",
+        "confidence": 0.95,
+        "timestamp": "2025-12-19T09:00:00Z",
+        "curator": "user@example.com",
+        "validation_status": "verified"
+      }
+    },
+    
+    {
+      "@type": "kg:Node",
+      "@id": "node:concept_001",
+      "labels": ["Concept", "Technology"],
+      
+      "properties": {
+        "name": "Example Concept",
+        "category": "Concept"
+      },
+      
+      "chunk_text": "Example concept text used for retrieval grounding. Agents can use this content to support reasoning and summarization.",
+      
+      "embedding": [0.34, 0.12, -0.45, 0.67, 0.89, -0.12],
+      
+      "flow:kind": "compute",
+      "flow:value": 0.0,
+      "flow:op": "sum",
+      
+      "metadata": {
+        "source": "system:row_def456",
+        "confidence": 0.88,
+        "timestamp": "2025-12-19T09:15:00Z",
+        "curator": "user@example.com"
+      }
+    },
+    
+    {
+      "@type": "kg:Node",
+      "@id": "node:entity_002",
+      "labels": ["Entity", "Location"],
+      
+      "properties": {
+        "name": "Example Place",
+        "type": "Location"
+      },
+      
+      "chunk_text": "Example place text used for retrieval grounding.",
+      
+      "embedding": [-0.23, 0.45, 0.12, -0.56, 0.34, 0.78],
+      
+      "flow:kind": "input",
+      "flow:value": 1.0,
+      
+      "geo": {
+        "lat": 0.0,
+        "lng": 0.0,
+        "display_name": "Example place"
+      },
+      
+      "metadata": {
+        "source": "system:row_ghi789",
+        "confidence": 1.0,
+        "timestamp": "2025-12-19T09:30:00Z"
+      }
+    },
+    
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:rel_001",
+      "source": "node:entity_001",
+      "target": "node:concept_001",
+      "label": "RELATED_TO",
+      
+      "properties": {
+        "strength": 0.92,
+        "since": "2020"
+      },
+      
+      "metadata": {
+        "source": "system:relationship_xyz",
+        "confidence": 0.90,
+        "timestamp": "2025-12-19T09:45:00Z",
+        "derivation": "curator_defined"
+      }
+    },
+    
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:rel_002",
+      "source": "node:entity_001",
+      "target": "node:entity_002",
+      "label": "RELATED_TO",
+      
+      "properties": {
+        "strength": 0.75
+      },
+      
+      "metadata": {
+        "source": "system:relationship_uvw",
+        "confidence": 0.95,
+        "timestamp": "2025-12-19T10:00:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:Canvas",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Canvas", "@language": "en-us" },
+    { "@value": "画布", "@language": "zh-cn" }
+  ]
+}

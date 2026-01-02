@@ -1,0 +1,143 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "kg:Edge",
+  "@type": "rdfs:Class",
+  
+  "rdfs:label": [
+    {"@value": "Knowledge Graph Edge", "@language": "en-us"},
+    {"@value": "知识图谱边", "@language": "zh-cn"}
+  ],
+  
+  "rdfs:comment": [
+    {
+      "@value": "Generic graph edge/relationship - domain-agnostic, supports multi-hop reasoning",
+      "@language": "en-us"
+    },
+    {
+      "@value": "通用图边/关系 - 领域无关，支持多跳推理",
+      "@language": "zh-cn"
+    }
+  ],
+  
+  "schema_version": "1.0.0",
+  
+  "required": ["source", "target", "label"],
+  "compatibilityAliases": {
+    "source_node": "source",
+    "target_node": "target",
+    "relation": "label"
+  },
+  
+  "propertyDefinitions": {
+    "@id": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Edge Identifier", "@language": "en-us"},
+        {"@value": "边标识符", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Unique identifier for the edge (required)", "@language": "en-us"},
+        {"@value": "边的唯一标识符（必需）", "@language": "zh-cn"}
+      ],
+      "required": true
+    },
+    
+    "source": {
+      "@type": "@id",
+      "rdfs:label": [
+        {"@value": "Source Node Reference", "@language": "en-us"},
+        {"@value": "源节点引用", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Reference to the source node @id - Validator checks referential integrity (required)", "@language": "en-us"},
+        {"@value": "源节点@id的引用 - 验证器检查引用完整性（必需）", "@language": "zh-cn"}
+      ],
+      "required": true,
+      "validationRule": "must_reference_existing_node"
+    },
+    
+    "target": {
+      "@type": "@id",
+      "rdfs:label": [
+        {"@value": "Target Node Reference", "@language": "en-us"},
+        {"@value": "目标节点引用", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Reference to the target node @id - Validator checks referential integrity (required)", "@language": "en-us"},
+        {"@value": "目标节点@id的引用 - 验证器检查引用完整性（必需）", "@language": "zh-cn"}
+      ],
+      "required": true,
+      "validationRule": "must_reference_existing_node"
+    },
+    
+    "label": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Relationship Type", "@language": "en-us"},
+        {"@value": "关系类型", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Opaque relationship label - Schema does NOT validate semantics (required)", "@language": "en-us"},
+        {"@value": "不透明关系标签 - 模式不验证语义（必需）", "@language": "zh-cn"}
+      ],
+      "required": true
+    },
+    
+    "source_node": {
+      "@type": "@id",
+      "aliasFor": "source"
+    },
+    
+    "target_node": {
+      "@type": "@id",
+      "aliasFor": "target"
+    },
+    
+    "relation": {
+      "@type": "xsd:string",
+      "aliasFor": "label"
+    },
+    
+    "properties": {
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Edge Properties", "@language": "en-us"},
+        {"@value": "边属性", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Domain-specific edge attributes (e.g., weight, probability) - Schema treats as opaque", "@language": "en-us"},
+        {"@value": "特定领域的边属性（例如权重、概率）- 模式视为不透明", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+    
+    "metadata": {
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Edge Metadata", "@language": "en-us"},
+        {"@value": "边元数据", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Provenance, confidence, timestamps - Enables agent path confidence scoring", "@language": "en-us"},
+        {"@value": "来源、置信度、时间戳 - 使智能体路径置信度评分成为可能", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "suggestedFields": ["source", "confidence", "timestamp"],
+      "useCase": "multi_hop_reasoning"
+    }
+  },
+  
+  "validationRules": {
+    "structural_only": true,
+    "check_referential_integrity": true,
+    "no_domain_semantics": true,
+    "treat_relation_as_string": true
+  },
+  
+  "agenticUseCases": [
+    "multi_hop_traversal",
+    "relationship_reasoning",
+    "path_confidence_scoring",
+    "subgraph_extraction"
+  ]
+}

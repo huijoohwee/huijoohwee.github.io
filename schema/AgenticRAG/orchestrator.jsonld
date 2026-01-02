@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:Orchestrator",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Orchestrator", "@language": "en-us" },
+    { "@value": "编排器", "@language": "zh-cn" }
+  ]
+}

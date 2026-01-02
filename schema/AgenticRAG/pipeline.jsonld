@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:Pipeline",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Pipeline", "@language": "en-us" },
+    { "@value": "流水线", "@language": "zh-cn" }
+  ]
+}

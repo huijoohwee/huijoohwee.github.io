@@ -1,0 +1,71 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "kg:Graph",
+  "@type": "rdfs:Class",
+  "rdfs:label": [
+    { "@value": "Graph Container", "@language": "en-us" },
+    { "@value": "图容器", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Domain-agnostic graph container for nodes, edges, and top-level metadata. Structural validation only: ID uniqueness and edge referential integrity.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "领域无关的图容器，用于承载节点、边和顶层元数据。仅做结构验证：ID 唯一性、边引用完整性。",
+      "@language": "zh-cn"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "required": [],
+  "compatibility": {
+    "jsonld": {
+      "uses": ["@context", "@graph"],
+      "notes": "A JSON-LD document can place Node and Edge objects inside @graph."
+    },
+    "graphdata": {
+      "uses": ["metadata", "nodes", "edges"],
+      "notes": "A non-JSON-LD document can use nodes[] and edges[] directly."
+    }
+  },
+  "propertyDefinitions": {
+    "@context": {
+      "@type": "@json",
+      "required": false
+    },
+    "@graph": {
+      "@container": "@list",
+      "required": false
+    },
+    "metadata": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Graph Metadata", "@language": "en-us" },
+        { "@value": "图元数据", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "nodes": {
+      "@container": "@list",
+      "rdfs:label": [
+        { "@value": "Nodes", "@language": "en-us" },
+        { "@value": "节点", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "edges": {
+      "@container": "@list",
+      "rdfs:label": [
+        { "@value": "Edges", "@language": "en-us" },
+        { "@value": "边", "@language": "zh-cn" }
+      ],
+      "required": false
+    }
+  },
+  "validationRules": {
+    "structural_only": true,
+    "check_node_id_uniqueness": true,
+    "check_edge_referential_integrity": true,
+    "no_domain_semantics": true
+  }
+}

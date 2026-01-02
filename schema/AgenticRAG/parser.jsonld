@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:Parser",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Parser", "@language": "en-us" },
+    { "@value": "解析器", "@language": "zh-cn" }
+  ]
+}

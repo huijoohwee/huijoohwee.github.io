@@ -1,0 +1,10 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:SRPSVO",
+  "@type": "rdfs:Class",
+  "schema_version": "1.0.0",
+  "rdfs:label": [
+    { "@value": "SRP/SVO", "@language": "en-us" },
+    { "@value": "SRP/SVO", "@language": "zh-cn" }
+  ]
+}

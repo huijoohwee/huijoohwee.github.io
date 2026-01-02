@@ -1,0 +1,217 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "kg:Node",
+  "@type": "rdfs:Class",
+  
+  "rdfs:label": [
+    {"@value": "Knowledge Graph Node", "@language": "en-us"},
+    {"@value": "知识图谱节点", "@language": "zh-cn"}
+  ],
+  
+  "rdfs:comment": [
+    {
+      "@value": "Generic graph node structure - domain-agnostic, supports RAG, embeddings, geospatial, and multimedia",
+      "@language": "en-us"
+    },
+    {
+      "@value": "通用图节点结构 - 领域无关，支持RAG、嵌入、地理空间和多媒体",
+      "@language": "zh-cn"
+    }
+  ],
+  
+  "schema_version": "1.0.0",
+  
+  "required": ["@id", "labels"],
+  
+  "propertyDefinitions": {
+    "@id": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Node Identifier", "@language": "en-us"},
+        {"@value": "节点标识符", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Unique identifier for the node (required)", "@language": "en-us"},
+        {"@value": "节点的唯一标识符（必需）", "@language": "zh-cn"}
+      ],
+      "required": true
+    },
+    
+    "labels": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Type Labels", "@language": "en-us"},
+        {"@value": "类型标签", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Array of opaque type labels - Parser/Validator treat as strings (required, min: 1)", "@language": "en-us"},
+        {"@value": "不透明类型标签数组 - 解析器/验证器视为字符串（必需，最少：1）", "@language": "zh-cn"}
+      ],
+      "required": true,
+      "minItems": 1
+    },
+    
+    "properties": {
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Custom Properties", "@language": "en-us"},
+        {"@value": "自定义属性", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Domain-specific key-value pairs - Schema does NOT validate content", "@language": "en-us"},
+        {"@value": "特定领域的键值对 - 模式不验证内容", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+    
+    "chunk_text": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "RAG Text Content", "@language": "en-us"},
+        {"@value": "RAG文本内容", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Text content for semantic retrieval and agent grounding", "@language": "en-us"},
+        {"@value": "用于语义检索和智能体基础的文本内容", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "agentic_rag"
+    },
+    
+    "embedding": {
+      "@container": "@list",
+      "@type": "xsd:float",
+      "rdfs:label": [
+        {"@value": "Vector Embedding", "@language": "en-us"},
+        {"@value": "向量嵌入", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Dense vector for similarity search - Generated from chunk_text", "@language": "en-us"},
+        {"@value": "用于相似性搜索的密集向量 - 从chunk_text生成", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "agentic_rag"
+    },
+    
+    "geo": {
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Geospatial Coordinates", "@language": "en-us"},
+        {"@value": "地理空间坐标", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Geographic location {lat: float, lng: float} for spatial reasoning", "@language": "en-us"},
+        {"@value": "地理位置 {lat: float, lng: float} 用于空间推理", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "spatial_reasoning"
+    },
+    
+    "media_url": {
+      "@type": "@id",
+      "rdfs:label": [
+        {"@value": "Media Resource URL", "@language": "en-us"},
+        {"@value": "媒体资源网址", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "URL to external media (image, video, document) - Agent can inject inline", "@language": "en-us"},
+        {"@value": "外部媒体（图像、视频、文档）网址 - 智能体可内联注入", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "multimodal"
+    },
+    
+    "metadata": {
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Contextual Metadata", "@language": "en-us"},
+        {"@value": "上下文元数据", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Provenance, confidence, timestamps - Used for agent self-correction and traceability", "@language": "en-us"},
+        {"@value": "来源、置信度、时间戳 - 用于智能体自我修正和可追溯性", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "suggestedFields": ["source", "confidence", "timestamp", "curator"],
+      "useCase": "provenance_tracking"
+    },
+    
+    "flow:kind": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Flow Node Kind", "@language": "en-us"},
+        {"@value": "流节点类型", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional flow role for computing over the graph (for example: input, compute, aggregate).",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于在图上进行计算的可选流角色（例如：input、compute、aggregate）。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "useCase": "agentic_flow"
+    },
+    
+    "flow:value": {
+      "@type": "xsd:float",
+      "rdfs:label": [
+        {"@value": "Flow Numeric Value", "@language": "en-us"},
+        {"@value": "流数值", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Numeric flow value used by a computing flow engine.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "由计算流引擎使用的数值。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "useCase": "agentic_flow",
+      "validationRule": "must_be_numeric"
+    },
+    
+    "flow:op": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Flow Operation", "@language": "en-us"},
+        {"@value": "流运算", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional aggregation or transformation applied when computing this node's flow value (for example: sum, avg, min, max).",
+          "@language": "en-us"
+        },
+        {
+          "@value": "在计算此节点流数值时应用的可选聚合或变换（例如：sum、avg、min、max）。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "useCase": "agentic_flow"
+    }
+  },
+  
+  "validationRules": {
+    "structural_only": true,
+    "no_domain_semantics": true,
+    "treat_properties_as_opaque": true,
+    "treat_labels_as_strings": true
+  },
+  
+  "agenticUseCases": [
+    "semantic_retrieval",
+    "multi_hop_reasoning",
+    "self_correction",
+    "provenance_tracking",
+    "spatial_reasoning",
+    "multimodal_grounding"
+  ]
+}

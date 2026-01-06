@@ -19,7 +19,7 @@
     }
   ],
   
-  "schema_version": "1.0.0",
+  "schemaVersion": "1.0.0",
   
   "required": ["@id", "labels"],
   
@@ -81,7 +81,7 @@
     
     "embedding": {
       "@container": "@list",
-      "@type": "xsd:float",
+      "@type": "xsd:double",
       "rdfs:label": [
         {"@value": "Vector Embedding", "@language": "en-us"},
         {"@value": "向量嵌入", "@language": "zh-cn"}
@@ -92,6 +92,69 @@
       ],
       "required": false,
       "useCase": "agentic_rag"
+    },
+
+    "provenance": {
+      "@container": "@set",
+      "@type": "@id",
+      "rdfs:label": [
+        { "@value": "Provenance Links", "@language": "en-us" },
+        { "@value": "溯源链接", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Links to source structures (documents, blocks, tokens) this node was derived from.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "指向该节点来源的结构（文档、块、词元）的链接。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "documentPath": {
+      "@type": "xsd:string",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "documentUrl": {
+      "@type": "@id",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "lineStart": {
+      "@type": "xsd:integer",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "lineEnd": {
+      "@type": "xsd:integer",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "blockType": {
+      "@type": "xsd:string",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "tokenStart": {
+      "@type": "xsd:integer",
+      "required": false,
+      "useCase": "provenance_tracking"
+    },
+
+    "tokenEnd": {
+      "@type": "xsd:integer",
+      "required": false,
+      "useCase": "provenance_tracking"
     },
     
     "geo": {
@@ -129,11 +192,17 @@
         {"@value": "上下文元数据", "@language": "zh-cn"}
       ],
       "rdfs:comment": [
-        {"@value": "Provenance, confidence, timestamps - Used for agent self-correction and traceability", "@language": "en-us"},
-        {"@value": "来源、置信度、时间戳 - 用于智能体自我修正和可追溯性", "@language": "zh-cn"}
+        {
+          "@value": "Provenance, confidence, timestamps, and optional codebase paths (for example metadata.codebasePath) used for agent self-correction and traceability.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "来源、置信度、时间戳以及可选的代码库路径（例如 metadata.codebasePath），用于智能体自我修正和可追溯性。",
+          "@language": "zh-cn"
+        }
       ],
       "required": false,
-      "suggestedFields": ["source", "confidence", "timestamp", "curator"],
+      "suggestedFields": ["source", "confidence", "timestamp", "curator", "codebasePath", "documentPath", "documentUrl", "lineStart", "lineEnd", "blockType", "tokenStart", "tokenEnd"],
       "useCase": "provenance_tracking"
     },
     

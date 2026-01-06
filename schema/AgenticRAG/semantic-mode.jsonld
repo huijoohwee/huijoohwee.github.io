@@ -1,0 +1,160 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:SemanticLayerMode",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.1",
+  "rdfs:label": [
+    { "@value": "Semantic layer mode and controls", "@language": "en-us" },
+    { "@value": "语义层模式和控制项", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Directive describing how schema.layers.mode === 'semantic' and schema.layers.semantic.* configuration drive semantic layer derivation in a neutral, dataset-agnostic way. The focus is on structural controls and algorithm steps, not on any particular domain or repository. In screenshot-oriented AgenticRAG workflow examples (for example a codebase index graph), the same schema-driven node/edge color palette and per-layer opacity settings are reused across property, document-structure, and semantic modes so document-structure type bands and semantic convex hull polygons share one consistent visual language. Base node circles keep colors from schema.nodeStyles in every mode; semantic derivation attaches visual:community and visual:fill for community-aware overlays (such as polygons) without replacing the core palette, and the same layer-mode configuration surface (schema.layers.mode plus schema.layers.semantic.*) is exposed in-app via the Renderer AI-KG Layers controls, the MainPanel Settings Render section, the FloatingPanel renderer layer mode selector, and the Canvas bottom-panel Stats tab (layer/edge/community charts and word-frequency views). Stats token filters support both include and exclude modes and are typically exposed as tickbox lists with a Select all checkbox. In exclude mode, checked tokens are kept and unchecked tokens are excluded; Select all is checked by default and unchecking it unselects all tokens (exclude everything). When lists are long, the Select all row should remain sticky inside the scroll container and stay aligned with list padding, and the list can be collapsible/expandable. Distribution charts are expected to render full bar sets (using horizontal scroll rather than truncating categories); selections made from the canvas should highlight the corresponding bar and horizontally scroll the distribution so the selected/pinned bar stays visible. Hover previews should only show tooltip text and must not change the underlying bar set, selection state, or reflow chart layout; sub-distribution bar charts may be rendered for hovered/pinned/selected items when more detail is available.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "描述 schema.layers.mode === '语义' 时，schema.layers.semantic.* 配置如何在领域无关和数据集无关的前提下驱动语义层提取，重点是结构控制和算法步骤，而不是特定域或仓库。统计面板的词项过滤支持包含与排除两种模式，通常以勾选框列表呈现，并提供全选勾选框：在排除模式下，勾选表示保留该词项，取消勾选表示排除该词项；全选默认勾选，取消全选表示全部不选（全部排除）。当列表较长时，全选行应在滚动容器内保持吸顶，并与列表内边距对齐，且列表可折叠/展开。分布图应显示全部柱状条（类别过多时使用横向滚动而非截断）；从画布产生的选择应高亮对应柱条，并自动横向滚动以确保已选/已固定的柱条可见。悬停预览不应改变柱状条集合或触发布局重排，且在信息可用时可为已固定/已选中的条目渲染更细分的子分布柱状图。",
+      "@language": "zh-cn"
+    }
+  ],
+  "fields": {
+    "schema.layers.mode": {
+      "type": "xsd:string",
+      "allowed_values": ["property", "document-structure", "semantic"],
+      "description": "Selects the layer grouping strategy. Semantic derivation only runs when mode is set to semantic; other modes leave GraphData unchanged apart from how downstream renderers interpret polygons and document structure. In document-structure mode, structural container node types (for example Document, Section, Paragraph, CodeBlock, Table, List, ListItem) remain normal nodes and drive type-based layering. In semantic mode, the similarity pipeline derives weighted semantic edges plus per-node visual:importance / visual:nodeSize and (optionally) community ids; polygon overlays represent semantic communities and intentionally exclude JSON-LD structural block types so semantic polygons reflect meaning/word-frequency clusters rather than document scaffolding. Separately, JSON-LD array-based group polygons (for example steps/contains) can still be shown via the group-polygons feature regardless of layer mode."
+    },
+    "schema.layers.documentStructure.minGroupSize": {
+      "type": "xsd:integer",
+      "minimum": 2,
+      "default": 2,
+      "description": "Minimum number of nodes required for a derived group when using document-structure or semantic modes. Smaller groups are merged back into base polygons to keep layer bands readable."
+    },
+    "schema.layers.semantic.similarityEdgeLabel": {
+      "type": "xsd:string",
+      "default": "semanticSimilarity",
+      "description": "Label used for derived semantic similarity edges. Only edges with this label and positive weight participate in semantic layer communities and overlays."
+    },
+    "schema.layers.semantic.similarityMetric": {
+      "type": "xsd:string",
+      "allowed_values": ["cosine", "pmi"],
+      "default": "cosine",
+      "description": "Interprets edge weights as either cosine similarity over token vectors or pointwise mutual information (PMI) over token co-occurrence frequencies."
+    },
+    "schema.layers.semantic.topKEdgesPerNode": {
+      "type": "xsd:integer",
+      "minimum": 0,
+      "default": 4,
+      "description": "Maximum number of strongest similarity neighbors to keep per node before community detection. Zero keeps all candidates above the similarity threshold; higher values prune to a fixed neighborhood size."
+    },
+    "schema.layers.semantic.minSimilarity": {
+      "type": "xsd:double",
+      "minimum": 0,
+      "default": 0.12,
+      "description": "Global similarity threshold applied after ranking neighbors. Edges below this score are dropped before community detection so clusters emphasize stronger semantic ties."
+    },
+    "schema.layers.semantic.textKeys": {
+      "type": "@json",
+      "description": "Optional list of node property keys whose string values are concatenated with the node label to form the tokenization text used for semantic similarity."
+    },
+    "schema.layers.semantic.minTokenLength": {
+      "type": "xsd:integer",
+      "minimum": 1,
+      "default": 3,
+      "description": "Minimum token length in characters. Shorter tokens are discarded during tokenization to reduce noise from very short terms."
+    },
+    "schema.layers.semantic.maxTokensPerNode": {
+      "type": "xsd:integer",
+      "minimum": 0,
+      "default": 2000,
+      "description": "Maximum number of tokens retained per node after tokenization. Zero means do not truncate; positive values cap per-node token lists for predictable resource usage."
+    },
+    "schema.layers.semantic.stopwords": {
+      "type": "@json",
+      "default": [],
+      "description": "Optional list of stopwords that are removed from tokenized text in a case-insensitive way before frequency counts are computed."
+    },
+    "schema.layers.semantic.communityDetection.enabled": {
+      "type": "xsd:boolean",
+      "default": true,
+      "description": "Enables or disables Louvain-style community detection over the semantic similarity graph. When disabled, nodes keep importance scores but no community ids are assigned."
+    },
+    "schema.layers.semantic.communityDetection.resolution": {
+      "type": "xsd:double",
+      "minimum": 0.05,
+      "default": 1,
+      "description": "Resolution parameter for modularity gain. Higher values favor smaller, more granular communities; lower values favor larger groups."
+    },
+    "schema.layers.semantic.communityDetection.maxPasses": {
+      "type": "xsd:integer",
+      "minimum": 1,
+      "default": 10,
+      "description": "Maximum number of passes over all nodes during community optimization. Each pass re-evaluates potential community moves until no positive modularity gain is found or the move limit is reached."
+    },
+    "schema.layers.semantic.communityDetection.maxMovesPerPass": {
+      "type": "xsd:integer",
+      "minimum": 100,
+      "default": 20000,
+      "description": "Upper bound on how many successful community moves are applied per pass. Helps keep runtime predictable on large graphs without tying behavior to any particular dataset."
+    }
+  },
+  "algorithm_steps": [
+    {
+      "step": 1,
+      "name": "Mode check and configuration lookup",
+      "description": "If schema.layers.mode is not semantic, return GraphData unchanged. When in semantic mode, read schema.layers.semantic.* controls (similarityEdgeLabel, similarityMetric, topKEdgesPerNode, minSimilarity, textKeys, token limits, stopwords, and communityDetection parameters)."
+    },
+    {
+      "step": 2,
+      "name": "Tokenization and per-node vector construction",
+      "description": "Normalize node labels and configured textKeys to lower case, split on non-alphanumeric separators, drop tokens shorter than minTokenLength or present in stopwords, and optionally truncate to maxTokensPerNode. For each node, count token frequencies, store total token count, and compute the Euclidean norm of the frequency vector."
+    },
+    {
+      "step": 3,
+      "name": "Inverted index and pair statistics",
+      "description": "Build an inverted index from token to (node, count) pairs. For each token with at least two nodes, accumulate dot products and shared-token counts for node pairs. Track totalTokens across all nodes to support PMI scoring without referencing any specific corpus."
+    },
+    {
+      "step": 4,
+      "name": "Similarity scoring (cosine or PMI)",
+      "description": "For each node pair, compute a similarity score based on the selected metric. Cosine divides the accumulated dot product by the product of per-node norms, ignoring non-positive or non-finite results. PMI computes log₂(pᵢⱼ / (pᵢ · pⱼ)) from token co-occurrence frequencies, clamps negative scores to zero, and discards non-positive or non-finite values."
+    },
+    {
+      "step": 5,
+      "name": "Top-K neighbor selection and global thresholding",
+      "description": "For each node, collect candidate neighbors with their similarity scores, sort by descending similarity (breaking ties by node id), and optionally truncate to a small multiple of topKEdgesPerNode. Iterate candidates in order, keeping at most topKEdgesPerNode neighbors whose similarity is at or above minSimilarity, and record accepted undirected pairs symmetrically."
+    },
+    {
+      "step": 6,
+      "name": "Semantic edge construction",
+      "description": "For each accepted pair, create a derived semantic edge with label similarityEdgeLabel, store the similarity score as weight, the shared-token count as count, and compute a clamped width from the square root of the co-occurrence count. Mark edges as derived semantic edges in metadata so renderers can distinguish them from original graph edges."
+    },
+    {
+      "step": 7,
+      "name": "Community detection over similarity graph",
+      "description": "If communityDetection.enabled is true and the semantic graph has positive total edge weight, run a Louvain-style optimization pass over the similarity edges. Initialize each node in its own community, then repeatedly move nodes to neighboring communities when modularity gain is positive, respecting resolution, maxPasses, and maxMovesPerPass, and finally remap community ids into a compact integer range."
+    },
+    {
+      "step": 8,
+      "name": "Node importance and visual attributes",
+      "description": "For each node, derive an importance score from the token count or the sum of incident similarity weights, map it into a clamped radius band to compute visual:nodeSize, and attach visual:importance. When communities are available, also attach visual:community and a deterministic visual:fill color derived from the community id."
+    },
+    {
+      "step": 9,
+      "name": "GraphData update",
+      "description": "Remove any edges previously marked as derived and replace them with the constructed semantic edges. Keep original nodes and edges otherwise unchanged, returning a new GraphData object whose nodes carry semantic visualization metadata and whose edges include the semantic similarity graph under the configured label."
+    },
+    {
+      "step": 10,
+      "name": "Layer integration with polygons and document structure",
+      "description": "Downstream renderers interpret schema.layers.mode together with schema.layers.documentStructure.minGroupSize and schema.metadata['canvas:polygons'] to layer AI-KG views. In document-structure mode, structural node types (Document/Section/Paragraph/CodeBlock/Table/List/ListItem) drive non-polygon, type-based layer bands while remaining visible as normal nodes. In semantic mode, semantic communities (derived from similarity edges and Louvain-style detection) can be rendered as convex-hull polygon overlays and colored by community; JSON-LD structural block types are excluded from semantic community polygon grouping so semantic polygons emphasize meaning/word-frequency clusters, including the per-polygon token-frequency distributions surfaced in UI stats. Independently of layer mode, the group-polygons feature can render convex hulls around nodes referenced by array-valued properties (for example steps/contains), using schema.metadata['canvas:polygons'] to style those surfaces consistently in 2D and 3D."
+    }
+  ],
+  "neutrality": {
+    "dataset_agnostic": true,
+    "project_agnostic": true,
+    "domain_agnostic": true,
+    "math_dataset_independent": true,
+    "forbid_project_specific_preset": true,
+    "notes": "All probability and similarity computations operate on token frequencies derived from the current GraphData only and do not assume any particular domain, label vocabulary, or file layout. UI statistics (for example polygon, edge, and community word-frequency charts in Knowgrph Canvas) must reuse the same schema.layers.semantic.* tokenization and stopword configuration and may only apply runtime include/exclude filters based on GraphData contents, never hard-coded dataset-specific presets. When visualizing distributions, UIs should avoid truncating categories and instead allow scrolling to preserve the full bar set; hover previews should not change the underlying distribution set or reflow chart layout; optional sub-distribution charts may be rendered for pinned/selected items as long as they are computed from the same neutral configuration."
+  }
+}

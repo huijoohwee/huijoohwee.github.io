@@ -1,0 +1,53 @@
+{
+  "@context": {
+    "@vocab": "https://huijoohwee.github.io/schema/AgenticRAG/v1/",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld"
+  },
+  "@id": "rag:DocumentationGuide",
+  "@type": "core:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Documentation guide patterns", "@language": "en-us" },
+    { "@value": "文档风格模式", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines neutral, domain-agnostic wording patterns for Role → Actions → Outcome tooltips and numeric value semantics so UI copy, JSON-LD fixtures, and tests share the same structure.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义领域无关的语言模式，用于 Role → Actions → Outcome 工具提示和数值语义，使 UI 文案、JSON-LD 和测试具有一致结构。",
+      "@language": "zh-cn"
+    }
+  ],
+  "role_action_outcome": {
+    "pattern": "Role → Actions → Outcome",
+    "maxWords": 50,
+    "example": "Orchestrator → execute AgenticRAG traversal presets and edit GraphRAG paths → adjust traversal delay and view mode via bottom panel and Settings → Orchestrator → deliver controlled, customizable graph navigation for consistent analysis and sharing.",
+    "examples": [
+      {
+        "@value": "Orchestrator → execute AgenticRAG traversal presets and edit GraphRAG paths → adjust traversal delay and view mode via bottom panel and Settings → Orchestrator → deliver controlled, customizable graph navigation for consistent analysis and sharing.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "调度器 → 执行 AgenticRAG 遍历预设并编辑 GraphRAG 路径 → 通过底部面板和 Settings → Orchestrator 调整步进延迟和查看模式 → 保持可控、易分享的图形导航。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "value_semantics": {
+    "pattern": "Default/Min/Max/Interval + impact",
+    "maxWords": 15,
+    "example": "Default: 3; Min: 0; Max: 32; Interval: 1; Higher values favor recall over precision.",
+    "examples": [
+      {
+        "@value": "Default: 3; Min: 0; Max: 32; Interval: 1; Higher values favor recall over precision.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "默认：3；最小：0；最大：32；间隔：1；数值越大越偏向记忆。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}

@@ -27,6 +27,19 @@
     },
     {
       "@type": "rag:RoleActionOutcome",
+      "role": "Stats distribution bar charts",
+      "actions": [
+        "click bars in bottom panel Stats distributions to pin a node/edge subset in the shared selection model",
+        "keep the main distribution stable while rendering available drilldown sub-bar charts below the chart",
+        "highlight and auto-scroll the matching bar when selection comes from the canvas"
+      ],
+      "outcome": "let curators inspect token- and community-level summaries without turning distribution charts into drilldown views or changing bar counts as selection changes.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "bottomPanel:statsDistributions",
+      "raci_role": "Curator"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
       "role": "Polygon presets",
       "actions": [
         "edit schema.metadata[\"canvas:polygons\"] defaultStyle and per-field overrides from the Main Panel Graph Fields tab",
@@ -35,6 +48,66 @@
       "outcome": "keep 2D/3D canvas group polygons, workflow JSON-LD exports, and AgenticRAG system design docs aligned on the same schema-driven configuration.",
       "pipeline_phase": "Schema",
       "ui_anchor": "mainPanel:graphFieldsPolygonPresets",
+      "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "AI‑KG layer mode",
+      "actions": [
+        "toggle schema.layers.mode between property, document-structure, and semantic in the Render tab, the MainPanel Settings Render section, the FloatingPanel Renderer view, and the Graph Fields panel header",
+        "use semantic mode to derive similarity edges, node importance sizing, and Louvain-style communities whose polygons represent meaning/word-frequency clusters (excluding JSON-LD structural block types), while document-structure mode keeps structural containers visible as nodes and relies on type-based layering"
+      ],
+      "outcome": "align AI‑KG canvas layering with AgenticRAG-friendly document and semantic group surfaces so exported JSON-LD graphs, polygons, and traversal overlays share the same schema.layers contract.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "render:aiKgLayersMode",
+      "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Semantic similarity metric",
+      "actions": [
+        "switch schema.layers.semantic.similarityMetric between cosine similarity and PMI for semantic edges",
+        "make the chosen similarity metric explicit in traversal tooling so semantic overlays remain reproducible and explainable"
+      ],
+      "outcome": "keep semantic layer edges grounded in a clearly documented similarity metric so AgenticRAG workflows can reason over PMI- or cosine-based neighborhoods without relying on dataset-specific presets.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "render:aiKgSemanticMetric",
+      "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Semantic similarity label",
+      "actions": [
+        "choose schema.layers.semantic.similarityEdgeLabel for derived semantic similarity edges",
+        "separate semantic similarity edges from structural and traversal edges across renderers and exports"
+      ],
+      "outcome": "keep semantic layer edges queryable under a single label so AgenticRAG workflows can filter, replay, and export similarity graphs without embedding dataset-specific labels.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "render:aiKgSemanticEdgeLabel",
+      "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Semantic edge sparsity",
+      "actions": [
+        "tune schema.layers.semantic.topKEdgesPerNode to control how many strongest PMI/cosine neighbors each node keeps in the semantic layer",
+        "balance cluster readability and coverage by limiting edges per node before community detection and polygon generation"
+      ],
+      "outcome": "let curators tighten or relax semantic edge density in a dataset-agnostic way so communities, traversal overlays, and group polygons stay legible without hard-coding graph-specific thresholds.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "render:aiKgSemanticTopK",
+      "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Semantic similarity threshold",
+      "actions": [
+        "adjust schema.layers.semantic.minSimilarity to drop low-signal PMI/cosine edges before Louvain community detection",
+        "shape semantic bands and convex hulls by enforcing a minimum similarity level instead of relying on raw co-occurrence counts"
+      ],
+      "outcome": "give AgenticRAG workflows a single, schema-driven similarity cutoff that filters noisy semantic edges across datasets while preserving meaningful neighborhoods for traversal and visualization.",
+      "pipeline_phase": "Schema",
+      "ui_anchor": "render:aiKgSemanticMinSimilarity",
       "raci_role": "Schema"
     }
   ]

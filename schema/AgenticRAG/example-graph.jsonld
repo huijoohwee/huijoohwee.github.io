@@ -3,14 +3,14 @@
   "@type": "kg:Graph",
   
   "metadata": {
-    "schema_version": "1.0.0",
-    "export_timestamp": "2025-12-19T10:30:00Z",
-    "source_system": "example_export",
+    "schemaVersion": "1.0.0",
+    "exportedAt": "2025-12-19T10:30:00Z",
+    "source": "example_export",
     "pipeline_phase": "PRODUCE",
-    "graph_statistics": {
-      "node_count": 3,
-      "edge_count": 2,
-      "label_distribution": {
+    "graphStatistics": {
+      "nodeCount": 3,
+      "edgeCount": 2,
+      "labelDistribution": {
         "Entity": 2,
         "Concept": 1
       }
@@ -47,7 +47,7 @@
         "source": "system:row_abc123",
         "confidence": 0.95,
         "timestamp": "2025-12-19T09:00:00Z",
-        "curator": "user@example.com",
+        "curator": "curator:example",
         "validation_status": "verified"
       }
     },
@@ -74,7 +74,7 @@
         "source": "system:row_def456",
         "confidence": 0.88,
         "timestamp": "2025-12-19T09:15:00Z",
-        "curator": "user@example.com"
+        "curator": "curator:example"
       }
     },
     
@@ -114,6 +114,8 @@
       "source": "node:entity_001",
       "target": "node:concept_001",
       "label": "RELATED_TO",
+      "confidence": 0.9,
+      "sourceSentence": "Example sentence stating that the entity is related to the concept.",
       
       "properties": {
         "strength": 0.92,
@@ -134,6 +136,8 @@
       "source": "node:entity_001",
       "target": "node:entity_002",
       "label": "RELATED_TO",
+      "confidence": 0.95,
+      "sourceSentence": "Example sentence stating that the entity is related to the location.",
       
       "properties": {
         "strength": 0.75

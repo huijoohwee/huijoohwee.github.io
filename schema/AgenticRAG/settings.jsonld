@@ -2,9 +2,108 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schema_version": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
-  ]
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Workspace-level UI and layout presets used by MainPanel Settings. Validation is structural only and focuses on stable key names rather than specific Tailwind classes or domains.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "由主面板 Settings 使用的工作区级 UI 与布局预设。仅做结构验证，关注稳定键名，而不是具体 Tailwind 类或领域含义。",
+      "@language": "zh-cn"
+    }
+  ],
+  "propertyDefinitions": {
+    "uiIconScale": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Icon scale preset", "@language": "en-us" },
+        { "@value": "图标尺寸预设", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["default", "compact"]
+    },
+    "uiIconAnimationEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Icon motion toggle", "@language": "en-us" },
+        { "@value": "图标动效开关", "@language": "zh-cn" }
+      ]
+    },
+    "chatEndpointUrl": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat endpoint URL", "@language": "en-us" },
+        { "@value": "聊天端点 URL", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "OpenAI-compatible /v1/chat/completions endpoint used by the Canvas Chat surface. Treated as a workspace-level setting and expected to be domain-agnostic (for example a local server such as LM Studio’s OpenAI compatibility mode, or a vLLM gateway).",
+          "@language": "en-us"
+        },
+        {
+          "@value": "由 Canvas 聊天界面使用的 OpenAI 兼容 /v1/chat/completions 端点，作为工作区级设置存在，预期为与领域无关的通用地址（例如 LM Studio 的 OpenAI 兼容模式，或 vLLM 网关）。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "chatModel": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat model identifier", "@language": "en-us" },
+        { "@value": "聊天模型标识", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Model name or identifier sent in Chat Completions requests (for example lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-8bit). For OpenAI-compatible local servers, the safe way to discover the expected value is to query /v1/models and reuse one of the returned ids. Validation is structural only and does not assume vendor-specific semantics.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "在 Chat Completions 请求中发送的模型名称或标识（例如 deepseek-ai/DeepSeek-R1-0528-Qwen3-8B）。对 OpenAI 兼容的本地服务，推荐通过查询 /v1/models 并复用返回的 id 来确定期望值。仅做结构性校验，不假设供应商特定语义。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "chatTemperature": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Chat sampling temperature", "@language": "en-us" },
+        { "@value": "聊天采样温度", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Numerical temperature parameter clamped to a safe range before being forwarded to the provider. Used as a generic sampling control without encoding domain-specific behavior.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "在转发给提供方之前会被限制在安全区间的数值温度参数，用作通用采样控制，而不编码任何特定领域行为。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "chatSystemPrompt": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat system prompt", "@language": "en-us" },
+        { "@value": "聊天系统提示词", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional system message prepended to Chat requests. Encouraged to remain neutral and metadata-focused so that Chat behavior stays aligned with AgenticRAG’s domain-agnostic principles.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "可选的系统级提示信息，在聊天请求前置发送。建议保持中立且以元数据为中心，以便聊天行为与 AgenticRAG 的领域无关原则保持一致。",
+          "@language": "zh-cn"
+        }
+      ]
+    }
+  },
+  "validationRules": {
+    "structural_only": true,
+    "no_domain_semantics": true
+  }
 }

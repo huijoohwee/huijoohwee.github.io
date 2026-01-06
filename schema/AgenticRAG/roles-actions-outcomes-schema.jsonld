@@ -26,7 +26,7 @@
     }
   ],
 
-  "schema_version": "2.0.0",
+  "schemaVersion": "2.0.0",
   "extends": "rag:RoleActionOutcome/v1",
 
   "required": ["role", "actions", "outcome", "svo_pattern"],
@@ -353,7 +353,9 @@
     "pipeline_orchestration",
     "dag_construction",
     "test_case_generation",
-    "documentation_synthesis"
+    "documentation_synthesis",
+    "chat_explanation",
+    "chat_playback"
   ],
 
   "changeLog": [
@@ -367,6 +369,13 @@
         "Added dependencies/produces/consumes for DAG construction",
         "Added step_id for precise traceability",
         "Enhanced validation rules for atomic actions"
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "2026-01-04",
+      "changes": [
+        "Extended agenticUseCases with chat_explanation and chat_playback for Side Panel Chat integration in markdown-to-rendering pipelines"
       ]
     }
   ]

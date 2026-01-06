@@ -1,0 +1,29 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:NeutralityConstraints",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Neutrality and Generality Constraints", "@language": "en-us" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Directive describing neutrality constraints for AgenticRAG configurations, tooltips, and algorithms: keep descriptions neutral, context-aware, schema-aware, semantic-aware, domain-agnostic, project-agnostic, metadata-driven, dataset-agnostic, and avoid hard-coded file paths or presets. All math and similarity scoring must be generic and independent of any specific dataset or repository.",
+      "@language": "en-us"
+    }
+  ],
+  "constraints": {
+    "domain_agnostic": true,
+    "project_agnostic": true,
+    "dataset_agnostic": true,
+    "schema_aware": true,
+    "semantic_aware": true,
+    "context_aware": true,
+    "metadata_driven": true,
+    "forbid_project_specific_hardcode": true,
+    "forbid_project_specific_embed": true,
+    "forbid_project_specific_preset": true,
+    "math_dataset_independent": true,
+    "auto_suggest_friendly": true
+  }
+}

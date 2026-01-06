@@ -9,6 +9,29 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
+function listJsonldFiles(rootDir) {
+  const results = [];
+  const stack = [rootDir];
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop();
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === 'node_modules' || entry.name === '.deprecated') continue;
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (entry.isFile() && entry.name.endsWith('.jsonld')) {
+        results.push(fullPath);
+      }
+    }
+  }
+
+  return results.sort();
+}
+
 // Mock JSON-LD processor for validation (in real implementation, use jsonld library)
 class JSONLDValidator {
   constructor() {
@@ -35,6 +58,10 @@ class JSONLDValidator {
           // Array format validation
           if (jsonld['@context'].length === 0) {
             this.errors.push(`${filePath}: Empty @context array`);
+          }
+        } else if (typeof jsonld['@context'] === 'string') {
+          if (!jsonld['@context'].startsWith('http')) {
+            this.warnings.push(`${filePath}: Context URL should use HTTP(S) protocol`);
           }
         } else if (typeof jsonld['@context'] !== 'object') {
           this.errors.push(`${filePath}: Invalid @context type`);
@@ -131,7 +158,11 @@ class JSONLDValidator {
       const content = fs.readFileSync(filePath, 'utf8');
       const jsonld = JSON.parse(content);
       
-      if (Array.isArray(jsonld['@context'])) {
+      if (typeof jsonld['@context'] === 'string') {
+        if (!jsonld['@context'].startsWith('http')) {
+          this.warnings.push(`${filePath}: Context URL should use HTTP(S) protocol`);
+        }
+      } else if (Array.isArray(jsonld['@context'])) {
         for (const context of jsonld['@context']) {
           if (typeof context === 'string') {
             // Check if context URL is resolvable (mock check)
@@ -216,9 +247,7 @@ async function main() {
   console.log('=====================================');
   
   try {
-    const files = fs.readdirSync(schemaDir)
-      .filter(file => file.endsWith('.jsonld'))
-      .map(file => path.join(schemaDir, file));
+    const files = listJsonldFiles(schemaDir);
     
     console.log(`Found ${files.length} JSON-LD files to validate`);
     

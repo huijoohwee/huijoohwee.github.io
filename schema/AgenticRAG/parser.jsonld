@@ -2,9 +2,39 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Parser",
   "@type": "rdfs:Class",
-  "schema_version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "rdfs:comment": [
+    {
+      "@value": "Parser surface for token linking and edge elevation. Extracts phrase boundaries, entity spans, relationships, and attaches confidence and provenance while remaining domain-agnostic and configuration-driven.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "用于 token linking 与 edge elevation 的解析器表面。提取短语边界、实体跨度与关系，并附加置信度与溯源信息；保持领域无关与配置驱动。",
+      "@language": "zh-cn"
+    }
+  ],
   "rdfs:label": [
     { "@value": "Parser", "@language": "en-us" },
     { "@value": "解析器", "@language": "zh-cn" }
-  ]
+  ],
+  "propertyDefinitions": {
+    "tokenLinkingConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "phrase_boundary_threshold",
+        "max_entity_span_tokens",
+        "coreference_distance_limit"
+      ]
+    },
+    "edgeElevationConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "edge_confidence_threshold",
+        "max_syntactic_path_length",
+        "temporal_marker_boost"
+      ]
+    }
+  }
 }

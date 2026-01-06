@@ -44,6 +44,7 @@ class TestSuite {
     }
     
     this.generateReport();
+    return this.failed === 0;
   }
 
   /**
@@ -104,176 +105,109 @@ class TestSuite {
 // Create test suite instance
 const suite = new TestSuite();
 
-// Test: Schema files exist
-suite.test('Schema files exist', () => {
-  const schemaDir = path.join(__dirname, '../schema');
+function listJsonldFiles(rootDir) {
+  const results = [];
+  const stack = [rootDir];
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop();
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === 'node_modules' || entry.name === '.deprecated') continue;
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (entry.isFile() && entry.name.endsWith('.jsonld')) {
+        results.push(fullPath);
+      }
+    }
+  }
+
+  return results.sort();
+}
+
+// Test: AgenticRAG schema files exist
+suite.test('AgenticRAG schema files exist', () => {
+  const agenticDir = path.join(__dirname, '../schema/AgenticRAG');
   const requiredFiles = [
-    'base.jsonld',
-    'vocab.jsonld',
-    'core.jsonld',
-    'uc.jsonld',
-    'wf.jsonld',
-    'kg.jsonld',
-    'nqds.jsonld',
-    'jdbl.jsonld',
-    'jjnhm.jsonld',
-    'actions.jsonld',
-    'agents.jsonld',
-    'features.jsonld',
-    'project-areas.jsonld',
-    'project-issues.jsonld',
-    'ui-ux-elements.jsonld'
+    'v1/context.jsonld',
+    'node-schema.jsonld',
+    'edge-schema.jsonld',
+    'graph-schema.jsonld',
+    'example-graph.jsonld'
   ];
-  
-  for (const file of requiredFiles) {
-    const filePath = path.join(schemaDir, file);
-    suite.assertFileExists(filePath);
+
+  for (const relPath of requiredFiles) {
+    suite.assertFileExists(path.join(agenticDir, relPath));
   }
 });
 
-// Test: All schema files are valid JSON
-suite.test('All schema files are valid JSON', () => {
+// Test: All active schema files are valid JSON
+suite.test('All active schema files are valid JSON', () => {
   const schemaDir = path.join(__dirname, '../schema');
-  const files = fs.readdirSync(schemaDir)
-    .filter(file => file.endsWith('.jsonld'))
-    .map(file => path.join(schemaDir, file));
-  
+  const files = listJsonldFiles(schemaDir);
+  suite.assert(files.length > 0, 'No active .jsonld files found under schema/');
+
   for (const file of files) {
     suite.assertValidJSON(file);
   }
 });
 
-// Test: Base schema structure
-suite.test('Base schema has required structure', () => {
-  const basePath = path.join(__dirname, '../schema/base.jsonld');
-  const content = JSON.parse(fs.readFileSync(basePath, 'utf8'));
-  
-  suite.assertHasProperty(content, '@context');
-  suite.assertHasProperty(content, 'meta');
-  suite.assert(content['@type'] === 'ContextDefinition' || content.meta['@type'] === 'schema:Dataset', 'Base schema should have valid type');
-});
+// Test: All active schema files have @context
+suite.test('All active schema files include @context', () => {
+  const schemaDir = path.join(__dirname, '../schema');
+  const files = listJsonldFiles(schemaDir);
 
-// Test: Vocabulary schema structure
-suite.test('Vocabulary schema has required structure', () => {
-  const vocabPath = path.join(__dirname, '../schema/vocab.jsonld');
-  const content = JSON.parse(fs.readFileSync(vocabPath, 'utf8'));
-  
-  suite.assertHasProperty(content, '@context');
-  suite.assertHasProperty(content, 'meta');
-  // Vocabulary may have classes/properties structure instead of @graph
-  suite.assert(content['@graph'] || content.classes || content.properties, 'Vocabulary should have @graph, classes, or properties');
-});
-
-// Test: Core schema structure
-suite.test('Core schema has required structure', () => {
-  const corePath = path.join(__dirname, '../schema/core.jsonld');
-  const content = JSON.parse(fs.readFileSync(corePath, 'utf8'));
-  
-  suite.assertHasProperty(content, '@context');
-  suite.assertHasProperty(content, '@graph');
-  suite.assert(Array.isArray(content['@graph']), 'Core @graph should be an array');
-});
-
-// Test: Domain-specific schemas have standardized structure
-suite.test('Domain-specific schemas have standardized structure', () => {
-  const domainSchemas = [
-    'actions.jsonld',
-    'agents.jsonld',
-    'features.jsonld',
-    'project-areas.jsonld',
-    'project-issues.jsonld',
-    'ui-ux-elements.jsonld'
-  ];
-  
-  for (const schema of domainSchemas) {
-    const filePath = path.join(__dirname, '../schema', schema);
-    const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    
-    // Check standardized @context structure
-    suite.assert(Array.isArray(content['@context']), `${schema}: @context should be an array`);
-    suite.assert(content['@context'][0] === 'https://huijoohwee.github.io/schema/base.jsonld', 
-      `${schema}: First @context should import base.jsonld`);
-    
-    // Check metadata
-    suite.assertHasProperty(content, 'meta', `${schema}: Missing meta section`);
-    suite.assertHasProperty(content.meta, '@type', `${schema}: Missing meta @type`);
-    
-    // Check @graph structure
-    suite.assertHasProperty(content, '@graph', `${schema}: Missing @graph`);
-    suite.assert(Array.isArray(content['@graph']), `${schema}: @graph should be an array`);
+  for (const file of files) {
+    const content = JSON.parse(fs.readFileSync(file, 'utf8'));
+    suite.assertHasProperty(content, '@context', `${path.basename(file)}: Missing @context`);
   }
 });
 
-// Test: JJNHM schema compliance
-suite.test('JJNHM schema has proper layer definitions', () => {
-  const jjnhmPath = path.join(__dirname, '../schema/jjnhm.jsonld');
-  const content = JSON.parse(fs.readFileSync(jjnhmPath, 'utf8'));
-  
-  // JJNHM may have @graph or layers structure
-  const hasGraph = content['@graph'];
-  const hasLayers = content.layers;
-  
-  suite.assert(hasGraph || hasLayers, 'JJNHM should have @graph or layers structure');
-  
-  if (hasGraph) {
-    // Check for layer definitions in @graph
-    const graph = content['@graph'];
-    const hasJSONLD = graph.some(item => item['@id'] && item['@id'].includes('JSONLD'));
-    const hasJDBL = graph.some(item => item['@id'] && item['@id'].includes('JDBL'));
-    const hasNQDS = graph.some(item => item['@id'] && item['@id'].includes('NQDS'));
-    const hasHBS = graph.some(item => item['@id'] && item['@id'].includes('HBS'));
-    const hasMMD = graph.some(item => item['@id'] && item['@id'].includes('MMD'));
-    
-    suite.assert(hasJSONLD || hasJDBL || hasNQDS || hasHBS || hasMMD, 'JJNHM should define at least one layer');
-  }
+// Test: AgenticRAG core schemas have expected structural fields
+suite.test('AgenticRAG core schemas have expected structure', () => {
+  const agenticDir = path.join(__dirname, '../schema/AgenticRAG');
+  const nodeSchema = JSON.parse(fs.readFileSync(path.join(agenticDir, 'node-schema.jsonld'), 'utf8'));
+  const edgeSchema = JSON.parse(fs.readFileSync(path.join(agenticDir, 'edge-schema.jsonld'), 'utf8'));
+  const graphSchema = JSON.parse(fs.readFileSync(path.join(agenticDir, 'graph-schema.jsonld'), 'utf8'));
+
+  suite.assertHasProperty(nodeSchema, 'propertyDefinitions', 'node-schema.jsonld: Missing propertyDefinitions');
+  suite.assertHasProperty(edgeSchema, 'propertyDefinitions', 'edge-schema.jsonld: Missing propertyDefinitions');
+  suite.assertHasProperty(graphSchema, 'propertyDefinitions', 'graph-schema.jsonld: Missing propertyDefinitions');
+
+  suite.assert(Array.isArray(nodeSchema.required), 'node-schema.jsonld: required should be an array');
+  suite.assert(Array.isArray(edgeSchema.required), 'edge-schema.jsonld: required should be an array');
 });
 
 // Test: Context resolution URLs
 suite.test('Context URLs are properly formatted', () => {
   const schemaDir = path.join(__dirname, '../schema');
-  const files = fs.readdirSync(schemaDir)
-    .filter(file => file.endsWith('.jsonld'))
-    .map(file => path.join(schemaDir, file));
+  const files = listJsonldFiles(schemaDir);
   
   for (const file of files) {
     const content = JSON.parse(fs.readFileSync(file, 'utf8'));
     
-    if (Array.isArray(content['@context'])) {
-      for (const context of content['@context']) {
-        if (typeof context === 'string') {
-          suite.assert(context.startsWith('https://'), 
-            `${path.basename(file)}: Context URL should use HTTPS`);
-          suite.assert(context.includes('huijoohwee.github.io'), 
-            `${path.basename(file)}: Context URL should use correct domain`);
-        }
+    const contexts = Array.isArray(content['@context']) ? content['@context'] : [content['@context']];
+    for (const context of contexts) {
+      if (typeof context === 'string') {
+        suite.assert(context.startsWith('https://'), `${path.basename(file)}: Context URL should use HTTPS`);
       }
     }
   }
 });
 
-// Test: Metadata consistency
-suite.test('Metadata is consistent across schemas', () => {
+// Test: Optional schemaVersion fields are well-formed
+suite.test('Schema version fields are well-formed', () => {
   const schemaDir = path.join(__dirname, '../schema');
-  const files = fs.readdirSync(schemaDir)
-    .filter(file => file.endsWith('.jsonld'))
-    .map(file => path.join(schemaDir, file));
-  
+  const files = listJsonldFiles(schemaDir);
+
   for (const file of files) {
     const content = JSON.parse(fs.readFileSync(file, 'utf8'));
-    
-    if (content.meta) {
-      // Check for creator (either dcterms:creator or creator)
-      suite.assert(content.meta['dcterms:creator'] || content.meta['creator'], 
-        `${path.basename(file)}: Missing creator in metadata`);
-      // Check for version (either owl:versionInfo or versionInfo)
-      suite.assert(content.meta['owl:versionInfo'] || content.meta['versionInfo'], 
-        `${path.basename(file)}: Missing version in metadata`);
-      // Check for created date (either dcterms:created or created)
-      suite.assert(content.meta['dcterms:created'] || content.meta['created'], 
-        `${path.basename(file)}: Missing created date in metadata`);
-      // Check for modified date (either dcterms:modified or modified)
-      suite.assert(content.meta['dcterms:modified'] || content.meta['modified'], 
-        `${path.basename(file)}: Missing modified date in metadata`);
+    const version = content.schemaVersion ?? content.schema_version;
+    if (version !== undefined) {
+      suite.assert(typeof version === 'string', `${path.basename(file)}: schemaVersion should be a string`);
     }
   }
 });

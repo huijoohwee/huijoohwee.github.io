@@ -2,9 +2,57 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Orchestrator",
   "@type": "rdfs:Class",
-  "schema_version": "1.0.0",
+  "schemaVersion": "1.0.0",
   "rdfs:label": [
     { "@value": "Orchestrator", "@language": "en-us" },
     { "@value": "编排器", "@language": "zh-cn" }
-  ]
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Orchestrates multi-document unification, feedback-driven refinement, and corpus-scale reasoning over extracted nodes and edges. Treats thresholds as external configuration and maintains provenance links back to source structure.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "编排多文档统一、反馈驱动的迭代优化与语料级推理。阈值作为外部配置处理，并维护回指源结构的溯源链接。",
+      "@language": "zh-cn"
+    }
+  ],
+  "propertyDefinitions": {
+    "thresholdTuningConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "auto_tune_enabled",
+        "tuning_sensitivity",
+        "feedback_window_size"
+      ]
+    },
+    "unificationConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "entity_merge_threshold",
+        "conflict_resolution_strategy",
+        "cross_document_inference_depth"
+      ]
+    },
+    "corpusReasoningConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "min_pattern_support",
+        "emergent_relationship_threshold",
+        "corpus_centrality_algorithm"
+      ]
+    },
+    "feedbackConfig": {
+      "@type": "@json",
+      "required": false,
+      "suggestedFields": [
+        "feedback_loop_enabled",
+        "quality_check_interval",
+        "max_feedback_iterations"
+      ]
+    }
+  }
 }

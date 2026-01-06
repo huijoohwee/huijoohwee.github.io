@@ -35,6 +35,21 @@
     "jsonLdMapping": { "@id": "rag:jsonLdMapping", "@type": "@json" },
     "contextEdgeProperties": { "@id": "rag:contextEdgeProperties", "@container": "@set" },
     "schemaVersion": "rag:schemaVersion",
-    "exportedAt": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime" }
+    "schema_version": "rag:schemaVersion",
+    "exportedAt": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime" },
+    "documentPath": { "@id": "rag:documentPath", "@type": "xsd:string" },
+    "documentUrl": { "@id": "rag:documentUrl", "@type": "@id" },
+    "lineStart": { "@id": "rag:lineStart", "@type": "xsd:integer" },
+    "lineEnd": { "@id": "rag:lineEnd", "@type": "xsd:integer" },
+    "blockType": { "@id": "rag:blockType", "@type": "xsd:string" },
+    "tokenStart": { "@id": "rag:tokenStart", "@type": "xsd:integer" },
+    "tokenEnd": { "@id": "rag:tokenEnd", "@type": "xsd:integer" },
+    "confidence": { "@id": "kg:confidence", "@type": "xsd:double" },
+    "temporalMarker": { "@id": "kg:temporalMarker", "@type": "xsd:string" },
+    "modality": { "@id": "kg:modality", "@type": "xsd:string" },
+    "negated": { "@id": "kg:negated", "@type": "xsd:boolean" },
+    "causalityStrength": { "@id": "kg:causalityStrength", "@type": "xsd:double" },
+    "sourceSentence": { "@id": "kg:sourceSentence", "@type": "xsd:string" },
+    "provenance": { "@id": "prov:wasDerivedFrom", "@container": "@set", "@type": "@id" }
   }
 }

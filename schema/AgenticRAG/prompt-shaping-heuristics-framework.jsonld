@@ -1,0 +1,568 @@
+{
+  "@context": {
+    "@vocab": "https://schema.example.org/prompt-shaping#",
+    "schema": "http://schema.org/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    
+    "PromptTemplate": "schema:SoftwareSourceCode",
+    "DetectionHeuristic": "schema:ComputerLanguage",
+    "ProcessingPattern": "schema:Algorithm",
+    "MetadataBlock": "schema:PropertyValue",
+    
+    "hasDetectionLayer": {
+      "@id": "hasDetectionLayer",
+      "@type": "@id"
+    },
+    "appliesTransformation": {
+      "@id": "appliesTransformation",
+      "@type": "@id"
+    },
+    "outputsSchema": {
+      "@id": "outputsSchema",
+      "@type": "@id"
+    },
+    "requiresInput": {
+      "@id": "requiresInput",
+      "@type": "@id"
+    },
+    "suggestsOperation": {
+      "@id": "suggestsOperation",
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "PromptShapingFramework",
+      "@type": "schema:DefinedTermSet",
+      "schema:name": "Enhanced Prompt-Shaping Heuristics Framework",
+      "schema:description": "A comprehensive framework for creating intelligent, reusable, domain-agnostic prompt templates with metadata-driven architecture and context-aware suggestions",
+      "schema:version": "1.0.0",
+      "dcterms:created": "2026-01-04",
+      "schema:author": {
+        "@type": "schema:Organization",
+        "schema:name": "Prompt Engineering Research"
+      },
+      "schema:license": "https://creativecommons.org/licenses/by/4.0/",
+      "schema:keywords": [
+        "prompt-engineering",
+        "schema-aware",
+        "metadata-driven",
+        "domain-agnostic",
+        "semantic-processing"
+      ]
+    },
+    
+    {
+      "@id": "PromptTemplate",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Prompt Template",
+      "rdfs:comment": "A reusable, parameterized template for generating prompts with intelligent context detection",
+      "rdfs:subClassOf": "schema:SoftwareSourceCode",
+      "schema:properties": [
+        "templateIdentifier",
+        "documentType",
+        "inferredDomain",
+        "detectedSchema",
+        "provenanceInfo",
+        "renderingFormat"
+      ]
+    },
+    
+    {
+      "@id": "templateIdentifier",
+      "@type": "rdf:Property",
+      "rdfs:label": "Template Identifier",
+      "rdfs:comment": "Unique identifier for the template, using placeholder syntax {{ variable_name }}",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": "xsd:string",
+      "schema:example": "{{ operation_name }}"
+    },
+    
+    {
+      "@id": "documentType",
+      "@type": "rdf:Property",
+      "rdfs:label": "Document Type",
+      "rdfs:comment": "Auto-detected type of document or data structure",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": "xsd:string",
+      "schema:valueRequired": true
+    },
+    
+    {
+      "@id": "inferredDomain",
+      "@type": "rdf:Property",
+      "rdfs:label": "Inferred Domain",
+      "rdfs:comment": "Domain category automatically inferred from terminology clustering",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": "xsd:string",
+      "skos:note": "Domain-agnostic: no hardcoded domain values"
+    },
+    
+    {
+      "@id": "detectedSchema",
+      "@type": "rdf:Property",
+      "rdfs:label": "Detected Schema",
+      "rdfs:comment": "Schema object automatically inferred from input structure",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": "SchemaDefinition",
+      "hasDetectionLayer": "SchemaDetectionHeuristic"
+    },
+    
+    {
+      "@id": "provenanceInfo",
+      "@type": "rdf:Property",
+      "rdfs:label": "Provenance Information",
+      "rdfs:comment": "Lineage tracking for all transformations and data sources",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": "ProvenanceChain",
+      "dcterms:requires": "DataLineage"
+    },
+    
+    {
+      "@id": "renderingFormat",
+      "@type": "rdf:Property",
+      "rdfs:label": "Rendering Format",
+      "rdfs:comment": "Preferred rendering format (GFM-first with CommonMark fallback)",
+      "rdfs:domain": "PromptTemplate",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": ["GFM", "CommonMark", "Progressive"]
+      },
+      "schema:defaultValue": "Progressive"
+    },
+    
+    {
+      "@id": "DetectionHeuristic",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Detection Heuristic",
+      "rdfs:comment": "Pattern-based detection mechanism for automatic schema and structure inference",
+      "schema:properties": [
+        "detectionMethod",
+        "detectionLayer",
+        "outputFormat",
+        "confidenceScore"
+      ]
+    },
+    
+    {
+      "@id": "detectionMethod",
+      "@type": "rdf:Property",
+      "rdfs:label": "Detection Method",
+      "rdfs:comment": "Algorithm or approach used for pattern detection",
+      "rdfs:domain": "DetectionHeuristic",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "ExtensionAnalysis",
+          "PatternMatching",
+          "FieldInference",
+          "TerminologyClustering"
+        ]
+      }
+    },
+    
+    {
+      "@id": "detectionLayer",
+      "@type": "rdf:Property",
+      "rdfs:label": "Detection Layer",
+      "rdfs:comment": "Layer in the detection hierarchy (FileType, ContentStructure, Schema, Domain)",
+      "rdfs:domain": "DetectionHeuristic",
+      "rdfs:range": "xsd:string"
+    },
+    
+    {
+      "@id": "confidenceScore",
+      "@type": "rdf:Property",
+      "rdfs:label": "Confidence Score",
+      "rdfs:comment": "Percentage confidence in the detection result",
+      "rdfs:domain": "DetectionHeuristic",
+      "rdfs:range": "xsd:decimal",
+      "schema:minValue": 0.0,
+      "schema:maxValue": 100.0
+    },
+    
+    {
+      "@id": "SchemaDefinition",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Schema Definition",
+      "rdfs:comment": "Auto-inferred schema with fields, relationships, and constraints",
+      "schema:properties": [
+        "detectedFields",
+        "inferredRelationships",
+        "identifiedConstraints",
+        "fieldRoles"
+      ]
+    },
+    
+    {
+      "@id": "detectedFields",
+      "@type": "rdf:Property",
+      "rdfs:label": "Detected Fields",
+      "rdfs:comment": "Collection of fields identified in the data structure",
+      "rdfs:domain": "SchemaDefinition",
+      "rdfs:range": "FieldDefinition",
+      "schema:isPartOf": "SchemaDefinition"
+    },
+    
+    {
+      "@id": "FieldDefinition",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Field Definition",
+      "rdfs:comment": "Definition of a single field with type, role, and constraints",
+      "schema:properties": [
+        "fieldName",
+        "fieldType",
+        "fieldRole",
+        "fieldConstraints"
+      ]
+    },
+    
+    {
+      "@id": "fieldName",
+      "@type": "rdf:Property",
+      "rdfs:label": "Field Name",
+      "rdfs:comment": "Parameterized field name using placeholder syntax",
+      "rdfs:domain": "FieldDefinition",
+      "rdfs:range": "xsd:string",
+      "schema:example": "{{ field_with_role:identifier }}"
+    },
+    
+    {
+      "@id": "fieldType",
+      "@type": "rdf:Property",
+      "rdfs:label": "Field Type",
+      "rdfs:comment": "Data type of the field (auto-detected)",
+      "rdfs:domain": "FieldDefinition",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "Quantitative",
+          "Categorical",
+          "Temporal",
+          "Hierarchical",
+          "Identifier",
+          "Text"
+        ]
+      }
+    },
+    
+    {
+      "@id": "fieldRole",
+      "@type": "rdf:Property",
+      "rdfs:label": "Field Role",
+      "rdfs:comment": "Semantic role of the field in the data structure",
+      "rdfs:domain": "FieldDefinition",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "PrimaryKey",
+          "Measure",
+          "Dimension",
+          "ForeignKey",
+          "Attribute"
+        ]
+      }
+    },
+    
+    {
+      "@id": "ProcessingPattern",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Processing Pattern",
+      "rdfs:comment": "Domain-agnostic pattern for data transformation and processing",
+      "rdfs:subClassOf": "schema:Algorithm",
+      "schema:properties": [
+        "patternCategory",
+        "genericTemplate",
+        "applicationScope",
+        "timeComplexity",
+        "spaceComplexity"
+      ]
+    },
+    
+    {
+      "@id": "patternCategory",
+      "@type": "rdf:Property",
+      "rdfs:label": "Pattern Category",
+      "rdfs:comment": "Category of the processing pattern",
+      "rdfs:domain": "ProcessingPattern",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "Aggregation",
+          "Filtering",
+          "Transformation",
+          "Join",
+          "Traversal"
+        ]
+      }
+    },
+    
+    {
+      "@id": "genericTemplate",
+      "@type": "rdf:Property",
+      "rdfs:label": "Generic Template",
+      "rdfs:comment": "Parameterized template expression for the pattern",
+      "rdfs:domain": "ProcessingPattern",
+      "rdfs:range": "xsd:string",
+      "schema:example": "GROUP BY {{ dimension }} → {{ aggregate_fn }}({{ measure }})"
+    },
+    
+    {
+      "@id": "applicationScope",
+      "@type": "rdf:Property",
+      "rdfs:label": "Application Scope",
+      "rdfs:comment": "Types of data structures this pattern applies to",
+      "rdfs:domain": "ProcessingPattern",
+      "rdfs:range": "xsd:string",
+      "skos:note": "Must be domain-agnostic and dataset-agnostic"
+    },
+    
+    {
+      "@id": "timeComplexity",
+      "@type": "rdf:Property",
+      "rdfs:label": "Time Complexity",
+      "rdfs:comment": "Big O notation for time complexity",
+      "rdfs:domain": "ProcessingPattern",
+      "rdfs:range": "xsd:string",
+      "schema:example": "O(n log n)"
+    },
+    
+    {
+      "@id": "spaceComplexity",
+      "@type": "rdf:Property",
+      "rdfs:label": "Space Complexity",
+      "rdfs:comment": "Big O notation for space complexity",
+      "rdfs:domain": "ProcessingPattern",
+      "rdfs:range": "xsd:string",
+      "schema:example": "O(k), k = non-zero"
+    },
+    
+    {
+      "@id": "ProvenanceChain",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Provenance Chain",
+      "rdfs:comment": "Complete lineage tracking for data transformations",
+      "schema:properties": [
+        "sourceSystem",
+        "transformationStages",
+        "validationChecks",
+        "timestamp"
+      ]
+    },
+    
+    {
+      "@id": "sourceSystem",
+      "@type": "rdf:Property",
+      "rdfs:label": "Source System",
+      "rdfs:comment": "Origin of the data (parameterized, not hardcoded)",
+      "rdfs:domain": "ProvenanceChain",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "UserUpload",
+          "API",
+          "DatabaseQuery",
+          "FileSystem",
+          "Stream"
+        ]
+      }
+    },
+    
+    {
+      "@id": "transformationStages",
+      "@type": "rdf:Property",
+      "rdfs:label": "Transformation Stages",
+      "rdfs:comment": "Ordered sequence of transformations applied",
+      "rdfs:domain": "ProvenanceChain",
+      "rdfs:range": "TransformationStage",
+      "schema:isPartOf": "ProvenanceChain"
+    },
+    
+    {
+      "@id": "TransformationStage",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Transformation Stage",
+      "rdfs:comment": "Single stage in the transformation pipeline",
+      "schema:properties": [
+        "stageNumber",
+        "operationName",
+        "inputReference",
+        "outputReference",
+        "stageTimestamp"
+      ]
+    },
+    
+    {
+      "@id": "ContextSuggestion",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Context Suggestion",
+      "rdfs:comment": "Intelligent operation suggestion based on detected data characteristics",
+      "schema:properties": [
+        "detectedCharacteristic",
+        "suggestedOperations",
+        "suggestionConfidence",
+        "algorithmRecommendation"
+      ]
+    },
+    
+    {
+      "@id": "detectedCharacteristic",
+      "@type": "rdf:Property",
+      "rdfs:label": "Detected Characteristic",
+      "rdfs:comment": "Data characteristic that triggers the suggestion",
+      "rdfs:domain": "ContextSuggestion",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "TemporalData",
+          "CategoricalData",
+          "HierarchicalStructure",
+          "HighCardinality",
+          "SparseNumeric",
+          "NestedJSON"
+        ]
+      }
+    },
+    
+    {
+      "@id": "suggestedOperations",
+      "@type": "rdf:Property",
+      "rdfs:label": "Suggested Operations",
+      "rdfs:comment": "List of recommended operations for the detected characteristic",
+      "rdfs:domain": "ContextSuggestion",
+      "rdfs:range": "xsd:string",
+      "schema:isPartOf": "ContextSuggestion"
+    },
+    
+    {
+      "@id": "MarkdownConvention",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Markdown Convention",
+      "rdfs:comment": "Structural conventions for markdown rendering (GFM-first, CommonMark-fallback)",
+      "schema:properties": [
+        "conventionType",
+        "gfmImplementation",
+        "commonMarkFallback",
+        "usageGuideline"
+      ]
+    },
+    
+    {
+      "@id": "conventionType",
+      "@type": "rdf:Property",
+      "rdfs:label": "Convention Type",
+      "rdfs:comment": "Type of markdown structural convention",
+      "rdfs:domain": "MarkdownConvention",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "HierarchicalSectioning",
+          "TableStructure",
+          "ListNesting",
+          "CodeFormatting",
+          "BlockquoteCallout",
+          "CollapsibleSection",
+          "EmphasisStyling",
+          "LinkReference"
+        ]
+      }
+    },
+    
+    {
+      "@id": "gfmImplementation",
+      "@type": "rdf:Property",
+      "rdfs:label": "GFM Implementation",
+      "rdfs:comment": "Primary implementation using GitHub Flavored Markdown features",
+      "rdfs:domain": "MarkdownConvention",
+      "rdfs:range": "xsd:string"
+    },
+    
+    {
+      "@id": "commonMarkFallback",
+      "@type": "rdf:Property",
+      "rdfs:label": "CommonMark Fallback",
+      "rdfs:comment": "Alternative implementation for strict CommonMark compatibility",
+      "rdfs:domain": "MarkdownConvention",
+      "rdfs:range": "xsd:string",
+      "schema:valueRequired": true
+    },
+    
+    {
+      "@id": "AntiPattern",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Anti-Pattern",
+      "rdfs:comment": "Common mistakes that violate framework principles",
+      "schema:properties": [
+        "antiPatternName",
+        "problemDescription",
+        "correctApproach",
+        "violatedPrinciple"
+      ]
+    },
+    
+    {
+      "@id": "violatedPrinciple",
+      "@type": "rdf:Property",
+      "rdfs:label": "Violated Principle",
+      "rdfs:comment": "Core principle violated by this anti-pattern",
+      "rdfs:domain": "AntiPattern",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "DomainAgnostic",
+          "SchemaAware",
+          "MetadataDriven",
+          "ProvenanceAware",
+          "ContextAware",
+          "Reusability",
+          "Portability"
+        ]
+      }
+    },
+    
+    {
+      "@id": "ValidationRule",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Validation Rule",
+      "rdfs:comment": "Rule for validating compliance with framework principles",
+      "schema:properties": [
+        "ruleCategory",
+        "checkDescription",
+        "requiredForCompliance",
+        "validationMethod"
+      ]
+    },
+    
+    {
+      "@id": "ruleCategory",
+      "@type": "rdf:Property",
+      "rdfs:label": "Rule Category",
+      "rdfs:comment": "Category of the validation rule",
+      "rdfs:domain": "ValidationRule",
+      "rdfs:range": {
+        "@type": "schema:Enumeration",
+        "schema:value": [
+          "GFMDesign",
+          "CommonMarkCompatibility",
+          "DomainAgnosticCompliance",
+          "SchemaCompliance",
+          "ProvenanceTracking"
+        ]
+      }
+    },
+    
+    {
+      "@id": "requiredForCompliance",
+      "@type": "rdf:Property",
+      "rdfs:label": "Required for Compliance",
+      "rdfs:comment": "Whether this rule is mandatory for framework compliance",
+      "rdfs:domain": "ValidationRule",
+      "rdfs:range": "xsd:boolean",
+      "schema:defaultValue": true
+    }
+  ]
+}

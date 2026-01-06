@@ -16,7 +16,7 @@
       "@language": "zh-cn"
     }
   ],
-  "schema_version": "1.0.0",
+  "schemaVersion": "1.0.0",
   "required": [],
   "compatibility": {
     "jsonld": {

@@ -10,7 +10,7 @@
 
 ```
 schema/
-├── context.jsonld          # Base @context (semantic vocabulary)
+├── v1/context.jsonld       # Base @context (semantic vocabulary)
 ├── node-schema.jsonld      # Node structure definition
 ├── edge-schema.jsonld      # Edge structure definition
 ├── graph-schema.jsonld     # Graph container definition
@@ -85,6 +85,8 @@ WHERE array_contains(labels, 'Company')
 - Include `metadata` with source, confidence, timestamp
 - Support geo-coordinates via `geo` object
 - Link media via `media_url`
+- Keep renderer-specific settings (color palettes, layer modes) in separate JSON-LD directives such as `colors.jsonld` and `semantic-mode.jsonld` rather than embedding them into the core node and edge schemas; this keeps structural validation domain-agnostic while still allowing a shared Lean Startup MVP palette and AI-KG layer configuration for downstream visualizers. When graphs include neutral external references (for example properties that point to markdown or code artifacts modeled with the `Markdown` class), UI layers such as Knowgrph Canvas can use those properties to drive split-pane external file previews (textarea editor + GFM-first `marked` renderer) anchored to the active node or edge selection, without changing the structural JSON-LD contract.
+- When emitting graphs intended for Knowgrph Canvas, optionally populate the `tags` array with Lean Startup categories such as `idea`, `hypothesis`, `execution`, `pivot`, and `alert`; renderers that understand the AgenticRAG directives will map these tags onto the shared MVP palette defined in `colors.jsonld` while structural validators continue to treat `tags` as an opaque, domain-agnostic field.
 
 ### ❌ **DON'T:**
 - Require domain-specific fields (no "name", "description" mandates)
@@ -109,6 +111,18 @@ Loader: Fetches JSON (syntax validation only)
 Parser: Builds node/edge objects (structure validation)
 Validator: Checks @id uniqueness, referential integrity
 GraphData: Stores canonical representation
+```
+
+#### Markdown Ingest (optional)
+```
+UI import: local file / URL (.md)
+↓
+Parser emits Graph JSON-LD where each extracted block carries provenance:
+  metadata.documentPath
+  metadata.lineStart / metadata.lineEnd
+  metadata.timestamp
+↓
+Renderers can use this metadata to highlight and preview source markdown without changing the core schema
 ```
 
 ### **Phase 3: Produce**
@@ -202,7 +216,7 @@ AND array_contains(n.labels, 'Company');
     "source": "system:row_abc123",
     "confidence": 0.95,
     "timestamp": "2025-12-19T10:00:00Z",
-    "curator": "user@example.com",
+    "curator": "curator:example",
     "validation_status": "verified",
     "last_updated": "2025-12-19T10:30:00Z"
   }
@@ -217,7 +231,7 @@ AND array_contains(n.labels, 'Company');
     "confidence": 0.88,
     "timestamp": "2025-12-19T10:15:00Z",
     "derivation": "llm_extracted",
-    "reviewed_by": "user@example.com"
+    "reviewed_by": "curator:example"
   }
 }
 ```
@@ -232,7 +246,7 @@ AND array_contains(n.labels, 'Company');
 ```json
 {
   "metadata": {
-    "schema_version": "1.0.0",
+    "schemaVersion": "1.0.0",
     "compatible_versions": ["1.0.0", "1.0.1"]
   }
 }
@@ -241,7 +255,7 @@ AND array_contains(n.labels, 'Company');
 **Migration Path:**
 - Backward compatible within major versions
 - @context can be extended without breaking changes
-- Agents query schema_version to adapt behavior
+- Agents query schemaVersion (or schema_version alias) to adapt behavior
 
 ---
 
@@ -308,7 +322,8 @@ MERGE (a)-[r:FOUNDED_BY]->(b);
 
 ## 📚 Resources
 
-- **Example Data:** See `example-graph.jsonld`
+- **Example Data:** See `example-graph.jsonld` and `example-lean-startup-layer-modes.jsonld`
+- **Renderer Palette:** See `colors.jsonld` (Lean Startup MVP node/edge palette shared across layer modes)
 - **Agentic Use Cases:** See "Why This Schema Matters for Agentic GraphRAG"
 
 ---

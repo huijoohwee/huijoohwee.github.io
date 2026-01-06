@@ -1,0 +1,44 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:RendererColorPalette",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Renderer MVP color palette (Lean Startup)", "@language": "en-us" },
+    { "@value": "渲染器最小可行颜色调色板（精益创业）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Neutral, dataset-agnostic renderer color palette used by Knowgrph Canvas for JSON-LD graphs that follow the AgenticRAG schema. The palette is tuned for Lean Startup style workflows and shared across property, document-structure, and semantic layer modes so that the same node and edge colors apply regardless of how layers are grouped. Renderers treat these colors as a recommendation: schema files remain structural-only and domain-agnostic, and visual properties can always be overridden at runtime or via schema.nodeStyles and schema.edgeStyles.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "为遵循 AgenticRAG 架构的 JSON-LD 图提供的中立、数据集无关的渲染器颜色调色板。该调色板针对精益创业风格工作流进行调整，并在属性模式、文档结构模式和语义模式之间共享，使相同的节点和边颜色在不同图层分组策略下保持一致。渲染器将这些颜色视为推荐值：模式文件本身依然只描述结构且领域无关，可视属性始终可以在运行时或通过 schema.nodeStyles 和 schema.edgeStyles 进行覆盖。",
+      "@language": "zh-cn"
+    }
+  ],
+  "palette": {
+    "nodes": {
+      "idea": "#2563EB",
+      "hypothesis": "#EAB308",
+      "execution": "#22C55E",
+      "pivot": "#F97316",
+      "alert": "#EF4444"
+    },
+    "edges": {
+      "critical": "#EF4444",
+      "neutral": "#9CA3AF"
+    }
+  },
+  "node_priority_ordering": [
+    "idea",
+    "hypothesis",
+    "execution",
+    "pivot",
+    "alert"
+  ],
+  "edge_roles": {
+    "critical_path": "critical",
+    "non_critical": "neutral"
+  }
+}

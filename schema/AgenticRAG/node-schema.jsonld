@@ -52,6 +52,21 @@
       "minItems": 1
     },
     
+    "name": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Node Names and Synonyms", "@language": "en-us"},
+        {"@value": "节点名称和同义词", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Optional list of human-readable labels clustered for this node. May include the preferred term and alternative labels used for synonym-aware retrieval and UI display.", "@language": "en-us"},
+        {"@value": "此节点的可选可读标签列表。可以包含首选术语和用于同义词检索与界面展示的备用标签。", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "synonym_clustering"
+    },
+    
     "properties": {
       "@type": "@json",
       "rdfs:label": [
@@ -196,6 +211,50 @@
       ],
       "required": false,
       "useCase": "multimodal"
+    },
+    
+    "skos:prefLabel": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Preferred Label", "@language": "en-us"},
+        {"@value": "首选标签", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Preferred human-readable label for this node when using SKOS-style synonym clustering.", "@language": "en-us"},
+        {"@value": "在使用 SKOS 风格同义词聚类时，此节点的首选可读标签。", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "synonym_clustering"
+    },
+    
+    "skos:altLabel": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Alternative Labels", "@language": "en-us"},
+        {"@value": "备用标签", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Synonyms, variants, or alternative labels associated with this node for internal synonym expansion.", "@language": "en-us"},
+        {"@value": "与此节点关联的同义词、变体或备用标签，用于内部同义词扩展。", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "synonym_clustering"
+    },
+    
+    "schema:sameAs": {
+      "@container": "@set",
+      "@type": "@id",
+      "rdfs:label": [
+        {"@value": "External Equivalents", "@language": "en-us"},
+        {"@value": "外部等价项", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "External identifiers or URIs that represent the same concept in other vocabularies or systems.", "@language": "en-us"},
+        {"@value": "在其他词汇表或系统中表示同一概念的外部标识符或 URI。", "@language": "zh-cn"}
+      ],
+      "required": false,
+      "useCase": "synonym_clustering"
     },
     
     "metadata": {

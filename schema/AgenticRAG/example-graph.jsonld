@@ -56,7 +56,19 @@
       "@type": "kg:Node",
       "@id": "node:concept_001",
       "labels": ["Concept", "Technology"],
-      
+      "skos:prefLabel": "Example Concept",
+      "skos:altLabel": [
+        "Sample Idea",
+        "Demo Concept"
+      ],
+      "schema:sameAs": [
+        "http://example.org/concept/example-concept"
+      ],
+      "name": [
+        "Example Concept",
+        "Sample Idea",
+        "Demo Concept"
+      ],
       "properties": {
         "name": "Example Concept",
         "category": "Concept"

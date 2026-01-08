@@ -33,6 +33,10 @@ schema/
       "@type": "kg:Node",
       "@id": "node:123",
       "labels": ["Entity"],
+      "skos:prefLabel": "Example term",
+      "skos:altLabel": ["Example synonym"],
+      "schema:sameAs": ["http://example.org/concept/example-term"],
+      "name": ["Example term", "Example synonym"],
       "chunk_text": "Your content here...",
       "embedding": [0.1, 0.2, 0.3]
     }
@@ -208,6 +212,21 @@ AND array_contains(n.labels, 'Company');
 ---
 
 ## 📊 Metadata Best Practices
+
+### **Synonym Clustering Pattern**
+```json
+{
+  "@id": "node:synonym_cluster_001",
+  "labels": ["Concept"],
+  "skos:prefLabel": "car",
+  "skos:altLabel": ["automobile", "vehicle"],
+  "schema:sameAs": [
+    "http://dbpedia.org/resource/Car",
+    "http://wikidata.org/entity/Q1420"
+  ],
+  "name": ["car", "automobile", "vehicle"]
+}
+```
 
 ### **Node Metadata Example**
 ```json

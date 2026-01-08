@@ -1,4 +1,0 @@
-{
-  "validate": "./pattern-schema.json",
-  "ignore": ["pattern-schema.json"]
-}

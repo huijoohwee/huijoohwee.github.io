@@ -25,5 +25,9 @@
     "forbid_project_specific_preset": true,
     "math_dataset_independent": true,
     "auto_suggest_friendly": true
-  }
+  },
+  "documentation_paths": [
+    "knowgrph/docs/guidelines/codebase-neutrality-guidelines.md",
+    "knowgrph/docs/guidelines/codebase-maintainability-guidelines.md"
+  ]
 }

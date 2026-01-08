@@ -102,7 +102,7 @@
       "required": false
     },
 
-    "temporalMarker": {
+    "temporal": {
       "@type": "xsd:string",
       "rdfs:label": [
         { "@value": "Temporal Marker", "@language": "en-us" },
@@ -120,7 +120,7 @@
       "required": false
     },
 
-    "negated": {
+    "negation": {
       "@type": "xsd:boolean",
       "rdfs:label": [
         { "@value": "Negation Flag", "@language": "en-us" },
@@ -221,7 +221,7 @@
         {"@value": "来源、置信度、时间戳 - 使智能体路径置信度评分成为可能", "@language": "zh-cn"}
       ],
       "required": false,
-      "suggestedFields": ["source", "confidence", "timestamp", "documentPath", "documentUrl", "lineStart", "lineEnd", "blockType", "temporalMarker", "modality", "negated", "causalityStrength", "sourceSentence"],
+      "suggestedFields": ["source", "confidence", "timestamp", "documentPath", "documentUrl", "lineStart", "lineEnd", "blockType", "temporal", "modality", "negation", "causalityStrength", "sourceSentence"],
       "useCase": "multi_hop_reasoning"
     }
   },

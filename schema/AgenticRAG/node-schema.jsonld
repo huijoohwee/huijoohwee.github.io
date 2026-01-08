@@ -94,6 +94,19 @@
       "useCase": "agentic_rag"
     },
 
+    "centrality": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        {"@value": "Centrality Score", "@language": "en-us"},
+        {"@value": "中心性分数", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Graph centrality score (e.g. PageRank) - Indicates node importance", "@language": "en-us"},
+        {"@value": "图中心性分数（例如PageRank）- 指示节点重要性", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+
     "provenance": {
       "@container": "@set",
       "@type": "@id",

@@ -1,5 +1,18 @@
 # Design Guidelines
 
+## Context
+
+- Design systems must remain domain-agnostic, project-agnostic, and dataset-agnostic.
+- Components adapt behavior via configuration and schema, not hardcoded assumptions.
+- Design artifacts (tokens, layouts, patterns) must support reuse across products and teams.
+
+## Intent
+
+These guidelines translate neutrality and documentation standards into concrete design rules:
+- Enforce codebase neutrality at the design layer (no project/dataset hardcoding).
+- Use SVO (Subject–Verb–Object) to express responsibilities for components.
+- Provide design patterns that documentation can describe using “From [input] to [output]” statements.
+
 ## Core Design Principles
 
 **Universal Composability**: Domain-agnostic building blocks | configuration-driven assembly | schema-aligned interfaces | provenance-aware state
@@ -139,7 +152,7 @@ state = {
 ❌ God components (>300 lines, >10 props)
 ❌ Prop drilling >3 levels
 ❌ Inline styles with magic numbers
-❌ Hardcoded content strings
+❌ Hardcoded content strings, project names, or dataset-specific labels
 
 **State Management**:
 ❌ Direct state mutation
@@ -180,6 +193,31 @@ state = {
 - [ ] Unidirectional data flow
 - [ ] Pure reducer functions
 - [ ] Selectors for derived data
+
+---
+
+## Documentation Integration
+
+Designs should be easy to document using the documentation guidelines:
+
+- Component documentation hooks
+  - Each component should support a statement of the form:
+    - “From [input_props] to [rendered_output]: Component -> actions -> outcome.”
+  - Responsibilities should be describable as SVO directives:
+    - “Component verbs data via configuration” (for example, `DataTable renders rows from config schema`).
+
+- Configuration surface
+  - Parameters should be expressible in configuration schemas:
+    - Name, default, min, max, step, impact description.
+  - Behavior changes must be achievable via configuration changes, not code edits.
+
+- Neutrality alignment
+  - Design must avoid:
+    - Hardcoded project names.
+    - Dataset-specific entity types baked into components.
+  - Instead:
+    - Use schema-driven entity types.
+    - Use metadata fields and tokens to adapt to different domains.
 
 ---
 

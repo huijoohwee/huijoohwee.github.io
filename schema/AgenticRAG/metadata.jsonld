@@ -112,6 +112,42 @@
       ],
       "required": false,
       "suggestedFields": ["nodeCount", "edgeCount", "labelDistribution"]
+    },
+    "ontologies": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Ontologies", "@language": "en-us" },
+        { "@value": "本体", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "rdfs:comment": [
+        {
+          "@value": "Array-valued hint describing ontology bundles associated with the graph. Pipelines should emit an array (possibly empty) so that downstream components can treat this property uniformly. Recommended shape is a list of objects such as {\"prefix\": \"prov\", \"iri\": \"http://www.w3.org/ns/prov#\"}, and markdown frontmatter parsers are encouraged to preserve structured list items instead of collapsing them to strings. Graphs may also use simpler string entries when only labels are needed. No domain-specific semantics are implied.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述与图关联的本体集合的数组值提示字段。流水线应输出数组（可以为空），以便下游组件可以统一处理。推荐形式为对象列表，例如 {\"prefix\": \"prov\", \"iri\": \"http://www.w3.org/ns/prov#\"}，并鼓励 Markdown 前言解析器保留结构化列表项，而不是将其折叠为字符串。在只需标签时也可以使用简单字符串条目。字段本身不携带具体领域语义。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "polygonLayers": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Polygon Layers", "@language": "en-us" },
+        { "@value": "多边形图层", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "rdfs:comment": [
+        {
+          "@value": "Array-valued hint describing configured polygon layers for visualization or traversal presets. Pipelines should emit an array (possibly empty) of strings or objects, keeping the field domain-agnostic so that layer names and grouping remain fully configurable. When graphs originate from markdown with YAML-style frontmatter, structured list entries should be preserved as array elements rather than flattened into a single string.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述可视化或遍历预设中配置的多边形图层的数组值提示字段。流水线应输出字符串或对象组成的数组（可以为空），保持该字段领域无关，使图层名称和分组完全由配置驱动。当图来自带有 YAML 风格前言的 Markdown 时，应保留结构化列表项为数组元素，而不是将其展平为单个字符串。",
+          "@language": "zh-cn"
+        }
+      ]
     }
   },
   "validationRules": {

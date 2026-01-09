@@ -49,6 +49,18 @@
 
 ### Module Organization Directives (SRP + SVO)
 
+#### Pattern: OversizedFileRefactor
+
+**From oversized file to scoped modules**: OversizedFileRefactor → detects files exceeding size limits via maintainability tooling → scopes responsibilities and utilities → splits content into multiple <600-line, single-responsibility files → consolidates shared content into canonical locations and updates automation.
+
+**Developers apply OversizedFileRefactor pattern**
+- Developers trigger scope utilities on files >600 lines (e.g., `docs/documents`)
+- Developers extract responsibilities into single-responsibility modules or classes
+- Developers traverse content to eliminate duplicates before consolidation
+- Developers consolidate content into existing <600-line files when semantics align
+- Developers create new <600-line files when no suitable target exists
+- Developers update validation/automation (e.g., sanity checks, status tables, scripts) to reference the new files
+
 #### Pattern: ComponentFactory
 
 **From configuration to instances**: ComponentFactory → parses schema definitions via metadata validation → instantiates components using registered builders → injects dependencies through configuration mapping → delivers initialized instances for application runtime.

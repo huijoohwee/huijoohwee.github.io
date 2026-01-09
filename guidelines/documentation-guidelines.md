@@ -209,6 +209,22 @@
 
 ---
 
+#### Automation Contracts for Documentation
+
+**Automation maintainers document docs:update-style workflows**
+- Maintainers describe scripts that regenerate documentation artifacts from source markdown (for example, EDA-to-ML pipelines) using SVO directives.
+- Maintainers specify input locations (docs/documents paths), output locations (preview artifact directories), and triggering commands (for example, dev/build hooks).
+- Maintainers ensure automation remains configuration-driven (no hardcoded domains) and aligns with documentation schemas.
+- Maintainers record how automation integrates with quality gates (lint, typecheck, tests) so documentation updates are validated alongside code.
+
+**Automation maintainers define neutral status matrices for documentation coverage**
+- Maintainers use multi-column tables to distinguish participation in artifact generation (for example, docs:update), documentation linting/sanity checks (for example, doc:lint and doc:sanity), and tests/QA pipelines (for example, docs:qa or equivalent).
+- Maintainers express coverage using neutral indicators (for example, `[x]` / `[ ]`) without referencing domain-specific projects or datasets.
+- Maintainers add a stewardship column that names roles (for example, Technical Writer, Component Documenter, Schema Documenter, API Documenter) instead of individuals, aligning with Role–Action–Outcome patterns.
+- Maintainers keep matrices configuration-driven so new documentation sources can be added by updating tables and automation configuration rather than embedding special-case logic.
+
+---
+
 ## Role—Action—Outcome
 
 **Role: Technical Writer**  

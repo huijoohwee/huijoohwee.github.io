@@ -1,0 +1,7 @@
+| Color       | Hex Code   | Node Type                          | Description                                                                 | Examples                                      |
+|-------------|------------|------------------------------------|-----------------------------------------------------------------------------|-----------------------------------------------|
+| Blue        | #007BFF   | Core ideas                        | Represents foundational elements like problem/solution hypotheses or market needs. Evokes trust and potential. | Problem/solution hypotheses, market needs.   |
+| Yellow      | #FFC107   | Hypotheses/testing                | Denotes exploratory phases like customer interviews or smoke tests. Highlights caution and curiosity. | Customer interviews, smoke tests.            |
+| Green       | #28A745   | Execution/validated actions/success | Symbolizes positive outcomes, including proven features or met metrics. Conveys growth and go-ahead. | Proven MVP features, metrics met.            |
+| Orange      | #FD7E14   | Pivots/iterations                 | Indicates adaptive changes based on learnings. Bridges testing and execution. | Changes based on learnings.                  |
+| Red         | #DC3545   | Alerts/risks/failures             | Highlights critical issues like invalidated assumptions or blocks. Used for emphasis on pivots or stops. | Invalidated assumptions, regulatory blocks.  |

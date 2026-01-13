@@ -1,10 +1,10 @@
 # Codebase Neutrality Guidelines
 
 ## Context
-**Production codebases**: domain‑agnostic implementations | adaptable across datasets/projects/contexts | no hardcoded assumptions | general‑purpose algorithms | config‑driven components | single‑responsibility modules | metadata‑driven orchestration | avoid embedded logic
+**Production codebases**: implement domain‑agnostic designs to maximize applicability, adapt across datasets, projects, and contexts to ensure versatility, avoid hardcoded assumptions to preserve flexibility, apply general‑purpose algorithms to enhance reusability, configure components to enable customization, define single‑responsibility modules to maintain clarity, orchestrate with metadata to secure traceability, and avoid embedded logic to reduce fragility.  
 
 ## Intent
-**Neutrality standards**: context‑aware design | domain‑agnostic | project‑agnostic | dataset‑agnostic | metadata‑driven orchestration | forbid hardcoding patterns | config‑driven adaptation | single‑responsibility modules | fixture‑based validation | assertion testing
+**Neutrality standards**: design with context awareness to ensure adaptability, remain domain‑agnostic to preserve universality, stay project‑agnostic to maintain flexibility, keep dataset‑agnostic to guarantee portability, orchestrate with metadata to secure traceability, forbid hardcoding patterns to avoid rigidity, adapt through configuration to enable customization, define single‑responsibility modules to uphold clarity, validate with fixtures to strengthen reliability, and apply assertion testing to enforce correctness.  
 
 ## Directives
 

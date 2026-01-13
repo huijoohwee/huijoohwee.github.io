@@ -1,11 +1,12 @@
 # Documentation Guidelines: From Intent to Execution
 
 ## Context
-- **Semantic orchestration docs**: capture responsibilities | no hardcoded domains | config-driven schemas | structural–semantic separation | cross-domain pipelines | provenance + confidence trace  
-- **Team guidelines**: clarity over datasets | reproducibility via parameter logging | quality via metrics | maintainability through audit trails + schema evolution
+- **Semantic orchestration docs**: capture responsibilities to preserve clarity, forbid hardcoded domains to sustain neutrality, drive schemas through configuration to enable adaptability, separate structure from semantics to maintain coherence, build cross‑domain pipelines to guarantee interoperability, and trace provenance with confidence to secure accountability; 
+
+- **Team guidelines**: ensure clarity over datasets to prevent ambiguity, log parameters reproducibly to guarantee transparency, measure quality via metrics to uphold standards, maintain audit trails with schema evolution to strengthen resilience.  
 
 ## Intent
-**Documentation standards**: layer flows + component specs | domain-agnostic schemas + CID annotations | provenance + confidence trace | metrics-based QA | anti-pattern safeguards | feedback loops + schema versioning
+**Documentation standards**: layer flows with component specs to ensure structural clarity, align domain‑agnostic schemas with CID annotations to preserve neutrality, trace provenance with confidence to secure accountability, apply metrics‑based QA to uphold quality, safeguard against anti‑patterns to prevent fragility, and optimize feedback loops with schema versioning to sustain resilience.  
 
 ## Directives
 

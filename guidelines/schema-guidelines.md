@@ -2,9 +2,9 @@
 
 ## Core Principles
 
-**Schema-Driven Architecture**: All data structures defined via external schemas -> runtime validation -> type safety without hardcoding | Domain-agnostic type systems | Version-controlled evolution | Zero embedded vocabularies
+**Schema‑Driven Architecture**: define all data structures via external schemas to guarantee consistency, validate at runtime to enforce correctness, achieve type safety without hardcoding to preserve flexibility, design domain‑agnostic type systems to ensure universality, evolve with version control to maintain continuity, and forbid embedded vocabularies to sustain neutrality.  
 
-**Validation Primacy**: Every component input/output validated against schema -> preconditions enforced -> postconditions verified | Fail-fast on schema violations
+**Validation Primacy**: validate every component input and output against schemas to guarantee correctness, enforce preconditions to secure reliability, verify postconditions to ensure integrity, and fail fast on schema violations to prevent propagation of errors.  
 
 ---
 

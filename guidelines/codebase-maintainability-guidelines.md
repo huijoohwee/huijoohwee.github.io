@@ -1,10 +1,10 @@
 # Codebase Maintainability Guidelines
 
 ## Context
-**Maintenance standards**: prevent semantic drift | centralized copy management | focused module boundaries | performance optimization | eliminate memory leaks | avoid race conditions | remove stale code | align with authoritative schemas | single source of truth | enforce size constraints | prevent anti‑patterns | reduce technical debt
+**Maintenance standards**: prevent semantic drift to preserve meaning, centralize copy management to ensure consistency, focus module boundaries to maintain clarity, optimize performance to enhance efficiency, eliminate memory leaks to sustain stability, avoid race conditions to guarantee reliability, remove stale code to improve maintainability, align with authoritative schemas to secure correctness, enforce a single source of truth to uphold integrity, constrain size to retain manageability, prevent anti‑patterns to safeguard quality, and reduce technical debt to extend longevity.  
 
 ## Intent
-**Maintainability standards**: consistency‑first architecture | schema alignment | reusable primitives | size limits | single‑responsibility classes | centralized copy helpers | shared LocalStorage keys | anti‑pattern identification | optimization requirements | validation gates | API backward compatibility
+**Maintainability standards**: design with consistency‑first architecture to ensure coherence, align schemas to guarantee correctness, build with reusable primitives to maximize efficiency, enforce size limits to retain manageability, define single‑responsibility classes to preserve clarity, centralize copy helpers to secure uniformity, share LocalStorage keys to maintain integrity, identify anti‑patterns to prevent fragility, meet optimization requirements to enhance performance, apply validation gates to uphold quality, and preserve API backward compatibility to sustain longevity.  
 
 ## Directives
 

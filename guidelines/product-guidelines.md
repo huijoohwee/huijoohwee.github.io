@@ -2,11 +2,11 @@
 
 ## Context
 
-**Product development**: rapid experimentation + rigorous validation | evidence-based user value | lean iteration | hypothesis testing | feedback-driven quality | prompt/interface design | context management | human-in-the-loop assurance
+**Product development**: experiment rapidly with rigorous validation to accelerate learning, deliver evidence‑based user value to ensure relevance, iterate leanly to maximize efficiency, test hypotheses to confirm assumptions, drive quality through feedback to strengthen outcomes, design prompts and interfaces to enhance usability, manage context to preserve coherence, and assure processes with humans in the loop to guarantee accountability.  
 
 ## Intent
 
-**Product practices**: Build–Measure–Learn cycles | user-centric MVPs | RICE prioritization | versioned prompt engineering | evaluation pipelines | agile sprints + acceptance criteria | hypothesis testing | continuous metric monitoring
+**Product practices**: run Build–Measure–Learn cycles to accelerate discovery, design user‑centric MVPs to ensure relevance, prioritize with RICE to maximize impact, version prompt engineering to preserve adaptability, construct evaluation pipelines to guarantee rigor, execute agile sprints with acceptance criteria to maintain accountability, test hypotheses to validate assumptions, and monitor metrics continuously to sustain quality.  
 
 ## Directives
 

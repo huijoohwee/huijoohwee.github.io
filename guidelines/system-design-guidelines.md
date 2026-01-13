@@ -2,14 +2,14 @@
 
 ## Context
 
-- **Distributed systems**: independent service deployment | resilience under failure | cross-boundary consistency | observability for debugging | defense-in-depth security  
+- **Distributed systems**: deploy services independently to maximize scalability, design for resilience under failure to ensure continuity, enforce cross‑boundary consistency to preserve correctness, instrument observability for debugging to guarantee transparency, and apply defense‑in‑depth security to protect integrity; 
 
-- **Team guidelines**: avoid monoliths | prevent synchronous coupling | eliminate single points of failure | schema contracts | event-driven integration | bounded contexts + explicit ownership
+- **Team guidelines**: avoid monoliths to sustain agility, prevent synchronous coupling to reduce fragility, eliminate single points of failure to secure reliability, define schema contracts to uphold clarity, integrate through events to enable adaptability, and bound contexts with explicit ownership to guarantee accountability.  
 
 
 ## Intent
 
-**System design principles**: distributed-first architecture | stateless services | event-driven communication | bounded contexts + backward-compatible interfaces | graceful degradation + circuit breakers | strategic caching + storage choices | multi-layer defense + zero-trust | comprehensive observability
+**System design principles**: architect distributed‑first systems to maximize scalability, design stateless services to preserve simplicity, communicate through events to enable adaptability, bound contexts with backward‑compatible interfaces to maintain stability, degrade gracefully with circuit breakers to ensure resilience, apply strategic caching and storage choices to optimize performance, enforce multi‑layer defense with zero‑trust to secure integrity, and instrument comprehensive observability to guarantee transparency.  
 
 ## Directives
 

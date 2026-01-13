@@ -1,10 +1,10 @@
 # Data Governance Guidelines
 
 ## Context
-**Governance standards**: prevent data leaks | enforce ownership | track provenance | manage lifecycles | secure PII | audit access | validate schema compliance | minimize duplication | token sharing
+**Governance standards**: prevent data leaks to safeguard confidentiality, enforce ownership to guarantee accountability, track provenance to ensure traceability, manage lifecycles to maintain continuity, secure PII to protect privacy, audit access to strengthen oversight, validate schema compliance to uphold correctness, minimize duplication to preserve efficiency, and share tokens to enable controlled interoperability.  
 
 ## Intent
-**Governance principles**: clear ownership | immutable provenance | lease-based access | minimized retention | secure defaults | schema-driven validation | centralized policy | automated auditing | redundant lexing prevention
+**Governance principles**: establish clear ownership to guarantee accountability, enforce immutable provenance to secure traceability, grant lease‑based access to maintain control, minimize retention to reduce risk, apply secure defaults to protect integrity, validate through schemas to ensure correctness, centralize policy to preserve consistency, automate auditing to strengthen oversight, and prevent redundant lexing to uphold efficiency.  
 
 ## Directives
 

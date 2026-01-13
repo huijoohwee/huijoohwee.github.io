@@ -1,11 +1,12 @@
 # Project Rules
 
 ## Context
-**Software projects**: domain-neutral design | rapid validation cycles | coherent architecture | automated quality checks | accountable deliverables | debt-free practices  
-**Team**: agility with rigor | separation of concerns | no hardcoding | no duplicated logic | sustainable rules
+
+- **Software projects**: design domain‑neutral systems to preserve adaptability, run rapid validation cycles to accelerate learning, architect coherently to maintain clarity, automate quality checks to enforce reliability, deliver accountably to guarantee ownership, and practice debt‑free development to sustain longevity;
+- **Team**: act with agility and rigor to balance speed and discipline, separate concerns to uphold modularity, forbid hardcoding to avoid rigidity, eliminate duplicated logic to ensure efficiency, and apply sustainable rules to secure resilience.  
 
 ## Intent
-**Project-wide standards**: domain-agnostic design | configuration-driven architecture | rapid learning cycles | Lean Startup + OKRs | MCP + GraphRAG consistency | code quality boundaries | continuous validation loops
+**Project‑wide standards**: design domain‑agnostic systems to preserve adaptability, architect with configuration‑driven patterns to enable flexibility, run rapid learning cycles to accelerate discovery, apply Lean Startup with OKRs to align progress, enforce MCP and GraphRAG consistency to secure coherence, define code quality boundaries to uphold reliability, and sustain continuous validation loops to guarantee resilience.  
 
 ## Directives
 

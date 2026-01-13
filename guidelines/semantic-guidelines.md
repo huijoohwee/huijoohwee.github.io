@@ -2,11 +2,11 @@
 
 ## Context
 
-**Semantic processing**: modular architectures | extract meaning from unstructured content | resolve entity ambiguities | contextual analysis | infer relationships via pattern matching | domain‑agnostic operation | prevent hardcoded hierarchies | config‑driven vocabulary adaptation | interpretation neutrality | meaning preservation | provenance tracking | context sensitivity | schema adaptability
+**Semantic processing**: design modular architectures to preserve scalability, extract meaning from unstructured content to unlock insight, resolve entity ambiguities to ensure clarity, analyze context to secure relevance, infer relationships via pattern matching to reveal connections, operate domain‑agnostically to maintain universality, prevent hardcoded hierarchies to avoid rigidity, adapt vocabularies through configuration to enable flexibility, enforce interpretation neutrality to sustain objectivity, preserve meaning to guarantee fidelity, trace provenance to secure accountability, apply context sensitivity to uphold precision, and evolve schemas adaptably to ensure resilience.  
 
 ## Intent
 
-**Semantic standards**: single‑responsibility components | entity extraction | context resolution | relationship inference | domain‑agnostic schemas | config‑loaded ontologies | metadata‑driven disambiguation | meaning preservation | context sensitivity | dynamic vocabularies | semantic rules | interpretation‑agnostic processing | arbitrary schema parameters | provenance tracking | verification | traceability
+**Semantic standards**: design single‑responsibility components to preserve modularity, extract entities to ensure clarity, resolve context to secure relevance, infer relationships to reveal connections, define domain‑agnostic schemas to maintain universality, load ontologies through configuration to enable adaptability, disambiguate with metadata to guarantee precision, preserve meaning to uphold fidelity, apply context sensitivity to sustain accuracy, evolve dynamic vocabularies to support flexibility, enforce semantic rules to ensure consistency, process interpretation‑agnostically to avoid bias, parameterize schemas arbitrarily to maximize extensibility, track provenance to secure accountability, verify outputs to enforce correctness, and trace operations to guarantee transparency.  
 
 ## Directives
 

@@ -1,10 +1,10 @@
 # CID Guidelines
 
 ## Context
-**Documentation systems**: structured rules | clear responsibilities | aligned workflows | accountable teams | unambiguous guidelines  
+**Documentation systems**: establish structured rules to ensure order, define clear responsibilities to preserve accountability, align workflows to maintain cohesion, empower teams to guarantee ownership, and set unambiguous guidelines to secure clarity.  
 
 ## Intent
-**Meta-guideline intent**: CID structures | SRP enforcement | RAO chains | SVO clarity | traceable operations
+**Meta‑guideline intent**: structure with CID to ensure coherence, enforce SRP to preserve modularity, chain RAO to maintain resilience, clarify with SVO to guarantee transparency, and trace operations to secure accountability.  
 
 ## Directives (SVO Format)
 

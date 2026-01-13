@@ -66,11 +66,43 @@ component:
 ### Theme & Style System
 
 **Abstraction Layers**:
-- **Tokens**: colors, spacing, typography (design primitives)
-- **Semantic Variables**: `--color-primary`, `--space-md` (context-aware)
-- **Component Classes**: `.btn-primary`, `.card-elevated` (application-specific)
+- **Tokens**: `UI_THEME_TOKENS` (centralized semantic colors for buttons, panels, text, tables, inputs, code blocks, status badges) and `UI_THEME_COLORS` (raw hex values for Canvas/D3).
+- **Theme Modes**: Light (GitHub Tritanopia Light) | Dark (GitHub Tritanopia Dark) | System
+- **Semantic Variables**: `--panel-bg-rgb`, `--toolbar-opacity` (CSS variables for global surfaces)
+- **Component Classes**: `.App-toolbar`, `.MainPanelContainer` (application-specific)
 
-**Rule**: Never hardcode `#FF5733` or `16px` in components -> reference tokens only
+**Code Block Pattern**:
+- **Structure**: `div.highlight` -> `pre` -> `div.zeroclipboard-container` -> `clipboard-copy`
+- **Style**: Theme-aware syntax highlighting (Light/Dark) with absolute positioned copy button.
+
+**Rule**: Never hardcode `#FF5733` or `16px` or Tailwind utility colors like `text-gray-500` -> reference tokens only.
+**Rule**: Use `UI_THEME_TOKENS` for consistent styling across Light/Dark modes.
+**Rule**: Components must adapt to `themeMode` state (Light/Dark/System) via `useGraphStore`.
+**Rule**: Enforce 100% Global Theme Tokenization; remove legacy/stale hardcoded styles.
+
+### Table & List Patterns
+
+**Style**:
+- **No Zebra Striping**: Rows use a flat background (`rowBg`) to maintain a clean, modern look.
+- **Selection**: Selected rows use a subtle background tint (`UI_THEME_TOKENS.table.rowSelected`) for clear visibility without overwhelming color (replacing legacy blue borders).
+- **Hover**: Rows highlight with a gallery-style amber focus (`UI_THEME_TOKENS.table.rowHoverAmber`) or a subtle gray tint (`UI_THEME_TOKENS.table.rowHover`) for interactive contexts.
+- **Main Table Settings**: Key/Value rows follow the same interaction model as the Graph Data Table: hover amber and selected blue background.
+
+### Preview Gallery Pattern
+
+**Style**:
+- **Consistency**: Gallery items follow the same selection/hover model as tables: blue border/tint for selection, subtle hover effects.
+- **Drag & Drop**: Drag indicators use the primary blue indicator color (`#60A5FA`) for drop targets and insertion points.
+
+### Interaction Patterns
+
+**Click-to-Edit**:
+- **Pattern**: View -> User Click -> Switch Layout Mode -> Sync Scroll Position -> Focus Editor
+- **Intent**: Seamless transition from reading to editing.
+- **Implementation**:
+    - Viewer captures click events on content blocks.
+    - Event handler identifies source line from block metadata.
+    - Controller switches layout to 'Editor' (if needed) and scrolls editor to line.
 
 ---
 
@@ -165,6 +197,7 @@ state = {
 ❌ Blocking main thread >50ms
 ❌ Unoptimized images (no lazy load, no WebP)
 ❌ Synchronous localStorage reads in render
+❌ Redundant lexing (missing token sharing)
 
 ---
 

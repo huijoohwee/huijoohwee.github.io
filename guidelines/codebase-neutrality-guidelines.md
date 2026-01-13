@@ -85,6 +85,7 @@
 **Token Handling**
 - Developers use neutral token modules to preserve runtime behavior with generic handling
 - Developers avoid dataset-specific token logic
+- Developers implement token sharing to avoid redundant lexing when switching modes or sharing data
 
 **Transport Layer**
 - Developers use transport-layer normalization for generic host/blob patterns

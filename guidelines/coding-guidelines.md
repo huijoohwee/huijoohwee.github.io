@@ -23,6 +23,7 @@
 - Developers implement schema-driven interfaces
 - Developers parameterize behavior via metadata
 - Developers build single-responsibility modules
+- Developers choose semantic HTML elements before adding div wrappers
 
 ---
 
@@ -284,6 +285,7 @@ RETURN { result: processed }  // Missing provenance metadata
 - [ ] Metrics instrumented at boundaries
 - [ ] Preconditions/postconditions validated
 - [ ] Single-responsibility maintained (clear S-V-O)
+- [ ] Token sharing implemented (no redundant lexing)
 
 **Developers validate per-module requirements**:
 - [ ] Module contains <600 lines total

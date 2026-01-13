@@ -26,12 +26,14 @@
 - Architects enable independent deployment
 - Architects assign data ownership
 - Architects maintain backward-compatible interfaces
+- Architects standardize semantic UI structure for observability and accessibility
 
 **Engineers implement resilience patterns**
 - Engineers enable graceful degradation
 - Engineers deploy circuit breakers
 - Engineers configure retry with exponential backoff
 - Engineers apply bulkhead isolation
+- Engineers implement token sharing to avoid redundant lexing
 
 ---
 

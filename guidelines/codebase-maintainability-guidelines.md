@@ -22,6 +22,8 @@
 - Developers scope utilities to features
 - Developers implement single-responsibility classes
 - Developers configure behavior without hardcoding
+- Developers use semantic HTML to reduce DOM complexity
+- Developers implement token sharing to avoid redundant lexing
 
 ---
 
@@ -104,9 +106,9 @@
 - Engineers enable batching/sharding
 - Engineers optimize memoization
 - Engineers implement virtualization for lists
-- Engineers reduce DOM complexity
+- Engineers reduce DOM complexity using semantic HTML and fewer wrappers
 - Engineers avoid style recalc on mousemove/hover
-
+ 
 #### Validation
 
 **QA engineers execute quality gates**

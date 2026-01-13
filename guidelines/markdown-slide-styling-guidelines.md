@@ -1,3 +1,25 @@
+---
+title: Markdown Slide Styling Guidelines
+graphId: md:markdown-slide-styling-guidelines
+theme: academic
+background: /cover.jpg
+class: text-center
+transition: slide-left
+layout: cover
+aspectRatio: 16/9
+lang: en-US
+authors:
+  - Knowgrph Team
+meeting: "Documentation"
+date: "2026-01-12"
+venue: "GitHub"
+institution: "Huijoohwee"
+url: "https://huijoohwee.github.io"
+mermaid: |
+  graph LR
+    A[Start] --> B[End]
+---
+
 # Markdown Slide Styling Guidelines
 
 Universal syntax guide for presentation frameworks
@@ -13,18 +35,33 @@ Universal syntax guide for presentation frameworks
 theme: default
 background: /cover.jpg
 class: text-center
-highlighter: shiki
-lineNumbers: true
 transition: slide-left
 layout: cover
 aspectRatio: '16/9'
 lang: en-US
+mermaid: |
+  graph LR
+    A[Start] --> B[End]
 ---
 ```
 
 **Purpose**: Configures presentation-wide settings via YAML metadata block
 
-**Common keys**: `theme`, `background`, `class`, `highlighter`, `lineNumbers`, `transition`, `layout`, `aspectRatio`, `lang`
+**Common keys**: `theme`, `background`, `class`, `transition`, `layout`, `aspectRatio`, `lang`
+
+**Academic / Metadata keys (fully supported):**
+- `authors`: List of authors (string or array)
+- `meeting`: Conference or meeting name
+- `date`: Presentation date
+- `venue`: Presentation venue
+- `institution`: Institution or organization name (displays in footer)
+- `url`: Link to paper or project
+- `theme`: Theme style (e.g., `default`, `academic`)
+- `mermaid`: Global mermaid diagram definition (string)
+
+**Effect**: When these keys are present, a persistent footer is rendered on slides (except `cover` and `intro` layouts).
+- **Default Theme**: Meeting/Venue/Institution/Date (Left), Authors/URL (Right), Page Numbers (Right).
+- **Academic Theme** (`theme: academic`): Meeting + Authors (Left), Institution/Venue + Page X / Y (Right).
 
 ---
 
@@ -34,8 +71,10 @@ lang: en-US
 **Italic:** `*text*` → *text*  
 **Bold+Italic:** `***text***` → ***text***  
 **Underline:** `<u>text</u>` → <u>text</u>  
-**Highlight:** `<mark>text</mark>` → <mark>text</mark>  
+**Highlight:** `==text==` or `<mark>text</mark>` → <mark>text</mark>  
 **Strikethrough:** `~~text~~` → ~~text~~  
+**Subscript:** `~text~` → <sub>text</sub>  
+**Superscript:** `^text^` → <sup>text</sup>  
 **Code:** `` `text` `` → `text`
 
 **Custom span:**
@@ -65,6 +104,31 @@ lang: en-US
 - [x] Completed
 - [ ] Pending
 ```
+
+---
+
+## Footnotes (fully supported)
+
+```markdown
+Here is a footnote reference[^1].
+
+[^1]: This is the footnote content.
+```
+
+**Purpose**: Add citations or additional context at the bottom of the slide/document.
+
+---
+
+## Headings and IDs (fully supported)
+
+```markdown
+# Heading Level 1 {#custom-id}
+## Heading Level 2
+```
+
+**Auto-generated IDs**: Headings automatically get IDs derived from their text (kebab-case).
+**Custom IDs**: You can specify a custom ID using the `{#id}` syntax.
+**Linking**: Link to headings using `[Link Text](#custom-id)`.
 
 ---
 
@@ -250,6 +314,44 @@ $$
 ***
 ___
 ```
+
+---
+
+## Slide Separation and Reordering in Knowgrph
+
+```markdown
+# Slide 1
+
+---
+
+# Slide 2
+```
+
+**Semantics in Knowgrph:**
+- Top-of-document YAML frontmatter (`---` … `---` at the very start) is treated as metadata and does not create a slide break.
+- `---` lines that appear outside YAML frontmatter and outside fenced code blocks are treated as slide separators by the Knowgrph markdown viewer and fullscreen slide gallery.
+- `---` that appear inside fenced code blocks or inside YAML frontmatter are treated as literal content, not slide breaks.
+
+**Reordering behavior:**
+- The fullscreen Markdown slide gallery sidebar lets you drag thumbnails to change slide order; Knowgrph rewrites the underlying markdown to match that order so the editor, viewer, and on-disk file stay aligned.
+- Reordering operates on slide-sized chunks, preserving per-slide YAML blocks, notes, and fenced code blocks (including those that contain `---`) as intact units.
+- When Knowgrph rewrites a deck after reordering, it normalizes slide separators to the form:
+
+  ```markdown
+  <last non-empty line of previous slide>
+  
+  ---
+  
+  <first non-empty line of next slide>
+  ```
+
+  enforcing a single blank line before and after each `---` separator.
+
+**Fullscreen frame, zoom, and scroll semantics in Knowgrph:**
+- The fullscreen slide gallery renders each slide inside a static frame; the frame border, corner radius, and drop shadow do not zoom.
+- The slide content inside the frame can be zoomed and panned for detail inspection, while the frame stays fixed.
+- Mouse wheel or trackpad scroll **inside the frame** scrolls the slide content; it does not trigger zoom.
+- Zoom gestures are modifier-based: holding `Ctrl` (or `Cmd` on macOS) while scrolling zooms; plain scroll without modifiers only scrolls.
 
 ---
 

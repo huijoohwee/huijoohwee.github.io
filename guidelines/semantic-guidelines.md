@@ -103,6 +103,7 @@
 ❌ Fixed relationship vocabularies → ✅ Configuration-loaded ontologies  
 ❌ Language-specific processing logic → ✅ Language-agnostic tokenization  
 ❌ Embedded disambiguation rules → ✅ Metadata-driven scoring  
+❌ Generic DOM wrappers for structure → ✅ Semantic HTML elements for structure  
 
 ---
 

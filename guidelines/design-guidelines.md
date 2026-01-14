@@ -167,6 +167,7 @@ state = {
 - Virtualization: Windowing for lists >100 items
 - Code splitting: Dynamic imports for routes/features
 - Lazy loading: Below-fold content deferred
+- **Token Sharing**: Use shared lexing and token storage to avoid redundancy when switching modes, sharing data, or during the rendering cycle. Tokens should be computed once at the parent level and passed down to consumers (Viewer, TOC, Editor) to ensure synchronization and reduce CPU load.
 
 **Metric Targets**: FCP <1.8s | LCP <2.5s | CLS <0.1 | TTI <3.8s
 

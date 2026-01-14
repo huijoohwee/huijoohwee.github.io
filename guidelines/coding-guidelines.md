@@ -17,6 +17,7 @@
 - **Token Sharing**: When switching between views (e.g., Editor <-> Viewer), share expensive computation results like lexed tokens. 
   - **Pattern**: Lift state up or use a store (e.g., `useGraphStore.markdownTokens`) to hold the `tokens` array. Pass `tokens` to both the Editor (for syntax highlighting/analysis) and Viewer (for rendering).
   - **Avoid**: Re-lexing the same markdown text in multiple child components.
+  - **Data Sharing**: Tokens must include source mapping (`startLine`, `endLine`) which should be preserved and shared to enable features like scroll sync, auto-positioning, and bi-directional navigation without re-parsing.
   - **Rendering Cycle**: Components should check the shared store for tokens before lexing. If tokens are missing, lex and update the store. The store should invalidate tokens when the source text changes.
 - **React.memo**: Use sparingly, only when profiling shows benefit.
 - **useEffect**: Avoid complex dependency arrays. Use `useCallback` / `useMemo` to stabilize functions and values.

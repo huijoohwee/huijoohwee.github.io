@@ -806,3 +806,28 @@ generate max LOD mermaid.js for "Universal Scaffolding Pseudocode Template",
 * Edge: Responsibility (S-V-O)
 * Subgraph: Phase
 ```
+## Problems and Diagnostics
+
+**Common Scaffolding Issues**:
+*   **Premature Implementation**: Implementing logic before stubs are verified.
+    *   *Diagnostic*: Check if tests exist before logic code.
+*   **Configuration Drift**: Hardcoded values persist after refinement.
+    *   *Diagnostic*: grep for magic numbers/strings in implementation files.
+*   **Scaffolding Rot**: Stubs remain unimplemented or diverge from documentation.
+    *   *Diagnostic*: Run linter/type-checker on stubs.
+
+**Diagnostic Checklist**:
+1.  Are all public methods documented with docstrings?
+2.  Do all stubs raise `NotImplementedError` or return placeholders?
+3.  Is there a corresponding test file for every module?
+
+## Token Sharing and Performance
+
+**Context**:
+Efficient rendering in dual-mode editors (Markdown + Canvas) requires sharing lexed tokens to avoid redundant processing.
+
+**Directives**:
+*   **Shared Lexing**: Lex markdown once, share tokens between Viewer, Editor, and Slide modes.
+*   **Cache Invalidation**: Invalidate token cache only when source text changes.
+*   **Semantic Rendering**: Use semantic HTML (`article`, `section`, `nav`) instead of generic `div`s for better accessibility and structure.
+*   **Unified State**: Store tokens in a central store (e.g., Zustand) to be consumed by multiple components.

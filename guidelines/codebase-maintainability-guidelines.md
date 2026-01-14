@@ -24,6 +24,7 @@
 - Developers configure behavior without hardcoding
 - Developers use semantic HTML to reduce DOM complexity
 - Developers implement token sharing to avoid redundant lexing
+- Developers invalidate token cache only when source content changes
 
 ---
 

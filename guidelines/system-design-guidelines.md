@@ -28,6 +28,32 @@
 - Architects maintain backward-compatible interfaces
 - Architects standardize semantic UI structure for observability and accessibility
 
+**Engineers enforce frontend performance & stability**
+- Engineers debounce heavy computations on user input
+- Engineers throttle resize and scroll listeners
+- Engineers debounce simulation restarts
+- Engineers cleanup async tasks on unmount
+- Engineers prevent layout thrashing via read/write batching
+- Engineers prevent Out-of-Memory (OOM) by streaming large datasets
+- Engineers avoid infinite loops by guarding recursive calls with depth limits
+- Engineers prevent UI hangs by offloading heavy tasks to web workers or using time-slicing
+- Engineers implement robust layout caching to skip expensive re-computations on resize
+- Engineers enforce view-stability by reusing cached positions during non-topology updates
+
+### Frontend Performance & Visualization Directives
+
+**Engineers optimize graph visualization rendering**
+- Engineers implement node/edge position caching (store-based) to persist layouts across mode switches
+- Engineers implement robust layout caching with revision-aware keys (layer:mode:fm:revision) to avoid stale layouts
+- Engineers skip initial layout calculation when topology is unchanged and cache is valid (>95% coverage)
+- Engineers decouple layout computation (Dagre/Force) from rendering loop (D3/Canvas)
+- Engineers enforce rectangular node shapes for structured layouts (Mermaid/Tree) to maximize readability
+- Engineers normalize disparate node types (Stadium/Cylinder) to uniform rectangles for layout consistency
+- Engineers implement incremental updates for window resizing instead of full re-layout to eliminate jank
+- Engineers memoize expensive text measurement and wrapping utilities to reduce layout overhead
+- Engineers refactor and remove redundant calculation logic to streamline the rendering pipeline
+
+
 **Engineers implement resilience patterns**
 - Engineers enable graceful degradation
 - Engineers deploy circuit breakers

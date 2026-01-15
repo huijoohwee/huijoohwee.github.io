@@ -1,0 +1,45 @@
+graph:
+  id: "md:eda-mlp-detailed-implementation-steps"
+  codebase_root: .
+  index_jsonld: /Users/huijoohwee/Documents/GitHub/knowgrph/canvas/src/data/eda-mlp-graph.json
+  index_schema: data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld
+orchestrator:
+  parser_script: python -m knowgrph_parser
+agentic_rag:
+  schema: "https://huijoohwee.github.io/schema/AgenticRAG"
+  node_view_type: AgenticRagNodeView
+  primary_fields:
+    - chunk_text
+    - provenance
+  traversal_edges:
+    - hasSection
+    - hasBlock
+    - hasItem
+    - linksTo
+    - next
+  graph_rag_paths:
+    - owner_id: "sec:md:eda-mlp-detailed-implementation-steps:phase-0-setup-data-acquisition-detailed-implementation-steps:1"
+      query: What is the structure and key content of eda-mlp-detailed-implementation-steps.md?
+      traverse:
+        - "sec:md:eda-mlp-detailed-implementation-steps:phase-0-setup-data-acquisition-detailed-implementation-steps:1"
+        - "sec:md:eda-mlp-detailed-implementation-steps:phase-1-environment-setup-configuration-detailed-implementation-steps:1009"
+        - "sec:md:eda-mlp-detailed-implementation-steps:on-windows:1333"
+        - "sec:md:eda-mlp-detailed-implementation-steps:verify-activation:1336"
+        - "sec:md:eda-mlp-detailed-implementation-steps:verify-activation:1349"
+        - "sec:md:eda-mlp-detailed-implementation-steps:python-should-point-to-venv-not-system:1356"
+        - "sec:md:eda-mlp-detailed-implementation-steps:should-show-pathtoproject_namevenvbinpython:1358"
+        - "sec:md:eda-mlp-detailed-implementation-steps:pip-should-also-be-in-venv:1360"
+        - "sec:md:eda-mlp-detailed-implementation-steps:should-show-pathtoproject_namevenvbinpip:1362"
+        - "sec:md:eda-mlp-detailed-implementation-steps:core-data-processing:1373"
+      steps:
+        - "Phase 0: Setup & Data Acquisition - Detailed Implementation Steps"
+        - "Phase 1: Environment Setup & Configuration - Detailed Implementation Steps"
+        - "On Windows:"
+        - Verify activation
+        - Verify activation
+        - "Python should point to venv, not system"
+        - "Should show: /path/to/project_name/venv/bin/python"
+        - pip should also be in venv
+        - "Should show: /path/to/project_name/venv/bin/pip"
+        - Core data processing
+      context: Summarize the markdown document at guidelines/eda-mlp-detailed-implementation-steps.md into a navigable graph structure.

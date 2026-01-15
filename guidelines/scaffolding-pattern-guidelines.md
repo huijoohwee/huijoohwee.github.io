@@ -831,3 +831,165 @@ Efficient rendering in dual-mode editors (Markdown + Canvas) requires sharing le
 *   **Cache Invalidation**: Invalidate token cache only when source text changes.
 *   **Semantic Rendering**: Use semantic HTML (`article`, `section`, `nav`) instead of generic `div`s for better accessibility and structure.
 *   **Unified State**: Store tokens in a central store (e.g., Zustand) to be consumed by multiple components.
+
+---
+
+## Prompt_202601131200
+
+### 01
+```
+
+adhere to `codebase-neutrality-guidelines.md`,
+convert:
+
+```
+A programmer starting **from scratch, without AI/LLM help**, would scaffold `data_loader.py` in a very manual, incremental way — usually something like this:
+
+---
+
+### 🛠 Typical Steps
+
+1. **Create the file**
+   - Run `touch src/data_loader.py` or create it in their editor.
+
+2. **Import essentials**
+   - Think about what libraries are needed (e.g., `sqlite3`, `pandas`).
+   - Add the imports at the top.
+
+   ```python
+   import sqlite3
+   import pandas as pd
+   ```
+
+3. **Stub out functions**
+   - Write empty function definitions with docstrings or comments to remind themselves of the purpose.
+
+   ```python
+   def load_from_sqlite(db_path, table_name):
+       """Load data from SQLite into a DataFrame."""
+       pass
+
+   def validate_schema(df, expected_dtypes):
+       """Check column count and dtypes."""
+       pass
+
+   def check_row_count(df, min_rows=1000):
+       """Ensure DataFrame has at least min_rows samples."""
+       pass
+
+   def parse_target_variable(df, target_col="label"):
+       """Verify target column contains only {0,1}."""
+       pass
+   ```
+
+4. **Fill in logic incrementally**
+   - Start with the simplest version (e.g., `load_from_sqlite` using `sqlite3.connect` and `pd.read_sql_query`).
+   - Run small tests in a REPL or notebook to confirm it works.
+   - Add error handling later.
+
+5. **Validation functions**
+   - For `validate_schema`, check `df.shape[1]` and loop through `df.dtypes`.
+   - For `check_row_count`, use `len(df)`.
+   - For `parse_target_variable`, check `df[target_col].unique()`.
+
+6. **Iterative testing**
+   - Write quick scripts or use Jupyter Notebook to call each function with sample data.
+   - Adjust until the functions behave as expected.
+
+7. **Refine with exceptions and docstrings**
+   - Replace `pass` with `raise ValueError(...)` where needed.
+   - Add clear docstrings for maintainability.
+
+---
+
+### 📄 Example of a Programmer’s First Draft
+It would look rough and incomplete at first:
+
+```python
+import sqlite3
+import pandas as pd
+
+def load_from_sqlite(db_path, table_name):
+    conn = sqlite3.connect(db_path)
+    df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+    conn.close()
+    return df
+
+def validate_schema(df, expected_dtypes):
+    if df.shape[1] != 47:
+        raise ValueError("Wrong number of columns")
+    # TODO: check dtypes
+    return True
+
+def check_row_count(df, min_rows=1000):
+    if len(df) < min_rows:
+        raise ValueError("Not enough rows")
+    return True
+
+def parse_target_variable(df, target_col="label"):
+    if not set(df[target_col].unique()).issubset({0,1}):
+        raise ValueError("Invalid labels")
+    return df[target_col]
+```
+
+---
+
+### 🔑 Key Insight
+Without AI help, programmers scaffold by:
+- **Starting minimal** (imports + function stubs).
+- **Iteratively testing** each function with sample data.
+- **Gradually refining** with validation, error handling, and documentation.
+```
+
+into universal, neutral, project-agnostic `first-draft-code-to-codebase.md`
+```
+
+### 02
+```
+based on "Universal Scaffolding Pseudocode Template",
+generate `scaffolding-implementation-guide.md` 
+
+
+```markdown
+# Scaffold-to-production: Step-by-step Implementation Guide
+
+**Purpose**: Step-by-step implementation roadmap with LOD patterns for zero-experience candidates  
+**Format**: Hierarchical tasks (m.n.o) with reasoning, outcomes, and excellent practices  
+**Context**: Last-shot to make it production-ready
+
+---
+
+## How to Use This Guide
+
+**Numbering System**:
+- **m**: Phase number (1-7)
+- **n**: Step number within phase
+- **o**: Sub-step number within step (0 = main step)
+
+**Priority Levels**:
+- 🔴 **CRITICAL**: ...
+- 🟡 **HIGH**: ...
+- 🟢 **MEDIUM**: ...
+- ⚪ **LOW**: Nice to have ...
+
+**Work in Order**: Complete each phase before moving to next. Don't skip steps.
+
+---
+
+## Phase 1: File Creation & Imports (... minutes)
+
+| # | Phase/Step/Sub-step | Reasoning (Key Concepts) | Outcome | Notes (Do/Don't) | Priority |
+|---|---------------|-------------------------|---------|------------------------------|----------|
+| **1.0.0** | **File Creation & Imports** | ...
+...
+| 7.n.o | ...
+```
+```
+
+```
+generate max LOD mermaid.js for "Scaffold-to-Production: Step-by-Step Implementation Guide", 
+* Parent Node: Step
+* Node: Sub-step
+* Edge: Workflow
+* Subgraph: Phase
+```

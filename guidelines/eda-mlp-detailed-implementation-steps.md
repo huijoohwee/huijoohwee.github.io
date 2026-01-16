@@ -1528,7 +1528,7 @@ $ git commit -m "Initial project structure"
 
 ## Project Structure
 
-```
+```plaintext
 project_name/
 ├── data/              # Data files (not tracked in git)
 ├── notebooks/         # Exploratory analysis notebooks

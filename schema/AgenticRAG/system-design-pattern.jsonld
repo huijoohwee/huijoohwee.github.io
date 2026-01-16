@@ -27,6 +27,18 @@
     },
     {
       "@type": "rag:RoleActionOutcome",
+      "role": "Mermaid render ordering",
+      "actions": [
+        "configure deterministic draw order for Mermaid-derived nodes, edges, and labels via a renderer-controlled mapping",
+        "keep subgraph hulls behind member nodes while preserving edge visibility during interaction"
+      ],
+      "outcome": "keep hierarchical Mermaid-style diagrams visually stable and interaction-safe across datasets without hard-coding domain semantics.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "render:mermaidRenderOrder",
+      "raci_role": "Curator"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
       "role": "Stats distribution bar charts",
       "actions": [
         "click bars in bottom panel Stats distributions to pin a node/edge subset in the shared selection model",

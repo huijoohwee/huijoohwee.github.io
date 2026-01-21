@@ -19,14 +19,14 @@
   ],
   "palette": {
     "nodes": {
-      "idea": "#2563EB",
-      "hypothesis": "#EAB308",
-      "execution": "#22C55E",
-      "pivot": "#F97316",
-      "alert": "#EF4444"
+      "idea": "#007BFF",
+      "hypothesis": "#FFC107",
+      "execution": "#28A745",
+      "pivot": "#FD7E14",
+      "alert": "#DC3545"
     },
     "edges": {
-      "critical": "#EF4444",
+      "critical": "#DC3545",
       "neutral": "#9CA3AF"
     }
   },

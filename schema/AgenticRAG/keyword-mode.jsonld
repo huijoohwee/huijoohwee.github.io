@@ -9,19 +9,19 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Directive for deriving a compact, domain-agnostic keyword graph from document text when a UI switches from document-structure mode into keyword mode. Keyword mode exposes Subject/Object/Entity keywords as nodes and Verb/Predicate/Relationship keywords as edges, with co-occurrence counts and similarity weights so the same bottom-panel dashboard can summarize nodes, edges, and communities without relying on a selection. Implementations should be deterministic, cache derived graphs by a stable text hash, and isolate layout caches across modes to prevent cross-mode cache contamination.",
+      "@value": "Directive for deriving a compact, domain-agnostic keyword graph from document text when a UI switches from document mode into keyword mode. Keyword mode exposes Subject/Object/Entity keywords as nodes and Verb/Predicate/Relationship keywords as edges, with co-occurrence counts and similarity weights so the same bottom-panel dashboard can summarize nodes, edges, and clusters (communities) without relying on a selection. Implementations should be deterministic, cache derived graphs by a stable text hash, and isolate layout caches across modes to prevent cross-mode cache contamination.",
       "@language": "en-us"
     },
     {
-      "@value": "当 UI 从文档结构模式切换到关键词模式时，用于从文档文本推导紧凑、领域无关关键词图的指令。关键词模式将主语/宾语/实体关键词作为节点，将动词/谓词/关系关键词作为边，并提供共现计数与相似度权重，使底部面板仪表盘可在不依赖选择的情况下汇总节点、边与社区。实现应保持确定性，用稳定的文本哈希缓存推导结果，并隔离不同模式下的布局缓存以避免跨模式污染。",
+      "@value": "当 UI 从文档模式切换到关键词模式时，用于从文档文本推导紧凑、领域无关关键词图的指令。关键词模式将主语/宾语/实体关键词作为节点，将动词/谓词/关系关键词作为边，并提供共现计数与相似度权重，使底部面板仪表盘可在不依赖选择的情况下汇总节点、边与簇（社区）。实现应保持确定性，用稳定的文本哈希缓存推导结果，并隔离不同模式下的布局缓存以避免跨模式污染。",
       "@language": "zh-cn"
     }
   ],
   "fields": {
     "ui.semanticMode": {
       "type": "xsd:string",
-      "allowed_values": ["document-structure", "keyword"],
-      "description": "UI-level mode selector. document-structure renders structural nodes/edges; keyword derives a keyword graph from text for exploration and dashboarding."
+      "allowed_values": ["document", "keyword"],
+      "description": "UI-level mode selector. document renders the imported graph; keyword derives a keyword graph from text for exploration and dashboarding."
     },
     "keywordMode.stopwords": {
       "type": "@json",
@@ -42,9 +42,15 @@
     },
     "keywordMode.communityDetection": {
       "type": "xsd:string",
-      "allowed_values": ["label-propagation"],
-      "default": "label-propagation",
-      "description": "Deterministic, lightweight community detection strategy used to map keyword graph communities onto graph layers/subgraphs."
+      "allowed_values": ["connected_components"],
+      "default": "connected_components",
+      "description": "Deterministic cluster (community) detection strategy used to map keyword graph clusters onto graph layers/subgraphs."
+    },
+    "keywordMode.centrality": {
+      "type": "xsd:string",
+      "allowed_values": ["pagerank", "none"],
+      "default": "pagerank",
+      "description": "Optional centrality computation for keyword entities used to enrich visual:importance and dashboards."
     }
   },
   "algorithm_steps": [
@@ -56,12 +62,12 @@
     {
       "step": 2,
       "name": "Extract entity keywords",
-      "description": "Extract subject/object/entity keyword candidates from text spans (for example inline-code spans, capitalized phrases, identifier-like tokens, and neutral word tokens), normalize to case-insensitive keys, remove stopwords, and count mentions. Each unique entity key becomes one node with a stable id derived from the normalized key, and should expose frequency-based sizing via properties like visual:nodeSize or visual:importance."
+      "description": "Extract subject/object/entity keyword candidates from text spans (for example inline-code spans, capitalized phrases, identifier-like tokens, and neutral word tokens), normalize to case-insensitive keys, remove stopwords, and count mentions. Each unique entity key becomes one node with a stable id derived from the normalized key, and should expose frequency-based sizing via properties like visual:nodeSize."
     },
     {
       "step": 3,
       "name": "Extract relationship keywords",
-      "description": "Within sentence or line blocks, pair co-mentioned entity keywords and infer a Verb/Predicate/Relationship keyword by scanning tokens between entity mentions (prefer verb-like tokens; otherwise pick the first non-stopword token; fallback to a neutral relation label when empty). Remove inferred relationship tokens from the entity-node set when they collide, aggregate relationship counts per entity pair, and select the most frequent relationship label per pair."
+      "description": "Within sentence or line blocks, pair co-mentioned entity keywords and infer a Verb/Predicate/Relationship keyword by scanning tokens between entity mentions (prefer verb-like tokens; otherwise pick the first non-stopword token; fallback to a neutral relation label when empty). Remove inferred relationship tokens from the entity-node set when they collide, aggregate relationship counts per entity pair, and select the most frequent relationship label per pair. Optionally emit predicate nodes (keyword:kind=predicate) and role edges (subject/object) to expose a layered view."
     },
     {
       "step": 4,
@@ -75,13 +81,13 @@
     },
     {
       "step": 5,
-      "name": "Assign communities for graph layers/subgraphs",
-      "description": "Build an undirected neighbor map from edges and run deterministic label propagation to assign compact integer community ids; store ids on nodes as visual:community and map to visual:layer so 2D subgraph groups, 3D Z-layering, and layer controls remain consistent."
+      "name": "Assign centrality and communities",
+      "description": "Compute PageRank centrality over the entity co-occurrence graph (optional) and store it on entity nodes (for example keyword:pagerank). Build an undirected neighbor map from entity edges and run NetworkX-style connected components to assign deterministic compact cluster ids (stored as visual:community); map to visual:layer so 2D cluster outlines, 3D Z-layering, and layer controls remain consistent."
     },
     {
       "step": 6,
       "name": "Cache and isolate layout",
-      "description": "Cache derived graphs by stable text hash. Key layout position caches by (semanticMode, frontmatterMode, layoutMode) to prevent cross-mode cache contamination while preserving each mode’s layout stability; merge media-capable base nodes into the derived keyword graph so the media overlay toggle remains effective in keyword mode."
+      "description": "Cache derived graphs by stable text hash. Key layout position caches by (semanticMode, frontmatterMode, layoutMode, renderMode) to prevent cross-mode cache contamination while preserving each mode’s layout stability; merge media-capable base nodes into the derived keyword graph so the media overlay toggle remains effective in keyword mode."
     }
   ],
   "neutrality": {

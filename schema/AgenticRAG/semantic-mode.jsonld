@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:SemanticLayerMode",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.4",
   "rdfs:label": [
     { "@value": "Semantic layer mode and controls", "@language": "en-us" },
     { "@value": "语义层模式和控制项", "@language": "zh-cn" }
@@ -20,8 +20,8 @@
   "fields": {
     "schema.layers.mode": {
       "type": "xsd:string",
-      "allowed_values": ["property", "document-structure", "semantic"],
-      "description": "Selects the layer grouping strategy. Semantic derivation only runs when mode is set to semantic; other modes leave GraphData unchanged apart from how downstream renderers interpret polygons and document structure. In document-structure mode, structural container node types (for example Document, Section, Paragraph, CodeBlock, Table, List, ListItem) remain normal nodes and drive type-based layering. In semantic mode, the similarity pipeline derives weighted semantic edges plus per-node visual:importance / visual:nodeSize and (optionally) community ids; polygon overlays represent semantic communities and intentionally exclude JSON-LD structural block types so semantic polygons reflect meaning/word-frequency clusters rather than document scaffolding. Separately, JSON-LD array-based group polygons (for example steps/contains) can still be shown via the group-polygons feature regardless of layer mode."
+      "allowed_values": ["property", "document-structure", "semantic", "keyword"],
+      "description": "Selects the layer grouping strategy. Semantic derivation only runs when mode is set to semantic; other modes leave GraphData unchanged apart from how downstream renderers interpret polygons and document structure. In document-structure mode, structural container node types (for example Document, Section, Paragraph, CodeBlock, Table, List, ListItem) remain normal nodes and drive type-based layering. In keyword mode, a lightweight keyword graph can be derived from document text where subject/object/entity keywords appear as nodes and verb/predicate/relationship keywords appear as edges, with co-occurrence counts and similarity weights surfaced in the same neutral Stats dashboard. In semantic mode, the similarity pipeline derives weighted semantic edges plus per-node visual:importance / visual:nodeSize and (optionally) community ids; polygon overlays represent semantic communities and intentionally exclude JSON-LD structural block types so semantic polygons reflect meaning/word-frequency clusters rather than document scaffolding. Separately, JSON-LD array-based group polygons (for example steps/contains) can still be shown via the group-polygons feature regardless of layer mode."
     },
     "schema.layers.documentStructure.minGroupSize": {
       "type": "xsd:integer",
@@ -76,32 +76,25 @@
     "schema.layers.semantic.communityDetection.enabled": {
       "type": "xsd:boolean",
       "default": true,
-      "description": "Enables or disables Louvain-style community detection over the semantic similarity graph. When disabled, nodes keep importance scores but no community ids are assigned."
+      "description": "Enables or disables NetworkX community detection over the semantic similarity graph. When disabled, nodes keep importance scores but no community ids are assigned."
     },
-    "schema.layers.semantic.communityDetection.resolution": {
-      "type": "xsd:double",
-      "minimum": 0.05,
-      "default": 1,
-      "description": "Resolution parameter for modularity gain. Higher values favor smaller, more granular communities; lower values favor larger groups."
+    "schema.layers.semantic.communityDetection.algorithm": {
+      "type": "xsd:string",
+      "allowed_values": ["connected_components"],
+      "default": "connected_components",
+      "description": "NetworkX community detection algorithm used to assign visual:community ids over the semantic similarity graph."
     },
-    "schema.layers.semantic.communityDetection.maxPasses": {
-      "type": "xsd:integer",
-      "minimum": 1,
-      "default": 10,
-      "description": "Maximum number of passes over all nodes during community optimization. Each pass re-evaluates potential community moves until no positive modularity gain is found or the move limit is reached."
-    },
-    "schema.layers.semantic.communityDetection.maxMovesPerPass": {
-      "type": "xsd:integer",
-      "minimum": 100,
-      "default": 20000,
-      "description": "Upper bound on how many successful community moves are applied per pass. Helps keep runtime predictable on large graphs without tying behavior to any particular dataset."
+    "schema.layers.semantic.communityDetection.weightProperty": {
+      "type": "xsd:string",
+      "default": "pmi",
+      "description": "Edge property key used as the weight when running community detection (for example pmi)."
     }
   },
   "algorithm_steps": [
     {
       "step": 1,
       "name": "Mode check and configuration lookup",
-      "description": "If schema.layers.mode is not semantic, return GraphData unchanged. When in semantic mode, read schema.layers.semantic.* controls (similarityEdgeLabel, similarityMetric, topKEdgesPerNode, minSimilarity, textKeys, token limits, stopwords, and communityDetection parameters)."
+      "description": "If schema.layers.mode is not semantic, return GraphData unchanged. When in semantic mode, read schema.layers.semantic.* controls (similarityEdgeLabel, similarityMetric, topKEdgesPerNode, minSimilarity, textKeys, token limits, stopwords, and communityDetection settings)."
     },
     {
       "step": 2,
@@ -131,7 +124,7 @@
     {
       "step": 7,
       "name": "Community detection over similarity graph",
-      "description": "If communityDetection.enabled is true and the semantic graph has positive total edge weight, run a Louvain-style optimization pass over the similarity edges. Initialize each node in its own community, then repeatedly move nodes to neighboring communities when modularity gain is positive, respecting resolution, maxPasses, and maxMovesPerPass, and finally remap community ids into a compact integer range."
+      "description": "If communityDetection.enabled is true and the semantic graph has positive total edge weight, run NetworkX community detection over the similarity edges using the configured algorithm and weightProperty. Remap community ids into a compact integer range with deterministic ordering."
     },
     {
       "step": 8,
@@ -146,7 +139,7 @@
     {
       "step": 10,
       "name": "Layer integration with polygons and document structure",
-      "description": "Downstream renderers interpret schema.layers.mode together with schema.layers.documentStructure.minGroupSize and schema.metadata['canvas:polygons'] to layer AI-KG views. In document-structure mode, structural node types (Document/Section/Paragraph/CodeBlock/Table/List/ListItem) drive non-polygon, type-based layer bands while remaining visible as normal nodes. In semantic mode, semantic communities (derived from similarity edges and Louvain-style detection) can be rendered as convex-hull polygon overlays and colored by community; JSON-LD structural block types are excluded from semantic community polygon grouping so semantic polygons emphasize meaning/word-frequency clusters, including the per-polygon token-frequency distributions surfaced in UI stats. Independently of layer mode, the group-polygons feature can render convex hulls around nodes referenced by array-valued properties (for example steps/contains), using schema.metadata['canvas:polygons'] to style those surfaces consistently in 2D and 3D."
+      "description": "Downstream renderers interpret schema.layers.mode together with schema.layers.documentStructure.minGroupSize and schema.metadata['canvas:polygons'] to layer AI-KG views. In document-structure mode, structural node types (Document/Section/Paragraph/CodeBlock/Table/List/ListItem) drive non-polygon, type-based layer bands while remaining visible as normal nodes. In semantic mode, semantic communities (derived from similarity edges and NetworkX community detection) can be rendered as convex-hull polygon overlays and colored by community; JSON-LD structural block types are excluded from semantic community polygon grouping so semantic polygons emphasize meaning/word-frequency clusters, including the per-polygon token-frequency distributions surfaced in UI stats. Independently of layer mode, the group-polygons feature can render convex hulls around nodes referenced by array-valued properties (for example steps/contains), using schema.metadata['canvas:polygons'] to style those surfaces consistently in 2D and 3D."
     }
   ],
   "neutrality": {

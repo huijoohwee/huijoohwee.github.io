@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -32,6 +32,24 @@
         { "@value": "Icon motion toggle", "@language": "en-us" },
         { "@value": "图标动效开关", "@language": "zh-cn" }
       ]
+    },
+    "themeMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Theme mode", "@language": "en-us" },
+        { "@value": "主题模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "UI theme preference. \"light\" and \"dark\" are explicit. \"system\" resolves via prefers-color-scheme and should update by subscribing to matchMedia change events (no polling). Implementations should treat CSS variables as the source of truth and avoid hardcoding colors outside the centralized token layer.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "UI 主题偏好设置。\"light\" 与 \"dark\" 为显式指定，\"system\" 通过 prefers-color-scheme 解析，并应通过订阅 matchMedia 的 change 事件更新（禁止轮询）。实现应以 CSS 变量作为唯一真实来源，并避免在集中化 token 层之外硬编码颜色。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["system", "light", "dark"]
     },
     "chatEndpointUrl": {
       "@type": "xsd:string",

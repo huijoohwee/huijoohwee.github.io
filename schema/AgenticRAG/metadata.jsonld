@@ -101,6 +101,16 @@
         { "@value": "JSON-LD Mapping Configuration", "@language": "en-us" },
         { "@value": "JSON-LD 映射配置", "@language": "zh-cn" }
       ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional mapping hints for JSON-LD ingestion. Use jsonLdMapping.contextEdgeProperties (array of strings) as an explicit allow-list of relation keys that should be interpreted as edges when the JSON-LD @context is incomplete or does not mark those keys with @type:@id.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于 JSON-LD 导入的可选映射提示。当 JSON-LD 的 @context 不完整或未将某些键标注为 @type:@id 时，可使用 jsonLdMapping.contextEdgeProperties（字符串数组）作为关系键的显式白名单，以便将其解释为边。",
+          "@language": "zh-cn"
+        }
+      ],
       "required": false,
       "suggestedFields": ["contextEdgeProperties"]
     },

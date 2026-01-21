@@ -2,7 +2,17 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
+  "rdfs:comment": [
+    {
+      "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义可复用的面板 UI 表面。图标与文本组合控件必须使用稳定的对齐原语（inline-flex 居中对齐）与共享图标基线规则，避免在主题与密度设置下出现视觉漂移。",
+      "@language": "zh-cn"
+    }
+  ],
   "rdfs:label": [
     { "@value": "Panel", "@language": "en-us" },
     { "@value": "面板", "@language": "zh-cn" }

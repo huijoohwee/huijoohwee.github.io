@@ -278,6 +278,16 @@ AND array_contains(n.labels, 'Company');
 
 ---
 
+## 🖼️ Canvas Integration (v1.1 Update)
+
+Recent updates to the Knowgrph Canvas pipeline ensure seamless rendering of this schema:
+- **Radial Layout Stability**: Force simulation forces are automatically disabled in Radial mode to prevent layout drift.
+- **Theme Alignment**: Labels and headings automatically adapt to System/Light/Dark themes.
+- **Theme-Safe Defaults**: Renderer label colors are theme-derived by default (no hardcoded black/white schema defaults).
+- **Performance**: Optimized caching for adjacency maps and layout positions.
+
+---
+
 ## 🧪 Validation Checklist
 
 ### **Structural (✅ Required)**

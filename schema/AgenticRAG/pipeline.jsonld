@@ -38,6 +38,7 @@
         "quality_check_interval",
         "max_feedback_iterations",
         "min_pattern_support",
+        "max_pattern_entities_per_block",
         "emergent_relationship_threshold",
         "corpus_centrality_algorithm",
         "default_traversal_depth",

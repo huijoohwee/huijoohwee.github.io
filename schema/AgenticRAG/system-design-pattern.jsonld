@@ -67,7 +67,7 @@
       "role": "AI‑KG layer mode",
       "actions": [
         "toggle schema.layers.mode between property, document-structure, and semantic in the Render tab, the MainPanel Settings Render section, the FloatingPanel Renderer view, and the Graph Fields panel header",
-        "use semantic mode to derive similarity edges, node importance sizing, and Louvain-style communities whose polygons represent meaning/word-frequency clusters (excluding JSON-LD structural block types), while document-structure mode keeps structural containers visible as nodes and relies on type-based layering"
+        "use semantic mode to derive similarity edges, node importance sizing, and NetworkX communities whose polygons represent meaning/word-frequency clusters (excluding JSON-LD structural block types), while document-structure mode keeps structural containers visible as nodes and relies on type-based layering"
       ],
       "outcome": "align AI‑KG canvas layering with AgenticRAG-friendly document and semantic group surfaces so exported JSON-LD graphs, polygons, and traversal overlays share the same schema.layers contract.",
       "pipeline_phase": "Schema",
@@ -114,7 +114,7 @@
       "@type": "rag:RoleActionOutcome",
       "role": "Semantic similarity threshold",
       "actions": [
-        "adjust schema.layers.semantic.minSimilarity to drop low-signal PMI/cosine edges before Louvain community detection",
+        "adjust schema.layers.semantic.minSimilarity to drop low-signal PMI/cosine edges before community detection",
         "shape semantic bands and convex hulls by enforcing a minimum similarity level instead of relying on raw co-occurrence counts"
       ],
       "outcome": "give AgenticRAG workflows a single, schema-driven similarity cutoff that filters noisy semantic edges across datasets while preserving meaningful neighborhoods for traversal and visualization.",

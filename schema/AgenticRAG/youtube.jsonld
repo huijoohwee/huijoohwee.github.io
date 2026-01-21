@@ -1,0 +1,20 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:YouTube",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "YouTube", "@language": "en-us" },
+    { "@value": "YouTube", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Describes YouTube video resources ingested into AgenticRAG workflows. Transcripts are extracted via native parser (using youtube-transcript-api) and converted to Markdown for semantic analysis and GraphRAG indexing. Preserves video ID, URL, and time-aligned text segments.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "描述摄取到 AgenticRAG 工作流中的 YouTube 视频资源。通过原生解析器（使用 youtube-transcript-api）提取字幕并转换为 Markdown，用于语义分析和 GraphRAG 索引。保留视频 ID、URL 和时间对齐的文本片段。",
+      "@language": "zh-cn"
+    }
+  ]
+}

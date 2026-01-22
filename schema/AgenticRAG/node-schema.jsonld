@@ -122,6 +122,58 @@
       "required": false
     },
 
+    "centrality:betweenness": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        {"@value": "Betweenness Centrality", "@language": "en-us"},
+        {"@value": "介数中心性", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Number of shortest paths passing through node - Indicates bridge role", "@language": "en-us"},
+        {"@value": "经过节点的最短路径数量 - 指示桥梁角色", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+
+    "centrality:closeness": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        {"@value": "Closeness Centrality", "@language": "en-us"},
+        {"@value": "紧密中心性", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Inverse sum of shortest paths to all other nodes - Indicates efficient spread", "@language": "en-us"},
+        {"@value": "到所有其他节点的最短路径之和的倒数 - 指示有效传播", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+
+    "centrality:hubs": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        {"@value": "Hub Score", "@language": "en-us"},
+        {"@value": "枢纽分数", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "HITS Hub score - Points to good authorities", "@language": "en-us"},
+        {"@value": "HITS枢纽分数 - 指向好的权威", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+
+    "centrality:authorities": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        {"@value": "Authority Score", "@language": "en-us"},
+        {"@value": "权威分数", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "HITS Authority score - Pointed to by good hubs", "@language": "en-us"},
+        {"@value": "HITS权威分数 - 由好的枢纽指向", "@language": "zh-cn"}
+      ],
+      "required": false
+    },
+
     "provenance": {
       "@container": "@set",
       "@type": "@id",

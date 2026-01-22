@@ -18,6 +18,11 @@
     { "@value": "GraphRAG 流水线", "@language": "zh-cn" }
   ],
   "propertyDefinitions": {
+    "config": {
+      "@type": "@json",
+      "required": false,
+      "description": "User-configurable pipeline settings (for example centrality toggles and clustering bounds) applied at parse time."
+    },
     "stages": {
       "@type": "@json",
       "required": true,

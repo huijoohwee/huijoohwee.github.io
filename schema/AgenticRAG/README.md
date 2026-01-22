@@ -14,7 +14,7 @@ schema/
 ├── node-schema.jsonld      # Node structure definition
 ├── edge-schema.jsonld      # Edge structure definition
 ├── graph-schema.jsonld     # Graph container definition
-├── youtube.jsonld          # YouTube transcript/captions ingest surface
+├── youtube.jsonld          # YouTube transcript/captions ingest surface (metadata + time-aligned segments)
 ├── example-graph.jsonld    # Complete working example
 └── README.md               # This file
 ```

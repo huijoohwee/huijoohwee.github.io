@@ -1,20 +1,182 @@
 {
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
-  "@id": "rag:YouTube",
+  "@id": "rag:YouTubeTranscript",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.3.3",
   "rdfs:label": [
-    { "@value": "YouTube", "@language": "en-us" },
-    { "@value": "YouTube", "@language": "zh-cn" }
+    { "@value": "YouTube Transcript", "@language": "en-us" },
+    { "@value": "YouTube 转写文稿", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Describes YouTube video resources ingested into AgenticRAG workflows. Transcripts are extracted via native parser (using youtube-transcript-api) and converted to Markdown for semantic analysis and GraphRAG indexing. Preserves video ID, URL, and time-aligned text segments.",
+      "@value": "Represents a YouTube transcript/captions payload ingested into AgenticRAG workflows. Extracted via video-analyzer (Whisper-based ASR over downloaded video/audio) with optional Whisper CLI fallback and converted to Markdown for semantic analysis and GraphRAG indexing. Preserves rich metadata and time-aligned segments.",
       "@language": "en-us"
     },
     {
-      "@value": "描述摄取到 AgenticRAG 工作流中的 YouTube 视频资源。通过原生解析器（使用 youtube-transcript-api）提取字幕并转换为 Markdown，用于语义分析和 GraphRAG 索引。保留视频 ID、URL 和时间对齐的文本片段。",
+      "@value": "表示摄取到 AgenticRAG 工作流中的 YouTube 字幕/转写文稿载荷。通过 video-analyzer（基于 Whisper 的 ASR，对下载的视频/音频进行转写）提取，必要时可回退到 Whisper CLI，并转换为 Markdown，用于语义分析和 GraphRAG 索引。保留丰富元数据与时间对齐片段。",
       "@language": "zh-cn"
     }
-  ]
+  ],
+  "required": ["video_id", "source_url", "segments", "generated_at_ms"],
+  "propertyDefinitions": {
+    "title": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Title", "@language": "en-us" },
+        { "@value": "标题", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "video_id": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Video ID", "@language": "en-us" },
+        { "@value": "视频 ID", "@language": "zh-cn" }
+      ],
+      "required": true
+    },
+    "source_url": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source URL", "@language": "en-us" },
+        { "@value": "来源 URL", "@language": "zh-cn" }
+      ],
+      "required": true
+    },
+    "requested_language_code": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Requested Language Code", "@language": "en-us" },
+        { "@value": "请求语言代码", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "requested_language": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Requested Language", "@language": "en-us" },
+        { "@value": "请求语言", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "requested_languages": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Requested Languages", "@language": "en-us" },
+        { "@value": "请求语言列表", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "requested_start_s": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Requested Start Time (s)", "@language": "en-us" },
+        { "@value": "请求起始时间 (秒)", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "selected_language_code": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Selected Language Code", "@language": "en-us" },
+        { "@value": "选择语言代码", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "selected_language": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Selected Language", "@language": "en-us" },
+        { "@value": "选择语言", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "is_generated": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Is Generated", "@language": "en-us" },
+        { "@value": "是否自动生成", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "is_translatable": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Is Translatable", "@language": "en-us" },
+        { "@value": "是否可翻译", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "translation_languages": {
+      "@container": "@list",
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Translation Languages", "@language": "en-us" },
+        { "@value": "可翻译语言列表", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "oembed": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "oEmbed Metadata", "@language": "en-us" },
+        { "@value": "oEmbed 元数据", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "start_s": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        { "@value": "Start Time (s)", "@language": "en-us" },
+        { "@value": "起始时间 (秒)", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "end_s": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        { "@value": "End Time (s)", "@language": "en-us" },
+        { "@value": "结束时间 (秒)", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "duration_s": {
+      "@type": "xsd:double",
+      "rdfs:label": [
+        { "@value": "Duration (s)", "@language": "en-us" },
+        { "@value": "时长 (秒)", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "segment_count": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Segment Count", "@language": "en-us" },
+        { "@value": "片段数量", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "generated_at_ms": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Generated At (ms)", "@language": "en-us" },
+        { "@value": "生成时间 (毫秒)", "@language": "zh-cn" }
+      ],
+      "required": true
+    },
+    "segments": {
+      "@container": "@list",
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Segments", "@language": "en-us" },
+        { "@value": "片段", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Time-aligned transcript segments: {text,start,duration}", "@language": "en-us" },
+        { "@value": "时间对齐的字幕片段：{text,start,duration}", "@language": "zh-cn" }
+      ],
+      "required": true
+    }
+  }
 }

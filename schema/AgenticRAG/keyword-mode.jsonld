@@ -67,7 +67,7 @@
     {
       "step": 3,
       "name": "Extract relationship keywords",
-      "description": "Within sentence or line blocks, pair co-mentioned entity keywords and infer a Verb/Predicate/Relationship keyword by scanning tokens between entity mentions (prefer verb-like tokens; otherwise pick the first non-stopword token; fallback to a neutral relation label when empty). Remove inferred relationship tokens from the entity-node set when they collide, aggregate relationship counts per entity pair, and select the most frequent relationship label per pair. Optionally emit predicate nodes (keyword:kind=predicate) and role edges (subject/object) to expose a layered view."
+      "description": "Within sentence or line blocks, pair co-mentioned entity keywords and infer a Verb/Predicate/Relationship keyword by scanning tokens between entity mentions (prefer verb-like tokens; otherwise pick the first non-stopword token; fallback to a neutral relation label when empty). Remove inferred relationship tokens from the entity-node set when they collide, aggregate relationship counts per entity pair, and select the most frequent predicate label per pair. Emit directed predicate edges (subject→object) annotated with keyword:kind, keyword:predicate, and a verb-likeness flag so tables, dashboards, and renderer settings can stay palette-synced and mode-consistent."
     },
     {
       "step": 4,

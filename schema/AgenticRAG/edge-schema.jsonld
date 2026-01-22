@@ -147,6 +147,46 @@
       "required": false
     },
 
+    "evidenceText": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Evidence Text", "@language": "en-us" },
+        { "@value": "证据文本", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Extracted sentence/span used as evidence for this edge (optional).", "@language": "en-us" },
+        { "@value": "用于该边的抽取句子/片段证据（可选）。", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+
+    "sentenceIndex": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Sentence Index", "@language": "en-us" },
+        { "@value": "句子索引", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+
+    "sentenceStart": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Sentence Start Offset", "@language": "en-us" },
+        { "@value": "句子起始偏移", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+
+    "sentenceEnd": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Sentence End Offset", "@language": "en-us" },
+        { "@value": "句子结束偏移", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+
     "provenance": {
       "@container": "@set",
       "@type": "@id",

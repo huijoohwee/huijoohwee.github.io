@@ -2,14 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GraphRagPipeline",
   "@type": "rdfs:Class",
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
   "rdfs:comment": [
     {
-      "@value": "Defines the GraphRAG Text Pipeline stages for the client-side demo. Includes entity keyword frequency + importance scoring, relation strength + causality scoring (temporal/modality/why), graph metrics, and density-based community clustering.",
+      "@value": "Defines the GraphRAG Text Pipeline stages for the client-side demo. Includes extractive summarization (sentence/paragraph-level), entity keyword frequency + importance scoring, relation strength + causality scoring (temporal/modality/why), graph metrics, and density-based community clustering with bounded execution.",
       "@language": "en-us"
     },
     {
-      "@value": "定义用于客户端演示的 GraphRAG 文本流水线阶段。包含实体关键词频率与重要性评分、关系强度与因果评分（时间/情态/原因）、图指标与基于密度的社区聚类。",
+      "@value": "定义用于客户端演示的 GraphRAG 文本流水线阶段。包含抽取式摘要（段落/句子级）、实体关键词频率与重要性评分、关系强度与因果评分（时间/情态/原因）、图指标与基于密度的社区聚类，并强制有界执行。",
       "@language": "zh-cn"
     }
   ],
@@ -23,6 +23,11 @@
       "required": true,
       "description": "List of pipeline stages with inputs, outputs, and metrics."
     },
+    "summary": {
+      "@type": "@json",
+      "required": false,
+      "description": "Extractive summary output (selected sentences, scores, bounded limits) for inspection."
+    },
     "nodeProperties": {
       "@type": "@json",
       "required": false,
@@ -31,7 +36,7 @@
     "edgeProperties": {
       "@type": "@json",
       "required": false,
-      "description": "Edge attributes such as strength:* (PPMI/count), causality:* (temporal/modality/score), and visual:* width/weight."
+      "description": "Edge attributes such as strength:* (PPMI/count), causality:* (temporal/modality/score), sentence-level evidence spans (evidenceText + sentenceIndex/start/end), and visual:* width/weight."
     },
     "clustering": {
       "@type": "@json",

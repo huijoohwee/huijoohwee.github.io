@@ -10,11 +10,11 @@
   
   "rdfs:comment": [
     {
-      "@value": "Generic graph node structure - domain-agnostic, supports RAG, embeddings, geospatial, and multimedia",
+      "@value": "Generic graph node structure - domain-agnostic, supports RAG, embeddings, geospatial, and multimedia. Rendering may annotate nodes with visual:layer / visual:community. GraphRAG pipelines may annotate nodes with graphrag:role (Subject/Object/Entity).",
       "@language": "en-us"
     },
     {
-      "@value": "通用图节点结构 - 领域无关，支持RAG、嵌入、地理空间和多媒体",
+      "@value": "通用图节点结构 - 领域无关，支持RAG、嵌入、地理空间和多媒体。渲染层可用 visual:layer / visual:community 标注分层/社区。GraphRAG 流水线可用 graphrag:role（Subject/Object/Entity）标注节点角色。",
       "@language": "zh-cn"
     }
   ],

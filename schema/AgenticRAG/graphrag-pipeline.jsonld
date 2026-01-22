@@ -2,14 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GraphRagPipeline",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "rdfs:comment": [
     {
-      "@value": "Defines the specific GraphRAG Text Pipeline configuration and stages for the client-side demo.",
+      "@value": "Defines the GraphRAG Text Pipeline stages for the client-side demo. Includes entity keyword frequency + importance scoring, relation strength + causality scoring (temporal/modality/why), graph metrics, and density-based community clustering.",
       "@language": "en-us"
     },
     {
-      "@value": "定义用于客户端演示的特定 GraphRAG 文本流水线配置与阶段。",
+      "@value": "定义用于客户端演示的 GraphRAG 文本流水线阶段。包含实体关键词频率与重要性评分、关系强度与因果评分（时间/情态/原因）、图指标与基于密度的社区聚类。",
       "@language": "zh-cn"
     }
   ],
@@ -22,6 +22,21 @@
       "@type": "@json",
       "required": true,
       "description": "List of pipeline stages with inputs, outputs, and metrics."
+    },
+    "nodeProperties": {
+      "@type": "@json",
+      "required": false,
+      "description": "Node attributes such as keyword:frequency, graphrag:* analytics, and visual:* importance/size."
+    },
+    "edgeProperties": {
+      "@type": "@json",
+      "required": false,
+      "description": "Edge attributes such as strength:* (PPMI/count), causality:* (temporal/modality/score), and visual:* width/weight."
+    },
+    "clustering": {
+      "@type": "@json",
+      "required": false,
+      "description": "Density clustering (DBSCAN) configuration and community summaries (top keywords)."
     }
   }
 }

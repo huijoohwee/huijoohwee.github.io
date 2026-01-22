@@ -8,11 +8,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Domain-agnostic graph container for nodes, edges, and top-level metadata. Structural validation only: ID uniqueness and edge referential integrity.",
+      "@value": "Domain-agnostic graph container for nodes, edges, and top-level metadata. Structural validation only: ID uniqueness and edge referential integrity. Rendering layers may use node/edge properties like visual:layer and visual:community for subgraph partitioning.",
       "@language": "en-us"
     },
     {
-      "@value": "领域无关的图容器，用于承载节点、边和顶层元数据。仅做结构验证：ID 唯一性、边引用完整性。",
+      "@value": "领域无关的图容器，用于承载节点、边和顶层元数据。仅做结构验证：ID 唯一性、边引用完整性。渲染层可用 visual:layer 与 visual:community 等属性进行子图分层/分区。",
       "@language": "zh-cn"
     }
   ],

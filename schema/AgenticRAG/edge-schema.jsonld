@@ -247,7 +247,20 @@
         {"@value": "Domain-specific edge attributes (e.g., weight, probability) - Schema treats as opaque", "@language": "en-us"},
         {"@value": "特定领域的边属性（例如权重、概率）- 模式视为不透明", "@language": "zh-cn"}
       ],
-      "required": false
+      "required": false,
+      "suggestedFields": [
+        "strength:count",
+        "strength:ppmi",
+        "strength:score",
+        "causality:why",
+        "causality:temporal",
+        "causality:modality",
+        "causality:negation",
+        "causality:score",
+        "visual:width",
+        "kg:collapsedEdge",
+        "kg:edgeCount"
+      ]
     },
     
     "metadata": {

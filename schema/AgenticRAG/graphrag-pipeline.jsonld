@@ -1,0 +1,27 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:GraphRagPipeline",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:comment": [
+    {
+      "@value": "Defines the specific GraphRAG Text Pipeline configuration and stages for the client-side demo.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义用于客户端演示的特定 GraphRAG 文本流水线配置与阶段。",
+      "@language": "zh-cn"
+    }
+  ],
+  "rdfs:label": [
+    { "@value": "GraphRAG Pipeline", "@language": "en-us" },
+    { "@value": "GraphRAG 流水线", "@language": "zh-cn" }
+  ],
+  "propertyDefinitions": {
+    "stages": {
+      "@type": "@json",
+      "required": true,
+      "description": "List of pipeline stages with inputs, outputs, and metrics."
+    }
+  }
+}

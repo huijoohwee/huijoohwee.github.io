@@ -1,0 +1,33 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:AieBookChapterSnippets",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:comment": [
+    {
+      "@value": "Defines a small, bounded, domain-agnostic set of chapter-like prose snippets used to validate GraphRAG text-to-graph extraction fidelity.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义一组小型、有界、领域中立的章节式散文片段，用于验证 GraphRAG 文本到图提取的语义保真度。",
+      "@language": "zh-cn"
+    }
+  ],
+  "rdfs:label": [
+    { "@value": "AIE Book Chapter Snippets", "@language": "en-us" },
+    { "@value": "AIE 书籍章节片段", "@language": "zh-cn" }
+  ],
+  "propertyDefinitions": {
+    "chapters": {
+      "@type": "@json",
+      "required": true,
+      "description": "A mapping from chapter ids to {title,text} records."
+    },
+    "constraints": {
+      "@type": "@json",
+      "required": false,
+      "description": "Bounded execution constraints (max sentences, max tokens) for fixture processing."
+    }
+  }
+}
+

@@ -158,6 +158,25 @@
           "@language": "zh-cn"
         }
       ]
+    },
+    "graphragTextPipeline": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "GraphRAG Text Pipeline (Demo)", "@language": "en-us" },
+        { "@value": "GraphRAG 文本流水线（演示）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-oriented payload capturing sequential text→entity→triple→graph stage outputs and per-stage metrics. This field is structural-only and intended for debugging and UI progressive disclosure; downstream processors may ignore it without breaking ingestion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于检查与调试的可选载荷：记录文本→实体→三元组→图的分阶段输出与阶段级指标。该字段仅用于结构与可观察性；下游处理器可忽略而不影响导入。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["inputTextPreview", "inputTextHash", "graphMetrics", "stages", "warnings"]
     }
   },
   "validationRules": {

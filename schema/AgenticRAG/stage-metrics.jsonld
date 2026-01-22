@@ -1,0 +1,67 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:StageMetrics",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Stage Metrics", "@language": "en-us" },
+    { "@value": "阶段指标", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Structural-only telemetry record for a single pipeline stage. Intended for inspection and debugging; must remain domain-agnostic and optional.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "单个流水线阶段的结构化遥测记录，用于检查与调试；必须保持领域无关且可选。",
+      "@language": "zh-cn"
+    }
+  ],
+  "propertyDefinitions": {
+    "stage": {
+      "@type": "xsd:string",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Stage Identifier", "@language": "en-us" },
+        { "@value": "阶段标识", "@language": "zh-cn" }
+      ]
+    },
+    "status": {
+      "@type": "xsd:string",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Status", "@language": "en-us" },
+        { "@value": "状态", "@language": "zh-cn" }
+      ]
+    },
+    "latency_ms": {
+      "@type": "xsd:double",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Latency (ms)", "@language": "en-us" },
+        { "@value": "延迟（毫秒）", "@language": "zh-cn" }
+      ]
+    },
+    "output_size": {
+      "@type": "xsd:integer",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Output Size", "@language": "en-us" },
+        { "@value": "输出大小", "@language": "zh-cn" }
+      ]
+    },
+    "error_message": {
+      "@type": "xsd:string",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Error Message", "@language": "en-us" },
+        { "@value": "错误信息", "@language": "zh-cn" }
+      ]
+    }
+  },
+  "validationRules": {
+    "structural_only": true,
+    "no_domain_semantics": true
+  }
+}
+

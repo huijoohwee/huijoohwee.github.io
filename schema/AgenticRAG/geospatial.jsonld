@@ -26,11 +26,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "MapLibre vector style URL for the basemap provider (defaulting to OpenFreeMap Liberty style endpoint if not configured, or a self-hosted style JSON). Implementations should allow configuration rather than hardcoding a single provider, should require an absolute http(s) URL, should reject embedded user credentials (e.g. https://user:pass@host/...), and should fall back to a safe default style when the configured URL is invalid.",
+          "@value": "MapLibre vector style URL for the basemap provider (defaulting to an OpenFreeMap Liberty style endpoint if not configured, or a self-hosted style URL). Implementations should allow configuration rather than hardcoding a single provider, should require an absolute http(s) URL, should reject embedded user credentials (e.g. https://user:pass@host/...), and should fall back to a safe default style when the configured URL is invalid. Implementations may normalize known provider endpoints (for example OpenFreeMap) to a canonical style URL.",
           "@language": "en-us"
         },
         {
-          "@value": "用于底图提供方的 MapLibre 矢量样式 URL（若未配置则默认使用 OpenFreeMap Liberty 样式端点，或自托管 style JSON）。实现应支持配置而非硬编码单一提供方；应要求绝对的 http(s) URL；应拒绝包含用户凭据的 URL（例如 https://user:pass@host/...）；当配置 URL 无效时应回退到安全的默认样式。",
+          "@value": "用于底图提供方的 MapLibre 矢量样式 URL（若未配置则默认使用 OpenFreeMap Liberty 样式端点，或自托管样式 URL）。实现应支持配置而非硬编码单一提供方；应要求绝对的 http(s) URL；应拒绝包含用户凭据的 URL（例如 https://user:pass@host/...）；当配置 URL 无效时应回退到安全的默认样式。实现可对已知提供方端点（例如 OpenFreeMap）做规范化以获得统一的样式 URL。",
           "@language": "zh-cn"
         }
       ],
@@ -152,11 +152,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Same-origin proxy endpoint used to fetch cross-origin map tile/sprite/glyph resources to avoid browser CORS and aborted network requests. Implementations should construct proxy request URLs as absolute (including runtime origin) when executed in worker contexts. Implementations should not proxy the initial Style request by default; style JSON must be directly fetchable by the browser.",
+          "@value": "Same-origin proxy endpoint used to fetch cross-origin map tile/sprite/glyph resources to avoid browser CORS failures. Implementations should construct proxy request URLs as absolute (including runtime origin) when executed in worker contexts. The initial Style request should remain directly fetchable by the browser when possible; aborted style requests are often caused by overlay teardown/recreation (or dev StrictMode effect probes) and should be mitigated by keeping the map instance stable.",
           "@language": "en-us"
         },
         {
-          "@value": "用于拉取跨域地图瓦片/精灵图/字形资源的同源代理端点，以避免浏览器 CORS 与中止的网络请求。实现应在 worker 上下文中将代理请求 URL 构造成绝对 URL（包含运行时 origin）。实现默认不应代理初始 Style 请求；style JSON 必须能被浏览器直接获取。",
+          "@value": "用于拉取跨域地图瓦片/精灵图/字形资源的同源代理端点，以避免浏览器 CORS 失败。实现应在 worker 上下文中将代理请求 URL 构造成绝对 URL（包含运行时 origin）。初始 Style 请求应尽量由浏览器直接获取；Style 请求被中止通常来自叠加层销毁/重建（或开发环境 StrictMode 的 effect 探测），应通过保持地图实例稳定来规避。",
           "@language": "zh-cn"
         }
       ],

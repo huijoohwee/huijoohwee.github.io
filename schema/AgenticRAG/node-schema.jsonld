@@ -265,8 +265,8 @@
         {"@value": "地理空间坐标", "@language": "zh-cn"}
       ],
       "rdfs:comment": [
-        {"@value": "Geographic location {lat: float, lng: float} for spatial reasoning", "@language": "en-us"},
-        {"@value": "地理位置 {lat: float, lng: float} 用于空间推理", "@language": "zh-cn"}
+        {"@value": "Geographic location {lat: float, lng: float} for spatial reasoning. Values may be sourced directly from node properties or derived during ingestion from dataset-agnostic geospatial formats (e.g., GeoJSON).", "@language": "en-us"},
+        {"@value": "地理位置 {lat: float, lng: float} 用于空间推理。该值可直接来自节点属性，也可在摄取阶段从领域无关的地理数据格式（例如 GeoJSON）派生。", "@language": "zh-cn"}
       ],
       "required": false,
       "useCase": "spatial_reasoning"

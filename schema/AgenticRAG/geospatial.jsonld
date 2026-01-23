@@ -1,0 +1,76 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:GeospatialMode",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Geospatial Mode", "@language": "en-us" },
+    { "@value": "地理空间模式", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, synchronize selection bidirectionally across map and graph views, and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化与空间查询界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，在地图与图视图之间双向同步选择状态，并以有界方式执行客户端空间查询（例如邻近搜索），禁止无界循环与数据集特定假设。",
+      "@language": "zh-cn"
+    }
+  ],
+  "propertyDefinitions": {
+    "mapStyleUrl": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Map style URL", "@language": "en-us" },
+        { "@value": "地图样式 URL", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "MapLibre style URL for the basemap provider (for example an OpenFreeMap style endpoint or a self-hosted style JSON). Implementations should allow configuration rather than hardcoding a single provider.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于底图提供方的 MapLibre 样式 URL（例如 OpenFreeMap 样式端点或自托管 style JSON）。实现应支持配置而非硬编码单一提供方。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "boundaryGeoJsonUrl": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Boundary GeoJSON URL", "@language": "en-us" },
+        { "@value": "边界 GeoJSON URL", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional external GeoJSON FeatureCollection URL used to overlay administrative boundaries (countries/states/cities exports) on the map. Treated as an opaque dataset reference; implementations must validate shape structurally, normalize transport-safe URLs (e.g. GitHub blob → raw), and bound fetch size/time.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "可选的外部 GeoJSON FeatureCollection URL，用于在地图上叠加行政边界（国家/州/城市导出）。作为不透明的数据集引用处理；实现必须进行结构校验、将 URL 归一化为可传输形式（例如 GitHub blob → raw），并限制拉取体积/耗时。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "proximityRadiusKm": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Proximity radius (km)", "@language": "en-us" },
+        { "@value": "邻近半径（公里）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Default proximity search radius in kilometers. Implementations should clamp to a safe range and bound result counts.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "默认邻近搜索半径（公里）。实现应限制在安全范围内并限制结果数量。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    }
+  }
+}

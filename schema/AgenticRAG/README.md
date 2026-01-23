@@ -15,6 +15,7 @@ schema/
 ├── edge-schema.jsonld      # Edge structure definition
 ├── graph-schema.jsonld     # Graph container definition
 ├── youtube.jsonld          # YouTube transcript/captions ingest surface (metadata + time-aligned segments)
+├── geospatial.jsonld       # Geospatial mode surface (map rendering + bounded spatial queries)
 ├── example-graph.jsonld    # Complete working example
 └── README.md               # This file
 ```

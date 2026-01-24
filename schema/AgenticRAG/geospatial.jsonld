@@ -9,11 +9,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, synchronize selection bidirectionally across map and graph views, and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions. In 3D render mode, implementations may present a globe-style projection when supported by the map renderer. Ingestion layers should support deriving properties.geo from dataset-agnostic shapes such as GeoJSON Feature/FeatureCollection inputs and generic record datasets (arrays of records or object maps) with common coordinate fields. Note: some runtimes may intentionally expose UI-only affordances without implementing map rendering or spatial query execution.",
+      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, support clicking/selecting POIs and synchronizing selection across map and graph views (for example selecting the corresponding node when clicking a graph-node POI on the map), and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions. Remote dataset fetching must be bounded by configurable timeout/size limits and should fail with actionable errors when limits are exceeded. In 3D render mode, implementations may present a globe-style projection when supported by the map renderer. Ingestion layers should support deriving properties.geo from dataset-agnostic shapes such as GeoJSON Feature/FeatureCollection inputs and generic record datasets (arrays of records or object maps) with common coordinate fields. Note: some runtimes may intentionally expose UI-only affordances without implementing map rendering or spatial query execution.",
       "@language": "en-us"
     },
     {
-      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。摄取层应支持从领域无关数据形态派生 properties.geo，例如 GeoJSON Feature/FeatureCollection 输入，以及包含常见坐标字段的通用记录数据集（记录数组或键→记录对象映射）。所有拉取/解析工作必须有界（时间/体积）并避免无界循环。",
+      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。实现应支持在地图上点击/选择 POI 并与图视图选择保持同步（例如点击图节点 POI 时选中对应节点），同时远程数据集拉取必须受可配置的超时/体积限制约束，并在超出限制时给出可操作的错误提示；所有拉取/解析工作需有界并避免无界循环。",
       "@language": "zh-cn"
     }
   ],
@@ -172,11 +172,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs or local file references, while validating GeoJSON shapes and bounding fetch size/time.",
+          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs or local file references, while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }].",
           "@language": "en-us"
         },
         {
-          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL 或本地文件引用，同时校验 GeoJSON 结构并限制拉取体积/耗时。",
+          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL 或本地文件引用，同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]。",
           "@language": "zh-cn"
         }
       ],

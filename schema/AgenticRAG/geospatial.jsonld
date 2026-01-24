@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.2.0",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -26,11 +26,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "MapLibre vector style URL for the basemap provider (defaulting to an OpenFreeMap Liberty style endpoint if not configured, or a self-hosted style URL). Implementations should allow configuration rather than hardcoding a single provider, should require an absolute http(s) URL, should reject embedded user credentials (e.g. https://user:pass@host/...), and should fall back to a safe default style when the configured URL is invalid. Implementations may normalize known provider endpoints (for example OpenFreeMap) to a canonical style URL.",
+          "@value": "MapLibre vector style URL for the basemap provider (defaulting to an OpenFreeMap Liberty style endpoint if not configured, or a self-hosted style URL). The canonical OpenFreeMap Liberty style URL is https://tiles.openfreemap.org/styles/liberty (note: no /style.json). Implementations should allow configuration rather than hardcoding a single provider, should require an absolute http(s) URL, should reject embedded user credentials (e.g. https://user:pass@host/...), and should fall back to a safe default style when the configured URL is invalid. Implementations may normalize known provider endpoints (for example accept an OpenFreeMap URL ending with /style.json and normalize it to the canonical endpoint).",
           "@language": "en-us"
         },
         {
-          "@value": "用于底图提供方的 MapLibre 矢量样式 URL（若未配置则默认使用 OpenFreeMap Liberty 样式端点，或自托管样式 URL）。实现应支持配置而非硬编码单一提供方；应要求绝对的 http(s) URL；应拒绝包含用户凭据的 URL（例如 https://user:pass@host/...）；当配置 URL 无效时应回退到安全的默认样式。实现可对已知提供方端点（例如 OpenFreeMap）做规范化以获得统一的样式 URL。",
+          "@value": "用于底图提供方的 MapLibre 矢量样式 URL（若未配置则默认使用 OpenFreeMap Liberty 样式端点，或自托管样式 URL）。OpenFreeMap Liberty 样式的规范 URL 为 https://tiles.openfreemap.org/styles/liberty（注意：不带 /style.json）。实现应支持配置而非硬编码单一提供方；应要求绝对的 http(s) URL；应拒绝包含用户凭据的 URL（例如 https://user:pass@host/...）；当配置 URL 无效时应回退到安全的默认样式。实现可对已知提供方端点（例如接受以 /style.json 结尾的 OpenFreeMap URL，并规范化为统一端点）做规范化。",
           "@language": "zh-cn"
         }
       ],
@@ -80,11 +80,85 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Whether the overlay map captures pointer/keyboard interactions. Implementations should allow disabling to preserve graph affordances, and should default to false on application load.",
+          "@value": "Whether the overlay map captures pointer/keyboard interactions. For newer implementations, prefer mapInteractionMode to express off / hold-to-interact / always-interact behavior while keeping graph-first defaults. Implementations should default to a graph-first mode on application load.",
           "@language": "en-us"
         },
         {
-          "@value": "叠加地图是否捕获指针/键盘交互。实现应允许关闭以保护图交互能力，并应在应用加载时默认关闭。",
+          "@value": "叠加地图是否捕获指针/键盘交互。新实现建议使用 mapInteractionMode 表达 关闭 / 按住键临时交互 / 始终交互，同时保持以图为主的默认体验。实现应在应用加载时默认采用以图为主的模式。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapInteractionMode": {
+      "@type": "xsd:string",
+      "enum": ["off", "hold-space", "always"],
+      "rdfs:label": [
+        { "@value": "Map interaction mode", "@language": "en-us" },
+        { "@value": "地图交互模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Interaction mode for the overlay map: off (graph only), hold-space (temporarily allow pan/zoom while holding Space), or always (map captures pointer interactions). Implementations should default to hold-space or off to preserve graph-first affordances.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加地图的交互模式：off（仅图交互）、hold-space（按住 Space 临时允许平移/缩放）、always（地图捕获指针交互）。实现应默认使用 hold-space 或 off，以保留以图为主的交互体验。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapProjectionMode": {
+      "@type": "xsd:string",
+      "enum": ["auto", "mercator", "globe"],
+      "rdfs:label": [
+        { "@value": "Map projection mode", "@language": "en-us" },
+        { "@value": "地图投影模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Projection mode for the overlay basemap. Auto lets the runtime choose a suitable projection (for example globe in 3D render mode). Mercator forces a 2D projection. Globe forces a globe-style projection when supported.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加底图的投影模式。Auto 由运行时选择合适投影（例如 3D 渲染时使用 globe）。Mercator 强制 2D 墨卡托投影。Globe 在支持时强制球面投影。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapAnimateCamera": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Animate map camera", "@language": "en-us" },
+        { "@value": "地图相机动画", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether overlay camera moves (for example fit-to-data) should animate rather than jump. Implementations should allow disabling to reduce motion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加层相机移动（例如 fit-to-data）是否使用动画而非瞬移。实现应允许关闭以减少动态效果。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapAutoFitEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Auto-fit enabled", "@language": "en-us" },
+        { "@value": "自动适配启用", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the runtime should auto-fit the overlay camera to active geospatial bounds (commonly enabled in 3D render mode to avoid a blank globe). Implementations should ensure auto-fit is bounded and does not trigger unbounded loops.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "运行时是否应自动将叠加层相机适配到当前地理范围（通常在 3D 渲染中启用以避免空白球体）。实现应确保自动适配有界且不会触发无界循环。",
           "@language": "zh-cn"
         }
       ],

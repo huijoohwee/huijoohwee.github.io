@@ -152,11 +152,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Same-origin proxy endpoint used to fetch cross-origin map tile/sprite/glyph resources to avoid browser CORS failures. Implementations should construct proxy request URLs as absolute (including runtime origin) when executed in worker contexts. The initial Style request should remain directly fetchable by the browser when possible; aborted style requests are often caused by overlay teardown/recreation (or dev StrictMode effect probes) and should be mitigated by keeping the map instance stable.",
+          "@value": "Same-origin proxy endpoint used to fetch cross-origin map tile/sprite/glyph resources to avoid browser CORS failures. In static/prod deploys the proxy may not exist, so implementations should treat proxying as a development-only convenience and prefer direct cross-origin loads when the provider supports CORS. If proxying is enabled, proxy request URLs should be absolute (including runtime origin) when executed in worker contexts. The initial Style request should remain directly fetchable by the browser when possible; aborted style requests are often caused by overlay teardown/recreation (or dev StrictMode effect probes) and should be mitigated by keeping the map instance stable. If the map appears blank after refresh while requests succeed, validate that the overlay container has a non-zero height and call map.resize() after style/load/resize events.",
           "@language": "en-us"
         },
         {
-          "@value": "用于拉取跨域地图瓦片/精灵图/字形资源的同源代理端点，以避免浏览器 CORS 失败。实现应在 worker 上下文中将代理请求 URL 构造成绝对 URL（包含运行时 origin）。初始 Style 请求应尽量由浏览器直接获取；Style 请求被中止通常来自叠加层销毁/重建（或开发环境 StrictMode 的 effect 探测），应通过保持地图实例稳定来规避。",
+          "@value": "用于拉取跨域地图瓦片/精灵图/字形资源的同源代理端点，以避免浏览器 CORS 失败。在静态/生产部署中代理端点可能不存在，因此实现应将代理视为仅开发环境的便利手段，并在提供方支持 CORS 时优先直接跨域加载。若启用代理，实现应在 worker 上下文中将代理请求 URL 构造成绝对 URL（包含运行时 origin）。初始 Style 请求应尽量由浏览器直接获取；Style 请求被中止通常来自叠加层销毁/重建（或开发环境 StrictMode 的 effect 探测），应通过保持地图实例稳定来规避。若刷新后地图空白但请求成功，应检查叠加层容器高度是否为非零，并在 style/load/resize 事件后调用 map.resize()。",
           "@language": "zh-cn"
         }
       ],

@@ -8,17 +8,44 @@
 
 ## 📁 Schema Files
 
+<!-- SCHEMA_FILES_START -->
 ```
-schema/
-├── v1/context.jsonld       # Base @context (semantic vocabulary)
-├── node-schema.jsonld      # Node structure definition
-├── edge-schema.jsonld      # Edge structure definition
-├── graph-schema.jsonld     # Graph container definition
-├── youtube.jsonld          # YouTube transcript/captions ingest surface (metadata + time-aligned segments)
-├── geospatial.jsonld       # Geospatial mode surface (map rendering + bounded spatial queries)
-├── example-graph.jsonld    # Complete working example
-└── README.md               # This file
+schema/AgenticRAG/
+├── v1/
+│   └── context.jsonld                         # Base @context (semantic vocabulary)
+├── README.md                                 # This file
+├── node-schema.jsonld                        # Node structural contract (@id + labels required)
+├── edge-schema.jsonld                        # Edge structural contract (@id + source/target/label required)
+├── graph-schema.jsonld                       # Graph container contract (@context/@graph + metadata)
+├── metadata.jsonld                           # Provenance/metrics conventions (structural, not semantic)
+├── neutrality.jsonld                         # Domain-agnostic constraints and anti-patterns
+├── colors.jsonld                             # Lean Startup MVP palette (renderer directive)
+├── canvas.jsonld                             # Canvas/renderer integration directives
+├── panels.jsonld                             # Panel/pane interaction directives (UI contract)
+├── settings.jsonld                           # Settings surface (config-driven behavior)
+├── semantic-mode.jsonld                      # Semantic mode surface (renderer directive)
+├── keyword-mode.jsonld                       # Keyword mode surface (renderer directive)
+├── geospatial.jsonld                         # Geospatial mode surface (map + bounded spatial queries)
+├── youtube.jsonld                            # YouTube transcript ingest surface (segments + metadata)
+├── markdown.jsonld                           # Markdown ingest surface (provenance + preview hooks)
+├── parser.jsonld                             # Parser surface (token linking + edge elevation)
+├── pipeline.jsonld                           # Pipeline stage vocabulary (ingest→validate→produce→reuse)
+├── workflow.jsonld                           # Workflow vocabulary (agents/tools/stages)
+├── orchestrator.jsonld                       # Orchestrator contract (workflow execution + exports)
+├── graphrag-pipeline.jsonld                  # GraphRAG pipeline directives
+├── roles-actions-outcomes-schema.jsonld      # Role→Action→Outcome wording contract
+├── documentation.jsonld                      # Documentation copy patterns (neutral wording)
+├── stage-metrics.jsonld                      # Stage metrics schema (quality gates, drift checks)
+├── action-verbs.jsonld                       # Action verb canonicalization (neutral verbs)
+├── system-design-pattern.jsonld              # System design patterns (domain-agnostic)
+├── prompt-shaping-heuristics-framework.jsonld # Prompt shaping heuristics (agentic, domain-agnostic)
+├── ast-traversal.jsonld                      # AST traversal surface (code analysis mode)
+├── aie-book-chapter-snippets.jsonld          # Example ingest surface (snippets)
+├── knowgrph-documents-map.graph.jsonld      # Knowgrph docs/documents ↔ schema surfaces map (sync artifact)
+├── example-graph.jsonld                      # Complete working example graph
+└── example-lean-startup-layer-modes.jsonld   # Example layer modes (Lean Startup tags + palette)
 ```
+<!-- SCHEMA_FILES_END -->
 
 ---
 

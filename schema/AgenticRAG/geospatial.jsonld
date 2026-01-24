@@ -172,11 +172,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs or local file references, while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }].",
+          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs or local file references, while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }], where format may be omitted and default to auto. Implementations should allow reloading a dataset layer without removing/re-adding it.",
           "@language": "en-us"
         },
         {
-          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL 或本地文件引用，同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]。",
+          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL 或本地文件引用，同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]；format 可省略并默认 auto。实现应允许在不删除/重加数据集的情况下触发重新加载。",
           "@language": "zh-cn"
         }
       ],
@@ -213,6 +213,42 @@
         },
         {
           "@value": "下载数据集图层时允许的最大字节数。实现必须限制该值以防止无界内存占用，并应提供保守的默认上限。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "graphPoiColor": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph POI color", "@language": "en-us" },
+        { "@value": "图节点 POI 颜色", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Hex color used to render graph-node POIs on the overlay map (e.g. #2563EB). Implementations should validate a safe hex format and fall back to a default when invalid.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于渲染叠加地图上图节点 POI 的十六进制颜色（例如 #2563EB）。实现应校验安全的 hex 格式，非法值应回退默认值。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "graphPoiSelectedColor": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph POI selected outline color", "@language": "en-us" },
+        { "@value": "图节点 POI 选中描边颜色", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Hex color used for the selected graph-node POI outline/stroke on the overlay map. This should remain visually distinct against the POI fill and basemap.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于叠加地图上已选中图节点 POI 的描边/外轮廓十六进制颜色。该颜色应在 POI 填充与底图之上保持可见的对比度。",
           "@language": "zh-cn"
         }
       ],

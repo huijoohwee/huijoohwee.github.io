@@ -1,5 +1,20 @@
 {
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "schemaVersion": "1.0.1",
+  "rdfs:label": [
+    { "@value": "System design patterns (domain-agnostic)", "@language": "en-us" },
+    { "@value": "系统设计模式（领域无关）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Collection of domain-agnostic system design patterns for AgenticRAG UI surfaces and pipeline integrations. Entries document stable UI anchors, pipeline phases, and neutral Role→Action→Outcome wording to reduce cross-repo drift.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "面向 AgenticRAG 的领域无关系统设计模式集合，用于 UI 表面与流水线集成。条目记录稳定的 UI 锚点、流水线阶段与中性 Role→Action→Outcome 表述，以降低跨仓库漂移。",
+      "@language": "zh-cn"
+    }
+  ],
   "@graph": [
     {
       "@type": "rag:RoleActionOutcome",
@@ -121,6 +136,19 @@
       "pipeline_phase": "Schema",
       "ui_anchor": "render:aiKgSemanticMinSimilarity",
       "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Workspace actions surface",
+      "actions": [
+        "expose import, export, and run-pipeline controls inside MainPanel Workflow Step 3 (Ingest) so users have a single end-to-end control surface",
+        "avoid duplicating the same Workspace Actions controls in floating tool menus so UI ownership stays clear and drift-resistant",
+        "centralize Workspace Actions menu state and action handlers behind a single model so behavior stays consistent across hosts"
+      ],
+      "outcome": "keep import→parse→render controls discoverable in one stable workflow surface while preventing competing UI implementations and stale duplicated actions.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "mainPanel:workflowWorkspaceActions",
+      "raci_role": "Engineer"
     },
     {
       "@type": "rag:RoleActionOutcome",

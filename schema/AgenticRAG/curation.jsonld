@@ -1,0 +1,20 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:CurationSurface",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Curation surface (Graph Data)", "@language": "en-us" },
+    { "@value": "策展界面（图数据）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines Graph Data curation and presentation UI surfaces such as Graph Data Table, Markdown viewer/editor/presentation/gallery, and JSON inspectors. These surfaces must preserve provenance line mappings, remain schema-aligned, and avoid domain-specific assumptions.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义图数据的策展与展示 UI 表面，例如图数据表格、Markdown 浏览/编辑/演示/画廊，以及 JSON 检视器。这些表面必须保留来源行号映射、保持与 schema 对齐，并避免领域特定假设。",
+      "@language": "zh-cn"
+    }
+  ]
+}

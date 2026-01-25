@@ -121,6 +121,20 @@
       "pipeline_phase": "Schema",
       "ui_anchor": "render:aiKgSemanticMinSimilarity",
       "raci_role": "Schema"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Extracted UI surface integration contract",
+      "actions": [
+        "resolve extracted UI package source from installed node_modules/<package>/src via bundler and TypeScript aliases",
+        "preserve symlink resolution so extracted source keeps a single node_modules truth for dependencies and types",
+        "scan extracted source in Tailwind content discovery so extracted UI classnames remain stable",
+        "dedupe shared deps (e.g. react, highlight.js) and pre-optimize dual ESM/CJS deps to avoid runtime export-shape mismatches"
+      ],
+      "outcome": "keep extracted UI surfaces neutral and maintainable across host repos without reintroducing duplicate implementations or cross-repo path coupling.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "integration:node_modules-src",
+      "raci_role": "Engineer"
     }
   ]
 }

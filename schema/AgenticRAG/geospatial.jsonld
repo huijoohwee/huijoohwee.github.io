@@ -2,18 +2,18 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.0",
+  "schemaVersion": "1.2.2",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, support clicking/selecting POIs and synchronizing selection across map and graph views (for example selecting the corresponding node when clicking a graph-node POI on the map), and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions. Remote dataset fetching must be bounded by configurable timeout/size limits and should fail with actionable errors when limits are exceeded. In 3D render mode, implementations may present a globe-style projection when supported by the map renderer. Ingestion layers should support deriving properties.geo from dataset-agnostic shapes such as GeoJSON Feature/FeatureCollection inputs and generic record datasets (arrays of records or object maps) with common coordinate fields. Note: reference implementation lives in the gympgrph repo; some runtimes may load it via plugin modules and some may intentionally omit map rendering or spatial query execution.",
+      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, support clicking/selecting POIs and synchronizing selection across map and graph views (for example selecting the corresponding node when clicking a graph-node POI on the map), and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions. Basemaps should prefer vector-tile style sources by default when available, and support interactive navigation (drag/pan + smooth zoom) unless explicitly gated by an interaction mode. Implementations may render lightweight popups on hover/click for POIs, and may cluster large point datasets using built-in map renderer clustering (configuration-driven, dataset-agnostic). Remote dataset fetching must be bounded by configurable timeout/size limits and should fail with actionable errors when limits are exceeded. In 3D render mode, implementations may present a globe-style projection when supported by the map renderer. Ingestion layers should support deriving properties.geo from dataset-agnostic shapes such as GeoJSON Feature/FeatureCollection inputs and generic record datasets (arrays of records or object maps) with common coordinate fields. Persistence keys should be app-namespaced (for example kg:ui:geospatial:*) to avoid cross-app collisions. When embedded into an existing canvas UI, the overlay container must sit above the graph renderer and must capture pointer events when interactive; critical layout styles should be bundled with the module or inlined to avoid host-CSS regressions. Note: reference implementation lives in the gympgrph repo; some runtimes may load it via plugin modules and some may intentionally omit map rendering or spatial query execution.",
       "@language": "en-us"
     },
     {
-      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。实现应支持在地图上点击/选择 POI 并与图视图选择保持同步（例如点击图节点 POI 时选中对应节点），同时远程数据集拉取必须受可配置的超时/体积限制约束，并在超出限制时给出可操作的错误提示；所有拉取/解析工作需有界并避免无界循环。注：参考实现位于 gympgrph 仓库；部分运行时可能以插件方式加载，也可能不会实现地图渲染或空间查询执行。",
+      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。基底地图在可用时应默认优先使用矢量瓦片风格源，并支持交互式导航（拖拽/平移 + 平滑缩放），除非显式通过交互模式进行限制。实现可为 POI 提供 hover/click 轻量弹窗，并可对大型点数据集启用配置化聚类（保持数据集无关）。远程数据集拉取必须受可配置的超时/体积限制约束，并在超出限制时给出可操作的错误提示；所有拉取/解析工作需有界并避免无界循环。在嵌入现有画布 UI 的场景中，叠加层容器必须位于图渲染之上，并在可交互时捕获指针事件；关键布局样式应随模块一起打包或以内联方式提供，以避免宿主 CSS 回归导致交互失效。注：参考实现位于 gympgrph 仓库；部分运行时可能以插件方式加载，也可能不会实现地图渲染或空间查询执行。",
       "@language": "zh-cn"
     }
   ],
@@ -99,11 +99,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Interaction mode for the overlay map: off (graph only), hold-space (temporarily allow pan/zoom while holding Space), or always (map captures pointer interactions). Implementations should default to hold-space or off to preserve graph-first affordances.",
+          "@value": "Interaction mode for the overlay map: off (graph only), hold-space (temporarily allow pan/zoom while holding Space), or always (map captures pointer interactions). On application load, graph-first affordances are preserved by defaulting mapOverlayEnabled to false; when the user explicitly enables Geospatial Mode, implementations may choose to default to always for immediate map navigation.",
           "@language": "en-us"
         },
         {
-          "@value": "叠加地图的交互模式：off（仅图交互）、hold-space（按住 Space 临时允许平移/缩放）、always（地图捕获指针交互）。实现应默认使用 hold-space 或 off，以保留以图为主的交互体验。",
+          "@value": "叠加地图的交互模式：off（仅图交互）、hold-space（按住 Space 临时允许平移/缩放）、always（地图捕获指针交互）。应用加载时通过默认关闭 mapOverlayEnabled 保留以图为主体验；当用户显式启用地理空间模式时，实现可以默认使用 always 以便立即进行地图导航。",
           "@language": "zh-cn"
         }
       ],
@@ -172,11 +172,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs or local file references, while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }], where format may be omitted and default to auto. Implementations should allow reloading a dataset layer without removing/re-adding it.",
+          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs (http(s)) or same-origin absolute paths (starting with /), while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }], where format may be omitted and default to auto. Implementations should normalize GitHub blob-like URLs to raw URLs, and should allow reloading a dataset layer without removing/re-adding it.",
           "@language": "en-us"
         },
         {
-          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL 或本地文件引用，同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]；format 可省略并默认 auto。实现应允许在不删除/重加数据集的情况下触发重新加载。",
+          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL（http(s)）或同源绝对路径（以 / 开头），同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]；format 可省略并默认 auto。实现应将 GitHub blob 类 URL 规范化为 raw URL，并允许在不删除/重加数据集的情况下触发重新加载。",
           "@language": "zh-cn"
         }
       ],
@@ -213,6 +213,61 @@
         },
         {
           "@value": "下载数据集图层时允许的最大字节数。实现必须限制该值以防止无界内存占用，并应提供保守的默认上限。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+
+    "clusterEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Cluster point datasets", "@language": "en-us" },
+        { "@value": "点数据集聚类", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether point-only dataset layers should be clustered for readability and performance. Implementations should remain dataset-agnostic and apply clustering only to point geometries.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点类型数据集图层是否启用聚类以提升可读性与性能。实现必须保持数据集无关，并且只对点几何启用聚类。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "clusterRadiusPx": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Cluster radius (px)", "@language": "en-us" },
+        { "@value": "聚类半径（px）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Cluster radius in pixels when clustering point datasets. Implementations should bound this to a safe range.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点数据集聚类时的像素半径。实现应限制在安全范围内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "clusterMaxZoom": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Cluster max zoom", "@language": "en-us" },
+        { "@value": "聚类最大缩放级别", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Maximum zoom level at which point clustering is applied. Implementations should bound this to the map renderer zoom domain.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点聚类应用的最大缩放级别。实现应限制在地图渲染器的缩放范围内。",
           "@language": "zh-cn"
         }
       ],

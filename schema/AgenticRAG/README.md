@@ -22,6 +22,7 @@ schema/AgenticRAG/
 ├── colors.jsonld                             # Lean Startup MVP palette (renderer directive)
 ├── canvas.jsonld                             # Canvas/renderer integration directives
 ├── panels.jsonld                             # Panel/pane interaction directives (UI contract)
+├── curation.jsonld                           # Graph Data curation surfaces (tables/editors/presentation)
 ├── settings.jsonld                           # Settings surface (config-driven behavior)
 ├── semantic-mode.jsonld                      # Semantic mode surface (renderer directive)
 ├── keyword-mode.jsonld                       # Keyword mode surface (renderer directive)

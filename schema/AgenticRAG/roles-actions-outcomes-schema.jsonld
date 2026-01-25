@@ -334,6 +334,52 @@
       "validation": {
         "pattern": "^[0-9]{1,2}[A-Z]?\\.[0-9]{1,3}$"
       }
+    },
+
+    "key_tooltip_text": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Key tooltip text (RAO)", "@language": "en-us" },
+        { "@value": "键名提示文本（RAO）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Tooltip copy for a setting key label. Must follow Role \u2192 Actions \u2192 Outcome semantics and remain under 50 words.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于设置键名的提示文案。必须遵循 角色 \u2192 动作 \u2192 结果 语义，并限制在 50 词以内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "max_words": 50,
+        "rao_semantics": true
+      }
+    },
+
+    "value_tooltip_text": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Value tooltip text (bounds + impact)", "@language": "en-us" },
+        { "@value": "值提示文本（边界 + 影响）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Tooltip copy for a setting value cell. Must follow 'Default; Min; Max; Interval; Impact' semantics and remain under 15 words.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于设置值的提示文案。必须遵循“默认值；最小；最大；间隔；影响”语义，并限制在 15 词以内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "max_words": 15,
+        "bounds_impact_semantics": true
+      }
     }
   },
 

@@ -1,0 +1,41 @@
+# Reference
+
+
+
+
+## Benchmark
+
+| [doccano](https://github.com/doccano/doccano.git) | Open source annotation tool for machine learning practitioners |
+| [Heptabase/Gallery](https://heptabase.com/gallery) | Collaborative knowledge base for teams |
+| [Heptabase/How to Start a Startup](https://app.heptabase.com/p/whiteboard/82a19c72-5132-447c-b6f7-f167f6d4cda8/tab/61cc08c9-ab70-4263-bf6c-7e4f034a360b?panel=split) | Whiteboard for startup ideas |
+| [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
+| [Scrintal](https://scrintal.com) | Visual Note-Taking & Research Made Easy |
+
+
+
+---
+
+## Geographic Data
+
+### GeoJSON/JSON
+
+| [Adm1](https://github.com/lutangar/cities.json/blob/master/admin1.json) |
+| [airports.json](https://github.com/mwgg/Airports/blob/master/airports.json) |
+| [atlas.co](https://atlas.co/maps/franchise-territory-map/) |
+| [data.gov.sg/Tourist Attractions](https://data.gov.sg/datasets?query=&formats=GEOJSON&resultId=d_0f2f47515425404e6c9d2a040dd87354) |
+| [Drone Flight Plan Generator](Drone Flightplan Generator) |
+| [Food Tour](https://github.com/muratcankoylan/Food-tour-planner-agent?tab=readme-ov-file) |
+| [GeoJSON](https://geojson.io) |
+| [Indonesia GeoJSON](https://drive.google.com/drive/folders/10gEi4mIriMoL2p6kzlncPXkScw2uZiDW) |
+
+| [Malaysia GeoJSON](https://github.com/nullifye/malaysia.geojson/tree/master) |
+| [railrouter-sg](https://github.com/cheeaun/railrouter-sg/blob/master/src/sg-rail.geo.json) |
+
+| [Wanderlog](https://wanderlog.com/view/nlcviusycz/japan-video-game-guide--2025) |
+
+
+---
+
+## Text Annotator
+
+| [deepwel/Chinese-Annotator](https://github.com/deepwel/Chinese-Annotator) | Annotator for Chinese Text Corpus (UNDER DEVELOPMENT) |

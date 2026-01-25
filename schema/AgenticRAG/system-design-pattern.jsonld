@@ -142,12 +142,29 @@
       "role": "Workspace actions surface",
       "actions": [
         "expose import, export, and run-pipeline controls inside MainPanel Workflow Step 3 (Ingest) so users have a single end-to-end control surface",
+        "use the MainPanel header Graph Search toggle to filter Workspace Actions instead of rendering a separate per-section search input",
+        "treat the Toolbar Open Data button as navigation that opens MainPanel Workflow (not a second competing Workspace Actions surface)",
         "avoid duplicating the same Workspace Actions controls in floating tool menus so UI ownership stays clear and drift-resistant",
         "centralize Workspace Actions menu state and action handlers behind a single model so behavior stays consistent across hosts"
       ],
       "outcome": "keep import→parse→render controls discoverable in one stable workflow surface while preventing competing UI implementations and stale duplicated actions.",
       "pipeline_phase": "UI Curation",
       "ui_anchor": "mainPanel:workflowWorkspaceActions",
+      "raci_role": "Engineer"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "MainPanel settings surface",
+      "actions": [
+        "render editable settings as a single Key/Type/Value grid driven by the shared settings registry",
+        "show Role→Actions→Outcome key tooltips and bounded Default/Min/Max/Interval value tooltips without adding per-row icon affordances",
+        "batch user edits through MainPanel header Apply/Reset instead of applying ad-hoc setter calls from inline preset buttons",
+        "hide non-writable persistence artifacts so Settings stays focused on intentional configuration knobs",
+        "expose Modules/Classes/Functions details via click-to-expand rows to keep cross-repo provenance inspectable"
+      ],
+      "outcome": "keep Settings discoverable, drift-resistant, and semantically self-documenting while avoiding duplicated controls and stale inline copy across host and extracted UI surfaces.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "mainPanel:settingsPanel",
       "raci_role": "Engineer"
     },
     {

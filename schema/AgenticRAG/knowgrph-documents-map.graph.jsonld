@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@type": "kg:Graph",
   "metadata": {
-    "schemaVersion": "1.0.0",
+    "schemaVersion": "1.0.1",
     "source": "system:docs-sync",
     "description": "Structural-only mapping between Knowgrph docs/documents and AgenticRAG schema directive surfaces."
   },
@@ -544,6 +544,22 @@
       "properties": { "repo": "knowgrph", "relPath": "docs/documents/refactor-pipeline-cleanup.md" },
       "documentPath": "docs/documents/refactor-pipeline-cleanup.md"
     },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graph-data-curation-document",
+      "@type": "kg:Node",
+      "labels": ["Document"],
+      "name": ["knowgrph-graph-data-curation-document.md"],
+      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-graph-data-curation-document.md" },
+      "documentPath": "docs/documents/knowgrph-graph-data-curation-document.md"
+    },
+    {
+      "@id": "node:knowgrph:doc:curagrph-graph-data-curation-document",
+      "@type": "kg:Node",
+      "labels": ["Document"],
+      "name": ["curagrph-graph-data-curation-document.md"],
+      "properties": { "repo": "knowgrph", "relPath": "docs/documents/curagrph-graph-data-curation-document.md" },
+      "documentPath": "docs/documents/curagrph-graph-data-curation-document.md"
+    },
 
     { "@id": "edge:doc:api->readme", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-api-document", "target": "node:schema:agenticrag:readme", "label": "mapsTo" },
     { "@id": "edge:doc:pipeline->pipeline", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-pipeline-document", "target": "node:schema:agenticrag:pipeline", "label": "mapsTo" },
@@ -558,4 +574,3 @@
     { "@id": "edge:doc:orchestrator->orchestrator", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-orchestrator-document", "target": "node:schema:agenticrag:orchestrator", "label": "mapsTo" }
   ]
 }
-

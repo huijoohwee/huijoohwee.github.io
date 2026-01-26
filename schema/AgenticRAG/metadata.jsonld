@@ -16,7 +16,7 @@
       "@language": "zh-cn"
     }
   ],
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "propertyDefinitions": {
     "schemaVersion": {
       "@type": "xsd:string",
@@ -67,6 +67,63 @@
         { "@value": "图标识", "@language": "zh-cn" }
       ],
       "required": false
+    },
+    "sourceLayers": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Source Layers", "@language": "en-us" },
+        { "@value": "来源图层", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional list describing the ordered source inputs used to compose the effective graph. This field is structural-only and must remain dataset-agnostic. Recommended shape is a list of objects such as {\"id\":\"src:{uuid}\",\"label\":\"…\",\"enabled\":true,\"source\":{\"kind\":\"url\",\"url\":\"https://…\"},\"format\":\"md|txt|json|jsonld|csv|html|yaml|pdf|youtube|auto\",\"hash\":\"…\"}. Downstream components may ignore this field without breaking ingestion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述构成最终图的有序来源输入列表的可选字段。该字段仅承载结构信息且必须保持数据集无关。推荐形态为对象列表，例如 {\"id\":\"src:{uuid}\",\"label\":\"…\",\"enabled\":true,\"source\":{\"kind\":\"url\",\"url\":\"https://…\"},\"format\":\"md|txt|json|jsonld|csv|html|yaml|pdf|youtube|auto\",\"hash\":\"…\"}。下游组件可忽略该字段而不影响导入。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["id", "label", "enabled", "source", "format", "hash"]
+    },
+    "sourceLayerComposition": {
+      "@type": "xsd:string",
+      "enum": ["compose", "replace"],
+      "rdfs:label": [
+        { "@value": "Source Layer Composition", "@language": "en-us" },
+        { "@value": "来源图层组合方式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional hint describing how source layers produce the effective graph. compose means enabled layers are composed deterministically into one effective graph; replace means only one active source layer is treated as authoritative at a time.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述来源图层如何生成最终图的可选提示。compose 表示启用的图层会按确定性规则组合为一个最终图；replace 表示同一时刻只使用一个激活的来源图层作为权威来源。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "exportPreferences": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Export Preferences", "@language": "en-us" },
+        { "@value": "导出偏好", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, UI-oriented preferences for export defaults. Structural-only; downstream processors may ignore it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "面向 UI 的导出默认值偏好设置，可选。仅承载结构信息；下游处理器可忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["defaultExportFormat"]
     },
     "codebaseId": {
       "@type": "xsd:string",

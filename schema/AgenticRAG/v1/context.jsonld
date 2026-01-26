@@ -47,6 +47,14 @@
     "blockType": { "@id": "rag:blockType", "@type": "xsd:string" },
     "tokenStart": { "@id": "rag:tokenStart", "@type": "xsd:integer" },
     "tokenEnd": { "@id": "rag:tokenEnd", "@type": "xsd:integer" },
+    "sourceLayers": { "@id": "rag:sourceLayers", "@container": "@list", "@type": "@json" },
+    "sourceLayerId": { "@id": "rag:sourceLayerId", "@type": "xsd:string" },
+    "sourceLayerLabel": { "@id": "rag:sourceLayerLabel", "@type": "xsd:string" },
+    "sourceLayerEnabled": { "@id": "rag:sourceLayerEnabled", "@type": "xsd:boolean" },
+    "sourceLayerOrder": { "@id": "rag:sourceLayerOrder", "@type": "xsd:integer" },
+    "sourceLayerFormat": { "@id": "rag:sourceLayerFormat", "@type": "xsd:string" },
+    "sourceLayerHash": { "@id": "rag:sourceLayerHash", "@type": "xsd:string" },
+    "exportFormat": { "@id": "rag:exportFormat", "@type": "xsd:string" },
     "pipeline_phase": { "@id": "flow:pipeline_phase", "@type": "xsd:string" },
     "ui_anchor": { "@id": "flow:ui_anchor", "@type": "xsd:string" },
     "raci_role": { "@id": "flow:raci_role", "@type": "xsd:string" },
@@ -60,7 +68,7 @@
   },
   "@id": "rag:AgenticRAGContext",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:label": [
     { "@value": "AgenticRAG JSON-LD context", "@language": "en-us" },
     { "@value": "AgenticRAG JSON-LD 上下文", "@language": "zh-cn" }

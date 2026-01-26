@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.9",
+  "schemaVersion": "1.1.0",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -25,12 +25,22 @@
     "controlHeight": "h-7",
     "statusPillHeight": "h-6",
     "toolAreaSectionPadding": "px-2 py-1",
+    "workflowStep3Ingest": {
+      "subsections": ["Sample Dataset", "Dataset fetch limits", "Source Files"],
+      "datasetFetchLimits": {
+        "layout": "keyValueRows",
+        "rowRule": "One key/value per row; reuse MainPanel Settings Key/Value primitives; keep the value control right-aligned and height-aligned with other controls. These limits must be applied to bounded URL fetches and local file reads (including Source Files URL import and editor preview fetch) to avoid relying on small shared defaults."
+      },
+      "layoutRule": "All Step 3 subsections must share the same left/right padding and sticky header styling (do not render an out-of-band Sample Dataset block outside the Step 3 subsection stack)."
+    },
     "sourceFilesManagementTable": {
-      "columns": ["Move Layer", "Show/Hide Layer", "Label", "Local/URL", "Geo Layer", "Status", "Action"],
-      "columnWidths": ["2%", "2%", "25%", "45%", "5%", "5%", "16%"],
+      "columns": ["Move Layer", "Show/Hide Layer", "Label", "Local/URL", "Action", "Geo Layer", "Status"],
+      "columnWidths": ["2%", "2%", "22%", "28%", "32%", "6%", "10%"],
       "moveIcon": "GripDotsIcon",
       "visibilityIcon": "VisibilityIcon",
-      "rowRule": "Header New Source File button is icon-only. Row action icons use the global stroke width. Each row supports import/export/clear and status is shown only in the row Status cell."
+      "supportedImportFormats": [".md", ".markdown", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".htm", ".yaml", ".yml", ".pdf", "YouTube"],
+      "supportedExportFormats": [".md", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".yaml"],
+      "rowRule": "Header New Source File button is icon-only and square-sized. Row action icons are square-sized, borderless, and use the global stroke width. URL import input is hidden by default and expands leftwards from the URL icon. Clear action clears the row’s text + parsed caches (does not delete the row). Geo Layer checkbox is only shown while Geospatial Mode is enabled; Geo-capable JSON/GeoJSON can auto-enable the Geo Layer flag."
     }
   }
 }

@@ -225,6 +225,20 @@
       "pipeline_phase": "UI Curation",
       "ui_anchor": "integration:node_modules-src",
       "raci_role": "Engineer"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Markdown code block render mode",
+      "actions": [
+        "toggle between Beside/Inline/Render mode in the Markdown Viewer header to set the default code block layout",
+        "override Beside/Inline/Render per code block via icon-only controls in the code block header without mutating the global preference",
+        "render supported previews (Mermaid diagrams, GeoJSON via MapLibre, Rich Media) in Render mode while falling back to source code in Inline/Beside modes",
+        "reuse shared geospatial/graph utilities for inline previews to avoid duplicated rendering logic"
+      ],
+      "outcome": "ensure consistent, schema-driven rendering of rich content within Markdown without dataset-specific hacks or fragmented UI controls.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "markdown:viewerRenderMode",
+      "raci_role": "Curator"
     }
   ]
 }

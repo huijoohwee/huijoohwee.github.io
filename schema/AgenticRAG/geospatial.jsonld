@@ -19,7 +19,8 @@
   ],
   "geospatialUiGuidelines": {
     "datasetFetchLimitsSurface": "Expose timeout/max-bytes in a single canonical surface (e.g. Workflow Step 3). Do not duplicate Dataset fetch limits inputs in the Geo side panel.",
-    "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest."
+    "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest.",
+    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets."
   },
   "propertyDefinitions": {
     "mapStyleUrl": {

@@ -496,6 +496,14 @@
       "documentPath": "docs/documents/knowgrph-semantic-document.md"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-shared-utils-document",
+      "@type": "kg:Node",
+      "labels": ["Document"],
+      "name": ["knowgrph-shared-utils-document.md"],
+      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-shared-utils-document.md" },
+      "documentPath": "docs/documents/knowgrph-shared-utils-document.md"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-settings-document",
       "@type": "kg:Node",
       "labels": ["Document"],

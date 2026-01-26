@@ -1,7 +1,21 @@
 {
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@type": "kg:Graph",
-  
+  "rdfs:label": [
+    { "@value": "Example AgenticRAG graph (minimal)", "@language": "en-us" },
+    { "@value": "AgenticRAG 示例图（最小示例）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Small, domain-agnostic example graph demonstrating core structural fields (nodes, edges, metadata, chunk_text, embedding, geo, media_url).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "小型、领域无关的示例图，用于展示核心结构字段（节点、边、元数据、chunk_text、embedding、geo、media_url）。",
+      "@language": "zh-cn"
+    }
+  ],
+
   "metadata": {
     "schemaVersion": "1.0.0",
     "exportedAt": "2025-12-19T10:30:00Z",

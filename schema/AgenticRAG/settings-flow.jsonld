@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@vocab": "https://huijoohwee.github.io/schema/AgenticRAG/v1/",
+    "core": "https://huijoohwee.github.io/schema/core.jsonld"
+  },
+  "@id": "rag:SettingsFlowProvenance",
+  "@type": "core:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Settings flow provenance", "@language": "en-us" },
+    { "@value": "设置流转溯源信息", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a structural, domain-agnostic provenance shape for MainPanel Settings. The goal is to derive Modules / Classes / Functions and line ranges from code (registry + store setters) so Settings UI can display inspectable responsibility flow without manual sync.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义主面板 Settings 的结构化、领域无关溯源信息形状。目标是从代码（registry + store setters）派生 Modules / Classes / Functions 与行号范围，使 Settings UI 能展示可检查的责任流转信息，避免手工同步。",
+      "@language": "zh-cn"
+    }
+  ],
+  "flowRow": {
+    "fields": [
+      "area",
+      "responsibility",
+      "modules",
+      "classes",
+      "functions",
+      "imports",
+      "notes",
+      "lineRange"
+    ],
+    "types": {
+      "area": "xsd:string",
+      "responsibility": "xsd:string",
+      "modules": "xsd:string[]",
+      "classes": "xsd:string[]",
+      "functions": "xsd:string[]",
+      "imports": "xsd:string[]",
+      "notes": "xsd:string",
+      "lineRange": "xsd:string"
+    }
+  },
+  "derivationPolicy": {
+    "principles": [
+      "code-derived by default",
+      "structural only",
+      "no domain semantics",
+      "drift-resistant"
+    ],
+    "lineRange": {
+      "format": "relative/path.ts:L123; relative/path.tsx:L456",
+      "sources": ["registry-key-definition", "store-setter-definition"]
+    },
+    "overrideRules": [
+      "Allow markdown documents to override placeholder text fields.",
+      "Do not override code-derived modules/classes/functions by default."
+    ]
+  }
+}
+

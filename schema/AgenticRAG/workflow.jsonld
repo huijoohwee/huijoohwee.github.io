@@ -2,9 +2,35 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.9",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
-  ]
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines the structural contract for workflow-oriented UI surfaces (for example MainPanel Workflow). Guidance copy should be low-verbosity in-layout and exposed via Role \u2192 Actions \u2192 Outcome tooltips, keeping the workflow step ordering reproducible and domain-agnostic.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义工作流类 UI 界面的结构化契约（例如主面板 Workflow）。指导文案应在布局中保持低冗余，并通过 Role \u2192 Actions \u2192 Outcome 工具提示呈现，使工作流步骤顺序可复现且领域无关。",
+      "@language": "zh-cn"
+    }
+  ],
+  "workflowUiGuidelines": {
+    "tooltipSemantics": "Role \u2192 Actions \u2192 Outcome",
+    "maxWords": 50,
+    "reduceVerbosityInLayout": true,
+    "oneRowHeaders": true,
+    "controlHeight": "h-7",
+    "statusPillHeight": "h-6",
+    "toolAreaSectionPadding": "px-2 py-1",
+    "sourceFilesManagementTable": {
+      "columns": ["Move Layer", "Show/Hide Layer", "Label", "Local/URL", "Geo Layer", "Status", "Action"],
+      "columnWidths": ["2%", "2%", "25%", "45%", "5%", "5%", "16%"],
+      "moveIcon": "GripDotsIcon",
+      "visibilityIcon": "VisibilityIcon",
+      "rowRule": "Header New Source File button is icon-only. Row action icons use the global stroke width. Each row supports import/export/clear and status is shown only in the row Status cell."
+    }
+  }
 }

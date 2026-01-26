@@ -1,0 +1,130 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@type": "kg:Graph",
+  "rdfs:label": [
+    { "@value": "AgenticRAG sync map (guidelines + schema surfaces)", "@language": "en-us" },
+    { "@value": "AgenticRAG 同步映射（指南 + 模式表面）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Structural mapping to keep AgenticRAG schema surfaces aligned with the workspace guidelines corpus and to reduce drift across repositories.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "用于将 AgenticRAG 的 schema 表面与工作区指南语料保持对齐的结构化映射，以降低跨仓库漂移。",
+      "@language": "zh-cn"
+    }
+  ],
+  "metadata": {
+    "schemaVersion": "1.0.0",
+    "source": "system:sync",
+    "inputs": [
+      { "repo": "huijoohwee.github.io", "relDir": "guidelines" },
+      { "repo": "huijoohwee.github.io", "relDir": "schema/AgenticRAG" },
+      { "repo": "knowgrph", "relDir": "docs/documents" }
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "node:huijoohwee:guidelines:index",
+      "@type": "kg:Node",
+      "labels": ["GuidelinesIndex"],
+      "name": ["huijoohwee.github.io/guidelines"],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relDir": "guidelines",
+        "files": [
+          "guidelines/cid-guidelines.md",
+          "guidelines/code-reading-mantra.md",
+          "guidelines/codebase-maintainability-guidelines.md",
+          "guidelines/codebase-neutrality-guidelines.md",
+          "guidelines/coding-guidelines.md",
+          "guidelines/color-palette.md",
+          "guidelines/compaction-guidelines.md",
+          "guidelines/data-governance-guidelines.md",
+          "guidelines/design-cid-guidelines.md",
+          "guidelines/design-guidelines.md",
+          "guidelines/documentation-guidelines.md",
+          "guidelines/eda-guidelines.md",
+          "guidelines/eda-mlp-cid-implementation-guidelines.md",
+          "guidelines/eda-mlp-detailed-implementation-lod-steps.md",
+          "guidelines/eda-mlp-detailed-implementation-steps.md",
+          "guidelines/eda-mlp-implementation-guidelines.md",
+          "guidelines/eda-mlp-keywords-reference-guide.md",
+          "guidelines/eda-mlp-pattern-guidelines.md",
+          "guidelines/eda-mlp-summary-implementation-steps.md.md",
+          "guidelines/github-implementation-reference-guide.md",
+          "guidelines/github-reference-guide.md",
+          "guidelines/knowgrph-pipeline-guidelines.md",
+          "guidelines/llm-ops-guidelines.md",
+          "guidelines/markdown-slide-styling-guidelines.md",
+          "guidelines/ml-ops-guidelines.md",
+          "guidelines/orchestrator-guidelines.md",
+          "guidelines/parser-guidelines.md",
+          "guidelines/prd-tad-guidelines.md",
+          "guidelines/product-guidelines.md",
+          "guidelines/project-mantra.md",
+          "guidelines/project-rules.md",
+          "guidelines/prompt-guidelines.md",
+          "guidelines/pseudocode-guidelines.md",
+          "guidelines/python-reference-guide.md",
+          "guidelines/scaffolding-implementation-guidelines.md",
+          "guidelines/scaffolding-pattern-guidelines.md",
+          "guidelines/schema-guidelines.md",
+          "guidelines/semantic-guidelines.md",
+          "guidelines/synonym-clustering-guidelines.md",
+          "guidelines/system-design-guidelines.md",
+          "guidelines/testing-guidelines.md",
+          "guidelines/user-rules.md",
+          "guidelines/verb‑selection-cheat-sheet.md"
+        ]
+      },
+      "chunk_text": "Index of workspace guideline files used to keep AgenticRAG schema wording and constraints aligned."
+    },
+    {
+      "@id": "node:schema:agenticrag:action-verbs",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["action-verbs.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/action-verbs.jsonld", "surface": "action-verbs" }
+    },
+    {
+      "@id": "node:schema:agenticrag:ast-traversal",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["ast-traversal.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/ast-traversal.jsonld", "surface": "ast-traversal" }
+    },
+    {
+      "@id": "node:schema:agenticrag:aie-snippets",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["aie-book-chapter-snippets.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/aie-book-chapter-snippets.jsonld", "surface": "aie-snippets" }
+    },
+    {
+      "@id": "node:schema:agenticrag:settings-flow",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["settings-flow.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/settings-flow.jsonld", "surface": "settings-flow" }
+    },
+    {
+      "@id": "node:schema:agenticrag:example-graph",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["example-graph.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/example-graph.jsonld", "surface": "example-graph" }
+    },
+    {
+      "@id": "node:schema:agenticrag:example-lean-startup-layer-modes",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["example-lean-startup-layer-modes.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/example-lean-startup-layer-modes.jsonld", "surface": "example-lean-startup-layer-modes" }
+    },
+    { "@id": "edge:guidelines:verb-cheatsheet->action-verbs", "@type": "kg:Edge", "source": "node:huijoohwee:guidelines:index", "target": "node:schema:agenticrag:action-verbs", "label": "informs" },
+    { "@id": "edge:guidelines:schema-guidelines->ast-traversal", "@type": "kg:Edge", "source": "node:huijoohwee:guidelines:index", "target": "node:schema:agenticrag:ast-traversal", "label": "informs" },
+    { "@id": "edge:guidelines:project-rules->settings-flow", "@type": "kg:Edge", "source": "node:huijoohwee:guidelines:index", "target": "node:schema:agenticrag:settings-flow", "label": "informs" }
+  ]
+}

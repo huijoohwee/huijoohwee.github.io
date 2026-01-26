@@ -24,6 +24,7 @@ schema/AgenticRAG/
 ├── panels.jsonld                             # Panel/pane interaction directives (UI contract)
 ├── curation.jsonld                           # Graph Data curation surfaces (tables/editors/presentation)
 ├── settings.jsonld                           # Settings surface (config-driven behavior)
+├── settings-flow.jsonld                      # Settings provenance flow (modules/classes/functions/line ranges)
 ├── semantic-mode.jsonld                      # Semantic mode surface (renderer directive)
 ├── keyword-mode.jsonld                       # Keyword mode surface (renderer directive)
 ├── geospatial.jsonld                         # Geospatial mode surface (map + bounded spatial queries)

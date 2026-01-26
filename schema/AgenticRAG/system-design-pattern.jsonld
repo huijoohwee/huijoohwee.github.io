@@ -169,6 +169,51 @@
     },
     {
       "@type": "rag:RoleActionOutcome",
+      "role": "GraphRAG workflow editor surface",
+      "actions": [
+        "edit rag:GraphRAGWorkflow JSON-LD fields (dataset paths, chunking, embedding model, maxHops) inside Bottom Panel → Orchestrator",
+        "reuse the same workflow document for traversal presets, renderer overlays, and JSON-LD export/import actions",
+        "avoid embedding a second GraphRAG workflow JSON editor inside MainPanel Workflow steps to prevent drift",
+        "pair Role→Actions→Outcome key tooltips with bounded Default/Min/Max/Interval value tooltips for all workflow fields",
+        "keep UI anchors unique so GraphRAG workflow navigation targets a single canonical element"
+      ],
+      "outcome": "keep GraphRAG workflow configuration centralized, reproducible, and shareable without duplicated UI implementations across panels.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "orchestrator:graphRagWorkflow",
+      "raci_role": "Engineer"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "BottomPanel orchestrator surface",
+      "actions": [
+        "treat Bottom Panel → Orchestrator as the canonical traversal workflow surface",
+        "support both UI editor and text editor views without duplicating orchestration controls elsewhere",
+        "host traversal presets, traversal sequence, AgenticRAG node inspector, and context/ignore filters in one surface",
+        "reuse shared Key/Type/Value primitives and enforce consistent tooltip semantics across all controls",
+        "keep Graph Traversal floating panel wired to the same orchestrator state to prevent drift"
+      ],
+      "outcome": "centralize agentic traversal configuration and inspection so import→index→traverse→render stays reproducible.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "bottomPanel:orchestrator",
+      "raci_role": "Engineer"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "FloatingPanel renderer surface",
+      "actions": [
+        "treat Toolbar → Floating Panel → Renderer as the canonical renderer settings surface",
+        "provide quick palette and hover-tooltip content toggles without duplicating full render configuration elsewhere",
+        "render the full renderer tuning sections (layout, camera, selection, presets) in the same surface with Collapse/Expand All",
+        "enforce Role→Actions→Outcome key tooltips and bounded Default/Min/Max/Interval value tooltips across renderer controls",
+        "keep setting key labels and anchors stable so renderer controls remain discoverable across repos"
+      ],
+      "outcome": "centralize renderer configuration and keep styling and hover inspection consistent across the import→render pipeline.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "floatingPanel:renderer",
+      "raci_role": "Engineer"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
       "role": "Extracted UI surface integration contract",
       "actions": [
         "resolve extracted UI package source from installed node_modules/<package>/src via bundler and TypeScript aliases",

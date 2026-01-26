@@ -57,5 +57,22 @@
     "causalityStrength": { "@id": "kg:causalityStrength", "@type": "xsd:double" },
     "sourceSentence": { "@id": "kg:sourceSentence", "@type": "xsd:string" },
     "provenance": { "@id": "prov:wasDerivedFrom", "@container": "@set", "@type": "@id" }
-  }
+  },
+  "@id": "rag:AgenticRAGContext",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "AgenticRAG JSON-LD context", "@language": "en-us" },
+    { "@value": "AgenticRAG JSON-LD 上下文", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Base JSON-LD @context for AgenticRAG graphs. Defines stable prefixes and structural field mappings so graph documents stay domain-agnostic and reproducible across repositories.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "AgenticRAG 图的基础 JSON-LD @context。定义稳定的前缀与结构字段映射，使图文档在跨仓库使用时保持领域无关与可复现。",
+      "@language": "zh-cn"
+    }
+  ]
 }

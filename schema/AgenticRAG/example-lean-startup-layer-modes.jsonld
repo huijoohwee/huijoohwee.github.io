@@ -1,6 +1,20 @@
 {
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@type": "kg:Graph",
+  "rdfs:label": [
+    { "@value": "Lean Startup layer modes example (property/document/semantic)", "@language": "en-us" },
+    { "@value": "精益创业分层模式示例（属性/文档/语义）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Tiny, domain-agnostic example graph for demonstrating property mode, document-structure mode, and semantic layer mode sharing a single renderer color palette.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "小型、领域无关的示例图，用于演示在同一套渲染器调色板下的属性模式、文档结构模式与语义层模式。",
+      "@language": "zh-cn"
+    }
+  ],
   "metadata": {
     "schemaVersion": "1.0.0",
     "source": "lean_startup_layer_modes_example",

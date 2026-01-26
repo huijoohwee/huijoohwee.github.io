@@ -88,6 +88,13 @@
       "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/panels.jsonld", "surface": "panels" }
     },
     {
+      "@id": "node:schema:agenticrag:curation",
+      "@type": "kg:Node",
+      "labels": ["SchemaSurface"],
+      "name": ["curation.jsonld"],
+      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/curation.jsonld", "surface": "curation" }
+    },
+    {
       "@id": "node:schema:agenticrag:settings",
       "@type": "kg:Node",
       "labels": ["SchemaSurface"],
@@ -537,6 +544,14 @@
       "documentPath": "docs/documents/knowgrph-ui-ux-design-document.md"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-source-files-import-document",
+      "@type": "kg:Node",
+      "labels": ["Document"],
+      "name": ["knowgrph-source-files-import-document.md"],
+      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-source-files-import-document.md" },
+      "documentPath": "docs/documents/knowgrph-source-files-import-document.md"
+    },
+    {
       "@id": "node:knowgrph:doc:refactor-pipeline-cleanup",
       "@type": "kg:Node",
       "labels": ["Document"],
@@ -570,6 +585,7 @@
     { "@id": "edge:doc:metadata->metadata", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-metadata-document", "target": "node:schema:agenticrag:metadata", "label": "mapsTo" },
     { "@id": "edge:doc:schema->settings", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-schema-document", "target": "node:schema:agenticrag:settings", "label": "mapsTo" },
     { "@id": "edge:doc:renderer->canvas", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-renderer-document", "target": "node:schema:agenticrag:canvas", "label": "mapsTo" },
+    { "@id": "edge:doc:source-files-import->curation", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-source-files-import-document", "target": "node:schema:agenticrag:curation", "label": "mapsTo" },
     { "@id": "edge:doc:geospatial->geospatial", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-geospatial-mode-document", "target": "node:schema:agenticrag:geospatial", "label": "mapsTo" },
     { "@id": "edge:doc:orchestrator->orchestrator", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-orchestrator-document", "target": "node:schema:agenticrag:orchestrator", "label": "mapsTo" }
   ]

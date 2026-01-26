@@ -34,6 +34,23 @@
       "@type": "@id"
     }
   },
+  "@id": "rag:PromptShapingHeuristicsFramework",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Prompt-shaping heuristics framework (domain-agnostic)", "@language": "en-us" },
+    { "@value": "提示词整形启发式框架（领域无关）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a metadata-driven, reusable framework for prompt templates, detection heuristics, and processing patterns. Used as a structural reference for building domain-agnostic prompt systems and keeping transformations traceable across pipelines.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义用于提示词模板、检测启发式与处理模式的元数据驱动可复用框架。作为构建领域无关提示系统的结构参考，并用于在流水线中保持转换过程可追溯。",
+      "@language": "zh-cn"
+    }
+  ],
   "@graph": [
     {
       "@id": "PromptShapingFramework",

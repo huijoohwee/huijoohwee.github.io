@@ -6,6 +6,7 @@
     
     "ast": "https://huijoohwee.github.io/schema/AgenticRAG/v1/ast#",
     "kg": "https://huijoohwee.github.io/schema/AgenticRAG/v1/kg#",
+    "rag": "https://huijoohwee.github.io/schema/AgenticRAG/v1/rag#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -233,6 +234,24 @@
       ]
     }
   },
+
+  "@id": "rag:ASTTraversal",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.3.0",
+  "rdfs:label": [
+    { "@value": "AST traversal vocabulary (codebase indexing)", "@language": "en-us" },
+    { "@value": "AST 遍历词表（代码库索引）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a bilingual, domain-agnostic vocabulary for representing AST-derived code artifacts (module/class/method/function) as JSON-LD graph nodes, enabling reproducible codebase indexing and traceable reasoning over structure, control flow, and data flow.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义用于将 AST 派生的代码构件（模块/类/方法/函数）表示为 JSON-LD 图节点的双语、领域无关词表，以支持可复现的代码库索引与对结构、控制流和数据流的可追溯推理。",
+      "@language": "zh-cn"
+    }
+  ],
   
   "ontology": {
     "@id": "ast:ASTTraversalOntology",
@@ -313,45 +332,11 @@
         "en-us": "Module with UID, purpose, domain, imports, exports",
         "zh-cn": "模块，包含UID、目的、领域、导入、导出"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:module_ml_pipeline",
         "labels": ["ASTModule", "CodeArtifact"],
-        
-        "uid": "ml.pipeline",
-        
-        "ast_module": {
-          "name": "ml.pipeline",
-          "purpose": {
-            "en-us": "ML training pipeline orchestration and workflow management",
-            "zh-cn": "机器学习训练管道编排和工作流管理"
-          },
-          "domain": "mlops/training",
-          "imports": [
-            {"module": "numpy", "alias": "np", "type": "external"},
-            {"module": "torch", "symbols": ["nn", "optim"], "type": "external"},
-            {"module": "ml.data.loader", "symbols": ["DataLoader"], "type": "internal"}
-          ],
-          "exports": [
-            {"name": "TrainingPipeline", "type": "class"},
-            {"name": "PipelineConfig", "type": "dataclass"},
-            {"name": "run_training", "type": "function"}
-          ]
-        },
-        
-        "file_path": "src/ml/pipeline.py",
-        "line_range": {"start": 1, "end": 456},
-        
-        "complexity_metrics": {
-          "total_lines": 456,
-          "code_lines": 342,
-          "num_classes": 2,
-          "num_functions": 6,
-          "avg_function_complexity": 4.2
-        },
-        
-        "chunk_text": "ML training pipeline module. Contains TrainingPipeline class, PipelineConfig dataclass, run_training function.",
-        "code_embedding": [0.34, -0.67, 0.23, 0.89, -0.12]
+        "required": ["@id", "@type", "labels", "uid", "ast_module"],
+        "optional": ["file_path", "line_range", "complexity_metrics", "chunk_text", "embedding"]
       }
     },
     
@@ -360,49 +345,11 @@
         "en-us": "Class with UID, responsibility, inheritance, role, docstring",
         "zh-cn": "类，包含UID、职责、继承、角色、文档字符串"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:class_training_pipeline",
-        "labels": ["ASTClass", "BusinessLogic", "CodeArtifact"],
-        
-        "uid": "TrainingPipeline",
-        
-        "ast_class": {
-          "name": "TrainingPipeline",
-          "qualified_name": "ml.pipeline.TrainingPipeline",
-          "responsibility": {
-            "en-us": "Orchestrates ML model training workflow with data loading, model initialization, training loop, evaluation, checkpointing",
-            "zh-cn": "编排机器学习模型训练工作流，包括数据加载、模型初始化、训练循环、评估、检查点"
-          },
-          "inheritance": {
-            "base_classes": ["BaseTrainer"],
-            "interfaces": [],
-            "is_abstract": false
-          },
-          "role": {
-            "semantic_role": "business_logic",
-            "system_component": "training_orchestrator"
-          },
-          "docstring": {
-            "en-us": "Main training pipeline for ML models. Handles complete training workflow including data loading, model initialization, training loop with validation, checkpointing and early stopping, metrics logging and visualization.",
-            "zh-cn": "机器学习模型的主要训练管道。处理完整的训练工作流程，包括数据加载、模型初始化、带验证的训练循环、检查点和早停、指标记录和可视化。"
-          }
-        },
-        
-        "file_path": "src/ml/pipeline.py",
-        "line_range": {"start": 45, "end": 345},
-        
-        "complexity_metrics": {
-          "lines_of_code": 300,
-          "cyclomatic_complexity": 15,
-          "num_methods": 5,
-          "num_attributes": 4,
-          "num_public_methods": 3,
-          "num_private_methods": 2
-        },
-        
-        "chunk_text": "TrainingPipeline class orchestrates ML training. 5 methods, 4 attributes. Extends BaseTrainer.",
-        "code_embedding": [0.56, -0.23, 0.78, 0.12, -0.45]
+        "labels": ["ASTClass", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "ast_class"],
+        "optional": ["file_path", "line_range", "complexity_metrics", "chunk_text", "embedding"]
       }
     },
     
@@ -411,74 +358,11 @@
         "en-us": "Method with UID, action verb, signature, control flow, dependencies",
         "zh-cn": "方法，包含UID、动作动词、签名、控制流、依赖关系"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:method_train_epoch",
-        "labels": ["ASTMethod", "ASTFunction", "CoreLogic", "CodeArtifact"],
-        
-        "uid": "train_epoch",
-        "action_verb": "train",
-        
-        "ast_method": {
-          "name": "train_epoch",
-          "qualified_name": "ml.pipeline.TrainingPipeline.train_epoch",
-          "action": {
-            "en-us": "Execute single training epoch over dataset",
-            "zh-cn": "在数据集上执行单个训练周期"
-          },
-          "signature": "def train_epoch(self, epoch: int, data_loader: DataLoader) -> Dict[str, float]:",
-          "visibility": "public",
-          "is_async": false,
-          "dependencies": {
-            "calls": ["self.model.train", "self.optimizer.zero_grad", "self.optimizer.step", "loss.backward"],
-            "accesses": ["self.model", "self.optimizer", "self.criterion"]
-          },
-          "docstring": {
-            "en-us": "Train model for one epoch. Iterates through data_loader, computes loss, backpropagates, updates model parameters.",
-            "zh-cn": "训练模型一个周期。遍历data_loader，计算损失，反向传播，更新模型参数。"
-          }
-        },
-        
-        "control_flow": {
-          "num_branches": 2,
-          "num_loops": 2,
-          "num_conditions": 3,
-          "max_nesting_depth": 3,
-          "has_recursion": false,
-          "flow_description": {
-            "en-us": "Main loop over batches → Forward pass → Compute loss → Backward pass → Update weights → Conditional logging every N batches",
-            "zh-cn": "主循环遍历批次 → 前向传播 → 计算损失 → 反向传播 → 更新权重 → 每N个批次条件记录"
-          }
-        },
-        
-        "call_graph": {
-          "calls": [
-            {"function": "self.model.train", "line": 126, "type": "method"},
-            {"function": "self.optimizer.zero_grad", "line": 132, "type": "method"},
-            {"function": "self.criterion", "line": 134, "type": "callable"},
-            {"function": "loss.backward", "line": 135, "type": "method"},
-            {"function": "self.optimizer.step", "line": 136, "type": "method"},
-            {"function": "self._log_batch_metrics", "line": 144, "type": "private_method"}
-          ],
-          "called_by": [
-            {"function": "TrainingPipeline.fit", "count": 1},
-            {"function": "main", "count": 1}
-          ]
-        },
-        
-        "file_path": "src/ml/pipeline.py",
-        "line_range": {"start": 125, "end": 156},
-        
-        "complexity_metrics": {
-          "lines_of_code": 31,
-          "cyclomatic_complexity": 5,
-          "cognitive_complexity": 7,
-          "halstead_volume": 487.3,
-          "maintainability_index": 72.4
-        },
-        
-        "chunk_text": "train_epoch method trains model for one epoch. Iterates batches, computes loss, backpropagates, updates optimizer. Returns metrics dict. Complexity: cyclomatic 5, cognitive 7.",
-        "code_embedding": [0.78, -0.34, 0.45, 0.23, -0.67]
+        "labels": ["ASTMethod", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "action_verb", "ast_method"],
+        "optional": ["control_flow", "data_flow", "call_graph", "complexity_metrics", "file_path", "line_range", "chunk_text", "embedding"]
       }
     },
     
@@ -487,72 +371,11 @@
         "en-us": "Parameter with position, type, default, constraints, tooltip",
         "zh-cn": "参数，包含位置、类型、默认值、约束、工具提示"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:param_batch_size",
-        "labels": ["ASTParameter", "ConfigParameter"],
-        
-        "name": "batch_size",
-        "position": 3,
-        
-        "ast_parameter": {
-          "qualified_name": "ml.pipeline.TrainingPipeline.__init__.batch_size",
-          "kind": "keyword",
-          "is_required": false,
-          "is_variadic": false,
-          "is_keyword_only": false
-        },
-        
-        "type_annotation": {
-          "type": "int",
-          "is_optional": false,
-          "default_value": 32,
-          "constraints": {
-            "min": 1,
-            "max": 1024,
-            "typical_values": [16, 32, 64, 128, 256]
-          }
-        },
-        
-        "governance_metadata": {
-          "key": "batch_size",
-          "type": "int",
-          "value": 32,
-          "default": 32,
-          "min": 1,
-          "max": 1024,
-          "typical_values": [16, 32, 64, 128, 256],
-          "interval": "discrete",
-          "dependencies": ["GPU memory", "model size", "dataset size"],
-          "notes": {
-            "en-us": "Number of samples per training batch. Larger batches: faster training (parallel GPU), more memory, stable gradients. Smaller batches: less memory, noisy gradients, better generalization. Must fit in GPU memory. Powers of 2 often optimal.",
-            "zh-cn": "每个训练批次的样本数。较大批次：训练更快（并行GPU）、更多内存、稳定梯度。较小批次：更少内存、噪声梯度、更好泛化。必须适合GPU内存。2的幂次通常最优。"
-          },
-          "key_tooltip": {
-            "en-us": "Batch size → Samples per training iteration → Affects memory, speed, convergence",
-            "zh-cn": "批量大小 → 每次训练迭代的样本数 → 影响内存、速度、收敛"
-          },
-          "value_tooltip": {
-            "en-us": "Default: 32. Range: 1-1024. Higher=faster, more memory",
-            "zh-cn": "默认：32。范围：1-1024。更高=更快、更多内存"
-          },
-          "impact": {
-            "en-us": "Critical: affects memory usage, training speed, model convergence quality",
-            "zh-cn": "关键：影响内存使用、训练速度、模型收敛质量"
-          },
-          "validation": {
-            "en-us": "Must be positive integer. Check GPU memory capacity before setting",
-            "zh-cn": "必须是正整数。设置前检查GPU内存容量"
-          },
-          "export_shape": "scalar int",
-          "usage_context": {
-            "en-us": "Passed to DataLoader initialization, affects memory allocation",
-            "zh-cn": "传递给DataLoader初始化，影响内存分配"
-          }
-        },
-        
-        "chunk_text": "batch_size parameter: int, default 32, range 1-1024. Affects GPU memory, training speed.",
-        "embedding": [0.67, -0.12, 0.89, 0.34, -0.56]
+        "labels": ["ASTParameter"],
+        "required": ["@id", "@type", "labels", "name", "position", "ast_parameter"],
+        "optional": ["type_annotation", "governance_metadata", "chunk_text", "embedding"]
       }
     },
     
@@ -561,75 +384,11 @@
         "en-us": "Attribute with UID, type, scope, visibility, governance",
         "zh-cn": "属性，包含UID、类型、作用域、可见性、治理"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:attr_learning_rate",
-        "labels": ["ASTAttribute", "ConfigParameter", "Hyperparameter"],
-        
-        "uid": "learning_rate",
-        
-        "ast_attribute": {
-          "name": "learning_rate",
-          "qualified_name": "ml.pipeline.PipelineConfig.learning_rate",
-          "scope": "instance",
-          "visibility": "public",
-          "is_property": false,
-          "is_readonly": false,
-          "is_static": false,
-          "attribute_type": "field"
-        },
-        
-        "type_annotation": {
-          "type": "float",
-          "is_optional": false,
-          "default_value": 0.001,
-          "type_origin": "builtins"
-        },
-        
-        "governance_metadata": {
-          "key": "learning_rate",
-          "type": "float",
-          "value": 0.001,
-          "default": 0.001,
-          "min": 1e-6,
-          "max": 1.0,
-          "typical_range": [0.0001, 0.01],
-          "interval": "continuous",
-          "dependencies": ["optimizer", "model architecture"],
-          "notes": {
-            "en-us": "Learning rate for optimizer. Controls step size during gradient descent. Too high: unstable training, divergence. Too low: slow convergence. Typical: 0.001 for Adam, 0.01 for SGD. Use learning rate scheduling for better results.",
-            "zh-cn": "优化器的学习率。控制梯度下降期间的步长。太高：训练不稳定、发散。太低：收敛缓慢。典型值：Adam为0.001，SGD为0.01。使用学习率调度以获得更好的结果。"
-          },
-          "key_tooltip": {
-            "en-us": "Learning rate → Controls optimization step size → Affects training speed and stability",
-            "zh-cn": "学习率 → 控制优化步长 → 影响训练速度和稳定性"
-          },
-          "value_tooltip": {
-            "en-us": "Default: 0.001. Range: 1e-6 to 1.0. Higher=faster but unstable",
-            "zh-cn": "默认：0.001。范围：1e-6到1.0。更高=更快但不稳定"
-          },
-          "impact": {
-            "en-us": "Critical for training. Affects convergence speed and final accuracy",
-            "zh-cn": "对训练至关重要。影响收敛速度和最终准确度"
-          },
-          "validation": {
-            "en-us": "Must be positive. Typical: 0.0001-0.01. Use learning rate finder for optimal value",
-            "zh-cn": "必须为正。典型：0.0001-0.01。使用学习率查找器获取最优值"
-          },
-          "export_shape": "scalar float",
-          "usage_context": {
-            "en-us": "Set in config, passed to optimizer initialization as lr parameter",
-            "zh-cn": "在配置中设置，作为lr参数传递给优化器初始化"
-          }
-        },
-        
-        "semantic_role": "hyperparameter",
-        
-        "file_path": "src/ml/pipeline.py",
-        "line_range": {"start": 23, "end": 23},
-        
-        "chunk_text": "learning_rate attribute: float = 0.001. Controls optimizer step size. Range: 1e-6 to 1.0.",
-        "embedding": [0.45, -0.89, 0.23, 0.56, -0.12]
+        "labels": ["ASTAttribute"],
+        "required": ["@id", "@type", "labels", "uid", "ast_attribute"],
+        "optional": ["type_annotation", "governance_metadata", "semantic_role", "file_path", "line_range", "chunk_text", "embedding"]
       }
     },
     
@@ -638,57 +397,11 @@
         "en-us": "Local variable with data flow and def-use chains",
         "zh-cn": "局部变量，包含数据流和定义-使用链"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:var_loss",
         "labels": ["ASTLocalVariable"],
-        
-        "name": "loss",
-        
-        "local_variable": {
-          "qualified_name": "ml.pipeline.TrainingPipeline.train_epoch.loss",
-          "scope": "function",
-          "definition_line": 134,
-          "use_lines": [135, 138, 144]
-        },
-        
-        "type_annotation": {
-          "type": "torch.Tensor",
-          "inferred": true
-        },
-        
-        "data_flow": {
-          "definition": {
-            "line": 134,
-            "statement": "loss = self.criterion(outputs, labels)",
-            "source_variables": ["outputs", "labels"]
-          },
-          "uses": [
-            {
-              "line": 135,
-              "statement": "loss.backward()",
-              "usage_type": "method_call"
-            },
-            {
-              "line": 138,
-              "statement": "total_loss += loss.item()",
-              "usage_type": "value_read"
-            },
-            {
-              "line": 144,
-              "statement": "self._log_batch_metrics(epoch, batch_idx, loss.item())",
-              "usage_type": "argument"
-            }
-          ],
-          "def_use_chain": {
-            "definition": 134,
-            "uses": [135, 138, 144],
-            "reaches_end": false
-          }
-        },
-        
-        "chunk_text": "loss local variable: torch.Tensor. Defined at line 134 from criterion output. Used for backward(), accumulation, logging.",
-        "embedding": [0.23, -0.45, 0.67, 0.89, -0.34]
+        "required": ["@id", "@type", "labels", "name", "local_variable"],
+        "optional": ["type_annotation", "data_flow", "chunk_text", "embedding"]
       }
     },
     
@@ -697,61 +410,11 @@
         "en-us": "Standalone function with UID, calls, complexity",
         "zh-cn": "独立函数，包含UID、调用、复杂度"
       },
-      "example": {
+      "node_shape": {
         "@type": "kg:Node",
-        "@id": "node:func_run_training",
-        "labels": ["ASTFunction", "EntryPoint", "CodeArtifact"],
-        
-        "uid": "run_training",
-        
-        "ast_function": {
-          "name": "run_training",
-          "qualified_name": "ml.pipeline.run_training",
-          "action": {
-            "en-us": "Entry point for training workflow execution",
-            "zh-cn": "训练工作流执行的入口点"
-          },
-          "signature": "def run_training(config_path: str) -> None:",
-          "visibility": "public",
-          "is_async": false,
-          "is_generator": false,
-          "standalone": true,
-          "docstring": {
-            "en-us": "Run complete training workflow from config file",
-            "zh-cn": "从配置文件运行完整的训练工作流"
-          }
-        },
-        
-        "call_graph": {
-          "calls": [
-            {"function": "load_config", "line": 402},
-            {"function": "TrainingPipeline", "line": 403},
-            {"function": "pipeline.fit", "line": 404}
-          ],
-          "called_by": [
-            {"function": "main", "count": 1}
-          ]
-        },
-        
-        "complexity_metrics": {
-          "lines_of_code": 12,
-          "cyclomatic_complexity": 2,
-          "cognitive_complexity": 3
-        },
-        
-        "type_annotation": {
-          "return_type": "None",
-          "return_description": {
-            "en-us": "No return value, writes checkpoints to disk",
-            "zh-cn": "无返回值，将检查点写入磁盘"
-          }
-        },
-        
-        "file_path": "src/ml/pipeline.py",
-        "line_range": {"start": 400, "end": 412},
-        
-        "chunk_text": "run_training function: entry point for training. Loads config, creates pipeline, runs fit. Standalone function.",
-        "code_embedding": [0.89, -0.23, 0.56, 0.12, -0.67]
+        "labels": ["ASTFunction", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "ast_function"],
+        "optional": ["call_graph", "complexity_metrics", "type_annotation", "file_path", "line_range", "chunk_text", "embedding"]
       }
     }
   },

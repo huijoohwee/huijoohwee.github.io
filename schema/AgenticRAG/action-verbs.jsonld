@@ -1,0 +1,36 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:ActionVerbLexicon",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Action verb lexicon (documentation + UI copy)", "@language": "en-us" },
+    { "@value": "动作动词词库（文档与 UI 文案）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a small, domain-agnostic action-verb vocabulary for Role → Actions → Outcome phrasing in docs and UI. Verbs are used as the leading word in each action line to keep workflows readable, testable, and consistent across repositories.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "为文档与 UI 中的 Role → Actions → Outcome 表述提供小型、领域无关的动作动词词表。动词作为每条 action 的首词，用于保持工作流可读、可测且跨仓库一致。",
+      "@language": "zh-cn"
+    }
+  ],
+  "verbs": ["Add", "Support", "Enable", "Provide", "Showcase", "Implement", "Maintain", "Refactor", "Render", "Evaluate", "Unify", "Prevent", "Ensure", "Make"],
+  "categories": {
+    "outward_facing": ["Add", "Support", "Enable", "Provide", "Showcase"],
+    "internal_change": ["Implement", "Maintain", "Refactor", "Render", "Evaluate", "Unify"],
+    "governance": ["Prevent", "Ensure", "Make"]
+  },
+  "selection_rules": {
+    "action_line_shape": "Verb + object + via method (SVO), avoid repetition, keep neutral tone",
+    "max_words_per_action": 20,
+    "prefer_config_driven": true,
+    "avoid_domain_terms": true
+  },
+  "documentation_paths": [
+    "guidelines/verb‑selection-cheat-sheet.md",
+    "guidelines/documentation-guidelines.md"
+  ]
+}

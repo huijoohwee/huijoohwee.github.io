@@ -4,12 +4,17 @@
   "@type": "rag:Directive",
   "schemaVersion": "1.0.0",
   "rdfs:label": [
-    { "@value": "Neutrality and Generality Constraints", "@language": "en-us" }
+    { "@value": "Neutrality and generality constraints", "@language": "en-us" },
+    { "@value": "中立性与通用性约束", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
       "@value": "Directive describing neutrality constraints for AgenticRAG configurations, tooltips, and algorithms: keep descriptions neutral, context-aware, schema-aware, semantic-aware, domain-agnostic, project-agnostic, metadata-driven, dataset-agnostic, and avoid hard-coded file paths or presets. All math and similarity scoring must be generic and independent of any specific dataset or repository.",
       "@language": "en-us"
+    },
+    {
+      "@value": "用于描述 AgenticRAG 配置、工具提示与算法的中立性约束：保持描述中立、上下文感知、schema 感知、语义感知、领域无关、项目无关、元数据驱动、数据集无关，并避免硬编码文件路径或预设。所有数学与相似度计算必须保持通用，不依赖任何特定数据集或仓库。",
+      "@language": "zh-cn"
     }
   ],
   "constraints": {
@@ -27,7 +32,9 @@
     "auto_suggest_friendly": true
   },
   "documentation_paths": [
-    "knowgrph/docs/guidelines/codebase-neutrality-guidelines.md",
-    "knowgrph/docs/guidelines/codebase-maintainability-guidelines.md"
+    "guidelines/codebase-neutrality-guidelines.md",
+    "guidelines/codebase-maintainability-guidelines.md",
+    "guidelines/schema-guidelines.md",
+    "guidelines/project-rules.md"
   ]
 }

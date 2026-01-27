@@ -43,6 +43,7 @@ schema/AgenticRAG/
 ├── prompt-shaping-heuristics-framework.jsonld # Prompt shaping heuristics (agentic, domain-agnostic)
 ├── ast-traversal.jsonld                      # AST traversal surface (code analysis mode)
 ├── aie-book-chapter-snippets.jsonld          # Example ingest surface (snippets)
+├── agenticrag-guidelines-and-surfaces-map.graph.jsonld # Guidelines ↔ surfaces map (sync artifact)
 ├── knowgrph-documents-map.graph.jsonld      # Knowgrph docs/documents ↔ schema surfaces map (sync artifact)
 ├── example-graph.jsonld                      # Complete working example graph
 └── example-lean-startup-layer-modes.jsonld   # Example layer modes (Lean Startup tags + palette)
@@ -50,6 +51,26 @@ schema/AgenticRAG/
 <!-- SCHEMA_FILES_END -->
 
 ---
+
+## 🔄 Docs Sync (Knowgrph)
+
+This folder stays in sync with Knowgrph documentation via a deterministic sync script:
+
+- **Source:** `/Users/huijoohwee/Documents/GitHub/knowgrph/docs/documents`
+- **Target artifact:** `schema/AgenticRAG/knowgrph-documents-map.graph.jsonld`
+- **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
+
+### Run (write)
+
+```bash
+python3 schema/AgenticRAG/sync_map.py --mode write
+```
+
+### Run (check / CI)
+
+```bash
+python3 schema/AgenticRAG/sync_map.py --mode check
+```
 
 ## 🚀 Quick Start
 
@@ -158,6 +179,13 @@ Parser emits Graph JSON-LD where each extracted block carries provenance:
   metadata.timestamp
 ↓
 Renderers can use this metadata to highlight and preview source markdown without changing the core schema
+
+Preview rendering hooks (UI-level, schema-neutral):
+- Fenced `mermaid` blocks may render as diagrams; per-block YAML config may be supported inside the fence.
+- Fenced `geojson` blocks may render as maps; `json` fences must be explicitly detected as GeoJSON (do not assume all JSON is GeoJSON).
+- GeoJSON map previews should keep a stable map container element across deferred-load states so they don’t require a remount/toggle to appear.
+- In Viewer surfaces, GeoJSON-renderable blocks follow the global Beside/Inline/Render mode; in Presentation surfaces, GeoJSON-renderable blocks (including `json` fences recognized as GeoJSON) may default to Render even when the global mode is Inline.
+- GeoJSON previews require an injected renderer hook (e.g., `geoDatasetIntegration.renderGeoJsonFeatureCollection`); if unavailable, surfaces should degrade gracefully with a compact error bar (not a full-height panel).
 ```
 
 ### **Phase 3: Produce**

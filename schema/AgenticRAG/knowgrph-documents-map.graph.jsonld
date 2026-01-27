@@ -4,14 +4,22 @@
   "metadata": {
     "schemaVersion": "1.0.1",
     "source": "system:docs-sync",
-    "description": "Structural-only mapping between Knowgrph docs/documents and AgenticRAG schema directive surfaces."
+    "description": "Structural-only mapping between Knowgrph docs/documents and AgenticRAG schema directive surfaces.",
+    "languages": [
+      "en-us",
+      "zh-cn"
+    ]
   },
   "@graph": [
     {
       "@id": "node:schema:agenticrag:readme",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["AgenticRAG README"],
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "AgenticRAG README"
+      ],
       "properties": {
         "repo": "huijoohwee.github.io",
         "relPath": "schema/AgenticRAG/README.md",
@@ -22,8 +30,12 @@
     {
       "@id": "node:schema:agenticrag:context",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["AgenticRAG context.jsonld"],
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "AgenticRAG context.jsonld"
+      ],
       "properties": {
         "repo": "huijoohwee.github.io",
         "relPath": "schema/AgenticRAG/v1/context.jsonld",
@@ -34,567 +46,1213 @@
     {
       "@id": "node:schema:agenticrag:node-schema",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["node-schema.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/node-schema.jsonld", "surface": "node" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "node-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/node-schema.jsonld",
+        "surface": "node"
+      }
     },
     {
       "@id": "node:schema:agenticrag:edge-schema",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["edge-schema.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/edge-schema.jsonld", "surface": "edge" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "edge-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/edge-schema.jsonld",
+        "surface": "edge"
+      }
     },
     {
       "@id": "node:schema:agenticrag:graph-schema",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["graph-schema.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/graph-schema.jsonld", "surface": "graph" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "graph-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/graph-schema.jsonld",
+        "surface": "graph"
+      }
     },
     {
       "@id": "node:schema:agenticrag:metadata",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["metadata.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/metadata.jsonld", "surface": "metadata" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "metadata.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/metadata.jsonld",
+        "surface": "metadata"
+      }
     },
     {
       "@id": "node:schema:agenticrag:neutrality",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["neutrality.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/neutrality.jsonld", "surface": "neutrality" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "neutrality.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/neutrality.jsonld",
+        "surface": "neutrality"
+      }
     },
     {
       "@id": "node:schema:agenticrag:colors",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["colors.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/colors.jsonld", "surface": "colors" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "colors.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/colors.jsonld",
+        "surface": "colors"
+      }
     },
     {
       "@id": "node:schema:agenticrag:canvas",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["canvas.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/canvas.jsonld", "surface": "canvas" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "canvas.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/canvas.jsonld",
+        "surface": "canvas"
+      }
     },
     {
       "@id": "node:schema:agenticrag:panels",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["panels.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/panels.jsonld", "surface": "panels" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "panels.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/panels.jsonld",
+        "surface": "panels"
+      }
     },
     {
       "@id": "node:schema:agenticrag:curation",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["curation.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/curation.jsonld", "surface": "curation" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "curation.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/curation.jsonld",
+        "surface": "curation"
+      }
     },
     {
       "@id": "node:schema:agenticrag:settings",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["settings.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/settings.jsonld", "surface": "settings" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "settings.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/settings.jsonld",
+        "surface": "settings"
+      }
     },
     {
       "@id": "node:schema:agenticrag:semantic-mode",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["semantic-mode.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/semantic-mode.jsonld", "surface": "semantic-mode" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "semantic-mode.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/semantic-mode.jsonld",
+        "surface": "semantic-mode"
+      }
     },
     {
       "@id": "node:schema:agenticrag:keyword-mode",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["keyword-mode.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/keyword-mode.jsonld", "surface": "keyword-mode" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "keyword-mode.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/keyword-mode.jsonld",
+        "surface": "keyword-mode"
+      }
     },
     {
       "@id": "node:schema:agenticrag:geospatial",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["geospatial.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/geospatial.jsonld", "surface": "geospatial" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "geospatial.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/geospatial.jsonld",
+        "surface": "geospatial"
+      }
     },
     {
       "@id": "node:schema:agenticrag:youtube",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["youtube.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/youtube.jsonld", "surface": "youtube" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "youtube.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/youtube.jsonld",
+        "surface": "youtube"
+      }
     },
     {
       "@id": "node:schema:agenticrag:markdown",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["markdown.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/markdown.jsonld", "surface": "markdown" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "markdown.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/markdown.jsonld",
+        "surface": "markdown"
+      }
     },
     {
       "@id": "node:schema:agenticrag:parser",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["parser.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/parser.jsonld", "surface": "parser" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "parser.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/parser.jsonld",
+        "surface": "parser"
+      }
     },
     {
       "@id": "node:schema:agenticrag:pipeline",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["pipeline.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/pipeline.jsonld", "surface": "pipeline" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "pipeline.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/pipeline.jsonld",
+        "surface": "pipeline"
+      }
     },
     {
       "@id": "node:schema:agenticrag:workflow",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["workflow.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/workflow.jsonld", "surface": "workflow" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "workflow.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/workflow.jsonld",
+        "surface": "workflow"
+      }
     },
     {
       "@id": "node:schema:agenticrag:orchestrator",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["orchestrator.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/orchestrator.jsonld", "surface": "orchestrator" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "orchestrator.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/orchestrator.jsonld",
+        "surface": "orchestrator"
+      }
     },
     {
       "@id": "node:schema:agenticrag:graphrag-pipeline",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["graphrag-pipeline.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/graphrag-pipeline.jsonld", "surface": "graphrag-pipeline" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "graphrag-pipeline.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/graphrag-pipeline.jsonld",
+        "surface": "graphrag-pipeline"
+      }
     },
     {
       "@id": "node:schema:agenticrag:roles-actions-outcomes",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["roles-actions-outcomes-schema.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld", "surface": "roles-actions-outcomes" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "roles-actions-outcomes-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld",
+        "surface": "roles-actions-outcomes"
+      }
     },
     {
       "@id": "node:schema:agenticrag:documentation",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["documentation.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/documentation.jsonld", "surface": "documentation" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "documentation.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/documentation.jsonld",
+        "surface": "documentation"
+      }
     },
     {
       "@id": "node:schema:agenticrag:stage-metrics",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["stage-metrics.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/stage-metrics.jsonld", "surface": "stage-metrics" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "stage-metrics.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/stage-metrics.jsonld",
+        "surface": "stage-metrics"
+      }
     },
     {
       "@id": "node:schema:agenticrag:system-design-pattern",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["system-design-pattern.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/system-design-pattern.jsonld", "surface": "system-design-pattern" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "system-design-pattern.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/system-design-pattern.jsonld",
+        "surface": "system-design-pattern"
+      }
     },
     {
       "@id": "node:schema:agenticrag:prompt-shaping",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["prompt-shaping-heuristics-framework.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/prompt-shaping-heuristics-framework.jsonld", "surface": "prompt-shaping" }
-    },
-
-    {
-      "@id": "node:knowgrph:doc:knowgrph-api-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-api-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-api-document.md" },
-      "documentPath": "docs/documents/knowgrph-api-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-backend-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-backend-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-backend-document.md" },
-      "documentPath": "docs/documents/knowgrph-backend-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-canvas-default-initialization-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-canvas-default-initialization-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-canvas-default-initialization-document.md" },
-      "documentPath": "docs/documents/knowgrph-canvas-default-initialization-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-canvas-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-canvas-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-canvas-document.md" },
-      "documentPath": "docs/documents/knowgrph-canvas-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-codebase-index-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-codebase-index-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-codebase-index-document.md" },
-      "documentPath": "docs/documents/knowgrph-codebase-index-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-codebase-semantics-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-codebase-semantics-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-codebase-semantics-document.md" },
-      "documentPath": "docs/documents/knowgrph-codebase-semantics-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-demo-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-demo-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-demo-document.md" },
-      "documentPath": "docs/documents/knowgrph-demo-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-design-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-design-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-design-document.md" },
-      "documentPath": "docs/documents/knowgrph-design-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-disjoint-force-frontmatter-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-disjoint-force-frontmatter-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md" },
-      "documentPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-fields-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-fields-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-fields-document.md" },
-      "documentPath": "docs/documents/knowgrph-fields-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-frontend-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-frontend-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-frontend-document.md" },
-      "documentPath": "docs/documents/knowgrph-frontend-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-geospatial-mode-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-geospatial-mode-document.md" },
-      "documentPath": "docs/documents/knowgrph-geospatial-mode-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-graphrag-pipeline-in-action-prd-tad",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-graphrag-pipeline-in-action-prd-tad.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md" },
-      "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-ingestor-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-ingestor-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-ingestor-document.md" },
-      "documentPath": "docs/documents/knowgrph-ingestor-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-llm-prompt-contract.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-llm-prompt-contract.md" },
-      "documentPath": "docs/documents/knowgrph-llm-prompt-contract.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-local-storage-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-local-storage-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-local-storage-document.md" },
-      "documentPath": "docs/documents/knowgrph-local-storage-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-mapping-stack-prd-tad.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md" },
-      "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-markdown-processing-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-markdown-processing-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-markdown-processing-document.md" },
-      "documentPath": "docs/documents/knowgrph-markdown-processing-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-markdown-slide-styling-guidelines",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-markdown-slide-styling-guidelines.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md" },
-      "documentPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mermaid-frontmatter-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-mermaid-frontmatter-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-mermaid-frontmatter-document.md" },
-      "documentPath": "docs/documents/knowgrph-mermaid-frontmatter-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mermaid-layout-configuration",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-mermaid-layout-configuration.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-mermaid-layout-configuration.md" },
-      "documentPath": "docs/documents/knowgrph-mermaid-layout-configuration.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mermaid-layout-configuration-examples",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-mermaid-layout-configuration-examples.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-mermaid-layout-configuration-examples.md" },
-      "documentPath": "docs/documents/knowgrph-mermaid-layout-configuration-examples.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-metadata-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-metadata-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-metadata-document.md" },
-      "documentPath": "docs/documents/knowgrph-metadata-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-native-overlap-resolution-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-native-overlap-resolution-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-native-overlap-resolution-document.md" },
-      "documentPath": "docs/documents/knowgrph-native-overlap-resolution-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-ontology-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-ontology-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-ontology-document.md" },
-      "documentPath": "docs/documents/knowgrph-ontology-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-orchestrator-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-orchestrator-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-orchestrator-document.md" },
-      "documentPath": "docs/documents/knowgrph-orchestrator-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-parser-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-parser-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-parser-document.md" },
-      "documentPath": "docs/documents/knowgrph-parser-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-pipeline-deep-dive-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-pipeline-deep-dive-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-pipeline-deep-dive-document.md" },
-      "documentPath": "docs/documents/knowgrph-pipeline-deep-dive-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-pipeline-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-pipeline-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-pipeline-document.md" },
-      "documentPath": "docs/documents/knowgrph-pipeline-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-pipeline-map.graph",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-pipeline-map.graph.json"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-pipeline-map.graph.json" },
-      "documentPath": "docs/documents/knowgrph-pipeline-map.graph.json"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-port-handles-and-subgraph-layout-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-port-handles-and-subgraph-layout-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md" },
-      "documentPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-prd",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-prd.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-prd.md" },
-      "documentPath": "docs/documents/knowgrph-prd.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-renderer-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-renderer-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-renderer-document.md" },
-      "documentPath": "docs/documents/knowgrph-renderer-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-schema-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-schema-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-schema-document.md" },
-      "documentPath": "docs/documents/knowgrph-schema-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-schema-document.tree-mermaid-appendix",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-schema-document.tree-mermaid-appendix.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-schema-document.tree-mermaid-appendix.md" },
-      "documentPath": "docs/documents/knowgrph-schema-document.tree-mermaid-appendix.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-semantic-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-semantic-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-semantic-document.md" },
-      "documentPath": "docs/documents/knowgrph-semantic-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-shared-utils-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-shared-utils-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-shared-utils-document.md" },
-      "documentPath": "docs/documents/knowgrph-shared-utils-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-settings-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-settings-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-settings-document.md" },
-      "documentPath": "docs/documents/knowgrph-settings-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-system-design-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-system-design-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-system-design-document.md" },
-      "documentPath": "docs/documents/knowgrph-system-design-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-tad",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-tad.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-tad.md" },
-      "documentPath": "docs/documents/knowgrph-tad.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-testing-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-testing-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-testing-document.md" },
-      "documentPath": "docs/documents/knowgrph-testing-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-token-and-budget-management-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-token-and-budget-management-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-token-and-budget-management-document.md" },
-      "documentPath": "docs/documents/knowgrph-token-and-budget-management-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-ui-ux-design-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-ui-ux-design-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-ui-ux-design-document.md" },
-      "documentPath": "docs/documents/knowgrph-ui-ux-design-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-source-files-import-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-source-files-import-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-source-files-import-document.md" },
-      "documentPath": "docs/documents/knowgrph-source-files-import-document.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:refactor-pipeline-cleanup",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["refactor-pipeline-cleanup.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/refactor-pipeline-cleanup.md" },
-      "documentPath": "docs/documents/refactor-pipeline-cleanup.md"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-graph-data-curation-document",
-      "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["knowgrph-graph-data-curation-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/knowgrph-graph-data-curation-document.md" },
-      "documentPath": "docs/documents/knowgrph-graph-data-curation-document.md"
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "prompt-shaping-heuristics-framework.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/prompt-shaping-heuristics-framework.jsonld",
+        "surface": "prompt-shaping"
+      }
     },
     {
       "@id": "node:knowgrph:doc:curagrph-graph-data-curation-document",
       "@type": "kg:Node",
-      "labels": ["Document"],
-      "name": ["curagrph-graph-data-curation-document.md"],
-      "properties": { "repo": "knowgrph", "relPath": "docs/documents/curagrph-graph-data-curation-document.md" },
-      "documentPath": "docs/documents/curagrph-graph-data-curation-document.md"
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "curagrph-graph-data-curation-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/curagrph-graph-data-curation-document.md"
+      },
+      "documentPath": "docs/documents/curagrph-graph-data-curation-document.md",
+      "language": "en-us"
     },
-
-    { "@id": "edge:doc:api->readme", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-api-document", "target": "node:schema:agenticrag:readme", "label": "mapsTo" },
-    { "@id": "edge:doc:pipeline->pipeline", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-pipeline-document", "target": "node:schema:agenticrag:pipeline", "label": "mapsTo" },
-    { "@id": "edge:doc:pipeline->graphrag", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-pipeline-document", "target": "node:schema:agenticrag:graphrag-pipeline", "label": "mapsTo" },
-    { "@id": "edge:doc:parser->parser", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-parser-document", "target": "node:schema:agenticrag:parser", "label": "mapsTo" },
-    { "@id": "edge:doc:parser->markdown", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-parser-document", "target": "node:schema:agenticrag:markdown", "label": "mapsTo" },
-    { "@id": "edge:doc:youtube->youtube", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-parser-document", "target": "node:schema:agenticrag:youtube", "label": "mapsTo" },
-    { "@id": "edge:doc:metadata->metadata", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-metadata-document", "target": "node:schema:agenticrag:metadata", "label": "mapsTo" },
-    { "@id": "edge:doc:schema->settings", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-schema-document", "target": "node:schema:agenticrag:settings", "label": "mapsTo" },
-    { "@id": "edge:doc:renderer->canvas", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-renderer-document", "target": "node:schema:agenticrag:canvas", "label": "mapsTo" },
-    { "@id": "edge:doc:source-files-import->curation", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-source-files-import-document", "target": "node:schema:agenticrag:curation", "label": "mapsTo" },
-    { "@id": "edge:doc:geospatial->geospatial", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-geospatial-mode-document", "target": "node:schema:agenticrag:geospatial", "label": "mapsTo" },
-    { "@id": "edge:doc:orchestrator->orchestrator", "@type": "kg:Edge", "source": "node:knowgrph:doc:knowgrph-orchestrator-document", "target": "node:schema:agenticrag:orchestrator", "label": "mapsTo" }
+    {
+      "@id": "node:knowgrph:doc:knowgrph-api-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-api-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-api-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-api-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-backend-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-backend-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-backend-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-backend-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-canvas-default-initialization-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-canvas-default-initialization-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-canvas-default-initialization-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-canvas-default-initialization-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-canvas-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-canvas-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-canvas-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-canvas-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-codebase-index-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-codebase-index-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-codebase-index-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-codebase-index-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-codebase-semantics-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-codebase-semantics-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-codebase-semantics-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-codebase-semantics-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-demo-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-demo-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-demo-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-demo-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-design-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-design-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-design-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-disjoint-force-frontmatter-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-disjoint-force-frontmatter-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-fields-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-fields-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-fields-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-fields-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-frontend-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-frontend-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-frontend-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-frontend-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-geospatial-mode-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-geospatial-mode-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-geospatial-mode-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graph-data-curation-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graph-data-curation-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graph-data-curation-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graph-data-curation-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graphrag-pipeline-in-action-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graphrag-pipeline-in-action-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-ingestor-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ingestor-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ingestor-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ingestor-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-llm-prompt-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-llm-prompt-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-llm-prompt-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-local-storage-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-local-storage-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-local-storage-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-local-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mapping-stack-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-processing-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-processing-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-processing-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-processing-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-slide-styling-guidelines",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-slide-styling-guidelines.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mermaid-frontmatter-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mermaid-frontmatter-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mermaid-frontmatter-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mermaid-frontmatter-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mermaid-layout-configuration-examples",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mermaid-layout-configuration-examples.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mermaid-layout-configuration-examples.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mermaid-layout-configuration-examples.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mermaid-layout-configuration",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mermaid-layout-configuration.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mermaid-layout-configuration.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mermaid-layout-configuration.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-metadata-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-metadata-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-metadata-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-metadata-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-native-overlap-resolution-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-native-overlap-resolution-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-native-overlap-resolution-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-native-overlap-resolution-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-ontology-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ontology-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ontology-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ontology-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-orchestrator-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-orchestrator-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-orchestrator-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-orchestrator-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-parser-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-parser-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-parser-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-parser-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pipeline-deep-dive-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pipeline-deep-dive-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pipeline-deep-dive-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pipeline-deep-dive-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pipeline-map.graph",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pipeline-map.graph.json"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pipeline-map.graph.json"
+      },
+      "documentPath": "docs/documents/knowgrph-pipeline-map.graph.json",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-port-handles-and-subgraph-layout-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-port-handles-and-subgraph-layout-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-prd",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-prd.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-prd.md"
+      },
+      "documentPath": "docs/documents/knowgrph-prd.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-renderer-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-renderer-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-renderer-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-renderer-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-schema-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-schema-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-schema-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-schema-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-schema-document.tree-mermaid-appendix",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-schema-document.tree-mermaid-appendix.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-schema-document.tree-mermaid-appendix.md"
+      },
+      "documentPath": "docs/documents/knowgrph-schema-document.tree-mermaid-appendix.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-semantic-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-semantic-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-semantic-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-semantic-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-settings-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-settings-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-settings-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-settings-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-shared-utils-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-shared-utils-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-shared-utils-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-shared-utils-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-source-files-import-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-source-files-import-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-source-files-import-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-source-files-import-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-system-design-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-system-design-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-system-design-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-system-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-testing-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-testing-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-testing-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-testing-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-token-and-budget-management-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-token-and-budget-management-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-token-and-budget-management-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-token-and-budget-management-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-ui-ux-design-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ui-ux-design-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ui-ux-design-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ui-ux-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:refactor-pipeline-cleanup",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "refactor-pipeline-cleanup.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/refactor-pipeline-cleanup.md"
+      },
+      "documentPath": "docs/documents/refactor-pipeline-cleanup.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "edge:doc:api->readme",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-api-document",
+      "target": "node:schema:agenticrag:readme",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:geospatial->geospatial",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
+      "target": "node:schema:agenticrag:geospatial",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:metadata->metadata",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-metadata-document",
+      "target": "node:schema:agenticrag:metadata",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:orchestrator->orchestrator",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-orchestrator-document",
+      "target": "node:schema:agenticrag:orchestrator",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:parser->markdown",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-parser-document",
+      "target": "node:schema:agenticrag:markdown",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:parser->parser",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-parser-document",
+      "target": "node:schema:agenticrag:parser",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:pipeline->graphrag",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-pipeline-document",
+      "target": "node:schema:agenticrag:graphrag-pipeline",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:pipeline->pipeline",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-pipeline-document",
+      "target": "node:schema:agenticrag:pipeline",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:renderer->canvas",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-renderer-document",
+      "target": "node:schema:agenticrag:canvas",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:schema->settings",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-schema-document",
+      "target": "node:schema:agenticrag:settings",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:source-files-import->curation",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-source-files-import-document",
+      "target": "node:schema:agenticrag:curation",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:youtube->youtube",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-parser-document",
+      "target": "node:schema:agenticrag:youtube",
+      "label": "mapsTo"
+    }
   ]
 }

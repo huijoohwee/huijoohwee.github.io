@@ -68,6 +68,68 @@
         "@value": "New Source File 创建新的空 Markdown 源文件，选中它，并打开 BottomPanel → Curation → Markdown（Viewer 模式）。",
         "@language": "zh-cn"
       }
-    ]
+    ],
+    "uiPath0": [
+      {
+        "@value": "ui-path-0 is the canonical navigation target for Markdown curation: BottomPanel → Curation → Markdown (Editor/Viewer/Presentation). Use this single stable path across repos and surfaces to prevent drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "ui-path-0 是 Markdown 策展的规范导航目标：BottomPanel → Curation → Markdown（Editor/Viewer/Presentation）。跨仓库/跨表面统一使用该稳定路径以避免漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "localMarkdownCrud": {
+      "openFolder": [
+        {
+          "@value": "Open Folder requests a user-selected local directory and enumerates Markdown source files; folder/file hierarchy is derived from `/` segments in file names.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "Open Folder 请求用户选择本地目录并枚举 Markdown 源文件；文件夹/文件层级由文件名中的 `/` 段派生。",
+          "@language": "zh-cn"
+        }
+      ],
+      "newFolder": [
+        {
+          "@value": "New Folder creates a new local directory under the user-granted handle when writable access is available; otherwise it should gracefully fall back (e.g., instruct the user to create the folder externally).",
+          "@language": "en-us"
+        },
+        {
+          "@value": "New Folder 在具备可写权限时于用户授权的句柄下创建新目录；否则需优雅降级（例如提示用户在外部创建文件夹）。",
+          "@language": "zh-cn"
+        }
+      ],
+      "newSourceFile": [
+        {
+          "@value": "New Source File creates a new empty `.md` file in the selected local folder when writable access is available; it then selects the file and opens Viewer/Presentation using the same canonical text buffer as Editor.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "New Source File 在具备可写权限时于选定本地文件夹内创建空的 `.md` 文件；随后选中文件，并使用与 Editor 相同的规范文本缓冲区打开 Viewer/Presentation。",
+          "@language": "zh-cn"
+        }
+      ],
+      "browserConsistency": [
+        {
+          "@value": "Prefer the Web File System Access API (e.g., showDirectoryPicker) when supported for writable local CRUD; otherwise use a directory input fallback (e.g., webkitdirectory) for read-only enumeration. Avoid silent capability mismatches by surfacing read-only vs writable state in UI.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "优先使用 Web File System Access API（如 showDirectoryPicker）以获得可写的本地 CRUD；不支持时使用目录选择回退（如 webkitdirectory）进行只读枚举。避免静默能力不一致，应在 UI 中明确展示只读与可写状态。",
+          "@language": "zh-cn"
+        }
+      ],
+      "textSourceOfTruth": [
+        {
+          "@value": "Editor, Viewer, and Presentation must render from the same single source of truth text buffer; selecting a source file updates this buffer first, then derives preview tokens/slides from it so mode switches never show stale/empty content.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "Editor、Viewer 与 Presentation 必须使用同一个规范文本缓冲区作为单一真源；选择源文件时先更新该缓冲区，再由其派生预览 tokens/幻灯片，确保模式切换不出现陈旧/空内容。",
+          "@language": "zh-cn"
+        }
+      ]
+    }
   }
 }

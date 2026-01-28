@@ -69,5 +69,49 @@
         "@language": "zh-cn"
       }
     ]
+  },
+  "uiPaths": {
+    "ui-path-0": [
+      {
+        "@value": "Canonical Markdown curation path: BottomPanel → Curation → Markdown (Editor/Viewer/Presentation). Keep this path stable across hosts and extracted surfaces.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "规范的 Markdown 策展路径：BottomPanel → Curation → Markdown（Editor/Viewer/Presentation）。在宿主与抽取表面间保持该路径稳定。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "markdownTextSourceOfTruth": [
+    {
+      "@value": "Editor, Viewer, and Presentation render from a single canonical Markdown text value; switching modes must not create independent stale copies of the same document.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Editor、Viewer 与 Presentation 从单一的规范 Markdown 文本值渲染；模式切换不得生成彼此独立且可能陈旧的副本。",
+      "@language": "zh-cn"
+    }
+  ],
+  "localMarkdownCrud": {
+    "supportedActions": [
+      {
+        "@value": "Local Markdown CRUD focuses on create/read/update inside a user-selected folder: Open Folder, New Folder, New Source File, and edit/save text. Delete/rename are optional and must surface capability state explicitly.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "本地 Markdown CRUD 聚焦于用户选定目录内的创建/读取/更新：Open Folder、New Folder、New Source File 以及编辑/保存文本。删除/重命名为可选能力且必须明确展示权限状态。",
+        "@language": "zh-cn"
+      }
+    ],
+    "browserConsistency": [
+      {
+        "@value": "Use the Web File System Access API for writable handles when available; otherwise fall back to directory input enumeration for read-only access. UI must clearly communicate read-only vs writable mode and avoid silent no-ops.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "可用时使用 Web File System Access API 获取可写句柄；否则回退到目录选择枚举以提供只读访问。UI 必须清晰表达只读/可写模式并避免静默无效操作。",
+        "@language": "zh-cn"
+      }
+    ]
   }
 }

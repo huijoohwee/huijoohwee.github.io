@@ -239,6 +239,20 @@
       "pipeline_phase": "UI Curation",
       "ui_anchor": "markdown:viewerRenderMode",
       "raci_role": "Curator"
+    },
+    {
+      "@type": "rag:RoleActionOutcome",
+      "role": "Markdown local source files surface",
+      "actions": [
+        "use ui-path-0 as the canonical navigation target for Markdown curation: BottomPanel → Curation → Markdown (Editor/Viewer/Presentation)",
+        "request local folder access via the Web File System Access API when available for writable CRUD; otherwise fall back to directory input enumeration for read-only access",
+        "keep Open Folder, New Folder, and New Source File capability-aware and never silently no-op when write permission is unavailable",
+        "treat a single canonical Markdown text buffer as the source of truth for Editor, Viewer, and Presentation; derive preview tokens/slides from it so mode switches never show empty/stale content"
+      ],
+      "outcome": "keep local Markdown workflows reproducible and drift-resistant across repos by standardizing a single UI path, capability-aware file access, and a shared text source of truth across modes.",
+      "pipeline_phase": "UI Curation",
+      "ui_anchor": "ui-path-0",
+      "raci_role": "Curator"
     }
   ]
 }

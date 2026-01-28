@@ -358,11 +358,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Whether the UI exposes Geospatial Mode as a top-level toggle (similar to 3D Mode). When ON, implementations should enable a translucent map overlay and a map-side panel; interactivity should be configurable separately to avoid breaking graph-first affordances by default.",
+          "@value": "Whether the UI exposes Geospatial Mode as a top-level toggle (similar to 3D Mode). When ON, implementations should enable a translucent map overlay and a map-side panel, and may suppress knowledge-graph canvas rendering (nodes/edges/layers/rich media) so geospatial exploration becomes the primary surface. Interactivity should be configurable separately to avoid breaking graph-first affordances by default.",
           "@language": "en-us"
         },
         {
-          "@value": "UI 是否将地理空间模式作为顶层开关（类似 3D 模式）。开启时实现应启用半透明地图叠加层与地图侧边栏；交互能力应作为独立配置项，以避免默认破坏以图为主的交互体验。",
+          "@value": "UI 是否将地理空间模式作为顶层开关（类似 3D 模式）。开启时实现应启用半透明地图叠加层与地图侧边栏，并且可以抑制知识图画布渲染（节点/边/图层/富媒体），使地理空间探索成为主要界面。交互能力应作为独立配置项，以避免默认破坏以图为主的交互体验。",
           "@language": "zh-cn"
         }
       ],

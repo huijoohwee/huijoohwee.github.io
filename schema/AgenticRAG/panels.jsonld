@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -16,5 +16,17 @@
   "rdfs:label": [
     { "@value": "Panel", "@language": "en-us" },
     { "@value": "面板", "@language": "zh-cn" }
-  ]
+  ],
+  "panelInteractionContracts": {
+    "markdownRightClickShowOnIn": [
+      {
+        "@value": "Right Click opens the app-level \"Show on/in …\" toolbar at the exact pointer position; avoid Monaco default context menus so behavior is consistent across Editor/Viewer/Presentation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条；避免使用 Monaco 默认菜单以保证 Editor/Viewer/Presentation 行为一致。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
 }

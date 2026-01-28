@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:CurationSurface",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.5",
+  "schemaVersion": "1.0.6",
   "rdfs:label": [
     { "@value": "Curation surface (Graph Data)", "@language": "en-us" },
     { "@value": "策展界面（图数据）", "@language": "zh-cn" }
@@ -17,4 +17,57 @@
       "@language": "zh-cn"
     }
   ]
+  ,
+  "markdownCurationInteraction": {
+    "textSelectionGestures": [
+      {
+        "@value": "Viewer/Presentation preserve native selection gestures: single click caret anchor, double click word, triple click paragraph/line. Do not hijack double-click for navigation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Viewer/Presentation 保持原生选择手势：单击光标锚点、双击选词、三击选段落/行；禁止把双击改成导航。",
+        "@language": "zh-cn"
+      }
+    ],
+    "rightClickShowOnIn": [
+      {
+        "@value": "Right Click opens the \"Show on/in …\" toolbar at the exact pointer position (no fly-out bias).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "右键在指针精确位置打开 \"Show on/in …\" 工具条（禁止 fly-out 偏移）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "applyAndToggle": [
+      {
+        "@value": "Cmd/Ctrl+Enter toggles Editor↔Viewer; when in Editor it applies changes then switches to Viewer.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Cmd/Ctrl+Enter 在 Editor↔Viewer 间切换；处于 Editor 时先 Apply 再切到 Viewer。",
+        "@language": "zh-cn"
+      }
+    ],
+    "blockControls": [
+      {
+        "@value": "Block controls use a reserved left gutter (Add line + reorder grip) so icons never overlap content; nested blocks inside lists/quotes do not render the gutter/controls.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "块级控件使用保留左侧 gutter（Add line + reorder grip）避免覆盖正文；列表/引用内的嵌套块不渲染 gutter/控件。",
+        "@language": "zh-cn"
+      }
+    ],
+    "newSourceFile": [
+      {
+        "@value": "New Source File creates a new empty Markdown source, selects it, and opens BottomPanel → Curation → Markdown in Viewer mode.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "New Source File 创建新的空 Markdown 源文件，选中它，并打开 BottomPanel → Curation → Markdown（Viewer 模式）。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
 }

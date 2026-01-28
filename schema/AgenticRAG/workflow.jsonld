@@ -40,7 +40,7 @@
       "visibilityIcon": "VisibilityIcon",
       "supportedImportFormats": [".md", ".markdown", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".htm", ".yaml", ".yml", ".pdf", "YouTube"],
       "supportedExportFormats": [".md", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".yaml"],
-      "rowRule": "Header New Source File button is icon-only and square-sized. Row action icons are square-sized, borderless, and use the global stroke width. URL import input is hidden by default and expands leftwards from the URL icon. Clear action clears the row’s text + parsed caches (does not delete the row). Geo Layer checkbox is only shown while Geospatial Mode is enabled; Geo-capable JSON/GeoJSON can auto-enable the Geo Layer flag."
+      "rowRule": "Header New Source File button is icon-only and square-sized. On create: select the new empty .md and open BottomPanel Curation→Markdown Viewer (viewer mode, not editor). Row action icons are square-sized, borderless, and use the global stroke width. URL import input is hidden by default and expands leftwards from the URL icon. Clear action clears the row’s text + parsed caches (does not delete the row). Geo Layer checkbox is only shown while Geospatial Mode is enabled; Geo-capable JSON/GeoJSON can auto-enable the Geo Layer flag."
     }
   }
 }

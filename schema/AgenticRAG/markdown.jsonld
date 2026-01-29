@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.17",
+  "schemaVersion": "1.0.20",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -26,6 +26,68 @@
     "persistenceKeys": [
       "kg:ui:markdown:sidebarOpen",
       "kg:ui:markdown:collapsedHeadingIds"
+    ]
+  },
+  "markdownPreviewSyntaxSupport": {
+    "anchors": [
+      {
+        "@value": "Preserve explicit anchor targets like <a id=\"...\"></a> (no href) and support deterministic heading ids using a shared slugify function so hash navigation works consistently.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "保留显式锚点目标（例如 <a id=\"...\"></a>，无 href），并用共享的 slugify 规则生成确定性的标题 id，以确保 hash 导航一致可用。",
+        "@language": "zh-cn"
+      }
+    ],
+    "blockIds": [
+      {
+        "@value": "Support trailing block-id markers like ^block-id as anchor targets (id=\"^block-id\") so in-doc links can target specific paragraphs/blocks.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持行尾 block-id 标记（例如 ^block-id）作为锚点目标（id=\"^block-id\"），使文内链接可指向特定段落/块。",
+        "@language": "zh-cn"
+      }
+    ],
+    "callouts": [
+      {
+        "@value": "Support callout syntax as a subset of blockquotes: first line [!type] (e.g., [!info]) and optional + / - to make it foldable (open or collapsed by default).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持 Callout 语法（作为 blockquote 子集）：首行 [!type]（如 [!info]），并可用 + / - 表示可折叠（默认展开或折叠）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterMermaidAnchors": [
+      {
+        "@value": "When YAML frontmatter contains a Mermaid diagram, Mermaid click directives (e.g., click X \"#anchor\") should map to graph edges (pointsTo) targeting Anchor nodes. Frontmatter-focused Canvas views may include these anchors plus any tied internal links and callouts. Producers preserve relative metadata.documentPath segments when available and strip absolute filesystem paths down to basenames to keep provenance portable.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当 YAML frontmatter 含 Mermaid 图时，Mermaid 的 click 指令（如 click X \"#anchor\"）应映射为指向 Anchor 节点的图边（pointsTo）。前置的 Frontmatter 画布视图可包含这些锚点及其关联的文内链接与 Callout。生产者在可用时保留 metadata.documentPath 的相对路径片段，并将绝对文件系统路径剥离为 basename，以保持溯源的可移植性。",
+        "@language": "zh-cn"
+      }
+    ],
+    "wikilinks": [
+      {
+        "@value": "Support in-document wikilinks: [[#Heading]] and [[#^block-id]] must render as safe hash links. File-level [[Note Name]] resolution may be implemented separately to avoid coupling rendering to vault indexing.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持文内 Wikilink：[[#Heading]] 与 [[#^block-id]] 必须渲染为安全的 hash 链接。文件级 [[Note Name]] 解析应独立实现，避免把渲染与 vault 索引耦合。",
+        "@language": "zh-cn"
+      }
+    ],
+    "backlinks": [
+      {
+        "@value": "Backlinks (linked mentions vs unlinked mentions) are a concept that may be derived from cross-document indexing; do not require Markdown content changes and should be implemented as an optional computed view.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "反向链接（已链接提及 vs 未链接提及）属于可通过跨文档索引推导的概念；无需修改 Markdown 内容，应作为可选的计算视图实现。",
+        "@language": "zh-cn"
+      }
     ]
   },
   "markdownUiInteractionContract": {

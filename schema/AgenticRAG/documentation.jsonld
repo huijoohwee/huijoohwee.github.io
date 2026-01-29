@@ -5,18 +5,18 @@
   },
   "@id": "rag:DocumentationGuide",
   "@type": "core:Directive",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:label": [
     { "@value": "Documentation guide patterns", "@language": "en-us" },
     { "@value": "文档风格模式", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Defines neutral, domain-agnostic wording patterns for Role → Actions → Outcome tooltips and numeric value semantics so UI copy, JSON-LD fixtures, and tests share the same structure.",
+      "@value": "Defines neutral, domain-agnostic documentation patterns: Role → Actions → Outcome tooltips, numeric value semantics, and Markdown-to-documentation-site export conventions (SPA routing, sidebar/navbar, and bounded search indexing) so UI copy, JSON-LD fixtures, and tests share the same structure.",
       "@language": "en-us"
     },
     {
-      "@value": "定义领域无关的语言模式，用于 Role → Actions → Outcome 工具提示和数值语义，使 UI 文案、JSON-LD 和测试具有一致结构。",
+      "@value": "定义领域无关的文档模式：Role → Actions → Outcome 工具提示、数值语义，以及 Markdown→文档站点导出约定（SPA 路由、侧边栏/导航栏、有界搜索索引），使 UI 文案、JSON-LD 和测试具有一致结构。",
       "@language": "zh-cn"
     }
   ],
@@ -46,6 +46,62 @@
       },
       {
         "@value": "默认：3；最小：0；最大：32；间隔：1；数值越大越偏向记忆。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "markdown_docsite_spa_export": {
+    "scope": "Static documentation site generation from Markdown folders (client-side SPA).",
+    "reference_implementations": [
+      "Docsify"
+    ],
+    "principles": [
+      {
+        "@value": "Keep Markdown as the SSOT; site generation adds routing and navigation without mutating content semantics.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "以 Markdown 作为唯一真源；站点生成仅增加路由与导航，不改变内容语义。",
+        "@language": "zh-cn"
+      }
+    ],
+    "file_conventions": [
+      {
+        "@value": "Common conventions: README.md (home), _sidebar.md (left nav), _navbar.md (top nav), _coverpage.md (optional landing), 404.md (optional not-found).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "常见约定：README.md（首页）、_sidebar.md（左侧导航）、_navbar.md（顶部导航）、_coverpage.md（可选封面页）、404.md（可选未找到页）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "routing": [
+      {
+        "@value": "Client-side routing maps markdown file paths to routes; hash-based routing is acceptable for static hosting. Deep links combine route + #heading-id.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "客户端路由将 Markdown 文件路径映射为站点路由；静态托管可使用 hash 路由。深链路由由“路径 + #heading-id”组成。",
+        "@language": "zh-cn"
+      }
+    ],
+    "search": [
+      {
+        "@value": "Use a bounded search index (headings + short excerpts + anchors). Avoid shipping unbounded full-text blobs.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "采用有界搜索索引（标题 + 短摘要 + 锚点）。避免发布无界的全文大块数据。",
+        "@language": "zh-cn"
+      }
+    ],
+    "security": [
+      {
+        "@value": "Render HTML with a safe subset and sanitization; avoid executing arbitrary scripts from Markdown.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "HTML 渲染仅允许安全子集并进行净化；避免从 Markdown 执行任意脚本。",
         "@language": "zh-cn"
       }
     ]

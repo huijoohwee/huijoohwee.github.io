@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.20",
+  "schemaVersion": "1.0.23",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -23,6 +23,11 @@
     "viewerBlockEditing": "In Viewer mode, allow bounded block-style operations (e.g., heading grip drag reorder among same-parent siblings and inserting a new blank line after a block) implemented as pure Markdown text transforms using TOC/line semantics; avoid WYSIWYG block state.",
     "tocReorderHandleOnly": "Enable TOC reorder drag only from a dedicated grip handle; avoid making the whole row draggable to prevent accidental reorders.",
     "sidebarAndCollapsePersistence": "Persist Markdown sidebar-open state and collapsed heading ids via canonical, app-namespaced LocalStorage keys (no magic strings).",
+    "ssotMarkdownSectionHeader": "Use one-and-only Markdown Section Header implementation across Editor/Viewer/Presentation; do not introduce mode-specific header variants.",
+    "ssotMarkdownSidebar": "Use one-and-only Markdown Contents sidebar/TOC structure across modes; sidebar section headers are typography-only (no action menus). Place Source Files actions in the SSOT Markdown header (left of Apply changes).",
+    "docsiteSpaExport": "Allow exporting a folder of Markdown files into a static documentation website that renders Markdown client-side with SPA routing; keep Markdown as SSOT and avoid domain coupling.",
+    "docsiteFileConventions": "Support common docsite conventions: README.md as home, optional _sidebar.md and _navbar.md for navigation, optional _coverpage.md and 404.md for landing/not-found; route paths map to file paths.",
+    "docsiteSearchIndex": "If search is enabled, build a bounded index from headings + short excerpts + anchors; avoid shipping unbounded full-text blobs.",
     "persistenceKeys": [
       "kg:ui:markdown:sidebarOpen",
       "kg:ui:markdown:collapsedHeadingIds"
@@ -71,21 +76,21 @@
     ],
     "wikilinks": [
       {
-        "@value": "Support in-document wikilinks: [[#Heading]] and [[#^block-id]] must render as safe hash links. File-level [[Note Name]] resolution may be implemented separately to avoid coupling rendering to vault indexing.",
+        "@value": "Support wikilinks in both forms: in-doc [[#Heading]] / [[#^block-id]] must render as safe hash links, and file-level [[Note]] / [[Note#Heading]] may resolve against the current Source Files set via loose name normalization (no hardcoded vault paths) and navigate in-app.",
         "@language": "en-us"
       },
       {
-        "@value": "支持文内 Wikilink：[[#Heading]] 与 [[#^block-id]] 必须渲染为安全的 hash 链接。文件级 [[Note Name]] 解析应独立实现，避免把渲染与 vault 索引耦合。",
+        "@value": "支持两类 Wikilink：文内 [[#Heading]] 与 [[#^block-id]] 必须渲染为安全的 hash 链接；文件级 [[Note]] / [[Note#Heading]] 可基于当前 Source Files 集合通过宽松的名称归一化进行解析（禁止硬编码 vault 路径），并在应用内导航。",
         "@language": "zh-cn"
       }
     ],
     "backlinks": [
       {
-        "@value": "Backlinks (linked mentions vs unlinked mentions) are a concept that may be derived from cross-document indexing; do not require Markdown content changes and should be implemented as an optional computed view.",
+        "@value": "Backlinks (linked mentions vs unlinked mentions) are derived from Source Files text/link indexing; do not require Markdown content changes and are surfaced as an optional computed sidebar view.",
         "@language": "en-us"
       },
       {
-        "@value": "反向链接（已链接提及 vs 未链接提及）属于可通过跨文档索引推导的概念；无需修改 Markdown 内容，应作为可选的计算视图实现。",
+        "@value": "反向链接（已链接提及 vs 未链接提及）可从 Source Files 文本/链接索引推导；无需修改 Markdown 内容，应作为可选的计算侧边栏视图呈现。",
         "@language": "zh-cn"
       }
     ]
@@ -118,6 +123,26 @@
       },
       {
         "@value": "拖拽重排仅允许从专用 grip 手柄触发；禁止让整块内容可拖拽。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidRenderPanZoom": [
+      {
+        "@value": "Rendered Mermaid previews support drag/pan (and optional zoom) in code-block Render mode; interaction should be container-scoped and persist per a canonical storage key when enabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid 预览在代码块 Render 模式下支持拖拽平移（可选缩放）；交互应限定在容器范围内，并在启用时通过规范的存储 key 进行持久化。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidInDocHashLinks": [
+      {
+        "@value": "In Mermaid SVGs and rendered HTML, href=\"#...\" links are treated as in-document navigation only and scroll within the Markdown preview container; do not navigate to external URLs.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid SVG 与渲染 HTML 中的 href=\"#...\" 仅作为文内导航：在 Markdown 预览容器内滚动定位；不得跳转到外部 URL。",
         "@language": "zh-cn"
       }
     ],

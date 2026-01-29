@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.2",
+  "schemaVersion": "1.0.3",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -18,6 +18,26 @@
     { "@value": "面板", "@language": "zh-cn" }
   ],
   "panelInteractionContracts": {
+    "markdownSsotSectionHeader": [
+      {
+        "@value": "Markdown Editor/Viewer/Presentation must share one-and-only Markdown Section Header implementation. Mode switches may change enabled/disabled state but must not introduce alternate header variants or different button sets.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Editor/Viewer/Presentation 必须共享唯一的 Markdown 区域头部实现。模式切换只允许改变启用/禁用状态，不得引入不同的头部变体或不同的按钮集合。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownSsotSidebarStructure": [
+      {
+        "@value": "Markdown Contents sidebar uses a single SSOT DOM structure (aside/header/nav/sections) with shared micro-label typography. Sidebar section headers are typography-only and must not render action menus; source file actions belong to the section header area only when they are part of the canonical SSOT header contract.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Contents 侧边栏必须使用唯一的 SSOT DOM 结构（aside/header/nav/sections）并共享微标签排版。侧边栏分区标题仅用于排版显示，不得渲染动作菜单；Source Files 动作应归属于规范的 SSOT 头部契约。",
+        "@language": "zh-cn"
+      }
+    ],
     "markdownRightClickShowOnIn": [
       {
         "@value": "Right Click opens the app-level \"Show on/in …\" toolbar at the exact pointer position; avoid Monaco default context menus so behavior is consistent across Editor/Viewer/Presentation.",

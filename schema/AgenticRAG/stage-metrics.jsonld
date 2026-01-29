@@ -50,6 +50,24 @@
         { "@value": "输出大小", "@language": "zh-cn" }
       ]
     },
+    "counters": {
+      "@type": "@json",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Counters", "@language": "en-us" },
+        { "@value": "计数器", "@language": "zh-cn" }
+      ],
+      "description": "Stage-specific counts intended for inspection (e.g., sentences/tokens for tokenize; chunks for chunk; entities by type; edges/nodes; communities)."
+    },
+    "examples": {
+      "@type": "@json",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Examples", "@language": "en-us" },
+        { "@value": "示例", "@language": "zh-cn" }
+      ],
+      "description": "Small bounded sample payloads for UI inspection (e.g., token samples, chunk metadata, extracted triples, top-ranked entities)."
+    },
     "error_message": {
       "@type": "xsd:string",
       "required": false,
@@ -64,4 +82,3 @@
     "no_domain_semantics": true
   }
 }
-

@@ -2,14 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GraphRagPipeline",
   "@type": "rdfs:Class",
-  "schemaVersion": "2.1.0",
+  "schemaVersion": "2.1.1",
   "rdfs:comment": [
     {
-      "@value": "Defines the GraphRAG Text Pipeline stages for the client-side demo. Includes extractive summarization (sentence/paragraph-level), entity keyword frequency + importance scoring, relation strength + causality scoring (temporal/modality/why), graph metrics, and density-based community clustering with bounded execution.",
+      "@value": "Defines a simple, inspectable GraphRAG pipeline surface aligned with the Mermaid demo breakdown (sandbox/demo/graphrag-pipeline-mmd-demo.md). The pipeline is staged and bounded: (1) tokenization, (2) semantic chunking, (3) entity extraction, (4) relationship extraction (pattern + co-occurrence), (5) knowledge graph construction, (6) graph analysis, (7) export/visualization. Outputs are structural telemetry and artifacts intended for UI inspection and debugging; avoid domain coupling and keep configuration externalized.",
       "@language": "en-us"
     },
     {
-      "@value": "定义用于客户端演示的 GraphRAG 文本流水线阶段。包含抽取式摘要（段落/句子级）、实体关键词频率与重要性评分、关系强度与因果评分（时间/情态/原因）、图指标与基于密度的社区聚类，并强制有界执行。",
+      "@value": "定义与 Mermaid 演示拆解（sandbox/demo/graphrag-pipeline-mmd-demo.md）一致的、可检查的简化 GraphRAG 流水线表面。流水线分阶段且有界：(1) 分词/标记化，(2) 语义分块，(3) 实体抽取，(4) 关系抽取（规则 + 共现），(5) 知识图构建，(6) 图分析，(7) 导出/可视化。输出以结构化遥测与产物为主，用于 UI 检查与调试；避免领域耦合并将配置外置。",
       "@language": "zh-cn"
     }
   ],
@@ -21,12 +21,17 @@
     "config": {
       "@type": "@json",
       "required": false,
-      "description": "User-configurable pipeline settings (for example centrality toggles and clustering bounds) applied at parse time."
+      "description": "User-configurable pipeline settings applied at run/parse time (for example chunk size/overlap bounds, pattern enablement, analysis toggles, export targets)."
     },
     "stages": {
       "@type": "@json",
       "required": true,
-      "description": "List of pipeline stages with inputs, outputs, and metrics."
+      "description": "Ordered list of stage records. Each stage should include a stable stage id, optional config snapshot, metrics (latency/size/counters), and small bounded examples for inspection (e.g., token samples, chunk metadata, extracted triples). Recommended stage ids: tokenize, chunk, entities, relationships, graph, analysis, export."
+    },
+    "stageIds": {
+      "@type": "@json",
+      "required": false,
+      "description": "Optional explicit stage id order to keep UI and telemetry aligned. Typical order: [\"tokenize\",\"chunk\",\"entities\",\"relationships\",\"graph\",\"analysis\",\"export\"]."
     },
     "summary": {
       "@type": "@json",

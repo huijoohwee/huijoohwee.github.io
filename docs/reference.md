@@ -8,6 +8,7 @@
 | [Airtable](https://airtable.com) | Collaborative database for teams |
 | [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
 | [doccano](https://github.com/doccano/doccano.git) | Open source annotation tool for machine learning practitioners |
+| [docsify](https://github.com/docsifyjs/docsify.git) | Simple and powerful documentation site generator |
 | [Fibery/Getting Started](https://joohwee.fibery.io/default/Getting-Started-1) | Getting Started with Fibery |
 | [Figr AI/Mercury - Founder Forecast Focus](https://app.figr.design/0787b7bb-ca15-49ab-ba09-b8a78e1393f9/a343dad6-7966-4a94-b6fd-d0a3e05cbadd) | Founder Forecast Focus |
 | [Heptabase/Gallery](https://heptabase.com/gallery) | Collaborative knowledge base for teams |

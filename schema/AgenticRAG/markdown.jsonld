@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.23",
+  "schemaVersion": "1.0.25",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -94,6 +94,38 @@
         "@language": "zh-cn"
       }
     ]
+    ,
+    "mermaidMultiDiagramFences": [
+      {
+        "@value": "Support multi-diagram Mermaid fences: when a single ```mermaid block contains repeated diagram starts (e.g., multiple graph/flowchart roots), split it into multiple Mermaid render units so every diagram renders deterministically.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持多图 Mermaid 代码块：当单个 ```mermaid 代码块包含多个图起始声明（例如多次出现 graph/flowchart 根声明）时，应拆分为多个可渲染单元，确保每个图都能确定性渲染。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
+    "htmlCodeBlocks": [
+      {
+        "@value": "In code-block Render mode, render HTML/SVG fenced code blocks as safe HTML (sanitized; no scripts or inline event handlers) and allow drag-to-pan via container scrolling.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在代码块 Render 模式下，将 HTML/SVG fenced code block 渲染为安全 HTML（消毒；禁止 script 与内联事件处理器），并允许通过滚动容器实现拖拽平移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "iframeSrcdoc": [
+      {
+        "@value": "Allow local-only <iframe srcdoc=...> blocks to render as sandboxed iframes (no network dependency; scripts disabled), enabling rich media demos without hardcoded domains.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "允许本地化的 <iframe srcdoc=...> 以沙盒 iframe 渲染（不依赖网络；禁用脚本），以便在不硬编码域名的前提下演示富媒体。",
+        "@language": "zh-cn"
+      }
+    ]
   },
   "markdownUiInteractionContract": {
     "textSelectionGestures": [
@@ -143,6 +175,16 @@
       },
       {
         "@value": "Mermaid SVG 与渲染 HTML 中的 href=\"#...\" 仅作为文内导航：在 Markdown 预览容器内滚动定位；不得跳转到外部 URL。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidPreviewOpenGesture": [
+      {
+        "@value": "Open Mermaid Preview Panel only on double-click (not single click) so single click remains available for selection and in-doc navigation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid 预览面板仅允许通过双击打开（禁止单击打开），以便单击仍用于选择与文内导航。",
         "@language": "zh-cn"
       }
     ],

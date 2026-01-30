@@ -15,3 +15,6 @@
 - TEST/VERIFY focused diffs only; AVOID indefinite full-codebase runs
 - AFTER: UPDATE cross-repo docs, API docs; SUGGEST next: `/GitHub/knowgrph/{todo-log.md,docs/documents}`, `/GitHub/huijoohwee.github.io/schema/AgenticRAG`
 ```
+
+## native development skills
+

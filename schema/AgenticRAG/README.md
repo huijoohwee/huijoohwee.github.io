@@ -60,6 +60,47 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Target artifact:** `schema/AgenticRAG/knowgrph-documents-map.graph.jsonld`
 - **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
 
+### Canvas Zoom/Fit SSOT (Knowgrph)
+
+- **Preset SSOT:** `knowgrph/grph-shared/src/zoom/presets.ts` (capped 16:9 frame + default fill ratio)
+- **Consumers:** `knowgrph/canvas/src/components/GraphCanvas/{fit.ts,simulation.ts}` (fit transforms + seeding/disjoint sizing)
+
+## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
+
+## COMPLY
+`/GitHub/{huijoohwee.github.io/guidelines/{codebase-neutrality-guidelines.md,codebase-maintainability-guidelines.md},knowgrph/todo.md#L5-21}`
+
+## ALIGN (Semantic Definition)
+- **GRAPHS Elements:** nodes, edges, graph layers (subgraphs, groups, clusters, communities), labels, text
+- **GRAPHS Configs:** grouping, positioning, collisions, timing, knobs
+
+## Baseline & Code Hygiene
+- Reuse existing elements/configs.
+- Enhance natively; forbid duplication.
+- Prevent interference across layers/modes.
+- Remove legacy/conflicting/stale code.
+
+## Pipeline Discipline
+- Scope: `/GitHub/{knowgrph,gympgrph,curagrph}` → import → render.
+- Support all `/GitHub/sandbox/` test data; no hardcoding.
+- Use semantic HTML; forbid generic `<div>`.
+- Centralize configs (labels, boxes, collisions, timing, knobs).
+- Resolve cross‑repo conflicts.
+- Test only bounded diffs; forbid indefinite runs.
+
+## Canvas Layout Rules
+- FORBID GRAPHS Elements overlaps or single‑line formations.
+- MAINTAIN 80:20 element‑to‑empty space ratio.
+- OPTIMIZE modularity, memory, rendering.
+- REUSE shared utilities.
+
+## GRAPHS Elements
+- Centralized zoom utils (“Fit to View/Screen/Selection”) on 1920×1080; always center centroid.
+- ENFORCE Fit to Screen 80:20 ratio.
+- FORCE nodes/subgraphs into grid (d3.forceSimulation + constraints).
+- Snap to grid for block‑like appearance.
+- Combine simulation + constraints for hybrid layout.
+
 ### Run (write)
 
 ```bash
@@ -341,6 +382,9 @@ AND array_contains(n.labels, 'Company');
 
 Recent updates to the Knowgrph Canvas pipeline ensure seamless rendering of this schema:
 - **Radial Layout Stability**: Force simulation forces are automatically disabled in Radial mode to prevent layout drift.
+- **Fit-to-Screen Policy**: Fit uses capped `1920×1080` (16:9) with `targetFillRatio=0.8` and responds to UI chrome changes (e.g. sidebar toggles).
+- **Zoom State Isolation**: Zoom state is cached per viewKey (render/layout/frontmatter/semantic + presentation toggles) to prevent cross-mode contamination.
+- **Non-Overlap Guarantees**: Group bbox collision is enforced whenever `layout.groups.enabled !== false`; legacy `groupBboxCollide` is deprecated for disabling.
 - **Theme Alignment**: Labels and headings automatically adapt to System/Light/Dark themes.
 - **Theme-Safe Defaults**: Renderer label colors are theme-derived by default (no hardcoded black/white schema defaults).
 - **Performance**: Optimized caching for adjacency maps and layout positions.

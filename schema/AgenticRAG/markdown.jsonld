@@ -106,6 +106,17 @@
       }
     ]
     ,
+    "mmdFileNormalization": [
+      {
+        "@value": "Treat .mmd (Mermaid-only) documents as first-class Mermaid inputs: normalize raw Mermaid text into a fenced ```mermaid block before parsing and before storing the active Markdown document, so both graph extraction and preview rendering behave consistently.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "将 .mmd（仅 Mermaid）文档视为一等 Mermaid 输入：在解析之前、以及写入当前活动 Markdown 文档之前，把原始 Mermaid 文本归一化为 fenced 的 ```mermaid 代码块，从而保证图抽取与预览渲染行为一致。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
     "htmlCodeBlocks": [
       {
         "@value": "In code-block Render mode, render HTML/SVG fenced code blocks as safe HTML (sanitized; no scripts or inline event handlers) and allow drag-to-pan via container scrolling.",

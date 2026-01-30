@@ -627,6 +627,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-graph-canvas-layout-ssot",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graph-canvas-layout-ssot.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graph-canvas-layout-ssot.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graph-canvas-layout-ssot.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-graph-data-curation-document",
       "@type": "kg:Node",
       "labels": [
@@ -752,6 +768,22 @@
         "relPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md"
       },
       "documentPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-ssot-ui-contract-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-ssot-ui-contract-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-ssot-ui-contract-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-ssot-ui-contract-document.md",
       "language": "en-us"
     },
     {

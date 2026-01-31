@@ -38,6 +38,7 @@ schema/AgenticRAG/
 ├── roles-actions-outcomes-schema.jsonld      # Role→Action→Outcome wording contract
 ├── documentation.jsonld                      # Documentation copy patterns (neutral wording)
 ├── stage-metrics.jsonld                      # Stage metrics schema (quality gates, drift checks)
+├── evals.jsonld                              # Evaluation harnesses and metrics (quality gates)
 ├── action-verbs.jsonld                       # Action verb canonicalization (neutral verbs)
 ├── system-design-pattern.jsonld              # System design patterns (domain-agnostic)
 ├── prompt-shaping-heuristics-framework.jsonld # Prompt shaping heuristics (agentic, domain-agnostic)
@@ -388,6 +389,8 @@ Recent updates to the Knowgrph Canvas pipeline ensure seamless rendering of this
 - **Theme Alignment**: Labels and headings automatically adapt to System/Light/Dark themes.
 - **Theme-Safe Defaults**: Renderer label colors are theme-derived by default (no hardcoded black/white schema defaults).
 - **Performance**: Optimized caching for adjacency maps and layout positions.
+- **Renderer Exclusivity**: D3 2D, Flow 2D, 3D, and Geospatial Mode are mutually exclusive at runtime to forbid hidden background rendering/recalculation; only the active mode is mounted and may consume shared requests.
+- **2D Renderer Toggle**: Canvas supports a 2D renderer toggle (D3 ↔ Flow) while preserving selection and isolating view/layout caches by renderer id.
 
 ---
 

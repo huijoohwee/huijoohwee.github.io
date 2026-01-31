@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.5",
+  "schemaVersion": "1.2.6",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -14,6 +14,14 @@
     },
     {
       "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。基底地图在可用时应默认优先使用矢量瓦片风格源，并支持交互式导航（拖拽/平移 + 平滑缩放），除非显式通过交互模式进行限制。实现可为 POI 提供 hover/click 轻量弹窗，并可对大型点数据集启用配置化聚类（保持数据集无关）。远程数据集拉取必须受可配置的超时/体积限制约束（UI 可在 Source Files 等策展表面暴露该限制配置），并在超出限制时给出可操作的错误提示；所有拉取/解析工作需有界并避免无界循环。数据集注册表可由策展表面更新（例如 Source Files 导入界面按行注册 URL），但新增行为必须保持数据集无关并执行有界。在嵌入现有画布 UI 的场景中，叠加层容器必须位于图渲染之上，并在可交互时捕获指针事件；关键布局样式应随模块一起打包或以内联方式提供，以避免宿主 CSS 回归导致交互失效。当以插件方式实现时，必须通过声明的包入口执行跨仓库集成（宿主集成优先使用包根入口，避免包子路径导入，并禁止 sibling 源码相对路径导入），并确保持久化 key 与合约类型单一真源。注：参考实现位于 gympgrph 仓库；部分运行时可能以插件方式加载，也可能不会实现地图渲染或空间查询执行。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "宿主集成合约：启用地理空间模式时，宿主 UI 应通过不在后台挂载 2D/3D 图画布来禁止图渲染干扰，并将缩放/适配类命令路由到地图表面。Markdown Viewer/Presentation 仍可独立渲染内嵌 GeoJSON 预览，不应与全局地理空间模式开关强耦合。",
       "@language": "zh-cn"
     }
   ],

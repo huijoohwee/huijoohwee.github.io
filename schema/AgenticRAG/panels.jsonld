@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.3",
+  "schemaVersion": "1.0.4",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -45,6 +45,17 @@
       },
       {
         "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条；避免使用 Monaco 默认菜单以保证 Editor/Viewer/Presentation 行为一致。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
+    "bottomPanelFlowTab": [
+      {
+        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Nodes/Edges tables. Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Nodes/Edges 表格）。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
         "@language": "zh-cn"
       }
     ]

@@ -28,7 +28,8 @@
   "geospatialUiGuidelines": {
     "datasetFetchLimitsSurface": "Expose timeout/max-bytes in a single canonical surface (e.g. Workflow Step 3). Do not duplicate Dataset fetch limits inputs in the Geo side panel.",
     "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest.",
-    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets."
+    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets.",
+    "markdownItineraryPoiDerivation": "If a local Markdown document contains itinerary-style structure (e.g. headings with location tokens such as airport codes), implementations may derive POIs from section metadata, resolve coordinates using a bounded in-memory index built from already-registered point datasets (records or GeoJSON points), and render a lightweight details panel (rich media links/images) when a POI is selected. The derivation must remain dataset-agnostic and configuration-driven."
   },
   "propertyDefinitions": {
     "mapStyleUrl": {

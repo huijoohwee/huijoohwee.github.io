@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.1.1",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -31,16 +31,20 @@
         "layout": "keyValueRows",
         "rowRule": "One key/value per row; reuse MainPanel Settings Key/Value primitives; keep the value control right-aligned and height-aligned with other controls. These limits must be applied to bounded URL fetches and local file reads (including Source Files URL import and editor preview fetch) to avoid relying on small shared defaults."
       },
-      "layoutRule": "All Step 3 subsections must share the same left/right padding and sticky header styling (do not render an out-of-band Sample Dataset block outside the Step 3 subsection stack)."
+      "layoutRule": "All Step 3 subsections must share the same left/right padding and sticky header styling (do not render an out-of-band Sample Dataset block outside the Step 3 subsection stack).",
+      "sourceFiles": {
+        "canonicalSurface": "BottomPanel.Curation.Markdown",
+        "workflowSurfaceRule": "Workflow Step 3 must not render a duplicate Source Files management table. It may only provide a single Open Markdown action that routes to the canonical Source Files surface."
+      }
     },
-    "sourceFilesManagementTable": {
-      "columns": ["Move Layer", "Show/Hide Layer", "Label", "Local/URL", "Action", "Geo Layer", "Status"],
-      "columnWidths": ["2%", "2%", "22%", "28%", "32%", "6%", "10%"],
-      "moveIcon": "GripDotsIcon",
-      "visibilityIcon": "VisibilityIcon",
+    "sourceFilesIngestSurface": {
+      "canonicalSurface": "BottomPanel.Curation.Markdown",
+      "sidebarSection": "Source Files",
+      "toolbarActions": ["Import local", "Import URL", "Open in editor", "Export", "Clear", "Status"],
       "supportedImportFormats": [".md", ".markdown", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".htm", ".yaml", ".yml", ".pdf", "YouTube"],
       "supportedExportFormats": [".md", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".yaml"],
-      "rowRule": "Header New Source File button is icon-only and square-sized. On create: select the new empty .md and open BottomPanel Curation→Markdown Viewer (viewer mode, not editor). Row action icons are square-sized, borderless, and use the global stroke width. URL import input is hidden by default and expands leftwards from the URL icon. Clear action clears the row’s text + parsed caches (does not delete the row). Geo Layer checkbox is only shown while Geospatial Mode is enabled; Geo-capable JSON/GeoJSON can auto-enable the Geo Layer flag."
+      "selectionRule": "Toolbar actions apply to the active Source File selected in the Source Files sidebar. If no file is active, Import actions must create a new Source File and make it active.",
+      "urlInputRule": "URL import input is hidden by default and expands leftwards from the URL icon; Enter submits; Escape closes."
     }
   }
 }

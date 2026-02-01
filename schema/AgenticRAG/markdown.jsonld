@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.26",
+  "schemaVersion": "1.0.29",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -23,6 +23,14 @@
     {
       "@value": "Markdown 文本 SSOT：Editor、Viewer、Presentation 必须渲染同一份当前文档 Markdown 文本。实现不得强制要求 activeDocumentPath（例如 sandbox/docs/demo.md）与已存储的文档名（例如 demo.md）完全相等；当 basename 匹配时应优先使用 store/import 的 markdown，并在相同 basename 场景下 @fs 加载失败时回退到 store/import 文本，从而禁止出现“预览有内容而编辑器为空”。",
       "@language": "zh-cn"
+    },
+    {
+      "@value": "Cross-surface markdown sync: Slides Gallery, Graph Data, and Canvas projections must render the same markdown text SSOT for the active document and must not reuse memoized markdown token caches across different activeDocumentPath values; cached tokens may be reused only when the stored tokens path matches the activeDocumentPath (prevents cross-document bleed and content disappearing on view switches).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "跨界面 Markdown 同步：Slides Gallery、Graph Data 与 Canvas 的投影视图必须渲染同一份当前文档 Markdown 文本 SSOT，且不得在不同 activeDocumentPath 之间复用已记忆化的 Markdown token 缓存；仅当缓存记录的 tokensPath 与 activeDocumentPath 相同才可复用（防止跨文档串扰与视图切换时内容消失）。",
+      "@language": "zh-cn"
     }
   ],
   "markdownUiGuidelines": {
@@ -32,12 +40,16 @@
     "tocReorderHandleOnly": "Enable TOC reorder drag only from a dedicated grip handle; avoid making the whole row draggable to prevent accidental reorders.",
     "sidebarAndCollapsePersistence": "Persist Markdown sidebar-open state and collapsed heading ids via canonical, app-namespaced LocalStorage keys (no magic strings).",
     "ssotMarkdownSectionHeader": "Use one-and-only Markdown Section Header implementation across Editor/Viewer/Presentation; do not introduce mode-specific header variants.",
-    "ssotMarkdownSidebar": "Use one-and-only Markdown Contents sidebar/TOC structure across modes; sidebar section headers are typography-only (no action menus). Place Source Files actions in the SSOT Markdown header (left of Apply changes).",
+    "ssotMarkdownSidebar": "Use one-and-only Markdown Explorer sidebar structure across modes. The sidebar may include an action menu in the Source Files section header for VS Code-like parity; other section headers remain typography-only. Actions must reuse the same underlying integrations as the Markdown header (no duplicate logic paths).",
     "docsiteSpaExport": "Allow exporting a folder of Markdown files into a static documentation website that renders Markdown client-side with SPA routing; keep Markdown as SSOT and avoid domain coupling.",
     "docsiteFileConventions": "Support common docsite conventions: README.md as home, optional _sidebar.md and _navbar.md for navigation, optional _coverpage.md and 404.md for landing/not-found; route paths map to file paths.",
     "docsiteSearchIndex": "If search is enabled, build a bounded index from headings + short excerpts + anchors; avoid shipping unbounded full-text blobs.",
     "persistenceKeys": [
       "kg:ui:markdown:sidebarOpen",
+      "kg:ui:markdown:explorer:sourceFilesCollapsed",
+      "kg:ui:markdown:explorer:sourceFilesExpandedPaths",
+      "kg:ui:markdown:explorer:outlineCollapsed",
+      "kg:ui:markdown:explorer:backlinksCollapsed",
       "kg:ui:markdown:collapsedHeadingIds"
     ]
   },

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.4",
+  "schemaVersion": "1.0.5",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -47,8 +47,7 @@
         "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条；避免使用 Monaco 默认菜单以保证 Editor/Viewer/Presentation 行为一致。",
         "@language": "zh-cn"
       }
-    ]
-    ,
+    ],
     "bottomPanelFlowTab": [
       {
         "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Nodes/Edges tables. Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
@@ -56,6 +55,16 @@
       },
       {
         "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Nodes/Edges 表格）。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarEditorWorkspaceToggle": [
+      {
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。",
         "@language": "zh-cn"
       }
     ]

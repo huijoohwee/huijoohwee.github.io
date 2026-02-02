@@ -88,6 +88,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Centralize configs (labels, boxes, collisions, timing, knobs).
 - Resolve cross‑repo conflicts.
 - Test only bounded diffs; forbid indefinite runs.
+ - Treat `.md`, `.markdown`, `.mmd`, `.mdx` as canonical Markdown ingest extensions in the graph pipeline; keep document path/provenance neutral.
 
 ## Canvas Layout Rules
 - FORBID GRAPHS Elements overlaps or single‑line formations.
@@ -225,6 +226,7 @@ Renderers can use this metadata to highlight and preview source markdown without
 Preview rendering hooks (UI-level, schema-neutral):
 - Fenced `mermaid` blocks may render as diagrams; per-block YAML config may be supported inside the fence.
 - Fenced `geojson` blocks may render as maps; `json` fences must be explicitly detected as GeoJSON (do not assume all JSON is GeoJSON).
+- Explorer folder expansion/collapse must not clear or change the active markdown document; only explicit file selection changes activeDocumentPath.
 - GeoJSON map previews should keep a stable map container element across deferred-load states so they don’t require a remount/toggle to appear.
 - In Viewer surfaces, GeoJSON-renderable blocks follow the global Beside/Inline/Render mode; in Presentation surfaces, GeoJSON-renderable blocks (including `json` fences recognized as GeoJSON) may default to Render even when the global mode is Inline.
 - GeoJSON previews require an injected renderer hook (e.g., `geoDatasetIntegration.renderGeoJsonFeatureCollection`); if unavailable, surfaces should degrade gracefully with a compact error bar (not a full-height panel).

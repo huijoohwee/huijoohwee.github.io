@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.5",
+  "schemaVersion": "1.0.6",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -60,11 +60,31 @@
     ],
     "toolbarEditorWorkspaceToggle": [
       {
-        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference.",
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference. The editor pane may switch between Markdown and a lightweight Graph Table section; selection and focus remain SSOT-aligned.",
         "@language": "en-us"
       },
       {
-        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。",
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。编辑区可在 Markdown 与轻量 Graph Table 间切换；选择与焦点需保持 SSOT 对齐。",
+        "@language": "zh-cn"
+      }
+    ],
+    "editorWorkspaceGraphTable": [
+      {
+        "@value": "Editor workspace may include a Graph Table section for inspecting the active GraphData. It must use semantic HTML (header/nav/form/table/thead/tbody/th/td), a toolbar for fields/filter/group/sort/row height, and colgroup-based column resizing. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Table 区域。必须使用语义化 HTML（header/nav/form/table/thead/tbody/th/td），并提供字段/过滤/分组/排序/行高工具条与基于 colgroup 的列宽调整。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
+        "@language": "zh-cn"
+      }
+    ],
+    "spreadsheetGridStorageBackend": [
+      {
+        "@value": "Spreadsheet grid uses AG Grid for rich Airtable-like interactions and RxDB+Dexie as the local-first persistence layer. Forbid hosted backends and registration/auth flows. Stream row/column changes from RxDB and avoid re-render churn by keeping stable row ids and column ids.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Spreadsheet 表格使用 AG Grid 提供类 Airtable 的交互能力，并使用 RxDB+Dexie 作为本地优先的持久化层。禁止托管后端与注册/认证流程。行/列变更应从 RxDB 流式推送，并通过稳定的 rowId/columnId 避免渲染抖动。",
         "@language": "zh-cn"
       }
     ]

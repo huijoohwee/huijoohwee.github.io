@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.14",
+  "schemaVersion": "1.0.15",
   "rdfs:comment": [
     {
       "@value": "Defines an interactive graph canvas surface. Invariants: (1) presentation toggles update layers without unnecessary re-layout; (2) layout positions are cached by (semanticMode, frontmatterMode, layoutMode, renderMode, renderVariant, layoutVariant?) with no legacy/partial cache-key fallback to forbid cross-mode contamination, and are persisted even when structured layouts stop their simulation (radial/stratify) to prevent drift when switching modes; (3) overlap prevention is schema-driven via layout.forces.{bboxCollide*, groupBboxCollide*} and reused across Force/Radial/Stratify (group bbox collision is enforced whenever layout.groups.enabled !== false; groupBboxCollide is deprecated for disabling); (4) group bbox collision must key by rendered group membership (subgraphs/headings/layers) to forbid group box overlap; (5) stratify mode is a structured tree layout derived from configured hierarchy edge labels and must use collision-safe synthetic root/group IDs; when enabled via schema.layout.stratify.grid, stratify positions snap to a grid using bounded constraint forces and clamp the effective grid size to the label-aware node AABB + padding to forbid overlap; (6) group boxes derive bounds from label-aware node AABBs; (7) render layers have a stable default Z-ordering (Groups/Clusters < LinksHit < Links < EdgeLabels < TempLink < Nodes < NodeChevrons < Media < PortHandles < Labels < GroupLabels) and may be overridden via schema.layout.mermaid.renderOrder for Mermaid-derived graphs; (8) zoom scale extents are schema-driven via schema.performance.zoom.{minScale,maxScale}; (9) zoom/fit transforms center on the graph centroid; zoom state is cached by a viewKey that includes render/layout/frontmatter/semantic modes and presentation toggles (nodes/groups) to forbid stale transforms (pinned views may carry across graph revisions; unpinned views must match graphDataRevision); fit-to-screen uses a target fill ratio computed on a capped 1920×1080 (16:9) frame (default 0.8; stratify may override via schema.layout.stratify.fitFillRatio) and must react to chrome changes (sidebar toggles).",
@@ -26,6 +26,14 @@
     },
     {
       "@value": "渲染模式互斥：Canvas 的渲染模式必须互斥，以禁止未启用/不可见的图层干扰当前模式。当启用地理空间模式时，图画布（2D D3、2D Flow、3D）不得在后台渲染或消费共享请求（推荐做法：卸载非活跃渲染层）。在 2D 内部，2D 渲染器切换（D3 ↔ Flow）必须保留 selection，并按 renderVariant（必要时包含 layoutVariant）对 zoom/layout cache 进行隔离，避免视图状态跨实现污染。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Embedded preview sync: when Canvas is embedded as a preview surface inside an Editor workspace, hosts should synchronize graph/schema/selection/render state via same-origin messaging and synchronize Geospatial Mode via a persisted, namespaced localStorage key so the preview reflects the active mode without duplicating UI state machines.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "嵌入式预览同步：当 Canvas 作为编辑器工作区中的预览表面被嵌入时，宿主应通过同源消息同步图/Schema/Selection/渲染状态，并通过命名空间化的 localStorage 持久化 key 同步地理空间模式，使预览能反映当前模式且避免重复实现 UI 状态机。",
       "@language": "zh-cn"
     }
   ],

@@ -50,11 +50,11 @@
     ],
     "bottomPanelFlowTab": [
       {
-        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Nodes/Edges tables. Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
+        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Graph Data Table (Nodes/Edges scope). Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
         "@language": "en-us"
       },
       {
-        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Nodes/Edges 表格）。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
+        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Graph Data Table：Nodes/Edges scope）。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
         "@language": "zh-cn"
       }
     ],

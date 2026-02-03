@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.6",
+  "schemaVersion": "1.2.7",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -17,11 +17,11 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle.",
+      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Hosts may sync the mode across tabs and embedded previews via a namespaced localStorage key (e.g. kg:ui:geospatial:overlayEnabled) and a same-window CustomEvent (e.g. kg:geospatialModeChanged). Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle.",
       "@language": "en-us"
     },
     {
-      "@value": "宿主集成合约：启用地理空间模式时，宿主 UI 应通过不在后台挂载 2D/3D 图画布来禁止图渲染干扰，并将缩放/适配类命令路由到地图表面。Markdown Viewer/Presentation 仍可独立渲染内嵌 GeoJSON 预览，不应与全局地理空间模式开关强耦合。",
+      "@value": "宿主集成合约：启用地理空间模式时，宿主 UI 应通过不在后台挂载 2D/3D 图画布来禁止图渲染干扰，并将缩放/适配类命令路由到地图表面。宿主可通过命名空间化的 localStorage key（例如 kg:ui:geospatial:overlayEnabled）与同窗口 CustomEvent（例如 kg:geospatialModeChanged）在多标签页与嵌入预览间同步模式。Markdown Viewer/Presentation 仍可独立渲染内嵌 GeoJSON 预览，不应与全局地理空间模式开关强耦合。",
       "@language": "zh-cn"
     }
   ],

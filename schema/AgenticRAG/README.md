@@ -84,11 +84,13 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Reuse existing elements/configs.
 - Enhance natively; forbid duplication.
 - Prevent interference across layers/modes.
+- Treat Document Structure Mode as the baseline; semantic-mode switches must restore per-mode view/schema snapshots and clear incompatible selection/collapse state (no cross-mode bleed).
 - Remove legacy/conflicting/stale code.
 
 ## Pipeline Discipline
 - Scope: `/GitHub/{knowgrph,gympgrph,curagrph}` → import → render.
 - Support all `/GitHub/sandbox/` test data; no hardcoding.
+- FORBID absolute local sandbox paths (e.g. `/Users/.../GitHub/sandbox/...`) in code/tests; use sandbox-root helpers + basenames or repo-local fixtures.
 - Use semantic HTML; forbid generic `<div>`.
 - Centralize configs (labels, boxes, collisions, timing, knobs).
 - Resolve cross‑repo conflicts.

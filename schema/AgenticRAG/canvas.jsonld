@@ -1,52 +1,82 @@
 {
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
-  "@type": "rdfs:Class",
-  "schemaVersion": "1.0.16",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Canvas integration directives", "@language": "en-us" },
+    { "@value": "画布集成指令", "@language": "zh-cn" }
+  ],
   "rdfs:comment": [
     {
-      "@value": "Defines an interactive graph canvas surface. Invariants: (1) presentation toggles update layers without unnecessary re-layout; (2) layout positions are cached by (semanticMode, frontmatterMode, layoutMode, renderMode, renderVariant, layoutVariant?) with no legacy/partial cache-key fallback to forbid cross-mode contamination, and are persisted even when structured layouts stop their simulation (radial/stratify) to prevent drift when switching modes; (3) overlap prevention is schema-driven via layout.forces.{bboxCollide*, groupBboxCollide*} and reused across Force/Radial/Stratify (group bbox collision is enforced whenever layout.groups.enabled !== false; groupBboxCollide is deprecated for disabling); (4) group bbox collision must key by rendered group membership (subgraphs/headings/layers) to forbid group box overlap; (5) stratify mode is a structured tree layout derived from configured hierarchy edge labels and must use collision-safe synthetic root/group IDs; when enabled via schema.layout.stratify.grid, stratify positions snap to a grid using bounded constraint forces and clamp the effective grid size to the label-aware node AABB + padding to forbid overlap; (6) group boxes derive bounds from label-aware node AABBs; (7) render layers have a stable default Z-ordering (Groups/Clusters < LinksHit < Links < EdgeLabels < TempLink < Nodes < NodeChevrons < Media < PortHandles < Labels < GroupLabels) and may be overridden via schema.layout.mermaid.renderOrder for Mermaid-derived graphs; (8) zoom scale extents are schema-driven via schema.performance.zoom.{minScale,maxScale}; (9) zoom/fit transforms center on the graph centroid; zoom state is cached by a viewKey that includes render/layout/frontmatter/semantic modes and presentation toggles (nodes/groups) to forbid stale transforms (pinned views may carry across graph revisions; unpinned views must match graphDataRevision); fit-to-screen uses a target fill ratio computed on a capped 1920×1080 (16:9) frame (default 0.8; stratify may override via schema.layout.stratify.fitFillRatio) and must react to chrome changes (sidebar toggles).",
+      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D/3D/Flow/Geospatial) do not drift or contaminate each other at runtime.",
       "@language": "en-us"
     },
     {
-      "@value": "定义交互式图画布表面。关键不变量：(1) 展示开关仅更新渲染图层，避免不必要重布局；(2) 布局位置按 (semanticMode, frontmatterMode, layoutMode, renderMode, renderVariant, layoutVariant?) 缓存，且不允许回退到历史/部分 key（禁止跨模式污染），并在结构化布局停止模拟（radial/stratify）时也会落盘缓存，避免切换模式漂移；(3) 重叠防护通过 schema 驱动的 layout.forces.{bboxCollide*, groupBboxCollide*} 统一控制，并在 Force/Radial/Stratify 中复用（当 layout.groups.enabled !== false 时强制启用群组 bbox 碰撞；groupBboxCollide 不再用于关闭该约束）；(4) 群组 bbox 碰撞必须按“渲染出来的群组成员关系”（子图/标题层/图层）进行 keying，以禁止群组框互相重叠；(5) Stratify 模式为结构化树布局，按配置的层级边标签推导父子关系，且必须使用不会与真实节点 ID 冲突的合成 root/group ID；当通过 schema.layout.stratify.grid 启用时，Stratify 会用有界约束力将位置吸附到网格，并将有效网格尺寸钳制到“标签感知 AABB + padding”以禁止重叠；(6) 群组框边界由“标签感知”的节点 AABB 推导；(7) 渲染图层提供稳定的默认 Z 顺序（Groups/Clusters < LinksHit < Links < EdgeLabels < TempLink < Nodes < NodeChevrons < Media < PortHandles < Labels < GroupLabels），并可通过 schema.layout.mermaid.renderOrder 对 Mermaid 派生图进行覆盖；(8) 缩放范围由 schema.performance.zoom.{minScale,maxScale} 驱动；(9) 缩放/fit 变换始终以图元素质心居中；缩放状态按包含 render/layout/frontmatter/semantic 模式与 nodes/groups 展示开关的 viewKey 缓存，禁止跨视图复用导致的错位（固定视图可跨图数据版本保留；非固定视图必须匹配 graphDataRevision）；Fit-to-Screen 使用封顶 1920×1080（16:9）作为缩放计算基准，目标占屏比默认 0.8（Stratify 可由 schema.layout.stratify.fitFillRatio 覆盖），并必须对 UI 外壳变化（如侧边栏开关）作出响应。",
-      "@language": "zh-cn"
-    },
-    {
-      "@value": "Stratify enhancements: final centering uses the node centroid (not bbox center) to keep zoom + layout consistent; optional schema.layout.stratify.groupGrid snaps group (subgraph) boxes to the same grid while preserving overlap constraints; in Stratify, edge labels avoid overlaps against nodes, group headers, and other edge labels.",
-      "@language": "en-us"
-    },
-    {
-      "@value": "Stratify 增强：最终居中以节点质心为准（而非 bbox 中心），保证缩放与布局一致；可选 schema.layout.stratify.groupGrid 将群组（子图）框对齐到同一网格，同时保持重叠约束；在 Stratify 中，边标签会避让节点、群组标题区域以及其他边标签，禁止重叠。",
-      "@language": "zh-cn"
-    },
-    {
-      "@value": "Renderer mode exclusivity: Canvas render modes must be mutually exclusive to forbid inactive/off layers from interfering with the active mode. If Geospatial Mode is enabled, graph canvases (2D D3, 2D Flow, 3D) must not render or consume shared requests in the background (recommended: unmount inactive layers). Within 2D, a dedicated 2D renderer toggle (D3 vs Flow) must preserve selection and must key zoom/layout caches by renderVariant (and layoutVariant when relevant) so view state does not bleed across implementations.",
-      "@language": "en-us"
-    },
-    {
-      "@value": "渲染模式互斥：Canvas 的渲染模式必须互斥，以禁止未启用/不可见的图层干扰当前模式。当启用地理空间模式时，图画布（2D D3、2D Flow、3D）不得在后台渲染或消费共享请求（推荐做法：卸载非活跃渲染层）。在 2D 内部，2D 渲染器切换（D3 ↔ Flow）必须保留 selection，并按 renderVariant（必要时包含 layoutVariant）对 zoom/layout cache 进行隔离，避免视图状态跨实现污染。",
-      "@language": "zh-cn"
-    },
-    {
-      "@value": "Flow renderer parity: 2D Flow must honor the same presentation toggles as 2D D3 (Cluster Shape rect/polygon via schema.layout.groups.shape, Port Handles via schema.behavior.portHandles, node-shape precedence via schema.nodeShapes + visual:shape + nodeShapeMode). Flow layout engine selection is schema-driven via schema.layout.flow.engine and schema.layout.flow.elkLayout (elk, elk.layered, elk.force, elk.mrtree, elk.stress). Port-handle endpoint distribution must follow layout direction (LR: along node height; TB: along node width) to keep edge routing stable across renderers.",
-      "@language": "en-us"
-    },
-    {
-      "@value": "Flow 渲染一致性：2D Flow 必须遵循与 2D D3 相同的展示开关（Cluster Shape 矩形/多边形由 schema.layout.groups.shape 控制；Port Handles 由 schema.behavior.portHandles 控制；节点形状优先级按 schema.nodeShapes + visual:shape + nodeShapeMode）。Flow 的布局引擎选择必须由 schema.layout.flow.engine 与 schema.layout.flow.elkLayout（elk、elk.layered、elk.force、elk.mrtree、elk.stress）驱动。端口句柄的端点分布必须随布局方向变化（LR：沿节点高度；TB：沿节点宽度），以保证跨渲染器切换时边路由稳定。",
-      "@language": "zh-cn"
-    },
-    {
-      "@value": "Embedded preview sync: when Canvas is embedded as a preview surface inside an Editor workspace, hosts should synchronize graph/schema/selection/render state via same-origin messaging and synchronize Geospatial Mode via a persisted, namespaced localStorage key so the preview reflects the active mode without duplicating UI state machines.",
-      "@language": "en-us"
-    },
-    {
-      "@value": "嵌入式预览同步：当 Canvas 作为编辑器工作区中的预览表面被嵌入时，宿主应通过同源消息同步图/Schema/Selection/渲染状态，并通过命名空间化的 localStorage 持久化 key 同步地理空间模式，使预览能反映当前模式且避免重复实现 UI 状态机。",
+      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免 2D/3D/Flow/Geospatial 等渲染器在运行时发生漂移或相互污染。",
       "@language": "zh-cn"
     }
   ],
-  "rdfs:label": [
-    { "@value": "Canvas", "@language": "en-us" },
-    { "@value": "画布", "@language": "zh-cn" }
-  ]
+  "canvasContracts": {
+    "rendererExclusivity": [
+      {
+        "@value": "Only one renderer surface is mounted at a time (D3 2D, Flow 2D, 3D, Geospatial). Non-active surfaces must not subscribe to graph store updates, run layouts, or mutate shared caches. Switching renderer surfaces must preserve selection and view state via a stable SSOT view key rather than duplicating computation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "任意时刻只允许挂载一个渲染表面（D3 2D、Flow 2D、3D、Geospatial）。非激活表面不得订阅图状态更新、运行布局、或写入共享缓存。切换渲染表面必须通过稳定的 SSOT view key 保持选择与视图状态，而不是重复计算。",
+        "@language": "zh-cn"
+      }
+    ],
+    "viewKeyIsolation": [
+      {
+        "@value": "View state and caches are isolated by a viewKey that includes all render-affecting toggles (render mode, renderer variant, semantic/frontmatter mode, group collapse, media density, and other presentation settings). Avoid cross-mode contamination by never sharing zoom/layout caches between different view keys.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视图状态与缓存必须按 viewKey 隔离，viewKey 需要包含所有影响渲染的开关（渲染模式、渲染器变体、semantic/frontmatter 模式、group collapse、媒体密度与其他展示设置）。不同 viewKey 之间禁止共享 zoom/layout 缓存，以避免跨模式污染。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layoutCacheKeyIsolation": [
+      {
+        "@value": "Layout caches (positions, seeds, bounding boxes) must include all layout-affecting inputs in their cache keys, including renderer variant and media-related toggles. When a renderer variant changes, the layout pipeline must treat it as a distinct variant and avoid reusing stale positioning from another renderer.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "布局缓存（位置、seed、包围盒）必须在 cache key 中纳入所有影响布局的输入，包括渲染器变体与媒体相关开关。渲染器变体变化时，布局流水线必须视其为不同变体，禁止复用来自其他渲染器的过期定位结果。",
+        "@language": "zh-cn"
+      }
+    ],
+    "viewportAwareAutoFit": [
+      {
+        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。",
+        "@language": "zh-cn"
+      }
+    ],
+    "orderSafeImportRender": [
+      {
+        "@value": "Import→render flows are order-safe and batch-aware: bulk imports coalesce change notifications; late async completions (layouts, previews, derived views) must not override the currently selected graph or viewKey. Prefer explicit request ids or monotonic revision counters for applying async results.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Import→render 流程必须具备顺序安全与批处理意识：批量导入要合并变更通知；异步任务（布局、预览、派生视图）的迟到完成不得覆盖当前选择的图或 viewKey。应优先使用显式 request id 或单调递增的 revision 计数来应用异步结果。",
+        "@language": "zh-cn"
+      }
+    ],
+    "ssotActiveGraphRenderView": [
+      {
+        "@value": "All render surfaces consume the same SSOT-derived active graph render view. Derivation order: keyword base → optional frontmatter filter (document mode only) → optional group collapse. Forbid per-surface re-derivation to prevent drift between Canvas, Flow overview, tables, and stats panels.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "所有渲染表面必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter 过滤（仅 document mode）→ 可选 group collapse。禁止各表面自行二次推导，避免 Canvas、Flow 概览、表格与统计面板之间产生漂移。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
 }

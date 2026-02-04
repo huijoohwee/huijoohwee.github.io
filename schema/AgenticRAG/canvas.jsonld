@@ -29,11 +29,11 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Flow renderer parity: 2D Flow must honor the same presentation toggles as 2D D3 (Cluster Shape rect/polygon via schema.layout.groups.shape, Port Handles via schema.behavior.portHandles, node-shape precedence via schema.nodeShapes + visual:shape + nodeShapeMode). Port-handle endpoint distribution must follow layout direction (LR: along node height; TB: along node width) to keep edge routing stable across renderers.",
+      "@value": "Flow renderer parity: 2D Flow must honor the same presentation toggles as 2D D3 (Cluster Shape rect/polygon via schema.layout.groups.shape, Port Handles via schema.behavior.portHandles, node-shape precedence via schema.nodeShapes + visual:shape + nodeShapeMode). Flow layout engine selection is schema-driven via schema.layout.flow.engine and schema.layout.flow.elkLayout (elk, elk.layered, elk.force, elk.mrtree, elk.stress). Port-handle endpoint distribution must follow layout direction (LR: along node height; TB: along node width) to keep edge routing stable across renderers.",
       "@language": "en-us"
     },
     {
-      "@value": "Flow 渲染一致性：2D Flow 必须遵循与 2D D3 相同的展示开关（Cluster Shape 矩形/多边形由 schema.layout.groups.shape 控制；Port Handles 由 schema.behavior.portHandles 控制；节点形状优先级按 schema.nodeShapes + visual:shape + nodeShapeMode）。端口句柄的端点分布必须随布局方向变化（LR：沿节点高度；TB：沿节点宽度），以保证跨渲染器切换时边路由稳定。",
+      "@value": "Flow 渲染一致性：2D Flow 必须遵循与 2D D3 相同的展示开关（Cluster Shape 矩形/多边形由 schema.layout.groups.shape 控制；Port Handles 由 schema.behavior.portHandles 控制；节点形状优先级按 schema.nodeShapes + visual:shape + nodeShapeMode）。Flow 的布局引擎选择必须由 schema.layout.flow.engine 与 schema.layout.flow.elkLayout（elk、elk.layered、elk.force、elk.mrtree、elk.stress）驱动。端口句柄的端点分布必须随布局方向变化（LR：沿节点高度；TB：沿节点宽度），以保证跨渲染器切换时边路由稳定。",
       "@language": "zh-cn"
     },
     {

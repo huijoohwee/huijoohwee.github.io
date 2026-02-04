@@ -395,6 +395,7 @@ Recent updates to the Knowgrph Canvas pipeline ensure seamless rendering of this
 - **Fit-to-Screen Policy**: Fit uses capped `1920×1080` (16:9) with `targetFillRatio=0.8` and responds to UI chrome changes (e.g. sidebar toggles).
 - **Zoom State Isolation**: Zoom state is cached per viewKey (render/layout/frontmatter/semantic + presentation toggles) to prevent cross-mode contamination.
 - **Non-Overlap Guarantees**: Group bbox collision is enforced whenever `layout.groups.enabled !== false`; legacy `groupBboxCollide` is deprecated for disabling.
+- **Collision Tolerance**: Implementations may expose `layout.forces.bboxCollideTouchEpsilonPx` and `layout.forces.groupBboxCollideTouchEpsilonPx` to stabilize near-touch AABB separation; broadphase should be subquadratic (e.g., packed R-tree).
 - **Theme Alignment**: Labels and headings automatically adapt to System/Light/Dark themes.
 - **Theme-Safe Defaults**: Renderer label colors are theme-derived by default (no hardcoded black/white schema defaults).
 - **Performance**: Optimized caching for adjacency maps and layout positions.

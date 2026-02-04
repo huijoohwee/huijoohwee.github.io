@@ -11,9 +11,11 @@
 | [docsify](https://github.com/docsifyjs/docsify.git) | Simple and powerful documentation site generator |
 | [Fibery/Getting Started](https://joohwee.fibery.io/default/Getting-Started-1) | Getting Started with Fibery |
 | [Figr AI/Mercury - Founder Forecast Focus](https://app.figr.design/0787b7bb-ca15-49ab-ba09-b8a78e1393f9/a343dad6-7966-4a94-b6fd-d0a3e05cbadd) | Founder Forecast Focus |
+| [Fuser](https://app.fuser.studio/flow/e1f91385-247d-472a-be7f-2fadc81b9b63) | Collaborative flow editor |
 | [GMC Map Component](https://codesandbox.io/p/sandbox/gmc-map-component-forked-4y3zsv) | Map component for React |
 | [Heptabase/Gallery](https://heptabase.com/gallery) | Collaborative knowledge base for teams |
 | [Heptabase/How to Start a Startup](https://app.heptabase.com/p/whiteboard/82a19c72-5132-447c-b6f7-f167f6d4cda8/tab/61cc08c9-ab70-4263-bf6c-7e4f034a360b?panel=split) | Whiteboard for startup ideas |
+| [Node Collision Detection Algorithms](https://xyflow.com/blog/node-collision-detection-algorithms) | Node collision detection algorithms |
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
 | [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
 | [Scrintal](https://scrintal.com) | Visual Note-Taking & Research Made Easy |

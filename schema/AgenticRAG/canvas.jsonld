@@ -77,6 +77,16 @@
         "@value": "所有渲染表面必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter 过滤（仅 document mode）→ 可选 group collapse。禁止各表面自行二次推导，避免 Canvas、Flow 概览、表格与统计面板之间产生漂移。",
         "@language": "zh-cn"
       }
+    ],
+    "documentStructureBaselineDefault": [
+      {
+        "@value": "Default UX anchors to Document Structure baseline. A persisted baseline lock may disable mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview content-aligned and prevent cross-surface drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "默认体验锚定在 Document Structure 基线。可通过持久化的 baseline lock 禁用模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 内容对齐并防止跨表面漂移。",
+        "@language": "zh-cn"
+      }
     ]
   }
 }

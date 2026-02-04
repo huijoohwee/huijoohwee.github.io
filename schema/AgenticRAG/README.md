@@ -65,6 +65,11 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - **Preset SSOT:** `knowgrph/grph-shared/src/zoom/presets.ts` (capped 16:9 frame + default fill ratio)
 - **Consumers:** `knowgrph/canvas/src/components/GraphCanvas/{fit.ts,simulation.ts}` (fit transforms + seeding/disjoint sizing)
+- **Flow renderer:** `knowgrph/canvas/src/components/FlowCanvas.tsx` applies the same fit/zoom policies while rendering via a native Canvas2D Flow renderer.
+
+### UI Event SSOT (Knowgrph)
+
+- Mode/selection sync events that cross repo boundaries should be centralized in `knowgrph/grph-shared/src/*/events.ts` to keep payload shapes aligned.
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 

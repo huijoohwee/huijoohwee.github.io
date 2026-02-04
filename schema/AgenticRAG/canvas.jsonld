@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.15",
+  "schemaVersion": "1.0.16",
   "rdfs:comment": [
     {
       "@value": "Defines an interactive graph canvas surface. Invariants: (1) presentation toggles update layers without unnecessary re-layout; (2) layout positions are cached by (semanticMode, frontmatterMode, layoutMode, renderMode, renderVariant, layoutVariant?) with no legacy/partial cache-key fallback to forbid cross-mode contamination, and are persisted even when structured layouts stop their simulation (radial/stratify) to prevent drift when switching modes; (3) overlap prevention is schema-driven via layout.forces.{bboxCollide*, groupBboxCollide*} and reused across Force/Radial/Stratify (group bbox collision is enforced whenever layout.groups.enabled !== false; groupBboxCollide is deprecated for disabling); (4) group bbox collision must key by rendered group membership (subgraphs/headings/layers) to forbid group box overlap; (5) stratify mode is a structured tree layout derived from configured hierarchy edge labels and must use collision-safe synthetic root/group IDs; when enabled via schema.layout.stratify.grid, stratify positions snap to a grid using bounded constraint forces and clamp the effective grid size to the label-aware node AABB + padding to forbid overlap; (6) group boxes derive bounds from label-aware node AABBs; (7) render layers have a stable default Z-ordering (Groups/Clusters < LinksHit < Links < EdgeLabels < TempLink < Nodes < NodeChevrons < Media < PortHandles < Labels < GroupLabels) and may be overridden via schema.layout.mermaid.renderOrder for Mermaid-derived graphs; (8) zoom scale extents are schema-driven via schema.performance.zoom.{minScale,maxScale}; (9) zoom/fit transforms center on the graph centroid; zoom state is cached by a viewKey that includes render/layout/frontmatter/semantic modes and presentation toggles (nodes/groups) to forbid stale transforms (pinned views may carry across graph revisions; unpinned views must match graphDataRevision); fit-to-screen uses a target fill ratio computed on a capped 1920×1080 (16:9) frame (default 0.8; stratify may override via schema.layout.stratify.fitFillRatio) and must react to chrome changes (sidebar toggles).",
@@ -26,6 +26,14 @@
     },
     {
       "@value": "渲染模式互斥：Canvas 的渲染模式必须互斥，以禁止未启用/不可见的图层干扰当前模式。当启用地理空间模式时，图画布（2D D3、2D Flow、3D）不得在后台渲染或消费共享请求（推荐做法：卸载非活跃渲染层）。在 2D 内部，2D 渲染器切换（D3 ↔ Flow）必须保留 selection，并按 renderVariant（必要时包含 layoutVariant）对 zoom/layout cache 进行隔离，避免视图状态跨实现污染。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Flow renderer parity: 2D Flow must honor the same presentation toggles as 2D D3 (Cluster Shape rect/polygon via schema.layout.groups.shape, Port Handles via schema.behavior.portHandles, node-shape precedence via schema.nodeShapes + visual:shape + nodeShapeMode). Port-handle endpoint distribution must follow layout direction (LR: along node height; TB: along node width) to keep edge routing stable across renderers.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Flow 渲染一致性：2D Flow 必须遵循与 2D D3 相同的展示开关（Cluster Shape 矩形/多边形由 schema.layout.groups.shape 控制；Port Handles 由 schema.behavior.portHandles 控制；节点形状优先级按 schema.nodeShapes + visual:shape + nodeShapeMode）。端口句柄的端点分布必须随布局方向变化（LR：沿节点高度；TB：沿节点宽度），以保证跨渲染器切换时边路由稳定。",
       "@language": "zh-cn"
     },
     {

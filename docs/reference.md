@@ -8,19 +8,26 @@
 | [AI Flow](https://github.com/DahnM20/ai-flow.git) | Collaborative flow editor |
 | [Airtable](https://airtable.com) | Collaborative database for teams |
 | [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
+| [AnyPose](https://huggingface.co/lilylilith/AnyPose) | Pose estimation model |
 | [doccano](https://github.com/doccano/doccano.git) | Open source annotation tool for machine learning practitioners |
 | [docsify](https://github.com/docsifyjs/docsify.git) | Simple and powerful documentation site generator |
 | [Fibery/Getting Started](https://joohwee.fibery.io/default/Getting-Started-1) | Getting Started with Fibery |
 | [Figr AI/Mercury - Founder Forecast Focus](https://app.figr.design/0787b7bb-ca15-49ab-ba09-b8a78e1393f9/a343dad6-7966-4a94-b6fd-d0a3e05cbadd) | Founder Forecast Focus |
+| [Flowise](https://github.com/FlowiseAI/Flowise.git) | Collaborative flow editor |
 | [Fuser](https://app.fuser.studio/flow/e1f91385-247d-472a-be7f-2fadc81b9b63) | Collaborative flow editor |
 | [GMC Map Component](https://codesandbox.io/p/sandbox/gmc-map-component-forked-4y3zsv) | Map component for React |
 | [Heptabase/Gallery](https://heptabase.com/gallery) | Collaborative knowledge base for teams |
 | [Heptabase/How to Start a Startup](https://app.heptabase.com/p/whiteboard/82a19c72-5132-447c-b6f7-f167f6d4cda8/tab/61cc08c9-ab70-4263-bf6c-7e4f034a360b?panel=split) | Whiteboard for startup ideas |
+| [Langflow](https://github.com/langflow-ai/langflow.git) | Open source platform for building LLM-powered applications |
+| [Microdiff](https://github.com/AsyncBanana/microdiff.git) | Microdiff is a library for computing the difference between two objects |
 | [Node Collision Detection Algorithms](https://xyflow.com/blog/node-collision-detection-algorithms) | Node collision detection algorithms |
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
 | [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
 | [Reaflow](https://reaflow.dev) | Collaborative flow editor |
+| [Remotion](https://github.com/remotion-dev/remotion.git) | Video rendering library for React |
 | [Scrintal](https://scrintal.com) | Visual Note-Taking & Research Made Easy |
+| [Skills](https://skills.sh) | The Agent Skills Directory |
+| [TurboRepo](https://github.com/vercel/turborepo.git) | High-performance build system for monorepos |
 | [YouTubeTranscript.dev](https://youtubetranscript.dev/dashboard/api-docs) | API documentation for YouTubeTranscript.dev |
 
 

@@ -96,6 +96,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Resolve cross‑repo conflicts.
 - Test only bounded diffs; forbid indefinite runs.
  - Treat `.md`, `.markdown`, `.mmd`, `.mdx` as canonical Markdown ingest extensions in the graph pipeline; keep document path/provenance neutral.
+- On toolbar Markdown import, sync Markdown Editor SSOT (`markdownDocumentName/text/sourceUrl`) and Graph SSOT together; forbid split-brain Editor/Viewer state.
 
 ## Canvas Layout Rules
 - FORBID GRAPHS Elements overlaps or single‑line formations.
@@ -395,7 +396,7 @@ Recent updates to the Knowgrph Canvas pipeline ensure seamless rendering of this
 - **Fit-to-Screen Policy**: Fit uses capped `1920×1080` (16:9) with `targetFillRatio=0.8` and responds to UI chrome changes (e.g. sidebar toggles).
 - **Zoom State Isolation**: Zoom state is cached per viewKey (render/layout/frontmatter/semantic + presentation toggles) to prevent cross-mode contamination.
 - **Non-Overlap Guarantees**: Group bbox collision is enforced whenever `layout.groups.enabled !== false`; legacy `groupBboxCollide` is deprecated for disabling.
-- **Collision Tolerance**: Implementations may expose `layout.forces.bboxCollideTouchEpsilonPx` and `layout.forces.groupBboxCollideTouchEpsilonPx` to stabilize near-touch AABB separation; broadphase should be subquadratic (e.g., packed R-tree).
+- **Collision Tolerance**: Implementations may expose `layout.forces.bboxCollideTouchEpsilon*`, `layout.forces.groupBboxCollideTouchEpsilon*`, and `layout.forces.groupBboxCollideNestedTouchEpsilon*` to stabilize near-touch AABB separation (including nested group inner-border vs parent border, computed from the group’s rendered bounds rather than inflated collision gap). Broadphase should be subquadratic (e.g., packed R-tree), and Z pushes should be gated by `*ZEnabled` + explicit Z values.
 - **Theme Alignment**: Labels and headings automatically adapt to System/Light/Dark themes.
 - **Theme-Safe Defaults**: Renderer label colors are theme-derived by default (no hardcoded black/white schema defaults).
 - **Performance**: Optimized caching for adjacency maps and layout positions.

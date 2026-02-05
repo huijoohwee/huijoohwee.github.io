@@ -90,11 +90,21 @@
     ],
     "floatingPanelShellSsot": [
       {
-        "@value": "Floating Panel (tool menu) is the only SSOT shell primitive for Canvas panels (semantic structure, header/body structure, and theming). It hosts Props Panel + Inspector/Chat/Geo views and forbids any legacy right SidePanel. Only mount the active view to forbid hidden background work.",
+        "@value": "Floating Panel (tool menu) is the only SSOT shell primitive for Canvas panels (semantic structure, header/body structure, and theming). It hosts Props Panel + Inspector/Chat/Geo + Graph Traversal views and forbids any legacy right SidePanel or BottomPanel Orchestrator. Only mount the active view to forbid hidden background work.",
         "@language": "en-us"
       },
       {
-        "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo 视图，并禁止任何遗留右侧 SidePanel。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
+        "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo + Graph Traversal 视图，并禁止任何遗留右侧 SidePanel 或 BottomPanel Orchestrator。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphTraversalOrchestratorContract": [
+      {
+        "@value": "Graph Traversal (Orchestrator) UI must live only in the Canvas Floating Panel Graph Traversal view. Forbid any duplicate Orchestrator UI/Text editors in BottomPanel. Orchestrator configuration text editing must happen in the Editor workspace via workspace files (e.g. `orchestrator/graphrag-workflow.jsonld`); the panel may provide a jump-to-file button but must not embed a second freeform text editor.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Graph Traversal（Orchestrator）UI 只能存在于 Canvas Floating Panel 的 Graph Traversal 视图中。禁止在 BottomPanel 中保留/新增任何重复的 Orchestrator UI/Text 编辑器。Orchestrator 配置的纯文本编辑必须在 Editor 工作区通过工作区文件完成（例如 `orchestrator/graphrag-workflow.jsonld`）；面板可提供跳转按钮，但不得嵌入第二套自由文本编辑器。",
         "@language": "zh-cn"
       }
     ],
@@ -105,6 +115,16 @@
       },
       {
         "@value": "所有渲染表面（Editor 工作区、Graph Data Table、Graph Fields、Selection Inspector（Record Inspector）、EXPLORER 投影、Canvas Preview、Canvas D3/Flow/2D/3D、Document Mode、Geospatial 2D/3D）必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter Mermaid 过滤（仅 document mode）→ 可选 group collapse（`collapsedGroupIds`）。禁止各表面自行二次推导与漂移。Graph Table 的持久化结果必须反映该推导视图（包含 collapsed groups），并通过有界的 host 测试验证。",
+        "@language": "zh-cn"
+      }
+    ],
+    "parserSchemaWorkflowSsot": [
+      {
+        "@value": "Parser and Schema Configurator UI must live only in MainPanel Workflow. Forbid BottomPanel Parser/Schema tabs and any embedded Monaco Text Editors for parser scripts or schema config. Freeform text editing happens only in the Editor workspace via workspace files: `/parser/parser.py` and `/schema/schema.json`. Workspace autosave may sync `/parser/parser.py` into parser state and apply `/schema/schema.json` to the host schema only when JSON parses.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Parser 与 Schema Configurator UI 只能存在于 MainPanel Workflow。禁止 BottomPanel 中存在 Parser/Schema 标签页，且禁止在其中嵌入任何用于 parser script 或 schema 配置的 Monaco 文本编辑器。自由文本编辑只能在 Editor 工作区通过工作区文件完成：`/parser/parser.py` 与 `/schema/schema.json`。工作区自动保存可将 `/parser/parser.py` 同步到 parser state，并仅在 JSON 可解析时将 `/schema/schema.json` 应用到宿主 schema。",
         "@language": "zh-cn"
       }
     ],

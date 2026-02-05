@@ -60,11 +60,11 @@
     ],
     "collisionNoStick": [
       {
-        "@value": "Collision resolution must forbid exact-contact sticking: treat near-touch as overlap via a small touch-epsilon and enforce axis-aware spacing using sum-of-gaps (gapA + gapB) rather than max. Model boxes with indexed borders (inner x2..x4/y2..y4/z2..z4 vs outer envelope x1..x5/y1..y5/z1..z5) and forbid any inner border from snap/touch/stick to another box's outer envelope. Z-axis resolution must be explicitly gated (non-zero cz, positive halfD, or positive explicit gapZ); otherwise treat Z as infinite overlap so 2D surfaces never accidentally push in Z.",
+        "@value": "Collision resolution must forbid exact-contact sticking: treat near-touch as overlap via a small touch-epsilon and enforce axis-aware spacing using sum-of-gaps (gapA + gapB) rather than max. Model boxes with indexed borders (inner x2..x4/y2..y4/z2..z4 vs outer envelope x1..x5/y1..y5/z1..z5); nested containment must compare child inner to parent outer. Z-axis resolution must be explicitly gated (non-zero cz, positive halfD, or positive explicit gapZ); otherwise treat Z as infinite overlap so 2D surfaces never accidentally push in Z.",
         "@language": "en-us"
       },
       {
-        "@value": "碰撞消解必须禁止“贴边粘连”：通过 touch-epsilon 将近似接触视为重叠，并使用按轴间距的 sum-of-gaps（gapA + gapB）而不是 max 来保证更严格的分离。将盒子建模为带索引的边界（内边界 x2..x4/y2..y4/z2..z4 vs 外包络 x1..x5/y1..y5/z1..z5），并禁止任何内边界与其他盒子的外包络发生吸附/触碰/粘连。Z 轴消解必须显式 gating（cz 非零、halfD 为正、或显式 gapZ 为正）；否则将 Z 视为无限重叠，确保 2D 表面不会误在 Z 轴上推挤。",
+        "@value": "碰撞消解必须禁止“贴边粘连”：通过 touch-epsilon 将近似接触视为重叠，并使用按轴间距的 sum-of-gaps（gapA + gapB）而不是 max 来保证更严格的分离。将盒子建模为带索引的边界（内边界 x2..x4/y2..y4/z2..z4 vs 外包络 x1..x5/y1..y5/z1..z5），嵌套包裹需对比子盒内边界与父盒外包络。Z 轴消解必须显式 gating（cz 非零、halfD 为正、或显式 gapZ 为正）；否则将 Z 视为无限重叠，确保 2D 表面不会误在 Z 轴上推挤。",
         "@language": "zh-cn"
       }
     ],

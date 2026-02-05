@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.7",
+  "schemaVersion": "1.0.9",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -98,6 +98,16 @@
         "@language": "zh-cn"
       }
     ],
+    "floatingPanelTypographySsot": [
+      {
+        "@value": "Floating Panel typography (font family + base text size + micro-label size + monospace size) must be SSOT-driven via the host UI settings and applied at the floating panel content root so Inspector/Props/Orchestrator/Chat/Geo surfaces inherit consistently. MainPanel / Editor workspace / Graph Data Table must use the same ladder (anchor = FloatingPanel Inspector). Cross-repo panels mounted inside Floating Panel (e.g. geospatial panel) must receive the same ladder via a typed `panelTypography` prop. Record Inspector key labels must use the same key/value text size as inputs (no micro-label sizing on `dt`). Portal content (dropdowns/popovers) must apply `microLabelClass` when it cannot inherit. Forbid hardcoded `text-*`/`font-*` inside panel bodies; only semantic emphasis (e.g. bold) is allowed.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 的排版（字体族 + 基础字号 + 微标签字号 + 等宽字号）必须由宿主 UI 设置驱动，并在浮动面板内容根节点统一应用，使 Inspector/Props/Orchestrator/Chat/Geo 表面一致继承。MainPanel / Editor 工作区 / Graph Data Table 也必须使用同一排版阶梯（锚点 = FloatingPanel Inspector）。Floating Panel 内挂载的跨仓库面板（例如 geospatial panel）必须通过类型化的 `panelTypography` prop 获取同一排版阶梯。Record Inspector 的 key 标签必须与输入框使用同一 key/value 字号（`dt` 不得使用微标签字号）。无法继承的 Portal 内容（下拉/弹层）必须显式应用 `microLabelClass`。禁止在面板正文中硬编码 `text-*`/`font-*`；只允许语义强调（如加粗）。",
+        "@language": "zh-cn"
+      }
+    ],
     "graphTraversalOrchestratorContract": [
       {
         "@value": "Graph Traversal (Orchestrator) UI must live only in the Canvas Floating Panel Graph Traversal view. Forbid any duplicate Orchestrator UI/Text editors in BottomPanel. Orchestrator configuration text editing must happen in the Editor workspace via workspace files (e.g. `orchestrator/graphrag-workflow.jsonld`); the panel may provide a jump-to-file button but must not embed a second freeform text editor.",
@@ -125,6 +135,16 @@
       },
       {
         "@value": "Parser 与 Schema Configurator UI 只能存在于 MainPanel Workflow。禁止 BottomPanel 中存在 Parser/Schema 标签页，且禁止在其中嵌入任何用于 parser script 或 schema 配置的 Monaco 文本编辑器。自由文本编辑只能在 Editor 工作区通过工作区文件完成：`/parser/parser.py` 与 `/schema/schema.json`。工作区自动保存可将 `/parser/parser.py` 同步到 parser state，并仅在 JSON 可解析时将 `/schema/schema.json` 应用到宿主 schema。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorNodeQuickEditorSsot": [
+      {
+        "@value": "Flow Editor may render an in-canvas Node Quick Editor overlay (positioned near the selected node). The overlay must use semantic HTML (aside/article/header/form/fieldset/legend/label/input/select/textarea/button) and must not use generic div wrappers. Field values must map to node.properties keys and validation must surface missing required keys without mutating graph state on failure.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Flow Editor 可在画布内渲染 Node Quick Editor 覆层（靠近当前选中节点定位）。该覆层必须使用语义化 HTML（aside/article/header/form/fieldset/legend/label/input/select/textarea/button），不得使用通用 div 包裹。字段值必须映射到 node.properties 键；校验需提示缺失必填键，失败时不得修改图状态。",
         "@language": "zh-cn"
       }
     ],

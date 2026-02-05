@@ -421,7 +421,7 @@
       "version": "2.1.0",
       "date": "2026-01-04",
       "changes": [
-        "Extended agenticUseCases with chat_explanation and chat_playback for Side Panel Chat integration in markdown-to-rendering pipelines"
+        "Extended agenticUseCases with chat_explanation and chat_playback for Floating Panel Chat integration in markdown-to-rendering pipelines"
       ]
     }
   ]

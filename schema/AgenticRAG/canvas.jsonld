@@ -20,21 +20,21 @@
   "canvasContracts": {
     "rendererExclusivity": [
       {
-        "@value": "Only one renderer surface is mounted at a time (D3 2D, Flow 2D, 3D, Geospatial). Non-active surfaces must not subscribe to graph store updates, run layouts, or mutate shared caches. Switching renderer surfaces must preserve selection and view state via a stable SSOT view key rather than duplicating computation.",
+        "@value": "Only one renderer surface is active at a time (2D: D3/Flow/Flow Editor, 3D, Geospatial). The app may warm-mount inactive surfaces to reduce switch lag, but non-active surfaces must be effect-gated (no draw loops, no request consumption, no shared-cache writes). Switching renderer surfaces must preserve selection and view state via stable SSOT keys rather than duplicating computation.",
         "@language": "en-us"
       },
       {
-        "@value": "任意时刻只允许挂载一个渲染表面（D3 2D、Flow 2D、3D、Geospatial）。非激活表面不得订阅图状态更新、运行布局、或写入共享缓存。切换渲染表面必须通过稳定的 SSOT view key 保持选择与视图状态，而不是重复计算。",
+        "@value": "任意时刻只允许一个渲染表面处于激活状态（2D：D3/Flow/Flow Editor，3D，Geospatial）。可为降低切换延迟而 warm-mount 非激活表面，但必须通过 effect gating 禁止其运行 draw loop、消费共享请求、或写入共享缓存。切换渲染表面需通过稳定的 SSOT key 保持选择与视图状态，禁止重复计算。",
         "@language": "zh-cn"
       }
     ],
     "viewKeyIsolation": [
       {
-        "@value": "View state and caches are isolated by a viewKey that includes all render-affecting toggles (render mode, renderer variant, semantic/frontmatter mode, group collapse, media density, and other presentation settings). Avoid cross-mode contamination by never sharing zoom/layout caches between different view keys.",
+        "@value": "View state and caches are isolated by explicit keys. Zoom view state may be intentionally shared across 2D renderer variants to preserve viewport continuity, but layout caches must include renderer variant and other layout-affecting toggles. Avoid cross-mode contamination by never sharing layout caches between different layout keys.",
         "@language": "en-us"
       },
       {
-        "@value": "视图状态与缓存必须按 viewKey 隔离，viewKey 需要包含所有影响渲染的开关（渲染模式、渲染器变体、semantic/frontmatter 模式、group collapse、媒体密度与其他展示设置）。不同 viewKey 之间禁止共享 zoom/layout 缓存，以避免跨模式污染。",
+        "@value": "视图状态与缓存必须通过显式 key 隔离：zoom 视图状态可在 2D 渲染器变体之间有意共享以保持 viewport 连续性，但布局缓存必须把渲染器变体与其他影响布局的开关纳入 key。不同布局 key 之间禁止共享布局缓存，以避免跨模式污染。",
         "@language": "zh-cn"
       }
     ],

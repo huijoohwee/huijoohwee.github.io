@@ -9,11 +9,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Defines the structural contract for workflow-oriented UI surfaces (for example MainPanel Workflow). Guidance copy should be low-verbosity in-layout and exposed via Role \u2192 Actions \u2192 Outcome tooltips, keeping the workflow step ordering reproducible and domain-agnostic.",
+      "@value": "Defines the structural contract for workflow-oriented UI surfaces (for example MainPanel Workflow Manager). Guidance copy should be low-verbosity in-layout and exposed via Role \u2192 Actions \u2192 Outcome tooltips, keeping the workflow step ordering reproducible and domain-agnostic.",
       "@language": "en-us"
     },
     {
-      "@value": "定义工作流类 UI 界面的结构化契约（例如主面板 Workflow）。指导文案应在布局中保持低冗余，并通过 Role \u2192 Actions \u2192 Outcome 工具提示呈现，使工作流步骤顺序可复现且领域无关。",
+      "@value": "定义工作流类 UI 界面的结构化契约（例如主面板 Workflow Manager）。指导文案应在布局中保持低冗余，并通过 Role \u2192 Actions \u2192 Outcome 工具提示呈现，使工作流步骤顺序可复现且领域无关。",
       "@language": "zh-cn"
     }
   ],

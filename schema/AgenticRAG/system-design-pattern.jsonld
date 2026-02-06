@@ -141,9 +141,9 @@
       "@type": "rag:RoleActionOutcome",
       "role": "Workspace actions surface",
       "actions": [
-        "expose import, export, and run-pipeline controls inside MainPanel Workflow Step 3 (Ingest) so users have a single end-to-end control surface",
+        "expose import, export, and run-pipeline controls inside MainPanel Workflow Manager Step 3 (Ingest) so users have a single end-to-end control surface",
         "use the MainPanel header Graph Search toggle to filter Workspace Actions instead of rendering a separate per-section search input",
-        "treat the Toolbar Open Data button as navigation that opens MainPanel Workflow (not a second competing Workspace Actions surface)",
+        "treat the Toolbar Open Data button as navigation that opens MainPanel Workflow Manager (not a second competing Workspace Actions surface)",
         "avoid duplicating the same Workspace Actions controls in floating tool menus so UI ownership stays clear and drift-resistant",
         "centralize Workspace Actions menu state and action handlers behind a single model so behavior stays consistent across hosts"
       ],
@@ -173,7 +173,7 @@
       "actions": [
         "edit rag:GraphRAGWorkflow JSON-LD fields (dataset paths, chunking, embedding model, maxHops) inside Bottom Panel → Orchestrator",
         "reuse the same workflow document for traversal presets, renderer overlays, and JSON-LD export/import actions",
-        "avoid embedding a second GraphRAG workflow JSON editor inside MainPanel Workflow steps to prevent drift",
+        "avoid embedding a second GraphRAG workflow JSON editor inside MainPanel Workflow Manager steps to prevent drift",
         "pair Role→Actions→Outcome key tooltips with bounded Default/Min/Max/Interval value tooltips for all workflow fields",
         "keep UI anchors unique so GraphRAG workflow navigation targets a single canonical element"
       ],

@@ -66,6 +66,8 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Preset SSOT:** `knowgrph/grph-shared/src/zoom/presets.ts` (capped 16:9 frame + default fill ratio)
 - **Consumers:** `knowgrph/canvas/src/components/GraphCanvas/{fit.ts,simulation.ts}` (fit transforms + seeding/disjoint sizing)
 - **Flow renderer:** `knowgrph/canvas/src/components/FlowCanvas.tsx` applies the same fit/zoom policies while rendering via a native Canvas2D Flow renderer.
+- **Canvas overlays:** in-canvas overlays (e.g. Flow Node Quick Editor) must derive any zoom-coupled scaling from a single SSOT helper and should keep *macro view* usable at extreme zoom-out (avoid oversized overlays that hide the graph).
+- **Wheel/trackpad parity:** 2D zoom must share wheel delta normalization + zoom factor SSOT; clamp-edge behavior should avoid “min zoom-out bounce back zoom-in” and avoid zooming while dragging nodes.
 
 ### UI Event SSOT (Knowgrph)
 

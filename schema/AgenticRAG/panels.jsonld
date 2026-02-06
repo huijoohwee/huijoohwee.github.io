@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.9",
+  "schemaVersion": "1.0.11",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -68,6 +68,26 @@
         "@language": "zh-cn"
       }
     ],
+    "toolbarNavigateMode": [
+      {
+        "@value": "Toolbar includes a Navigate button that clears selection and forces single-select. It replaces any floating mode rail and must reuse the same canonical selection/mode state.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 包含 Navigate 按钮：清空选择并强制单选模式。它替代任何悬浮模式栏，并且必须复用同一份规范选择/模式状态。",
+        "@language": "zh-cn"
+      }
+    ],
+    "canvasViewportStatusInStatusPanel": [
+      {
+        "@value": "Viewport HUD (zoom %, pan x/y, selection count, renderer) must be surfaced only inside the Status Panel. Forbid separate floating HUD or bottom status bars on the canvas.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视口 HUD（缩放百分比、平移 x/y、选择数量、渲染器）只能展示在 Status Panel 内。禁止在画布上再渲染独立的悬浮 HUD 或底部状态栏。",
+        "@language": "zh-cn"
+      }
+    ],
     "editorWorkspaceGraphTable": [
       {
         "@value": "Editor workspace may include a Graph Table section for inspecting the active GraphData. It must use semantic HTML (header/nav/form/table/thead/tbody/th/td), a toolbar for fields/filter/group/sort/row height, and colgroup-based column resizing. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
@@ -100,11 +120,11 @@
     ],
     "floatingPanelTypographySsot": [
       {
-        "@value": "Floating Panel typography (font family + base text size + micro-label size + monospace size) must be SSOT-driven via the host UI settings and applied at the floating panel content root so Inspector/Props/Orchestrator/Chat/Geo surfaces inherit consistently. MainPanel / Editor workspace / Graph Data Table must use the same ladder (anchor = FloatingPanel Inspector). Cross-repo panels mounted inside Floating Panel (e.g. geospatial panel) must receive the same ladder via a typed `panelTypography` prop. Record Inspector key labels must use the same key/value text size as inputs (no micro-label sizing on `dt`). Portal content (dropdowns/popovers) must apply `microLabelClass` when it cannot inherit. Forbid hardcoded `text-*`/`font-*` inside panel bodies; only semantic emphasis (e.g. bold) is allowed.",
+        "@value": "Floating Panel typography (font family + base text size + micro-label size + monospace size) must be SSOT-driven via the host UI settings and applied at the floating panel content root so Inspector/Props/Orchestrator/Chat/Geo surfaces inherit consistently. MainPanel / Editor workspace / Graph Data Table must use the same ladder (anchor = FloatingPanel Inspector). Cross-repo panels mounted inside Floating Panel (e.g. geospatial panel) must receive the same ladder via a typed `panelTypography` prop (`PanelTypography.keyLabelClass` is the canonical Key label class; `PANEL_TYPOGRAPHY_DEFAULTS` centralizes fallbacks). Record Inspector key labels must use the same key/value text size as inputs (no micro-label sizing on `dt`). Portal content (dropdowns/popovers) must apply `microLabelClass` when it cannot inherit. Forbid hardcoded `text-*`/`font-*` inside panel bodies; only semantic emphasis (e.g. bold) is allowed.",
         "@language": "en-us"
       },
       {
-        "@value": "Floating Panel 的排版（字体族 + 基础字号 + 微标签字号 + 等宽字号）必须由宿主 UI 设置驱动，并在浮动面板内容根节点统一应用，使 Inspector/Props/Orchestrator/Chat/Geo 表面一致继承。MainPanel / Editor 工作区 / Graph Data Table 也必须使用同一排版阶梯（锚点 = FloatingPanel Inspector）。Floating Panel 内挂载的跨仓库面板（例如 geospatial panel）必须通过类型化的 `panelTypography` prop 获取同一排版阶梯。Record Inspector 的 key 标签必须与输入框使用同一 key/value 字号（`dt` 不得使用微标签字号）。无法继承的 Portal 内容（下拉/弹层）必须显式应用 `microLabelClass`。禁止在面板正文中硬编码 `text-*`/`font-*`；只允许语义强调（如加粗）。",
+        "@value": "Floating Panel 的排版（字体族 + 基础字号 + 微标签字号 + 等宽字号）必须由宿主 UI 设置驱动，并在浮动面板内容根节点统一应用，使 Inspector/Props/Orchestrator/Chat/Geo 表面一致继承。MainPanel / Editor 工作区 / Graph Data Table 也必须使用同一排版阶梯（锚点 = FloatingPanel Inspector）。Floating Panel 内挂载的跨仓库面板（例如 geospatial panel）必须通过类型化的 `panelTypography` prop 获取同一排版阶梯（`PanelTypography.keyLabelClass` 为 Key 标签的规范 class；`PANEL_TYPOGRAPHY_DEFAULTS` 统一默认回退值）。Record Inspector 的 key 标签必须与输入框使用同一 key/value 字号（`dt` 不得使用微标签字号）。无法继承的 Portal 内容（下拉/弹层）必须显式应用 `microLabelClass`。禁止在面板正文中硬编码 `text-*`/`font-*`；只允许语义强调（如加粗）。",
         "@language": "zh-cn"
       }
     ],
@@ -140,11 +160,11 @@
     ],
     "flowEditorNodeQuickEditorSsot": [
       {
-        "@value": "Flow Editor may render an in-canvas Node Quick Editor overlay (positioned near the selected node). The overlay must use semantic HTML (aside/article/header/form/fieldset/legend/label/input/select/textarea/button) and must not use generic div wrappers. Field values must map to node.properties keys and validation must surface missing required keys without mutating graph state on failure.",
+        "@value": "Flow Editor may render an in-canvas Node Quick Editor overlay (positioned near the selected node). The overlay must reuse the host FloatingPanel shell patterns (ARIA + theming) and use semantic HTML only (aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button), forbidding generic div wrappers. It supports pin/unpin (detach from node), drag when unpinned, minimize/restore, and inherits SSOT `uiPanelOpacity`. Toolbar actions use icon buttons and a click-to-open More menu. Field values map to node.properties keys; validation surfaces missing required keys without mutating graph state on failure.",
         "@language": "en-us"
       },
       {
-        "@value": "Flow Editor 可在画布内渲染 Node Quick Editor 覆层（靠近当前选中节点定位）。该覆层必须使用语义化 HTML（aside/article/header/form/fieldset/legend/label/input/select/textarea/button），不得使用通用 div 包裹。字段值必须映射到 node.properties 键；校验需提示缺失必填键，失败时不得修改图状态。",
+        "@value": "Flow Editor 可在画布内渲染 Node Quick Editor 覆层（靠近当前选中节点定位）。该覆层必须复用宿主 FloatingPanel 的壳层模式（ARIA + 主题），并仅使用语义化 HTML（aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button），禁止通用 div 包裹。支持 pin/unpin（从节点脱离）、未 pin 时可拖拽移动、最小化/还原，并继承 SSOT 的 `uiPanelOpacity`。工具条使用图标按钮与点击展开的 More 菜单。字段值映射到 node.properties；校验需提示缺失必填键，失败时不得修改图状态。",
         "@language": "zh-cn"
       }
     ],

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.9",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -58,6 +58,66 @@
         "@language": "zh-cn"
       }
     ],
+    "panZoomParity2d": [
+      {
+        "@value": "2D renderer variants (D3, Flow, Flow Editor) must share one SSOT mapping for wheel/trackpad zoom: same wheel delta normalization, same zoom sensitivity, and pointer-anchored zoom. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体（D3、Flow、Flow Editor）必须共享同一套 SSOT 的滚轮/触控板缩放映射：一致的 delta 归一化、一致的缩放灵敏度、并以指针为锚点缩放。工具栏/键盘的 zoom-in/out 必须以当前 viewport 中心为锚点（保持视图中心对应的 world 点不变），而 fit/reset 可回到图的边界/重心。节点附着的 overlay 必须跟随节点 world→screen 位置并允许像节点一样离开 viewport；脱离（detached）overlay 必须使用渲染器 viewport 坐标系进行 clamp，并避免 post-paint 的“回弹修正”导致边界抖动。当滚轮事件略微落在 viewport 外侧时，必须先向边界 clamp，再回退到 last-pointer 或 center，以避免边缘回弹。平移进行中必须对 zoom state 做 rAF 节流且可做 interval gate（并可进行量化）提交，确保 overlay 与渲染器保持同步且不会在平移结束时出现 snap；避免锚点取整导致的 overlay 抖动。应优先复用共享的 viewport clamp 与 pre-paint 修正 helper，防止各表面实现漂移。当指针位于激活画布之上时，必须阻止页面默认滚动/缩放。",
+        "@language": "zh-cn"
+      }
+    ],
+    "overlayScrollIsolation2d": [
+      {
+        "@value": "Scrolling inside overlays (e.g., Flow Node Quick Editor) must not trigger canvas zoom. Mark overlays as wheel-ignore zones and make 2D wheel-zoom handlers early-return when the wheel event originates from (or the pointer is within) an ignore zone.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在 overlay 内滚动（例如 Flow Node Quick Editor）不得触发画布缩放。必须将 overlay 标记为 wheel-ignore zone，并让 2D 的 wheel-zoom handler 在事件来源于（或指针位于）ignore zone 时直接 return。",
+        "@language": "zh-cn"
+      }
+    ],
+    "interactionPerformance2d": [
+      {
+        "@value": "2D interaction handlers (wheel/pan/drag) must avoid forced layout reads and unnecessary rerenders. Prefer offset-based local coordinates (`offsetX/offsetY`) for canvas-local pointer/wheel mapping; only fall back to `getBoundingClientRect()` when offsets are unavailable. Avoid per-frame `getComputedStyle()`/CSS var reads in draw loops; cache theme tokens keyed by theme state. Imperative renderers should not subscribe to high-frequency store state (e.g., zoom state) in ways that rerender the React component on every commit.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 交互 handler（wheel/pan/drag）必须避免强制 layout 读取与不必要的 rerender。应优先使用基于 offset 的本地坐标（`offsetX/offsetY`）进行画布局部坐标映射；仅在 offset 不可用时回退到 `getBoundingClientRect()`。在 draw loop 中必须避免每帧执行 `getComputedStyle()`/CSS var 读取；应按主题状态 key 缓存 theme token。命令式渲染器不得订阅高频 store 状态（例如 zoom state）从而导致每次 commit 都触发 React 组件 rerender。",
+        "@language": "zh-cn"
+      }
+    ],
+    "collisionRelaxPerformance2d": [
+      {
+        "@value": "Collision relaxation during drag must be throttled (at most once per animation frame, and may be further time-bounded) and step-bounded. For large graphs, drag-time relaxation may be disabled to preserve interaction responsiveness; commit-time relaxation should use a size-aware step policy to stay bounded.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "拖拽期间的碰撞 relax 必须被节流（最多每个动画帧一次，且可进一步按时间间隔限频）并限制 steps 上限。对于大图可禁用拖拽期 relax 以保证交互顺滑；commit 期 relax 必须使用与图规模相关的 steps 策略以保持有界。",
+        "@language": "zh-cn"
+      }
+    ],
+    "overlayRenderIsolation2d": [
+      {
+        "@value": "2D overlays that depend on zoom/pan for positioning (e.g., Node Quick Editor) must isolate zoom-dependent layout from heavy UI subtrees. Zoom updates should not re-render editor forms; prefer rAF-batched DOM style updates for position/scale and keep updates on the compositor path (e.g., `transform: translate3d(...) scale(...)` instead of left/top writes), and memoize the panel body.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "依赖 zoom/pan 进行定位的 2D overlay（例如 Node Quick Editor）必须将与 zoom 相关的布局计算从重 UI 子树中隔离。zoom 更新不得触发 editor form rerender；应优先用 rAF 批处理的 DOM style 更新实现位置/缩放，并尽量走合成器路径（例如使用 `transform: translate3d(...) scale(...)` 而不是频繁写 left/top），并 memoize panel body。",
+        "@language": "zh-cn"
+      }
+    ],
+    "interactionNoTextSelectionDuringCanvasDrag": [
+      {
+        "@value": "During canvas pointer interactions (pan, drag, marquee) the app must prevent browser text selection and HTML dragstart side-effects so dragging never selects panel text or triggers copy/drag cursors.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在画布指针交互（平移、拖拽、框选）期间，应用必须阻止浏览器文本选择与 HTML dragstart 副作用，确保拖动不会选中面板文字或触发复制/拖拽光标。",
+        "@language": "zh-cn"
+      }
+    ],
     "collisionNoStick": [
       {
         "@value": "Collision resolution must forbid exact-contact sticking: treat near-touch as overlap via a small touch-epsilon and enforce axis-aware spacing using sum-of-gaps (gapA + gapB) rather than max. Model boxes with indexed borders (inner x2..x4/y2..y4/z2..z4 vs outer envelope x1..x5/y1..y5/z1..z5); nested containment must compare child inner to parent outer. Z-axis resolution must be explicitly gated (non-zero cz, positive halfD, or positive explicit gapZ); otherwise treat Z as infinite overlap so 2D surfaces never accidentally push in Z.",
@@ -65,6 +125,16 @@
       },
       {
         "@value": "碰撞消解必须禁止“贴边粘连”：通过 touch-epsilon 将近似接触视为重叠，并使用按轴间距的 sum-of-gaps（gapA + gapB）而不是 max 来保证更严格的分离。将盒子建模为带索引的边界（内边界 x2..x4/y2..y4/z2..z4 vs 外包络 x1..x5/y1..y5/z1..z5），嵌套包裹需对比子盒内边界与父盒外包络。Z 轴消解必须显式 gating（cz 非零、halfD 为正、或显式 gapZ 为正）；否则将 Z 视为无限重叠，确保 2D 表面不会误在 Z 轴上推挤。",
+        "@language": "zh-cn"
+      }
+    ],
+    "labelTextSsot": [
+      {
+        "@value": "Label wrapping/truncation and approximate text measurement must reuse one SSOT helper set across 2D renderers (D3, Flow, Flow Editor). Prefer cached, width-based truncation (estimate max chars from width + font size) over ad-hoc slice constants; avoid per-frame expensive text measurement loops. Label typography (font family/size/weight) must follow the UI design token SSOT so label behavior does not drift across surfaces.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Label 的换行/截断与近似文本度量必须在 2D 渲染器（D3、Flow、Flow Editor）之间复用同一套 SSOT helper。应优先使用带缓存的“按宽度截断”（根据 width + fontSize 估算最大字符数），禁止使用各表面自定义的 slice 常量；避免每帧执行昂贵的 text measurement 循环。Label 排版（字体族/字号/字重）必须遵循 UI 设计 token 的 SSOT，防止跨表面漂移。",
         "@language": "zh-cn"
       }
     ],

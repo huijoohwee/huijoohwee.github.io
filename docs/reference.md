@@ -7,8 +7,9 @@
 
 | [AI Flow](https://github.com/DahnM20/ai-flow.git) | Collaborative flow editor |
 | [Airtable](https://airtable.com) | Collaborative database for teams |
-| [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
 | [AnyPose](https://huggingface.co/lilylilith/AnyPose) | Pose estimation model |
+| [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
+| [ComfyUI/Hunyuan3D-2](https://docs.comfy.org/tutorials/3d/hunyuan3D-2) | Hunyuan3D-2 tutorial |
 | [doccano](https://github.com/doccano/doccano.git) | Open source annotation tool for machine learning practitioners |
 | [docsify](https://github.com/docsifyjs/docsify.git) | Simple and powerful documentation site generator |
 | [Fibery/Getting Started](https://joohwee.fibery.io/default/Getting-Started-1) | Getting Started with Fibery |
@@ -23,10 +24,12 @@
 | [Node Collision Detection Algorithms](https://xyflow.com/blog/node-collision-detection-algorithms) | Node collision detection algorithms |
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
 | [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
+| [PageIndex](https://github.com/VectifyAI/PageIndex.git) | PageIndex is a tool for indexing web pages |
 | [Reaflow](https://reaflow.dev) | Collaborative flow editor |
 | [Remotion](https://github.com/remotion-dev/remotion.git) | Video rendering library for React |
 | [Scrintal](https://scrintal.com) | Visual Note-Taking & Research Made Easy |
 | [Skills](https://skills.sh) | The Agent Skills Directory |
+| [tldraw](https://github.com/tldraw/tldraw.git) | Collaborative whiteboard for teams |
 | [TurboRepo](https://github.com/vercel/turborepo.git) | High-performance build system for monorepos |
 | [YouTubeTranscript.dev](https://youtubetranscript.dev/dashboard/api-docs) | API documentation for YouTubeTranscript.dev |
 

@@ -10,6 +10,8 @@
 | [AnyPose](https://huggingface.co/lilylilith/AnyPose) | Pose estimation model |
 | [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
 | [ComfyUI/Hunyuan3D-2](https://docs.comfy.org/tutorials/3d/hunyuan3D-2) | Hunyuan3D-2 tutorial |
+| [ComfyUI/Node JSON Schema](https://docs.comfy.org/specs/nodedef_json) | ComfyUI node JSON schema |
+| [ComfyUI/Workflow](https://docs.comfy.org/specs/workflow_json) | ComfyUI workflow JSON schema |
 | [doccano](https://github.com/doccano/doccano.git) | Open source annotation tool for machine learning practitioners |
 | [docsify](https://github.com/docsifyjs/docsify.git) | Simple and powerful documentation site generator |
 | [Fibery/Getting Started](https://joohwee.fibery.io/default/Getting-Started-1) | Getting Started with Fibery |
@@ -19,7 +21,9 @@
 | [GMC Map Component](https://codesandbox.io/p/sandbox/gmc-map-component-forked-4y3zsv) | Map component for React |
 | [Heptabase/Gallery](https://heptabase.com/gallery) | Collaborative knowledge base for teams |
 | [Heptabase/How to Start a Startup](https://app.heptabase.com/p/whiteboard/82a19c72-5132-447c-b6f7-f167f6d4cda8/tab/61cc08c9-ab70-4263-bf6c-7e4f034a360b?panel=split) | Whiteboard for startup ideas |
+| [JSON Schema Spec](https://github.com/json-schema-org/json-schema-spec.git) | JSON Schema Specification |
 | [Langflow](https://github.com/langflow-ai/langflow.git) | Open source platform for building LLM-powered applications |
+| [LLM Stats](https://llm-stats.com) | LLM Stats is a tool for tracking the performance of LLM models |
 | [Microdiff](https://github.com/AsyncBanana/microdiff.git) | Microdiff is a library for computing the difference between two objects |
 | [Node Collision Detection Algorithms](https://xyflow.com/blog/node-collision-detection-algorithms) | Node collision detection algorithms |
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
@@ -29,6 +33,7 @@
 | [Remotion](https://github.com/remotion-dev/remotion.git) | Video rendering library for React |
 | [Scrintal](https://scrintal.com) | Visual Note-Taking & Research Made Easy |
 | [Skills](https://skills.sh) | The Agent Skills Directory |
+| [Tencent/Hunyuan Video](https://github.com/Tencent-Hunyuan/HunyuanVideo.git) | Hunyuan Video is a video generation model |
 | [tldraw](https://github.com/tldraw/tldraw.git) | Collaborative whiteboard for teams |
 | [TurboRepo](https://github.com/vercel/turborepo.git) | High-performance build system for monorepos |
 | [YouTubeTranscript.dev](https://youtubetranscript.dev/dashboard/api-docs) | API documentation for YouTubeTranscript.dev |

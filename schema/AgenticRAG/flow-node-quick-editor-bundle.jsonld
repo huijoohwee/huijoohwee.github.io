@@ -1,0 +1,63 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:FlowNodeQuickEditorBundle",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Flow Node Quick Editor bundle contract", "@language": "en-us" },
+    { "@value": "Flow 节点快速编辑器 bundle 契约", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Contract for a project-agnostic JSON envelope that imports/exports Flow Node Quick Editor registry mappings and optionally includes a GraphData payload for import→render round-trips.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "用于导入/导出 Flow 节点快速编辑器 Registry 映射的领域无关 JSON 封装格式，并可选携带 GraphData 用于 import→render 的往返。",
+      "@language": "zh-cn"
+    }
+  ],
+  "quickEditorBundleContracts": {
+    "bundleKindAndVersion": [
+      {
+        "@value": "Bundle documents must declare kind='kg:flow:nodeQuickEditorBundle' and version=1. Parsers must reject other versions unless explicitly supported.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Bundle 文档必须声明 kind='kg:flow:nodeQuickEditorBundle' 且 version=1。解析器必须拒绝其他版本（除非显式支持）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "registryPayload": [
+      {
+        "@value": "Bundles carry a 'registry' array whose items match the Node Quick Editor Registry entry shape (id/nodeTypeId/quickEditorTypeId/formId/fields/ports/updatedAt). Consumers must validate and normalize before persisting.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Bundle 携带 'registry' 数组，其元素匹配 Node Quick Editor Registry entry 形状（id/nodeTypeId/quickEditorTypeId/formId/fields/ports/updatedAt）。消费方必须在持久化前做校验与归一化。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphMetadataWiring": [
+      {
+        "@value": "Import pipelines may write registry entries into GraphData.metadata['flow:nodeQuickEditorRegistry'] to enable immediate Node Quick Editor rendering after graph commit.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "导入流水线可将 registry entries 写入 GraphData.metadata['flow:nodeQuickEditorRegistry']，以便图数据 commit 后立即启用 Node Quick Editor 的渲染。",
+        "@language": "zh-cn"
+      }
+    ],
+    "noChurnPolicy": [
+      {
+        "@value": "Auto-apply must be idempotent: if the imported registry signature matches the current store snapshot, do not rewrite or re-persist.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "自动应用必须幂等：若导入 registry 的签名与当前 store 快照一致，则不得重复写入或重复持久化。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}
+

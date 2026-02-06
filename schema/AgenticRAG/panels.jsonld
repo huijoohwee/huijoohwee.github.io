@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.11",
+  "schemaVersion": "1.0.12",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -160,11 +160,11 @@
     ],
     "flowEditorNodeQuickEditorSsot": [
       {
-        "@value": "Flow Editor may render an in-canvas Node Quick Editor overlay (positioned near the selected node). The overlay must reuse the host FloatingPanel shell patterns (ARIA + theming) and use semantic HTML only (aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button), forbidding generic div wrappers. It supports pin/unpin (detach from node), drag when unpinned, minimize/restore, and inherits SSOT `uiPanelOpacity`. Toolbar actions use icon buttons and a click-to-open More menu. Field values map to node.properties keys; validation surfaces missing required keys without mutating graph state on failure.",
+        "@value": "Flow Editor may render an in-canvas Node Quick Editor overlay (positioned near the selected node). The overlay must reuse the host FloatingPanel shell patterns (ARIA + theming) and use semantic HTML only (aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button), forbidding generic div wrappers. It supports pin/unpin (detach from node), drag when pinned (detached), minimize/restore, and inherits SSOT `uiPanelOpacity`. The More menu may open the node in Sidepane, enable Port Handles for all nodes (set behavior.portHandles.enabled=true and behavior.portHandles.showAllInputs=true; gated by baseline lock), and convert the selected node to a Loop node (set node.type='Loop' and node.properties['workflow:kind']='loop'). Actions must be idempotent to avoid rerender churn. Field values map to node.properties keys; validation surfaces missing required keys without mutating graph state on failure.",
         "@language": "en-us"
       },
       {
-        "@value": "Flow Editor 可在画布内渲染 Node Quick Editor 覆层（靠近当前选中节点定位）。该覆层必须复用宿主 FloatingPanel 的壳层模式（ARIA + 主题），并仅使用语义化 HTML（aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button），禁止通用 div 包裹。支持 pin/unpin（从节点脱离）、未 pin 时可拖拽移动、最小化/还原，并继承 SSOT 的 `uiPanelOpacity`。工具条使用图标按钮与点击展开的 More 菜单。字段值映射到 node.properties；校验需提示缺失必填键，失败时不得修改图状态。",
+        "@value": "Flow Editor 可在画布内渲染 Node Quick Editor 覆层（靠近当前选中节点定位）。该覆层必须复用宿主 FloatingPanel 的壳层模式（ARIA + 主题），并仅使用语义化 HTML（aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button），禁止通用 div 包裹。支持 pin/unpin（从节点脱离）、pin 后可拖拽移动（脱离模式）、最小化/还原，并继承 SSOT 的 `uiPanelOpacity`。More 菜单可打开 Sidepane、为所有节点启用 Port Handles（设置 behavior.portHandles.enabled=true 与 behavior.portHandles.showAllInputs=true，受 baseline lock 限制），并将选中节点转换为 Loop 节点（设置 node.type='Loop' 与 node.properties['workflow:kind']='loop'）。动作必须幂等以避免渲染抖动。字段值映射到 node.properties；校验需提示缺失必填键，失败时不得修改图状态。",
         "@language": "zh-cn"
       }
     ],

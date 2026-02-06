@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.9",
+  "schemaVersion": "1.0.10",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -135,6 +135,26 @@
       },
       {
         "@value": "Label 的换行/截断与近似文本度量必须在 2D 渲染器（D3、Flow、Flow Editor）之间复用同一套 SSOT helper。应优先使用带缓存的“按宽度截断”（根据 width + fontSize 估算最大字符数），禁止使用各表面自定义的 slice 常量；避免每帧执行昂贵的 text measurement 循环。Label 排版（字体族/字号/字重）必须遵循 UI 设计 token 的 SSOT，防止跨表面漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphElementsSemantics": [
+      {
+        "@value": "Graph elements vocabulary: nodes (entities with id/label/type + properties), edges (relationships with id/source/target/label + properties), labels/text (rendered copy driven by SSOT UI tokens), and graph layers (groups/clusters/communities, selection, overlays). Node Quick Editor is a screen-space overlay anchored to a selected node and synchronized to world→screen transforms. Node Quick Editor More actions are idempotent and SSOT-driven: enable Port Handles by setting schema.behavior.portHandles.enabled=true and schema.behavior.portHandles.showAllInputs=true; convert to Loop by setting node.type='Loop' and node.properties['workflow:kind']='loop'; open sidepane dispatches the panel open event without mutating GraphData.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "图元素词汇：nodes（包含 id/label/type 与 properties 的实体）、edges（包含 id/source/target/label 与 properties 的关系）、labels/text（由 SSOT UI token 驱动的渲染文案）、graph layers（groups/clusters/communities、selection、overlays）。Node Quick Editor 是屏幕空间的覆层，锚定选中节点并与 world→screen 变换保持同步。Node Quick Editor 的 More actions 必须幂等并遵循 SSOT：通过设置 schema.behavior.portHandles.enabled=true 与 schema.behavior.portHandles.showAllInputs=true 启用 Port Handles；通过设置 node.type='Loop' 与 node.properties['workflow:kind']='loop' 转换为 Loop；打开 sidepane 仅派发面板打开事件且不得修改 GraphData。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphConfigsSemantics": [
+      {
+        "@value": "Graph configs vocabulary: grouping (schema.layout.groups.*), positioning (layout mode + flow engine knobs), collisions (bounded relax policies + schema collision knobs), timing (rAF/interval gates and bounded timeouts), and knobs (schema/config/persistence SSOT; cache-keyed when render-affecting).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "图配置词汇：grouping（schema.layout.groups.*）、positioning（布局模式 + flow 引擎参数）、collisions（有界 relax 策略 + schema 碰撞参数）、timing（rAF/interval gate 与有界超时）、knobs（schema/config/persistence 的 SSOT；影响渲染时必须纳入 cache key）。",
         "@language": "zh-cn"
       }
     ],

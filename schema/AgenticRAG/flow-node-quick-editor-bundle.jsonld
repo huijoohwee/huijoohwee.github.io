@@ -57,7 +57,36 @@
         "@value": "自动应用必须幂等：若导入 registry 的签名与当前 store 快照一致，则不得重复写入或重复持久化。",
         "@language": "zh-cn"
       }
+    ],
+    "dragAndDropPayload": [
+      {
+        "@value": "UIs may support drag-and-drop creation of workflow nodes from registry entries. Drag payloads should be versioned and project-agnostic (e.g. kind='kg:flow:nodeQuickEditorDrag', version=1) and resolve to a registry entry id in the active store snapshot.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "UI 可支持从 registry entries 拖拽创建工作流节点。拖拽 payload 应版本化且领域无关（例如 kind='kg:flow:nodeQuickEditorDrag', version=1），并解析为当前 store 快照中的 registry entry id。",
+        "@language": "zh-cn"
+      }
+    ],
+    "exportSurfaces": [
+      {
+        "@value": "Export surfaces may include: exporting registry-only bundles (Flow Editor Manager), exporting workflow bundles (draft graph + registry), and exporting per-node bundles (node subgraph + matching registry). All must preserve kind/version.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "导出面可包括：仅导出 registry 的 bundle（Flow Editor Manager）、导出工作流 bundle（draft graph + registry）、导出单节点 bundle（节点子图 + 匹配 registry）。均必须保留 kind/version。",
+        "@language": "zh-cn"
+      }
+    ],
+    "multiNodeEditorRendering": [
+      {
+        "@value": "When multiple Node Quick Editors are visible simultaneously, UIs must avoid DOM id collisions by scoping form control ids per node and applying a deterministic offset/stacking strategy to reduce panel overlap.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当多个 Node Quick Editor 同时可见时，UI 必须通过按节点作用域化 form 控件 id 来避免 DOM id 冲突，并使用确定性偏移/堆叠策略减少面板重叠。",
+        "@language": "zh-cn"
+      }
     ]
   }
 }
-

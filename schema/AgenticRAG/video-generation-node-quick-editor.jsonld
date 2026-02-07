@@ -1,0 +1,63 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "rag:VideoGenerationNodeQuickEditor",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.0",
+  "rdfs:label": [
+    { "@value": "Video generation node quick editor contract", "@language": "en-us" },
+    { "@value": "视频生成节点快速编辑器契约", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Project-agnostic contract for a VideoGeneration node + its Node Quick Editor mapping. This describes the neutral node property keys and the recommended registry fields/ports so import→render→export pipelines can round-trip without domain coupling.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "用于 VideoGeneration 节点及其 Node Quick Editor 映射的领域无关契约，描述中立的 node.properties 键与推荐的 registry fields/ports，从而支持 import→render→export 往返且不与具体项目耦合。",
+      "@language": "zh-cn"
+    }
+  ],
+  "videoGenerationContracts": {
+    "nodeTypeId": [
+      {
+        "@value": "Use a stable node type id (e.g. 'VideoGeneration') and treat it as an opaque identifier. UIs should not hardcode project domains into the type id.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "使用稳定的 node type id（例如 'VideoGeneration'）并将其视为不透明标识符；UI 不得将项目域名硬编码到 type id 中。",
+        "@language": "zh-cn"
+      }
+    ],
+    "nodePropertiesNeutralKeys": [
+      {
+        "@value": "Recommended neutral property keys for the quick editor: model, prompt, aspect_ratio, duration, resolution, generate_audio, fast, reference_image. These remain opaque JSON values at the schema layer (no domain semantics).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "快速编辑器推荐的中立属性键：model, prompt, aspect_ratio, duration, resolution, generate_audio, fast, reference_image。它们在 schema 层仅作为不透明 JSON 值（不承载领域语义）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "registryMappingShape": [
+      {
+        "@value": "Registry entries should map field values via schemaPath='properties.<fieldKey>' and expose ports for workflow wiring (e.g. input: reference_image, output: videoUrl). Consumers must validate and normalize registry entries before persisting.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Registry entry 应通过 schemaPath='properties.<fieldKey>' 映射字段值，并暴露 ports 用于工作流连线（例如 input: reference_image, output: videoUrl）。消费方在持久化前必须校验与归一化。",
+        "@language": "zh-cn"
+      }
+    ],
+    "importExportRoundTrip": [
+      {
+        "@value": "Import pipelines may embed registry mappings into GraphData.metadata['flow:nodeQuickEditorRegistry'] and export them via the Flow Node Quick Editor bundle (kind='kg:flow:nodeQuickEditorBundle', version=1).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "导入流水线可将 registry 映射写入 GraphData.metadata['flow:nodeQuickEditorRegistry']，并通过 Flow Node Quick Editor bundle（kind='kg:flow:nodeQuickEditorBundle', version=1）导出。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}
+

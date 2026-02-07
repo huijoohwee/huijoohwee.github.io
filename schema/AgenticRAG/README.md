@@ -23,6 +23,7 @@ schema/AgenticRAG/
 ├── canvas.jsonld                             # Canvas/renderer integration directives
 ├── panels.jsonld                             # Panel/pane interaction directives (UI contract)
 ├── flow-node-quick-editor-bundle.jsonld       # Node Quick Editor bundle import/export contract
+├── video-generation-node-quick-editor.jsonld  # VideoGeneration node quick editor contract
 ├── curation.jsonld                           # Graph Data curation surfaces (tables/editors/presentation)
 ├── settings.jsonld                           # Settings surface (config-driven behavior)
 ├── settings-flow.jsonld                      # Settings provenance flow (modules/classes/functions/line ranges)

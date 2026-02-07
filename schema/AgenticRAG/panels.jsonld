@@ -18,6 +18,16 @@
     { "@value": "面板", "@language": "zh-cn" }
   ],
   "panelInteractionContracts": {
+    "nodeQuickEditorLiveSync": [
+      {
+        "@value": "Node Quick Editor visibility must live-sync across Canvas (Flow Editor) and the Editor Workspace Graph Table Inspector. Visibility gating uses a shared open-id list (e.g., `openQuickEditorNodeIds`) from the host store, not per-surface local state. The Editor Workspace Graph Table must reuse the same Inspector and panel UI so the quick editor looks and behaves identically across surfaces. Mode switches (Canvas↔Editor) must preserve the open list unless nodes are removed from GraphData.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Node Quick Editor 的可见性必须在 Canvas（Flow Editor）与 Editor 工作区的 Graph Table Inspector 之间实时同步。可见性由宿主存储中的共享打开 ID 列表（例如 `openQuickEditorNodeIds`）进行控制，而非各表面维护本地状态。Editor 工作区的 Graph Table 必须复用同一套 Inspector 与面板 UI，使 Quick Editor 在各表面外观与行为一致。工作区模式切换（Canvas↔Editor）必须保留打开列表，除非节点已从 GraphData 移除。",
+        "@language": "zh-cn"
+      }
+    ],
     "markdownSsotSectionHeader": [
       {
         "@value": "Markdown Editor/Viewer/Presentation must share one-and-only Markdown Section Header implementation. Mode switches may change enabled/disabled state but must not introduce alternate header variants or different button sets.",

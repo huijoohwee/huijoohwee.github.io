@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.12",
+  "schemaVersion": "1.0.13",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -20,11 +20,11 @@
   "panelInteractionContracts": {
     "nodeQuickEditorLiveSync": [
       {
-        "@value": "Node Quick Editor visibility must live-sync across Canvas (Flow Editor) and the Editor Workspace Graph Table Inspector. Visibility gating uses a shared open-id list (e.g., `openQuickEditorNodeIds`) from the host store, not per-surface local state. The Editor Workspace Graph Table must reuse the same Inspector and panel UI so the quick editor looks and behaves identically across surfaces. Mode switches (Canvas↔Editor) must preserve the open list unless nodes are removed from GraphData.",
+        "@value": "Node Quick Editor visibility must live-sync across Canvas (Flow Editor) and the host Graph Table Inspector. Visibility gating uses a shared open-id list (e.g., `openQuickEditorNodeIds`) from the host store, not per-surface local state. Editor Workspace must not mount a second inspector dock; it surfaces Node Quick Editor as bundle codes inside the Markdown editor/viewer (JSON/Markdown) and may auto-focus when a quick-editor node is available. Mode switches (Canvas↔Editor) must preserve the open list unless nodes are removed from GraphData.",
         "@language": "en-us"
       },
       {
-        "@value": "Node Quick Editor 的可见性必须在 Canvas（Flow Editor）与 Editor 工作区的 Graph Table Inspector 之间实时同步。可见性由宿主存储中的共享打开 ID 列表（例如 `openQuickEditorNodeIds`）进行控制，而非各表面维护本地状态。Editor 工作区的 Graph Table 必须复用同一套 Inspector 与面板 UI，使 Quick Editor 在各表面外观与行为一致。工作区模式切换（Canvas↔Editor）必须保留打开列表，除非节点已从 GraphData 移除。",
+        "@value": "Node Quick Editor 的可见性必须在 Canvas（Flow Editor）与宿主 Graph Table Inspector 之间实时同步。可见性由宿主存储中的共享打开 ID 列表（例如 `openQuickEditorNodeIds`）进行控制，而非各表面维护本地状态。Editor 工作区不得挂载第二套 Inspector 停靠栏；应在 Markdown editor/viewer 内以 bundle codes（JSON/Markdown）形式呈现 Node Quick Editor，并可在存在 quick-editor 节点时自动聚焦。工作区模式切换（Canvas↔Editor）必须保留打开列表，除非节点已从 GraphData 移除。",
         "@language": "zh-cn"
       }
     ],
@@ -70,11 +70,11 @@
     ],
     "toolbarEditorWorkspaceToggle": [
       {
-        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference. The editor pane may switch between Markdown and a lightweight Graph Table section; selection and focus remain SSOT-aligned.",
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference. Editor Workspace must not mount a standalone inspector dock; optional tools (e.g., Graph Table) must keep inspector behavior scoped within the tool surface.",
         "@language": "en-us"
       },
       {
-        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。编辑区可在 Markdown 与轻量 Graph Table 间切换；选择与焦点需保持 SSOT 对齐。",
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。Editor 工作区不得挂载独立的 Inspector 停靠栏；可选工具（例如 Graph Table）必须将 inspector 行为限制在其工具表面内部。",
         "@language": "zh-cn"
       }
     ],
@@ -110,11 +110,11 @@
     ],
     "recordInspectorSsot": [
       {
-        "@value": "Record/Selection Inspector (dl/header + field inputs) must be a single host-owned SSOT component reused across Graph Table and the Canvas Floating Panel Inspector view (no legacy right SidePanel). When Flow Editor is the active 2D renderer, its inspector must be consolidated into the same Floating Panel Inspector surface (portal slot) rather than rendering a separate inspector panel. The Inspector layout must render even with no active selection; inputs may be disabled but the surface stays visible.",
+        "@value": "Record/Selection Inspector (dl/header + field inputs) must be a single host-owned SSOT component reused across Graph Table and the Canvas Floating Panel Inspector view (no legacy right SidePanel). Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. When Flow Editor is the active 2D renderer, its inspector must be consolidated into the same Floating Panel Inspector surface (portal slot) rather than rendering a separate inspector panel. The Inspector layout must render even with no active selection; inputs may be disabled but the surface stays visible.",
         "@language": "en-us"
       },
       {
-        "@value": "Record/Selection Inspector（dl/header + 字段输入）必须是宿主唯一的 SSOT 组件，并在 Graph Table 与 Canvas 浮动面板（Floating Panel）的 Inspector 视图中复用（禁止遗留右侧 SidePanel）。当 Flow Editor 为当前 2D 渲染器时，其 Inspector 必须合并到同一 Floating Panel Inspector 表面（portal slot），禁止渲染独立的 Inspector 面板。Inspector 布局必须在无选择时也保持渲染；输入可禁用但界面需可见。",
+        "@value": "Record/Selection Inspector（dl/header + 字段输入）必须是宿主唯一的 SSOT 组件，并在 Graph Table 与 Canvas 浮动面板（Floating Panel）的 Inspector 视图中复用（禁止遗留右侧 SidePanel）。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 表面仅允许存在于 Graph Table 工作区与 Canvas Floating Panel。 当 Flow Editor 为当前 2D 渲染器时，其 Inspector 必须合并到同一 Floating Panel Inspector 表面（portal slot），禁止渲染独立的 Inspector 面板。Inspector 布局必须在无选择时也保持渲染；输入可禁用但界面需可见。",
         "@language": "zh-cn"
       }
     ],

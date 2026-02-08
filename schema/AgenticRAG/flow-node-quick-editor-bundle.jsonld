@@ -34,7 +34,15 @@
         "@language": "en-us"
       },
       {
+        "@value": "Registry field/port items may include an optional boolean 'isHidden'. When true, UIs must hide that field/port in Node Quick Editor rendering and suppress Flow port handles derived from it.",
+        "@language": "en-us"
+      },
+      {
         "@value": "Bundle 携带 'registry' 数组，其元素匹配 Node Quick Editor Registry entry 形状（id/nodeTypeId/quickEditorTypeId/formId/fields/ports/updatedAt）。消费方必须在持久化前做校验与归一化。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Registry 的 field/port 项可包含可选布尔字段 'isHidden'。当为 true 时，UI 必须在 Node Quick Editor 中隐藏该 field/port，并抑制由其派生的 Flow 端口句柄。",
         "@language": "zh-cn"
       }
     ],

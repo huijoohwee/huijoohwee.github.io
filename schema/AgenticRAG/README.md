@@ -81,7 +81,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 `/GitHub/{huijoohwee.github.io/guidelines/{codebase-neutrality-guidelines.md,codebase-maintainability-guidelines.md},knowgrph/todo.md#L5-21}`
 
 ## ALIGN (Semantic Definition)
-- **GRAPHS Elements:** nodes, edges, graph layers (subgraphs, groups, clusters, communities), labels, text
+- **GRAPHS Elements:** nodes, Node Quick Editors, edges, graph layers (subgraphs, groups, clusters, communities), labels, text
 - **GRAPHS Configs:** grouping, positioning, collisions, timing, knobs
 
 ## Baseline & Code Hygiene

@@ -38,11 +38,20 @@
         "@language": "en-us"
       },
       {
+        "@value": "Registry entries may include an optional 'schemaMappings' array for in-editor dataflow. Each item declares fromPath/toPath and optional transformId/reduceId. Consumers must validate ids; unknown ids must be treated as no-op rather than failing import.",
+        "@language": "en-us"
+      },
+      {
         "@value": "Bundle 携带 'registry' 数组，其元素匹配 Node Quick Editor Registry entry 形状（id/nodeTypeId/quickEditorTypeId/formId/fields/ports/updatedAt）。消费方必须在持久化前做校验与归一化。",
         "@language": "zh-cn"
       },
       {
         "@value": "Registry 的 field/port 项可包含可选布尔字段 'isHidden'。当为 true 时，UI 必须在 Node Quick Editor 中隐藏该 field/port，并抑制由其派生的 Flow 端口句柄。",
+        "@language": "zh-cn"
+      }
+      ,
+      {
+        "@value": "Registry entry 可包含可选的 'schemaMappings' 数组用于编辑器内数据流计算。每项包含 fromPath/toPath，以及可选 transformId/reduceId。消费方必须校验这些 id；未知 id 必须按 no-op 处理而不是导致导入失败。",
         "@language": "zh-cn"
       }
     ],

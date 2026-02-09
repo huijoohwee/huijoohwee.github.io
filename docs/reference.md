@@ -29,8 +29,8 @@
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
 | [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
 | [PageIndex](https://github.com/VectifyAI/PageIndex.git) | PageIndex is a tool for indexing web pages |
-| [React Flow/Custom Connection Line](https://reactflow.dev/examples/edges/custom-connectionline) | Custom Connection Line in React Flow |
-| [React Flow/Edge Types](https://reactflow.dev/examples/edges/edge-types) | Edge Types in React Flow |
+| [React Flow/Custom Connection Line](https://reactflow.dev/examples/edges/custom-connectionline) | Custom Connection Line in React Flow (reference only; do not copy implementation/behavior) |
+| [React Flow/Edge Types](https://reactflow.dev/examples/edges/edge-types) | Edge Types in React Flow (reference only; do not copy implementation/behavior) |
 | [React Flow/Sub Flows](https://reactflow.dev/learn/layouting/sub-flows) | Sub Flows in React Flow |
 | [React Flow/The Flow](https://reactflow.dev/learn/tutorials/getting-started-with-react-flow-components#the-flow-editor) | Getting Started with React Flow Components |
 | [Reaflow](https://reaflow.dev) | Collaborative flow editor |

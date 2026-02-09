@@ -120,11 +120,11 @@
     ],
     "floatingPanelShellSsot": [
       {
-        "@value": "Floating Panel (tool menu) is the only SSOT shell primitive for Canvas panels (semantic structure, header/body structure, and theming). It hosts Props Panel + Inspector/Chat/Geo + Graph Traversal views and forbids any legacy right SidePanel or BottomPanel Orchestrator. Only mount the active view to forbid hidden background work.",
+        "@value": "Floating Panel (tool menu) is the only SSOT shell primitive for Canvas panels (semantic structure, header/body structure, and theming). It hosts Props Panel + Inspector/Chat/Geo + Graph Traversal views and forbids any legacy right SidePanel or BottomPanel Orchestrator. Pin disables header drag (locked panel, blue pin icon); unpin enables header drag (floating panel). Only mount the active view to forbid hidden background work.",
         "@language": "en-us"
       },
       {
-        "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo + Graph Traversal 视图，并禁止任何遗留右侧 SidePanel 或 BottomPanel Orchestrator。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
+        "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo + Graph Traversal 视图，并禁止任何遗留右侧 SidePanel 或 BottomPanel Orchestrator。pin=锁定（禁用拖拽，蓝色图钉），unpin=浮动（启用头部拖拽）。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
         "@language": "zh-cn"
       }
     ],

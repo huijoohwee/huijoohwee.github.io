@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.10",
+  "schemaVersion": "1.0.13",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -60,11 +60,31 @@
     ],
     "panZoomParity2d": [
       {
-        "@value": "2D renderer variants (D3, Flow, Flow Editor) must share one SSOT mapping for wheel/trackpad zoom: same wheel delta normalization, same zoom sensitivity, and pointer-anchored zoom. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom.",
+        "@value": "2D renderer variants (D3, Flow, Flow Editor) must share one SSOT mapping for viewport controls (preset + selection + wheel/trackpad/pinch zoom): consistent preset semantics (`viewportControlsPreset`: map vs design) for pan/zoom/select, delta normalization, zoom sensitivity, and pointer-anchored zoom. Wheel/pinch zoom must be continuous (no discrete stepping) and may rAF-batch deltas; all renderers should apply a short anchored easing animation to avoid per-frame delta clumping and feel continuous; cancel on pan/drag and cleanup RAF on unmount. Zoom magnitude/increment, ctrl/meta pinch boost, and smoothing durations may be user-tunable via MainPanel Settings (persisted) but must remain bounded; Fit/Selection zoom action durations and zoom modes (pin/fit-to-screen/zoom-to-selection) may also be user-tunable and must be enforced consistently across all 2D renderers. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom so zooming never triggers horizontal/vertical page scrolling.",
         "@language": "en-us"
       },
       {
-        "@value": "2D 渲染器变体（D3、Flow、Flow Editor）必须共享同一套 SSOT 的滚轮/触控板缩放映射：一致的 delta 归一化、一致的缩放灵敏度、并以指针为锚点缩放。工具栏/键盘的 zoom-in/out 必须以当前 viewport 中心为锚点（保持视图中心对应的 world 点不变），而 fit/reset 可回到图的边界/重心。节点附着的 overlay 必须跟随节点 world→screen 位置并允许像节点一样离开 viewport；脱离（detached）overlay 必须使用渲染器 viewport 坐标系进行 clamp，并避免 post-paint 的“回弹修正”导致边界抖动。当滚轮事件略微落在 viewport 外侧时，必须先向边界 clamp，再回退到 last-pointer 或 center，以避免边缘回弹。平移进行中必须对 zoom state 做 rAF 节流且可做 interval gate（并可进行量化）提交，确保 overlay 与渲染器保持同步且不会在平移结束时出现 snap；避免锚点取整导致的 overlay 抖动。应优先复用共享的 viewport clamp 与 pre-paint 修正 helper，防止各表面实现漂移。当指针位于激活画布之上时，必须阻止页面默认滚动/缩放。",
+        "@value": "2D 渲染器变体（D3、Flow、Flow Editor）必须共享同一套 SSOT 的 viewport 控制映射（preset + 框选 + 滚轮/触控板/双指捏合缩放）：一致的 preset 语义（`viewportControlsPreset`: map vs design）用于 pan/zoom/select，一致的 delta 归一化、一致的缩放灵敏度、并以指针为锚点缩放。滚轮/捏合缩放必须是连续的（不允许离散分级跳变），可以做 rAF 批处理；所有渲染器都应使用短时的“以锚点为中心”的缓动动画，避免同一帧 delta 堆叠导致跳变并提升连续感；在平移/拖拽时必须取消，并在卸载时清理 RAF。缩放幅度/增量、Ctrl/Meta 捏合加速倍率与平滑时长可以在 MainPanel Settings 中由用户调参（持久化），但必须保持有界；Fit/Selection 的缩放动作时长与缩放模式（pin/fit-to-screen/zoom-to-selection）也可以由用户调参，并且必须在所有 2D 渲染器中一致强制执行。工具栏/键盘的 zoom-in/out 必须以当前 viewport 中心为锚点（保持视图中心对应的 world 点不变），而 fit/reset 可回到图的边界/重心。节点附着的 overlay 必须跟随节点 world→screen 位置并允许像节点一样离开 viewport；脱离（detached）overlay 必须使用渲染器 viewport 坐标系进行 clamp，并避免 post-paint 的“回弹修正”导致边界抖动。当滚轮事件略微落在 viewport 外侧时，必须先向边界 clamp，再回退到 last-pointer 或 center，以避免边缘回弹。平移进行中必须对 zoom state 做 rAF 节流且可做 interval gate（并可进行量化）提交，确保 overlay 与渲染器保持同步且不会在平移结束时出现 snap；避免锚点取整导致的 overlay 抖动。应优先复用共享的 viewport clamp 与 pre-paint 修正 helper，防止各表面实现漂移。当指针位于激活画布之上时，必须阻止页面默认滚动/缩放，确保缩放不会触发页面横向/纵向滚动。",
+        "@language": "zh-cn"
+      }
+    ],
+    "nodeEdgeVisibilityParity2d": [
+      {
+        "@value": "2D renderer variants (D3, Flow, Flow Editor) must apply the same node/edge display filter (visibility semantics) before layout, fit, and scene build. If a node is filtered out, all incident edges must also be filtered out; if the preferred filter would remove all nodes/edges, a safe fallback must display the base nodes/edges to avoid rendering an empty canvas. Initial view restoration must not apply stored transforms when graph bounds cannot be computed yet (e.g., no finite node positions); prefer fit/identity to prevent a blank view caused by stale offscreen pans.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体（D3、Flow、Flow Editor）必须在 layout / fit / scene build 之前应用同一套节点/边显示过滤（可见性语义）。若某节点被过滤掉，则其相连的所有边也必须被过滤掉；若“优先过滤”会导致节点/边全部被过滤，则必须使用安全回退策略显示基础节点/边，避免渲染为空。初始视图恢复时，若尚无法计算图边界（例如没有任何有限的节点坐标），不得应用持久化的 transform；应优先使用 fit/identity，避免因旧的离屏平移导致画布空白。",
+        "@language": "zh-cn"
+      }
+    ],
+    "panZoomParityGeospatial": [
+      {
+        "@value": "Geospatial mode must honor the same viewportControlsPreset semantics as 2D canvas surfaces. In map preset: slippy-map interactions are enabled (drag-pan, scroll/pinch zoom) and shift-drag may be reserved for box-zoom/selection without triggering pan. In design preset: wheel defaults to panning; zoom on wheel requires Ctrl/Cmd (trackpad pinch counts as zoom), and pointer-drag panning is restricted to middle/right drag or Space+drag. Interactions must be gated when the Geospatial surface is not active.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Geospatial 模式必须遵循与 2D 画布一致的 viewportControlsPreset 语义。map preset：开启类地图交互（拖拽平移、滚轮/捏合缩放），并将 Shift+拖拽保留为框选/box-zoom（不得触发平移）。design preset：滚轮默认用于平移；滚轮缩放需 Ctrl/Cmd（触控板捏合也视为缩放）；指针拖拽平移仅允许中键/右键拖拽或 Space+拖拽。Geospatial 表面非激活时必须对交互做 effect gating。",
         "@language": "zh-cn"
       }
     ],
@@ -180,11 +200,11 @@
     ],
     "documentStructureBaselineDefault": [
       {
-        "@value": "Default UX anchors to Document Structure baseline. A persisted baseline lock may disable mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview content-aligned and prevent cross-surface drift.",
+        "@value": "Default UX anchors to Document Structure baseline. Baseline lock forces a stable 2D baseline (D3 + Fit-to-Screen, no Pin/Zoom-to-Selection) and blocks mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview aligned. Zoom view keys must isolate 2D renderers to prevent cross-renderer drift.",
         "@language": "en-us"
       },
       {
-        "@value": "默认体验锚定在 Document Structure 基线。可通过持久化的 baseline lock 禁用模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 内容对齐并防止跨表面漂移。",
+        "@value": "默认体验锚定在 Document Structure 基线。baseline lock 强制稳定的 2D 基线（D3 + Fit-to-Screen，禁用 Pin/Zoom-to-Selection），并阻止模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 内容对齐并防止跨表面漂移。Zoom view key 必须隔离不同 2D 渲染器，防止跨渲染器漂移。",
         "@language": "zh-cn"
       }
     ]

@@ -75,6 +75,10 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - Mode/selection sync events that cross repo boundaries should be centralized in `knowgrph/grph-shared/src/*/events.ts` to keep payload shapes aligned.
 
+### PDF Workspace (Knowgrph)
+
+- Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel` to keep the pipeline deterministic and in-repo.
+
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 
 ## COMPLY

@@ -2,10 +2,10 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Pipeline",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.4",
+  "schemaVersion": "1.0.5",
   "rdfs:comment": [
     {
-      "@value": "Defines the high-level, domain-agnostic GraphRAG pipeline surface. Components implement token linking, edge elevation, adaptive threshold tuning, multi-document unification, feedback loops, corpus-scale reasoning, and agentic query traversal. Configuration is expected to be externalized and validated structurally. Runtime import→render flows must be order-safe and batch-aware: bulk imports should coalesce change notifications, and late async completions must not override the current user-selected view. UI render surfaces must consume a single SSOT-derived active graph render view (keyword base → optional frontmatter filter → optional group collapse) to prevent cross-panel drift. Cross-repo modularity is enforced: each concern has a single owner (host vs plugins), cross-repo imports occur only through declared package entrypoints (no sibling source-relative imports), shared types (GraphData/GraphNode/GraphEdge) are single-source-of-truth (SSOT: grph-shared/graph/types), and persistence keys are centrally defined and namespaced to avoid collisions; automated checks should guard these boundaries. Render-stage caches must isolate all render-affecting toggles (renderer variants, view keys, media density/toggles) and auto-fit behaviors must react to viewport changes. For computing data flows, a project-agnostic import may use a Node Quick Editor bundle (kind='kg:flow:nodeQuickEditorBundle', version=1) that carries a workflow graph plus registry mappings; after commit, Flow Editor should render port-bound edges via the native Flow renderer and Node Quick Editor overlays must avoid overlap by using deterministic default placement and per-node persisted detached positions.",
+      "@value": "Defines the high-level, domain-agnostic GraphRAG pipeline surface. Components implement token linking, edge elevation, adaptive threshold tuning, multi-document unification, feedback loops, corpus-scale reasoning, and agentic query traversal. Configuration is expected to be externalized and validated structurally. Runtime import→render flows must be order-safe and batch-aware: bulk imports should coalesce change notifications, and late async completions must not override the current user-selected view. Document import is provider-based and must default to local execution for sensitive data: PDF→Markdown conversion should support a native local provider plus optional online enrichment providers (e.g., OCR and structure enrichment) behind explicit configuration. For PDF, image persistence should be achieved via bounded `data:` URI embedding with a safe fallback to same-origin cached asset URLs. UI render surfaces must consume a single SSOT-derived active graph render view (keyword base → optional frontmatter filter → optional group collapse) to prevent cross-panel drift. Cross-repo modularity is enforced: each concern has a single owner (host vs plugins), cross-repo imports occur only through declared package entrypoints (no sibling source-relative imports), shared types (GraphData/GraphNode/GraphEdge) are single-source-of-truth (SSOT: grph-shared/graph/types), and persistence keys are centrally defined and namespaced to avoid collisions; automated checks should guard these boundaries. Render-stage caches must isolate all render-affecting toggles (renderer variants, view keys, media density/toggles) and auto-fit behaviors must react to viewport changes. For computing data flows, a project-agnostic import may use a Node Quick Editor bundle (kind='kg:flow:nodeQuickEditorBundle', version=1) that carries a workflow graph plus registry mappings; after commit, Flow Editor should render port-bound edges via the native Flow renderer and Node Quick Editor overlays must avoid overlap by using deterministic default placement and per-node persisted detached positions.",
       "@language": "en-us"
     },
     {
@@ -44,7 +44,26 @@
         "default_traversal_depth",
         "min_result_count",
         "max_context_chunks",
-        "follow_up_suggestion_count"
+        "follow_up_suggestion_count",
+        "pdf_import_conversion_mode"
+      ]
+    },
+    "provenance": {
+      "@type": "@id",
+      "required": false,
+      "rdfs:label": [
+        { "@value": "Provenance", "@language": "en-us" },
+        { "@value": "溯源", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional derivation references (prov:wasDerivedFrom) used to track pipeline lineage without introducing domain semantics. Use stable ids/URIs and keep records bounded.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于记录流水线血缘的可选派生引用（prov:wasDerivedFrom），不引入领域语义。使用稳定的 id/URI，并保持记录有界。",
+          "@language": "zh-cn"
+        }
       ]
     }
   }

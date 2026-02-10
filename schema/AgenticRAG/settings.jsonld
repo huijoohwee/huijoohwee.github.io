@@ -74,6 +74,58 @@
         { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
       ]
     },
+    "pdfImportIncludeImages": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "PDF import: include images", "@language": "en-us" },
+        { "@value": "PDF 导入：包含图片", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled, PDF→Markdown conversion extracts page images and emits Markdown image tokens.", "@language": "en-us" },
+        { "@value": "启用后，PDF→Markdown 转换会提取页面图片并生成 Markdown 图片标记。", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportEmbedImages": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "PDF import: embed images as data URIs", "@language": "en-us" },
+        { "@value": "PDF 导入：用 data URI 内嵌图片", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled, eligible image links are rewritten to bounded data: URIs to improve offline persistence.", "@language": "en-us" },
+        { "@value": "启用后，满足大小限制的图片链接会被重写为有上限的 data: URI，以提升离线持久化。", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportProvider": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "PDF import: provider", "@language": "en-us" },
+        { "@value": "PDF 导入：提供方", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["native", "docling-remote"]
+    },
+    "pdfImportDoclingEndpoint": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "PDF import: Docling endpoint", "@language": "en-us" },
+        { "@value": "PDF 导入：Docling 端点", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportDeepseekOcr2Enabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "PDF import: DeepSeek OCR2 enabled", "@language": "en-us" },
+        { "@value": "PDF 导入：启用 DeepSeek OCR2", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportDeepseekOcr2Mode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "PDF import: DeepSeek OCR2 mode", "@language": "en-us" },
+        { "@value": "PDF 导入：DeepSeek OCR2 模式", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["fallback", "always"]
+    },
     "flowCollisionDuringDrag": {
       "@type": "xsd:boolean",
       "rdfs:label": [

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.6",
+  "schemaVersion": "1.0.8",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -50,6 +50,28 @@
       "rdfs:comment": [
         { "@value": "Base pan speed multiplier read from schema and clamped to a safe range before use.", "@language": "en-us" },
         { "@value": "从 schema 读取的基础平移速度倍率，使用前会被限制在安全区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "canvasPanSpeedMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "2D pan/drag speed multiplier", "@language": "en-us" },
+        { "@value": "2D 平移/拖拽速度倍率", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to 2D panning (wheel pan + pointer/touch drag pan) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
+        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 平移（滚轮平移 + 指针/触控拖拽平移）。", "@language": "zh-cn" }
+      ]
+    },
+    "canvasInteractionSpeedMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Unified 2D interaction speed multiplier", "@language": "en-us" },
+        { "@value": "统一 2D 交互速度倍率", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to both 2D zoom (wheel/pinch) and 2D pan (wheel/pointer/touch) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
+        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
       ]
     },
     "flowCollisionDuringDrag": {

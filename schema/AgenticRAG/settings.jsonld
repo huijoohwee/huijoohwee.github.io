@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.2",
+  "schemaVersion": "1.0.6",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -18,6 +18,312 @@
     }
   ],
   "propertyDefinitions": {
+    "schema.performance.zoom.wheelBehavior": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Wheel behavior override", "@language": "en-us" },
+        { "@value": "滚轮行为覆盖", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Overrides wheel behavior for 2D renderers. When set to preset, wheel behavior follows viewportControlsPreset.", "@language": "en-us" },
+        { "@value": "覆盖 2D 渲染器的滚轮行为。当设为 preset 时，滚轮行为遵循 viewportControlsPreset。", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["preset", "pan", "zoom"]
+    },
+    "schema.performance.zoom.zoomSpeed": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Base zoom speed (schema)", "@language": "en-us" },
+        { "@value": "基础缩放速度（schema）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Base zoom speed multiplier read from schema and clamped to a safe range before use.", "@language": "en-us" },
+        { "@value": "从 schema 读取的基础缩放速度倍率，使用前会被限制在安全区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "schema.performance.zoom.panSpeed": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Base pan speed (schema)", "@language": "en-us" },
+        { "@value": "基础平移速度（schema）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Base pan speed multiplier read from schema and clamped to a safe range before use.", "@language": "en-us" },
+        { "@value": "从 schema 读取的基础平移速度倍率，使用前会被限制在安全区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowCollisionDuringDrag": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Flow collision during drag", "@language": "en-us" },
+        { "@value": "拖拽时启用 Flow 碰撞", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled, FlowCanvas runs bounded collision relaxation during drag to reduce overlaps.", "@language": "en-us" },
+        { "@value": "启用时，FlowCanvas 在拖拽过程中运行有界碰撞松弛以减少重叠。", "@language": "zh-cn" }
+      ]
+    },
+    "flowOverlayPanelCollisionGapPx": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Overlay collision gap (px)", "@language": "en-us" },
+        { "@value": "Overlay 碰撞间距（像素）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Gap in pixels used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Flow Editor overlay 面板碰撞解算的像素间距。", "@language": "zh-cn" }
+      ]
+    },
+    "flowOverlayPanelCollisionStrength": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Overlay collision strength", "@language": "en-us" },
+        { "@value": "Overlay 碰撞强度", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Strength used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Flow Editor overlay 面板碰撞解算的强度。", "@language": "zh-cn" }
+      ]
+    },
+    "flowOverlayPanelCollisionIterations": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Overlay collision iterations", "@language": "en-us" },
+        { "@value": "Overlay 碰撞迭代次数", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Iterations used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Flow Editor overlay 面板碰撞解算的迭代次数。", "@language": "zh-cn" }
+      ]
+    },
+    "flowOverlayPanelCollisionTouchEpsilonPx": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Overlay collision touch epsilon (px)", "@language": "en-us" },
+        { "@value": "Overlay 碰撞 touch epsilon（像素）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Touch-epsilon in pixels used for Flow Editor overlay collisions to treat near-touch as overlap, avoid sticking, and enforce non-touching borders.", "@language": "en-us" },
+        { "@value": "Flow Editor overlay 碰撞使用的像素 touch-epsilon，用于将近似接触视为重叠、避免粘连，并确保边框不贴边接触。", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.circleCollide": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "D3 circle collision enabled", "@language": "en-us" },
+        { "@value": "启用 D3 圆形碰撞", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Enables/disables D3 forceCollide in GraphCanvas force layout.", "@language": "en-us" },
+        { "@value": "在 GraphCanvas force 布局中启用/禁用 D3 forceCollide。", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.circleCollideStrength": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "D3 circle collision strength", "@language": "en-us" },
+        { "@value": "D3 圆形碰撞强度", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.circleCollideIterations": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "D3 circle collision iterations", "@language": "en-us" },
+        { "@value": "D3 圆形碰撞迭代次数", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.structuredRelaxSteps": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Structured relax steps", "@language": "en-us" },
+        { "@value": "结构化松弛步数", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Step budget for structured relax overlap resolution (used by Flow post-layout relax and D3 structured relax passes).", "@language": "en-us" },
+        { "@value": "结构化松弛重叠解算的步数预算（Flow 布局后松弛与 D3 结构化松弛都会使用）。", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.bboxCollide": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "AABB collision enabled", "@language": "en-us" },
+        { "@value": "启用 AABB 碰撞", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.bboxCollideStrength": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "AABB collision strength", "@language": "en-us" },
+        { "@value": "AABB 碰撞强度", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.bboxCollideIterations": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "AABB collision iterations", "@language": "en-us" },
+        { "@value": "AABB 碰撞迭代次数", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.groupBboxCollide": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Group bbox collision enabled", "@language": "en-us" },
+        { "@value": "启用分组 bbox 碰撞", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.groupBboxCollideStrength": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Group bbox collision strength", "@language": "en-us" },
+        { "@value": "分组 bbox 碰撞强度", "@language": "zh-cn" }
+      ]
+    },
+    "schema.layout.forces.groupBboxCollideIterations": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Group bbox collision iterations", "@language": "en-us" },
+        { "@value": "分组 bbox 碰撞迭代次数", "@language": "zh-cn" }
+      ]
+    },
+    "viewPinned": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Pin view", "@language": "en-us" },
+        { "@value": "固定视图", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Pins the current viewport and suppresses automatic fit/selection zoom requests until re-enabled.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "固定当前视口并抑制自动 fit/selection 缩放请求，直到再次启用相关模式。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "fitToScreenMode": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Fit to screen mode", "@language": "en-us" },
+        { "@value": "适配屏幕模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Auto-fit the graph to the viewport while enabled. Suppressed when viewPinned=true.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "启用时自动将图适配到视口。viewPinned=true 时被抑制。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "zoomToSelectionMode": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Zoom to selection mode", "@language": "en-us" },
+        { "@value": "缩放到选择模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Auto-zoom to the active selection while enabled. Suppressed when viewPinned=true.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "启用时自动缩放到当前选择。viewPinned=true 时被抑制。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "zoomDurationFitMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Fit zoom duration (ms)", "@language": "en-us" },
+        { "@value": "适配缩放时长（毫秒）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Animation duration for fit-to-view / fit-to-screen zoom actions. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于 fit-to-view / fit-to-screen 缩放动作的动画时长。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "zoomDurationSelectionMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Selection zoom duration (ms)", "@language": "en-us" },
+        { "@value": "选择缩放时长（毫秒）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Animation duration for zoom-to-selection action. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于 zoom-to-selection 动作的动画时长。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "wheelZoomCtrlMetaBoostMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Ctrl/Cmd wheel zoom boost", "@language": "en-us" },
+        { "@value": "Ctrl/Cmd 滚轮缩放加速", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Boost multiplier applied to ctrl/cmd wheel zoom (trackpad pinch). Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于 Ctrl/Cmd 滚轮缩放（触控板捏合）的加速倍率。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowWheelPanSpeedMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Wheel pan speed multiplier", "@language": "en-us" },
+        { "@value": "滚轮平移速度倍率", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Multiplier applied to wheel-pan deltas for 2D renderers. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于 2D 渲染器滚轮平移增量的倍率。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowWheelZoomSpeedMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Wheel/pinch zoom speed multiplier", "@language": "en-us" },
+        { "@value": "滚轮/捏合缩放速度倍率", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Multiplier applied to wheel/pinch zoom speed for 2D renderers. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于 2D 渲染器滚轮/捏合缩放速度的倍率。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowWheelZoomIncrementMultiplier": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Wheel zoom increment multiplier", "@language": "en-us" },
+        { "@value": "滚轮缩放增量倍率", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Per-gesture zoom magnitude multiplier for wheel/pinch zoom. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于滚轮/捏合缩放的单次手势缩放幅度倍率。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowWheelZoomSmoothMinDurationMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Wheel zoom smoothing min duration (ms)", "@language": "en-us" },
+        { "@value": "滚轮缩放平滑最小时长（毫秒）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Minimum duration for wheel-zoom smoothing animation. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于滚轮缩放平滑动画的最小时长。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
+    "flowWheelZoomSmoothMaxDurationMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Wheel zoom smoothing max duration (ms)", "@language": "en-us" },
+        { "@value": "滚轮缩放平滑最大时长（毫秒）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Maximum duration for wheel-zoom smoothing animation. Implementations clamp to a safe bounded range.", "@language": "en-us" },
+        { "@value": "用于滚轮缩放平滑动画的最大时长。实现会限制在安全有界区间内。", "@language": "zh-cn" }
+      ]
+    },
     "uiIconScale": {
       "@type": "xsd:string",
       "rdfs:label": [

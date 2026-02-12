@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.1",
+  "schemaVersion": "1.1.4",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -40,11 +40,30 @@
     "sourceFilesIngestSurface": {
       "canonicalSurface": "BottomPanel.Curation.Markdown",
       "sidebarSection": "Source Files",
-      "toolbarActions": ["Import local", "Import URL", "Open in editor", "Export", "Clear", "Status"],
+      "toolbarActions": ["Import local", "Import URL", "Import website", "Open in editor", "Export", "Clear", "Status"],
       "supportedImportFormats": [".md", ".markdown", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".htm", ".yaml", ".yml", ".pdf", "YouTube"],
       "supportedExportFormats": [".md", ".txt", ".geojson", ".json", ".jsonld", ".csv", ".html", ".yaml"],
       "selectionRule": "Toolbar actions apply to the active Source File selected in the Source Files sidebar. If no file is active, Import actions must create a new Source File and make it active.",
-      "urlInputRule": "URL import input is hidden by default and expands leftwards from the URL icon; Enter submits; Escape closes."
+      "urlInputRule": "URL import input is hidden by default and expands leftwards from the URL icon; Enter submits; Escape closes.",
+      "webpageViews": {
+        "activeRowDropdown": ["Markdown", "JSON", "HTML", "Wireframe"],
+        "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView"],
+        "viewOnlyRule": "Switching view modes must be strictly view-only: forbid apply-to-graph, layout reseeds, zoom jumps, and layer mutations.",
+        "modeContract": {
+          "markdown": "Editor shows Markdown; Viewer/Presentation/Slides render Markdown.",
+          "json": "Editor shows conversion JSON (read-only); Viewer/Presentation/Slides render HTML via iframe proxy.",
+          "html": "Editor shows Markdown; Viewer/Presentation/Slides render HTML via iframe proxy.",
+          "wireframe": "Editor shows ASCII wireframe (read-only); Viewer/Presentation/Slides render HTML via iframe proxy."
+        }
+      },
+      "websiteImport": {
+        "triggerRule": "In the Import URL UI, the Globe button triggers website import (sitemap/tree crawl).",
+        "workspaceTreeRule": "Website import writes one stub Markdown file per page under /websites/<host>/<importId>/... to mirror URL path structure.",
+        "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView", "kgWebsiteImportId", "kgWebsiteNodeId"],
+        "artifactKinds": ["rawHtml", "markdown", "conversionJson", "wireframeMarkdown"],
+        "artifactMappingRule": "For website-import pages, editor view→artifact maps as json→conversionJson, wireframe→wireframeMarkdown, else markdown.",
+        "htmlFidelityRule": "For view modes json/html/wireframe, Viewer/Presentation/Slides must render 100% fidelity HTML via the same-origin iframe proxy; editor stays Markdown/JSON/Wireframe as selected."
+      }
     }
   }
 }

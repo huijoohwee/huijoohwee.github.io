@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.11",
+  "schemaVersion": "1.0.12",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -771,9 +771,10 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for imported webpages. Options: 'markdown' (default), 'json' (show conversion payload JSON in editor while Viewer renders HTML), or 'html' (live iframe proxy render).", "@language": "en-us" },
-        { "@value": "导入网页的默认显示模式。选项：'markdown'（默认）、'json'（编辑器显示转换载荷 JSON，Viewer 渲染 HTML）、或 'html'（通过 iframe 同源代理进行实时渲染）。", "@language": "zh-cn" }
-      ]
+        { "@value": "Default view mode for imported webpages. Options: 'markdown' (default), 'json' (show conversion payload JSON in editor while Viewer renders HTML), 'html' (live iframe proxy render), or 'wireframe' (layout-oriented summary).", "@language": "en-us" },
+        { "@value": "导入网页的默认显示模式。选项：'markdown'（默认）、'json'（编辑器显示转换载荷 JSON，Viewer 渲染 HTML）、'html'（通过 iframe 同源代理进行实时渲染）、或 'wireframe'（面向布局的摘要）。", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["markdown", "json", "html", "wireframe"]
     }
   },
   "validationRules": {

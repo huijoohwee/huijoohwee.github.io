@@ -9,11 +9,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Represents a YouTube transcript/captions payload ingested into AgenticRAG workflows. Extracted via video-analyzer (Whisper-based ASR over downloaded video/audio) with optional Whisper CLI fallback and converted to Markdown for semantic analysis and GraphRAG indexing. Preserves rich metadata and time-aligned segments.",
+      "@value": "Represents a YouTube transcript/captions payload ingested into AgenticRAG workflows. Extracted via native YouTube TimedText/InnerTube API fetch with fallback to video-analyzer (Whisper-based ASR over downloaded video/audio) or yt-dlp. Converted to Markdown/JSON for semantic analysis and GraphRAG indexing. Preserves rich metadata and time-aligned segments.",
       "@language": "en-us"
     },
     {
-      "@value": "表示摄取到 AgenticRAG 工作流中的 YouTube 字幕/转写文稿载荷。通过 video-analyzer（基于 Whisper 的 ASR，对下载的视频/音频进行转写）提取，必要时可回退到 Whisper CLI，并转换为 Markdown，用于语义分析和 GraphRAG 索引。保留丰富元数据与时间对齐片段。",
+      "@value": "表示摄取到 AgenticRAG 工作流中的 YouTube 字幕/转写文稿载荷。通过原生 YouTube TimedText/InnerTube API 提取，支持回退到 video-analyzer（基于 Whisper 的 ASR，对下载的视频/音频进行转写）或 yt-dlp。转换为 Markdown/JSON，用于语义分析和 GraphRAG 索引。保留丰富元数据与时间对齐片段。",
       "@language": "zh-cn"
     }
   ],
@@ -21,6 +21,7 @@
     "title",
     "video_id",
     "source_url",
+    "thumbnail_url",
     "requested_language_code",
     "requested_language",
     "requested_languages",
@@ -60,6 +61,14 @@
       "rdfs:label": [
         { "@value": "Source URL", "@language": "en-us" },
         { "@value": "来源 URL", "@language": "zh-cn" }
+      ],
+      "required": true
+    },
+    "thumbnail_url": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Thumbnail URL", "@language": "en-us" },
+        { "@value": "缩略图 URL", "@language": "zh-cn" }
       ],
       "required": true
     },

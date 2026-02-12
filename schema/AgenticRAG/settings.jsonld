@@ -718,6 +718,40 @@
           "@language": "zh-cn"
         }
       ]
+    },
+    "youtubeTranscriptOutputDir": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "YouTube transcript output directory", "@language": "en-us" },
+        { "@value": "YouTube 转写文稿输出目录", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Absolute path for saving imported YouTube transcripts. Defaults to workspace root if unspecified.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于保存导入的 YouTube 转写文稿的绝对路径。如未指定，默认为工作区根目录。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "youtubeTranscriptOutputFormat": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "YouTube transcript output format", "@language": "en-us" },
+        { "@value": "YouTube 转写文稿输出格式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "File format for saved transcripts. Options: 'markdown' (default) or 'json'.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "保存的转写文稿文件格式。选项：'markdown'（默认）或 'json'。",
+          "@language": "zh-cn"
+        }
+      ]
     }
   },
   "validationRules": {

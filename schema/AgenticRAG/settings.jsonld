@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.12",
+  "schemaVersion": "1.0.13",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -771,10 +771,28 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for imported webpages. Options: 'markdown' (default), 'json' (show conversion payload JSON in editor while Viewer renders HTML), 'html' (live iframe proxy render), or 'wireframe' (layout-oriented summary).", "@language": "en-us" },
-        { "@value": "导入网页的默认显示模式。选项：'markdown'（默认）、'json'（编辑器显示转换载荷 JSON，Viewer 渲染 HTML）、'html'（通过 iframe 同源代理进行实时渲染）、或 'wireframe'（面向布局的摘要）。", "@language": "zh-cn" }
+        { "@value": "Default view mode for imported webpages. Options: 'markdown' (default), 'json' (Editor shows conversion JSON read-only; Viewer/Presentation/Slides render sandboxed HTML), 'html' (Editor stays Markdown; Viewer/Presentation/Slides render sandboxed HTML), or 'wireframe' (Editor shows ASCII wireframe read-only; Viewer/Presentation/Slides render sandboxed HTML).", "@language": "en-us" },
+        { "@value": "导入网页的默认显示模式。选项：'markdown'（默认）、'json'（编辑器只读显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、'html'（编辑器仍为 Markdown；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、或 'wireframe'（编辑器只读显示 ASCII 线框；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）。", "@language": "zh-cn" }
       ],
       "allowed_values": ["markdown", "json", "html", "wireframe"]
+    },
+    "webpageHtmlIframeMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Import Webpage: HTML iframe mode", "@language": "en-us" },
+        { "@value": "导入网页：HTML iframe 模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Controls how HTML is rendered for webpage views that use an iframe (json/html/wireframe). 'srcdoc' (default) renders sandboxed HTML via iframe srcdoc populated from a same-origin proxy or stored artifact; 'src' renders via iframe src=\"/__webpage_proxy?url=...\".",
+          "@language": "en-us"
+        },
+        {
+          "@value": "控制网页相关视图（json/html/wireframe）如何通过 iframe 渲染 HTML。'srcdoc'（默认）使用同源代理或已存储的 artifact 生成 iframe srcdoc 并在沙盒中渲染；'src' 使用 iframe src=\"/__webpage_proxy?url=...\" 渲染。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["srcdoc", "src"]
     }
   },
   "validationRules": {

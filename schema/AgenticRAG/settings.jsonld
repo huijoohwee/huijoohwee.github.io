@@ -752,6 +752,28 @@
           "@language": "zh-cn"
         }
       ]
+    },
+    "webpageImportIncludeImages": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Import Webpage: include images", "@language": "en-us" },
+        { "@value": "导入网页：包含图片", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled, webpage import extracts images and emits Markdown image tokens.", "@language": "en-us" },
+        { "@value": "启用后，网页导入会提取图片并生成 Markdown 图片标记。", "@language": "zh-cn" }
+      ]
+    },
+    "webpageImportView": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Import Webpage: view mode", "@language": "en-us" },
+        { "@value": "导入网页：显示模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Default rendering mode for imported webpages. Options: 'markdown' (default), 'json' (conversion payload), or 'html' (live iframe proxy render).", "@language": "en-us" },
+        { "@value": "导入网页的默认渲染模式。选项：'markdown'（默认）、'json'（转换载荷）、或 'html'（通过 iframe 同源代理进行实时渲染）。", "@language": "zh-cn" }
+      ]
     }
   },
   "validationRules": {

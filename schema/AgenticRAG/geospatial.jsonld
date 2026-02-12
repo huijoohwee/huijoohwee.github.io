@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.7",
+  "schemaVersion": "1.2.8",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -17,7 +17,7 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Hosts may sync the mode across tabs and embedded previews via a namespaced localStorage key (e.g. kg:ui:geospatial:overlayEnabled) and a same-window CustomEvent (e.g. kg:geospatialModeChanged). Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle.",
+      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Hosts may sync the mode across tabs and embedded previews via a namespaced localStorage key (e.g. kg:ui:geospatial:overlayEnabled) and a same-window CustomEvent (e.g. kg:geospatialModeChanged). Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle, and may expose an action to register an embedded GeoJSON block as a bounded overlay dataset.",
       "@language": "en-us"
     },
     {
@@ -28,7 +28,8 @@
   "geospatialUiGuidelines": {
     "datasetFetchLimitsSurface": "Expose timeout/max-bytes in a single canonical surface (e.g. Workflow Step 3). Do not duplicate Dataset fetch limits inputs in the Geo side panel.",
     "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest.",
-    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets.",
+    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets (for example via a per-code-block “Add as Dataset” action in Markdown Viewer/Presentation).",
+    "devRemoteFetchProxy": "On localhost/dev, cross-origin map assets may be fetched via a same-origin proxy endpoint (e.g. /__fetch_remote). The proxy must return full, untruncated response bodies for JSON and binary assets (style JSON, glyph PBF, tile PBF/PNG) and must not prematurely abort upstream fetches on request close events.",
     "markdownItineraryPoiDerivation": "If a local Markdown document contains itinerary-style structure (e.g. headings with location tokens such as airport codes), implementations may derive POIs from section metadata, resolve coordinates using a bounded in-memory index built from already-registered point datasets (records or GeoJSON points), and render a lightweight details panel (rich media links/images) when a POI is selected. The derivation must remain dataset-agnostic and configuration-driven."
   },
   "propertyDefinitions": {

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.14",
+  "schemaVersion": "1.0.15",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -40,11 +40,11 @@
     ],
     "markdownSsotSidebarStructure": [
       {
-        "@value": "Markdown Contents sidebar uses a single SSOT DOM structure (aside/header/nav/sections) with shared micro-label typography. Sidebar section headers are typography-only and must not render action menus; source file actions belong to the section header area only when they are part of the canonical SSOT header contract.",
+        "@value": "Markdown Contents sidebar uses a single SSOT DOM structure (aside/header/nav/sections) with shared micro-label typography. Sidebar section headers are typography-only and must not render action menus; source file actions belong to the section header area only when they are part of the canonical SSOT header contract. Import Folder must be lazy: create file/folder entries + pending stubs without reading contents; clicking a file triggers indexing/loading/parsing/rendering (including on-demand PDF conversion). Forbid showing an Indexing spinner on Import Folder; show the progress pill only while opening a file with shared label formatting (e.g. `Indexing • 1/1 • 123kb`). Workspace file CRUD must sync to the Source Files list (stable IDs keyed by `workspace:<path>`), and file open should reuse cached parsed graphs when text hashes match. GeoJSON/JSON files with geodata must render by converting into graph nodes with `properties.geo.{lat,lng}`. Forbid file switching from toggling frontmatter mode or triggering graph/layout recomputation.",
         "@language": "en-us"
       },
       {
-        "@value": "Markdown Contents 侧边栏必须使用唯一的 SSOT DOM 结构（aside/header/nav/sections）并共享微标签排版。侧边栏分区标题仅用于排版显示，不得渲染动作菜单；Source Files 动作应归属于规范的 SSOT 头部契约。",
+        "@value": "Markdown Contents 侧边栏必须使用唯一的 SSOT DOM 结构（aside/header/nav/sections）并共享微标签排版。侧边栏分区标题仅用于排版显示，不得渲染动作菜单；Source Files 动作应归属于规范的 SSOT 头部契约。Import Folder 必须惰性执行：创建文件/目录条目与 pending stubs，禁止读取文件内容；点击单个文件才触发 indexing/loading/parsing/rendering（包含按需 PDF 转换）。禁止在 Import Folder 阶段显示 Indexing 转圈；只允许在打开文件阶段显示进度胶囊，并使用共享格式（例如 `Indexing • 1/1 • 123kb`）。Workspace 文件 CRUD 必须同步到 Source Files 列表（使用 `workspace:<path>` 作为稳定 ID 键），并且打开文件时当文本 hash 匹配应复用已缓存的解析图。GeoJSON/包含地理数据的 JSON 必须通过转换为带 `properties.geo.{lat,lng}` 的图节点来渲染。禁止切换文件导致 frontmatter 模式翻转或触发图/布局重算。",
         "@language": "zh-cn"
       }
     ],

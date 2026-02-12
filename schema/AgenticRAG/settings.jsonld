@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.8",
+  "schemaVersion": "1.0.11",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -74,6 +74,28 @@
         { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
       ]
     },
+    "markdownWordWrap": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Markdown: word wrap", "@language": "en-us" },
+        { "@value": "Markdown：自动换行", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Default word-wrap behavior for Markdown Viewer and Presentation surfaces.", "@language": "en-us" },
+        { "@value": "Markdown Viewer 与 Presentation 界面的默认自动换行行为。", "@language": "zh-cn" }
+      ]
+    },
+    "markdownTextHighlight": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Markdown: text highlight", "@language": "en-us" },
+        { "@value": "Markdown：文本高亮", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Enables line-range highlight styling in Markdown Viewer and Presentation surfaces.", "@language": "en-us" },
+        { "@value": "启用 Markdown Viewer 与 Presentation 界面的行区间高亮样式。", "@language": "zh-cn" }
+      ]
+    },
     "pdfImportIncludeImages": {
       "@type": "xsd:boolean",
       "rdfs:label": [
@@ -85,6 +107,137 @@
         { "@value": "启用后，PDF→Markdown 转换会提取页面图片并生成 Markdown 图片标记。", "@language": "zh-cn" }
       ]
     },
+    "pdfImportConversionMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "PDF import: conversion preset", "@language": "en-us" },
+        { "@value": "PDF 导入：转换预设", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "High-level preset for PDF→Markdown conversion (text-only, image-heavy, scan-ocr).", "@language": "en-us" },
+        { "@value": "PDF→Markdown 转换的高层预设（仅文本、偏图片、扫描/OCR）。", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["text-only", "image-heavy", "scan-ocr"]
+    },
+    "pdfImportMaxPages": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max pages", "@language": "en-us" },
+        { "@value": "PDF 导入：最大页数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxPdfBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max PDF bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：PDF 最大字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportFetchTimeoutMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: fetch timeout (ms)", "@language": "en-us" },
+        { "@value": "PDF 导入：抓取超时（毫秒）", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportUploadTimeoutMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: upload timeout (ms)", "@language": "en-us" },
+        { "@value": "PDF 导入：上传超时（毫秒）", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportConvertTimeoutMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: convert timeout (ms)", "@language": "en-us" },
+        { "@value": "PDF 导入：转换超时（毫秒）", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportStreamDecodeCacheMaxBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: stream decode cache max bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：流解码缓存上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportContentStreamMaxDecodeBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: content stream max decode bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：内容流解码上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportPageContentMaxBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: page content max bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：单页内容上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportCmapMaxBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: CMap max bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：CMap 上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxToUnicodeStreamBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: ToUnicode stream max bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：ToUnicode 流上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportToUnicodeMaxDecodeBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: ToUnicode decode max bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：ToUnicode 解码上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportImageStreamMaxDecodeBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: image stream max decode bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：图片流解码上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxTextContentBytesPerPage": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max text content bytes per page", "@language": "en-us" },
+        { "@value": "PDF 导入：单页文本内容上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxTextStreamBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max text stream bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：文本流上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxFormXObjectBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max Form XObject bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：Form XObject 上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxFormXObjectStreamBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max Form XObject stream bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：Form XObject 流上限字节数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxFormXObjectCount": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max Form XObject count", "@language": "en-us" },
+        { "@value": "PDF 导入：Form XObject 数量上限", "@language": "zh-cn" }
+      ]
+    },
     "pdfImportEmbedImages": {
       "@type": "xsd:boolean",
       "rdfs:label": [
@@ -94,6 +247,66 @@
       "rdfs:comment": [
         { "@value": "When enabled, eligible image links are rewritten to bounded data: URIs to improve offline persistence.", "@language": "en-us" },
         { "@value": "启用后，满足大小限制的图片链接会被重写为有上限的 data: URI，以提升离线持久化。", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxExtractedImagesPerPage": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max extracted images per page", "@language": "en-us" },
+        { "@value": "PDF 导入：单页提取图片上限", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxEmbeddedImagesPerPage": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max embedded images per page", "@language": "en-us" },
+        { "@value": "PDF 导入：单页内嵌图片上限", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxEmbeddedTotalBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max embedded total bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：内嵌总字节上限", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportMaxEmbeddedAssetBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: max embedded asset bytes", "@language": "en-us" },
+        { "@value": "PDF 导入：单个内嵌资源字节上限", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportReconstructTables": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "PDF import: reconstruct tables", "@language": "en-us" },
+        { "@value": "PDF 导入：重建表格", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled for the native provider, conversion attempts to infer column-aligned rows and emit Markdown pipe tables.", "@language": "en-us" },
+        { "@value": "对本地提供方启用后，转换会尝试从列对齐的行中推断并生成 Markdown 管道表格。", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportTableMinColumns": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: table min columns", "@language": "en-us" },
+        { "@value": "PDF 导入：表格最小列数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportTableMinRows": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: table min rows", "@language": "en-us" },
+        { "@value": "PDF 导入：表格最小行数", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportTableMaxRows": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "PDF import: table max rows", "@language": "en-us" },
+        { "@value": "PDF 导入：表格最大行数", "@language": "zh-cn" }
       ]
     },
     "pdfImportProvider": {
@@ -111,18 +324,25 @@
         { "@value": "PDF 导入：Docling 端点", "@language": "zh-cn" }
       ]
     },
-    "pdfImportDeepseekOcr2Enabled": {
+    "pdfImportProviderFallbackToNative": {
       "@type": "xsd:boolean",
       "rdfs:label": [
-        { "@value": "PDF import: DeepSeek OCR2 enabled", "@language": "en-us" },
-        { "@value": "PDF 导入：启用 DeepSeek OCR2", "@language": "zh-cn" }
+        { "@value": "PDF import: fallback to native", "@language": "en-us" },
+        { "@value": "PDF 导入：失败后回退到本地", "@language": "zh-cn" }
       ]
     },
-    "pdfImportDeepseekOcr2Mode": {
+    "pdfImportOcrEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "PDF import: OCR enabled", "@language": "en-us" },
+        { "@value": "PDF 导入：启用 OCR", "@language": "zh-cn" }
+      ]
+    },
+    "pdfImportOcrMode": {
       "@type": "xsd:string",
       "rdfs:label": [
-        { "@value": "PDF import: DeepSeek OCR2 mode", "@language": "en-us" },
-        { "@value": "PDF 导入：DeepSeek OCR2 模式", "@language": "zh-cn" }
+        { "@value": "PDF import: OCR mode", "@language": "en-us" },
+        { "@value": "PDF 导入：OCR 模式", "@language": "zh-cn" }
       ],
       "allowed_values": ["fallback", "always"]
     },

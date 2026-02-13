@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.7",
+  "schemaVersion": "1.1.8",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -46,7 +46,7 @@
       "selectionRule": "Toolbar actions apply to the active Source File selected in the Source Files sidebar. If no file is active, Import actions must create a new Source File and make it active.",
       "urlInputRule": "URL import input is hidden by default and expands leftwards from the URL icon; Enter submits; Escape closes.",
       "webpageViews": {
-        "activeRowDropdown": ["Markdown", "JSON", "HTML", "Wireframe"],
+        "activeRowDropdown": ["Markdown", "JSON", "HTML", "Wireframe", "Wireframe+"],
         "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView"],
         "viewOnlyRule": "Switching view modes must be strictly view-only: forbid apply-to-graph, layout reseeds, zoom jumps, layer mutations, and writes to default import settings (for example webpageImportView).",
         "iframeRenderMode": {
@@ -57,15 +57,16 @@
           "srcRule": "Render HTML in a sandboxed iframe using src=\"/__webpage_proxy?url=...\"."
         },
         "iframeSecurityPolicy": {
-          "sandbox": "allow-scripts allow-forms allow-popups allow-downloads allow-modals allow-pointer-lock allow-presentation",
+          "sandbox": "allow-scripts",
           "referrerPolicy": "no-referrer",
           "forbid": ["allow-top-navigation"]
         },
         "modeContract": {
           "markdown": "Editor shows Markdown; Viewer/Presentation/Slides render Markdown.",
-          "json": "Editor shows conversion JSON (read-only); Viewer/Presentation/Slides render HTML via iframe proxy.",
+          "json": "Editor shows conversion JSON; Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc.",
           "html": "Editor shows Markdown; Viewer/Presentation/Slides render HTML via iframe proxy.",
-          "wireframe": "Editor shows the markdown file; the wireframe ASCII lives in a dedicated fenced block inside the file (editable); Viewer/Presentation/Slides render HTML via iframe proxy."
+          "wireframe": "Editor shows generated ASCII wireframe Markdown (editable); Viewer/Presentation/Slides render the same Markdown.",
+          "wireframe-enhanced": "Editor shows a richer wireframe artifact Markdown; Viewer/Presentation/Slides render the same Markdown."
         },
         "wireframeEditor": {
           "wireframeFence": "```text kg-wireframe",
@@ -76,16 +77,34 @@
           "neutralityRule": "Signal extraction must be generic and domain-neutral with no site-specific branching.",
           "vocabulary": ["[NAV]", "[CTA]", "[LINK]", "[PRICE]", "[TIME]"],
           "reuseRule": "Wireframe mockups and Document Structure must use the same token prefixes as the underlying signal extraction logic."
+        },
+        "wireframeEnhancedStructure": {
+          "policy": "Fixture-like structure is permitted only when signaled by extracted tokens and/or appended extracted blocks; forbid hardcoded domain checks.",
+          "preferredExtractedBlocks": [
+            "Extracted Navigation Menus",
+            "Pricing Comparison (Extracted)",
+            "Company License Options (Extracted)",
+            "Pricing Details (Extracted)",
+            "Rendering Options (Extracted)"
+          ],
+          "sectionExpectations": [
+            "Header Navigation section includes a primary nav ASCII mockup and a menu-structure table",
+            "Hero section includes a hero ASCII mockup and a Hero Content Breakdown table",
+            "Feature sections include Section Statistics (paragraphs, links, media) when signals are present",
+            "Template Showcase includes a multi-row ASCII grid when template set is detected",
+            "Pricing includes both a comparison table and pricing details/option blocks when extracted"
+          ],
+          "testRule": "Regression tests must use offline fixture markdown and placeholder URLs (for example https://example.com/); forbid live-site coupling."
         }
       },
       "websiteImport": {
         "triggerRule": "In the Import URL UI, the Globe button triggers website import (sitemap/tree crawl).",
         "workspaceTreeRule": "Website import writes one stub Markdown file per page under /websites/<host>/<importId>/... to mirror URL path structure.",
         "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView", "kgWebsiteImportId", "kgWebsiteNodeId", "kgWebsiteOutputDirRel"],
-        "artifactKinds": ["rawHtml", "markdown", "conversionJson", "wireframeMarkdown"],
-        "artifactMappingRule": "For website-import pages, editor view→artifact maps as json→conversionJson, wireframe→wireframeMarkdown, else markdown.",
-        "htmlFidelityRule": "For view modes json/html/wireframe, Viewer/Presentation/Slides must render 100% fidelity HTML via a sandboxed iframe; prefer stored rawHtml artifacts and fall back to the same-origin iframe proxy; editor stays Markdown/JSON/Wireframe as selected.",
-        "optionsRule": "Website import must persist markdown/conversionJson/wireframeMarkdown artifacts per page and must accept a wireframeDetailLevel option for deterministic wireframe LOD."
+        "artifactKinds": ["rawHtml", "markdown", "conversionJson", "wireframeMarkdown", "wireframeEnhancedMarkdown"],
+        "artifactMappingRule": "For website-import pages, editor view→artifact maps as json→conversionJson, wireframe→wireframeMarkdown, wireframe-enhanced→wireframeEnhancedMarkdown, else markdown.",
+        "htmlFidelityRule": "For html view, Viewer/Presentation/Slides must render 100% fidelity HTML via a sandboxed iframe; prefer stored rawHtml artifacts and fall back to the same-origin iframe proxy. JSON view renders sandboxed JSON code. Wireframe views render Markdown artifacts.",
+        "optionsRule": "Website import must persist markdown/conversionJson/wireframeMarkdown/wireframeEnhancedMarkdown artifacts per page and must accept a wireframeDetailLevel option for deterministic wireframe LOD."
       }
     }
   }

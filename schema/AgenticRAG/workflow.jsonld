@@ -60,8 +60,8 @@
         },
         "modeContract": {
           "markdown": "Editor shows Markdown; Viewer/Presentation/Slides render Markdown.",
-          "json": "Editor shows conversion JSON; Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc.",
-          "html": "Editor shows Markdown; Viewer/Presentation/Slides render HTML via iframe proxy."
+          "json": "Editor shows conversion JSON (read-only override); Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc.",
+          "html": "Editor shows editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via iframe srcdoc."
         },
         "signalTokens": {
           "neutralityRule": "Signal extraction must be generic and domain-neutral with no site-specific branching.",

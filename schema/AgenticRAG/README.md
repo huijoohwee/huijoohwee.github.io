@@ -79,9 +79,9 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel` to keep the pipeline deterministic and in-repo.
 
-### Wireframe+ Fixture-Driven Structure (Webpage)
+### Webpage Markdown Artifact (Fixture-Driven Structure)
 
-- Wireframe+ structure enhancements (Header Navigation tables, Hero breakdown, section statistics, template grids, pricing tables, rendering options) must be driven by extracted tokens and optional appended `(Extracted)` blocks, never by hardcoded domains.
+- Webpage markdown artifact structure enhancements (Header Navigation tables, Hero breakdown, section statistics, template grids, pricing tables, rendering options) must be driven by extracted tokens and optional appended `(Extracted)` blocks, never by hardcoded domains.
 - Regression tests should use repo-local fixtures under `knowgrph/canvas/src/__tests__/fixtures/` and a placeholder URL like `https://example.com/` for deterministic generation.
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines

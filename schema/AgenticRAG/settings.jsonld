@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.14",
+  "schemaVersion": "1.0.15",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -771,28 +771,10 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON; Viewer/Presentation/Slides render sandboxed JSON code), 'html' (Editor shows raw HTML; Viewer/Presentation/Slides render sandboxed HTML), 'wireframe' (Editor contains a generated ASCII wireframe artifact; Viewer/Presentation/Slides render the same Markdown), or 'wireframe-enhanced' (same as wireframe but richer structure/stats/layout frames).", "@language": "en-us" },
-        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 JSON 代码）、'html'（编辑器显示原始 HTML；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、'wireframe'（编辑器包含生成的 ASCII 线框 artifact；Viewer/Presentation/Slides 渲染同一份 Markdown）、或 'wireframe-enhanced'（同 wireframe，但包含更丰富的结构/统计/布局框架）。", "@language": "zh-cn" }
+        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON; Viewer/Presentation/Slides render sandboxed JSON code), or 'html' (Editor shows raw HTML; Viewer/Presentation/Slides render sandboxed HTML).", "@language": "en-us" },
+        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 JSON 代码）、或 'html'（编辑器显示原始 HTML；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）。", "@language": "zh-cn" }
       ],
-      "allowed_values": ["markdown", "json", "html", "wireframe", "wireframe-enhanced"]
-    },
-    "webpageHtmlIframeMode": {
-      "@type": "xsd:string",
-      "rdfs:label": [
-        { "@value": "Import Webpage: HTML iframe mode", "@language": "en-us" },
-        { "@value": "导入网页：HTML iframe 模式", "@language": "zh-cn" }
-      ],
-      "rdfs:comment": [
-        {
-          "@value": "Controls how HTML is rendered for webpage views that use an iframe (html). HTML rendering is enforced via sandboxed iframe srcdoc populated from a same-origin proxy or stored artifact. 'src' is retained for backward compatibility but may be ignored by safety policies.",
-          "@language": "en-us"
-        },
-        {
-          "@value": "控制网页相关视图（html）如何通过 iframe 渲染 HTML。HTML 渲染强制使用同源代理或已存储的 artifact 生成 iframe srcdoc 并在沙盒中渲染。'src' 为兼容旧配置保留，但可能会被安全策略忽略。",
-          "@language": "zh-cn"
-        }
-      ],
-      "allowed_values": ["srcdoc", "src"]
+      "allowed_values": ["markdown", "json", "html"]
     }
   },
   "validationRules": {

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.13",
+  "schemaVersion": "1.0.14",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -771,8 +771,8 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for imported webpages. Options: 'markdown' (default), 'json' (Editor shows conversion JSON read-only; Viewer/Presentation/Slides render sandboxed HTML), 'html' (Editor stays Markdown; Viewer/Presentation/Slides render sandboxed HTML), or 'wireframe' (Editor shows ASCII wireframe read-only; Viewer/Presentation/Slides render sandboxed HTML).", "@language": "en-us" },
-        { "@value": "导入网页的默认显示模式。选项：'markdown'（默认）、'json'（编辑器只读显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、'html'（编辑器仍为 Markdown；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、或 'wireframe'（编辑器只读显示 ASCII 线框；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）。", "@language": "zh-cn" }
+        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON read-only; Viewer/Presentation/Slides render sandboxed HTML), 'html' (Editor stays Markdown; Viewer/Presentation/Slides render sandboxed HTML), or 'wireframe' (Editor shows ASCII wireframe read-only; Viewer/Presentation/Slides render sandboxed HTML).", "@language": "en-us" },
+        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器只读显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、'html'（编辑器仍为 Markdown；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）、或 'wireframe'（编辑器只读显示 ASCII 线框；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML）。", "@language": "zh-cn" }
       ],
       "allowed_values": ["markdown", "json", "html", "wireframe"]
     },

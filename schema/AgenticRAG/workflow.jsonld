@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.5",
+  "schemaVersion": "1.1.7",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -48,7 +48,7 @@
       "webpageViews": {
         "activeRowDropdown": ["Markdown", "JSON", "HTML", "Wireframe"],
         "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView"],
-        "viewOnlyRule": "Switching view modes must be strictly view-only: forbid apply-to-graph, layout reseeds, zoom jumps, and layer mutations.",
+        "viewOnlyRule": "Switching view modes must be strictly view-only: forbid apply-to-graph, layout reseeds, zoom jumps, layer mutations, and writes to default import settings (for example webpageImportView).",
         "iframeRenderMode": {
           "settingKey": "webpageHtmlIframeMode",
           "default": "srcdoc",
@@ -65,7 +65,17 @@
           "markdown": "Editor shows Markdown; Viewer/Presentation/Slides render Markdown.",
           "json": "Editor shows conversion JSON (read-only); Viewer/Presentation/Slides render HTML via iframe proxy.",
           "html": "Editor shows Markdown; Viewer/Presentation/Slides render HTML via iframe proxy.",
-          "wireframe": "Editor shows ASCII wireframe (read-only); Viewer/Presentation/Slides render HTML via iframe proxy."
+          "wireframe": "Editor shows the markdown file; the wireframe ASCII lives in a dedicated fenced block inside the file (editable); Viewer/Presentation/Slides render HTML via iframe proxy."
+        },
+        "wireframeEditor": {
+          "wireframeFence": "```text kg-wireframe",
+          "editingRule": "Wireframe mode must treat the markdown file as the canonical content; the kg-wireframe fence is the canonical location for ASCII mockup text.",
+          "persistenceRule": "Saving must preserve the markdown file and keep the kg-wireframe fenced block parseable and discoverable."
+        },
+        "signalTokens": {
+          "neutralityRule": "Signal extraction must be generic and domain-neutral with no site-specific branching.",
+          "vocabulary": ["[NAV]", "[CTA]", "[LINK]", "[PRICE]", "[TIME]"],
+          "reuseRule": "Wireframe mockups and Document Structure must use the same token prefixes as the underlying signal extraction logic."
         }
       },
       "websiteImport": {

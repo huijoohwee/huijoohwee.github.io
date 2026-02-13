@@ -84,6 +84,11 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Webpage markdown artifact structure enhancements (Header Navigation tables, Hero breakdown, section statistics, template grids, pricing tables, rendering options) must be driven by extracted tokens and optional appended `(Extracted)` blocks, never by hardcoded domains.
 - Regression tests should use repo-local fixtures under `knowgrph/canvas/src/__tests__/fixtures/` and a placeholder URL like `https://example.com/` for deterministic generation.
 
+### Website Import (Sitemap → Workspace)
+
+- Website imports should generate a workspace-level sitemap document (`website.sitemap.md`) that provides a single tree + page table view over imported webpages.
+- Webpage view switching (`Markdown` / `JSON` / `HTML`) must keep a shared token vocabulary (`[NAV]`, `[CTA]`, `[PRICE]`, `[TIME]`) visible across modes.
+
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 
 ## COMPLY

@@ -83,6 +83,16 @@
         "artifactMappingRule": "For website-import pages, editor view→artifact maps as json→conversionJson, else markdown.",
         "htmlFidelityRule": "For html view, Viewer/Presentation/Slides must render 100% fidelity HTML via a sandboxed iframe; prefer stored rawHtml artifacts and fall back to the same-origin iframe proxy. JSON view renders sandboxed JSON code.",
         "optionsRule": "Website import must persist markdown/conversionJson/rawHtml artifacts per page."
+      },
+      "githubRepoImport": {
+        "triggerRule": "In the Import URL UI, when the URL is a GitHub repository root (https://github.com/<owner>/<repo>), treat it as a repo import.",
+        "outputRule": "Create a workspace folder named <repo> and write repo.sitemap.md + repo.user-journey.md inside it; focus repo.sitemap.md as the first opened editor document.",
+        "folderModeContractRule": "When a folder containing repo.sitemap.md/repo.user-journey.md is selected, show a right-side dropdown that switches the Editor SSOT between Sitemap and User Journey (reuse the File Mode Contract dropdown UI).",
+        "sitemapLodRule": "repo.sitemap.md must include bounded repo statistics, directory tree, extracted feature groups + per-section statistics, template showcase (grid + table), and a core entry points section derived from key source files when present.",
+        "fetchRule": "Avoid per-folder GitHub contents crawling; list via the GitHub tree API and fetch file bodies via raw.githubusercontent.com.",
+        "boundsRule": "Import must be bounded (max files, max tree lines, max log rows) and must continue on per-file failures while recording them.",
+        "uiRule": "Emit progress via a persistent toast and record bounded progress rows into MainPanel History→Log; final state must emit success/warn/error.",
+        "neutralityRule": "Do not hardcode any specific repo URLs or repo-specific output; all sitemap content must be derived from GitHub API responses and README markdown."
       }
     }
   }

@@ -776,6 +776,18 @@
       ],
       "allowed_values": ["markdown", "json", "html"]
     },
+    "webpageArtifactFidelityMaxLevel": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Webpage artifact: max fidelity level", "@language": "en-us" },
+        { "@value": "网页工件：最大保真等级", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Upper bound for the generated Webpage Markdown Artifact detail level (1..4). The generator infers a fidelity level from extracted signals and structure, then clamps to this max to bound output size and noise.", "@language": "en-us" },
+        { "@value": "生成 Webpage Markdown Artifact 的细节等级上限（1..4）。生成器会根据提取信号与结构推断保真等级，再被该上限限制以控制输出规模与噪声。", "@language": "zh-cn" }
+      ],
+      "allowed_values": [1, 2, 3, 4]
+    },
     "websiteImportGenerateWebpageArtifactDocs": {
       "@type": "xsd:boolean",
       "rdfs:label": [

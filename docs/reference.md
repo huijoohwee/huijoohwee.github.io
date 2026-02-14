@@ -32,6 +32,7 @@
 | [Notion/Marketplace](https://www.notion.so/marketplace) | Notion Marketplace |
 | [Obsidian Canvas](https://obsidian.md/canvas) | Collaborative canvas for knowledge management |
 | [PageIndex](https://github.com/VectifyAI/PageIndex.git) | PageIndex is a tool for indexing web pages |
+| [Penpot](https://github.com/penpot/penpot) | Collaborative flow editor |
 | [Railway](https://railway.com) | Cloud platform for deploying applications |
 | [React Flow/Custom Connection Line](https://reactflow.dev/examples/edges/custom-connectionline) | Custom Connection Line in React Flow (reference only; do not copy implementation/behavior) |
 | [React Flow/Edge Types](https://reactflow.dev/examples/edges/edge-types) | Edge Types in React Flow (reference only; do not copy implementation/behavior) |

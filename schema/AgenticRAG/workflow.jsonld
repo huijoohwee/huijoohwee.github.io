@@ -50,8 +50,8 @@
         "frontmatterKeys": ["kgWebpageUrl", "kgWebpageView"],
         "viewOnlyRule": "Switching view modes must be strictly view-only: forbid apply-to-graph, layout reseeds, zoom jumps, layer mutations, and writes to default import settings (for example webpageImportView).",
         "iframeRenderMode": {
-          "enforced": "srcdoc",
-          "srcdocRule": "Render HTML/JSON in a sandboxed iframe using srcdoc populated from stored artifacts when available, else from the same-origin proxy HTML; srcdoc must upsert <base> and strip CSP meta tags to avoid self-blocking."
+          "enforced": "sandboxed-iframe",
+          "rule": "Render HTML/JSON in a sandboxed iframe using proxy-src (highest fidelity) by default. When a safe non-clipped snapshot is available (for example stored rawHtml artifacts or an explicit editor override), render via a sanitized srcdoc snapshot that upserts <base> and strips CSP/refresh meta tags to avoid self-blocking."
         },
         "iframeSecurityPolicy": {
           "sandbox": "allow-scripts",
@@ -60,8 +60,8 @@
         },
         "modeContract": {
           "markdown": "Editor shows Markdown; Viewer/Presentation/Slides render Markdown.",
-          "json": "Editor shows conversion JSON (read-only override); Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc.",
-          "html": "Editor shows editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via iframe srcdoc."
+          "json": "Editor shows conversion JSON (read-only override); Viewer/Presentation/Slides render sandboxed JSON code via a sandboxed iframe (prefer srcdoc snapshot).",
+          "html": "Editor shows editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via a sandboxed iframe (proxy-src by default; sanitized srcdoc snapshot when available)."
         },
         "signalTokens": {
           "neutralityRule": "Signal extraction must be generic and domain-neutral with no site-specific branching.",

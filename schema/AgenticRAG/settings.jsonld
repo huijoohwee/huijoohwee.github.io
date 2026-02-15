@@ -771,8 +771,8 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON as a read-only override; Viewer/Presentation/Slides render sandboxed JSON code), or 'html' (Editor stays editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via either proxy-src (highest fidelity) or sanitized srcdoc snapshot when available).", "@language": "en-us" },
-        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器以只读覆盖显示转换 JSON；Viewer/Presentation/Slides 以沙盒 iframe 渲染 JSON 代码）、或 'html'（编辑器保持可编辑的 Markdown SSOT；Viewer/Presentation/Slides 以沙盒 iframe 渲染 HTML：优先 proxy-src 以获得最高保真；若存在安全快照则可用净化的 srcdoc）。", "@language": "zh-cn" }
+        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON as a read-only override; Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc), or 'html' (Editor stays editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via iframe srcdoc built from stored artifacts when available, otherwise fetched once via the proxy middleware and sanitized).", "@language": "en-us" },
+        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器以只读覆盖显示转换 JSON；Viewer/Presentation/Slides 通过 iframe srcdoc 以沙盒渲染 JSON 代码）、或 'html'（编辑器保持可编辑的 Markdown SSOT；Viewer/Presentation/Slides 通过 iframe srcdoc 以沙盒渲染 HTML：优先使用已保存的工件；若无则通过 proxy 中间件一次性获取并净化后生成 srcdoc）。", "@language": "zh-cn" }
       ],
       "allowed_values": ["markdown", "json", "html"]
     },
@@ -795,8 +795,8 @@
         { "@value": "导入网站：生成网页工件文档", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "When enabled, website import writes each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframes (proxy-src or sanitized srcdoc snapshot) and must be view-only.", "@language": "en-us" },
-        { "@value": "启用后，网站导入会将每个导入页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe 渲染（proxy-src 或净化的 srcdoc 快照）且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
+        { "@value": "When enabled, website import writes each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframe srcdoc and must be view-only.", "@language": "en-us" },
+        { "@value": "启用后，网站导入会将每个导入页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe srcdoc 渲染且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
       ]
     }
   },

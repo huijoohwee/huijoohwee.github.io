@@ -771,10 +771,22 @@
         { "@value": "导入网页：显示模式", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Options: 'markdown' (default), 'json' (Editor shows conversion JSON as a read-only override; Viewer/Presentation/Slides render sandboxed JSON code via iframe srcdoc), or 'html' (Editor stays editable Markdown SSOT; Viewer/Presentation/Slides render sandboxed HTML via iframe srcdoc built from stored artifacts when available, otherwise fetched once via the proxy middleware and sanitized).", "@language": "en-us" },
-        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。选项：'markdown'（默认）、'json'（编辑器以只读覆盖显示转换 JSON；Viewer/Presentation/Slides 通过 iframe srcdoc 以沙盒渲染 JSON 代码）、或 'html'（编辑器保持可编辑的 Markdown SSOT；Viewer/Presentation/Slides 通过 iframe srcdoc 以沙盒渲染 HTML：优先使用已保存的工件；若无则通过 proxy 中间件一次性获取并净化后生成 srcdoc）。", "@language": "zh-cn" }
+        { "@value": "Default view mode for newly imported webpages. Per-document overrides are stored in kgWebpageView frontmatter and may be changed via active-row dropdowns without mutating this default. Mode contract (ordered): (1) 'markdown' (default SSOT), (2) 'html' (view-only; Viewer/Presentation/Slides render sandboxed HTML via iframe srcdoc), (3) 'json' (view-only; Editor shows conversion JSON as read-only override; Viewer/Presentation/Slides render sandboxed JSON via iframe srcdoc).", "@language": "en-us" },
+        { "@value": "新导入网页的默认显示模式。单个文档的覆盖值存储于 kgWebpageView frontmatter，可通过活动行下拉菜单切换且不得反向修改该默认值。模式契约（有序）：(1) 'markdown'（默认 SSOT）、(2) 'html'（纯视图；Viewer/Presentation/Slides 通过 iframe srcdoc 沙盒渲染 HTML）、(3) 'json'（纯视图；编辑器以只读覆盖显示转换 JSON；Viewer/Presentation/Slides 通过 iframe srcdoc 沙盒渲染 JSON）。", "@language": "zh-cn" }
       ],
-      "allowed_values": ["markdown", "json", "html"]
+      "allowed_values": ["markdown", "html", "json"]
+    },
+    "webpageViewerScriptPolicy": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Webpage viewer: script policy", "@language": "en-us" },
+        { "@value": "网页查看器：脚本策略", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "Controls whether the HTML viewer sanitizes webpages by stripping all scripts and inline event handlers before rendering in a sandboxed iframe srcdoc. 'strip' (default) prevents upstream JS from running (safer + faster); 'allow' keeps scripts (may be slower).", "@language": "en-us" },
+        { "@value": "控制 HTML Viewer 在沙盒 iframe srcdoc 渲染前，是否会剥离网页中的全部脚本与内联事件处理器。'strip'（默认）禁止上游 JS 运行（更安全、更快）；'allow' 允许脚本保留（可能更慢）。", "@language": "zh-cn" }
+      ],
+      "allowed_values": ["strip", "allow"]
     },
     "webpageArtifactFidelityMaxLevel": {
       "@type": "xsd:integer",
@@ -795,8 +807,8 @@
         { "@value": "导入网站：生成网页工件文档", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "When enabled, website import writes each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframe srcdoc and must be view-only.", "@language": "en-us" },
-        { "@value": "启用后，网站导入会将每个导入页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe srcdoc 渲染且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
+        { "@value": "When enabled, website import writes each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. Default: false (avoid UI freezes on large imports). The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframe srcdoc and must be view-only.", "@language": "en-us" },
+        { "@value": "启用后，网站导入会将每个导入页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。默认：false（避免大规模导入时 UI 卡死）。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe srcdoc 渲染且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
       ]
     }
   },

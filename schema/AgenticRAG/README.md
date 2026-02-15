@@ -77,7 +77,8 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 ### PDF Workspace (Knowgrph)
 
-- Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel` to keep the pipeline deterministic and in-repo.
+- Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel`.
+- In this repo, `.knowgrph-workspace/` is moved to `sandbox/.knowgrph-workspace/` via symlink to avoid storing large artifacts inside `knowgrph`.
 
 ### Webpage Markdown Artifact (Fixture-Driven Structure)
 
@@ -88,7 +89,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - Website imports should generate a workspace-level sitemap document (`website.sitemap.md`) that provides a single tree + page table view over imported webpages.
 - Webpage view switching (`Markdown` / `JSON` / `HTML`) must keep a shared token vocabulary (`[NAV]`, `[CTA]`, `[PRICE]`, `[TIME]`) visible across modes.
-- HTML/JSON rendering must use a sandboxed iframe and remain view-only (no graph/layout/zoom side effects): HTML prefers same-origin proxy-src for fidelity and may use sanitized srcdoc snapshots when safe; JSON renders as sandboxed code via srcdoc.
+- HTML/JSON rendering must use a sandboxed iframe and remain view-only (no graph/layout/zoom side effects): HTML/JSON render via sanitized iframe `srcdoc`; HTML source may be fetched via the same-origin proxy or loaded from stored `raw.html` artifacts.
 - Monaco editor initialization must apply the latest hydrated file contents at create-time to avoid an empty editor during async imports or `kgWebpageView` toggles.
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines

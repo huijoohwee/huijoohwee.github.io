@@ -107,7 +107,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Prevent interference across layers/modes.
 - Treat Document Structure Mode as the baseline; semantic-mode switches must restore per-mode view/schema snapshots and clear incompatible selection/collapse state (no cross-mode bleed).
 - Remove legacy/conflicting/stale code.
-- Repo hygiene: never commit `.knowgrph-workspace/**` (store it under `sandbox/.knowgrph-workspace/` via symlink); if artifacts were committed previously, purge history via `git-filter-repo` and force-push rewritten `main`.
+- Repo hygiene: never commit `.knowgrph-workspace/**`, `node_modules/**`, or `backups/**` (store workspace artifacts under `sandbox/.knowgrph-workspace/` via symlink); if large artifacts were committed previously, purge history via `git-filter-repo` and force-push rewritten `main`.
 
 ## Pipeline Discipline
 - Scope: `/GitHub/{knowgrph,gympgrph,curagrph}` → import → render.

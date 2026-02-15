@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.8",
+  "schemaVersion": "1.2.9",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -33,6 +33,24 @@
     "markdownItineraryPoiDerivation": "If a local Markdown document contains itinerary-style structure (e.g. headings with location tokens such as airport codes), implementations may derive POIs from section metadata, resolve coordinates using a bounded in-memory index built from already-registered point datasets (records or GeoJSON points), and render a lightweight details panel (rich media links/images) when a POI is selected. The derivation must remain dataset-agnostic and configuration-driven."
   },
   "propertyDefinitions": {
+    "autoEnableGeospatialOnGeoImport": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Auto-enable Geospatial Mode on geo imports", "@language": "en-us" },
+        { "@value": "地理数据导入后自动启用地理空间模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the host should auto-enable Geospatial Mode immediately after a successful import that yields geo-capable GraphData (nodes contain properties.geo.{lat,lng}). This must be configurable and should default to false for graph-first defaults unless the product explicitly opts into auto-enable.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "宿主在成功导入产生地理节点（包含 properties.geo.{lat,lng}）后是否应自动启用地理空间模式。该行为必须可配置；若产品未显式选择自动启用，应默认关闭以保持以图为主的默认体验。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
     "mapStyleUrl": {
       "@type": "xsd:string",
       "rdfs:label": [

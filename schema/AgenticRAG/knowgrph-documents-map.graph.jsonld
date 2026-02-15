@@ -531,6 +531,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-computing-data-flows-import-render-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-computing-data-flows-import-render-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-computing-data-flows-import-render-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-computing-data-flows-import-render-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-demo-document",
       "@type": "kg:Node",
       "labels": [
@@ -595,6 +611,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-flow-editor-node-quick-editor-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-flow-editor-node-quick-editor-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-flow-editor-node-quick-editor-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-flow-editor-node-quick-editor-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-frontend-document",
       "@type": "kg:Node",
       "labels": [
@@ -656,6 +688,22 @@
         "relPath": "docs/documents/knowgrph-graph-data-curation-document.md"
       },
       "documentPath": "docs/documents/knowgrph-graph-data-curation-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graph-elements-and-configs-semantics-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graph-elements-and-configs-semantics-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graph-elements-and-configs-semantics-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graph-elements-and-configs-semantics-document.md",
       "language": "en-us"
     },
     {
@@ -736,6 +784,22 @@
         "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-editor-mode-contract-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-editor-mode-contract-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-editor-mode-contract-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-editor-mode-contract-document.md",
       "language": "en-us"
     },
     {
@@ -915,6 +979,54 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-parser-schema-config-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-parser-schema-config-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-parser-schema-config-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-parser-schema-config-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pdf-ocr-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pdf-ocr-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pdf-ocr-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pdf-ocr-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pdf-workspace-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pdf-workspace-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pdf-workspace-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pdf-workspace-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-pipeline-deep-dive-document",
       "@type": "kg:Node",
       "labels": [
@@ -1008,6 +1120,22 @@
         "relPath": "docs/documents/knowgrph-renderer-document.md"
       },
       "documentPath": "docs/documents/knowgrph-renderer-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-repo-hygiene-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-repo-hygiene-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-repo-hygiene-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-repo-hygiene-document.md",
       "language": "en-us"
     },
     {
@@ -1107,6 +1235,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-spreadsheet-storage-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-spreadsheet-storage-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-spreadsheet-storage-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-spreadsheet-storage-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-system-design-document",
       "@type": "kg:Node",
       "labels": [
@@ -1184,6 +1328,38 @@
         "relPath": "docs/documents/knowgrph-ui-ux-design-document.md"
       },
       "documentPath": "docs/documents/knowgrph-ui-ux-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-webpage-proxy-and-srcdoc-iframe-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-webpage-proxy-and-srcdoc-iframe-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-webpage-proxy-and-srcdoc-iframe-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-webpage-proxy-and-srcdoc-iframe-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-wireframe-enhanced-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-wireframe-enhanced-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-wireframe-enhanced-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-wireframe-enhanced-document.md",
       "language": "en-us"
     },
     {

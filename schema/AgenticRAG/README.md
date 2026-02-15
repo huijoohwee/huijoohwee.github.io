@@ -88,10 +88,19 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 ### Website Import (Sitemap → Workspace)
 
 - Website imports should generate a workspace-level sitemap document (`website.sitemap.md`) that provides a single tree + page table view over imported webpages.
-- Webpage view switching (`Markdown` / `JSON` / `HTML`) must keep a shared token vocabulary (`[NAV]`, `[CTA]`, `[PRICE]`, `[TIME]`) visible across modes.
+- The sitemap pages table should include stable `Doc` links to the actual generated workspace markdown files.
+- Webpage view switching (`Markdown` / `HTML` / `DOM` / `Raw` / `JSON`) must keep a shared token vocabulary (`[NAV]`, `[CTA]`, `[PRICE]`, `[TIME]`) visible across modes.
 - HTML/JSON rendering must use a sandboxed iframe and remain view-only (no graph/layout/zoom side effects): HTML/JSON render via sanitized iframe `srcdoc`; HTML source may be fetched via the same-origin proxy, via `/__repo_file/*` for repo-relative `kgWebpageUrl`, or loaded from stored `raw.html` artifacts.
+- Local repo-relative imports should accept both `path/to/file.html` and `file://path/to/file.html` as equivalent repo-relative inputs.
+- Markdown preview should render safe rich-media HTML blocks (e.g., `<svg>`, `<iframe>`, `<video>`, `<audio>`, `<details>`, `<picture>`, `<figure>`) even when the upstream markdown lexer emits them as standalone inline HTML.
+- HTML→Markdown import should prefer lossless embedded Markdown payloads; otherwise use unified/rehype/remark as a general-purpose fallback without replacing the markdown-it-based Markdown UI renderer.
 - Monaco editor initialization must apply the latest hydrated file contents at create-time to avoid an empty editor during async imports or `kgWebpageView` toggles.
 - Lossless round-trip: when Markdown is rendered to HTML/DOM for preview, embed the exact Markdown source in a non-executing payload so HTML imports can restore the Markdown exactly (MD → HTML → MD).
+
+### Webpage Per-Document Fidelity Controls
+
+- Per-doc frontmatter may override conversion/rendering fidelity: `kgWebpageScriptPolicy: allow|strip`, `kgWebpageIncludeImages: true|false`, `kgWebpageFidelityLevel: 1|2|3|4`.
+- UI placement SSOT: these controls live in the Markdown toolbar `nav` (Webpage group) with an explicit `Sync` (DOM→Markdown) action.
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 

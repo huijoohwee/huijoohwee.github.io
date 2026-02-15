@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.29",
+  "schemaVersion": "1.0.30",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -38,6 +38,14 @@
     },
     {
       "@value": "无损 MD→HTML→MD：当 Markdown 被渲染为预览用 HTML/DOM（Viewer/Presentation）时，必须以非执行的 payload（base64 编码）嵌入原始 Markdown 源文本，使 HTML 导入可精确还原 Markdown；禁止从渲染后的 DOM 反推 Markdown。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Webpage-backed Markdown fidelity: support view-only iframe render modes (markdown/html/dom/raw/json) and per-document fidelity controls stored in YAML frontmatter (script policy, include-images, and fidelity level). The UI must expose these controls in the Markdown toolbar nav and provide an explicit Sync (DOM→Markdown) action for JS-heavy pages.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "网页型 Markdown 保真：支持视图只读的 iframe 渲染模式（markdown/html/dom/raw/json），并将每个文档的保真控制写入 YAML frontmatter（脚本策略、是否包含图片、保真等级）。UI 必须在 Markdown 工具条导航区集中呈现这些控制，并提供显式的 Sync（DOM→Markdown）动作以支持 JS 重页面。",
       "@language": "zh-cn"
     }
   ],

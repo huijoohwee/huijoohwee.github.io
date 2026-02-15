@@ -31,6 +31,14 @@
     {
       "@value": "跨界面 Markdown 同步：Slides Gallery、Graph Data 与 Canvas 的投影视图必须渲染同一份当前文档 Markdown 文本 SSOT，且不得在不同 activeDocumentPath 之间复用已记忆化的 Markdown token 缓存；仅当缓存记录的 tokensPath 与 activeDocumentPath 相同才可复用（防止跨文档串扰与视图切换时内容消失）。",
       "@language": "zh-cn"
+    },
+    {
+      "@value": "Lossless MD→HTML→MD: whenever Markdown is rendered to HTML/DOM for preview (Viewer/Presentation), embed the exact Markdown source as a non-executing payload (base64-encoded) so HTML imports can restore Markdown exactly; do not attempt to reconstruct Markdown from rendered DOM.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "无损 MD→HTML→MD：当 Markdown 被渲染为预览用 HTML/DOM（Viewer/Presentation）时，必须以非执行的 payload（base64 编码）嵌入原始 Markdown 源文本，使 HTML 导入可精确还原 Markdown；禁止从渲染后的 DOM 反推 Markdown。",
+      "@language": "zh-cn"
     }
   ],
   "markdownUiGuidelines": {

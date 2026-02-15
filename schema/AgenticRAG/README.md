@@ -89,8 +89,9 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - Website imports should generate a workspace-level sitemap document (`website.sitemap.md`) that provides a single tree + page table view over imported webpages.
 - Webpage view switching (`Markdown` / `JSON` / `HTML`) must keep a shared token vocabulary (`[NAV]`, `[CTA]`, `[PRICE]`, `[TIME]`) visible across modes.
-- HTML/JSON rendering must use a sandboxed iframe and remain view-only (no graph/layout/zoom side effects): HTML/JSON render via sanitized iframe `srcdoc`; HTML source may be fetched via the same-origin proxy or loaded from stored `raw.html` artifacts.
+- HTML/JSON rendering must use a sandboxed iframe and remain view-only (no graph/layout/zoom side effects): HTML/JSON render via sanitized iframe `srcdoc`; HTML source may be fetched via the same-origin proxy, via `/__repo_file/*` for repo-relative `kgWebpageUrl`, or loaded from stored `raw.html` artifacts.
 - Monaco editor initialization must apply the latest hydrated file contents at create-time to avoid an empty editor during async imports or `kgWebpageView` toggles.
+- Lossless round-trip: when Markdown is rendered to HTML/DOM for preview, embed the exact Markdown source in a non-executing payload so HTML imports can restore the Markdown exactly (MD → HTML → MD).
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 

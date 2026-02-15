@@ -39,7 +39,7 @@
     "viewerBlockEditing": "In Viewer mode, allow bounded block-style operations (e.g., heading grip drag reorder among same-parent siblings and inserting a new blank line after a block) implemented as pure Markdown text transforms using TOC/line semantics; avoid WYSIWYG block state.",
     "tocReorderHandleOnly": "Enable TOC reorder drag only from a dedicated grip handle; avoid making the whole row draggable to prevent accidental reorders.",
     "tocFocusFromOtherSurfaces": "Allow non-markdown projections (e.g., Graph Table / Graph Data Table) to request TOC focus using a stable event contract (e.g., dispatch CustomEvent('kg:tocFocus', {detail:{id}})). The id must be a stable heading identifier derived from shared slugify/anchor rules; do not invent per-surface ids.",
-    "sidebarAndCollapsePersistence": "Persist Markdown sidebar-open state and collapsed heading ids via canonical, app-namespaced LocalStorage keys (no magic strings).",
+    "sidebarAndCollapsePersistence": "Persist Markdown sidebar-open state and collapsed heading ids via canonical, app-namespaced LocalStorage keys (no magic strings). Collapsed headings should be scoped per documentPath (store under a doc-derived suffix) to prevent cross-document content hiding.",
     "ssotMarkdownSectionHeader": "Use one-and-only Markdown Section Header implementation across Editor/Viewer/Presentation; do not introduce mode-specific header variants.",
     "ssotMarkdownSidebar": "Use one-and-only Markdown Explorer sidebar structure across modes. The sidebar may include an action menu in the Source Files section header for VS Code-like parity; other section headers remain typography-only. Actions must reuse the same underlying integrations as the Markdown header (no duplicate logic paths).",
     "docsiteSpaExport": "Allow exporting a folder of Markdown files into a static documentation website that renders Markdown client-side with SPA routing; keep Markdown as SSOT and avoid domain coupling.",
@@ -51,7 +51,8 @@
       "kg:ui:markdown:explorer:sourceFilesExpandedPaths",
       "kg:ui:markdown:explorer:outlineCollapsed",
       "kg:ui:markdown:explorer:backlinksCollapsed",
-      "kg:ui:markdown:collapsedHeadingIds"
+      "kg:ui:markdown:collapsedHeadingIds",
+      "kg:ui:markdown:collapsedHeadingIds:<docHash>"
     ]
   },
   "markdownPreviewSyntaxSupport": {

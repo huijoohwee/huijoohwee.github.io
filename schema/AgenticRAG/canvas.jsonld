@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.13",
+  "schemaVersion": "1.0.14",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -100,11 +100,11 @@
     ],
     "overlayPointerCaptureSafety2d": [
       {
-        "@value": "Overlays must opt out of forwarded canvas pan pointerdowns to prevent pointer-capture conflicts. If the Flow canvas loses pointer capture while a drag is active, it must cancel/clear the active drag state so wheel pan/zoom cannot become stuck or blocked.",
+        "@value": "Overlays should prevent accidental canvas wheel zoom via wheel-ignore zones. Space-pan must remain usable even when pointerdown starts on an overlay: the Flow canvas may proxy Space+drag pan from overlay ignore targets, but must only do so for pan (no node/overlay drag forwarding) and must remain pointer-capture safe. If pointer capture is lost while a drag is active, cancel/clear drag state so pan/zoom cannot become stuck or blocked. Any global user-select lock used during interactions must always unlock on end/cancel and have a bounded failsafe reset on blur/visibility hidden.",
         "@language": "en-us"
       },
       {
-        "@value": "Overlay 必须选择退出被转发到画布的“平移指针按下事件”，以避免 pointer capture 冲突。若 Flow 画布在拖拽过程中丢失 pointer capture，必须取消/清理当前 drag 状态，防止滚轮平移/缩放被卡死或被阻塞。",
+        "@value": "Overlay 应通过 wheel-ignore zone 防止误触发画布滚轮缩放。按住 Space 时必须始终可平移：Flow 画布可以从 overlay 的 ignore target 代理 Space+拖拽平移，但只能代理平移（禁止转发节点/overlay 拖拽）且必须保证 pointer capture 安全。拖拽中若丢失 pointer capture，必须取消/清理 drag 状态，防止平移/缩放被卡死。交互期间若使用全局 user-select 锁，必须在 end/cancel 时始终解锁，并提供有界的 failsafe（blur/页面隐藏时重置）。",
         "@language": "zh-cn"
       }
     ],

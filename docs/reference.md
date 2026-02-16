@@ -18,6 +18,7 @@
 | [Figr AI/Mercury - Founder Forecast Focus](https://app.figr.design/0787b7bb-ca15-49ab-ba09-b8a78e1393f9/a343dad6-7966-4a94-b6fd-d0a3e05cbadd) | Founder Forecast Focus |
 | [Flowise](https://github.com/FlowiseAI/Flowise.git) | Collaborative flow editor |
 | [Fuser](https://app.fuser.studio/flow/e1f91385-247d-472a-be7f-2fadc81b9b63) | Collaborative flow editor |
+| [Glide Data Grid](https://github.com/glideapps/glide-data-grid.git) | Data grid component for React |
 | [GMC Map Component](https://codesandbox.io/p/sandbox/gmc-map-component-forked-4y3zsv) | Map component for React |
 
 | [GSAP](https://gsap.com) | GreenSock Animation Platform |

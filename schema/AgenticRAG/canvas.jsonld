@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.14",
+  "schemaVersion": "1.0.15",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -30,11 +30,31 @@
     ],
     "viewKeyIsolation": [
       {
-        "@value": "View state and caches are isolated by explicit keys. Zoom view state may be intentionally shared across 2D renderer variants to preserve viewport continuity, but layout caches must include renderer variant and other layout-affecting toggles. Avoid cross-mode contamination by never sharing layout caches between different layout keys.",
+        "@value": "View state and caches are isolated by explicit keys. Zoom view state may be intentionally shared across 2D renderer variants to preserve viewport continuity, but zoom/layout view keys must be built from the same schema-layout fingerprint across D3/Flow/Design/Flow Editor (include schema.layout.flow). Avoid cross-mode contamination by never sharing layout caches between different layout keys.",
         "@language": "en-us"
       },
       {
-        "@value": "视图状态与缓存必须通过显式 key 隔离：zoom 视图状态可在 2D 渲染器变体之间有意共享以保持 viewport 连续性，但布局缓存必须把渲染器变体与其他影响布局的开关纳入 key。不同布局 key 之间禁止共享布局缓存，以避免跨模式污染。",
+        "@value": "视图状态与缓存必须通过显式 key 隔离：zoom 视图状态可在 2D 渲染器变体之间有意共享以保持 viewport 连续性，但 D3/Flow/Design/Flow Editor 必须使用同一份 schema-layout 指纹构建 zoom/layout view key（必须包含 schema.layout.flow）。不同布局 key 之间禁止共享布局缓存，以避免跨模式污染。",
+        "@language": "zh-cn"
+      }
+    ],
+    "schemaLayoutFingerprint2d": [
+      {
+        "@value": "Use a single schema→layout-engine JSON fingerprint builder for 2D renderer variants and reuse it in both zoom view keys and layout view keys. The fingerprint must include Flow layout knobs (schema.layout.flow) so 2D renderers do not compute mismatched keys.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体必须复用同一个 schema→layout-engine JSON 指纹构建器，并同时用于 zoom view key 与 layout view key。该指纹必须包含 Flow 布局参数（schema.layout.flow），避免不同 2D 渲染器计算出不一致的 key。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorCameraInitKey": [
+      {
+        "@value": "Flow Editor camera init must be keyed per dataset when a stable datasetKey exists (e.g., path:*). When dataset keys collapse to rev:*, fall back to a per-graph hashed signature to avoid cross-file init collisions; if the current transform does not show the graph, re-apply an initial fit.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Flow Editor 的 camera init 在 datasetKey 稳定时必须按 datasetKey 作为 key（例如 path:*）。当 datasetKey 退化为 rev:* 时必须回退到按图签名 hash 的 key，避免跨文件冲突；若当前 transform 看不到图，则必须重新执行 initial fit。",
         "@language": "zh-cn"
       }
     ],
@@ -90,11 +110,11 @@
     ],
     "overlayScrollIsolation2d": [
       {
-        "@value": "Scrolling inside overlays (e.g., Flow Node Quick Editor) must not trigger canvas zoom. Mark overlays as wheel-ignore zones and make 2D wheel-zoom handlers early-return when the wheel event originates from (or the pointer is within) an ignore zone.",
+        "@value": "Scrolling inside overlays (e.g., Flow Node Quick Editor) must not trigger canvas zoom. Mark overlays as wheel-ignore zones and make 2D wheel-zoom handlers early-return when the wheel event originates from (or the pointer is within) an ignore zone. In Flow Editor, wheel-ignore must not blanket block wheel zoom when the top-most element under the pointer is still the canvas.",
         "@language": "en-us"
       },
       {
-        "@value": "在 overlay 内滚动（例如 Flow Node Quick Editor）不得触发画布缩放。必须将 overlay 标记为 wheel-ignore zone，并让 2D 的 wheel-zoom handler 在事件来源于（或指针位于）ignore zone 时直接 return。",
+        "@value": "在 overlay 内滚动（例如 Flow Node Quick Editor）不得触发画布缩放。必须将 overlay 标记为 wheel-ignore zone，并让 2D 的 wheel-zoom handler 在事件来源于（或指针位于）ignore zone 时直接 return。对 Flow Editor，还必须禁止 wheel-ignore 在“指针下最上层元素仍为 canvas”时把缩放整体屏蔽掉。",
         "@language": "zh-cn"
       }
     ],

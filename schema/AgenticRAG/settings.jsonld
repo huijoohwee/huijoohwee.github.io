@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.15",
+  "schemaVersion": "1.0.16",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -72,6 +72,17 @@
       "rdfs:comment": [
         { "@value": "Workspace-level multiplier (clamped to a safe range) applied to both 2D zoom (wheel/pinch) and 2D pan (wheel/pointer/touch) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
         { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
+      ]
+    },
+    "flowEditorOverlayWheelProxyEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Flow Editor: fly-out wheel proxy", "@language": "en-us" },
+        { "@value": "Flow Editor：浮层滚轮代理", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        { "@value": "When enabled, wheel pan/zoom gestures that originate over Flow Editor fly-out overlays (Node Quick Editor panels) are forwarded to the 2D canvas unless the overlay can scroll in that direction.", "@language": "en-us" },
+        { "@value": "启用后，当鼠标指针位于 Flow Editor 的浮层（Node Quick Editor 面板）上时，滚轮平移/缩放手势会被转发到 2D 画布；若浮层在该方向可滚动则不转发。", "@language": "zh-cn" }
       ]
     },
     "markdownWordWrap": {

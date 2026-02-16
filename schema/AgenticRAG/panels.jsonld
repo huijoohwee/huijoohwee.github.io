@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.15",
+  "schemaVersion": "1.0.16",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -125,6 +125,16 @@
       },
       {
         "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo + Graph Traversal 视图，并禁止任何遗留右侧 SidePanel 或 BottomPanel Orchestrator。pin=锁定（禁用拖拽，蓝色图钉），unpin=浮动（启用头部拖拽）。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelLightweightViewPattern": [
+      {
+        "@value": "Floating Panel view bodies must reuse the Props Panel lightweight embedding pattern. Default: the Floating Panel shell owns background + base typography and provides the single scroll container; embedded views must be content-only (no nested h-full/min-h-0/overflow scrollers, no redundant panel bg/borders/shadows, no fixed width constraints). If a view must own an internal scroller (e.g., chat messages), the Floating Panel body must switch to overflow-hidden for that view to prevent double-scroll. Layout-only wrappers should prefer div; reserve section/header/nav/aside for meaningful surface boundaries.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 的视图正文必须复用 Props Panel 的轻量嵌入模式。默认：Floating Panel 壳层负责背景与基础排版，并提供唯一的滚动容器；嵌入视图必须是纯内容（禁止嵌套 h-full/min-h-0/overflow 滚动区、禁止重复的 panel 背景/边框/阴影、禁止固定宽度约束）。如果某视图必须自带内部滚动（例如聊天消息列表），则该视图下 Floating Panel 正文必须切换为 overflow-hidden 以避免双重滚动。仅用于布局的包裹层优先使用 div；section/header/nav/aside 仅用于有语义的表面边界。",
         "@language": "zh-cn"
       }
     ],

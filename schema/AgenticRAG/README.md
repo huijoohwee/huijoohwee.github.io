@@ -75,6 +75,13 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 - Mode/selection sync events that cross repo boundaries should be centralized in `knowgrph/grph-shared/src/*/events.ts` to keep payload shapes aligned.
 
+### Floating Panel Lightweight Pattern (Knowgrph)
+
+- Floating Panel view bodies must reuse the Props Panel lightweight embedding contract: shell owns background + typography; default to a single shell-owned scroll container.
+- Embedded views must be content-only (no nested `h-full`/`overflow-*` scrollers, no redundant panel bg/borders/shadows, no hardcoded widths/colors).
+- If a view must own an internal scroller (e.g. chat messages), the Floating Panel body must switch to `overflow-hidden` for that view to prevent double-scroll.
+- Layout-only wrappers inside panel bodies should prefer `div`; reserve `section/header/nav/aside` for meaningful surface boundaries.
+
 ### PDF Workspace (Knowgrph)
 
 - Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel`.
@@ -123,7 +130,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Scope: `/GitHub/{knowgrph,gympgrph,curagrph}` → import → render.
 - Support all `/GitHub/sandbox/` test data; no hardcoding.
 - FORBID absolute local sandbox paths (e.g. `/Users/.../GitHub/sandbox/...`) in code/tests; use sandbox-root helpers + basenames or repo-local fixtures.
-- Use semantic HTML; forbid generic `<div>`.
+- Use semantic HTML for surface boundaries; use `div` for layout-only wrappers.
 - Centralize configs (labels, boxes, collisions, timing, knobs).
 - Resolve cross‑repo conflicts.
 - Test only bounded diffs; forbid indefinite runs.

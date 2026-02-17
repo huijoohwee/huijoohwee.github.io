@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.16",
+  "schemaVersion": "1.0.17",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -60,11 +60,11 @@
     ],
     "bottomPanelFlowTab": [
       {
-        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Graph Data Table (Nodes/Edges scope). Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
+        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Graph Data Table (Nodes/Edges scope). The table must keep sticky header + optional frozen first column aligned with horizontal scroll, share column widths between header/body, support pointer-drag column reordering, and clear to empty state when GraphData is empty. Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
         "@language": "en-us"
       },
       {
-        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Graph Data Table：Nodes/Edges scope）。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
+        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Graph Data Table：Nodes/Edges scope）。表格必须保证 sticky 表头与可选的冻结首列在水平滚动时始终对齐；表头/表体必须共享列宽；支持指针拖拽进行列重排；当 GraphData 为空时必须清空为 empty state。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
         "@language": "zh-cn"
       }
     ],
@@ -100,11 +100,11 @@
     ],
     "editorWorkspaceGraphTable": [
       {
-        "@value": "Editor workspace may include a Graph Table section for inspecting the active GraphData. It must use semantic HTML (header/nav/form/table/thead/tbody/th/td), a toolbar for fields/filter/group/sort/row height, and colgroup-based column resizing. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
+        "@value": "Editor workspace may include a Graph Data Table (Graph Table) section for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid (single scroll owner) with an explicit scroll-extents spacer element sized to the computed layout. It must provide a toolbar for fields/filter/group/sort/row height and pointer-drag column resizing. Pinned header/columns must be fully opaque and must not show scrolled text underneath; draw operations must clip scrollable regions. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
         "@language": "en-us"
       },
       {
-        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Table 区域。必须使用语义化 HTML（header/nav/form/table/thead/tbody/th/td），并提供字段/过滤/分组/排序/行高工具条与基于 colgroup 的列宽调整。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
+        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Data Table（Graph Table）区域。必须实现为滚动稳定的 Canvas fast-grid（单一滚动宿主），并使用与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。必须提供字段/过滤/分组/排序/行高工具条与可拖拽列宽调整。固定表头/固定列必须完全不透明，禁止出现滚动文本透出；绘制必须对可滚动区域做 clip。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
         "@language": "zh-cn"
       }
     ],

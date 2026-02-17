@@ -84,6 +84,21 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - If a view must own an internal scroller (e.g. chat messages), the Floating Panel body must switch to `overflow-hidden` for that view to prevent double-scroll.
 - Layout-only wrappers inside panel bodies should prefer `div`; reserve `section/header/nav/aside` for meaningful surface boundaries.
 
+### Graph Data Table (Host Fast Grid) (Knowgrph)
+
+- The host Graph Data Table (Editor workspace) is a canvas fast-grid with a single scroll owner.
+- Scroll extents must be driven by an explicit spacer element sized to the computed layout total width/height; do not rely on padding hacks.
+- Forbid ResizeObserver→React state loops and scroll/resize feedback loops.
+- Pinned header/columns must be fully opaque and must not show scrolled content underneath; clip drawing regions.
+- Performance: avoid `getComputedStyle()` in the scroll loop; cache theme metrics and update only on theme mutation or resize.
+
+### Graph Data Table (Curation Table) (curagrph)
+
+- The curation Graph Data Table is a DOM `<table>` surface (BottomPanel / curation views) over the same SSOT-derived active graph render view.
+- Sticky header and optional frozen first data column must remain aligned with horizontal scroll; avoid empty sticky overlays that block pointer interaction.
+- Header and body must share column widths; visible columns can be reordered via pointer drag (Glide-like), persisted via `graphDataTableColumnOrder`.
+- When the active graph becomes empty, the table must render empty state (no stale rows from prior graphs).
+
 ### PDF Workspace (Knowgrph)
 
 - Local PDF→Markdown workspace artifacts should be written under `.knowgrph-workspace/` and configured via the Settings key `pdfWorkspaceOutputDirRel`.

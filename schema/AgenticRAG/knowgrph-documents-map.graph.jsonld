@@ -627,6 +627,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-flow-editor-pan-zoom-overlay-failsafe-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-frontend-document",
       "@type": "kg:Node",
       "labels": [
@@ -688,6 +704,22 @@
         "relPath": "docs/documents/knowgrph-graph-data-curation-document.md"
       },
       "documentPath": "docs/documents/knowgrph-graph-data-curation-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graph-data-table-fast-grid-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graph-data-table-fast-grid-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graph-data-table-fast-grid-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graph-data-table-fast-grid-document.md",
       "language": "en-us"
     },
     {

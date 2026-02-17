@@ -89,7 +89,9 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - The host Graph Data Table (Editor workspace) is a canvas fast-grid with a single scroll owner.
 - Scroll extents must be driven by an explicit spacer element sized to the computed layout total width/height; do not rely on padding hacks.
 - Forbid ResizeObserver→React state loops and scroll/resize feedback loops.
-- Pinned header/columns must be fully opaque and must not show scrolled content underneath; clip drawing regions.
+- Header must remain aligned to the body while horizontally scrolling: use a DOM header overlay that is translated by `-scrollLeft` from the same single scroll owner; the canvas should be clipped so it never draws into the header band.
+- Visible data columns can be reordered by dragging the header; persist order per table via local storage `kg:ui:graphTable:columnOrderByTableId` (ordered `columnId` list). RxDB column `order` remains the base/default ordering.
+- Header click selects a column (highlight the entire column in the body grid).
 - Performance: avoid `getComputedStyle()` in the scroll loop; cache theme metrics and update only on theme mutation or resize.
 
 ### Graph Data Table (Curation Table) (curagrph)

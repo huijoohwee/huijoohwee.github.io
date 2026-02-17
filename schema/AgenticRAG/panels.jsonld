@@ -100,11 +100,11 @@
     ],
     "editorWorkspaceGraphTable": [
       {
-        "@value": "Editor workspace may include a Graph Data Table (Graph Table) section for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid (single scroll owner) with an explicit scroll-extents spacer element sized to the computed layout. It must provide a toolbar for fields/filter/group/sort/row height and pointer-drag column resizing. Pinned header/columns must be fully opaque and must not show scrolled text underneath; draw operations must clip scrollable regions. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
+        "@value": "Editor workspace may include a Graph Data Table (Graph Table) section for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid with a single scroll owner and an explicit scroll-extents spacer element sized to the computed layout. The header must remain aligned to the body while horizontally scrolling: use a DOM header overlay that is translated by -scrollLeft from the same scroll owner; clip the canvas so it never draws into the header band. The header supports pointer resize (near right edge) and pointer-drag reorder; header click selects the entire column. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
         "@language": "en-us"
       },
       {
-        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Data Table（Graph Table）区域。必须实现为滚动稳定的 Canvas fast-grid（单一滚动宿主），并使用与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。必须提供字段/过滤/分组/排序/行高工具条与可拖拽列宽调整。固定表头/固定列必须完全不透明，禁止出现滚动文本透出；绘制必须对可滚动区域做 clip。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
+        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Data Table（Graph Table）区域。必须实现为滚动稳定的 Canvas fast-grid：单一滚动宿主 + 与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。表头必须在水平滚动时与表体保持对齐：使用 DOM 表头覆层，并以同一滚动宿主的 -scrollLeft 进行平移；同时对 canvas 做裁剪，禁止绘制进入表头带。表头支持靠右边缘拖拽调整列宽、指针拖拽进行列重排；点击表头应选中整列。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
         "@language": "zh-cn"
       }
     ],

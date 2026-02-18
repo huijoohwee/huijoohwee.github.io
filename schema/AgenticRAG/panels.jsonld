@@ -70,11 +70,11 @@
     ],
     "toolbarEditorWorkspaceToggle": [
       {
-        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shows a Canvas preview via an iframe URL param contract (e.g. `/?kgPreview=1`) that forces preview-only rendering (no toolbar/panels) to prevent recursion and cross-mode interference. Editor Workspace must not mount a standalone inspector dock; optional tools (e.g., Graph Table) must keep inspector behavior scoped within the tool surface.",
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",
         "@language": "en-us"
       },
       {
-        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并通过 iframe + URL 参数契约（如 `/?kgPreview=1`）强制预览仅渲染（无工具栏/面板），以防递归与跨模式干扰。Editor 工作区不得挂载独立的 Inspector 停靠栏；可选工具（例如 Graph Table）必须将 inspector 行为限制在其工具表面内部。",
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
         "@language": "zh-cn"
       }
     ],
@@ -100,11 +100,11 @@
     ],
     "editorWorkspaceGraphTable": [
       {
-        "@value": "Editor workspace may include a Graph Data Table (Graph Table) section for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid with a single scroll owner and an explicit scroll-extents spacer element sized to the computed layout. The header must remain aligned to the body while horizontally scrolling: use a DOM header overlay that is translated by -scrollLeft from the same scroll owner; clip the canvas so it never draws into the header band. The header supports pointer resize (near right edge) and pointer-drag reorder; header click selects the entire column. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with preview and TOC.",
+        "@value": "Graph Data Table (Graph Table) is a workspace tool surface for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid with a single scroll owner and an explicit scroll-extents spacer element sized to the computed layout. The header must remain aligned to the body while horizontally scrolling: use a DOM header overlay that is translated by -scrollLeft from the same scroll owner; clip the canvas so it never draws into the header band. The header supports pointer resize (near right edge) and pointer-drag reorder; header click selects the entire column. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with the shared Canvas pane and TOC.",
         "@language": "en-us"
       },
       {
-        "@value": "Editor 工作区可包含用于查看当前 GraphData 的 Graph Data Table（Graph Table）区域。必须实现为滚动稳定的 Canvas fast-grid：单一滚动宿主 + 与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。表头必须在水平滚动时与表体保持对齐：使用 DOM 表头覆层，并以同一滚动宿主的 -scrollLeft 进行平移；同时对 canvas 做裁剪，禁止绘制进入表头带。表头支持靠右边缘拖拽调整列宽、指针拖拽进行列重排；点击表头应选中整列。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与预览与 TOC 同步选择时需避免滚动跳动循环。",
+        "@value": "Graph Data Table（Graph Table）是用于查看当前 GraphData 的工作区工具表面。必须实现为滚动稳定的 Canvas fast-grid：单一滚动宿主 + 与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。表头必须在水平滚动时与表体保持对齐：使用 DOM 表头覆层，并以同一滚动宿主的 -scrollLeft 进行平移；同时对 canvas 做裁剪，禁止绘制进入表头带。表头支持靠右边缘拖拽调整列宽、指针拖拽进行列重排；点击表头应选中整列。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与宿主共享的 Canvas 画布表面与 TOC 同步选择时需避免滚动跳动循环。",
         "@language": "zh-cn"
       }
     ],
@@ -160,11 +160,11 @@
     ],
     "activeGraphRenderViewSsot": [
       {
-        "@value": "All render surfaces (Editor workspace, Graph Data Table, Graph Fields, Dashboard (Stats), Selection Inspector (Record Inspector), EXPLORER projections, Canvas Preview, Canvas D3/Flow/2D/3D, Document Mode, and Geospatial 2D/3D) must consume the same SSOT-derived active graph render view. Derivation order: keyword base → optional frontmatter Mermaid filter (document mode only) → optional group collapse (`collapsedGroupIds`). Forbid per-surface re-derivation and drift. Graph Table persistence must reflect this derived view (including collapsed groups) and be validated with a bounded host test.",
+        "@value": "All render surfaces (Editor workspace, Graph Data Table, Graph Fields, Dashboard (Stats), Selection Inspector (Record Inspector), EXPLORER projections, external Canvas Preview embed (if used), Canvas D3/Flow/2D/3D, Document Mode, and Geospatial 2D/3D) must consume the same SSOT-derived active graph render view. Derivation order: keyword base → optional frontmatter Mermaid filter (document mode only) → optional group collapse (`collapsedGroupIds`). Forbid per-surface re-derivation and drift. Graph Table persistence must reflect this derived view (including collapsed groups) and be validated with a bounded host test.",
         "@language": "en-us"
       },
       {
-        "@value": "所有渲染表面（Editor 工作区、Graph Data Table、Graph Fields、Dashboard（Stats）、Selection Inspector（Record Inspector）、EXPLORER 投影、Canvas Preview、Canvas D3/Flow/2D/3D、Document Mode、Geospatial 2D/3D）必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter Mermaid 过滤（仅 document mode）→ 可选 group collapse（`collapsedGroupIds`）。禁止各表面自行二次推导与漂移。Graph Table 的持久化结果必须反映该推导视图（包含 collapsed groups），并通过有界的 host 测试验证。",
+        "@value": "所有渲染表面（Editor 工作区、Graph Data Table、Graph Fields、Dashboard（Stats）、Selection Inspector（Record Inspector）、EXPLORER 投影、外部 Canvas Preview 嵌入（如有使用）、Canvas D3/Flow/2D/3D、Document Mode、Geospatial 2D/3D）必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter Mermaid 过滤（仅 document mode）→ 可选 group collapse（`collapsedGroupIds`）。禁止各表面自行二次推导与漂移。Graph Table 的持久化结果必须反映该推导视图（包含 collapsed groups），并通过有界的 host 测试验证。",
         "@language": "zh-cn"
       }
     ],

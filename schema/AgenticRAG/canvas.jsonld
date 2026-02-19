@@ -70,11 +70,11 @@
     ],
     "viewportAwareAutoFit": [
       {
-        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled.",
+        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps).",
         "@language": "en-us"
       },
       {
-        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。",
+        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。",
         "@language": "zh-cn"
       }
     ],
@@ -90,11 +90,11 @@
     ],
     "nodeEdgeVisibilityParity2d": [
       {
-        "@value": "2D renderer variants (D3, Flow, Design, Flow Editor) must apply the same node/edge display filter (visibility semantics) before layout, fit, and scene build. If a node is filtered out, all incident edges must also be filtered out; if the preferred filter would remove all nodes/edges, a safe fallback must display the base nodes/edges to avoid rendering an empty canvas. Initial view restoration must not apply stored transforms when graph bounds cannot be computed yet (e.g., no finite node positions); prefer fit/identity to prevent a blank view caused by stale offscreen pans.",
+        "@value": "2D renderer variants (D3, Flow, Design, Flow Editor) must apply the same node/edge display filter (visibility semantics) before layout, fit, and scene build. If a node is filtered out, all incident edges must also be filtered out; if the preferred filter would remove all nodes/edges, a safe fallback must display the base nodes/edges to avoid rendering an empty canvas. Initial view restoration must not apply stored transforms when graph bounds cannot be computed yet (e.g., no finite node positions); prefer fit/identity to prevent a blank view caused by stale offscreen pans. Initialization must be idempotent: if a stored transform is applied, the same init pass must not also re-fit. When positions are only partially available, scene build must skip nodes without finite positions (and suppress their edges) to prevent one-long stray lines. Fit geometry must use stable per-node dimensions (e.g., read visual:width/visual:height or renderer defaults) so centering does not drift across 2D variants.",
         "@language": "en-us"
       },
       {
-        "@value": "2D 渲染器变体（D3、Flow、Design、Flow Editor）必须在 layout / fit / scene build 之前应用同一套节点/边显示过滤（可见性语义）。若某节点被过滤掉，则其相连的所有边也必须被过滤掉；若“优先过滤”会导致节点/边全部被过滤，则必须使用安全回退策略显示基础节点/边，避免渲染为空。初始视图恢复时，若尚无法计算图边界（例如没有任何有限的节点坐标），不得应用持久化的 transform；应优先使用 fit/identity，避免因旧的离屏平移导致画布空白。",
+        "@value": "2D 渲染器变体（D3、Flow、Design、Flow Editor）必须在 layout / fit / scene build 之前应用同一套节点/边显示过滤（可见性语义）。若某节点被过滤掉，则其相连的所有边也必须被过滤掉；若“优先过滤”会导致节点/边全部被过滤，则必须使用安全回退策略显示基础节点/边，避免渲染为空。初始视图恢复时，若尚无法计算图边界（例如没有任何有限的节点坐标），不得应用持久化的 transform；应优先使用 fit/identity，避免因旧的离屏平移导致画布空白。初始化必须幂等：若已应用持久化 transform，则同一轮初始化中不得再次触发 fit。若位置仅部分可用，则 scene build 必须跳过无有限坐标的节点（并抑制其相关边），防止出现“一条超长线”。fit 的几何计算必须使用稳定的节点尺寸（例如读取 visual:width/visual:height 或使用渲染器默认值），确保 2D 变体之间的居中不漂移。",
         "@language": "zh-cn"
       }
     ],

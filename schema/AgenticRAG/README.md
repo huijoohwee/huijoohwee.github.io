@@ -79,6 +79,12 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Overlay event proxy:** fly-out overlays must expose a stable root selector (`[data-kg-node-quick-editor]`) at the portal root so global capture handlers can proxy wheel/gesture zoom without brittle DOM assumptions.
 - **Safari pinch parity:** when Safari emits `gesture*` pinch events over the canvas or fly-out overlays, the app must prevent browser zoom and apply anchored zoom to the active 2D renderer.
 - **Wheel/trackpad parity:** 2D zoom must share wheel delta normalization + zoom factor SSOT; clamp-edge behavior should avoid “min zoom-out bounce back zoom-in” and avoid zooming while dragging nodes.
+- **Document baseline isolation:** switching semantic modes must not back-propagate zoom/collapse state into Document Structure mode unless explicitly pinned.
+- **Keyword derive debounce settings:** `keyword.graph.previewDebounceMs` and `keyword.graph.fullDebounceMs` gate preview/full worker derivation to avoid churn.
+
+### Graph Search Query Filters (Knowgrph)
+
+- Search supports `key:value` filters (space-separated) for targeted queries, e.g. `kind:node type:hook path:hooks usegraphstore` or `kind:edge source:foo target:bar`.
 
 ### UI Event SSOT (Knowgrph)
 

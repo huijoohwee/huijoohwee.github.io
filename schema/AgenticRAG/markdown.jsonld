@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.30",
+  "schemaVersion": "1.0.31",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -46,6 +46,14 @@
     },
     {
       "@value": "网页型 Markdown 保真：支持视图只读的 iframe 渲染模式（markdown/html/dom/raw/json），并将每个文档的保真控制写入 YAML frontmatter（脚本策略、是否包含图片、保真等级）。UI 必须在 Markdown 工具条导航区集中呈现这些控制，并提供显式的 Sync（DOM→Markdown）动作以支持 JS 重页面。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Markdown Viewer layout + export: in Viewer and Split modes, render article content at a stable 80% of the containing section width; toggling Explorer open/closed and the workspace Canvas pane open/closed must not change this rule. Save As supports Markdown/JSON/JSON-LD and PDF export; PDF export uses an in-page print pipeline (no pop-ups) and cleans up temporary print DOM.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Markdown Viewer 布局与导出：在 Viewer 与 Split 模式下，article 内容宽度应稳定为容器 section 宽度的 80%；切换 Explorer 展开/收起与工作区 Canvas pane 显示/隐藏不得改变该规则。Save As 支持导出 Markdown/JSON/JSON-LD 与 PDF；PDF 导出使用页面内 print 流水线（无弹窗）并清理临时打印 DOM。",
       "@language": "zh-cn"
     }
   ],

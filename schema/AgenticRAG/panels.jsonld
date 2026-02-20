@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.17",
+  "schemaVersion": "1.0.18",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -70,11 +70,11 @@
     ],
     "toolbarEditorWorkspaceToggle": [
       {
-        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor workspace includes layout toggles (Explorer open/closed and Canvas pane open/closed); Canvas pane open state persists via `kg:ui:workspace:canvasPaneOpen` and Canvas pane width persists via `kg:ui:workspace:previewWidthPx`. Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",
         "@language": "en-us"
       },
       {
-        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区包含布局开关（Explorer 展开/收起与 Canvas pane 显示/隐藏）；Canvas pane 显示状态通过 `kg:ui:workspace:canvasPaneOpen` 持久化，Canvas pane 宽度通过 `kg:ui:workspace:previewWidthPx` 持久化。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
         "@language": "zh-cn"
       }
     ],

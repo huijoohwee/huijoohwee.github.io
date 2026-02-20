@@ -63,6 +63,12 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Target artifact:** `schema/AgenticRAG/knowgrph-documents-map.graph.jsonld`
 - **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
 
+### Git Rebase / Conflict Resolution (Cross‑Repo)
+
+- Prefer rebasing when syncing Knowgrph↔Schema changes to keep one linear history for contract updates.
+- If conflicts involve `knowgrph/canvas/src/components/GraphCanvas/scene.ts`, preserve idempotent initialization (no “double-fit” jump) and schema-driven fit (`readFitAllOptions` + `fitAllTransform`).
+- Never hand-merge `knowgrph/canvas/tsconfig.tsbuildinfo`; regenerate via `npm --prefix canvas run check` or `npm --prefix canvas run build`.
+
 ### Canvas Zoom/Fit SSOT (Knowgrph)
 
 - **Preset SSOT:** `knowgrph/grph-shared/src/zoom/presets.ts` (capped 16:9 frame + default fill ratio)

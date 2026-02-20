@@ -2,14 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:KeywordMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:comment": [
     {
-      "@value": "Defines the Keyword Mode graph generation logic, including Subject-Verb-Object triple extraction and statistical co-occurrence.",
+      "@value": "Defines the Keyword Mode graph generation logic, including entity/mention extraction, Subject-Verb-Object-style relation inference, and statistical co-occurrence. Implementations are expected to keep derivation bounded (thresholds/top-k), debounce keystroke-driven recomputation, and cache by stable source hashes.",
       "@language": "en-us"
     },
     {
-      "@value": "定义关键词模式图生成逻辑，包括主谓宾三元组提取和统计共现。",
+      "@value": "定义关键词模式图生成逻辑，包括实体/提及提取、主谓宾风格的关系推断与统计共现。实现应保持计算有界（阈值/top-k）、对按键驱动的重复计算进行防抖，并基于稳定来源哈希进行缓存。",
       "@language": "zh-cn"
     }
   ],
@@ -29,7 +29,13 @@
           "description": "PageRank centrality score within the keyword graph"
         },
         "visual:community": {
-          "description": "Community ID derived from connected components"
+          "description": "Community ID derived from community detection (e.g., label propagation + compression)"
+        },
+        "visual:layer": {
+          "description": "Visualization layer identifier (often aligned to visual:community in keyword mode)"
+        },
+        "visual:importance": {
+          "description": "Renderer hint combining frequency and centrality to stabilize sizing/ordering"
         }
       }
     },

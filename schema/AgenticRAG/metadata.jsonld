@@ -16,7 +16,7 @@
       "@language": "zh-cn"
     }
   ],
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "propertyDefinitions": {
     "schemaVersion": {
       "@type": "xsd:string",
@@ -234,6 +234,114 @@
       ],
       "required": false,
       "suggestedFields": ["inputTextPreview", "inputTextHash", "graphMetrics", "stages", "warnings"]
+    },
+    "derived": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Derived Graph Flag", "@language": "en-us" },
+        { "@value": "派生图标记", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional hint indicating that the graph was derived from another source (for example: keyword mode, semantic enrichment, or frontmatter filtering). Structural-only; no domain semantics implied.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于指示该图是否由其他来源派生（例如：关键词模式、语义增强、前言过滤）的可选提示。仅承载结构信息；不包含领域语义。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "kind": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph Kind", "@language": "en-us" },
+        { "@value": "图类型", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional kind discriminator for derived graphs (for example: 'keyword', 'semantic', 'frontmatter'). Must remain configuration-driven and non-normative; downstream processors should not require it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于派生图的可选类型区分字段（例如：'keyword'、'semantic'、'frontmatter'）。必须保持配置驱动与非规范性；下游处理器不应依赖该字段。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "sourceLabel": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Label", "@language": "en-us" },
+        { "@value": "来源标签", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional human-readable label for the source input that produced the graph (for example, a markdown document name). Structural-only.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述生成该图的来源输入的人类可读标签（例如 Markdown 文档名）的可选字段。仅承载结构信息。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "sourceLayerHash": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Layer Hash", "@language": "en-us" },
+        { "@value": "来源图层哈希", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional stable hash identifying the effective source layer used to derive this graph. Intended for caching and debugging; downstream processors may ignore it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于标识派生该图所使用的有效来源图层的稳定哈希，可选。用于缓存与调试；下游处理器可忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "ingestionMetrics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Ingestion Metrics", "@language": "en-us" },
+        { "@value": "导入指标", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-only payload capturing parse/ingestion timings and counters for a single document import. Must remain domain-agnostic and safe to ignore.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "记录单次文档导入的解析/导入耗时与计数器的可选载荷，仅用于检查与调试。必须保持领域无关且可安全忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "pipelineMetrics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Pipeline Metrics", "@language": "en-us" },
+        { "@value": "流水线指标", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-only payload capturing multi-stage pipeline metrics (for example, Agentic RAG or text→graph stage telemetry). Must remain domain-agnostic and optional.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "记录多阶段流水线指标（例如 Agentic RAG 或 文本→图 阶段遥测）的可选载荷，仅用于检查与调试。必须保持领域无关且可选。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
     }
   },
   "validationRules": {

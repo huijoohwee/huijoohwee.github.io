@@ -2,14 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Parser",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:comment": [
     {
-      "@value": "Parser surface for token linking and edge elevation. Extracts phrase boundaries, entity spans, relationships, and attaches confidence and provenance while remaining domain-agnostic and configuration-driven.",
+      "@value": "Parser surface for token linking and edge elevation. Extracts phrase boundaries, entity spans, and relationships; attaches confidence and provenance while remaining domain-agnostic and configuration-driven. Implementations are encouraged to keep parsing bounded and responsive via off-main-thread workers, bounded caches, and optional inspection-only metrics stored in graph metadata.",
       "@language": "en-us"
     },
     {
-      "@value": "用于 token linking 与 edge elevation 的解析器表面。提取短语边界、实体跨度与关系，并附加置信度与溯源信息；保持领域无关与配置驱动。",
+      "@value": "用于 token linking 与 edge elevation 的解析器表面。提取短语边界、实体跨度与关系，并附加置信度与溯源信息；保持领域无关与配置驱动。实现建议通过离线程 worker、有界缓存以及写入图元数据的可选“仅检查”指标来保证解析过程有界且响应迅速。",
       "@language": "zh-cn"
     }
   ],

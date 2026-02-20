@@ -70,11 +70,11 @@
     ],
     "viewportAwareAutoFit": [
       {
-        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps).",
+        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles) and respect the actual container aspect ratio (do not force 16:9). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps).",
         "@language": "en-us"
       },
       {
-        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。",
+        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化），并尊重容器实际纵横比（不得强制 16:9）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。",
         "@language": "zh-cn"
       }
     ],

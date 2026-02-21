@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.15",
+  "schemaVersion": "1.0.16",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -30,11 +30,11 @@
     ],
     "viewKeyIsolation": [
       {
-        "@value": "View state and caches are isolated by explicit keys. Zoom view state may be intentionally shared across 2D renderer variants to preserve viewport continuity, but zoom/layout view keys must be built from the same schema-layout fingerprint across D3/Flow/Design/Flow Editor (include schema.layout.flow). Avoid cross-mode contamination by never sharing layout caches between different layout keys.",
+        "@value": "View state and caches are isolated by explicit keys. Zoom view keys are isolated per 2D renderer variant (D3/Flow/Design/Flow Editor) to prevent cross-variant transform reuse. Build both zoom and layout keys from the same schema→layout-engine fingerprint (include schema.layout.flow). Never share layout caches between different layout keys.",
         "@language": "en-us"
       },
       {
-        "@value": "视图状态与缓存必须通过显式 key 隔离：zoom 视图状态可在 2D 渲染器变体之间有意共享以保持 viewport 连续性，但 D3/Flow/Design/Flow Editor 必须使用同一份 schema-layout 指纹构建 zoom/layout view key（必须包含 schema.layout.flow）。不同布局 key 之间禁止共享布局缓存，以避免跨模式污染。",
+        "@value": "视图状态与缓存必须通过显式 key 隔离。2D 渲染器变体（D3/Flow/Design/Flow Editor）的 zoom 视图 key 必须按变体隔离，防止跨变体复用相机变换。zoom 与 layout 的 key 都必须来自同一份 schema→布局引擎指纹（必须包含 schema.layout.flow）。不同布局 key 之间禁止共享布局缓存。",
         "@language": "zh-cn"
       }
     ],
@@ -230,11 +230,11 @@
     ],
     "documentStructureBaselineDefault": [
       {
-        "@value": "Default UX anchors to Document Structure baseline. Baseline lock forces a stable 2D baseline (D3 + Fit-to-Screen, no Pin/Zoom-to-Selection) and blocks mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview aligned. Zoom view keys should be shared across 2D renderer variants to preserve viewport continuity, while layout/cache keys must remain isolated to prevent cross-mode contamination.",
+        "@value": "Default UX anchors to Document Structure baseline. Baseline lock forces a stable 2D baseline (D3 + Fit-to-Screen, no Pin/Zoom-to-Selection) and blocks mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview aligned. Zoom view keys are isolated per 2D renderer variant; share controls semantics, not transforms. Flow and Flow Editor must honor baseline lock (disable auto zoom modes) and reuse the same SSOT display filter and fit geometry as D3. Keyword graphs reuse Document baseline seeding/forces for stability; Flow does not run D3 forces but must respect the same visibility and fit rules.",
         "@language": "en-us"
       },
       {
-        "@value": "默认体验锚定在 Document Structure 基线。baseline lock 强制稳定的 2D 基线（D3 + Fit-to-Screen，禁用 Pin/Zoom-to-Selection），并阻止模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 内容对齐并防止跨表面漂移。Zoom view key 应在 2D 渲染器变体之间共享以保持 viewport 连续性，但 layout/cache key 必须保持隔离以防止跨模式污染。",
+        "@value": "默认体验锚定在 Document Structure 基线。baseline lock 强制稳定的 2D 基线（D3 + Fit-to-Screen，禁用 Pin/Zoom-to-Selection），并阻止模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 对齐。zoom 视图 key 按 2D 渲染器变体隔离；共享的是控制语义而非变换。Flow 与 Flow Editor 必须遵守 baseline lock（禁用自动缩放），并复用与 D3 相同的可见性过滤与 fit 几何。Keyword 图为稳定性复用 Document 基线的种子/力；Flow 不运行 D3 力，但必须遵循相同的可见性与 fit 规则。",
         "@language": "zh-cn"
       }
     ]

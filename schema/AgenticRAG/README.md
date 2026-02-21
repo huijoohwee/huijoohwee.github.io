@@ -74,7 +74,9 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Preset SSOT:** `knowgrph/grph-shared/src/zoom/presets.ts` (capped 16:9 frame + default fill ratio)
 - **Consumers:** `knowgrph/canvas/src/components/GraphCanvas/{fit.ts,simulation.ts}` (fit transforms + seeding/disjoint sizing)
 - **Flow renderer:** `knowgrph/canvas/src/components/FlowCanvas.tsx` applies the same fit/zoom policies while rendering via a native Canvas2D Flow renderer.
+- **Collective fit+center:** Fit-to-view / fit-to-screen must be computed from the display-derived graph (post filters/collapse) and must include node dimensions (prefer `visual:width/height` when present) plus group envelopes (clusters/subgraphs/layers) so the visible graph is fully in-viewport and centered.
 - **Initialization parity:** initial view restoration is bounds-guarded (do not apply stored transforms until bounds are computable) and idempotent (forbid “double-fit” jumps when a stored transform is applied); when positions are only partially available, skip invalid geometry to prevent one-long stray lines.
+- **Zoom key isolation:** zoom view keys are isolated by 2D renderer variant (`canvas2dRenderer`) while still including semantic mode + schema layout fingerprint; forbid cross-renderer zoom state contamination.
 - **Canvas overlays:** in-canvas overlays (e.g. Flow Node Quick Editor) must derive any zoom-coupled scaling from a single SSOT helper and should keep *macro view* usable at extreme zoom-out (avoid oversized overlays that hide the graph).
 - **Overlay event proxy:** fly-out overlays must expose a stable root selector (`[data-kg-node-quick-editor]`) at the portal root so global capture handlers can proxy wheel/gesture zoom without brittle DOM assumptions.
 - **Safari pinch parity:** when Safari emits `gesture*` pinch events over the canvas or fly-out overlays, the app must prevent browser zoom and apply anchored zoom to the active 2D renderer.
@@ -179,7 +181,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - REUSE shared utilities.
 
 ## GRAPHS Elements
-- Centralized zoom utils (“Fit to View/Screen/Selection”) on 1920×1080; always center centroid.
+- Centralized zoom utils (“Fit to View/Screen/Selection”) on 1920×1080; center the collective bounds (not per-node centroids).
 - ENFORCE Fit to Screen 80:20 ratio.
 - FORCE nodes/subgraphs into grid (d3.forceSimulation + constraints).
 - Snap to grid for block‑like appearance.

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.16",
+  "schemaVersion": "1.0.17",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -45,6 +45,36 @@
       },
       {
         "@value": "2D 渲染器变体必须复用同一个 schema→layout-engine JSON 指纹构建器，并同时用于 zoom view key 与 layout view key。该指纹必须包含 Flow 布局参数（schema.layout.flow），避免不同 2D 渲染器计算出不一致的 key。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layerOrderSsot2d": [
+      {
+        "@value": "2D renderers must share one SSOT layer ordering for nodes/edges/groups/labels/handles. Centralize layer ranks and apply them consistently to both SVG z-order (D3) and native canvas draw order (Flow/Flow Editor) to prevent stacking drift across renderer switches.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器必须共享同一套 SSOT 的层级顺序（nodes/edges/groups/labels/handles）。应集中定义 layer rank，并一致应用于 SVG 的 z-order（D3）与原生 canvas 的绘制顺序（Flow/Flow Editor），防止切换渲染器时层级漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "postLayoutCollisionRelax2d": [
+      {
+        "@value": "To forbid persistent overlaps, run a bounded collision relax pass when layouts are produced or frozen: after collective layout and before final fit/freeze in D3, after layout engine output in Flow/Flow Editor, and after drag end in Design. Use overlap-pressure heuristics (not only 'unstable positions') so overlapping-but-stable layouts still get settled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "为禁止持续重叠，布局产出或冻结时必须执行有界的碰撞 relax：D3 在 collective layout 之后、最终 fit/freeze 之前；Flow/Flow Editor 在布局引擎输出之后；Design 在拖拽结束之后。必须使用 overlap-pressure 等轻量启发式（不能只依赖“位置不稳定”检测），确保“稳定但重叠”的布局也会被收敛。",
+        "@language": "zh-cn"
+      }
+    ],
+    "boundedLayoutWrites2d": [
+      {
+        "@value": "Any store writes caused by collision relax or layout settlement must be bounded and loop-safe: key computations by a stable graph/layout key, write caches at most once per key, and batch multi-node position patches into a single store update to avoid rerender churn and feedback loops.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "由碰撞 relax 或布局收敛引起的任何 store 写入都必须有界且防环：以稳定的 graph/layout key 作为计算与写入门控，同一 key 最多写一次缓存，并将多节点位置补丁合并为一次 store 更新，避免 rerender 抖动与反馈循环。",
         "@language": "zh-cn"
       }
     ],

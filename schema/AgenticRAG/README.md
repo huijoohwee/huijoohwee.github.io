@@ -77,10 +77,15 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Collective fit+center:** Fit-to-view / fit-to-screen must be computed from the display-derived graph (post filters/collapse) and must include node dimensions (prefer `visual:width/height` when present) plus group envelopes (clusters/subgraphs/layers) so the visible graph is fully in-viewport and centered.
 - **Initialization parity:** initial view restoration is bounds-guarded (do not apply stored transforms until bounds are computable) and idempotent (forbid “double-fit” jumps when a stored transform is applied); when positions are only partially available, skip invalid geometry to prevent one-long stray lines.
 - **Zoom key isolation:** zoom view keys are isolated by 2D renderer variant (`canvas2dRenderer`) while still including semantic mode + schema layout fingerprint; forbid cross-renderer zoom state contamination.
+- **2D layer order SSOT:** centralize layer ranks (nodes/edges/groups/labels/handles) and apply consistently across SVG (D3) and native canvas (Flow/Flow Editor) so stacking does not drift.
 - **Canvas overlays:** in-canvas overlays (e.g. Flow Node Quick Editor) must derive any zoom-coupled scaling from a single SSOT helper and should keep *macro view* usable at extreme zoom-out (avoid oversized overlays that hide the graph).
+- **Collision relax parity:** apply a bounded collision relax pass when layouts are produced/frozen (post-collective-fit freeze in D3; post-layout in Flow/Flow Editor; post-drag in Design) to forbid persistent overlaps.
+- **Flow overlap guard:** do not rely only on “unstable positions” detection; also trigger relax using a cheap overlap-pressure heuristic so overlapping-but-stable layouts get settled.
+- **Bounded store writes:** when collision relax produces multi-node/frame patches, batch store updates to avoid rerender churn and feedback loops.
 - **Overlay event proxy:** fly-out overlays must expose a stable root selector (`[data-kg-node-quick-editor]`) at the portal root so global capture handlers can proxy wheel/gesture zoom without brittle DOM assumptions.
 - **Safari pinch parity:** when Safari emits `gesture*` pinch events over the canvas or fly-out overlays, the app must prevent browser zoom and apply anchored zoom to the active 2D renderer.
 - **Wheel/trackpad parity:** 2D zoom must share wheel delta normalization + zoom factor SSOT; clamp-edge behavior should avoid “min zoom-out bounce back zoom-in” and avoid zooming while dragging nodes.
+- **Overlay z-index parity:** overlay-only routing/edges must stack relative to the panel z-index SSOT (e.g., `floatingPanelZIndex`) rather than hardcoded constants so quick editors reliably remain on top.
 - **Document baseline isolation:** switching semantic modes must not back-propagate zoom/collapse state into Document Structure mode unless explicitly pinned.
 - **Keyword derive debounce settings:** `keyword.graph.previewDebounceMs` and `keyword.graph.fullDebounceMs` gate preview/full worker derivation to avoid churn.
 

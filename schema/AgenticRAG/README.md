@@ -75,13 +75,18 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Consumers:** `knowgrph/canvas/src/components/GraphCanvas/{fit.ts,simulation.ts}` (fit transforms + seeding/disjoint sizing)
 - **Flow renderer:** `knowgrph/canvas/src/components/FlowCanvas.tsx` applies the same fit/zoom policies while rendering via a native Canvas2D Flow renderer.
 - **Collective fit+center:** Fit-to-view / fit-to-screen must be computed from the display-derived graph (post filters/collapse) and must include node dimensions (prefer `visual:width/height` when present) plus group envelopes (clusters/subgraphs/layers) so the visible graph is fully in-viewport and centered.
+- **Reset semantics:** Toolbar Reset is defined as Fit-to-View framing (centroid + group-aware bounds) and must not force `k=1` when the graph is larger than the viewport.
 - **Initialization parity:** initial view restoration is bounds-guarded (do not apply stored transforms until bounds are computable) and idempotent (forbid “double-fit” jumps when a stored transform is applied); when positions are only partially available, skip invalid geometry to prevent one-long stray lines.
 - **Zoom key isolation:** zoom view keys are isolated by 2D renderer variant (`canvas2dRenderer`) while still including semantic mode + schema layout fingerprint; forbid cross-renderer zoom state contamination.
 - **2D layer order SSOT:** centralize layer ranks (nodes/edges/groups/labels/handles) and apply consistently across SVG (D3) and native canvas (Flow/Flow Editor) so stacking does not drift.
 - **Canvas overlays:** in-canvas overlays (e.g. Flow Node Quick Editor) must derive any zoom-coupled scaling from a single SSOT helper and should keep *macro view* usable at extreme zoom-out (avoid oversized overlays that hide the graph).
 - **Collision relax parity:** apply a bounded collision relax pass when layouts are produced/frozen (post-collective-fit freeze in D3; post-layout in Flow/Flow Editor; post-drag in Design) to forbid persistent overlaps.
+- **Collision relax determinism:** seed any collision force initializer RNG by stable inputs (e.g., node ids) and clamp displacement so overlap removal cannot destroy macro layout.
 - **Flow overlap guard:** do not rely only on “unstable positions” detection; also trigger relax using a cheap overlap-pressure heuristic so overlapping-but-stable layouts get settled.
 - **Bounded store writes:** when collision relax produces multi-node/frame patches, batch store updates to avoid rerender churn and feedback loops.
+- **Design auto zoom modes:** Auto Fit-to-Screen and Auto Zoom-to-Selection should work in Design by using the renderer’s local display graph for fit signatures.
+- **Flow packing cohesion:** collective packing should treat group membership as connectivity so groups/subgraphs remain cohesive even when edges are sparse.
+- **Flow edge labels:** native edge-label placement should avoid collisions (nodes/groups/labels) and be gated by zoom and graph size to stay bounded.
 - **Overlay event proxy:** fly-out overlays must expose a stable root selector (`[data-kg-node-quick-editor]`) at the portal root so global capture handlers can proxy wheel/gesture zoom without brittle DOM assumptions.
 - **Safari pinch parity:** when Safari emits `gesture*` pinch events over the canvas or fly-out overlays, the app must prevent browser zoom and apply anchored zoom to the active 2D renderer.
 - **Wheel/trackpad parity:** 2D zoom must share wheel delta normalization + zoom factor SSOT; clamp-edge behavior should avoid “min zoom-out bounce back zoom-in” and avoid zooming while dragging nodes.

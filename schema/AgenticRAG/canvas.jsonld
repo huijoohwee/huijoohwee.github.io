@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.17",
+  "schemaVersion": "1.0.20",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -60,21 +60,51 @@
     ],
     "postLayoutCollisionRelax2d": [
       {
-        "@value": "To forbid persistent overlaps, run a bounded collision relax pass when layouts are produced or frozen: after collective layout and before final fit/freeze in D3, after layout engine output in Flow/Flow Editor, and after drag end in Design. Use overlap-pressure heuristics (not only 'unstable positions') so overlapping-but-stable layouts still get settled.",
+        "@value": "To forbid persistent overlaps, run a bounded collision relax pass when layouts are produced or frozen: after collective layout and before final fit/freeze in D3, after layout engine output in Flow/Flow Editor, and after drag end in Design. Use overlap-pressure heuristics (not only 'unstable positions') so overlapping-but-stable layouts still get settled. Collision relax must be deterministic (seed RNG from stable inputs such as node ids) and must clamp displacement so overlap removal cannot destroy macro layout.",
         "@language": "en-us"
       },
       {
-        "@value": "为禁止持续重叠，布局产出或冻结时必须执行有界的碰撞 relax：D3 在 collective layout 之后、最终 fit/freeze 之前；Flow/Flow Editor 在布局引擎输出之后；Design 在拖拽结束之后。必须使用 overlap-pressure 等轻量启发式（不能只依赖“位置不稳定”检测），确保“稳定但重叠”的布局也会被收敛。",
+        "@value": "为禁止持续重叠，布局产出或冻结时必须执行有界的碰撞 relax：D3 在 collective layout 之后、最终 fit/freeze 之前；Flow/Flow Editor 在布局引擎输出之后；Design 在拖拽结束之后。必须使用 overlap-pressure 等轻量启发式（不能只依赖“位置不稳定”检测），确保“稳定但重叠”的布局也会被收敛。碰撞 relax 必须可复现（用节点 id 等稳定输入作为随机种子），并必须限制位移幅度，避免“消重叠”破坏宏观布局。",
+        "@language": "zh-cn"
+      }
+    ],
+    "resetFitFraming2d": [
+      {
+        "@value": "Toolbar Reset is defined as Fit-to-View framing (collective centroid + group-aware bounds) and must not force k=1 when the visible graph is larger than the viewport. Reset must not mutate layout caches or node positions; it only applies a viewport transform.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "工具栏 Reset 的语义是 Fit-to-View 取景（整体重心 + group-aware 边界），禁止在可见图大于 viewport 时强制 k=1。Reset 不得修改布局缓存或节点位置；只能应用 viewport 变换。",
         "@language": "zh-cn"
       }
     ],
     "boundedLayoutWrites2d": [
       {
-        "@value": "Any store writes caused by collision relax or layout settlement must be bounded and loop-safe: key computations by a stable graph/layout key, write caches at most once per key, and batch multi-node position patches into a single store update to avoid rerender churn and feedback loops.",
+        "@value": "Any store writes caused by collision relax or layout settlement must be bounded and loop-safe: key computations by a stable graph/layout key, write caches at most once per key, and batch multi-node position patches into a single store update to avoid rerender churn and feedback loops. In the Design renderer, frame-drag commits must apply a single batched position update per drag gesture (no per-frame writes), with in-flight drag feedback handled via visual-only transforms rather than store mutations.",
         "@language": "en-us"
       },
       {
-        "@value": "由碰撞 relax 或布局收敛引起的任何 store 写入都必须有界且防环：以稳定的 graph/layout key 作为计算与写入门控，同一 key 最多写一次缓存，并将多节点位置补丁合并为一次 store 更新，避免 rerender 抖动与反馈循环。",
+        "@value": "由碰撞 relax 或布局收敛引起的任何 store 写入都必须有界且防环：以稳定的 graph/layout key 作为计算与写入门控，同一 key 最多写一次缓存，并将多节点位置补丁合并为一次 store 更新，避免 rerender 抖动与反馈循环。Design 渲染器在拖拽 frame 时，拖拽结束的提交必须按一次拖拽手势合并为单次位置批量写入（禁止按帧写入），拖拽过程中的即时反馈应通过纯视觉 transform 实现，而不是不断修改 store。",
+        "@language": "zh-cn"
+      }
+    ],
+    "cachedLayoutPositionsRespect": [
+      {
+        "@value": "Initialization must respect stable cached layout positions: if a per-mode layout position cache exists and is not extreme/unstable, apply it and avoid rewriting node positions during init; only seed missing positions or repair unstable/extreme layouts.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "初始化必须尊重稳定的布局位置缓存：当存在按模式隔离的布局位置缓存且其并非极端/不稳定时，应直接应用并禁止在初始化过程中重写节点位置；只允许为缺失位置做 seed，或对不稳定/极端布局进行修复。",
+        "@language": "zh-cn"
+      }
+    ],
+    "abortableAsyncDerivations": [
+      {
+        "@value": "Async derivations and parse/derive worker requests should be abortable (e.g., via AbortSignal) so stale computations do not leak results, caches, or UI warnings when inputs change rapidly.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "异步派生与 parse/derive worker 请求应支持可取消（例如通过 AbortSignal），避免在输入快速变化时，过期计算泄漏结果、缓存写入或 UI 警告。",
         "@language": "zh-cn"
       }
     ],
@@ -100,11 +130,11 @@
     ],
     "viewportAwareAutoFit": [
       {
-        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles) and respect the actual container aspect ratio (do not force 16:9). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps).",
+        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles) and respect the actual container aspect ratio (do not force 16:9). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps). For the Design renderer, frame grid layout must derive its column count from the active viewport width (within safety bounds) so initial framing and auto-fit operate on a viewport-responsive grid instead of a fixed column count, and fit geometry must be computed from the same visible frame set used by the grid.",
         "@language": "en-us"
       },
       {
-        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化），并尊重容器实际纵横比（不得强制 16:9）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。",
+        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化），并尊重容器实际纵横比（不得强制 16:9）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。对于 Design 渲染器，frame 网格布局必须根据当前 viewport 宽度推导列数（在安全边界内），使首帧取景与自适配基于随 viewport 变化而响应的网格而非固定列数，并且 fit 几何计算必须复用与网格相同的可见 frame 集合作为签名。",
         "@language": "zh-cn"
       }
     ],

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.19",
+  "schemaVersion": "1.0.20",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -130,11 +130,11 @@
     ],
     "floatingInteractionPanelSsot": [
       {
-        "@value": "Infinite-canvas Interaction controls (pointer mode, layout switching, center/centroid, even distribute, opt-in perf overlay) must be consolidated into one SSOT Interaction panel surface. It is a companion floating panel adjacent to the Floating Panel Props view and forbids any legacy Arrange panels (canvas overlays, editor tabs, or side panels) that duplicate controls or reintroduce conflicting gesture ownership.",
+        "@value": "Infinite-canvas Interaction controls (Viewport readout, pointer mode, layout switching, center/centroid, even distribute, opt-in perf overlay) must be consolidated into one SSOT Interaction tab inside the Canvas Floating Panel. The Interaction tab exposes a read-only Viewport section that groups zoom/transform/zoom modes/wheel/speed/Flow fields derived from schema and settings, plus collapsible Interaction, Centering/Centroid, Even Spread, and Performance sections. It forbids any legacy Arrange panels (canvas overlays, editor tabs, or side panels) that duplicate controls or reintroduce conflicting gesture ownership.",
         "@language": "en-us"
       },
       {
-        "@value": "无限画布的 Interaction 控件（指针模式、布局切换、居中/重心、均匀分布、可选性能面板）必须统一收敛到唯一的 SSOT Interaction 面板表面。该表面作为 Floating Panel 的 Props 视图旁边的伴随浮动面板存在，并禁止任何遗留 Arrange 面板（画布覆层、编辑器标签页或侧栏）重复控件或重新引入手势归属冲突。",
+        "@value": "无限画布的 Interaction 控件（Viewport 只读状态、指针模式、布局切换、居中/重心、均匀分布、可选性能面板）必须统一收敛到 Canvas Floating Panel 内唯一的 SSOT Interaction 选项卡。Interaction 选项卡提供一个只读的 Viewport 区块，用于分组展示从 schema 与设置推导出的缩放/变换/缩放模式/滚轮/速度/Flow 相关字段，并包含可折叠的 Interaction、Centering/Centroid、Even Spread 与 Performance 小节。禁止任何遗留 Arrange 面板（画布覆层、编辑器标签页或侧栏）重复控件或重新引入手势归属冲突。",
         "@language": "zh-cn"
       }
     ],

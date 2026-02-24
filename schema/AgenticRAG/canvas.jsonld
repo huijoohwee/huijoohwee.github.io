@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.20",
+  "schemaVersion": "1.0.21",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -65,6 +65,16 @@
       },
       {
         "@value": "为禁止持续重叠，布局产出或冻结时必须执行有界的碰撞 relax：D3 在 collective layout 之后、最终 fit/freeze 之前；Flow/Flow Editor 在布局引擎输出之后；Design 在拖拽结束之后。必须使用 overlap-pressure 等轻量启发式（不能只依赖“位置不稳定”检测），确保“稳定但重叠”的布局也会被收敛。碰撞 relax 必须可复现（用节点 id 等稳定输入作为随机种子），并必须限制位移幅度，避免“消重叠”破坏宏观布局。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layoutForceTuning2d": [
+      {
+        "@value": "2D D3 layout-force tuning must be driven by schema-only knobs (e.g., schema.layout.forces.antiLineStrength, postFitStrength, postFitAlphaMax, plus antiLine/postFit enable and alpha-range switches). Floating Panel Layout controls (numeric inputs + strong-spread preset + reset-to-default) are a UI shell over these schema fields. Toolbar Reset is strictly camera/viewport Fit-to-View and must never mutate layout-force knobs or layout caches.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D D3 的布局力调参必须完全由 schema 控制（例如 schema.layout.forces.antiLineStrength、postFitStrength、postFitAlphaMax 以及 antiLine/postFit 的启用与 alpha 范围开关）。Floating Panel 的 Layout 控件（数值输入 + 强力展开预设 + 重置为默认）只是这些 schema 字段之上的 UI 外壳。工具栏 Reset 仅用于相机/viewport 的 Fit-to-View，禁止修改任何布局力参数或布局缓存。",
         "@language": "zh-cn"
       }
     ],

@@ -59,7 +59,7 @@ schema/AgenticRAG/
 
 This folder stays in sync with Knowgrph documentation via a deterministic sync script:
 
-- **Source:** `/Users/huijoohwee/Documents/GitHub/knowgrph/docs/documents`
+- **Source:** `knowgrph/docs/documents` (repo-relative)
 - **Target artifact:** `schema/AgenticRAG/knowgrph-documents-map.graph.jsonld`
 - **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
 
@@ -108,6 +108,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Embedded views must be content-only (no nested `h-full`/`overflow-*` scrollers, no redundant panel bg/borders/shadows, no hardcoded widths/colors).
 - If a view must own an internal scroller (e.g. chat messages), the Floating Panel body must switch to `overflow-hidden` for that view to prevent double-scroll.
 - Layout-only wrappers inside panel bodies should prefer `div`; reserve `section/header/nav/aside` for meaningful surface boundaries.
+- Infinite-canvas interaction actions (mode/layout/center/distribute/perf) live in a dedicated SSOT Interaction floating panel adjacent to the Floating Panel Props view; do not add legacy Arrange overlays/tabs.
 
 ### Graph Data Table (Host Fast Grid) (Knowgrph)
 

@@ -435,6 +435,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-2d-renderer-enhancement-design",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-2d-renderer-enhancement-design.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-2d-renderer-enhancement-design.md"
+      },
+      "documentPath": "docs/documents/knowgrph-2d-renderer-enhancement-design.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-api-document",
       "@type": "kg:Node",
       "labels": [
@@ -752,6 +768,22 @@
         "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-infinite-canvas-interaction-performance-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-infinite-canvas-interaction-performance-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-infinite-canvas-interaction-performance-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-infinite-canvas-interaction-performance-document.md",
       "language": "en-us"
     },
     {

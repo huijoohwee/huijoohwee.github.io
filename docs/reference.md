@@ -8,6 +8,10 @@
 | [AI Flow](https://github.com/DahnM20/ai-flow.git) | Collaborative flow editor |
 | [Airtable](https://airtable.com) | Collaborative database for teams |
 | [AnyPose](https://huggingface.co/lilylilith/AnyPose) | Pose estimation model |
+
+| [BytePlus/AI Playground](https://www.byteplus.com/en/ai-playground) | BytePlus AI Playground |
+
+| [Byteplus/ModelArk/API Reference](https://docs.byteplus.com/en/docs/ModelArk/api) | Byteplus API reference |
 | [Code/Simple CRM for Venture Investors](https://coda.io/d/Copy-of-Simple-CRM-for-Venture-Investors_d7K8_pZqu9a/Simple-CRM-for-Venture-Investors_suNey9gD#_lubou2fw) | 
 | [ComfyUI/Hunyuan3D-2](https://docs.comfy.org/tutorials/3d/hunyuan3D-2) | Hunyuan3D-2 tutorial |
 | [ComfyUI/Node JSON Schema](https://docs.comfy.org/specs/nodedef_json) | ComfyUI node JSON schema |

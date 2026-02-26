@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.31",
+  "schemaVersion": "1.0.32",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -41,11 +41,19 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Webpage-backed Markdown fidelity: support view-only iframe render modes (markdown/html/dom/raw/json) and per-document fidelity controls stored in YAML frontmatter (script policy, include-images, and fidelity level). The UI must expose these controls in the Markdown toolbar nav and provide an explicit Sync (DOM→Markdown) action for JS-heavy pages.",
+      "@value": "Webpage-backed Markdown fidelity: support view-only iframe render modes (markdown/html/dom/raw/json) and per-document fidelity controls stored in YAML frontmatter (script policy, include-images, and fidelity level). The UI must expose these controls in the Markdown toolbar nav and provide an explicit Sync (DOM→Markdown) action for JS-heavy pages. Sync output must stay Markdown-only (no duplicate artifact-doc wrappers, no HTML/YAML snapshot blocks, no synthetic HTML Head sections).",
       "@language": "en-us"
     },
     {
-      "@value": "网页型 Markdown 保真：支持视图只读的 iframe 渲染模式（markdown/html/dom/raw/json），并将每个文档的保真控制写入 YAML frontmatter（脚本策略、是否包含图片、保真等级）。UI 必须在 Markdown 工具条导航区集中呈现这些控制，并提供显式的 Sync（DOM→Markdown）动作以支持 JS 重页面。",
+      "@value": "网页型 Markdown 保真：支持视图只读的 iframe 渲染模式（markdown/html/dom/raw/json），并将每个文档的保真控制写入 YAML frontmatter（脚本策略、是否包含图片、保真等级）。UI 必须在 Markdown 工具条导航区集中呈现这些控制，并提供显式的 Sync（DOM→Markdown）动作以支持 JS 重页面。Sync 输出必须保持为纯 Markdown（不得写入重复的 artifact-doc 包装、不得附加 HTML/YAML 快照块、不得生成合成的 HTML Head 区块）。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "HTML/CSS/JS→Markdown conversion invariants (universal): resolve relative URLs against baseUrl for href/src/action/poster/srcset and common lazy-load data-* variants; upsert missing img src from data-src/srcset to prevent empty markdown images; forbid duplicate content emissions (no repeated synthetic headings/cards/pricing/features). Preview must render preserved HTML tables/grids/media with CSS grid spans applying even when the item itself is not display:grid, and must preserve safe video/audio attributes (autoplay/muted/loop/playsinline/poster) and source candidates.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "HTML/CSS/JS→Markdown 转换不变量（通用、与站点无关）：对 href/src/action/poster/srcset 以及常见懒加载 data-* 变体在 baseUrl 上做相对 URL 解析；当 img 缺少 src 时从 data-src/srcset 补齐 src 以禁止出现空的 Markdown 图片；禁止重复内容输出（不得重复合成标题/卡片/定价/特性）。预览必须渲染保留的 HTML 表格/网格/媒体：网格项的 span 规则即使在该项本身不是 display:grid 时也要生效，并保留安全视频/音频属性（autoplay/muted/loop/playsinline/poster）与 source 候选。",
       "@language": "zh-cn"
     },
     {

@@ -828,8 +828,8 @@
         { "@value": "网页工件：最大保真等级", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Upper bound for the generated Webpage Markdown Artifact detail level (1..4). The generator infers a fidelity level from extracted signals and structure, then clamps to this max to bound output size and noise.", "@language": "en-us" },
-        { "@value": "生成 Webpage Markdown Artifact 的细节等级上限（1..4）。生成器会根据提取信号与结构推断保真等级，再被该上限限制以控制输出规模与噪声。", "@language": "zh-cn" }
+        { "@value": "Upper bound for legacy Webpage Markdown Artifact detail level (1..4) when artifact-doc generation is explicitly enabled. SSOT webpage conversions and Sync output must remain Markdown-only and must not emit artifact wrappers.", "@language": "en-us" },
+        { "@value": "在显式启用“网页工件文档”生成时，用于旧式 Webpage Markdown Artifact 细节等级的上限（1..4）。SSOT 网页转换与 Sync 输出必须保持为纯 Markdown，不得生成工件包装。", "@language": "zh-cn" }
       ],
       "allowed_values": [1, 2, 3, 4]
     },
@@ -840,8 +840,8 @@
         { "@value": "导入网站：生成网页工件文档", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "When enabled, website import writes each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. Default: false (avoid UI freezes on large imports). The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframe srcdoc and must be view-only.", "@language": "en-us" },
-        { "@value": "启用后，网站导入会将每个导入页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。默认：false（避免大规模导入时 UI 卡死）。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe srcdoc 渲染且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
+        { "@value": "Legacy option: when enabled, website import may write each imported page as a detailed Webpage Markdown Artifact (signals-only, generic heuristics) instead of a frontmatter-only stub. Default: false (avoid UI freezes on large imports and avoid non-SSOT artifact wrappers). The per-page kgWebpageView remains the view-switch SSOT; HTML/JSON are rendered via sandboxed iframe srcdoc and must be view-only.", "@language": "en-us" },
+        { "@value": "旧式选项：启用后，网站导入可能把每个页面写成详细的 Webpage Markdown Artifact（仅基于信号与通用启发式），而非仅包含 frontmatter 的空桩文档。默认：false（避免大规模导入时 UI 卡死，并避免非 SSOT 的工件包装）。每页的 kgWebpageView 仍为视图切换 SSOT；HTML/JSON 通过沙盒 iframe srcdoc 渲染且必须是纯视图（不得影响图/布局/缩放）。", "@language": "zh-cn" }
       ]
     }
   },

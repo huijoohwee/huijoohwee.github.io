@@ -148,6 +148,40 @@
         "@language": "zh-cn"
       }
     ],
+    "webpageLayoutWireframe2dDesign": [
+      {
+        "@value": "The Design 2D renderer consumes a browser-native webpage layout snapshot (webpageLayout) and a deterministic DOM→graph converter to render viewport-aware webpage wireframes. The snapshot captures DOM elements with bounding boxes, attributes, and neutral CSS signals only; the converter must remain domain-agnostic and URL-agnostic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 渲染器消费浏览器原生的网页布局快照（webpageLayout）与确定性的 DOM→图转换器，用于渲染随 viewport 变化而响应的网页线框。快照仅捕获带边界框的 DOM 元素及属性与中性 CSS 信号；转换器必须保持领域无关与 URL 无关。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "DOM→graph conversion must enforce geometric nesting and wrapper pruning using bounded, neutral heuristics: (1) re-parent elements when DOM containment and geometry disagree within tolerance; (2) drop tiny noisy leaves and overlapping glue boxes; (3) preserve large semantic containers and interactive/media nodes; (4) preserve landmark roles (banner/navigation/main/contentinfo/region/search) regardless of text.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "DOM→图转换必须使用有界且中性的启发式强制几何嵌套与 wrapper 削减：（1）当 DOM 包含关系与几何包含在容差内不一致时进行重挂载；（2）删除极小的噪声叶子与重叠的“胶水”盒子；（3）保留大尺寸语义容器与交互/媒体节点；（4）即使缺少文本也必须保留 landmark 角色（banner/navigation/main/contentinfo/region/search）。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "The converter may synthesize neutral SECTION containers for repeated grid/list regions (e.g., feature/pricing card grids) by detecting viewport-aware clusters of similar-sized siblings; optional headings immediately above the cluster may become ariaLabel text. Synthetic sections must be domain-neutral and keyed by geometry/structure only.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "转换器可以为重复的栅格/列表区域（例如特性/定价卡片栅格）合成中性的 SECTION 容器，通过检测在 viewport 维度上相近的同类兄弟元素簇来实现；紧邻簇上方的标题可用作 ariaLabel 文本。合成 section 必须保持领域中立，只能依赖几何/结构信号。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Design 2D shares SSOT interaction semantics with other 2D renderers: lasso/multi-select add/remove/replace semantics (Shift/Cmd/Ctrl vs Alt), snap-to-grid behavior (with Alt bypass), align/distribute shortcuts (Alt+Shift+L/H/R/T/V/B/X/Y), and keyboard nudging (arrow keys with grid-aware steps and Shift-based multipliers).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 必须与其他 2D 渲染器共享同一套交互 SSOT：lasso/多选的“添加/移除/替换”语义（Shift/Cmd/Ctrl vs Alt）、吸附到网格的行为（Alt 可临时绕过）、对齐/分布快捷键（Alt+Shift+L/H/R/T/V/B/X/Y），以及键盘箭头微调（带网格敏感步长与 Shift 倍数）。",
+        "@language": "zh-cn"
+      }
+    ],
     "panZoomParity2d": [
       {
         "@value": "2D renderer variants (D3, Flow, Design, Flow Editor) must share one SSOT mapping for viewport controls (preset + selection + wheel/trackpad/pinch zoom): consistent preset semantics (`viewportControlsPreset`: map vs design) for pan/zoom/select, wheel delta normalization, zoom sensitivity, and pointer-anchored zoom. Flow Editor must never override the stored preset; selection-on-drag must be opt-in via a persisted setting (e.g., `flowEditorSelectionOnDrag`). Wheel/pinch zoom must be continuous (no discrete stepping) and may rAF-batch deltas; all renderers should apply a short anchored easing animation to avoid per-frame delta clumping and feel continuous; cancel on pan/drag and cleanup RAF on unmount. Trackpad pinch should be supported both as ctrl/meta wheel events and (where emitted) Safari `gesture*` events on canvas surfaces. Wheel pan must be consistent across renderers and apply the same pan speed composition (schema `panSpeed` × `flowWheelPanSpeedMultiplier`), independent of current zoom k. Zoom magnitude/increment, ctrl/meta pinch boost, pan speed multiplier, and smoothing durations may be user-tunable via MainPanel Settings (persisted) but must remain bounded; defaults may be upgraded once via a versioned persisted key to improve pinch responsiveness without overriding user-tuned values. Fit/Selection zoom action durations and zoom modes (pin/fit-to-screen/zoom-to-selection) may also be user-tunable and must be enforced consistently across all 2D renderers. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom so zooming never triggers horizontal/vertical page scrolling.",

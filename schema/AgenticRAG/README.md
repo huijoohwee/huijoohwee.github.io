@@ -93,7 +93,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Overlay z-index parity:** overlay-only routing/edges must stack relative to the panel z-index SSOT (e.g., `floatingPanelZIndex`) rather than hardcoded constants so quick editors reliably remain on top.
 - **Document baseline isolation:** switching semantic modes must not back-propagate zoom/collapse state into Document Structure mode unless explicitly pinned.
 - **Keyword derive debounce settings:** `keyword.graph.previewDebounceMs` and `keyword.graph.fullDebounceMs` gate preview/full worker derivation to avoid churn.
-- **Design webpage wireframe parity:** the Design 2D renderer must consume a neutral `webpageLayout` snapshot (DOM elements + bounding boxes + safe CSS signals) and a deterministic DOM→graph converter that enforces geometric nesting, drops tiny noisy leaves and glue wrappers, preserves major semantic containers and landmark roles, and may synthesize neutral `SECTION` containers for repeated grid/list regions (e.g., feature/pricing cards) using viewport-aware structural heuristics only (never host/URL rules). Design shares selection/marquee, snap-to-grid, align/distribute, and keyboard nudging semantics and shortcuts with D3 and Flow.
+- **Design webpage wireframe parity:** the Design 2D renderer must consume a neutral `webpageLayout` snapshot (DOM elements + bounding boxes + safe CSS signals) and a deterministic DOM→graph converter that enforces geometric nesting, drops tiny noisy leaves and glue wrappers, preserves major semantic containers and landmark roles, and may synthesize neutral `SECTION` containers for repeated grid/list regions (e.g., feature/pricing cards) using viewport-aware structural heuristics only (never host/URL rules). Design shares selection/marquee, snap-to-grid, align/distribute, and keyboard nudging semantics and shortcuts with D3 and Flow, and exposes schema-only wireframe presentation settings (`renderer:designWireframe`) for label/meta chips, text/media previews, depth-aware styling, optional edges, and label-collision avoidance; the Floating Panel UI is a thin shell over these settings.
 
 ### Graph Search Query Filters (Knowgrph)
 
@@ -156,8 +156,8 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 ### Webpage Per-Document Fidelity Controls
 
-- Per-doc frontmatter may override conversion/rendering fidelity: `kgWebpageScriptPolicy: allow|strip`, `kgWebpageIncludeImages: true|false`, `kgWebpageFidelityLevel: 1|2|3|4`.
-- UI placement SSOT: these controls live in the Markdown toolbar `nav` (Webpage group) with an explicit `Sync` (DOM→Markdown) action.
+- Per-doc frontmatter may override conversion/rendering fidelity when needed, but the default is **Auto**: Script/Imgs/Fid are inferred from shared rich-media + iframe heuristics and do not require frontmatter. Optional keys: `kgWebpageScriptPolicy: allow|strip`, `kgWebpageIncludeImages: true|false`, `kgWebpageFidelityLevel: 1|2|3|4`.
+- UI placement SSOT: these controls live in the Markdown toolbar `nav` (Webpage group) with an explicit `Sync` (DOM→Markdown) action, and default to Auto; frontmatter is only written when the user explicitly chooses a non-auto override.
 
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 

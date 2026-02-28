@@ -816,8 +816,8 @@
         { "@value": "网页查看器：脚本策略", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Controls whether the HTML viewer sanitizes webpages by stripping all scripts and inline event handlers before rendering in a sandboxed iframe srcdoc. 'strip' (default) prevents upstream JS from running (safer + faster); 'allow' keeps scripts (may be slower).", "@language": "en-us" },
-        { "@value": "控制 HTML Viewer 在沙盒 iframe srcdoc 渲染前，是否会剥离网页中的全部脚本与内联事件处理器。'strip'（默认）禁止上游 JS 运行（更安全、更快）；'allow' 允许脚本保留（可能更慢）。", "@language": "zh-cn" }
+        { "@value": "Baseline script policy for the HTML viewer. Effective per-page behavior is auto by default: shared rich-media + iframe heuristics decide when scripts are required for DOM export versus when they should be stripped. 'strip' (default) keeps behavior safest/static; 'allow' keeps upstream scripts (may be slower).", "@language": "en-us" },
+        { "@value": "HTML Viewer 的基线脚本策略。每页的实际行为默认是自动：由共享的富媒体 + iframe 启发式决定何时需要脚本用于 DOM 导出、何时应剥离脚本。'strip'（默认）保持最安全/静态；'allow' 保留上游脚本（可能更慢）。", "@language": "zh-cn" }
       ],
       "allowed_values": ["strip", "allow"]
     },

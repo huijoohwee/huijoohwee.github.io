@@ -180,6 +180,14 @@
       {
         "@value": "Design 2D 必须与其他 2D 渲染器共享同一套交互 SSOT：lasso/多选的“添加/移除/替换”语义（Shift/Cmd/Ctrl vs Alt）、吸附到网格的行为（Alt 可临时绕过）、对齐/分布快捷键（Alt+Shift+L/H/R/T/V/B/X/Y），以及键盘箭头微调（带网格敏感步长与 Shift 倍数）。",
         "@language": "zh-cn"
+      },
+      {
+        "@value": "Design 2D wireframe presentation is controlled by schema-only settings (e.g., metadata.renderer:designWireframe) that gate label/meta chips, text/media previews, depth-aware frame styling, optional edges, and label-collision avoidance. UI surfaces (Floating Panel controls) must remain a thin shell over these settings and stay domain- and URL-agnostic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 的线框呈现由纯 schema 设置控制（例如 metadata.renderer:designWireframe），用于开关标签/元信息气泡、文本/富媒体预览、随深度变化的 frame 样式、可选边以及标签碰撞消解。UI（Floating Panel 控件）只是这些设置之上的轻量外壳，必须保持领域与 URL 中立。",
+        "@language": "zh-cn"
       }
     ],
     "panZoomParity2d": [

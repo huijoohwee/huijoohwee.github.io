@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.21",
+  "schemaVersion": "1.0.22",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -187,6 +187,14 @@
       },
       {
         "@value": "Design 2D 的线框呈现由纯 schema 设置控制（例如 metadata.renderer:designWireframe），用于开关标签/元信息气泡、文本/富媒体预览、随深度变化的 frame 样式、可选边以及标签碰撞消解。UI（Floating Panel 控件）只是这些设置之上的轻量外壳，必须保持领域与 URL 中立。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "When a webpageLayout snapshot is available, Design 2D must use it as the sole layout SSOT (no fallback to legacy non-webpage frame grids). When no snapshot is ready yet, it may render a neutral placeholder frame (loading/error/idle) instead of a grid or empty canvas. Snapshot capture parameters (viewport size, element caps, timeouts, networkIdle/domQuiet thresholds) are URL-agnostic and must be derived from shared fidelity settings and current window size, not from host-specific rules.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当存在 webpageLayout 快照时，Design 2D 必须以其作为唯一布局 SSOT（不得回退到旧的非网页 frame 网格）。当尚无快照就绪时，可以渲染中性的占位 frame（loading/error/idle），而不是网格或空画布。快照采集参数（viewport 尺寸、元素上限、超时、networkIdle/domQuiet 阈值）必须 URL 无关，并从共享的保真度设置与当前窗口尺寸推导，而非基于 host 特定规则。",
         "@language": "zh-cn"
       }
     ],

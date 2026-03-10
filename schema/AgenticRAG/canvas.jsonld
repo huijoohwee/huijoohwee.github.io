@@ -248,6 +248,16 @@
         "@language": "zh-cn"
       }
     ],
+    "richMediaRendering": [
+      {
+        "@value": "Rich Media nodes (image/svg/video/iframe) must be detected via shared, domain-agnostic URL/metadata heuristics and rendered through a bounded DOM overlay pool per canvas (2D D3/Flow/Design and 3D). Overlays follow node motion via a shared RAF-coalesced scheduler, reuse a single overlay surface per canvas, and respect Script/Imgs/Fid defaults as auto, driven by shared rich-media + iframe heuristics across Markdown Viewer, Canvas, Design, and Geospatial modes; per-document frontmatter overrides are optional escape hatches only and must not be required for normal Rich Media rendering.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "富媒体节点（image/svg/video/iframe）必须通过共享且领域无关的 URL/元数据启发式进行检测，并在每个画布中通过有界的 DOM overlay 池进行渲染（适用于 2D D3/Flow/Design 以及 3D）。Overlay 必须通过共享的 RAF 合并调度器跟随节点运动，并在每个画布上复用单一 overlay 表面；Script/Imgs/Fid 的默认行为必须保持为 auto，由共享的富媒体 + iframe 启发式驱动，在 Markdown Viewer、Canvas、Design 与 Geospatial 模式间保持一致；每文档 frontmatter 覆盖仅作为可选逃生阀，不能成为正常富媒体渲染的前提条件。",
+        "@language": "zh-cn"
+      }
+    ],
     "interactionPerformance2d": [
       {
         "@value": "2D interaction handlers (wheel/pan/drag) must avoid forced layout reads and unnecessary rerenders. Prefer offset-based local coordinates (`offsetX/offsetY`) for canvas-local pointer/wheel mapping; only fall back to `getBoundingClientRect()` when offsets are unavailable. Avoid per-frame `getComputedStyle()`/CSS var reads in draw loops; cache theme tokens keyed by theme state. Imperative renderers should not subscribe to high-frequency store state (e.g., zoom state) in ways that rerender the React component on every commit.",

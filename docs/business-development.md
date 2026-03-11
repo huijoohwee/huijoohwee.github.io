@@ -20,3 +20,11 @@ if keen, feel free to connect with me on https://www.linkedin.com/in/huijoohwee/
 
 祖辉
 ```
+
+```
+one-line eval {{event}} vis-à-vis other peer events/meet-ups/hackathons
+```
+
+```
+objective assessments from both ends of the spectrum (no bars hold)
+```

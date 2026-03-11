@@ -69,6 +69,8 @@
  | [Singapore Tourism Accelerator](https://sgtourismaccelerator.thestartupx.com/) |
 | [Singapore Tourism Accelerator - Cohort 8 - Airtable](https://airtable.com/appVeAnThPPi20CT5/pag2kREMxfga3yo0v/form) |
 
+| [Singapore/Gemini 3/Hackathon](https://cerebralvalley.ai/e/gemini-3-singapore-hackathon/hackathon/gallery) | 
+
 https://www.linkedin.com/in/durwinho/
 
 [](https://www.linkedin.com/feed/update/urn:li:activity:7423530552328269824/?commentUrn=urn%3Ali%3Acomment%3A(ugcPost%3A7423399166703325184%2C7423954584353710080)&dashCommentUrn=urn%3Ali%3Afsd_comment%3A(7423954584353710080%2Curn%3Ali%3AugcPost%3A7423399166703325184))

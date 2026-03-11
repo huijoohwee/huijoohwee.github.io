@@ -22,7 +22,7 @@ if keen, feel free to connect with me on https://www.linkedin.com/in/huijoohwee/
 ```
 
 ```
-one-line eval {{event}} vis-à-vis other peer events/meet-ups/hackathons
+one-line eval {{events/meet-ups/hackathons}} vis-à-vis other peers
 ```
 
 ```

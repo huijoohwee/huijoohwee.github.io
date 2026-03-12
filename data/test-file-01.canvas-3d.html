@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <title>test-file-01 (Canvas)</title>
+  <title>test-file-01.md (Canvas)</title>
   <style>
     :root{
       --kg-canvas-bg:#f3f4f6;
-      --kg-panel-bg:rgba(255, 255, 255, 0.95);
+      --kg-panel-bg:#ffffff;
       --kg-border:#e5e7eb;
       --kg-text:#111827;
       --kg-text-tertiary:#6b7280;
@@ -99,7 +99,7 @@
     var lastPanelW = 0;
     var lastPanelH = 0;
     var mediaNodes = [{"id":"img:https-www-aljazeera-com-wp-content-uploads-2026-02-interactive-which-countries-are-spending-the-most-on-ai-1771490012-png-quality-80","title":"Which countries are spending the most on AI (Image)","url":"https://www.aljazeera.com/wp-content/uploads/2026/02/INTERACTIVE-Which-countries-are-spending-the-most-on-AI-1771490012.png?quality=80","interactive":false,"kind":"image"},{"id":"link:https-www-aljazeera-com-news-2026-2-19-visualising-ai-spending-how-does-it-compare-with-historys-mega-projects","title":"Visualising AI spending: How does it compare with history’s mega projects? (Link)","url":"https://www.aljazeera.com/news/2026/2/19/visualising-ai-spending-how-does-it-compare-with-historys-mega-projects","interactive":true,"kind":"iframe"},{"id":"link:https-youtu-be-xzzprqrdcdw-t-2997","title":"What To Do With Your Money in 2026 (Link)","url":"https://www.youtube-nocookie.com/embed/XzzPRQRDcDw?start=2997","interactive":true,"kind":"iframe"},{"id":"link:https-x-com-huijoohwee-status-2023774971982672097-s-20","title":"敢叫 AI 换新天 (Link)","url":"https://platform.twitter.com/embed/Tweet.html?id=2023774971982672097","interactive":true,"kind":"iframe"}];
-    var nodePosById = {"doc:md:test-file-01":{"x":936.3176423587196,"y":925.6078048776609},"anchor:md:test-file-01:rich-media":{"x":578.8011288855106,"y":954.9366628315394},"blk:md:test-file-01:p:3:1":{"x":652.2905168889008,"y":245.75020522768742},"link:https-www-aljazeera-com-wp-content-uploads-2026-02-interactive-which-countries-are-spending-the-most-on-ai-1771490012-png-quality-80":{"x":651.6883312850763,"y":666.0158536328448},"img:https-www-aljazeera-com-wp-content-uploads-2026-02-interactive-which-countries-are-spending-the-most-on-ai-1771490012-png-quality-80":{"x":339.70630049654915,"y":63.11005829465758},"blk:md:test-file-01:p:5:2":{"x":1007.1255480579351,"y":186.56836275111678},"link:https-www-aljazeera-com-news-2026-2-19-visualising-ai-spending-how-does-it-compare-with-historys-mega-projects":{"x":970.4072939850105,"y":622.8582190928663},"blk:md:test-file-01:p:7:3":{"x":1285.0011758058415,"y":394.3822892324039},"link:https-youtu-be-xzzprqrdcdw-t-2997":{"x":1283.031857424264,"y":824.5334358286797},"blk:md:test-file-01:p:9:4":{"x":1609.1679431879438,"y":415.1945665540293},"link:https-x-com-huijoohwee-status-2023774971982672097-s-20":{"x":1247.2190727914856,"y":642.804042541685}};
+    var nodePosById = {};
     var groupMembersById = {};
     var overlayFollowAnimation = (function(){
       try {
@@ -1484,9 +1484,9 @@
       if (!mediaNodes || mediaNodes.length === 0) return;
       var vp = getViewport();
       var density = "default";
-      var widthRatio = density === 'compact' ? 0.16 : 0.2;
-      var widthMin = density === 'compact' ? 180 : 210;
-      var widthMax = density === 'compact' ? 300 : 360;
+      var widthRatio = density === 'compact' ? 0.2 : 0.2;
+      var widthMin = density === 'compact' ? 210 : 210;
+      var widthMax = density === 'compact' ? 360 : 360;
       var baseW = clamp(vp.w * widthRatio, widthMin, widthMax);
       var MAX_PANEL_PX = 2048;
       var STEP_PX = 16;

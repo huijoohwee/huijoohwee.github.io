@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.22",
+  "schemaVersion": "1.0.25",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -365,6 +365,44 @@
       },
       {
         "@value": "默认体验锚定在 Document Structure 基线。baseline lock 强制稳定的 2D 基线（D3 + Fit-to-Screen，禁用 Pin/Zoom-to-Selection），并阻止模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 对齐。zoom 视图 key 按 2D 渲染器变体隔离；共享的是控制语义而非变换。Flow 与 Flow Editor 必须遵守 baseline lock（禁用自动缩放），并复用与 D3 相同的可见性过滤与 fit 几何。Keyword 图为稳定性复用 Document 基线的种子/力；Flow 不运行 D3 力，但必须遵循相同的可见性与 fit 规则。",
+        "@language": "zh-cn"
+      }
+    ],
+    "rendererModeMatrix2d3d": [
+      {
+        "@value": "Canvas surfaces expose a renderer matrix: 2D D3/Flow/Design/Flow Editor, 3D, and Geospatial. All variants must consume the same SSOT-derived active graph render view (keyword base → optional frontmatter filter in Document mode → optional group collapse) and differ only in layout/presentation. 2D D3 runs force/layout; Flow/Design reuse the same visibility and collective-fit geometry and do not re-run D3 forces; 3D reuses 2D positions (when present) as a baseline and applies its own camera/depth. Switching 2D↔3D must preserve selection and per-variant zoom keys while sharing controls semantics; layout caches are renderer-variant-aware but share the same schema→layout-engine fingerprint.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas 表面暴露一组渲染器矩阵：2D D3/Flow/Design/Flow Editor、3D 与 Geospatial。所有变体必须消费同一份 SSOT 推导的 active graph render view（keyword 基础图 → Document 模式下可选 frontmatter 过滤 → 可选 group collapse），只能在布局/呈现上有差异。2D D3 负责 force/layout；Flow/Design 复用相同的可见性与 collective-fit 几何且不重新运行 D3 力；3D 复用 2D 位置（存在时）作为基线并施加自身相机/深度。2D↔3D 切换时必须保持选择与按变体隔离的 zoom key，同时共享控制语义；布局缓存需感知渲染器变体但共享同一套 schema→布局引擎指纹。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaHtmlCanvasExport": [
+      {
+        "@value": "HTML Viewer/Canvas exports must reuse the same renderer matrix semantics as in-app Canvas: the exported SVG is rendered from the display-derived graph (including group envelopes) via GraphCanvas (live or off-screen), and a serialized mediaNodes list drives bounded Rich Media overlays at runtime. Flow-based HTML Canvas exports do not snapshot Flow’s canvas; they re-render into off-screen SVG using the same layout/fit rules as D3 and reuse derived group membership so dragging groups or nodes keeps nodes, edges, and overlays interconnected. Repo-relative Rich Media URLs (e.g., /__repo_file/…) are resolved by a runtime helper and may be inlined as data: URLs within bounded size limits; when exports are opened via file://, the runtime must still resolve these URLs through a probed http(s) origin so local media remains visible.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "HTML Viewer/Canvas 导出必须复用与应用内 Canvas 相同的渲染器矩阵语义：导出的 SVG 必须通过 GraphCanvas（实时或离屏）从 display 推导的图（包含 group 包络）渲染得到，序列化的 mediaNodes 列表在运行时驱动有界的 Rich Media overlay。基于 Flow 的 HTML Canvas 导出不会对 Flow 的 canvas 进行快照；而是使用与 D3 相同的布局/fit 规则在离屏 SVG 中重渲染，并复用推导出的 group 成员关系，确保拖拽 group 或节点时节点/边/overlay 始终保持互联。以 /__repo_file/… 为前缀的富媒体 URL 由运行时代码解析，并可在有界大小限制内被内联为 data: URL；当导出通过 file:// 打开时，运行时仍必须通过探测到的 http(s) origin 解析这些 URL，以保证本地媒体可见。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Exported HTML Canvas viewer must expose a compact HUD that mirrors in-app renderer toggles: 2D↔3D switch, Rich Media On/Off, Media interaction gate, and Frontmatter Mode On/Off. HUD toggles are strictly view-only, reuse the same SSOT GraphData/fit/zoom semantics as Canvas, and support desktop + mobile (full-viewport canvas with pointer pan/drag and touch pan/pinch/drag) without introducing export-only derivation or layout paths.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "导出的 HTML Canvas 查看器必须提供一组精简 HUD 开关，镜像应用内渲染器开关：2D↔3D 切换、Rich Media 开/关、媒体交互门控以及 Frontmatter Mode 开/关。HUD 开关必须是纯视图行为，复用与 Canvas 相同的 SSOT GraphData/fit/zoom 语义，并在桌面与移动端（充满视口的画布，指针平移/拖拽与触控平移/捏合/拖拽）上工作，禁止引入仅导出使用的推导或布局路径。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterModeToggleContract": [
+      {
+        "@value": "Frontmatter Mode controls which graph derivation path feeds Canvas, not GraphData itself. When Frontmatter Mode is On and the active Markdown file defines a Flow frontmatter graph (nodes/connections/'kg:subgraphs'), 2D D3 and Flow both treat that graph as the layout SSOT (no hidden per-renderer nodes) while still using the shared active graph render view pipeline. When Frontmatter Mode is Off, renderers fall back to the Markdown→JSON-LD pipeline; mode toggles are view-only and must not mutate imported Markdown/JSON-LD sources or layout caches beyond normal visibility/fit effects. 3D must respect the same frontmatter filter decisions as 2D, reusing positions where available but never introducing a separate, frontmatter-only GraphData fork.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Frontmatter Mode 只控制 Canvas 消费的图推导路径，而非 GraphData 本身。当 Frontmatter Mode 为 On 且当前 Markdown 文件定义了 Flow frontmatter 图（nodes/connections/'kg:subgraphs'）时，2D D3 与 Flow 都必须将该图视为布局 SSOT（不得存在仅某个渲染器可见的节点），同时仍复用共享的 active graph render view 流水线。Frontmatter Mode 为 Off 时，渲染器回退到 Markdown→JSON-LD 流程；模式切换必须是纯视图行为，不得修改导入的 Markdown/JSON-LD 源或超出正常可见性/fit 效果的布局缓存。3D 必须与 2D 一样尊重 frontmatter 过滤决策，在可用时复用位置，但不得引入单独的 frontmatter-only GraphData 分支。",
         "@language": "zh-cn"
       }
     ]

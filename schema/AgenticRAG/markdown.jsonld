@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.32",
+  "schemaVersion": "1.0.33",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -125,6 +125,16 @@
       },
       {
         "@value": "当 YAML frontmatter 含 Mermaid 图时，Mermaid 的 click 指令（如 click X \"#anchor\"）应映射为指向 Anchor 节点的图边（pointsTo）。前置的 Frontmatter 画布视图可包含这些锚点及其关联的文内链接与 Callout。生产者在可用时保留 metadata.documentPath 的相对路径片段，并将绝对文件系统路径剥离为 basename，以保持溯源的可移植性。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterMarkdownRichMediaLinking": [
+      {
+        "@value": "Frontmatter graphs (nodes/connections/'kg:subgraphs'), Mermaid diagrams, Markdown body anchors, wikilinks, templates, and Rich Media nodes are different projections of the same document-level graph. YAML frontmatter may define Flow/cluster graphs and Mermaid diagrams; Markdown body may define anchors (<a id=\"...\">, heading ids, ^block-id), wikilinks ([[Note]] / [[#Heading]] / [[#^block-id]]), and {{templates}} in fenced blocks; Rich Media nodes carry media_kind/media_url/iframe_url and optional anchor metadata (e.g., doc:anchorId). Implementations must keep these projections structurally aligned: Mermaid click targets (#anchor) and graph edges should resolve to the same Anchor/Note nodes; body wikilinks and anchors must not require absolute in-repo filesystem paths; Rich Media overlays must preserve node ids and anchor links across live Canvas and HTML exports. Linking semantics must remain domain-agnostic and schema-neutral; YAML/Mermaid/Markdown/Rich Media must not introduce renderer-specific link syntax.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Frontmatter 图（nodes/connections/'kg:subgraphs'）、Mermaid 图、Markdown 正文锚点、Wikilink、模板以及 Rich Media 节点，是同一份文档级图的不同投影。YAML frontmatter 可定义 Flow/cluster 图与 Mermaid 图；Markdown 正文可定义锚点（<a id=\"...\">、标题 id、^block-id）、Wikilink（[[Note]] / [[#Heading]] / [[#^block-id]]）以及 fenced 块中的 {{templates}}；Rich Media 节点通过 media_kind/media_url/iframe_url 以及可选锚点元信息（如 doc:anchorId）描述媒体。实现必须保持这些投影在结构上的对齐：Mermaid click 目标（#anchor）与图边应解析到相同的 Anchor/Note 节点；正文 Wikilink 与锚点不得依赖绝对 in-repo 文件系统路径；Rich Media overlay 必须在实时 Canvas 与 HTML 导出中保持节点 id 与锚点链接不变。链接语义必须保持领域无关与模式中立；YAML/Mermaid/Markdown/Rich Media 不得引入特定渲染器专用的链接语法。",
         "@language": "zh-cn"
       }
     ],

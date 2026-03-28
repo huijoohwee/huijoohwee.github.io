@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.20",
+  "schemaVersion": "1.0.21",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -75,6 +75,16 @@
       },
       {
         "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区包含布局开关（Explorer 展开/收起与 Canvas pane 显示/隐藏）；Canvas pane 显示状态通过 `kg:ui:workspace:canvasPaneOpen` 持久化，Canvas pane 宽度通过 `kg:ui:workspace:previewWidthPx` 持久化。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarCanvasInteractionAndSyncModes": [
+      {
+        "@value": "Toolbar includes Canvas Interaction Mode and Workspace Sync Mode toggle buttons adjacent to the Document Mode control. These toggles are thin shells over shared SSOT settings (`infiniteCanvasInteractionMode∈{static,interactive}`, `canvasWorkspaceSyncMode∈{manual,realtime}`) used by MainPanel Settings and the Interaction panel. Static interaction mode runs 2D D3 force layout to a bounded stable state and then freezes simulation, forwarding rich-media/markdown overlay wheel/pan to the canvas so pan/zoom remain primary and Graph Data Table/GraphTableDb treat position-only updates as non-syncing metadata; Interactive keeps D3 forces running and enables full overlay interactivity while still using the same GraphData/layout keys and revision-gated sync. Manual sync disables automatic GraphTableDb sync from Canvas and exposes a single 'Sync now' action in the Graph Table header; Real-time enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) using structure-only revisions in static mode and full graph revisions in interactive mode, deduped via last-write/last-sync gates. Panel UI must not introduce alternate interaction/sync flags; Toolbar buttons and Settings must always remain in lockstep.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 在 Document Mode 控件旁边包含 Canvas Interaction Mode 与 Workspace Sync Mode 开关按钮。这些开关只是共享 SSOT 设置（`infiniteCanvasInteractionMode∈{static,interactive}`、`canvasWorkspaceSyncMode∈{manual,realtime}`）的轻量外壳，与 MainPanel Settings 与 Interaction 面板共用。static 交互模式会将 2D D3 力导向布局运行到有界稳定状态后冻结模拟，并将富媒体/Markdown 覆盖层的滚轮/平移事件转发给画布，使平移/缩放保持为主交互，并让 Graph Data Table/GraphTableDb 将纯位置更新视为“非同步元数据”；interactive 模式则保持 D3 力导向布局持续运行，并启用完整覆盖层交互，同时仍复用相同的 GraphData/布局 key 与基于修订号的同步。manual 同步模式禁用从 Canvas 到 GraphTableDb 的自动同步，仅在 Graph Table 表头提供一次性的“Sync now” 操作；realtime 模式则启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步：在 static 模式下仅使用结构修订，在 interactive 模式下使用完整图修订，并通过 last-write/last-sync 门控去重。面板 UI 不得引入平行的交互/同步标志；Toolbar 按钮与 Settings 必须始终保持一致。",
         "@language": "zh-cn"
       }
     ],

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.25",
+  "schemaVersion": "1.0.26",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -70,11 +70,11 @@
     ],
     "layoutForceTuning2d": [
       {
-        "@value": "2D D3 layout-force tuning must be driven by schema-only knobs (e.g., schema.layout.forces.antiLineStrength, postFitStrength, postFitAlphaMax, plus antiLine/postFit enable and alpha-range switches). Floating Panel Layout controls (numeric inputs + strong-spread preset + reset-to-default) are a UI shell over these schema fields. Toolbar Reset is strictly camera/viewport Fit-to-View and must never mutate layout-force knobs or layout caches.",
+        "@value": "2D D3 layout-force tuning must be driven by schema-only knobs (e.g., schema.layout.forces.antiLineStrength, postFitStrength, postFitAlphaMax, plus antiLine/postFit enable and alpha-range switches). Collision/repulsion tuning across ALL 2D graph elements (nodes, groups, labels, rich media as nodes/panels) must also be schema-only via schema.layout.forces.physics2d* (charge/collide/bbox scales, velocityDecay bias, max-speed scale, strict-overlap scale, label-nudge scale, drag charge/distanceMax). Floating Panel Interaction + MainPanel Settings are UI shells over these schema fields. Toolbar Reset is strictly camera/viewport Fit-to-View and must never mutate layout-force knobs or layout caches.",
         "@language": "en-us"
       },
       {
-        "@value": "2D D3 的布局力调参必须完全由 schema 控制（例如 schema.layout.forces.antiLineStrength、postFitStrength、postFitAlphaMax 以及 antiLine/postFit 的启用与 alpha 范围开关）。Floating Panel 的 Layout 控件（数值输入 + 强力展开预设 + 重置为默认）只是这些 schema 字段之上的 UI 外壳。工具栏 Reset 仅用于相机/viewport 的 Fit-to-View，禁止修改任何布局力参数或布局缓存。",
+        "@value": "2D D3 的布局力调参必须完全由 schema 控制（例如 schema.layout.forces.antiLineStrength、postFitStrength、postFitAlphaMax 以及 antiLine/postFit 的启用与 alpha 范围开关）。同时，覆盖全部 2D 图元素（节点、分组/子图、标签、富媒体作为节点/面板）的碰撞/斥力调参也必须完全由 schema 控制：schema.layout.forces.physics2d*（charge/collide/bbox 缩放、velocityDecay 偏置、max-speed 缩放、strict-overlap 缩放、label-nudge 缩放、拖拽时的 charge/distanceMax）。Floating Panel Interaction 与 MainPanel Settings 只是这些 schema 字段之上的 UI 外壳。工具栏 Reset 仅用于相机/viewport 的 Fit-to-View，禁止修改任何布局力参数或布局缓存。",
         "@language": "zh-cn"
       }
     ],
@@ -258,6 +258,16 @@
         "@language": "zh-cn"
       }
     ],
+    "interactionAndSyncModes": [
+      {
+        "@value": "Canvas Interaction Mode and Workspace Sync Mode must be implemented as shared SSOT toggles that control how aggressively the infinite canvas runs force-directed layout and how Canvas↔Workspace sync behaves. `infiniteCanvasInteractionMode∈{static,interactive}` controls layout and overlay interactivity: static (default) runs D3 forces to a bounded stable state then freezes simulation and forwards overlay wheel/pan to Canvas so pan/zoom remain primary and Graph Data Table/GraphTableDb treat position-only updates as non-syncing metadata; interactive keeps D3 forces running and enables full embedded overlay interactivity while still using the same GraphData/layout keys and bounded, revision-gated sync. `canvasWorkspaceSyncMode∈{manual,realtime}` controls when GraphData is synced into GraphTableDb: manual (default) disables automatic sync and exposes a single 'Sync now' action for the current view; realtime enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) and must use structure-only revisions in static interaction mode and full graph revisions in interactive mode while deduping via last-write/last-sync gates to prevent loops and background churn. Toolbar toggles and MainPanel Settings must write the same underlying state; interaction/sync modes must never be implemented as parallel, renderer-specific flags.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas Interaction Mode 与 Workspace Sync Mode 必须作为共享的 SSOT 开关实现，用于控制无限画布运行力导向布局的程度以及 Canvas↔Workspace 的同步行为。`infiniteCanvasInteractionMode∈{static,interactive}` 用于控制布局与覆盖层交互：static（默认）将 D3 力导向布局运行到有界稳定状态后冻结模拟，并将覆盖层的滚轮/平移事件转发给 Canvas，使平移/缩放保持为主交互，并让 Graph Data Table/GraphTableDb 将纯位置更新视为“非同步元数据”；interactive 则保持 D3 力导向布局持续运行，并启用完整的嵌入式覆盖层交互（iframe/图片/视频/Markdown 区块直接接收滚轮/指针事件），同时仍复用同一套 GraphData/布局 key 与有界、基于修订号的同步。`canvasWorkspaceSyncMode∈{manual,realtime}` 用于控制 GraphData 何时同步到 GraphTableDb：manual（默认）禁用自动同步，仅对当前视图提供一次性的“Sync now” 操作；realtime 启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步，并在 static 交互模式下仅使用结构修订，在 interactive 模式下使用完整图修订，同时通过 last-write/last-sync 门控去重，防止循环与后台抖动。工具栏开关与 MainPanel Settings 必须写入相同的底层状态；交互/同步模式严禁作为并行的、渲染器特有的标志实现。",
+        "@language": "zh-cn"
+      }
+    ],
     "interactionPerformance2d": [
       {
         "@value": "2D interaction handlers (wheel/pan/drag) must avoid forced layout reads and unnecessary rerenders. Prefer offset-based local coordinates (`offsetX/offsetY`) for canvas-local pointer/wheel mapping; only fall back to `getBoundingClientRect()` when offsets are unavailable. Avoid per-frame `getComputedStyle()`/CSS var reads in draw loops; cache theme tokens keyed by theme state. Imperative renderers should not subscribe to high-frequency store state (e.g., zoom state) in ways that rerender the React component on every commit.",
@@ -380,11 +390,11 @@
     ],
     "richMediaHtmlCanvasExport": [
       {
-        "@value": "HTML Viewer/Canvas exports must reuse the same renderer matrix semantics as in-app Canvas: the exported SVG is rendered from the display-derived graph (including group envelopes) via GraphCanvas (live or off-screen), and a serialized mediaNodes list drives bounded Rich Media overlays at runtime. Flow-based HTML Canvas exports do not snapshot Flow’s canvas; they re-render into off-screen SVG using the same layout/fit rules as D3 and reuse derived group membership so dragging groups or nodes keeps nodes, edges, and overlays interconnected. Repo-relative Rich Media URLs (e.g., /__repo_file/…) are resolved by a runtime helper and may be inlined as data: URLs within bounded size limits; when exports are opened via file://, the runtime must still resolve these URLs through a probed http(s) origin so local media remains visible.",
+        "@value": "HTML Viewer/Canvas exports must reuse the same renderer matrix semantics as in-app Canvas: the exported SVG is rendered from the display-derived graph (including group envelopes) via GraphCanvas (live or off-screen) and styled identically using `applyGraphCanvasStyles2d` to ensure parity of CSS animations (`kgNodeBob`), node strokes, and colors. A serialized mediaNodes list drives bounded Rich Media overlays at runtime. Full parity with DOM overlays (tables, blockquotes, codeblocks) is maintained by capturing `[data-kg-markdown-design-block]` elements from the live workspace and injecting them as `<foreignObject>`s inside the SVG snapshot with computed HTML styles. Flow-based HTML Canvas exports do not snapshot Flow’s canvas; they re-render into off-screen SVG using the same layout/fit rules as D3 and reuse derived group membership so dragging groups or nodes keeps nodes, edges, and overlays interconnected. Repo-relative Rich Media URLs (e.g., /__repo_file/…) are resolved by a runtime helper and may be inlined as data: URLs within bounded size limits; when exports are opened via file://, the runtime must still resolve these URLs through a probed http(s) origin so local media remains visible.",
         "@language": "en-us"
       },
       {
-        "@value": "HTML Viewer/Canvas 导出必须复用与应用内 Canvas 相同的渲染器矩阵语义：导出的 SVG 必须通过 GraphCanvas（实时或离屏）从 display 推导的图（包含 group 包络）渲染得到，序列化的 mediaNodes 列表在运行时驱动有界的 Rich Media overlay。基于 Flow 的 HTML Canvas 导出不会对 Flow 的 canvas 进行快照；而是使用与 D3 相同的布局/fit 规则在离屏 SVG 中重渲染，并复用推导出的 group 成员关系，确保拖拽 group 或节点时节点/边/overlay 始终保持互联。以 /__repo_file/… 为前缀的富媒体 URL 由运行时代码解析，并可在有界大小限制内被内联为 data: URL；当导出通过 file:// 打开时，运行时仍必须通过探测到的 http(s) origin 解析这些 URL，以保证本地媒体可见。",
+        "@value": "HTML Viewer/Canvas 导出必须复用与应用内 Canvas 相同的渲染器矩阵语义：导出的 SVG 必须通过 GraphCanvas（实时或离屏）从 display 推导的图（包含 group 包络）渲染得到，并使用 `applyGraphCanvasStyles2d` 应用完全相同的样式，以确保 CSS 动画（`kgNodeBob`）、节点描边和颜色的高保真一致性。序列化的 mediaNodes 列表在运行时驱动有界的 Rich Media overlay，同时为保证 DOM overlay（如表格、引用、代码块）的高保真，导出时会捕获实时工作区中的 `[data-kg-markdown-design-block]` 元素并附带计算好的 HTML 样式将其作为 `<foreignObject>` 注入 SVG 快照中。基于 Flow 的 HTML Canvas 导出不会对 Flow 的 canvas 进行快照；而是使用与 D3 相同的布局/fit 规则在离屏 SVG 中重渲染，并复用推导出的 group 成员关系，确保拖拽 group 或节点时节点/边/overlay 始终保持互联。以 /__repo_file/… 为前缀的富媒体 URL 由运行时代码解析，并可在有界大小限制内被内联为 data: URL；当导出通过 file:// 打开时，运行时仍必须通过探测到的 http(s) origin 解析这些 URL，以保证本地媒体可见。",
         "@language": "zh-cn"
       },
       {

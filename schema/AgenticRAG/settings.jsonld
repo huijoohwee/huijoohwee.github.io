@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.17",
+  "schemaVersion": "1.0.18",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -73,6 +73,42 @@
         { "@value": "Workspace-level multiplier (clamped to a safe range) applied to both 2D zoom (wheel/pinch) and 2D pan (wheel/pointer/touch) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
         { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
       ]
+    },
+    "infiniteCanvasInteractionMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Canvas Interaction Mode", "@language": "en-us" },
+        { "@value": "画布交互模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Controls how aggressively the infinite canvas runs force-directed layout and Rich Media/Markdown overlay interactivity. `static` (default) runs D3 forces to a bounded stable state, then freezes simulation and forwards overlay wheel/pan to the canvas; `interactive` keeps forces running and enables full overlay interactivity while still using SSOT GraphData/layout keys and bounded sync.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "控制无限画布在多大程度上运行力导向布局以及富媒体/Markdown 覆盖层的交互行为。`static`（默认）将 D3 力导向布局运行到有界稳定状态后冻结模拟，同时将覆盖层的滚轮/平移事件转发给画布；`interactive` 保持力导向布局持续运行，并启用完整覆盖层交互，同时仍使用单一事实来源的 GraphData/布局键与有界同步。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["static", "interactive"]
+    },
+    "canvasWorkspaceSyncMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Workspace Sync Mode", "@language": "en-us" },
+        { "@value": "工作区同步模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Controls how Canvas→Graph Data Table and GraphTableDb sync occurs. `manual` (default) disables automatic sync and surfaces a single “Sync now” action; `realtime` enables revision+viewKey-gated auto sync that uses structure-only revisions in static interaction mode and full graph revisions in interactive mode, avoiding loops and background churn.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "控制 Canvas→图数据表与 GraphTableDb 的同步方式。`manual`（默认）禁用自动同步，仅提供一次性的“Sync now” 操作；`realtime` 启用基于修订号与 viewKey 的自动同步：在 static 交互模式下仅使用结构修订，在 interactive 模式下使用完整图修订，从而避免循环与后台抖动。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["manual", "realtime"]
     },
     "zoomDurationFitMs": {
       "@type": "xsd:integer",

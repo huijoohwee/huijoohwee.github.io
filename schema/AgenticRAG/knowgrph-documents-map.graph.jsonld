@@ -419,22 +419,6 @@
       }
     },
     {
-      "@id": "node:knowgrph:doc:curagrph-graph-data-curation-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "curagrph-graph-data-curation-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/curagrph-graph-data-curation-document.md"
-      },
-      "documentPath": "docs/documents/curagrph-graph-data-curation-document.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-2d-renderer-enhancement-design",
       "@type": "kg:Node",
       "labels": [
@@ -768,6 +752,38 @@
         "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-html-canvas-export-callgraph",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-html-canvas-export-callgraph.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-html-canvas-export-callgraph.md"
+      },
+      "documentPath": "docs/documents/knowgrph-html-canvas-export-callgraph.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-html-canvas-export-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-html-canvas-export-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-html-canvas-export-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-html-canvas-export-document.md",
       "language": "en-us"
     },
     {

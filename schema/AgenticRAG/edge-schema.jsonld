@@ -258,6 +258,7 @@
         "causality:negation",
         "causality:score",
         "visual:width",
+        "visual:edgeType",
         "kg:collapsedEdge",
         "kg:edgeCount"
       ]

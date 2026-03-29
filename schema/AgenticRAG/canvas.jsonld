@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.26",
+  "schemaVersion": "1.0.27",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -338,6 +338,16 @@
         "@language": "zh-cn"
       }
     ],
+    "edgeTypesGlobalSsot": [
+      {
+        "@value": "Edge visual types are controlled globally via schema.layout.edges.type∈{bezier,straight,step,smoothstep} and applied consistently across 2D D3/D3 Bipartite, Flow, Design, Flow Editor, and 3D. Global edge type is renderer-neutral, view-only, and must not change GraphData; it selects the path shape used for rendering while edge labels, structural fields, and semantics remain unchanged. Per-edge visual properties such as visual:width or visual:edgeType inside edge.properties may refine presentation but must not introduce domain-specific edge semantics.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "边的可视化类型由全局字段 schema.layout.edges.type∈{bezier,straight,step,smoothstep} 控制，并在 2D D3/D3 Bipartite、Flow、Design、Flow Editor 以及 3D 之间保持一致。全局 Edge Type 是与渲染器无关的纯视图开关，不得修改 GraphData，仅用于选择渲染时采用的路径形状；边的标签、结构字段与语义保持不变。边级的 visual:width 及 edge.properties 中的 visual:edgeType 等可视属性只能细化呈现效果，禁止引入任何特定领域的语义含义。",
+        "@language": "zh-cn"
+      }
+    ],
     "graphConfigsSemantics": [
       {
         "@value": "Graph configs vocabulary: grouping (schema.layout.groups.*), positioning (layout mode + flow engine knobs), collisions (bounded relax policies + schema collision knobs), timing (rAF/interval gates and bounded timeouts), and knobs (schema/config/persistence SSOT; cache-keyed when render-affecting).",
@@ -413,6 +423,24 @@
       },
       {
         "@value": "Frontmatter Mode 只控制 Canvas 消费的图推导路径，而非 GraphData 本身。当 Frontmatter Mode 为 On 且当前 Markdown 文件定义了 Flow frontmatter 图（nodes/connections/'kg:subgraphs'）时，2D D3 与 Flow 都必须将该图视为布局 SSOT（不得存在仅某个渲染器可见的节点），同时仍复用共享的 active graph render view 流水线。Frontmatter Mode 为 Off 时，渲染器回退到 Markdown→JSON-LD 流程；模式切换必须是纯视图行为，不得修改导入的 Markdown/JSON-LD 源或超出正常可见性/fit 效果的布局缓存。3D 必须与 2D 一样尊重 frontmatter 过滤决策，在可用时复用位置，但不得引入单独的 frontmatter-only GraphData 分支。",
+        "@language": "zh-cn"
+      }
+    ],
+    "bipartiteSuperGroups2dD3": [
+      {
+        "@value": "The 2D D3 Bipartite renderer must treat bipartite graphs (nodes with type∈{problem,solution} and cluster ids from metadata) as a nested super-group hierarchy: a root Bipartite super-group over all bipartite nodes, side super-groups for Problems/Solutions, and per-cluster groups under each side. This hierarchy is expressed structurally via subgraphs (kg:subgraphs metadata) and reused by layout/fit/visibility; renderer-specific flags must not fork a parallel grouping model.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D D3 的 Bipartite 渲染器必须将二部图（节点 type∈{problem,solution} 且 cluster id 来自元数据）视为嵌套的 super-group 层级：根 Bipartite super-group 覆盖所有二部节点，其下按侧划分 Problems/Solutions super-group，再在每一侧下根据 cluster 建立子分组。该层级必须通过结构化的子图（kg:subgraphs 元数据）表达，并被 layout/fit/visibility 复用；禁止通过渲染器特定标志建立并行的分组模型。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Bipartite layouts must keep problem/solution nodes in separated left/right lanes derived from shared layout/index anchors and schema-only force knobs. Super-group/group envelopes and headers are part of fit geometry and must remain visible during interaction (click/drag/zoom) without requiring renderer switching. Edge visibility in Bipartite mode uses schema + per-edge visual width/opacity only; highlight/dimming must never fully hide the bipartite line structure when nodes remain visible.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Bipartite 布局必须通过共享的布局/index 锚点与仅由 schema 控制的力参数，将 problem/solution 节点保持在左右分离的“车道”中。super-group/group 的边界与标题属于 fit 几何的一部分，交互（点击/拖拽/缩放）期间必须保持可见，无需通过切换渲染器来“找回”分组。Bipartite 模式下边的可见性只能由 schema 与每条边的可视宽度/不透明度控制；即使存在高亮/弱化，也不得在节点可见时完全隐藏二部“连线”结构。",
         "@language": "zh-cn"
       }
     ]

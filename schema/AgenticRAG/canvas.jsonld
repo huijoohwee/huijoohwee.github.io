@@ -9,11 +9,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D/3D/Flow/Geospatial) do not drift or contaminate each other at runtime.",
+      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D: D3 Graph/D3 Bipartite/Flow/Design/Flow Editor, 3D, Voxel, Geospatial) do not drift or contaminate each other at runtime.",
       "@language": "en-us"
     },
     {
-      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免 2D/3D/Flow/Geospatial 等渲染器在运行时发生漂移或相互污染。",
+      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免不同渲染器（2D：D3 Graph/D3 Bipartite/Flow/Design/Flow Editor，3D，Voxel，Geospatial）在运行时发生漂移或相互污染。",
       "@language": "zh-cn"
     }
   ],

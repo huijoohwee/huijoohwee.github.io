@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full-Stack AI-Native · Knowledge Graph</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050510;overflow:hidden;font-family:'Courier New',monospace;color:#c8d0f0;user-select:none}
+canvas{display:block}
+
+#tooltip{
+  position:fixed;pointer-events:none;
+  background:rgba(5,5,20,0.95);
+  border:1px solid rgba(130,140,255,0.4);
+  padding:8px 14px;border-radius:3px;
+  font-size:11px;white-space:nowrap;
+  z-index:200;opacity:0;
+  transition:opacity 0.12s;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 20px rgba(80,80,255,0.2);
+}
+#tooltip.on{opacity:1}
+#tt-badge{font-size:9px;text-transform:uppercase;letter-spacing:.15em;opacity:.5;margin-bottom:3px}
+#tt-name{font-size:13px;font-weight:bold}
+
+#panel{
+  position:fixed;right:24px;top:50%;
+  transform:translateY(-50%) translateX(30px);
+  width:300px;
+  background:rgba(5,5,22,0.96);
+  border:1px solid rgba(100,110,255,0.3);
+  border-radius:6px;padding:22px;
+  z-index:200;opacity:0;
+  transition:opacity .25s,transform .25s;
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 40px rgba(50,50,200,0.15);
+}
+#panel.on{opacity:1;transform:translateY(-50%) translateX(0)}
+#panel-close{
+  position:absolute;top:12px;right:14px;
+  cursor:pointer;opacity:.4;font-size:15px;
+  background:none;border:none;color:inherit;
+  transition:opacity .15s;
+}
+#panel-close:hover{opacity:1}
+.p-badge{font-size:9px;text-transform:uppercase;letter-spacing:.18em;opacity:.45;margin-bottom:7px}
+.p-name{font-size:17px;font-weight:bold;line-height:1.3;margin-bottom:10px}
+.p-cluster{font-size:11px;opacity:.55;margin-bottom:16px;line-height:1.5}
+.p-body{font-size:11px;line-height:1.75}
+.tag{display:inline-block;padding:2px 7px;border-radius:2px;font-size:9px;letter-spacing:.1em;margin:2px;text-transform:uppercase}
+.tag-g{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.tag-r{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.tag-n{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1)}
+.p-pain{margin-top:12px;padding:10px 12px;background:rgba(255,200,50,.05);border-left:2px solid rgba(255,200,50,.3);font-size:11px;line-height:1.6;opacity:.85}
+.p-url{display:block;margin-top:12px;color:#818cf8;font-size:10px;text-decoration:none;word-break:break-all}
+.p-url:hover{color:#a5b4fc}
+.p-phase{margin-top:10px;font-size:10px;opacity:.45}
+
+#hud-title{
+  position:fixed;left:22px;top:22px;z-index:100;
+}
+#hud-title h1{font-size:13px;text-transform:uppercase;letter-spacing:.22em;color:#818cf8}
+#hud-title p{font-size:10px;opacity:.3;margin-top:3px;letter-spacing:.1em}
+
+#legend{
+  position:fixed;left:22px;bottom:64px;z-index:100;
+  display:flex;flex-direction:column;gap:7px;
+}
+.leg-row{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.05em;opacity:.75}
+.leg-cube{width:11px;height:11px;border-radius:1px;flex-shrink:0}
+
+#node-legend{
+  position:fixed;right:24px;bottom:64px;z-index:100;
+  font-size:9px;text-align:right;opacity:.45;line-height:2;letter-spacing:.08em;text-transform:uppercase;
+}
+
+#statsbar{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  z-index:100;display:flex;gap:28px;
+  font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.4;
+}
+.stat .v{font-size:16px;display:block;font-weight:bold;opacity:.9;margin-bottom:2px}
+
+#controls{
+  position:fixed;top:22px;right:24px;z-index:100;
+  font-size:9px;opacity:.3;text-align:right;line-height:2;letter-spacing:.1em;text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="tooltip"><div id="tt-badge"></div><div id="tt-name"></div></div>
+
+<div id="panel">
+  <button id="panel-close">✕</button>
+  <div class="p-badge" id="p-badge"></div>
+  <div class="p-name" id="p-name"></div>
+  <div class="p-cluster" id="p-cluster"></div>
+  <div class="p-body" id="p-body"></div>
+</div>
+
+<div id="hud-title"><h1>Full-Stack AI-Native</h1><p>Knowledge Graph · 0→1</p></div>
+
+<div id="legend"></div>
+
+<div id="node-legend">
+  <div>▪ Hub</div>
+  <div>▪ Problem</div>
+  <div>▪ Solution</div>
+  <div>◆ Concept</div>
+</div>
+
+<div id="statsbar">
+  <div class="stat"><span class="v">56</span>Nodes</div>
+  <div class="stat"><span class="v">83</span>Edges</div>
+  <div class="stat"><span class="v">5</span>Clusters</div>
+  <div class="stat"><span class="v">49</span>FOSS</div>
+  <div class="stat"><span class="v">$0</span>TCO</div>
+</div>
+
+<div id="controls">Drag · Orbit<br>Scroll · Zoom<br>Click · Inspect</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════ DATA
+const G = {
+clusters:[
+  {id:"c-fe", label:"Frontend",               color:"#6366f1",angle:90, desc:"UI · State · Streaming · Dataviz"},
+  {id:"c-be", label:"Backend",                color:"#22c55e",angle:162,desc:"REST API · DB · Auth · Job Queue"},
+  {id:"c-llm",label:"LLM Runtime",            color:"#f59e0b",angle:234,desc:"Local Inference · Prompts · RAG"},
+  {id:"c-orc",label:"Multi-Agent Orchestration",color:"#ec4899",angle:306,desc:"Agent Graph · State Machine · Routing"},
+  {id:"c-inf",label:"DevOps / Infra",         color:"#64748b",angle:18, desc:"Docker · Env · CI/CD · Deploy"}
+],
+nodes:[
+  {id:"hub-fe", label:"Frontend Hub",     type:"hub",cluster:"c-fe", orbit:0,meta:{foss:true,local:true,freeTier:true}},
+  {id:"hub-be", label:"Backend Hub",      type:"hub",cluster:"c-be", orbit:0,meta:{foss:true,local:true,freeTier:true}},
+  {id:"hub-llm",label:"LLM Runtime Hub",  type:"hub",cluster:"c-llm",orbit:0,meta:{foss:true,local:true,freeTier:false}},
+  {id:"hub-orc",label:"Orchestration Hub",type:"hub",cluster:"c-orc",orbit:0,meta:{foss:true,local:true,freeTier:false}},
+  {id:"hub-inf",label:"Infra / DevOps Hub",type:"hub",cluster:"c-inf",orbit:0,meta:{foss:true,local:true,freeTier:true}},
+  {id:"p-fe-1",label:"No UI Framework",       type:"problem",cluster:"c-fe", orbit:1,meta:{painPoint:"No component model, no reactive rendering, no bundler",phase:1,priority:"P1"}},
+  {id:"p-fe-2",label:"No State Management",   type:"problem",cluster:"c-fe", orbit:1,meta:{painPoint:"Prop-drilling, inconsistent UI state, no single source of truth",phase:1,priority:"P1"}},
+  {id:"p-fe-3",label:"No Realtime / Streaming UI",type:"problem",cluster:"c-fe",orbit:1,meta:{painPoint:"LLM tokens arrive incrementally; polling is too slow and wastes resources",phase:2,priority:"P1"}},
+  {id:"p-fe-4",label:"No Data Visualisation",type:"problem",cluster:"c-fe", orbit:1,meta:{painPoint:"Agent dependency graphs and knowledge maps need a programmable canvas",phase:4,priority:"P2"}},
+  {id:"p-be-1",label:"No REST API Layer",     type:"problem",cluster:"c-be", orbit:1,meta:{painPoint:"No HTTP interface between frontend and backend logic",phase:1,priority:"P1"}},
+  {id:"p-be-2",label:"No Data Persistence",   type:"problem",cluster:"c-be", orbit:1,meta:{painPoint:"In-memory state lost on restart; no multi-session history",phase:1,priority:"P1"}},
+  {id:"p-be-3",label:"No Authentication",     type:"problem",cluster:"c-be", orbit:1,meta:{painPoint:"API is open to the world; no user identity for multi-tenant use",phase:4,priority:"P2"}},
+  {id:"p-be-4",label:"No Background Job Queue",type:"problem",cluster:"c-be",orbit:1,meta:{painPoint:"Long-running agent runs block HTTP request threads and time out",phase:1,priority:"P1"}},
+  {id:"p-llm-1",label:"No Local Inference Runtime",type:"problem",cluster:"c-llm",orbit:1,meta:{painPoint:"Cloud LLM APIs cost money; zero-cost TCO requires local inference",phase:0,priority:"P1"}},
+  {id:"p-llm-2",label:"No Prompt Management",type:"problem",cluster:"c-llm",orbit:1,meta:{painPoint:"Hard-coded prompt strings don't scale; need versioned composable templates",phase:2,priority:"P1"}},
+  {id:"p-llm-3",label:"No Vector Embeddings",type:"problem",cluster:"c-llm",orbit:1,meta:{painPoint:"Can't do semantic search or RAG without embedding generation",phase:2,priority:"P1"}},
+  {id:"p-llm-4",label:"No Context Window Control",type:"problem",cluster:"c-llm",orbit:1,meta:{painPoint:"Unbounded context overflows the model's window and degrades quality",phase:2,priority:"P2"}},
+  {id:"p-orc-1",label:"No Agent Architecture",type:"problem",cluster:"c-orc",orbit:1,meta:{painPoint:"A single LLM call can't reason, search, draft, and critique in one pass",phase:2,priority:"P1"}},
+  {id:"p-orc-2",label:"No Task Routing",      type:"problem",cluster:"c-orc",orbit:1,meta:{painPoint:"No mechanism to direct work to the right agent at the right step",phase:2,priority:"P1"}},
+  {id:"p-orc-3",label:"No Inter-Agent Communication",type:"problem",cluster:"c-orc",orbit:1,meta:{painPoint:"Agents need to pass structured state without tight coupling",phase:2,priority:"P1"}},
+  {id:"p-orc-4",label:"No Agent Observability",type:"problem",cluster:"c-orc",orbit:1,meta:{painPoint:"Opaque agent execution makes debugging and performance tuning impossible",phase:3,priority:"P2"}},
+  {id:"p-inf-1",label:"No Containerisation",  type:"problem",cluster:"c-inf",orbit:1,meta:{painPoint:"Works on my machine ≠ works on any machine; deps need isolation",phase:1,priority:"P1"}},
+  {id:"p-inf-2",label:"No Env Management",    type:"problem",cluster:"c-inf",orbit:1,meta:{painPoint:"API keys hard-coded in source = security and portability risk",phase:0,priority:"P1"}},
+  {id:"p-inf-3",label:"No Frontend Deployment",type:"problem",cluster:"c-inf",orbit:1,meta:{painPoint:"Localhost-only app can't be shared, demoed, or iterated with users",phase:5,priority:"P1"}},
+  {id:"p-inf-4",label:"No Backend Deployment",type:"problem",cluster:"c-inf",orbit:1,meta:{painPoint:"API must be reachable from the deployed frontend and remote collaborators",phase:5,priority:"P1"}},
+  {id:"s-fe-1",label:"React + Vite",          type:"solution",cluster:"c-fe", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:1,estMin:5,url:"https://vite.dev"}},
+  {id:"s-fe-2",label:"Zustand",               type:"solution",cluster:"c-fe", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:1,estMin:5,url:"https://zustand-demo.pmnd.rs"}},
+  {id:"s-fe-3",label:"EventSource (SSE)",     type:"solution",cluster:"c-fe", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:8,url:"https://developer.mozilla.org/en-US/docs/Web/API/EventSource"}},
+  {id:"s-fe-4",label:"D3.js",                 type:"solution",cluster:"c-fe", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:4,estMin:10,url:"https://d3js.org"}},
+  {id:"s-fe-5",label:"Tailwind CSS v4",       type:"solution",cluster:"c-fe", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:1,estMin:3,url:"https://tailwindcss.com"}},
+  {id:"s-be-1",label:"FastAPI + Uvicorn",     type:"solution",cluster:"c-be", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:1,estMin:10,url:"https://fastapi.tiangolo.com"}},
+  {id:"s-be-2",label:"Supabase Postgres",     type:"solution",cluster:"c-be", orbit:2,meta:{foss:true,local:false,freeTier:true,phase:1,estMin:10,url:"https://supabase.com"}},
+  {id:"s-be-3",label:"Supabase Auth",         type:"solution",cluster:"c-be", orbit:2,meta:{foss:true,local:false,freeTier:true,phase:4,estMin:10,url:"https://supabase.com/docs/guides/auth"}},
+  {id:"s-be-4",label:"BullMQ + Redis",        type:"solution",cluster:"c-be", orbit:2,meta:{foss:true,local:true,freeTier:false,phase:1,estMin:10,url:"https://bullmq.io"}},
+  {id:"s-be-5",label:"Pydantic v2",           type:"solution",cluster:"c-be", orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:8,url:"https://docs.pydantic.dev"}},
+  {id:"s-llm-1",label:"Ollama",               type:"solution",cluster:"c-llm",orbit:2,meta:{foss:true,local:true,freeTier:false,phase:0,estMin:15,url:"https://ollama.com"}},
+  {id:"s-llm-2",label:"llama3.2:3b",          type:"solution",cluster:"c-llm",orbit:2,meta:{foss:true,local:true,freeTier:false,phase:0,estMin:10,url:"https://ollama.com/library/llama3.2",note:"2GB download — pull once in Phase 0"}},
+  {id:"s-llm-3",label:"nomic-embed-text",     type:"solution",cluster:"c-llm",orbit:2,meta:{foss:true,local:true,freeTier:false,phase:0,estMin:5,url:"https://ollama.com/library/nomic-embed-text"}},
+  {id:"s-llm-4",label:"LangChain / LangGraph",type:"solution",cluster:"c-llm",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:5,url:"https://python.langchain.com"}},
+  {id:"s-llm-5",label:"Prompt Template System",type:"solution",cluster:"c-llm",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:9,note:"prompts/base.py + prompts/tasks.py in Python dataclasses"}},
+  {id:"s-orc-1",label:"LangGraph",            type:"solution",cluster:"c-orc",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:10,url:"https://langchain-ai.github.io/langgraph"}},
+  {id:"s-orc-2",label:"Researcher Agent",     type:"solution",cluster:"c-orc",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:10}},
+  {id:"s-orc-3",label:"Synthesizer Agent",    type:"solution",cluster:"c-orc",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:10}},
+  {id:"s-orc-4",label:"Critic Agent",         type:"solution",cluster:"c-orc",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:8}},
+  {id:"s-orc-5",label:"State Graph Router",   type:"solution",cluster:"c-orc",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:2,estMin:10,url:"https://langchain-ai.github.io/langgraph/concepts/low_level"}},
+  {id:"s-inf-1",label:"Docker Compose",       type:"solution",cluster:"c-inf",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:1,estMin:7,url:"https://docs.docker.com/compose"}},
+  {id:"s-inf-2",label:"Railway",              type:"solution",cluster:"c-inf",orbit:2,meta:{foss:false,local:false,freeTier:true,phase:5,estMin:8,url:"https://railway.app"}},
+  {id:"s-inf-3",label:"Vercel",               type:"solution",cluster:"c-inf",orbit:2,meta:{foss:false,local:false,freeTier:true,phase:5,estMin:7,url:"https://vercel.com"}},
+  {id:"s-inf-4",label:"python-dotenv",        type:"solution",cluster:"c-inf",orbit:2,meta:{foss:true,local:true,freeTier:true,phase:0,estMin:2,url:"https://pypi.org/project/python-dotenv"}},
+  {id:"s-inf-5",label:"GitHub (FOSS + Actions CI)",type:"solution",cluster:"c-inf",orbit:2,meta:{foss:true,local:false,freeTier:true,phase:0,estMin:3,url:"https://github.com"}},
+  {id:"con-foss",    label:"FOSS-first Constraint",type:"concept",cluster:null,orbit:1.5,meta:{description:"Every tool must have an open-source license. No vendor lock-in at the stack level.",crossCluster:true}},
+  {id:"con-local",   label:"Local > Cloud",        type:"concept",cluster:null,orbit:1.5,meta:{description:"Prefer on-device execution (Ollama, Redis Docker) over cloud inference to achieve zero-cost TCO.",crossCluster:true}},
+  {id:"con-zero-cost",label:"Zero-Cost TCO",       type:"concept",cluster:null,orbit:1.5,meta:{description:"Total cost of ownership = $0 at MVP stage. Free Tier cloud + local compute.",crossCluster:true}},
+  {id:"con-stream",  label:"Token Streaming",      type:"concept",cluster:null,orbit:1.5,meta:{description:"LLM tokens streamed via SSE from Ollama → FastAPI → EventSource → React UI. No polling.",crossCluster:true}},
+  {id:"con-e2e",     label:"End-to-End Journey",   type:"concept",cluster:null,orbit:1.5,meta:{description:"User prompt → API → Queue → Agent Graph → LLM → DB → Realtime → UI. Full closed loop.",crossCluster:true}},
+  {id:"con-mvp",     label:"Lean MVP (0→1)",        type:"concept",cluster:null,orbit:1.5,meta:{description:"Ship the thinnest vertical slice that demonstrates full-stack AI-native capability in 3 hours.",crossCluster:true}}
+],
+edges:[
+  {source:"hub-fe", target:"p-fe-1", type:"spoke"},{source:"hub-fe", target:"p-fe-2", type:"spoke"},
+  {source:"hub-fe", target:"p-fe-3", type:"spoke"},{source:"hub-fe", target:"p-fe-4", type:"spoke"},
+  {source:"hub-be", target:"p-be-1", type:"spoke"},{source:"hub-be", target:"p-be-2", type:"spoke"},
+  {source:"hub-be", target:"p-be-3", type:"spoke"},{source:"hub-be", target:"p-be-4", type:"spoke"},
+  {source:"hub-llm",target:"p-llm-1",type:"spoke"},{source:"hub-llm",target:"p-llm-2",type:"spoke"},
+  {source:"hub-llm",target:"p-llm-3",type:"spoke"},{source:"hub-llm",target:"p-llm-4",type:"spoke"},
+  {source:"hub-orc",target:"p-orc-1",type:"spoke"},{source:"hub-orc",target:"p-orc-2",type:"spoke"},
+  {source:"hub-orc",target:"p-orc-3",type:"spoke"},{source:"hub-orc",target:"p-orc-4",type:"spoke"},
+  {source:"hub-inf",target:"p-inf-1",type:"spoke"},{source:"hub-inf",target:"p-inf-2",type:"spoke"},
+  {source:"hub-inf",target:"p-inf-3",type:"spoke"},{source:"hub-inf",target:"p-inf-4",type:"spoke"},
+  {source:"hub-fe", target:"s-fe-1",  type:"spoke"},{source:"hub-fe", target:"s-fe-2",  type:"spoke"},
+  {source:"hub-fe", target:"s-fe-3",  type:"spoke"},{source:"hub-fe", target:"s-fe-4",  type:"spoke"},
+  {source:"hub-fe", target:"s-fe-5",  type:"spoke"},
+  {source:"hub-be", target:"s-be-1",  type:"spoke"},{source:"hub-be", target:"s-be-2",  type:"spoke"},
+  {source:"hub-be", target:"s-be-3",  type:"spoke"},{source:"hub-be", target:"s-be-4",  type:"spoke"},
+  {source:"hub-be", target:"s-be-5",  type:"spoke"},
+  {source:"hub-llm",target:"s-llm-1", type:"spoke"},{source:"hub-llm",target:"s-llm-2", type:"spoke"},
+  {source:"hub-llm",target:"s-llm-3", type:"spoke"},{source:"hub-llm",target:"s-llm-4", type:"spoke"},
+  {source:"hub-llm",target:"s-llm-5", type:"spoke"},
+  {source:"hub-orc",target:"s-orc-1", type:"spoke"},{source:"hub-orc",target:"s-orc-2", type:"spoke"},
+  {source:"hub-orc",target:"s-orc-3", type:"spoke"},{source:"hub-orc",target:"s-orc-4", type:"spoke"},
+  {source:"hub-orc",target:"s-orc-5", type:"spoke"},
+  {source:"hub-inf",target:"s-inf-1", type:"spoke"},{source:"hub-inf",target:"s-inf-2", type:"spoke"},
+  {source:"hub-inf",target:"s-inf-3", type:"spoke"},{source:"hub-inf",target:"s-inf-4", type:"spoke"},
+  {source:"hub-inf",target:"s-inf-5", type:"spoke"},
+  {source:"p-fe-1", target:"s-fe-1",  type:"solves"},{source:"p-fe-2",target:"s-fe-2",  type:"solves"},
+  {source:"p-fe-3", target:"s-fe-3",  type:"solves"},{source:"p-fe-4",target:"s-fe-4",  type:"solves"},
+  {source:"p-be-1", target:"s-be-1",  type:"solves"},{source:"p-be-2",target:"s-be-2",  type:"solves"},
+  {source:"p-be-3", target:"s-be-3",  type:"solves"},{source:"p-be-4",target:"s-be-4",  type:"solves"},
+  {source:"p-llm-1",target:"s-llm-1", type:"solves"},{source:"p-llm-1",target:"s-llm-2",type:"solves"},
+  {source:"p-llm-3",target:"s-llm-3", type:"solves"},{source:"p-llm-4",target:"s-llm-4",type:"solves"},
+  {source:"p-llm-2",target:"s-llm-5", type:"solves"},
+  {source:"p-orc-1",target:"s-orc-1", type:"solves"},{source:"p-orc-3",target:"s-orc-2",type:"solves"},
+  {source:"p-orc-3",target:"s-orc-3", type:"solves"},{source:"p-orc-3",target:"s-orc-4",type:"solves"},
+  {source:"p-orc-2",target:"s-orc-5", type:"solves"},
+  {source:"p-inf-1",target:"s-inf-1", type:"solves"},{source:"p-inf-4",target:"s-inf-2",type:"solves"},
+  {source:"p-inf-3",target:"s-inf-3", type:"solves"},{source:"p-inf-2",target:"s-inf-4",type:"solves"},
+  {source:"hub-fe", target:"con-stream",  type:"concept"},{source:"hub-llm",target:"con-stream",   type:"concept"},
+  {source:"hub-llm",target:"con-local",   type:"concept"},{source:"hub-inf",target:"con-zero-cost", type:"concept"},
+  {source:"hub-inf",target:"con-foss",    type:"concept"},{source:"con-foss",target:"con-zero-cost",type:"concept"},
+  {source:"con-mvp",target:"con-e2e",     type:"concept"},
+  {source:"hub-fe", target:"hub-be",  type:"bridge",label:"REST API",protocol:"HTTP/JSON"},
+  {source:"hub-be", target:"hub-fe",  type:"bridge",label:"SSE stream",protocol:"text/event-stream"},
+  {source:"hub-be", target:"hub-llm", type:"bridge",label:"Ollama HTTP",protocol:"HTTP/JSON"},
+  {source:"hub-be", target:"hub-orc", type:"bridge",label:"Task Queue",protocol:"BullMQ/Redis"},
+  {source:"hub-orc",target:"hub-llm", type:"bridge",label:"LLM tool calls",protocol:"LangGraph+HTTP"},
+  {source:"hub-be", target:"hub-inf", type:"bridge",label:"Dockerfile",protocol:"Docker"},
+  {source:"hub-fe", target:"hub-inf", type:"bridge",label:"Vercel deploy",protocol:"Git push"},
+  {source:"hub-orc",target:"hub-fe",  type:"bridge",label:"Realtime push",protocol:"Supabase RT"}
+]
+};
+
+// ═══════════════════════════════════════════════════════════ RENDERER
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x050510,1);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x050510, 0.00028);
+
+const camera = new THREE.PerspectiveCamera(58, window.innerWidth/window.innerHeight, 1, 9000);
+
+// ═══════════════════════════════════════════════════════════ CAMERA ORBIT
+let camTheta = -0.5, camPhi = 1.05, camRadius = 1550;
+const camTarget = new THREE.Vector3(0, 60, 0);
+
+function updateCamera() {
+  camera.position.set(
+    camTarget.x + camRadius * Math.sin(camPhi) * Math.cos(camTheta),
+    camTarget.y + camRadius * Math.cos(camPhi),
+    camTarget.z + camRadius * Math.sin(camPhi) * Math.sin(camTheta)
+  );
+  camera.lookAt(camTarget);
+}
+updateCamera();
+
+// ═══════════════════════════════════════════════════════════ LIGHTS
+scene.add(new THREE.AmbientLight(0x0d0d28, 2.5));
+
+const dirLight = new THREE.DirectionalLight(0x8090ff, 0.6);
+dirLight.position.set(300, 600, 200);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.set(2048,2048);
+scene.add(dirLight);
+
+const clusterLights = {};
+G.clusters.forEach(c => {
+  const r = 490, a = c.angle*Math.PI/180;
+  const pl = new THREE.PointLight(parseInt(c.color.replace('#',''),16), 1.8, 700);
+  pl.position.set(r*Math.cos(a), 100, r*Math.sin(a));
+  scene.add(pl);
+  clusterLights[c.id] = pl;
+});
+
+// central glow
+const centerLight = new THREE.PointLight(0x5060ff, 1.2, 450);
+centerLight.position.set(0, 80, 0);
+scene.add(centerLight);
+
+// ═══════════════════════════════════════════════════════════ GRID FLOOR
+const gridHelper = new THREE.GridHelper(3200, 80, 0x0c1038, 0x080c28);
+gridHelper.position.y = -0.5;
+scene.add(gridHelper);
+
+// ═══════════════════════════════════════════════════════════ LAYOUT
+const HUB_R = 490, PROB_R = 185, SOL_R = 335, GRID = 30, CON_R = 170;
+
+const snap = v => Math.round(v/GRID)*GRID;
+
+const clusterMap = {};
+G.clusters.forEach(c => { clusterMap[c.id] = c; });
+
+function clusterHub(cid) {
+  const c = clusterMap[cid];
+  const a = c.angle * Math.PI / 180;
+  return {x: HUB_R*Math.cos(a), z: HUB_R*Math.sin(a), a};
+}
+
+// Group nodes by cluster+type
+const groups = {};
+G.nodes.forEach(n => {
+  if (n.type === 'problem' || n.type === 'solution') {
+    const key = n.cluster + ':' + n.type;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(n.id);
+  }
+});
+
+// Concept nodes
+const conceptNodes = G.nodes.filter(n => n.type === 'concept');
+
+const positions = {};
+
+G.nodes.forEach(n => {
+  let x = 0, z = 0;
+
+  if (n.type === 'hub') {
+    const cc = clusterHub(n.cluster);
+    x = snap(cc.x); z = snap(cc.z);
+
+  } else if (n.type === 'problem') {
+    const cc = clusterHub(n.cluster);
+    const list = groups[n.cluster+':problem'];
+    const idx = list.indexOf(n.id);
+    const cnt = list.length;
+    const spread = 60 * Math.PI/180;
+    const step = cnt > 1 ? (spread*2)/(cnt-1) : 0;
+    const offset = -spread + idx*step;
+    const a = cc.a + offset;
+    x = snap(cc.x + PROB_R*Math.cos(a));
+    z = snap(cc.z + PROB_R*Math.sin(a));
+
+  } else if (n.type === 'solution') {
+    const cc = clusterHub(n.cluster);
+    const list = groups[n.cluster+':solution'];
+    const idx = list.indexOf(n.id);
+    const cnt = list.length;
+    const spread = 75 * Math.PI/180;
+    const step = cnt > 1 ? (spread*2)/(cnt-1) : 0;
+    const offset = -spread + idx*step;
+    const a = cc.a + offset;
+    x = snap(cc.x + SOL_R*Math.cos(a));
+    z = snap(cc.z + SOL_R*Math.sin(a));
+
+  } else if (n.type === 'concept') {
+    const idx = conceptNodes.findIndex(c => c.id === n.id);
+    const total = conceptNodes.length;
+    const a = (idx/total)*Math.PI*2 - Math.PI/6;
+    x = snap(CON_R*Math.cos(a));
+    z = snap(CON_R*Math.sin(a));
+  }
+
+  positions[n.id] = {x, z};
+});
+
+// ═══════════════════════════════════════════════════════════ NODE SPECS
+const SPECS = {
+  hub:     {w:52, h:66, d:52, ei:0.65, roughness:0.15, metalness:0.9},
+  problem: {w:28, h:32, d:28, ei:0.38, roughness:0.25, metalness:0.7},
+  solution:{w:22, h:22, d:22, ei:0.3,  roughness:0.2,  metalness:0.8},
+  concept: {w:30, h:44, d:30, ei:0.5,  roughness:0.1,  metalness:0.95}
+};
+
+const meshes = [];
+const meshById = {};
+const nodeByMesh = new WeakMap();
+
+G.nodes.forEach(n => {
+  const pos = positions[n.id];
+  if (!pos) return;
+  const sp = SPECS[n.type] || SPECS.solution;
+  const cl = n.cluster ? clusterMap[n.cluster] : null;
+  const hex = cl ? cl.color : '#9098c0';
+  const tc = new THREE.Color(hex);
+
+  const geo = new THREE.BoxGeometry(sp.w, sp.h, sp.d);
+  const mat = new THREE.MeshStandardMaterial({
+    color: tc.clone().multiplyScalar(0.22),
+    emissive: tc.clone(),
+    emissiveIntensity: sp.ei,
+    roughness: sp.roughness,
+    metalness: sp.metalness,
+  });
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(pos.x, sp.h/2, pos.z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.userData = {nodeId: n.id, node: n, baseEI: sp.ei, baseY: sp.h/2};
+
+  scene.add(mesh);
+  meshes.push(mesh);
+  meshById[n.id] = mesh;
+  nodeByMesh.set(mesh, n);
+
+  // Top cap accent (thin bright slice on top of each voxel)
+  const capGeo = new THREE.BoxGeometry(sp.w+0.5, 2, sp.d+0.5);
+  const capMat = new THREE.MeshStandardMaterial({
+    color: tc,
+    emissive: tc,
+    emissiveIntensity: 1.2,
+    roughness: 0,
+    metalness: 1,
+  });
+  const cap = new THREE.Mesh(capGeo, capMat);
+  cap.position.set(pos.x, sp.h + 1, pos.z);
+  scene.add(cap);
+});
+
+// ═══════════════════════════════════════════════════════════ ROLLOVER CUBE (voxel painter style)
+const rolloverGeo = new THREE.BoxGeometry(1,1,1);
+const rolloverMat = new THREE.MeshBasicMaterial({
+  color: 0xffffff, opacity:0.18, transparent:true, depthWrite:false, side:THREE.FrontSide
+});
+const rollover = new THREE.Mesh(rolloverGeo, rolloverMat);
+rollover.visible = false;
+scene.add(rollover);
+
+// Selection wireframe
+const selWireGeo = new THREE.BoxGeometry(1,1,1);
+const selWireMat = new THREE.MeshBasicMaterial({color:0xffffff, wireframe:true, opacity:0.5, transparent:true});
+const selWire = new THREE.Mesh(selWireGeo, selWireMat);
+selWire.visible = false;
+scene.add(selWire);
+
+// ═══════════════════════════════════════════════════════════ EDGES
+function buildLines(pts, color, opacity, dashed=false) {
+  if (!pts.length) return;
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = dashed
+    ? new THREE.LineDashedMaterial({color, opacity, transparent:true, dashSize:8, gapSize:6, linewidth:1})
+    : new THREE.LineBasicMaterial({color, opacity, transparent:true, linewidth:1});
+  const ls = new THREE.LineSegments(geo, mat);
+  if (dashed) ls.computeLineDistances();
+  scene.add(ls);
+}
+
+const spokePts=[], solvesPts=[], conceptPts=[], bridgePts=[];
+
+G.edges.forEach(e => {
+  const sm = meshById[e.source], tm = meshById[e.target];
+  if (!sm || !tm) return;
+  const v1 = sm.position.clone();
+  const v2 = tm.position.clone();
+  switch(e.type) {
+    case 'spoke':   spokePts.push(v1,v2);   break;
+    case 'solves':  solvesPts.push(v1,v2);  break;
+    case 'concept': conceptPts.push(v1,v2); break;
+    case 'bridge':  bridgePts.push(v1,v2);  break;
+  }
+});
+
+buildLines(spokePts,   0x2030a0, 0.18);
+buildLines(solvesPts,  0x20a050, 0.28);
+buildLines(conceptPts, 0xa08020, 0.25, true);
+buildLines(bridgePts,  0xffffff, 0.65);
+
+// ═══════════════════════════════════════════════════════════ BRIDGE LABELS (floating chips)
+// We'll draw thin horizontal bars to indicate protocol labels for bridges
+G.edges.filter(e=>e.type==='bridge').forEach(e => {
+  const sm = meshById[e.source], tm = meshById[e.target];
+  if (!sm || !tm || !e.protocol) return;
+  const mid = sm.position.clone().add(tm.position).multiplyScalar(0.5);
+  const cl = clusterMap[e.type] || {color:'#ffffff'};
+
+  // small flat box at midpoint as visual marker
+  const bg = new THREE.BoxGeometry(8, 4, 8);
+  const bm = new THREE.MeshBasicMaterial({color:0xffffff, opacity:0.25, transparent:true});
+  const b = new THREE.Mesh(bg, bm);
+  b.position.copy(mid);
+  b.position.y += 20;
+  scene.add(b);
+});
+
+// ═══════════════════════════════════════════════════════════ LEGEND
+const legendEl = document.getElementById('legend');
+G.clusters.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'leg-row';
+  d.innerHTML = `<div class="leg-cube" style="background:${c.color}"></div><span>${c.label}</span>`;
+  legendEl.appendChild(d);
+});
+
+// ═══════════════════════════════════════════════════════════ INTERACTION
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById('tooltip');
+const panel = document.getElementById('panel');
+let hovered = null, selected = null;
+let mx = 0, my = 0;
+let dragging = false, didDrag = false, prevMx=0, prevMy=0;
+let autoRotate = true;
+
+function showTooltip(n, x, y) {
+  const cl = n.cluster ? clusterMap[n.cluster] : null;
+  document.getElementById('tt-badge').textContent = n.type;
+  document.getElementById('tt-name').textContent = n.label;
+  document.getElementById('tt-name').style.color = cl ? cl.color : '#9098c0';
+  tooltip.style.left = (x+18)+'px';
+  tooltip.style.top  = (y-10)+'px';
+  tooltip.classList.add('on');
+}
+
+function buildPanelHTML(n) {
+  const cl = n.cluster ? clusterMap[n.cluster] : null;
+  document.getElementById('p-badge').textContent = n.type;
+  document.getElementById('p-name').textContent = n.label;
+  document.getElementById('p-name').style.color = cl ? cl.color : '#9098c0';
+  document.getElementById('p-cluster').textContent = cl
+    ? `${cl.label}  ·  ${cl.desc}`
+    : 'Cross-cluster principle';
+
+  const m = n.meta || {};
+  let html = '';
+
+  if (m.foss !== undefined) {
+    html += '<div style="margin-bottom:8px">';
+    html += `<span class="tag ${m.foss?'tag-g':'tag-r'}">${m.foss?'FOSS':'Proprietary'}</span>`;
+    if (m.local !== undefined) html += `<span class="tag ${m.local?'tag-g':'tag-n'}">${m.local?'Local':'Cloud'}</span>`;
+    if (m.freeTier !== undefined) html += `<span class="tag ${m.freeTier?'tag-g':'tag-n'}">${m.freeTier?'Free tier':'Paid'}</span>`;
+    html += '</div>';
+  }
+  if (m.phase !== undefined) html += `<div style="opacity:.4;font-size:10px;margin-bottom:8px">Phase ${m.phase}${m.priority?' · '+m.priority:''}</div>`;
+  if (m.estMin) html += `<div style="opacity:.45;font-size:10px;margin-bottom:8px">⏱ ~${m.estMin} min setup</div>`;
+  if (m.painPoint) html += `<div class="p-pain">⚠ ${m.painPoint}</div>`;
+  if (m.description) html += `<div class="p-pain">${m.description}</div>`;
+  if (m.note) html += `<div class="p-pain">📝 ${m.note}</div>`;
+  if (m.url) html += `<a class="p-url" href="${m.url}" target="_blank">↗ ${m.url.replace('https://','')}</a>`;
+
+  document.getElementById('p-body').innerHTML = html;
+  panel.classList.add('on');
+}
+
+function clearSelection() {
+  if (selected) {
+    selected.material.emissiveIntensity = selected.userData.baseEI;
+    selected = null;
+  }
+  selWire.visible = false;
+  panel.classList.remove('on');
+}
+
+document.getElementById('panel-close').addEventListener('click', clearSelection);
+
+canvas.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  mouse.x = (e.clientX/window.innerWidth)*2-1;
+  mouse.y = -(e.clientY/window.innerHeight)*2+1;
+  if (dragging) {
+    const dx = e.clientX - prevMx, dy = e.clientY - prevMy;
+    if (Math.abs(dx)+Math.abs(dy) > 2) didDrag = true;
+    camTheta -= dx*0.0048;
+    camPhi = Math.max(0.18, Math.min(Math.PI*0.49, camPhi + dy*0.0048));
+    prevMx = e.clientX; prevMy = e.clientY;
+    autoRotate = false;
+  }
+});
+
+canvas.addEventListener('mousedown', e => {
+  dragging = true; didDrag = false;
+  prevMx = e.clientX; prevMy = e.clientY;
+});
+window.addEventListener('mouseup', () => { dragging = false; });
+
+canvas.addEventListener('click', e => {
+  if (didDrag) return;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(meshes);
+  if (hits.length) {
+    const mesh = hits[0].object;
+    if (selected && selected !== mesh) selected.material.emissiveIntensity = selected.userData.baseEI;
+    selected = mesh;
+    selected.material.emissiveIntensity = 1.3;
+    // position selection wireframe
+    const sp2 = SPECS[mesh.userData.node.type] || SPECS.solution;
+    selWire.scale.set(sp2.w+5, sp2.h+5, sp2.d+5);
+    selWire.position.copy(mesh.position);
+    selWire.visible = true;
+    buildPanelHTML(mesh.userData.node);
+    autoRotate = false;
+  } else {
+    clearSelection();
+  }
+});
+
+canvas.addEventListener('wheel', e => {
+  camRadius = Math.max(350, Math.min(3200, camRadius + e.deltaY*0.9));
+  autoRotate = false;
+  e.preventDefault();
+}, {passive:false});
+
+// ═══════════════════════════════════════════════════════════ ANIMATION
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  if (autoRotate && !dragging) camTheta += 0.00028;
+
+  // Hub pulse
+  G.nodes.filter(n=>n.type==='hub').forEach(n => {
+    const m = meshById[n.id];
+    if (!m) return;
+    const p = 0.15 * Math.sin(t*1.4 + G.clusters.findIndex(c=>c.id===n.cluster)*1.3);
+    m.material.emissiveIntensity = (m===selected?1.3:m.userData.baseEI) + p;
+    m.position.y = m.userData.baseY + Math.sin(t*0.9 + G.clusters.findIndex(c=>c.id===n.cluster))*1.5;
+  });
+
+  // Concept nodes gentle float
+  G.nodes.filter(n=>n.type==='concept').forEach((n,i) => {
+    const m = meshById[n.id];
+    if (!m) return;
+    m.position.y = m.userData.baseY + Math.sin(t*0.7 + i*1.1)*4;
+    m.rotation.y = t*0.3 + i*0.8;
+  });
+
+  // Rollover + hover detect
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(meshes);
+  if (hits.length && !dragging) {
+    const mesh = hits[0].object;
+    const n = mesh.userData.node;
+    const sp2 = SPECS[n.type] || SPECS.solution;
+    rollover.scale.set(sp2.w+8, sp2.h+8, sp2.d+8);
+    rollover.position.copy(mesh.position);
+    rollover.visible = true;
+    canvas.style.cursor = 'pointer';
+    if (mesh !== hovered) {
+      if (hovered && hovered !== selected) hovered.material.emissiveIntensity = hovered.userData.baseEI;
+      hovered = mesh;
+      if (mesh !== selected) mesh.material.emissiveIntensity = Math.min(0.9, mesh.userData.baseEI*1.7);
+    }
+    showTooltip(n, mx, my);
+  } else {
+    rollover.visible = false;
+    canvas.style.cursor = 'default';
+    tooltip.classList.remove('on');
+    if (hovered && hovered !== selected) {
+      hovered.material.emissiveIntensity = hovered.userData.baseEI;
+      hovered = null;
+    }
+  }
+
+  // selWire spin
+  if (selWire.visible) selWire.rotation.y = t * 0.5;
+
+  // Center light pulse
+  centerLight.intensity = 1.0 + 0.4 * Math.sin(t * 0.8);
+
+  updateCamera();
+  renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+animate();
+</script>
+</body>
+</html>

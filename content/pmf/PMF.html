@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PMF — Voxel Layer Model</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+body { background:#05050f; overflow:hidden; font-family:'Courier New',monospace }
+canvas { display:block }
+#ui { position:fixed; inset:0; pointer-events:none }
+
+#tt {
+  position:absolute; background:rgba(4,4,18,.95);
+  border:1px solid rgba(255,255,255,.11); border-radius:8px;
+  padding:11px 14px; font-size:12px; color:#c8cce0;
+  pointer-events:none; opacity:0; transition:opacity .15s;
+  max-width:230px; line-height:1.6; z-index:10;
+}
+#tt b  { display:block; font-size:13px; color:#fff; margin-bottom:2px; letter-spacing:.04em }
+#tt .sub { font-size:10px; color:rgba(255,255,255,.35); margin-bottom:8px; line-height:1.4 }
+#tt .drow { display:flex; align-items:center; gap:6px; margin-top:4px }
+#tt .dk   { font-size:10px; width:54px; flex-shrink:0; letter-spacing:.02em }
+#tt .dbar { flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,.08) }
+#tt .dbf  { height:100%; border-radius:2px; transition:width .2s }
+#tt .dv   { font-size:10px; width:30px; text-align:right; opacity:.6 }
+#tt .gap  { margin-top:7px; font-size:10px; padding-top:6px; border-top:1px solid rgba(255,255,255,.08) }
+
+#title { position:absolute; top:20px; left:22px }
+#title h1 { font-size:13px; font-weight:bold; letter-spacing:.14em; color:rgba(255,255,255,.82) }
+#title p  { font-size:9px; letter-spacing:.09em; color:rgba(255,255,255,.28); margin-top:4px }
+
+#legend { position:absolute; bottom:22px; left:22px }
+#legend .lr { display:flex; align-items:center; gap:8px; font-size:10px; color:rgba(255,255,255,.45); margin-top:6px }
+#legend .lc { width:9px; height:9px; border-radius:2px; flex-shrink:0 }
+#legend .lf { font-weight:bold; color:rgba(255,255,255,.7) }
+
+#layers-ui { position:absolute; top:20px; right:22px; text-align:right }
+#layers-ui .ll { display:flex; align-items:center; justify-content:flex-end; gap:9px; font-size:10px; color:rgba(255,255,255,.38); margin-bottom:8px }
+#layers-ui .lb { width:22px; height:2px; border-radius:1px; flex-shrink:0 }
+
+#hint { position:absolute; bottom:22px; right:22px; font-size:9px; color:rgba(255,255,255,.2); text-align:right; line-height:2 }
+
+#pmf-bar {
+  position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+  display:flex; gap:1px; align-items:flex-end; height:40px;
+}
+.pmf-col { width:14px; border-radius:2px 2px 0 0; opacity:.7; transition:opacity .3s }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <div id="tt">
+    <b id="tt-n"></b>
+    <div class="sub" id="tt-s"></div>
+    <div id="tt-d"></div>
+  </div>
+  <div id="title">
+    <h1>PMF VOXEL MODEL</h1>
+    <p>PRODUCT &middot; SOLUTION &middot; MARKET &mdash; MONEY &middot; MAN &middot; MACHINE</p>
+  </div>
+  <div id="legend">
+    <div class="lr"><div class="lc" style="background:#EF9F27"></div><span class="lf">$</span>&nbsp;Money &mdash; Capital (CMF)</div>
+    <div class="lr"><div class="lc" style="background:#D85A30"></div><span class="lf">@</span>&nbsp;Man &mdash; Founder (FMF)</div>
+    <div class="lr"><div class="lc" style="background:#1D9E75"></div><span class="lf">#</span>&nbsp;Machine &mdash; Tech (TMF)</div>
+  </div>
+  <div id="layers-ui">
+    <div class="ll"><span>MARKET &mdash; Problem clusters</span><div class="lb" style="background:#D85A30"></div></div>
+    <div class="ll"><span>SOLUTION &mdash; Feature clusters</span><div class="lb" style="background:#7F77DD"></div></div>
+    <div class="ll"><span>PRODUCT &mdash; Startup builds</span><div class="lb" style="background:#1D9E75"></div></div>
+  </div>
+  <div id="hint">drag &middot; orbit<br>scroll &middot; zoom<br>hover &middot; inspect</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const DIMS = [
+  { id:'money',   label:'Money',   fit:'CMF', color:0xEF9F27, hex:'#EF9F27' },
+  { id:'man',     label:'Man',     fit:'FMF', color:0xD85A30, hex:'#D85A30' },
+  { id:'machine', label:'Machine', fit:'TMF', color:0x1D9E75, hex:'#1D9E75' },
+];
+
+const LAYERS = [
+  {
+    id:'product', label:'PRODUCT', y:-4.5, color:0x1D9E75, hex:'#1D9E75', maxH:1.0,
+    nodes:[
+      { id:'hackamap',   name:'Hackamap',    sub:'PMF gap canvas · D3 + TiDB Cloud',      money:.50,man:.80,machine:.70,gap:null },
+      { id:'angelbot',   name:'AngelBot',    sub:'Investor matching · Telegram + Agnes AI',money:.70,man:.50,machine:.60,gap:null },
+      { id:'mvpforge',   name:'MVPForge',    sub:'AI scaffold from problem statement',     money:.30,man:.70,machine:.90,gap:null },
+      { id:'genzlaunch', name:'GenZLaunch',  sub:'TikTok-first launch playbook generator', money:.50,man:.60,machine:.50,gap:null },
+      { id:'cofind',     name:'CoFind',      sub:'Co-founder matching · FMF scoring',      money:.20,man:.90,machine:.40,gap:null },
+    ]
+  },
+  {
+    id:'solution', label:'SOLUTION', y:0, color:0x7F77DD, hex:'#7F77DD', maxH:1.4,
+    nodes:[
+      { id:'network',  name:'Network',          sub:'CoFoundersLab · Angel.co',         money:.50,man:.80,machine:.40,gap:null },
+      { id:'launch',   name:'Launch Platforms',  sub:'Product Hunt · BetaList · AppSumo',money:.40,man:.60,machine:.70,gap:null },
+      { id:'build',    name:'Build & Hire',      sub:'Replit / Lovable · Fiverr · Toptal',money:.60,man:.50,machine:.90,gap:null },
+      { id:'funding',  name:'Funding & Growth',  sub:'YC batch · TikTok for Business',   money:.90,man:.70,machine:.50,gap:null },
+    ]
+  },
+  {
+    id:'market', label:'MARKET', y:4.5, color:0xD85A30, hex:'#D85A30', maxH:1.8,
+    nodes:[
+      { id:'team',       name:'Team Building', sub:'Find co-founders · Hire first engineer',  money:.30,man:1.0,machine:.40,gap:.30 },
+      { id:'validation', name:'Validation',    sub:'Validate idea fast · Market to Gen Z',     money:.40,man:.70,machine:.60,gap:.52 },
+      { id:'growth',     name:'Growth',        sub:'First 100 users · Build MVP cheap',        money:.50,man:.60,machine:.80,gap:.58 },
+      { id:'capital',    name:'Capital',       sub:'Pre-revenue funding · AI product pricing', money:1.0,man:.50,machine:.30,gap:1.0 },
+    ]
+  },
+];
+
+const POS = {
+  product:  [[-8,0],[-4,0],[0,0],[4,0],[8,0]],
+  solution: [[-5.5,0],[-1.8,0],[1.8,0],[5.5,0]],
+  market:   [[-5.5,0],[-1.8,0],[1.8,0],[5.5,0]],
+};
+
+const EDGES_RAW = [
+  ['hackamap','network'],['hackamap','launch'],
+  ['angelbot','funding'],['angelbot','network'],
+  ['mvpforge','build'],['genzlaunch','launch'],['cofind','network'],
+  ['network','team'],['network','capital'],
+  ['launch','validation'],['launch','growth'],
+  ['build','growth'],['funding','capital'],
+];
+
+// ─── RENDERER ────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const GW = ()=>window.innerWidth, GH = ()=>window.innerHeight;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x05050f, 0.028);
+
+const camera = new THREE.PerspectiveCamera(46, GW()/GH(), 0.1, 100);
+const sph = { theta: Math.PI/5.5, phi: 1.02, r: 26 };
+
+function camApply() {
+  camera.position.set(
+    sph.r * Math.sin(sph.phi) * Math.sin(sph.theta),
+    sph.r * Math.cos(sph.phi),
+    sph.r * Math.sin(sph.phi) * Math.cos(sph.theta)
+  );
+  camera.lookAt(0, 0.5, 0);
+}
+camApply();
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+renderer.setSize(GW(), GH());
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x05050f, 1);
+renderer.shadowMap.enabled = false;
+
+// ─── LIGHTS ──────────────────────────────────────────────────────────────────
+scene.add(new THREE.AmbientLight(0x7080a0, 0.55));
+
+const dirL = new THREE.DirectionalLight(0xffffff, 0.65);
+dirL.position.set(6, 14, 8);
+scene.add(dirL);
+
+const dirL2 = new THREE.DirectionalLight(0x8090c0, 0.25);
+dirL2.position.set(-8, -4, -6);
+scene.add(dirL2);
+
+function addPointLight(color, intensity, distance, x, y, z) {
+  const l = new THREE.PointLight(color, intensity, distance);
+  l.position.set(x, y, z);
+  scene.add(l);
+}
+addPointLight(0x2DE89F, 0.45, 16, 0, -4.5, 2);
+addPointLight(0x9088FF, 0.45, 16, 0,  0,   2);
+addPointLight(0xFF6040, 0.45, 16, 0,  4.5, 2);
+
+// ─── GRID FLOOR ──────────────────────────────────────────────────────────────
+const grid = new THREE.GridHelper(30, 30, 0x0c0c22, 0x0c0c22);
+grid.position.y = -6.4;
+scene.add(grid);
+
+// a subtle second fine grid
+const grid2 = new THREE.GridHelper(30, 60, 0x080818, 0x080818);
+grid2.position.y = -6.38;
+scene.add(grid2);
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function makeSprite(text, colorHex, scaleW, scaleH) {
+  const cvs = document.createElement('canvas');
+  cvs.width = 512; cvs.height = 96;
+  const ctx = cvs.getContext('2d');
+  ctx.clearRect(0,0,512,96);
+  ctx.font = 'bold 28px "Courier New",monospace';
+  ctx.fillStyle = colorHex;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, 256, 48);
+  const tex = new THREE.CanvasTexture(cvs);
+  const mat = new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false });
+  const sp = new THREE.Sprite(mat);
+  sp.scale.set(scaleW, scaleH, 1);
+  return sp;
+}
+
+function makeLayerPlate(color) {
+  const geo = new THREE.BoxGeometry(24, 0.04, 11);
+  const mat = new THREE.MeshStandardMaterial({
+    color, transparent:true, opacity:.06,
+    roughness:1, metalness:0, side:THREE.DoubleSide,
+  });
+  return new THREE.Mesh(geo, mat);
+}
+
+function makeVoxel(h, color) {
+  const height = Math.max(0.06, h);
+  const geo = new THREE.BoxGeometry(0.46, height, 0.46);
+  const mat = new THREE.MeshStandardMaterial({ color, roughness:.38, metalness:.12 });
+  const m = new THREE.Mesh(geo, mat);
+  m.userData.mat = mat;
+  m.userData.baseColor = new THREE.Color(color);
+  m.userData.emBase = new THREE.Color(0x000000);
+  return m;
+}
+
+function makeThinLine(p1, p2, opacity) {
+  const geo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(...p1), new THREE.Vector3(...p2)
+  ]);
+  const mat = new THREE.LineBasicMaterial({ color:0xffffff, transparent:true, opacity, depthWrite:false });
+  return new THREE.Line(geo, mat);
+}
+
+function makeGapRing(y) {
+  const geo = new THREE.RingGeometry(1.05, 1.18, 36);
+  const mat = new THREE.MeshBasicMaterial({ color:0xE24B4A, side:THREE.DoubleSide, transparent:true, opacity:.55 });
+  const m = new THREE.Mesh(geo, mat);
+  m.rotation.x = -Math.PI/2;
+  m.position.y = y + 0.025;
+  m.userData.isRing = true;
+  return m;
+}
+
+// ─── BUILD SCENE ─────────────────────────────────────────────────────────────
+const nodeMap = {};       // id → { nd, layer, px, pz, group, voxels, edges:[] }
+const layerGroups = {};
+const hitObjects = [];
+const allEdges = [];       // { mat, fromId, toId }
+let edgesBuilt = false;
+let edgesVisible = false;
+
+LAYERS.forEach(layer => {
+  const grp = new THREE.Group();
+  grp.userData.lid = layer.id;
+  grp.position.y = -14;          // start low; rises during intro
+  layerGroups[layer.id] = grp;
+  scene.add(grp);
+
+  // plate
+  const plate = makeLayerPlate(layer.color);
+  plate.position.set(0, layer.y, 0);
+  grp.add(plate);
+
+  // plate edge line (makes layer plane crisper)
+  const edgeGeo = new THREE.EdgesGeometry(plate.geometry);
+  const edgeMat = new THREE.LineBasicMaterial({ color:layer.color, transparent:true, opacity:.22 });
+  const edgeLine = new THREE.LineSegments(edgeGeo, edgeMat);
+  edgeLine.position.copy(plate.position);
+  grp.add(edgeLine);
+
+  // layer label
+  const lbl = makeSprite(layer.label, layer.hex, 5, 0.9);
+  lbl.position.set(-13.5, layer.y + 0.55, 0);
+  grp.add(lbl);
+
+  // nodes
+  const positions = POS[layer.id];
+  layer.nodes.forEach((nd, i) => {
+    const [px, pz] = positions[i];
+    const voxels = [];
+
+    DIMS.forEach((dim, di) => {
+      const score = nd[dim.id];
+      const h = score * layer.maxH;
+      const vox = makeVoxel(h, dim.color);
+      vox.position.set(px + (di-1)*0.64, layer.y + h/2, pz);
+      grp.add(vox);
+      voxels.push(vox);
+    });
+
+    // gap ring on market nodes with gap >= 0.85
+    if (nd.gap !== null && nd.gap >= 0.85) {
+      const ring = makeGapRing(layer.y);
+      ring.position.x = px;
+      ring.position.z = pz;
+      grp.add(ring);
+    }
+
+    // name label sprite above the tallest voxel
+    const maxScore = Math.max(nd.money, nd.man, nd.machine);
+    const maxH = maxScore * layer.maxH;
+    const nameSp = makeSprite(nd.name, 'rgba(200,205,230,1)', 4, 0.7);
+    nameSp.position.set(px, layer.y + maxH + 0.72, pz);
+    grp.add(nameSp);
+
+    // invisible hit box for raycasting
+    const hitGeo = new THREE.BoxGeometry(2.4, layer.maxH + 0.6, 1.4);
+    const hitMat = new THREE.MeshBasicMaterial({ visible:false });
+    const hitMesh = new THREE.Mesh(hitGeo, hitMat);
+    hitMesh.position.set(px, layer.y + layer.maxH/2 + 0.1, pz);
+    hitMesh.userData = { nodeId: nd.id };
+    grp.add(hitMesh);
+    hitObjects.push(hitMesh);
+
+    nodeMap[nd.id] = { nd, layer, px, pz, group:grp, voxels, edges:[] };
+  });
+});
+
+// ─── BUILD EDGES (called after layers settle) ─────────────────────────────────
+function buildEdges() {
+  EDGES_RAW.forEach(([fId, tId]) => {
+    const f = nodeMap[fId], t = nodeMap[tId];
+    if (!f || !t) return;
+
+    // compute world Y of each anchor: layer.y + group.position.y (which is 0 after intro)
+    const fy = f.layer.y, ty = t.layer.y;
+
+    // slightly above the plate surface
+    const yF = fy + 0.1, yT = ty + 0.1;
+
+    const line = makeThinLine([f.px, yF, f.pz], [t.px, yT, t.pz], 0);
+    scene.add(line);
+
+    const edgeObj = { line, mat: line.material, fromId: fId, toId: tId };
+    allEdges.push(edgeObj);
+    f.edges.push(edgeObj);
+    t.edges.push(edgeObj);
+  });
+
+  // staggered fade-in
+  allEdges.forEach((e, i) => {
+    const delay = i * 65;
+    setTimeout(() => {
+      const t0 = performance.now();
+      (function tick() {
+        const p = Math.min(1, (performance.now() - t0) / 700);
+        e.mat.opacity = p * 0.18;
+        e.mat.needsUpdate = true;
+        if (p < 1) requestAnimationFrame(tick);
+      })();
+    }, delay);
+  });
+
+  edgesVisible = true;
+}
+
+// ─── MOUSE / TOUCH CONTROLS ──────────────────────────────────────────────────
+let drag = false, mx0 = 0, my0 = 0;
+canvas.addEventListener('mousedown', e => { drag=true; mx0=e.clientX; my0=e.clientY; canvas.style.cursor='grabbing'; });
+window.addEventListener('mouseup', () => { drag=false; canvas.style.cursor='default'; });
+window.addEventListener('mousemove', e => {
+  if (!drag) return;
+  const dx = e.clientX - mx0, dy = e.clientY - my0;
+  sph.theta -= dx * 0.012;
+  sph.phi = Math.max(0.14, Math.min(Math.PI/2 - 0.04, sph.phi + dy * 0.011));
+  mx0 = e.clientX; my0 = e.clientY;
+  camApply();
+});
+canvas.addEventListener('wheel', e => {
+  sph.r = Math.max(10, Math.min(42, sph.r + e.deltaY * 0.038));
+  camApply(); e.preventDefault();
+}, { passive:false });
+
+// touch
+let tc0 = null;
+canvas.addEventListener('touchstart', e => { tc0 = { x:e.touches[0].clientX, y:e.touches[0].clientY }; });
+canvas.addEventListener('touchmove', e => {
+  if (!tc0) return;
+  const tc = { x:e.touches[0].clientX, y:e.touches[0].clientY };
+  sph.theta -= (tc.x-tc0.x)*0.014;
+  sph.phi = Math.max(0.14, Math.min(Math.PI/2-0.04, sph.phi+(tc.y-tc0.y)*0.012));
+  tc0 = tc; camApply(); e.preventDefault();
+}, { passive:false });
+
+// ─── HOVER / RAYCASTER ───────────────────────────────────────────────────────
+const ray = new THREE.Raycaster();
+const mPos = new THREE.Vector2();
+const tt = document.getElementById('tt');
+let hovered = null;
+
+// build node data lookup
+const ndLookup = {};
+LAYERS.forEach(l => l.nodes.forEach(nd => { ndLookup[nd.id] = { nd, layer:l }; }));
+
+canvas.addEventListener('mousemove', e => {
+  mPos.set((e.clientX/GW())*2-1, -(e.clientY/GH())*2+1);
+  ray.setFromCamera(mPos, camera);
+  const hits = ray.intersectObjects(hitObjects);
+
+  if (hits.length) {
+    const nid = hits[0].object.userData.nodeId;
+    canvas.style.cursor = 'pointer';
+    if (nid !== hovered) {
+      if (hovered) unhighlight(hovered);
+      hovered = nid;
+      highlight(nid);
+      renderTooltip(nid);
+    }
+    tt.style.left = Math.min(e.clientX+18, GW()-245)+'px';
+    tt.style.top  = Math.max(e.clientY-24, 8)+'px';
+  } else {
+    if (!drag) canvas.style.cursor = 'default';
+    if (hovered) { unhighlight(hovered); hovered = null; tt.style.opacity=0; }
+  }
+});
+
+function highlight(nid) {
+  const nm = nodeMap[nid];
+  if (!nm) return;
+  nm.voxels.forEach(v => {
+    v.userData.mat.emissive = v.userData.baseColor.clone().multiplyScalar(.45);
+    v.userData.mat.emissiveIntensity = .55;
+    v.userData.mat.needsUpdate = true;
+  });
+  nm.edges.forEach(e => { e.mat.opacity = 0.65; e.mat.needsUpdate = true; });
+}
+
+function unhighlight(nid) {
+  const nm = nodeMap[nid];
+  if (!nm) return;
+  nm.voxels.forEach(v => {
+    v.userData.mat.emissive = new THREE.Color(0);
+    v.userData.mat.emissiveIntensity = 0;
+    v.userData.mat.needsUpdate = true;
+  });
+  nm.edges.forEach(e => { e.mat.opacity = edgesVisible ? 0.18 : 0; e.mat.needsUpdate = true; });
+}
+
+function renderTooltip(nid) {
+  const entry = ndLookup[nid];
+  if (!entry) return;
+  const { nd, layer } = entry;
+
+  document.getElementById('tt-n').textContent = nd.name;
+  document.getElementById('tt-s').textContent = nd.sub;
+
+  let html = '';
+  DIMS.forEach(dim => {
+    const v = nd[dim.id];
+    const pct = Math.round(v*100);
+    html += `<div class="drow">
+      <span class="dk" style="color:${dim.hex}">${dim.fit}</span>
+      <div class="dbar"><div class="dbf" style="width:${pct}%;background:${dim.hex}"></div></div>
+      <span class="dv">${pct}%</span>
+    </div>`;
+  });
+
+  if (nd.gap !== null && nd.gap !== undefined) {
+    const g = Math.round(nd.gap*100);
+    const isOpp = g >= 85;
+    html += `<div class="gap" style="color:${isOpp?'#E24B4A':'rgba(255,255,255,.35)'}">gap ${g}%${isOpp?' &mdash; &#9889; unsolved':''}</div>`;
+  }
+
+  // pmf score (geometric mean of dim alignments vs market avg)
+  if (layer.id === 'product') {
+    const score = Math.pow(nd.money * nd.man * nd.machine, 1/3);
+    html += `<div class="gap" style="color:rgba(255,255,255,.4)">PMF score ${Math.round(score*100)}%</div>`;
+  }
+
+  document.getElementById('tt-d').innerHTML = html;
+  tt.style.opacity = 1;
+}
+
+// ─── ANIMATION LOOP ──────────────────────────────────────────────────────────
+const clock = new THREE.Clock();
+const INTRO_OFFSETS = { product:0, solution:.5, market:1.05 };
+
+function easeOutCubic(t) { return 1 - Math.pow(1-t, 3); }
+
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsed = clock.getElapsedTime();
+
+  // layer rise intro
+  LAYERS.forEach(layer => {
+    const grp = layerGroups[layer.id];
+    const startT = INTRO_OFFSETS[layer.id];
+    const t = Math.max(0, Math.min(1, (elapsed - startT) / 1.1));
+    grp.position.y = (easeOutCubic(t) - 1) * 14;
+  });
+
+  // build edges once all layers have settled
+  if (elapsed > 2.5 && !edgesBuilt) {
+    edgesBuilt = true;
+    buildEdges();
+  }
+
+  // gap ring pulse
+  LAYERS.forEach(layer => {
+    layerGroups[layer.id].children.forEach(child => {
+      if (child.userData.isRing) {
+        child.material.opacity = 0.28 + 0.38 * Math.sin(elapsed * 2.4 + child.position.x);
+        child.material.needsUpdate = true;
+      }
+    });
+  });
+
+  // very gentle idle sway on voxels (Y scale breathe)
+  LAYERS.forEach(layer => {
+    layerGroups[layer.id].children.forEach(child => {
+      if (child.userData.mat && child.userData.baseColor) {
+        const phase = child.position.x * 0.4 + child.position.z * 0.3;
+        const sway = 1 + 0.008 * Math.sin(elapsed * 0.8 + phase);
+        child.scale.y = sway;
+      }
+    });
+  });
+
+  renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+  camera.aspect = GW()/GH();
+  camera.updateProjectionMatrix();
+  renderer.setSize(GW(), GH());
+});
+
+animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hackamap · FOSS Stack · Globe Orrery</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020710;--border:#0a1e33;--text:#8ab4d4;--dim:#1c3348;--accent:#00d4ff}
+body{background:var(--bg);font-family:'JetBrains Mono',monospace;overflow:hidden;height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,130,255,.0065) 2px,rgba(0,130,255,.0065) 4px);pointer-events:none;z-index:300}
+body::after{content:'';position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,180,255,.2),transparent);animation:scan 18s linear infinite;pointer-events:none;z-index:301}
+@keyframes scan{0%{top:-2px}100%{top:100vh}}
+header{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(2,7,16,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:16px;z-index:50;backdrop-filter:blur(12px)}
+.logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--accent);letter-spacing:-.3px}
+.logo span{color:var(--dim)}
+.sep{width:1px;height:16px;background:var(--border)}
+.tag{font-size:8px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase}
+.hst{display:flex;gap:14px;margin-left:auto;font-size:10px;color:var(--dim)}
+.hst strong{color:var(--accent)}
+.live{display:flex;align-items:center;gap:5px;font-size:10px;color:#22c55e}
+.ld{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+canvas{position:fixed;top:48px;left:0;display:block}
+#lbl{position:fixed;top:48px;left:0;right:0;bottom:0;pointer-events:none;z-index:10}
+.lb{position:absolute;pointer-events:none;transform:translate(-50%,-50%);white-space:nowrap}
+.lb .ln{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.5px;text-shadow:0 0 10px currentColor,0 2px 6px #000c}
+.lb .lh{font-family:'JetBrains Mono',monospace;font-size:7px;opacity:.5;display:block;margin-top:1px;text-shadow:0 1px 4px #000c}
+.lb.hub-lb .ln{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px}
+.panel{position:fixed;background:rgba(5,12,26,.96);border:1px solid var(--border);border-radius:7px;padding:13px;backdrop-filter:blur(10px);z-index:40;font-family:'JetBrains Mono',monospace;font-size:10px}
+#ctrl{top:64px;left:12px;width:192px}
+.pt{font-size:8px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin-bottom:11px}
+.btn{width:100%;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 8px;border-radius:4px;cursor:pointer;text-align:left;margin-top:3px;transition:.18s all}
+.btn:hover,.btn.on{border-color:var(--accent);color:var(--accent)}
+.btn.on{background:rgba(0,212,255,.055)}
+#tip{top:64px;right:12px;width:248px;opacity:0;transform:translateX(12px);transition:.22s all}
+#tip.on{opacity:1;transform:translateX(0)}
+.ts{font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.tl{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:9px;line-height:1.3}
+.tr{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border);color:var(--dim)}
+.tr:last-of-type{border:none}
+.tr strong{color:var(--text);font-weight:500}
+.p0b{display:inline-block;background:rgba(192,132,252,.18);border:1px solid rgba(192,132,252,.5);color:#c084fc;font-size:8px;padding:1px 6px;border-radius:3px;margin-bottom:7px;letter-spacing:1.5px}
+/* HUD ticker */
+#hud{position:fixed;bottom:52px;left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:6px;align-items:center;font-size:9px;color:var(--dim);letter-spacing:1px;pointer-events:none}
+.hud-step{padding:3px 8px;border:1px solid var(--border);border-radius:3px;transition:.3s all}
+.hud-step.act{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07)}
+.hud-step.done{border-color:#1e3a52;color:#2a5570}
+#leg{position:fixed;bottom:12px;left:12px;font-size:9px;color:var(--dim);display:flex;flex-wrap:wrap;gap:9px;z-index:40}
+.li{display:flex;align-items:center;gap:4px}
+.lc{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Hacka<span>map</span></div><div class="sep"></div>
+  <div class="tag">FOSS Stack · Globe Orrery</div>
+  <div class="hst">
+    <div class="live"><div class="ld"></div>LIVE</div>
+    <div><strong>16</strong> tools</div><div><strong>8</strong> hubs</div>
+    <div><strong>8</strong> data arcs</div><div><strong>$0</strong> TCO</div>
+  </div>
+</header>
+<div id="lbl"></div>
+<div class="panel" id="ctrl">
+  <div class="pt">Controls · Drag + Scroll</div>
+  <button class="btn on" id="bGlobe">🌐 Globe ON</button>
+  <button class="btn on" id="bAtmo">✦ Atmosphere ON</button>
+  <button class="btn on" id="bGrid">⊞ Grid ON</button>
+  <button class="btn on" id="bOrbit">⟳ Orbits ON</button>
+  <button class="btn on" id="bArcs">→ Data Arcs ON</button>
+  <button class="btn on" id="bRipple">◎ Ripples ON</button>
+  <button class="btn on" id="bSpokes">⊛ Spokes ON</button>
+  <button class="btn on" id="bLabels">⬡ Labels ON</button>
+  <button class="btn on" id="bStars">✦ Stars ON</button>
+  <button class="btn" id="bReset" style="margin-top:8px">↺ Reset camera</button>
+</div>
+<div class="panel" id="tip">
+  <div class="ts" id="t-sc">—</div>
+  <div id="t-p0"></div>
+  <div class="tl" id="t-name">—</div>
+  <div class="tr"><span>Layer</span><strong id="t-layer">—</strong></div>
+  <div class="tr"><span>Hour</span><strong id="t-hour">—</strong></div>
+  <div class="tr"><span>Risk</span><strong id="t-risk">—</strong></div>
+  <div class="tr"><span>License</span><strong id="t-lic">—</strong></div>
+  <div class="tr"><span>DF Stage</span><strong id="t-df">—</strong></div>
+</div>
+<div id="hud"></div>
+<div id="leg">
+  <div class="li"><div class="lc" style="background:#c084fc;box-shadow:0 0 4px #c084fc"></div>P0 critical</div>
+  <div class="li"><div class="lc" style="background:none;border:1.5px solid #8ab4d4;border-radius:50%"></div>Hub</div>
+  <div class="li"><div class="lc" style="background:none;border:1px solid #3a5570;border-radius:50%"></div>Orbit ring</div>
+  <div class="li"><div class="lc" style="background:#22c55e;width:14px;height:1px;border-radius:0"></div>Data arc</div>
+  <div class="li"><div class="lc" style="background:#3a8080;width:14px;height:1px;border-radius:0"></div>Surface arc</div>
+</div>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────
+const SC=[
+  {id:'h-infra',    name:'Infra & SCM',      hex:'#64748b', clr:0x64748b, lat:48,  lon:-5,   df:'DF-00'},
+  {id:'h-scraping', name:'Scraping',          hex:'#06b6d4', clr:0x06b6d4, lat:20,  lon:72,   df:'DF-01'},
+  {id:'h-ai',       name:'AI Pipeline',       hex:'#a78bfa', clr:0xa78bfa, lat:36,  lon:138,  df:'DF-02/03'},
+  {id:'h-storage',  name:'Storage & Dedup',   hex:'#f59e0b', clr:0xf59e0b, lat:-22, lon:133,  df:'DF-04/05'},
+  {id:'h-queue',    name:'Queue & Pipeline',  hex:'#f43f5e', clr:0xf43f5e, lat:-28, lon:-58,  df:'DF-06'},
+  {id:'h-api',      name:'API & Edge',        hex:'#22c55e', clr:0x22c55e, lat:38,  lon:-97,  df:'DF-07'},
+  {id:'h-bot',      name:'Alerts & Bot',      hex:'#c084fc', clr:0xc084fc, lat:57,  lon:38,   df:'DF-08'},
+  {id:'h-frontend', name:'Frontend & Deploy', hex:'#2dd4bf', clr:0x2dd4bf, lat:-8,  lon:-35,  df:'DF-09'},
+];
+const TOOLS=[
+  {id:'t01',hub:'h-infra',   nm:'GitHub + Actions', ly:'SCM/CI-CD',    hr:'H0:00',rk:'Low',p0:false,lic:'MIT',        df:'DF-00'},
+  {id:'t02',hub:'h-scraping',nm:'Reddit API',        ly:'Scraping',     hr:'H0:20',rk:'Low',p0:false,lic:'MIT',        df:'DF-01'},
+  {id:'t03',hub:'h-scraping',nm:'HN Algolia API',    ly:'Scraping',     hr:'H0:20',rk:'Low',p0:false,lic:'Free',       df:'DF-01'},
+  {id:'t04',hub:'h-scraping',nm:'PH API v2',         ly:'Scraping',     hr:'H0:20',rk:'Low',p0:false,lic:'Free',       df:'DF-01'},
+  {id:'t05',hub:'h-ai',      nm:'OpenClaw',          ly:'Orchestration',hr:'H0:30',rk:'Low',p0:false,lic:'Free',       df:'DF-02'},
+  {id:'t06',hub:'h-ai',      nm:'LiteLLM proxy',     ly:'AI Proxy',     hr:'H0:40',rk:'Low',p0:false,lic:'MIT',        df:'DF-03'},
+  {id:'t07',hub:'h-ai',      nm:'DeepSeek chat',     ly:'AI Model',     hr:'H0:40',rk:'Med',p0:false,lic:'Apache 2.0', df:'DF-03'},
+  {id:'t08',hub:'h-storage', nm:'JSON Local Store',  ly:'Dedup/Cache',  hr:'H0:50',rk:'Low',p0:false,lic:'MIT',        df:'DF-04'},
+  {id:'t09',hub:'h-storage', nm:'Neon PostgreSQL',   ly:'Database',     hr:'H1:00',rk:'Low',p0:false,lic:'Apache 2.0', df:'DF-05'},
+  {id:'t10',hub:'h-queue',   nm:'BullMQ',            ly:'Queue',        hr:'H1:30',rk:'Low',p0:false,lic:'MIT',        df:'DF-06'},
+  {id:'t11',hub:'h-queue',   nm:'Upstash Redis',     ly:'Queue Infra',  hr:'H1:30',rk:'Low',p0:false,lic:'MIT client', df:'DF-06'},
+  {id:'t12',hub:'h-queue',   nm:'node-cron',         ly:'Scheduler',    hr:'H1:30',rk:'Low',p0:false,lic:'MIT',        df:'DF-06'},
+  {id:'t13',hub:'h-api',     nm:'Cloudflare Worker', ly:'API/Edge',     hr:'H1:15',rk:'Low',p0:false,lic:'Free',       df:'DF-07'},
+  {id:'t14',hub:'h-bot',     nm:'Telegram Bot',      ly:'Alerts',       hr:'H1:45',rk:'Low',p0:true, lic:'MIT',        df:'DF-08'},
+  {id:'t15',hub:'h-frontend',nm:'D3.js v7',          ly:'Canvas',       hr:'H2:00',rk:'Low',p0:true, lic:'MIT',        df:'DF-09'},
+  {id:'t16',hub:'h-frontend',nm:'Cloudflare Pages',  ly:'CDN',          hr:'H2:55',rk:'Low',p0:true, lic:'Free',       df:'DF-09'},
+];
+const ARCS=[
+  ['h-infra','h-scraping'],['h-scraping','h-ai'],['h-ai','h-storage'],
+  ['h-storage','h-queue'],['h-storage','h-api'],
+  ['h-api','h-bot'],['h-api','h-frontend'],['h-bot','h-frontend'],
+];
+const CP_HOURS=['H0:00','H0:20','H0:40','H1:00','H1:15','H1:30','H1:45','H2:00','H2:30','H2:55','H3:00'];
+const scMap=Object.fromEntries(SC.map(s=>[s.id,s]));
+
+// ── THREE SETUP ────────────────────────────────────────────────────────
+const W=window.innerWidth, H=window.innerHeight-48;
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(W,H); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setClearColor(0x020710,1);
+document.body.appendChild(renderer.domElement);
+const canvas=renderer.domElement;
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(52,W/H,.5,6000);
+camera.position.set(0,80,680); camera.lookAt(0,0,0);
+
+const world=new THREE.Group();
+scene.add(world);
+const GLOB_R=160;
+
+// ── HELPERS ────────────────────────────────────────────────────────────
+function ll2v(lat,lon,r=GLOB_R){
+  const phi=(90-lat)*Math.PI/180, th=(lon+180)*Math.PI/180;
+  return new THREE.Vector3(-r*Math.sin(phi)*Math.cos(th), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(th));
+}
+function hexRgb(h){return[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];}
+// Great-circle arc on sphere surface
+function greatArcPts(p1,p2,segs=48,lift=1.0){
+  const pts=[];
+  for(let i=0;i<=segs;i++){
+    const t=i/segs;
+    const p=new THREE.Vector3().lerpVectors(p1,p2,t).normalize().multiplyScalar(GLOB_R*lift);
+    pts.push(p);
+  }
+  return pts;
+}
+
+// ── STARS ──────────────────────────────────────────────────────────────
+const sG=new THREE.BufferGeometry();
+const sP=new Float32Array(4800);
+for(let i=0;i<1600;i++){
+  const r=1600+Math.random()*1200, a=Math.random()*Math.PI*2, b=(Math.random()-.5)*Math.PI;
+  sP[i*3]=r*Math.cos(b)*Math.cos(a); sP[i*3+1]=r*Math.sin(b); sP[i*3+2]=r*Math.cos(b)*Math.sin(a);
+}
+sG.setAttribute('position',new THREE.BufferAttribute(sP,3));
+const starField=new THREE.Points(sG,new THREE.PointsMaterial({color:0x3a6888,size:1.8,sizeAttenuation:true}));
+world.add(starField);
+
+// ── PARTICLE GLOBE (Fibonacci) ──────────────────────────────────────────
+const N=2400;
+const dPos=new Float32Array(N*3), dCol=new Float32Array(N*3), dBright=new Float32Array(N);
+const PHI=Math.PI*(3-Math.sqrt(5));
+for(let i=0;i<N;i++){
+  const y=1-(i/(N-1))*2, rr=Math.sqrt(Math.max(0,1-y*y)), th=PHI*i;
+  const px=GLOB_R*rr*Math.cos(th), py=GLOB_R*y, pz=GLOB_R*rr*Math.sin(th);
+  dPos[i*3]=px; dPos[i*3+1]=py; dPos[i*3+2]=pz;
+  let md=1e9,ns=SC[0];
+  SC.forEach(s=>{const hv=ll2v(s.lat,s.lon);const d=(px-hv.x)**2+(py-hv.y)**2+(pz-hv.z)**2;if(d<md){md=d;ns=s;}});
+  const[r,g,b]=hexRgb(ns.hex);
+  dCol[i*3]=r*.25; dCol[i*3+1]=g*.25; dCol[i*3+2]=b*.25;
+  dBright[i]=Math.random();
+}
+const dGeo=new THREE.BufferGeometry();
+dGeo.setAttribute('position',new THREE.BufferAttribute(dPos,3));
+dGeo.setAttribute('color',new THREE.BufferAttribute(dCol,3));
+const globeDots=new THREE.Points(dGeo,new THREE.PointsMaterial({size:2.3,vertexColors:true,sizeAttenuation:true}));
+world.add(globeDots);
+
+// ── LATITUDE/LONGITUDE GRID ─────────────────────────────────────────────
+const gridGroup=new THREE.Group();
+world.add(gridGroup);
+const gridMat=new THREE.LineBasicMaterial({color:0x0a2a40,transparent:true,opacity:.45});
+// Lat lines
+[-60,-30,0,30,60].forEach(lat=>{
+  const pts=[];
+  for(let lon=-180;lon<=180;lon+=3) pts.push(ll2v(lat,lon,GLOB_R+.5));
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  gridGroup.add(new THREE.Line(g,gridMat));
+});
+// Lon lines
+for(let lon=-180;lon<180;lon+=30){
+  const pts=[];
+  for(let lat=-90;lat<=90;lat+=3) pts.push(ll2v(lat,lon,GLOB_R+.5));
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  gridGroup.add(new THREE.Line(g,gridMat));
+}
+
+// ── ATMOSPHERE — INNER GLOW ─────────────────────────────────────────────
+const atmoV=`varying vec3 vN; void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
+const atmoF=`varying vec3 vN; void main(){float i=pow(max(0.,0.65-dot(vN,vec3(0,0,1))),3.2);gl_FragColor=vec4(.03,.28,.58,1.)*i*1.9;}`;
+const atmoMesh=new THREE.Mesh(
+  new THREE.SphereGeometry(GLOB_R*1.07,56,56),
+  new THREE.ShaderMaterial({vertexShader:atmoV,fragmentShader:atmoF,blending:THREE.AdditiveBlending,side:THREE.BackSide,transparent:true,depthWrite:false})
+);
+world.add(atmoMesh);
+
+// ── ATMOSPHERE — OUTER CORONA ───────────────────────────────────────────
+const coronaF=`varying vec3 vN; void main(){float i=pow(max(0.,.82-dot(vN,vec3(0,0,1))),5.5);gl_FragColor=vec4(.01,.14,.38,1.)*i*1.2;}`;
+const coronaMesh=new THREE.Mesh(
+  new THREE.SphereGeometry(GLOB_R*1.18,48,48),
+  new THREE.ShaderMaterial({vertexShader:atmoV,fragmentShader:coronaF,blending:THREE.AdditiveBlending,side:THREE.BackSide,transparent:true,depthWrite:false})
+);
+world.add(coronaMesh);
+
+// Ghost rim shell
+world.add(new THREE.Mesh(
+  new THREE.SphereGeometry(GLOB_R*1.015,48,48),
+  new THREE.MeshBasicMaterial({color:0x002255,transparent:true,opacity:.07,side:THREE.FrontSide,depthWrite:false})
+));
+
+// Core pulse sphere
+const coreMesh=new THREE.Mesh(
+  new THREE.SphereGeometry(16,14,14),
+  new THREE.MeshStandardMaterial({color:0x00d4ff,emissive:0x00d4ff,emissiveIntensity:.8,transparent:true,opacity:.55})
+);
+world.add(coreMesh);
+
+// ── LIGHTS ────────────────────────────────────────────────────────────
+scene.add(new THREE.AmbientLight(0x091622,1));
+const sun=new THREE.DirectionalLight(0x3a7acc,.4);
+sun.position.set(400,200,500); scene.add(sun);
+
+// ── RIPPLE POOL ────────────────────────────────────────────────────────
+const RIPPLE_MAX=24;
+const ripplePool=[];
+for(let i=0;i<RIPPLE_MAX;i++){
+  const mesh=new THREE.Mesh(
+    new THREE.TorusGeometry(1,.8,4,40),
+    new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0,depthWrite:false})
+  );
+  mesh.visible=false; mesh._active=false; mesh._t=0; mesh._sc=null;
+  world.add(mesh); ripplePool.push(mesh);
+}
+function spawnRipple(sc){
+  const r=ripplePool.find(r=>!r._active)||ripplePool[0];
+  r._active=true; r._t=0; r._sc=sc;
+  r.visible=true;
+  const out=sc.pos.clone().normalize();
+  r.position.copy(sc.pos);
+  // Orient ring to face outward (normal = outward)
+  const q=new THREE.Quaternion();
+  q.setFromUnitVectors(new THREE.Vector3(0,0,1),out);
+  r.setRotationFromQuaternion(q);
+  r.material.color.set(sc.clr);
+  r.scale.setScalar(1);
+  r.material.opacity=.55;
+}
+
+// ── HUB SURFACE NODES + ORBIT RINGS + TOOL NODES ─────────────────────
+const orbRings=[], spokePairs=[], arcFlowLines=[], travelerData=[];
+const surfaceArcs=[];
+const pickHubs=[], pickTools=[];
+
+SC.forEach(sc=>{
+  sc.pos=ll2v(sc.lat,sc.lon);
+  const outward=sc.pos.clone().normalize();
+
+  // Hub group — Y axis = outward normal
+  const hg=new THREE.Group();
+  hg.position.copy(sc.pos);
+  const q=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),outward);
+  hg.setRotationFromQuaternion(q);
+  world.add(hg); sc.hubGroup=hg;
+
+  // Hub sphere
+  const hm=new THREE.Mesh(
+    new THREE.SphereGeometry(8,14,14),
+    new THREE.MeshStandardMaterial({color:sc.clr,emissive:sc.clr,emissiveIntensity:.55,metalness:.5,roughness:.35})
+  );
+  hg.add(hm); sc.mesh=hm; pickHubs.push(hm); hm._sc=sc; hm._type='hub';
+
+  // Point light
+  const pl=new THREE.PointLight(sc.clr,.35,220); pl.position.copy(sc.pos);
+  world.add(pl); sc.light=pl;
+
+  // Orbit rings using EllipseCurve in local space
+  const members=TOOLS.filter(t=>t.hub===sc.id);
+  const orR=54+members.length*8;
+  const ell=new THREE.EllipseCurve(0,0,orR,orR*.70,0,Math.PI*2,false,0);
+  const ePts=ell.getPoints(100).map(p=>new THREE.Vector3(p.x,0,p.y));
+  // Ring 1 — primary
+  const r1=new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(ePts),
+    new THREE.LineBasicMaterial({color:sc.clr,transparent:true,opacity:.35})
+  );
+  r1.rotation.x=Math.PI/2; hg.add(r1); orbRings.push(r1); sc.ring1=r1;
+  // Ring 2 — tilted companion
+  const r2=new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(ePts),
+    new THREE.LineBasicMaterial({color:sc.clr,transparent:true,opacity:.16})
+  );
+  r2.rotation.x=Math.PI/2; r2.rotation.y=Math.PI*.55; r2.rotation.z=.7;
+  hg.add(r2); orbRings.push(r2);
+
+  // Tool nodes on orbit — proper rotation math
+  // Hub local space: Y = outward. Ring is in XZ plane (after rotation.x=PI/2).
+  // Tool orbit: ellipse semi-major=orR along X, semi-minor=orR*0.70 along Z, in XZ plane.
+  // After ring.rotation.x = PI/2, a point (ex,0,ez) maps to world-local (ex, -ez, 0).
+  // We track angle in the untilted ellipse, apply same rotation per-frame.
+  const TILT=Math.PI/2;
+  members.forEach((t,i)=>{
+    const ang=(i/members.length)*Math.PI*2;
+    t.orR=orR; t.orAng=ang; t.orSpeed=.0042+i*.0008+(t.p0?.003:0);
+    t.orTilt=TILT;
+    const col=t.p0?0xc084fc:(t.rk==='Med'?0xf87171:sc.clr);
+    const sz=t.p0?12:t.rk==='Med'?10:8;
+    const tm=new THREE.Mesh(
+      new THREE.SphereGeometry(sz,12,12),
+      new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:t.p0?.6:.28,metalness:.3,roughness:.5})
+    );
+    // Initial position
+    tm.position.set(orR*Math.cos(ang), -orR*.70*Math.sin(ang), 0);
+    hg.add(tm); t.mesh=tm; t._sc=sc; tm._tool=t; tm._sc=sc; tm._type='tool';
+    pickTools.push(tm);
+
+    // Spoke — local hub space
+    const spkGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),tm.position.clone()]);
+    const spkLine=new THREE.Line(spkGeo,new THREE.LineBasicMaterial({color:sc.clr,transparent:true,opacity:.3}));
+    hg.add(spkLine); spokePairs.push({line:spkLine,tool:t});
+  });
+});
+
+// ── ELEVATED DATA-FLOW ARCS ────────────────────────────────────────────
+ARCS.forEach(([aid,bid])=>{
+  const a=scMap[aid],b=scMap[bid];
+  const p1=a.pos.clone(),p2=b.pos.clone();
+  const mid=p1.clone().add(p2).multiplyScalar(.5).normalize().multiplyScalar(GLOB_R+80+Math.random()*35);
+  const curve=new THREE.QuadraticBezierCurve3(p1,mid,p2);
+  const pts=curve.getPoints(64);
+  const geo=new THREE.BufferGeometry().setFromPoints(pts);
+  const mat=new THREE.LineBasicMaterial({color:a.clr,transparent:true,opacity:.5});
+  const line=new THREE.Line(geo,mat);
+  line._phase=Math.random()*Math.PI*2;
+  world.add(line); arcFlowLines.push(line);
+
+  // Traveler sphere
+  const tv=new THREE.Mesh(
+    new THREE.SphereGeometry(3.2,8,8),
+    new THREE.MeshBasicMaterial({color:a.clr,transparent:true,opacity:1})
+  );
+  tv.position.copy(p1);
+  world.add(tv);
+  travelerData.push({mesh:tv,curve,t:Math.random(),speed:.0016+Math.random()*.0008});
+});
+
+// ── SURFACE GREAT-CIRCLE ARCS (data pipeline path) ─────────────────────
+ARCS.forEach(([aid,bid])=>{
+  const a=scMap[aid],b=scMap[bid];
+  const pts=greatArcPts(a.pos,b.pos,56,1.008);
+  const geo=new THREE.BufferGeometry().setFromPoints(pts);
+  const mat=new THREE.LineBasicMaterial({color:a.clr,transparent:true,opacity:.18});
+  const line=new THREE.Line(geo,mat);
+  world.add(line); surfaceArcs.push(line);
+});
+
+// ── HTML LABELS ────────────────────────────────────────────────────────
+const lblEl=document.getElementById('lbl');
+const allLabels=[];
+SC.forEach(sc=>{
+  const d=document.createElement('div');
+  d.className='lb hub-lb';
+  d.innerHTML=`<span class="ln" style="color:${sc.hex}">${sc.name.toUpperCase()}</span>`;
+  lblEl.appendChild(d); allLabels.push({div:d,sc,isHub:true});
+});
+TOOLS.forEach(t=>{
+  const sc=scMap[t.hub];
+  const d=document.createElement('div');
+  d.className='lb';
+  d.innerHTML=`<span class="ln" style="color:${sc.hex}">${t.nm}</span><span class="lh" style="color:${sc.hex}">${t.hr}</span>`;
+  lblEl.appendChild(d); allLabels.push({div:d,tool:t,sc,isHub:false});
+});
+
+// ── CRITICAL PATH HUD ──────────────────────────────────────────────────
+const hudEl=document.getElementById('hud');
+CP_HOURS.forEach((h,i)=>{
+  const s=document.createElement('div');
+  s.className='hud-step'; s.textContent=h; s.dataset.i=i;
+  if(i===0)s.classList.add('act');
+  hudEl.appendChild(s);
+});
+let hudIdx=0;
+function advanceHud(){
+  const steps=hudEl.querySelectorAll('.hud-step');
+  if(hudIdx<steps.length){
+    steps[hudIdx].classList.remove('act'); steps[hudIdx].classList.add('done');
+  }
+  hudIdx=(hudIdx+1)%steps.length;
+  if(hudIdx===0){steps.forEach(s=>{s.classList.remove('done','act');});}
+  steps[hudIdx].classList.add('act');
+}
+setInterval(advanceHud,2800);
+
+// ── INERTIA DRAG CONTROLS ─────────────────────────────────────────────
+let isDrag=false, prevX=0, prevY=0;
+let rotY=0, rotX=0, velY=0, velX=0, camD=680;
+canvas.addEventListener('mousedown',e=>{isDrag=true;prevX=e.clientX;prevY=e.clientY;velY=velX=0;canvas.style.cursor='grabbing';});
+window.addEventListener('mousemove',e=>{
+  if(!isDrag)return;
+  const dx=e.clientX-prevX, dy=e.clientY-prevY;
+  velY=dx*.004; velX=dy*.004;
+  rotY+=velY; rotX+=velX;
+  rotX=Math.max(-1.25,Math.min(1.25,rotX));
+  world.rotation.y=rotY; world.rotation.x=rotX;
+  prevX=e.clientX; prevY=e.clientY;
+  // Hover raycast on drag-move (throttled)
+  doHover(e.clientX, e.clientY);
+});
+window.addEventListener('mouseup',()=>{isDrag=false;canvas.style.cursor='grab';});
+canvas.addEventListener('wheel',e=>{
+  camD=Math.max(260,Math.min(2200,camD+e.deltaY*.75));
+  camera.position.set(0,camD*.13,camD); camera.lookAt(0,0,0);
+},{passive:true});
+let touch0=null;
+canvas.addEventListener('touchstart',e=>{touch0={x:e.touches[0].clientX,y:e.touches[0].clientY};velY=velX=0;});
+canvas.addEventListener('touchmove',e=>{
+  if(!touch0)return;
+  const dx=e.touches[0].clientX-touch0.x, dy=e.touches[0].clientY-touch0.y;
+  velY=dx*.004; velX=dy*.004;
+  rotY+=velY; rotX+=velX;
+  rotX=Math.max(-1.25,Math.min(1.25,rotX));
+  world.rotation.y=rotY; world.rotation.x=rotX;
+  touch0={x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+canvas.style.cursor='grab';
+
+// ── HOVER RAYCASTER ───────────────────────────────────────────────────
+const ray=new THREE.Raycaster();
+const mouse2=new THREE.Vector2();
+let hoveredHub=null, hoverFrame=0;
+function doHover(cx,cy){
+  if(hoverFrame++%3!==0)return; // throttle to every 3rd call
+  mouse2.x=(cx/W)*2-1; mouse2.y=-((cy-48)/H)*2+1;
+  ray.setFromCamera(mouse2,camera);
+  const hits=ray.intersectObjects([...pickHubs,...pickTools],true);
+  const hit=hits.length?hits[0].object:null;
+  const newHub=hit?hit._sc:null;
+  if(newHub===hoveredHub)return;
+  hoveredHub=newHub;
+  // Dim/highlight orbital rings and spokes
+  SC.forEach(sc=>{
+    const highlight=!newHub||sc===newHub;
+    sc.ring1.material.opacity=highlight?.35:.06;
+    sc.light.intensity=highlight?.35:.1;
+  });
+  // Dim non-cluster surface arcs
+  surfaceArcs.forEach((l,i)=>{
+    const sc=scMap[ARCS[i][0]];
+    l.material.opacity=(!newHub||sc===newHub)?.2:.04;
+  });
+  arcFlowLines.forEach((l,i)=>{
+    const sc=scMap[ARCS[i][0]];
+    l.material.opacity=(!newHub||sc===newHub)?.52:.07;
+  });
+  canvas.style.cursor=hit?'pointer':'grab';
+}
+canvas.addEventListener('mousemove',e=>doHover(e.clientX,e.clientY));
+
+// ── CLICK RAYCASTER + TOOLTIP ─────────────────────────────────────────
+const tip=document.getElementById('tip');
+canvas.addEventListener('click',e=>{
+  mouse2.x=(e.clientX/W)*2-1; mouse2.y=-((e.clientY-48)/H)*2+1;
+  ray.setFromCamera(mouse2,camera);
+  const hits=ray.intersectObjects([...pickHubs,...pickTools],true);
+  if(!hits.length){tip.classList.remove('on');return;}
+  const d=hits[0].object;
+  const isHub=d._type==='hub'; const sc=d._sc;
+  document.getElementById('t-sc').textContent=isHub?'SUPER-CLUSTER':sc.name.toUpperCase();
+  document.getElementById('t-sc').style.color=sc.hex;
+  document.getElementById('t-p0').innerHTML=(!isHub&&d._tool?.p0)?'<div class="p0b">P0 CRITICAL</div>':'';
+  document.getElementById('t-name').textContent=isHub?sc.name:d._tool.nm;
+  document.getElementById('t-layer').textContent=isHub?(TOOLS.filter(t=>t.hub===sc.id).length+' tools'):(d._tool?.ly||'—');
+  document.getElementById('t-hour').textContent=isHub?'—':(d._tool?.hr||'—');
+  document.getElementById('t-risk').textContent=isHub?'—':(d._tool?.rk||'—');
+  document.getElementById('t-lic').textContent=isHub?'—':(d._tool?.lic||'—');
+  document.getElementById('t-df').textContent=isHub?(sc.df||'—'):(d._tool?.df||'—');
+  tip.classList.add('on');
+  // Spawn ripple on hub click
+  if(isHub) spawnRipple(sc);
+});
+
+// ── TOGGLE CONTROLS ───────────────────────────────────────────────────
+let stOn=true,atOn=true,grOn=true,orOn=true,arOn=true,rpOn=true,spOn=true,lbOn=true,starsOn=true;
+function btn(id,fn){document.getElementById(id).addEventListener('click',function(){fn(this);});}
+btn('bGlobe',  b=>{globeDots.visible=!globeDots.visible;b.classList.toggle('on',globeDots.visible);b.textContent=(globeDots.visible?'🌐':'○')+' Globe '+(globeDots.visible?'ON':'OFF');});
+btn('bAtmo',   b=>{atOn=!atOn;atmoMesh.visible=atOn;coronaMesh.visible=atOn;b.classList.toggle('on',atOn);b.textContent='✦ Atmosphere '+(atOn?'ON':'OFF');});
+btn('bGrid',   b=>{grOn=!grOn;gridGroup.visible=grOn;b.classList.toggle('on',grOn);b.textContent='⊞ Grid '+(grOn?'ON':'OFF');});
+btn('bOrbit',  b=>{orOn=!orOn;orbRings.forEach(r=>r.visible=orOn);TOOLS.forEach(t=>{if(t.mesh)t.mesh.visible=orOn;});b.classList.toggle('on',orOn);b.textContent='⟳ Orbits '+(orOn?'ON':'OFF');});
+btn('bArcs',   b=>{arOn=!arOn;arcFlowLines.forEach(l=>l.visible=arOn);travelerData.forEach(d=>d.mesh.visible=arOn);surfaceArcs.forEach(l=>l.visible=arOn);b.classList.toggle('on',arOn);b.textContent='→ Data Arcs '+(arOn?'ON':'OFF');});
+btn('bRipple', b=>{rpOn=!rpOn;if(!rpOn)ripplePool.forEach(r=>{r.visible=false;r._active=false;});b.classList.toggle('on',rpOn);b.textContent='◎ Ripples '+(rpOn?'ON':'OFF');});
+btn('bSpokes', b=>{spOn=!spOn;spokePairs.forEach(s=>s.line.visible=spOn);b.classList.toggle('on',spOn);b.textContent='⊛ Spokes '+(spOn?'ON':'OFF');});
+btn('bLabels', b=>{lbOn=!lbOn;lblEl.style.display=lbOn?null:'none';b.classList.toggle('on',lbOn);b.textContent='⬡ Labels '+(lbOn?'ON':'OFF');});
+btn('bStars',  b=>{starsOn=!starsOn;starField.visible=starsOn;b.classList.toggle('on',starsOn);b.textContent='✦ Stars '+(starsOn?'ON':'OFF');});
+btn('bReset',  ()=>{rotY=0;rotX=0;velY=0;velX=0;camD=680;world.rotation.set(0,0,0);camera.position.set(0,80,680);camera.lookAt(0,0,0);});
+
+// Periodic ripple spawn
+let rippleTimer=0;
+setInterval(()=>{
+  if(!rpOn)return;
+  const sc=SC[Math.floor(Math.random()*SC.length)];
+  spawnRipple(sc);
+},1800);
+
+// ── ANIMATION LOOP ─────────────────────────────────────────────────────
+const camDir=new THREE.Vector3();
+function animate(){
+  requestAnimationFrame(animate);
+  const t=performance.now()*.001;
+
+  // ── Inertia on rotation ──
+  if(!isDrag){
+    velY*=.92; velX*=.92;
+    rotY+=velY+.00022;   // auto-slow spin + inertia
+    rotX+=velX;
+    rotX=Math.max(-1.25,Math.min(1.25,rotX));
+    world.rotation.y=rotY; world.rotation.x=rotX;
+  }
+
+  // ── Core pulse ──
+  coreMesh.scale.setScalar(.88+Math.sin(t*2.1)*.12);
+
+  // ── Animated dot brightness wave (latitude sweep) ──
+  const ca=dGeo.attributes.color;
+  const waveY=Math.sin(t*.4)*GLOB_R; // wave crest latitude in world-Y
+  for(let i=0;i<N;i++){
+    const py=dPos[i*3+1];
+    const wave=.18+Math.pow(Math.max(0,1-Math.abs(py-waveY)/(GLOB_R*.55)),2.2)*.55;
+    const base=dBright[i]*.08+.18;
+    const boost=wave*base;
+    // Nearest SC color already in col array — just scale brightness
+    ca.setX(i,Math.min(1,dCol[i*3]*3.5+boost));
+    ca.setY(i,Math.min(1,dCol[i*3+1]*3.5+boost));
+    ca.setZ(i,Math.min(1,dCol[i*3+2]*3.5+boost));
+  }
+  ca.needsUpdate=true;
+
+  // ── Tool orbital positions (correct rotation math) ──
+  // Hub local: Y=outward, orbit ring rotation.x=PI/2 → XZ plane maps to XY local.
+  // Ellipse point (ex, ez_pre) after rotation.x=PI/2: position = (ex, -ez_pre, 0)
+  TOOLS.forEach(t=>{
+    if(!t.mesh)return;
+    t.orAng+=t.orSpeed;
+    const ex=t.orR*Math.cos(t.orAng);
+    const ez=t.orR*.70*Math.sin(t.orAng);
+    // rotation.x = PI/2: (ex,0,ez) → (ex, -ez, 0)
+    t.mesh.position.set(ex,-ez,0);
+    // Slight Y wobble for depth feel
+    t.mesh.position.y+= Math.sin(t.orAng*1.7+t.orR*.01)*6;
+  });
+
+  // ── Update spokes ──
+  spokePairs.forEach(({line,tool})=>{
+    if(!tool.mesh)return;
+    const p=line.geometry.attributes.position;
+    p.setXYZ(0,0,0,0);
+    p.setXYZ(1,tool.mesh.position.x,tool.mesh.position.y,tool.mesh.position.z);
+    p.needsUpdate=true;
+  });
+
+  // ── Arc travelers ──
+  travelerData.forEach(d=>{
+    d.t=(d.t+d.speed)%1;
+    d.mesh.position.copy(d.curve.getPoint(d.t));
+    d.mesh.material.opacity=Math.sin(d.t*Math.PI)*.85;
+  });
+
+  // ── Arc opacity pulse ──
+  arcFlowLines.forEach(l=>{
+    if(hoveredHub){const sc=scMap[ARCS[arcFlowLines.indexOf(l)][0]];if(sc!==hoveredHub)return;}
+    l.material.opacity=.38+Math.sin(t*1.3+l._phase)*.18;
+  });
+
+  // ── Hub pulse + scheduled ripples ──
+  SC.forEach((sc,i)=>{
+    const s=.90+Math.sin(t*1.7+i*.8)*.11;
+    sc.mesh.scale.setScalar(s);
+    sc.light.intensity=(.28+Math.sin(t*1.5+i*.6)*.1)*(hoveredHub&&sc!==hoveredHub?.35:1);
+  });
+
+  // ── Ripple rings expansion ──
+  if(rpOn){
+    ripplePool.forEach(r=>{
+      if(!r._active)return;
+      r._t+=.018;
+      const s=1+r._t*18;
+      r.scale.setScalar(s);
+      r.material.opacity=Math.max(0,.55*(1-r._t));
+      if(r._t>=1){r._active=false;r.visible=false;}
+    });
+  }
+
+  // ── HTML label projection with back-face culling ──
+  if(lbOn){
+    camera.getWorldDirection(camDir);
+    const camPos=camera.position.clone();
+    allLabels.forEach(({div,sc,tool,isHub})=>{
+      const obj=isHub?sc.mesh:tool.mesh;
+      if(!obj){div.style.display='none';return;}
+      // World position
+      const wp=new THREE.Vector3(); obj.getWorldPosition(wp);
+      // Back-face cull: dot of (wp → camera) with world rotation
+      const toCamera=camPos.clone().sub(wp).normalize();
+      const rotatedNormal=wp.clone().applyEuler(new THREE.Euler(0,0,0)).normalize();
+      // Simpler: use projected z
+      const proj=wp.clone().project(camera);
+      const sx=(proj.x+1)/2*W, sy=(-proj.y+1)/2*H+48;
+      const depth=proj.z;
+      if(depth>=.9999){div.style.display='none';return;}
+      // Back hemisphere fade: use dot of (globe surface pos) with camera direction
+      const surfN=wp.clone().normalize();
+      const toCam=camPos.clone().normalize();
+      const vis=surfN.dot(toCam);
+      const fade=Math.max(0,Math.min(1,(vis-.1)*4));
+      div.style.left=sx+'px';
+      div.style.top=(sy-(isHub?28:20))+'px';
+      div.style.opacity=(fade>.05?fade*.88:0).toFixed(3);
+      div.style.display=null;
+    });
+  }
+
+  renderer.render(scene,camera);
+}
+animate();
+window.addEventListener('resize',()=>{
+  const nW=window.innerWidth,nH=window.innerHeight-48;
+  camera.aspect=nW/nH; camera.updateProjectionMatrix();
+  renderer.setSize(nW,nH);
+});
+</script>
+</body>
+</html>

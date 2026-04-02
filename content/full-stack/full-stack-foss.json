@@ -1,0 +1,702 @@
+{
+  "meta": {
+    "project": "Hackamap",
+    "tagline": "Startup Idea Radar · Gap Map · Knowledge Graph Canvas",
+    "version": "0.1.0",
+    "build_time_hours": 3,
+    "tco": "$0/month",
+    "stack_philosophy": "FOSS (MIT/Apache/BSD) > TCO > Free Tier · Local-first · Solo sequential build",
+    "generated": "2026-03-29"
+  },
+
+  "stack": [
+    {
+      "id": "01",
+      "tool": "GitHub + GitHub Actions",
+      "layer": ["SCM", "CI/CD"],
+      "license": "MIT tooling",
+      "locality": "Cloud SCM · Local clone",
+      "free_tier_limit": "2,000 CI min/month",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:00",
+        "task": "Init repo · wrangler.toml · pages.json · env vars · deploy.yml (git push main → CF Workers + Pages)",
+        "blocker": null,
+        "status": "☐",
+        "category": ["Infra", "SCM", "Deploy"]
+      },
+      "data_flow": {
+        "df_stage": "DF-00",
+        "df_stage_name": "Setup",
+        "data_in": null,
+        "data_in_type": null,
+        "transformation": "Scaffold directory tree; wire git push main → Actions → CF Workers + Pages auto-deploy",
+        "data_out": "Repo skeleton · CI pipeline live",
+        "data_out_type": "Repository + GitHub Actions workflow",
+        "pmf_fields_added": []
+      },
+      "user_stories": [],
+      "canvas_signal": null
+    },
+    {
+      "id": "02",
+      "tool": "Reddit API (PRAW / snoowrap)",
+      "layer": ["Scraping"],
+      "license": "MIT",
+      "locality": "Local process",
+      "free_tier_limit": "60 req/min OAuth",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:20",
+        "task": "Fetch r/startups + r/SaaS raw items via OAuth",
+        "blocker": "GitHub repo up",
+        "status": "☐",
+        "category": ["Scrape", "Data"]
+      },
+      "data_flow": {
+        "df_stage": "DF-01",
+        "df_stage_name": "Ingestion",
+        "data_in": "GET oauth.reddit.com/r/startups/new?limit=100",
+        "data_in_type": "HTTP API response",
+        "transformation": "Adapter normalises score→upvotes, num_comments→comments, permalink→source_url; wraps into RawItem",
+        "data_out_type": "RawItem[]",
+        "data_out_example": {
+          "source": "reddit_r_startups",
+          "post_id": "1fghjkl",
+          "url": "https://reddit.com/r/startups/comments/1fghjkl/",
+          "title": "AI agents are cool but I spent 8 hours on prompt engineering just to get it to remember context across sessions",
+          "upvotes": 142,
+          "comments": 28,
+          "scraped_at": "2026-03-27T12:45:00Z"
+        },
+        "pmf_fields_added": ["asks", "upvotes", "source", "source_url", "raw_text", "scraped_at"]
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": null
+    },
+    {
+      "id": "03",
+      "tool": "HN Algolia API",
+      "layer": ["Scraping"],
+      "license": "Free API (public)",
+      "locality": "Local process",
+      "free_tier_limit": "Unlimited (public endpoint)",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:20",
+        "task": "Fetch Ask HN items via Algolia search endpoint",
+        "blocker": "GitHub repo up",
+        "status": "☐",
+        "category": ["Scrape", "Data"]
+      },
+      "data_flow": {
+        "df_stage": "DF-01",
+        "df_stage_name": "Ingestion",
+        "data_in": "GET hn.algolia.com/api/v1/search?tags=ask_hn&hitsPerPage=100",
+        "data_in_type": "HTTP API response",
+        "transformation": "Adapter maps points→upvotes, num_comments→comments, objectID→post_id, storyUrl→source_url",
+        "data_out_type": "RawItem[]",
+        "data_out_example": {
+          "source": "hn_ask",
+          "post_id": "38291847",
+          "upvotes": 89,
+          "comments": 42
+        },
+        "pmf_fields_added": ["asks", "upvotes", "source", "source_url", "raw_text", "scraped_at"]
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": null
+    },
+    {
+      "id": "04",
+      "tool": "PH API v2 (GraphQL)",
+      "layer": ["Scraping"],
+      "license": "Free API",
+      "locality": "Local process",
+      "free_tier_limit": "1,000 req/day",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:20",
+        "task": "Fetch ProductHunt launches + comments via GraphQL",
+        "blocker": "GitHub repo up",
+        "status": "☐",
+        "category": ["Scrape", "Data"]
+      },
+      "data_flow": {
+        "df_stage": "DF-01",
+        "df_stage_name": "Ingestion",
+        "data_in": "POST api.producthunt.com/v2/api/graphql — posts { votesCount commentsCount url }",
+        "data_in_type": "GraphQL response",
+        "transformation": "Adapter maps votesCount→upvotes, commentsCount→comments, url→source_url",
+        "data_out_type": "RawItem[]",
+        "data_out_example": {
+          "source": "producthunt",
+          "post_id": "ph-582910",
+          "upvotes": 210,
+          "comments": 15
+        },
+        "pmf_fields_added": ["asks", "upvotes", "source", "source_url", "raw_text", "scraped_at"]
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": null
+    },
+    {
+      "id": "05",
+      "tool": "OpenClaw",
+      "layer": ["Orchestration"],
+      "license": "Free",
+      "locality": "Local process",
+      "free_tier_limit": "Free tier",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:30",
+        "task": "Load skills manifest · concurrency token bucket · retry × 3 · dead-letter → data/failed.json",
+        "blocker": "Scrapers return RawItem[]",
+        "status": "☐",
+        "category": ["Orchestration"]
+      },
+      "data_flow": {
+        "df_stage": "DF-02",
+        "df_stage_name": "Orchestration",
+        "data_in_type": "RawItem[]",
+        "transformation": "Wrap each item in Task{task_id, skill, payload, retry_count, enqueued_at}; enforce token bucket (DeepSeek ≤10 req/s); route failures to data/failed.json after retry × 3",
+        "data_out_type": "Task[]",
+        "data_out_example": {
+          "task_id": "task-cid-001",
+          "skill": "classify_and_embed",
+          "retry_count": 0,
+          "enqueued_at": "2026-03-27T12:45:05Z"
+        },
+        "pmf_fields_added": []
+      },
+      "user_stories": ["U1", "U2", "U3"],
+      "canvas_signal": null
+    },
+    {
+      "id": "06",
+      "tool": "LiteLLM",
+      "layer": ["AI Proxy"],
+      "license": "MIT",
+      "locality": "Local process (localhost:4000)",
+      "free_tier_limit": "Self-hosted · free",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:40",
+        "task": "Start LiteLLM proxy · set LITELLM_MODEL=deepseek/deepseek-chat env var",
+        "blocker": "OpenClaw manifest loaded",
+        "status": "☐",
+        "category": ["AI", "Proxy"]
+      },
+      "data_flow": {
+        "df_stage": "DF-03",
+        "df_stage_name": "Classification (proxy layer)",
+        "data_in_type": "Task envelope carrying RawItem",
+        "transformation": "Receives POST /v1/chat/completions from worker; routes to DeepSeek; retry × 1 on malformed JSON; model swap via env var — zero code change",
+        "data_out_type": "Proxied request to DeepSeek; raw completion back to worker",
+        "pmf_fields_added": []
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": null
+    },
+    {
+      "id": "07",
+      "tool": "DeepSeek (deepseek-chat)",
+      "layer": ["AI Model"],
+      "license": "Apache 2.0 (model)",
+      "locality": "Cloud API (via LiteLLM local proxy)",
+      "free_tier_limit": "500 req/day free",
+      "tco": "$0",
+      "risk": "Medium",
+      "risk_note": "500 req/day limit — batch carefully; LiteLLM enables fallback model swap",
+      "critical_path": {
+        "hour": "H0:40",
+        "task": "Classify + tag items — type, label, specificity, cluster, tags, embedding via structured JSON-only prompt",
+        "blocker": "LiteLLM proxy running",
+        "status": "☐",
+        "category": ["AI", "Data"]
+      },
+      "data_flow": {
+        "df_stage": "DF-03",
+        "df_stage_name": "Classification",
+        "data_in_type": "RawItem {title, body}",
+        "data_in_example": {
+          "title": "AI agents are cool but I spent 8 hours on prompt engineering just to get it to remember context",
+          "body": "Anyone else hitting this wall? Need something that persists memory without paying $50/mo..."
+        },
+        "prompt_system": "You are a startup signal classifier. Respond ONLY with valid JSON — no markdown, no preamble.",
+        "transformation": "title+body → type (problem/solution) · label (≤8-word noun phrase) · specificity (named_tool/domain_specific/vague) · cluster (one of 8) · tags (3–6 snake_case strings) · embedding (1536-dim float array)",
+        "specificity_multipliers": {
+          "named_tool": 1.5,
+          "domain_specific": 1.2,
+          "vague": 0.8
+        },
+        "data_out_type": "ClassifiedItem",
+        "data_out_example": {
+          "type": "problem",
+          "label": "AI agent memory persistence across sessions",
+          "specificity": "named_tool",
+          "cluster": "Validation",
+          "tags": ["ai_agents", "memory", "hackathon", "context_window"],
+          "embedding": [0.234, -0.567, 0.891, "...1536 dims..."]
+        },
+        "pmf_fields_added": ["type", "label", "cluster", "specificity", "tags", "embedding"]
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": "Node type (left/right bipartite side) · color · badge icon (🔧/🏷/💬)"
+    },
+    {
+      "id": "08",
+      "tool": "JSON Local Storage (data/*.json)",
+      "layer": ["Dedup", "Cache", "Watchlist"],
+      "license": "MIT",
+      "locality": "Local disk",
+      "free_tier_limit": "Disk only",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H0:50",
+        "task": "Write dedup cache data/cache.json · init data/watchlist.json · velocity snapshot data/velocity_snapshot.json",
+        "blocker": "DeepSeek returns ClassifiedItem",
+        "status": "☐",
+        "category": ["Local Storage", "Dedup"]
+      },
+      "data_flow": {
+        "df_stage": "DF-04",
+        "df_stage_name": "Deduplication",
+        "data_in_type": "ClassifiedItem",
+        "cache_key_strategy": {
+          "exact": "SHA256(source + post_id)",
+          "near_duplicate": "cosine_similarity(embedding, centroid) > 0.85"
+        },
+        "transformation": "Exact match → merge (asks +=, source_count +=, last_seen_at updated); near-dup → merge into existing node; unique → write new cache entry to disk; flush after every item",
+        "data_out_type": "DeduplicatedItem",
+        "data_out_example": {
+          "dedup_status": "unique",
+          "node_id": "node-uuid-abc123",
+          "similarity_to_existing": 0.12,
+          "action": "proceed_to_upsert"
+        },
+        "local_files": {
+          "data/cache.json": "Dedup entries keyed by SHA256(source+post_id)",
+          "data/watchlist.json": "{ keywords, pmf_threshold, telegram_chat_id }",
+          "data/nodes.json": "Full node list flushed from Neon after each BullMQ recalc",
+          "data/meta.json": "cluster_gap_ratios written by BullMQ update_cluster_gap_ratios job",
+          "data/velocity_snapshot.json": "gap_score per node_id at last 24h checkpoint",
+          "data/failed.json": "Dead-lettered tasks from OpenClaw"
+        },
+        "pmf_fields_added": ["dedup_status", "node_id"],
+        "pmf_fields_updated_on_merge": ["asks", "source_count", "last_seen_at"]
+      },
+      "user_stories": ["U1", "U2", "U3"],
+      "canvas_signal": "Prevents duplicate nodes · keeps demand signal clean"
+    },
+    {
+      "id": "09",
+      "tool": "Neon (PostgreSQL)",
+      "layer": ["Database"],
+      "license": "Apache 2.0 (client)",
+      "locality": "Cloud DB (serverless, autoscales to zero)",
+      "free_tier_limit": "0.5 GB · shared compute",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:00",
+        "task": "Provision DB · run schema.sql · deploy PL/pgSQL trigger for gap_score + urgency_weight + pmf_score",
+        "blocker": "Dedup cache live",
+        "status": "☐",
+        "category": ["DB", "Logic"]
+      },
+      "data_flow": {
+        "df_stage": "DF-05",
+        "df_stage_name": "Storage + Scoring",
+        "data_in_type": "DeduplicatedItem (dedup_status = unique)",
+        "transformation": "INSERT ... ON CONFLICT DO UPDATE; PL/pgSQL trigger on INSERT OR UPDATE OF asks: gap_score=LOG(asks+1)/(sol_count+1) · urgency_weight=1.5 if scraped_at > NOW()-7d else 1.0 · pmf_score=gap_score×urgency_weight×LOG(source_count+1)×specificity_mult; flush → data/nodes.json after each BullMQ recalc",
+        "trigger_example": {
+          "gap_score": 3.367,
+          "urgency_weight": 1.5,
+          "specificity_mult": 1.5,
+          "pmf_score": 5.24
+        },
+        "schema": {
+          "nodes": {
+            "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+            "type": "TEXT CHECK (type IN ('problem','solution'))",
+            "label": "VARCHAR(255)",
+            "source": "VARCHAR(64)",
+            "source_url": "TEXT",
+            "raw_text": "TEXT",
+            "asks": "INT",
+            "upvotes": "INT",
+            "comments": "INT",
+            "tags": "JSONB",
+            "embedding": "JSONB",
+            "gap_score": "FLOAT DEFAULT 0",
+            "urgency_weight": "FLOAT DEFAULT 1.0",
+            "pmf_score": "FLOAT DEFAULT 0",
+            "gap_velocity": "FLOAT DEFAULT 0",
+            "source_count": "INT DEFAULT 1",
+            "specificity": "TEXT CHECK (specificity IN ('named_tool','domain_specific','vague'))",
+            "cluster": "TEXT",
+            "scraped_at": "TIMESTAMPTZ DEFAULT now()",
+            "last_seen_at": "TIMESTAMPTZ DEFAULT now()"
+          },
+          "edges": {
+            "problem_id": "UUID REFERENCES nodes(id)",
+            "solution_id": "UUID REFERENCES nodes(id)",
+            "strength": "FLOAT",
+            "computed_at": "TIMESTAMPTZ DEFAULT now()",
+            "primary_key": "(problem_id, solution_id)"
+          }
+        },
+        "pmf_fields_added": ["gap_score", "urgency_weight", "pmf_score"]
+      },
+      "user_stories": ["U3"],
+      "canvas_signal": "Gap Score → node radius · color intensity"
+    },
+    {
+      "id": "10",
+      "tool": "BullMQ",
+      "layer": ["Queue", "Pipeline"],
+      "license": "MIT",
+      "locality": "Local workers",
+      "free_tier_limit": "Self-hosted · free",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:30",
+        "task": "Wire 3-job recalc pipeline: recompute_edges · update_cluster_gap_ratios · update_gap_velocity",
+        "blocker": "Neon schema + trigger up",
+        "status": "☐",
+        "category": ["Queue", "Pipeline"]
+      },
+      "data_flow": {
+        "df_stage": "DF-06",
+        "df_stage_name": "Pipeline",
+        "data_in": "Neon pg_notify on INSERT OR UPDATE OF asks · node-cron 60s tick",
+        "transformation": "Fan-out 1 event → 3 BullMQ jobs: (a) recompute_edges — cosine sim of new embedding vs all solution nodes → edges rows where sim > 0.4; (b) update_cluster_gap_ratios — aggregate gap nodes per cluster → data/meta.json; (c) update_gap_velocity — delta vs data/velocity_snapshot.json 24h ago → nodes.gap_velocity; after all jobs: flush Neon → data/nodes.json",
+        "jobs": [
+          { "name": "recompute_edges", "output": "edges table updated" },
+          { "name": "update_cluster_gap_ratios", "output": "data/meta.json written" },
+          { "name": "update_gap_velocity", "output": "nodes.gap_velocity float updated" }
+        ],
+        "data_out_types": ["edges rows", "nodes.gap_velocity", "data/meta.json", "data/nodes.json"],
+        "pmf_fields_added": ["gap_velocity", "cluster_gap_ratio"]
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": "Edge re-layout on gap change · pulse speed from gap_velocity"
+    },
+    {
+      "id": "11",
+      "tool": "Upstash Redis",
+      "layer": ["Queue Infra"],
+      "license": "MIT (client)",
+      "locality": "Cloud",
+      "free_tier_limit": "10,000 cmd/day",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:30",
+        "task": "Provision Upstash instance · set REDIS_URL env · connect BullMQ",
+        "blocker": "BullMQ queue defined",
+        "status": "☐",
+        "category": ["Queue Infra"]
+      },
+      "data_flow": {
+        "df_stage": "DF-06",
+        "df_stage_name": "Pipeline (infra backing store)",
+        "transformation": "Persists BullMQ job state (pending/active/completed/failed) across process restarts; enables retry and delayed jobs",
+        "pmf_fields_added": []
+      },
+      "user_stories": [],
+      "canvas_signal": null
+    },
+    {
+      "id": "12",
+      "tool": "node-cron",
+      "layer": ["Scheduler"],
+      "license": "MIT",
+      "locality": "Local process",
+      "free_tier_limit": "Self-hosted · free",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:30",
+        "task": "Schedule 60s recalc tick · 5min alert loop tick",
+        "blocker": "BullMQ workers defined",
+        "status": "☐",
+        "category": ["Scheduler"]
+      },
+      "data_flow": {
+        "df_stage": "DF-06",
+        "df_stage_name": "Pipeline (trigger)",
+        "transformation": "Every 60s: fires recalcQueue.add('recompute_edges') + gap_velocity job; every 5min: fires alert loop check",
+        "data_out_type": "BullMQ Job[] enqueued",
+        "pmf_fields_added": []
+      },
+      "user_stories": [],
+      "canvas_signal": "Canvas re-renders every 60s via D3 poll"
+    },
+    {
+      "id": "13",
+      "tool": "Cloudflare Worker",
+      "layer": ["API", "Edge"],
+      "license": "Free tier",
+      "locality": "Edge (CDN)",
+      "free_tier_limit": "100,000 req/day",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:15",
+        "task": "Build /api/graph CF Worker · bind Neon DATABASE_URL · inject clusterColors · set Cache-Control: max-age=55",
+        "blocker": "Neon schema up",
+        "status": "☐",
+        "category": ["API", "Edge"]
+      },
+      "data_flow": {
+        "df_stage": "DF-07",
+        "df_stage_name": "API Exposure",
+        "data_in": "GET /api/graph from D3 client every 60s",
+        "transformation": "Query Neon via @neondatabase/serverless: SELECT nodes JOIN edges; inject clusterColors HEX map; compute cluster_gap_ratios via aggregate query; set Cache-Control: max-age=55 (aligns with 60s poll); source_url included on every node",
+        "cluster_colors": {
+          "Validation": "#9f7cff",
+          "Capital": "#f472b6",
+          "Growth": "#34d399",
+          "Team building": "#60a5fa",
+          "Network": "#2dd4bf",
+          "Launch platforms": "#fb923c",
+          "Build & hire": "#a78bfa",
+          "Funding & growth": "#f59e0b"
+        },
+        "data_out_type": "ApiResponse JSON",
+        "data_out_example": {
+          "nodes": [
+            {
+              "id": "node-uuid-abc123",
+              "type": "problem",
+              "label": "AI agent memory persistence across sessions",
+              "cluster": "Validation",
+              "gap_score": 3.367,
+              "pmf_score": 5.24,
+              "gap_velocity": 0.82,
+              "source_count": 1,
+              "specificity": "named_tool",
+              "source_url": "https://reddit.com/r/startups/comments/1fghjkl/",
+              "color": "#9f7cff",
+              "x": 120,
+              "y": 340
+            },
+            {
+              "id": "sol-xyz987",
+              "type": "solution",
+              "label": "LangGraph by LangChain",
+              "cluster": "Build & hire",
+              "gap_score": 0,
+              "pmf_score": 0,
+              "gap_velocity": 0,
+              "source_count": 3,
+              "specificity": "named_tool",
+              "source_url": "https://www.producthunt.com/posts/langgraph",
+              "color": "#a78bfa"
+            }
+          ],
+          "edges": [
+            { "source": "node-uuid-abc123", "target": "sol-xyz987", "strength": 0.4 }
+          ],
+          "meta": {
+            "total_problems": 87,
+            "total_solutions": 34,
+            "cluster_gap_ratios": {
+              "Validation": 0.72,
+              "Capital": 1.0,
+              "Growth": 0.55,
+              "Team building": 0.31
+            },
+            "top_pmf_node": "node-uuid-abc123",
+            "last_updated": "2026-03-27T12:46:30Z"
+          }
+        },
+        "pmf_fields_added": ["color (HEX injected)", "cluster_gap_ratios (computed inline)"]
+      },
+      "user_stories": ["U1", "U2", "U3"],
+      "canvas_signal": "Single source of truth for every D3 poll"
+    },
+    {
+      "id": "14",
+      "tool": "Telegram Bot (node-telegram-bot-api)",
+      "layer": ["Alerts", "Bot"],
+      "license": "MIT",
+      "locality": "Cloud",
+      "free_tier_limit": "Unlimited",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H1:45",
+        "task": "BotFather token · set webhook · wire /gaps + /watch commands · alert loop (pmf_score > 3.0 ∩ watchlist)",
+        "blocker": "CF Worker API live",
+        "status": "☐",
+        "category": ["Bot", "Alerts", "Infra"]
+      },
+      "data_flow": {
+        "df_stage": "DF-08",
+        "df_stage_name": "Alerting",
+        "data_in": "Neon query: nodes WHERE pmf_score > threshold AND last_seen_at > NOW() - 5min; cross-checked against data/watchlist.json keywords",
+        "transformation": "Keyword substring match in-process (no extra DB query); format multi-line Telegram string; append source_url for one-tap post jump; send to telegram_chat_id from watchlist.json",
+        "data_out_type": "Telegram DM",
+        "data_out_example": "🚨 NEW HIGH-GAP DETECTED\n\nProblem: AI agent memory persistence across sessions\nGap Score:   3.37  (0 matching solutions)\nPMF Score:   5.24  ← highest today\nVelocity:    +0.82 (rising fast)\nSpecificity: named_tool ✅\nCluster:     Validation · Sources: 1\n\n→ Explore: https://hackamap.pages.dev/?highlight=node-uuid-abc123\n→ Source:  https://reddit.com/r/startups/comments/1fghjkl/",
+        "pmf_fields_surfaced": ["gap_score", "pmf_score", "gap_velocity", "specificity", "cluster", "source_count", "source_url"]
+      },
+      "user_stories": ["U3"],
+      "canvas_signal": "Alert deep-links into highlighted gap cluster; source_url enables one-tap jump to original post"
+    },
+    {
+      "id": "15",
+      "tool": "D3.js v7",
+      "layer": ["Frontend", "Canvas"],
+      "license": "MIT",
+      "locality": "Browser (self-hosted via CF Pages)",
+      "free_tier_limit": "Unlimited (client-side)",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H2:00",
+        "task": "Scaffold bipartite canvas · node/edge render · 4×4 cluster groups · collapse/expand · hover sidebar with source_url link · gap threshold slider",
+        "blocker": "Telegram bot wired",
+        "status": "☐",
+        "category": ["Frontend", "Graph"]
+      },
+      "data_flow": {
+        "df_stage": "DF-09 + DF-10",
+        "df_stage_name": "Canvas Rendering + User Interaction",
+        "data_in_type": "ApiResponse JSON from fetch('/api/graph') every 60s",
+        "visual_mappings": [
+          { "data_field": "gap_score", "data_type": "FLOAT", "canvas_element": "Node radius", "transform": "scaleSqrt domain [0,5] → range [6,22]px", "pmf_meaning": "Bigger = more unmet demand" },
+          { "data_field": "pmf_score", "data_type": "FLOAT", "canvas_element": "Node glow", "transform": "pmf_score * 2 → CSS drop-shadow px", "pmf_meaning": "Brighter = higher composite opportunity" },
+          { "data_field": "gap_velocity", "data_type": "FLOAT", "canvas_element": "Pulse speed", "transform": "gap_velocity > 0.5 → CSS class pulse-fast else pulse-slow", "pmf_meaning": "Faster pulse = accelerating demand" },
+          { "data_field": "source_count", "data_type": "INT", "canvas_element": "Border thickness", "transform": "source_count → stroke-width px", "pmf_meaning": "Thicker = seen across more platforms" },
+          { "data_field": "specificity", "data_type": "ENUM", "canvas_element": "Badge icon", "transform": "named_tool→🔧 · domain_specific→🏷 · vague→💬", "pmf_meaning": "Actionability signal" },
+          { "data_field": "strength", "data_type": "FLOAT [0-1]", "canvas_element": "Edge opacity", "transform": "0.2 + strength * 0.6", "pmf_meaning": "Fainter = weaker solution match" },
+          { "data_field": "cluster_gap_ratio", "data_type": "FLOAT (from meta)", "canvas_element": "Cluster badge", "transform": "float → % label on cluster header", "pmf_meaning": "% of nodes in cluster with no solution" },
+          { "data_field": "color", "data_type": "HEX (from CF Worker)", "canvas_element": "Node fill + glow tint", "transform": "Direct apply — no client-side colour logic", "pmf_meaning": "Cluster identity" },
+          { "data_field": "source_url", "data_type": "STRING", "canvas_element": "Hover sidebar <a> tag", "transform": "node.on('mouseover') → sidebar HTML with clickable link", "pmf_meaning": "One-tap jump to original post" }
+        ],
+        "interaction_transforms": [
+          { "gesture": "Gap threshold slider", "transform": "gap_score >= val → opacity 1.0, else 0.1; client-side per-frame, zero API calls" },
+          { "gesture": "Drag problem node", "transform": "highlightEmptyClusters(cluster) → shows where NO solutions exist" },
+          { "gesture": "Cluster header click", "transform": "toggle collapse; snap node positions to header {x,y}; simulation.alpha(0.3).restart()" },
+          { "gesture": "Cluster header hover", "transform": "showTooltip(cluster_gap_ratios[name]); highlightClusterEdges(name)" }
+        ],
+        "pmf_fields_added": []
+      },
+      "user_stories": ["U1", "U2", "U3"],
+      "canvas_signal": "Full bipartite graph — all PMF dimensions visible simultaneously"
+    },
+    {
+      "id": "16",
+      "tool": "Cloudflare Pages",
+      "layer": ["Frontend Hosting", "CDN"],
+      "license": "Free tier",
+      "locality": "Edge CDN",
+      "free_tier_limit": "Unlimited requests",
+      "tco": "$0",
+      "risk": "Low",
+      "critical_path": {
+        "hour": "H2:55",
+        "task": "git push main → GitHub Actions → CF Pages deploy → public URL hackamap.pages.dev",
+        "blocker": "D3 canvas complete · CF Worker wired",
+        "status": "☐",
+        "category": ["Deploy", "Frontend"]
+      },
+      "data_flow": {
+        "df_stage": "DF-09",
+        "df_stage_name": "Canvas Loading",
+        "transformation": "CF Pages serves D3 HTML/JS globally via CDN; browser fetches index.html → loads D3 bundle → first fetch('/api/graph') call → canvas renders ≤3s",
+        "data_out_type": "Live canvas at hackamap.pages.dev",
+        "pmf_fields_added": []
+      },
+      "user_stories": ["U1", "U2"],
+      "canvas_signal": "Initial bipartite layout on load (≤3s target)"
+    }
+  ],
+
+  "critical_path": [
+    { "cp": 1,  "hour": "H0:00", "task": "GitHub repo init · wrangler.toml · pages.json · env vars · deploy.yml", "blocker": null,                          "category": ["Infra","SCM","Deploy"],       "status": "☐" },
+    { "cp": 2,  "hour": "H0:10", "task": "Neon DB — provision · run schema.sql · PL/pgSQL trigger",                 "blocker": "GitHub up",                    "category": ["DB","Infra"],                 "status": "☐" },
+    { "cp": 3,  "hour": "H0:20", "task": "Reddit API + HN Algolia + PH API v2 — fetch + normalise raw items",       "blocker": "GitHub up",                    "category": ["Scrape","Data"],              "status": "☐" },
+    { "cp": 4,  "hour": "H0:30", "task": "OpenClaw skills manifest — concurrency · retry · dead-letter",             "blocker": "Scrapers return items",        "category": ["Orchestration"],              "status": "☐" },
+    { "cp": 5,  "hour": "H0:40", "task": "LiteLLM local proxy start · DeepSeek classify + tag",                     "blocker": "OpenClaw loaded",              "category": ["AI","Proxy"],                 "status": "☐" },
+    { "cp": 6,  "hour": "H0:50", "task": "JSON Local Storage — data/cache.json dedup · data/watchlist.json init",   "blocker": "DeepSeek returns ClassifiedItem","category": ["LocalStorage","Dedup"],     "status": "☐" },
+    { "cp": 7,  "hour": "H1:00", "task": "Neon upsert + PL/pgSQL trigger → gap_score · urgency_weight · pmf_score", "blocker": "Dedup cache live",             "category": ["DB","Logic"],                 "status": "☐" },
+    { "cp": 8,  "hour": "H1:15", "task": "Cloudflare Worker — /api/graph endpoint · clusterColors · Cache-Control", "blocker": "Neon schema up",               "category": ["API","Edge"],                 "status": "☐" },
+    { "cp": 9,  "hour": "H1:30", "task": "BullMQ + node-cron + Upstash Redis — 3-job recalc pipeline",              "blocker": "Neon trigger up",              "category": ["Queue","Pipeline"],           "status": "☐" },
+    { "cp": 10, "hour": "H1:45", "task": "Telegram Bot — BotFather token · webhook · /gaps · /watch",               "blocker": "CF Worker API live",           "category": ["Bot","Infra"],                "status": "☐" },
+    { "cp": 11, "hour": "H2:00", "task": "D3 bipartite canvas scaffold — node/edge render · force simulation",       "blocker": "Telegram wired",               "category": ["Frontend","Graph"],           "status": "☐" },
+    { "cp": 12, "hour": "H2:15", "task": "Cluster grouping 4×4 + color ramp",                                        "blocker": "D3 scaffold",                  "category": ["Frontend","UX"],              "status": "☐" },
+    { "cp": 13, "hour": "H2:30", "task": "Collapse/expand chevron · cluster hover · edge bundling · hover sidebar with source_url", "blocker": "Clusters rendered","category": ["Frontend","UX"],          "status": "☐" },
+    { "cp": 14, "hour": "H2:40", "task": "Wire /api/graph CF Worker → D3 canvas · gap threshold slider",             "blocker": "API + canvas ready",           "category": ["Integration","P0"],          "status": "☐", "p0": true },
+    { "cp": 15, "hour": "H2:50", "task": "Telegram alert loop — pmf_score > 3.0 ∩ watchlist → DM with source_url",  "blocker": "Integration wired",            "category": ["Bot","Alerts","P0"],          "status": "☐", "p0": true },
+    { "cp": 16, "hour": "H2:55", "task": "git push main → GitHub Actions → auto-deploy CF Workers + Pages",         "blocker": "All above",                    "category": ["CI/CD","Deploy"],             "status": "☐" },
+    { "cp": 17, "hour": "H3:00", "task": "DEMO READY — live scrape on stage · Telegram alert fires live",            "blocker": "Deploy complete",              "category": ["Demo","P0"],                  "status": "☐", "p0": true }
+  ],
+
+  "user_journeys": [
+    {
+      "id": "U1",
+      "name": "Founder Research",
+      "goal": "See problems vs solutions across last 7 days; identify where no one is building",
+      "entry_point": "Opens hackamap.pages.dev",
+      "tools_in_order": ["Cloudflare Pages", "D3.js v7", "Cloudflare Worker /api/graph", "Neon"],
+      "canvas_moment": "Bipartite canvas loads ≤3s; biggest nodes = highest gap_score",
+      "exit_action": "Drags problem node → empty cluster whitespace lights up → idea validated"
+    },
+    {
+      "id": "U2",
+      "name": "Hackathon Ideation",
+      "goal": "Find validated idea in < 5 minutes",
+      "entry_point": "Opens canvas · types domain in filter",
+      "tools_in_order": ["D3.js v7 (client-side filter)", "cluster_gap_ratio from meta", "hover sidebar source_url"],
+      "canvas_moment": "Cluster with cluster_gap_ratio = 1.0 glows; hover sidebar shows source post",
+      "exit_action": "Clicks source_url in hover panel → reads original Reddit/HN post → picks idea"
+    },
+    {
+      "id": "U3",
+      "name": "Passive Monitoring",
+      "goal": "Receive alert when a new high-gap cluster appears in watched domain",
+      "entry_point": "Sends /watch ai agents to Telegram Bot",
+      "tools_in_order": ["Telegram Bot", "data/watchlist.json", "BullMQ alert worker", "Neon query", "Telegram DM"],
+      "canvas_moment": "Follows deep-link ?highlight=node-id → canvas auto-highlights node",
+      "exit_action": "Taps → Source in Telegram → opens original post → acts on gap"
+    }
+  ],
+
+  "pmf_model": {
+    "description": "Hackamap measures product-market fit as whitespace density on a bipartite graph",
+    "signals": [
+      { "signal": "Demand intensity",  "measurement": "Upvotes + comment count on problem posts",                   "field": "asks" },
+      { "signal": "Supply coverage",   "measurement": "Count of solution nodes within cosine distance < 0.4",       "field": "solution_count" },
+      { "signal": "Raw gap magnitude", "measurement": "LOG(asks + 1) / (solution_count + 1)",                       "field": "gap_score" },
+      { "signal": "Urgency",           "measurement": "1.5× multiplier for posts < 7 days old",                     "field": "urgency_weight" },
+      { "signal": "Specificity",       "measurement": "named_tool=1.5 · domain_specific=1.2 · vague=0.8",          "field": "specificity" },
+      { "signal": "Cluster saturation","measurement": "Ratio of gap nodes to total nodes in cluster",               "field": "cluster_gap_ratio" },
+      { "signal": "Velocity",          "measurement": "Gap score delta over last 24 hrs",                           "field": "gap_velocity" },
+      { "signal": "Reach",             "measurement": "Unique sources citing same problem",                         "field": "source_count" }
+    ],
+    "composite_score": "pmf_score = gap_score × urgency_weight × LOG(source_count + 1) × specificity_multiplier",
+    "alert_threshold": 3.0,
+    "example": {
+      "node": "AI agent memory persistence across sessions",
+      "gap_score": 3.367,
+      "urgency_weight": 1.5,
+      "specificity_multiplier": 1.5,
+      "source_count": 1,
+      "pmf_score": 5.24,
+      "gap_velocity": 0.82,
+      "alert_fired": true
+    }
+  }
+}

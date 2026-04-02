@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "name": "hackamap-template",
+    "version": "0.1.0",
+    "generated_at": "2026-03-31",
+    "license": "CC0-1.0",
+    "description": "Project-agnostic schema template for tracking AI product launches, hackathon demos/winners, problem statements, value scoring, whitespace gaps, and derived opportunities. Designed to map cleanly to PostgreSQL and to drive a Three.js/D3 knowledge-graph visualization."
+  },
+  "conventions": {
+    "ids": {
+      "format": "ulid",
+      "example": "01J9ZVQK2Z0ZJ9B4M3K4W9Z7QX"
+    },
+    "timestamps": {
+      "format": "RFC3339",
+      "example": "2026-03-31T00:00:00Z"
+    },
+    "scoring": {
+      "value_triangle_scale": "1-5 (low-high)",
+      "gap_score_scale": "1-10 (low-high)"
+    }
+  },
+  "tables": [
+    {
+      "name": "sources",
+      "primary_key": "source_id",
+      "description": "Verifiable citations (press releases, blog posts, project gallery pages, etc.).",
+      "fields": [
+        { "name": "source_id", "type": "text", "required": true, "notes": "ULID" },
+        { "name": "title", "type": "text", "required": true },
+        { "name": "publisher", "type": "text", "required": false },
+        { "name": "url", "type": "text", "required": true },
+        { "name": "published_date", "type": "date", "required": false },
+        { "name": "retrieved_at", "type": "timestamptz", "required": false },
+        { "name": "quote", "type": "text", "required": false, "notes": "Optional key excerpt used as evidence." },
+        { "name": "claim_scope", "type": "text", "required": false, "notes": "What this source supports (e.g., problem framing, feature claims, winners list)." }
+      ],
+      "indexes": [
+        { "name": "idx_sources_url", "fields": ["url"], "unique": true }
+      ]
+    },
+    {
+      "name": "events",
+      "primary_key": "event_id",
+      "description": "Launch events, hackathons, demo days, conferences, etc.",
+      "fields": [
+        { "name": "event_id", "type": "text", "required": true },
+        { "name": "event_name", "type": "text", "required": true },
+        { "name": "event_type", "type": "text", "required": true, "notes": "e.g., hackathon, conference, demo_day, product_launch" },
+        { "name": "start_date", "type": "date", "required": false },
+        { "name": "end_date", "type": "date", "required": false },
+        { "name": "location", "type": "text", "required": false, "notes": "city/country or virtual" },
+        { "name": "organizer", "type": "text", "required": false },
+        { "name": "source_id", "type": "text", "required": false, "references": "sources.source_id" }
+      ],
+      "indexes": [
+        { "name": "idx_events_type_date", "fields": ["event_type", "start_date"] }
+      ]
+    },
+    {
+      "name": "products",
+      "primary_key": "product_id",
+      "description": "Products, projects, demos, or winning submissions.",
+      "fields": [
+        { "name": "product_id", "type": "text", "required": true },
+        { "name": "product_name", "type": "text", "required": true },
+        { "name": "product_type", "type": "text", "required": true, "notes": "e.g., startup_product, enterprise_feature, hackathon_demo, open_source_project" },
+        { "name": "org_name", "type": "text", "required": false },
+        { "name": "status", "type": "text", "required": false, "notes": "e.g., launched, beta, prototype" },
+        { "name": "launch_or_demo_date", "type": "date", "required": false },
+        { "name": "event_id", "type": "text", "required": false, "references": "events.event_id" },
+        { "name": "primary_source_id", "type": "text", "required": true, "references": "sources.source_id" },
+        { "name": "canonical_url", "type": "text", "required": false },
+        { "name": "one_liner", "type": "text", "required": false },
+        { "name": "domain", "type": "text", "required": false, "notes": "High-level domain label (e.g., hiring, banking, devtools, knowledge_management)." }
+      ],
+      "indexes": [
+        { "name": "idx_products_domain", "fields": ["domain"] },
+        { "name": "idx_products_date", "fields": ["launch_or_demo_date"] }
+      ]
+    },
+    {
+      "name": "problem_statements",
+      "primary_key": "problem_id",
+      "description": "The pain being solved, ideally in founder/organizer wording with evidence.",
+      "fields": [
+        { "name": "problem_id", "type": "text", "required": true },
+        { "name": "product_id", "type": "text", "required": true, "references": "products.product_id" },
+        { "name": "user_persona", "type": "text", "required": false },
+        { "name": "job_to_be_done", "type": "text", "required": false },
+        { "name": "pain_statement", "type": "text", "required": true },
+        { "name": "evidence_source_id", "type": "text", "required": true, "references": "sources.source_id" },
+        { "name": "evidence_quote", "type": "text", "required": false },
+        { "name": "constraints", "type": "jsonb", "required": false, "notes": "e.g., privacy, latency, compliance, offline-first." }
+      ],
+      "indexes": [
+        { "name": "idx_problem_product", "fields": ["product_id"] }
+      ]
+    },
+    {
+      "name": "value_triangle_scores",
+      "primary_key": "score_id",
+      "description": "Scoring across User / Founder / Investor lenses.",
+      "fields": [
+        { "name": "score_id", "type": "text", "required": true },
+        { "name": "product_id", "type": "text", "required": true, "references": "products.product_id" },
+        { "name": "score_user", "type": "int", "required": true, "notes": "1-5" },
+        { "name": "score_founder", "type": "int", "required": true, "notes": "1-5" },
+        { "name": "score_investor", "type": "int", "required": true, "notes": "1-5" },
+        { "name": "rationale", "type": "jsonb", "required": false, "notes": "Optional structured justification per lens." },
+        { "name": "scored_at", "type": "timestamptz", "required": false }
+      ],
+      "constraints": [
+        { "check": "score_user BETWEEN 1 AND 5" },
+        { "check": "score_founder BETWEEN 1 AND 5" },
+        { "check": "score_investor BETWEEN 1 AND 5" }
+      ]
+    },
+    {
+      "name": "gaps",
+      "primary_key": "gap_id",
+      "description": "Whitespace / adjacent pain not solved by the product.",
+      "fields": [
+        { "name": "gap_id", "type": "text", "required": true },
+        { "name": "product_id", "type": "text", "required": true, "references": "products.product_id" },
+        { "name": "domain", "type": "text", "required": true },
+        { "name": "unaddressed_pain", "type": "text", "required": true },
+        { "name": "why_unclaimed", "type": "text", "required": true },
+        { "name": "gap_score", "type": "int", "required": true, "notes": "1-10 (Demand + Market + Low competition + Buildable <3 months)" },
+        { "name": "assumptions", "type": "jsonb", "required": false },
+        { "name": "created_at", "type": "timestamptz", "required": false }
+      ],
+      "constraints": [
+        { "check": "gap_score BETWEEN 1 AND 10" }
+      ],
+      "indexes": [
+        { "name": "idx_gaps_domain_score", "fields": ["domain", "gap_score"] }
+      ]
+    },
+    {
+      "name": "opportunities",
+      "primary_key": "opportunity_id",
+      "description": "Aggregated whitespace opportunities (often many gaps roll up into one).",
+      "fields": [
+        { "name": "opportunity_id", "type": "text", "required": true },
+        { "name": "opportunity_title", "type": "text", "required": true },
+        { "name": "opportunity_domain", "type": "text", "required": true },
+        { "name": "opportunity_summary", "type": "text", "required": true },
+        { "name": "gap_ids", "type": "text[]", "required": false, "notes": "Foreign keys to gaps.gap_id (enforced in app logic or via join table)." },
+        { "name": "opportunity_score", "type": "int", "required": true, "notes": "1-10" },
+        { "name": "founder_action", "type": "text", "required": false },
+        { "name": "investor_thesis", "type": "text", "required": false }
+      ],
+      "constraints": [
+        { "check": "opportunity_score BETWEEN 1 AND 10" }
+      ],
+      "indexes": [
+        { "name": "idx_opportunities_score", "fields": ["opportunity_score"] }
+      ]
+    },
+    {
+      "name": "tags",
+      "primary_key": "tag_id",
+      "description": "Airtable-like multi-dimensional labels for flexible slicing and rollups.",
+      "fields": [
+        { "name": "tag_id", "type": "text", "required": true },
+        { "name": "tag", "type": "text", "required": true },
+        { "name": "tag_group", "type": "text", "required": false, "notes": "e.g., modality, industry, deployment, risk, buyer_persona" }
+      ],
+      "indexes": [
+        { "name": "idx_tags_group", "fields": ["tag_group"] },
+        { "name": "idx_tags_tag", "fields": ["tag"], "unique": true }
+      ]
+    },
+    {
+      "name": "product_tags",
+      "primary_key": "product_tag_id",
+      "description": "Many-to-many join between products and tags.",
+      "fields": [
+        { "name": "product_tag_id", "type": "text", "required": true },
+        { "name": "product_id", "type": "text", "required": true, "references": "products.product_id" },
+        { "name": "tag_id", "type": "text", "required": true, "references": "tags.tag_id" }
+      ],
+      "indexes": [
+        { "name": "idx_product_tags_product", "fields": ["product_id"] },
+        { "name": "idx_product_tags_tag", "fields": ["tag_id"] }
+      ]
+    }
+  ],
+  "records": {
+    "sources": [],
+    "events": [],
+    "products": [],
+    "problem_statements": [],
+    "value_triangle_scores": [],
+    "gaps": [],
+    "opportunities": [],
+    "tags": [],
+    "product_tags": []
+  }
+}

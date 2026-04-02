@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Full-Stack · Voxel 3D · 0→1 Knowledge Graph</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060611;overflow:hidden;font-family:'Courier New',monospace;color:#cbd5e1;user-select:none}
+canvas{display:block}
+#ui{position:fixed;inset:0;pointer-events:none}
+
+/* ── TOP BAR ── */
+#topbar{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;
+  background:linear-gradient(180deg,rgba(6,6,17,.95) 0%,transparent 100%);
+  border-bottom:1px solid rgba(99,102,241,.15);
+}
+#logo{font-size:13px;font-weight:700;letter-spacing:3px;color:#818cf8;text-transform:uppercase}
+#logo span{color:#4ade80}
+#hint{font-size:10px;color:#334155;letter-spacing:1px}
+
+/* ── PANELS ── */
+.panel{
+  background:rgba(6,6,17,.88);border:1px solid #1e293b;
+  border-radius:8px;padding:14px;backdrop-filter:blur(12px);
+}
+
+/* ── LEFT: NODE TYPES ── */
+#panel-types{position:absolute;top:64px;left:16px;width:156px}
+#panel-types h4,.panel h4{font-size:9px;letter-spacing:2px;color:#475569;text-transform:uppercase;margin-bottom:10px}
+.type-row{display:flex;align-items:center;gap:8px;font-size:11px;color:#94a3b8;margin-bottom:7px}
+.type-dot{width:9px;height:9px;flex-shrink:0}
+
+/* ── RIGHT: CLUSTERS ── */
+#panel-clusters{position:absolute;top:64px;right:16px;width:168px}
+.cluster-item{display:flex;align-items:center;gap:8px;font-size:11px;color:#94a3b8;margin-bottom:6px;
+  cursor:pointer;padding:3px 5px;border-radius:4px;transition:background .2s;pointer-events:all}
+.cluster-item:hover{background:rgba(255,255,255,.05);color:#e2e8f0}
+.cluster-swatch{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+
+/* ── BOTTOM LEFT: INFO ── */
+#panel-info{
+  position:absolute;bottom:20px;left:16px;width:300px;
+  transition:opacity .25s,transform .25s;
+}
+#panel-info.off{opacity:0;transform:translateY(6px);pointer-events:none}
+#info-type{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+#info-label{font-size:17px;font-weight:700;letter-spacing:.5px;margin-bottom:5px;color:#f1f5f9}
+#info-cluster{font-size:11px;margin-bottom:8px}
+#info-badges{margin-bottom:8px}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 8px;border-radius:10px;margin:0 3px 3px 0;letter-spacing:.5px}
+#info-desc{font-size:11px;color:#64748b;line-height:1.7}
+
+/* ── BOTTOM RIGHT: STATS ── */
+#panel-stats{position:absolute;bottom:20px;right:16px;min-width:120px}
+.stat-row{display:flex;justify-content:space-between;gap:16px;font-size:10px;color:#475569;margin-bottom:5px}
+.stat-val{color:#818cf8;font-weight:700}
+
+/* ── TOOLTIP ── */
+#tooltip{
+  position:absolute;pointer-events:none;
+  background:rgba(6,6,17,.95);border:1px solid #334155;
+  border-radius:5px;padding:5px 10px;font-size:11px;white-space:nowrap;
+  transition:opacity .12s;z-index:99;color:#e2e8f0;letter-spacing:.3px;
+}
+#tooltip.off{opacity:0}
+
+/* ── CROSSHAIR ── */
+#xhair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:12px;height:12px;pointer-events:none;opacity:.2}
+#xhair::before,#xhair::after{content:'';position:absolute;background:#818cf8}
+#xhair::before{width:1px;height:100%;left:50%;top:0}
+#xhair::after{width:100%;height:1px;top:50%;left:0}
+
+/* ── PHASE TAG (top center) ── */
+#phase-tag{
+  position:absolute;top:64px;left:50%;transform:translateX(-50%);
+  font-size:10px;color:#334155;letter-spacing:2px;text-align:center;
+  text-transform:uppercase;line-height:1.8;pointer-events:none;
+}
+#phase-tag strong{color:#818cf8;display:block;font-size:20px;letter-spacing:4px;line-height:1}
+</style>
+</head>
+<body>
+
+<div id="ui">
+  <div id="topbar">
+    <div id="logo">⬛ Full<span>·</span>Stack Voxel <span>3D</span></div>
+    <div id="hint">DRAG ORBIT · SCROLL ZOOM · HOVER + CLICK NODES</div>
+  </div>
+
+  <div class="panel" id="panel-types">
+    <h4>Node Types</h4>
+    <div class="type-row"><div class="type-dot" style="background:#818cf8;border-radius:1px"></div>Hub (×5)</div>
+    <div class="type-row"><div class="type-dot" style="background:#f87171;border-radius:1px"></div>Problem (×20)</div>
+    <div class="type-row"><div class="type-dot" style="background:#4ade80;border-radius:1px"></div>Solution (×25)</div>
+    <div class="type-row"><div class="type-dot" style="background:#fbbf24;border-radius:50%"></div>Concept (×6)</div>
+  </div>
+
+  <div class="panel" id="panel-clusters">
+    <h4>Clusters</h4>
+    <div class="cluster-item"><div class="cluster-swatch" style="background:#6366f1"></div>Frontend</div>
+    <div class="cluster-item"><div class="cluster-swatch" style="background:#22c55e"></div>Backend</div>
+    <div class="cluster-item"><div class="cluster-swatch" style="background:#f59e0b"></div>LLM Runtime</div>
+    <div class="cluster-item"><div class="cluster-swatch" style="background:#ec4899"></div>Multi-Agent Orch.</div>
+    <div class="cluster-item"><div class="cluster-swatch" style="background:#64748b"></div>DevOps / Infra</div>
+  </div>
+
+  <div class="panel" id="panel-info">
+    <div id="info-type"></div>
+    <div id="info-label"></div>
+    <div id="info-cluster"></div>
+    <div id="info-badges"></div>
+    <div id="info-desc"></div>
+  </div>
+
+  <div class="panel" id="panel-stats">
+    <div class="stat-row"><span>Nodes</span><span class="stat-val">56</span></div>
+    <div class="stat-row"><span>Edges</span><span class="stat-val">82</span></div>
+    <div class="stat-row"><span>Clusters</span><span class="stat-val">5</span></div>
+    <div class="stat-row"><span>FOSS</span><span class="stat-val">49</span></div>
+    <div class="stat-row"><span>Free Tier</span><span class="stat-val">30</span></div>
+  </div>
+
+  <div id="phase-tag"><strong>0→1</strong>3 HOUR CRITICAL PATH</div>
+  <div id="tooltip" class="off"></div>
+  <div id="xhair"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════
+//  GRAPH DATA
+// ════════════════════════════════════════════════════════
+const CLUSTERS = [
+  {id:'c-fe', label:'Frontend',         color:0x6366f1, angle:90,  layer:'F'},
+  {id:'c-be', label:'Backend',          color:0x22c55e, angle:162, layer:'B'},
+  {id:'c-llm',label:'LLM Runtime',      color:0xf59e0b, angle:234, layer:'L'},
+  {id:'c-orc',label:'Multi-Agent Orch.',color:0xec4899, angle:306, layer:'O'},
+  {id:'c-inf',label:'DevOps / Infra',   color:0x64748b, angle:18,  layer:'D'},
+];
+
+const NODES = [
+  // Hubs
+  {id:'hub-fe', c:'c-fe', type:'hub',label:'Frontend Hub',desc:'UI, state, routing, data visualisation, streaming display'},
+  {id:'hub-be', c:'c-be', type:'hub',label:'Backend Hub',desc:'REST API, business logic, data access, job orchestration entry point'},
+  {id:'hub-llm',c:'c-llm',type:'hub',label:'LLM Runtime Hub',desc:'Local inference, prompt management, embeddings, context control'},
+  {id:'hub-orc',c:'c-orc',type:'hub',label:'Orchestration Hub',desc:'Agent coordination, state machine routing, inter-agent comms'},
+  {id:'hub-inf',c:'c-inf',type:'hub',label:'Infra Hub',desc:'Containerisation, env management, CI/CD, cloud deploy'},
+  // Problems c-fe
+  {id:'p-fe-1',c:'c-fe',type:'problem',label:'No UI Framework',   desc:'No component model, no reactive rendering, no bundler — raw HTML doesn\'t scale'},
+  {id:'p-fe-2',c:'c-fe',type:'problem',label:'No State Mgmt',     desc:'Prop-drilling, inconsistent UI state, no single source of truth'},
+  {id:'p-fe-3',c:'c-fe',type:'problem',label:'No Streaming UI',   desc:'LLM tokens arrive incrementally; polling is too slow and wastes resources'},
+  {id:'p-fe-4',c:'c-fe',type:'problem',label:'No Data Viz Layer', desc:'Agent graphs and knowledge maps need a programmable canvas'},
+  // Problems c-be
+  {id:'p-be-1',c:'c-be',type:'problem',label:'No REST API',       desc:'No HTTP interface between frontend and backend logic'},
+  {id:'p-be-2',c:'c-be',type:'problem',label:'No Data Persistence',desc:'In-memory state lost on restart — no multi-session history'},
+  {id:'p-be-3',c:'c-be',type:'problem',label:'No Authentication', desc:'API is open to the world; no user identity for multi-tenant use'},
+  {id:'p-be-4',c:'c-be',type:'problem',label:'No Background Queue',desc:'Long-running agent runs block HTTP threads and time out'},
+  // Problems c-llm
+  {id:'p-llm-1',c:'c-llm',type:'problem',label:'No Local Inference',desc:'Cloud LLM APIs cost money; zero-cost TCO requires local inference'},
+  {id:'p-llm-2',c:'c-llm',type:'problem',label:'No Prompt Mgmt',   desc:'Hard-coded prompt strings don\'t scale; need versioned composable templates'},
+  {id:'p-llm-3',c:'c-llm',type:'problem',label:'No Embeddings',    desc:'Can\'t do semantic search or RAG without embedding generation'},
+  {id:'p-llm-4',c:'c-llm',type:'problem',label:'No Context Control',desc:'Unbounded context overflows the model\'s window and degrades quality'},
+  // Problems c-orc
+  {id:'p-orc-1',c:'c-orc',type:'problem',label:'No Agent Arch.',   desc:'A single LLM call can\'t reason, search, draft and critique in one pass'},
+  {id:'p-orc-2',c:'c-orc',type:'problem',label:'No Task Routing',  desc:'No mechanism to direct work to the right agent at the right step'},
+  {id:'p-orc-3',c:'c-orc',type:'problem',label:'No Inter-Agent Comms',desc:'Agents need to pass structured state without tight coupling'},
+  {id:'p-orc-4',c:'c-orc',type:'problem',label:'No Observability', desc:'Opaque agent execution makes debugging and tuning impossible'},
+  // Problems c-inf
+  {id:'p-inf-1',c:'c-inf',type:'problem',label:'No Containerisation',desc:'Works on my machine ≠ works on any machine; deps need isolation'},
+  {id:'p-inf-2',c:'c-inf',type:'problem',label:'No Env Management', desc:'API keys hard-coded in source = security and portability risk'},
+  {id:'p-inf-3',c:'c-inf',type:'problem',label:'No FE Deployment',  desc:'Localhost-only app can\'t be shared, demoed, or iterated with users'},
+  {id:'p-inf-4',c:'c-inf',type:'problem',label:'No BE Deployment',  desc:'API must be reachable from the deployed frontend and remote collaborators'},
+  // Solutions c-fe
+  {id:'s-fe-1',c:'c-fe',type:'solution',label:'React + Vite',     desc:'Component model + blazing-fast HMR. npm create vite@latest.',foss:1,local:1},
+  {id:'s-fe-2',c:'c-fe',type:'solution',label:'Zustand',          desc:'Bear-bone state: 1 KB, no boilerplate, no context hell.',foss:1,local:1},
+  {id:'s-fe-3',c:'c-fe',type:'solution',label:'EventSource (SSE)',desc:'W3C browser API — push LLM tokens directly to React state.',foss:1,local:1},
+  {id:'s-fe-4',c:'c-fe',type:'solution',label:'D3.js',            desc:'Programmable SVG/Canvas for force-directed knowledge graphs.',foss:1,local:1},
+  {id:'s-fe-5',c:'c-fe',type:'solution',label:'Tailwind CSS v4',  desc:'Utility-first CSS — instant design system, zero config.',foss:1,local:1},
+  // Solutions c-be
+  {id:'s-be-1',c:'c-be',type:'solution',label:'FastAPI + Uvicorn',desc:'Python async HTTP — auto-Swagger, Pydantic-first.',foss:1,local:1},
+  {id:'s-be-2',c:'c-be',type:'solution',label:'Supabase Postgres',desc:'Managed Postgres + Realtime + pgvector. Free tier.',foss:1,ft:1},
+  {id:'s-be-3',c:'c-be',type:'solution',label:'Supabase Auth',    desc:'Magic-link email, JWT, Row Level Security. Free tier.',foss:1,ft:1},
+  {id:'s-be-4',c:'c-be',type:'solution',label:'BullMQ + Redis',   desc:'Job queue on Redis — dequeue to agent graph runner.',foss:1,local:1},
+  {id:'s-be-5',c:'c-be',type:'solution',label:'Pydantic v2',      desc:'Schema validation + serialisation — FastAPI\'s backbone.',foss:1,local:1},
+  // Solutions c-llm
+  {id:'s-llm-1',c:'c-llm',type:'solution',label:'Ollama',          desc:'One-command local LLM server. macOS / Linux / Win.',foss:1,local:1},
+  {id:'s-llm-2',c:'c-llm',type:'solution',label:'llama3.2:3b',     desc:'3B param model — fast inference, 2 GB VRAM footprint.',foss:1,local:1},
+  {id:'s-llm-3',c:'c-llm',type:'solution',label:'nomic-embed-text',desc:'Local embedding model for RAG similarity search.',foss:1,local:1},
+  {id:'s-llm-4',c:'c-llm',type:'solution',label:'LangChain',       desc:'Prompt chaining, tool calls, retrieval abstractions.',foss:1,local:1},
+  {id:'s-llm-5',c:'c-llm',type:'solution',label:'Prompt Templates', desc:'Versioned dataclasses — researcher / synthesizer / critic.',foss:1,local:1},
+  // Solutions c-orc
+  {id:'s-orc-1',c:'c-orc',type:'solution',label:'LangGraph',        desc:'StateGraph: compile → run directed agent workflow engine.',foss:1,local:1},
+  {id:'s-orc-2',c:'c-orc',type:'solution',label:'Researcher Agent', desc:'Context retrieval, semantic search, distilled summary.',foss:1,local:1},
+  {id:'s-orc-3',c:'c-orc',type:'solution',label:'Synthesizer Agent',desc:'Draft structured output from researcher context.',foss:1,local:1},
+  {id:'s-orc-4',c:'c-orc',type:'solution',label:'Critic Agent',     desc:'Validate, score quality, request targeted revisions.',foss:1,local:1},
+  {id:'s-orc-5',c:'c-orc',type:'solution',label:'State Graph Router',desc:'Conditional edges — intelligent next-agent dispatch.',foss:1,local:1},
+  // Solutions c-inf
+  {id:'s-inf-1',c:'c-inf',type:'solution',label:'Docker Compose',  desc:'Multi-service container orchestration — one command boot.',foss:1,local:1},
+  {id:'s-inf-2',c:'c-inf',type:'solution',label:'Railway',         desc:'Git-push container deploy, free tier 500 hours/mo.',foss:0,ft:1},
+  {id:'s-inf-3',c:'c-inf',type:'solution',label:'Vercel',          desc:'Zero-config frontend CDN deploy. Free tier.',foss:0,ft:1},
+  {id:'s-inf-4',c:'c-inf',type:'solution',label:'python-dotenv',   desc:'.env loader — keeps secrets out of source control.',foss:1,local:1},
+  {id:'s-inf-5',c:'c-inf',type:'solution',label:'GitHub + Actions',desc:'FOSS hosting + CI/CD — lint, test, auto-deploy on push.',foss:1,ft:1},
+  // Concepts (cross-cluster)
+  {id:'con-foss',  c:null,type:'concept',label:'FOSS-first',       desc:'Every tool must carry an open-source license. No vendor lock-in at stack level.'},
+  {id:'con-local', c:null,type:'concept',label:'Local > Cloud',    desc:'Prefer on-device execution (Ollama, Redis) to reach zero-cost TCO.'},
+  {id:'con-zero',  c:null,type:'concept',label:'Zero-Cost TCO',    desc:'Total cost of ownership = $0 at MVP stage. Free Tier cloud + local compute.'},
+  {id:'con-stream',c:null,type:'concept',label:'Token Streaming',  desc:'LLM tokens flow via SSE: Ollama → FastAPI → EventSource → React UI. No polling.'},
+  {id:'con-e2e',   c:null,type:'concept',label:'E2E Journey',      desc:'Prompt → API → Queue → Agent Graph → LLM → DB → Realtime → UI. Full closed loop.'},
+  {id:'con-mvp',   c:null,type:'concept',label:'Lean MVP 0→1',    desc:'Ship the thinnest vertical slice demonstrating full-stack AI-native capability.'},
+];
+
+const BRIDGES = [
+  {src:'hub-fe', dst:'hub-be',  label:'REST + SSE',        color:0x818cf8},
+  {src:'hub-be', dst:'hub-llm', label:'Ollama HTTP',        color:0x4ade80},
+  {src:'hub-be', dst:'hub-orc', label:'BullMQ Task Queue',  color:0x22c55e},
+  {src:'hub-orc',dst:'hub-llm', label:'LLM Tool Calls',     color:0xf472b6},
+  {src:'hub-be', dst:'hub-inf', label:'Dockerfile',         color:0x94a3b8},
+  {src:'hub-fe', dst:'hub-inf', label:'Vercel Deploy',      color:0x6366f1},
+  {src:'hub-orc',dst:'hub-fe',  label:'Supabase Realtime',  color:0xec4899},
+];
+
+// ════════════════════════════════════════════════════════
+//  RENDERER + SCENE
+// ════════════════════════════════════════════════════════
+const W = innerWidth, H = innerHeight;
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(W, H);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x060611);
+scene.fog = new THREE.FogExp2(0x060611, 0.009);
+
+const camera = new THREE.PerspectiveCamera(48, W/H, 0.1, 600);
+
+// ════════════════════════════════════════════════════════
+//  ORBIT (manual spherical)
+// ════════════════════════════════════════════════════════
+const orbit = {theta:0.55, phi:1.08, r:70, tx:0, ty:4, tz:0};
+let dragging=false, lx=0, ly=0;
+
+function camSync(){
+  const sp=Math.sin(orbit.phi), cp=Math.cos(orbit.phi);
+  camera.position.set(
+    orbit.tx + orbit.r*sp*Math.sin(orbit.theta),
+    orbit.ty + orbit.r*cp,
+    orbit.tz + orbit.r*sp*Math.cos(orbit.theta)
+  );
+  camera.lookAt(orbit.tx, orbit.ty, orbit.tz);
+}
+camSync();
+
+const cvs = renderer.domElement;
+cvs.addEventListener('mousedown', e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
+window.addEventListener('mouseup',  ()=>dragging=false);
+window.addEventListener('wheel', e=>{orbit.r=Math.max(22,Math.min(130,orbit.r+e.deltaY*.06));},{passive:true});
+
+// ════════════════════════════════════════════════════════
+//  LIGHTS
+// ════════════════════════════════════════════════════════
+scene.add(new THREE.AmbientLight(0x0d0d2a, 3));
+const sun = new THREE.DirectionalLight(0xffffff, 0.7);
+sun.position.set(15, 40, 10);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048,2048);
+sun.shadow.camera.far = 200;
+sun.shadow.camera.left = sun.shadow.camera.bottom = -60;
+sun.shadow.camera.right = sun.shadow.camera.top = 60;
+scene.add(sun);
+// Fill light from below
+const fill = new THREE.DirectionalLight(0x1a0a3a, 0.4);
+fill.position.set(-10, -5, -20);
+scene.add(fill);
+
+// ════════════════════════════════════════════════════════
+//  FLOOR
+// ════════════════════════════════════════════════════════
+const gridHelper = new THREE.GridHelper(120,120,0x0c0c24,0x0c0c24);
+gridHelper.position.y = -0.51;
+scene.add(gridHelper);
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(300,300),
+  new THREE.MeshLambertMaterial({color:0x04040e})
+);
+floor.rotation.x = -Math.PI/2;
+floor.position.y = -0.52;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// ════════════════════════════════════════════════════════
+//  CLUSTER POSITIONS
+// ════════════════════════════════════════════════════════
+const CLUSTER_R = 23;
+const clusterPos = {}; // id → {x,z}
+CLUSTERS.forEach(cl=>{
+  const rad = cl.angle*Math.PI/180;
+  clusterPos[cl.id] = {x: CLUSTER_R*Math.cos(rad), z: -CLUSTER_R*Math.sin(rad)};
+});
+
+// ════════════════════════════════════════════════════════
+//  VOXEL SYSTEM
+// ════════════════════════════════════════════════════════
+const CUBE = new THREE.BoxGeometry(0.88,0.88,0.88);
+const pickMeshes = [];
+const nodeObj = {}; // nodeId → {meshes[], hitMesh, mat, origEmissive}
+const hubPos3 = {}; // nodeId → THREE.Vector3
+const clPL = {};    // clusterId → PointLight
+
+function hexBlend(a,b,t){
+  const ca=new THREE.Color(a), cb=new THREE.Color(b);
+  return ca.lerp(cb,t).getHex();
+}
+function darkHex(h,f=0.15){return new THREE.Color(h).multiplyScalar(f).getHex();}
+
+function makeColumn(cx,cy,cz,w,h,d,col,emCol,emInt,nodeData){
+  const mat = new THREE.MeshLambertMaterial({
+    color:col, emissive:emCol, emissiveIntensity:emInt
+  });
+  const meshes=[];
+  for(let dx=0;dx<w;dx++)for(let dz=0;dz<d;dz++)for(let y=0;y<h;y++){
+    const m=new THREE.Mesh(CUBE,mat);
+    m.position.set(cx+dx-(w-1)/2, cy+y+0.5, cz+dz-(d-1)/2);
+    m.castShadow=true; m.receiveShadow=true;
+    m.userData.nid=nodeData.id;
+    m.userData.origY=m.position.y;
+    scene.add(m);
+    meshes.push(m);
+  }
+  // hitbox
+  const hg=new THREE.BoxGeometry(w+0.6,h+0.3,d+0.6);
+  const hm=new THREE.Mesh(hg,new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+  hm.position.set(cx,cy+h/2,cz);
+  hm.userData.nid=nodeData.id;
+  scene.add(hm); pickMeshes.push(hm);
+  nodeObj[nodeData.id]={meshes,hitMesh:hm,mat,origEmissive:emInt,nodeData};
+  return hm;
+}
+
+// ════════════════════════════════════════════════════════
+//  BUILD CLUSTERS
+// ════════════════════════════════════════════════════════
+function buildClusters(){
+  CLUSTERS.forEach((cl,ci)=>{
+    const {x:cx,z:cz}=clusterPos[cl.id];
+    const col=cl.color;
+    const darkCol=darkHex(col,0.2);
+    const brightCol=new THREE.Color(col).multiplyScalar(1.2).getHex();
+
+    // Platform slab
+    const plat=new THREE.Mesh(
+      new THREE.BoxGeometry(16,0.7,16),
+      new THREE.MeshLambertMaterial({color:darkHex(col,0.12),emissive:col,emissiveIntensity:0.04})
+    );
+    plat.position.set(cx,-0.17,cz);
+    plat.receiveShadow=true;
+    scene.add(plat);
+
+    // Cluster point light (pulsed in animate)
+    const pl=new THREE.PointLight(col,1.0,22);
+    pl.position.set(cx,7,cz);
+    scene.add(pl);
+    clPL[cl.id]=pl;
+
+    // ── Hub tower (2×2×8) ──
+    const hubNode=NODES.find(n=>n.c===cl.id&&n.type==='hub');
+    if(hubNode){
+      makeColumn(cx,0,cz,2,8,2,col,col,0.45,hubNode);
+      hubPos3[hubNode.id]=new THREE.Vector3(cx,4,cz);
+      // Crown light atop hub
+      const cl2=new THREE.PointLight(col,1.5,10);
+      cl2.position.set(cx,9.5,cz);
+      scene.add(cl2);
+    }
+
+    // ── Problem nodes (inner ring, r=4.8) ──
+    const problems=NODES.filter(n=>n.c===cl.id&&n.type==='problem');
+    const probCol=hexBlend(col,0xef4444,0.55);
+    const probEmCol=hexBlend(0xef4444,col,0.3);
+    problems.forEach((nd,pi)=>{
+      const a=(pi/problems.length)*Math.PI*2+(ci*0.42+0.2);
+      makeColumn(cx+Math.cos(a)*4.8,0,cz+Math.sin(a)*4.8,1,3,1,probCol,probEmCol,0.08,nd);
+    });
+
+    // ── Solution nodes (outer ring, r=8.2) ──
+    const solutions=NODES.filter(n=>n.c===cl.id&&n.type==='solution');
+    const solCol=hexBlend(col,0x22c55e,0.28);
+    solutions.forEach((nd,si)=>{
+      const a=(si/solutions.length)*Math.PI*2+(ci*0.42+0.6);
+      makeColumn(cx+Math.cos(a)*8.2,0,cz+Math.sin(a)*8.2,1,5,1,solCol,col,0.12,nd);
+    });
+  });
+
+  // ── Concept nodes — center area, elevated ──
+  const concepts=NODES.filter(n=>n.type==='concept');
+  const conceptCols=[0x818cf8,0x60a5fa,0xfbbf24,0xc084fc,0xf472b6,0x34d399];
+  concepts.forEach((nd,i)=>{
+    const a=(i/concepts.length)*Math.PI*2;
+    const r=9;
+    const cx2=Math.cos(a)*r, cz2=Math.sin(a)*r;
+    const cc=conceptCols[i%conceptCols.length];
+    makeColumn(cx2,10,cz2,1,2,1,cc,cc,0.6,nd);
+    // floating connector to Y=0
+    const stem=new THREE.Mesh(
+      new THREE.BoxGeometry(0.12,10,0.12),
+      new THREE.MeshBasicMaterial({color:cc,transparent:true,opacity:0.15})
+    );
+    stem.position.set(cx2,5.5,cz2);
+    scene.add(stem);
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  BRIDGES (arched tubes between hubs)
+// ════════════════════════════════════════════════════════
+const bridgeObjs=[];
+
+function buildBridges(){
+  BRIDGES.forEach((br,bi)=>{
+    const sp=hubPos3[br.src], dp=hubPos3[br.dst];
+    if(!sp||!dp) return;
+    const pts=[];
+    const segs=24;
+    for(let i=0;i<=segs;i++){
+      const t=i/segs;
+      const x=sp.x+(dp.x-sp.x)*t;
+      const z=sp.z+(dp.z-sp.z)*t;
+      const arc=Math.sin(t*Math.PI)*4.5;
+      const y=sp.y+(dp.y-sp.y)*t+arc;
+      pts.push(new THREE.Vector3(x,y,z));
+    }
+    const curve=new THREE.CatmullRomCurve3(pts);
+    const geo=new THREE.TubeGeometry(curve,segs,0.09,5,false);
+    const mat=new THREE.MeshBasicMaterial({color:br.color,transparent:true,opacity:0.45});
+    const mesh=new THREE.Mesh(geo,mat);
+    scene.add(mesh);
+    bridgeObjs.push({mesh,mat,bi});
+
+    // Data-flow particles along bridge
+    const pCount=12;
+    const pGeo=new THREE.BufferGeometry();
+    const pPos=new Float32Array(pCount*3);
+    const pPhase=new Float32Array(pCount);
+    for(let k=0;k<pCount;k++){
+      pPhase[k]=k/pCount;
+      const pp=curve.getPoint(pPhase[k]);
+      pPos[k*3]=pp.x; pPos[k*3+1]=pp.y; pPos[k*3+2]=pp.z;
+    }
+    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+    pGeo.userData={curve,pPhase,pCount};
+    const pMat=new THREE.PointsMaterial({color:br.color,size:0.28,transparent:true,opacity:0.9,sizeAttenuation:true});
+    const pts2=new THREE.Points(pGeo,pMat);
+    scene.add(pts2);
+    bridgeObjs.push({pts2,pGeo,pMat,bi,_isFlow:true});
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  AMBIENT PARTICLE FIELD
+// ════════════════════════════════════════════════════════
+let ambPts;
+const AMB_N=800;
+
+function buildAmbient(){
+  const pos=new Float32Array(AMB_N*3);
+  const col=new Float32Array(AMB_N*3);
+  const ang=new Float32Array(AMB_N);
+  const rad=new Float32Array(AMB_N);
+  const spd=new Float32Array(AMB_N);
+  const yphs=new Float32Array(AMB_N);
+  const yspd=new Float32Array(AMB_N);
+  const ybase=new Float32Array(AMB_N);
+  const clusterColors=[0x6366f1,0x22c55e,0xf59e0b,0xec4899,0x64748b];
+  for(let i=0;i<AMB_N;i++){
+    ang[i]=Math.random()*Math.PI*2;
+    rad[i]=6+Math.random()*44;
+    spd[i]=0.0015+Math.random()*0.003;
+    ybase[i]=Math.random()*14;
+    yspd[i]=0.0008+Math.random()*0.0015;
+    yphs[i]=Math.random()*Math.PI*2;
+    pos[i*3]=Math.cos(ang[i])*rad[i];
+    pos[i*3+1]=ybase[i];
+    pos[i*3+2]=Math.sin(ang[i])*rad[i];
+    const c=new THREE.Color(clusterColors[i%5]);
+    c.multiplyScalar(0.6+Math.random()*0.6);
+    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  geo.userData={ang,rad,spd,yphs,yspd,ybase};
+  const mat=new THREE.PointsMaterial({size:0.13,vertexColors:true,transparent:true,opacity:0.55,sizeAttenuation:true});
+  ambPts=new THREE.Points(geo,mat);
+  scene.add(ambPts);
+}
+
+// ════════════════════════════════════════════════════════
+//  ROLLOVER INDICATOR (voxel-painter style)
+// ════════════════════════════════════════════════════════
+const rollGeo=new THREE.BoxGeometry(1.05,1.05,1.05);
+const rollMat=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.22,wireframe:true});
+const rollMesh=new THREE.Mesh(rollGeo,rollMat);
+rollMesh.visible=false;
+scene.add(rollMesh);
+
+// ════════════════════════════════════════════════════════
+//  RAYCASTER + INTERACTION
+// ════════════════════════════════════════════════════════
+const ray=new THREE.Raycaster();
+const mouse=new THREE.Vector2();
+let hovId=null, selId=null;
+const tooltip=document.getElementById('tooltip');
+const infoPan=document.getElementById('panel-info');
+
+function nodeLabel(id){const n=NODES.find(x=>x.id===id);return n?n.label:'';}
+function clusterOf(n){return n.c?CLUSTERS.find(c=>c.id===n.c):null;}
+
+function setHover(id){
+  if(hovId===id) return;
+  if(hovId&&nodeObj[hovId]){
+    const o=nodeObj[hovId];
+    o.mat.emissiveIntensity=o.origEmissive;
+  }
+  hovId=id;
+  if(id&&nodeObj[id]){
+    nodeObj[id].mat.emissiveIntensity=1.0;
+    document.body.style.cursor='pointer';
+    tooltip.textContent=nodeLabel(id);
+    tooltip.classList.remove('off');
+    // position rollover on nearest voxel in column
+    const ms=nodeObj[id].meshes;
+    if(ms.length) rollMesh.position.copy(ms[Math.floor(ms.length/2)].position);
+    rollMesh.visible=true;
+  } else {
+    document.body.style.cursor='';
+    tooltip.classList.add('off');
+    rollMesh.visible=false;
+  }
+}
+
+function selectNode(id){
+  selId=id;
+  if(!id){infoPan.classList.add('off');return;}
+  const node=NODES.find(n=>n.id===id); if(!node) return;
+  const cl=clusterOf(node);
+  const clHex=cl?'#'+cl.color.toString(16).padStart(6,'0'):'#64748b';
+  const typeColor=
+    node.type==='hub'?'#818cf8':
+    node.type==='problem'?'#f87171':
+    node.type==='solution'?'#4ade80':'#fbbf24';
+
+  document.getElementById('info-type').textContent=node.type.toUpperCase();
+  document.getElementById('info-type').style.color=typeColor;
+  document.getElementById('info-label').textContent=node.label;
+  document.getElementById('info-cluster').innerHTML=
+    cl?`<span style="color:${clHex}">▣</span> ${cl.label} · ${cl.layer} Layer`
+      :`<span style="color:#fbbf24">◈</span> Cross-Cluster Concept`;
+  const bd=document.getElementById('info-badges');
+  bd.innerHTML='';
+  if(node.foss) bd.innerHTML+=`<span class="badge" style="background:#052e16;color:#4ade80">FOSS ✓</span>`;
+  if(node.ft)   bd.innerHTML+=`<span class="badge" style="background:#0c1a2e;color:#93c5fd">Free Tier ✓</span>`;
+  if(node.local)bd.innerHTML+=`<span class="badge" style="background:#1c1917;color:#a8a29e">Local ✓</span>`;
+  document.getElementById('info-desc').textContent=node.desc||'';
+  infoPan.classList.remove('off');
+}
+
+cvs.addEventListener('mousemove',e=>{
+  tooltip.style.left=(e.clientX+14)+'px';
+  tooltip.style.top=(e.clientY-10)+'px';
+  if(dragging){
+    orbit.theta-=(e.clientX-lx)*0.004;
+    orbit.phi=Math.max(0.12,Math.min(Math.PI*0.46,orbit.phi+(e.clientY-ly)*0.004));
+    lx=e.clientX; ly=e.clientY;
+    return;
+  }
+  mouse.x=(e.clientX/innerWidth)*2-1;
+  mouse.y=-(e.clientY/innerHeight)*2+1;
+  ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects(pickMeshes,false);
+  setHover(hits.length?hits[0].object.userData.nid:null);
+});
+
+cvs.addEventListener('click',e=>{
+  if(dragging) return;
+  mouse.x=(e.clientX/innerWidth)*2-1;
+  mouse.y=-(e.clientY/innerHeight)*2+1;
+  ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects(pickMeshes,false);
+  selectNode(hits.length?hits[0].object.userData.nid:null);
+});
+
+window.addEventListener('resize',()=>{
+  renderer.setSize(innerWidth,innerHeight);
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+});
+
+// ════════════════════════════════════════════════════════
+//  ANIMATE
+// ════════════════════════════════════════════════════════
+const clock=new THREE.Clock();
+
+function animate(){
+  requestAnimationFrame(animate);
+  const t=clock.getElapsedTime();
+
+  camSync();
+
+  // Rollover pulsing
+  rollMesh.material.opacity=0.12+0.18*Math.sin(t*4);
+
+  // Cluster point lights
+  CLUSTERS.forEach((cl,ci)=>{
+    const pl=clPL[cl.id];
+    if(pl) pl.intensity=0.6+0.5*Math.sin(t*0.9+ci*1.3);
+  });
+
+  // Hub voxel bob
+  NODES.filter(n=>n.type==='hub').forEach((n,ni)=>{
+    const o=nodeObj[n.id];
+    if(!o) return;
+    const delta=Math.sin(t*0.55+ni*0.9)*0.07;
+    o.meshes.forEach(m=>{ m.position.y=m.userData.origY+delta; });
+    o.hitMesh.position.y=4+delta;
+  });
+
+  // Concept node levitation
+  NODES.filter(n=>n.type==='concept').forEach((n,ni)=>{
+    const o=nodeObj[n.id];
+    if(!o) return;
+    const delta=Math.sin(t*1.1+ni*1.8)*0.4;
+    o.meshes.forEach(m=>{ m.position.y=m.userData.origY+delta; });
+    o.hitMesh.position.y=10+delta+0.5;
+    o.mat.emissiveIntensity=0.4+0.4*Math.sin(t*1.4+ni*0.8);
+  });
+
+  // Bridge tube pulse + flow particles
+  bridgeObjs.forEach((b,bi)=>{
+    if(b._isFlow){
+      const {pGeo}=b;
+      const {curve,pPhase,pCount}=pGeo.userData;
+      const pos=pGeo.attributes.position;
+      for(let k=0;k<pCount;k++){
+        pPhase[k]=(pPhase[k]+0.004+b.bi*0.0003)%1;
+        const pp=curve.getPoint(pPhase[k]);
+        pos.setXYZ(k,pp.x,pp.y,pp.z);
+      }
+      pos.needsUpdate=true;
+    } else {
+      b.mat.opacity=0.25+0.25*Math.sin(t*1.2+b.bi*0.7);
+    }
+  });
+
+  // Ambient particles orbit
+  if(ambPts){
+    const g=ambPts.geometry;
+    const pos=g.attributes.position;
+    const {ang,rad,spd,yphs,yspd,ybase}=g.userData;
+    for(let i=0;i<AMB_N;i++){
+      ang[i]+=spd[i];
+      pos.setX(i,Math.cos(ang[i])*rad[i]);
+      pos.setZ(i,Math.sin(ang[i])*rad[i]);
+      pos.setY(i,ybase[i]+Math.sin(t*yspd[i]*200+yphs[i])*1.8);
+    }
+    pos.needsUpdate=true;
+  }
+
+  renderer.render(scene,camera);
+}
+
+// ════════════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════════════
+buildClusters();
+buildBridges();
+buildAmbient();
+animate();
+</script>
+</body>
+</html>

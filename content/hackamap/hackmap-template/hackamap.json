@@ -1,0 +1,1334 @@
+{
+  "meta": {
+    "name": "hackamap",
+    "version": "0.3.0",
+    "generated_at": "2026-03-31T00:00:00Z",
+    "time_window": {
+      "start_date": "2025-04-01",
+      "end_date": "2026-03-31"
+    },
+    "notes": "This file is a structured, citation-first map of AI-powered product launches and hackathon demos/winners (last 12 months). It includes user painpoints, solution summaries, and feature/functional capability lists. Coverage adds verifiable distribution sources where available (Hacker News, Product Hunt, LinkedIn, Reddit). x.com remains missing in this pass because no verifiable, directly relevant posts were found via available web retrieval without risking incorrect attribution."
+  },
+  "coverage": {
+    "requested_platforms": ["x.com", "reddit", "linkedin", "producthunt", "hackernews"],
+    "found_platforms": ["reddit", "linkedin", "producthunt", "hackernews"],
+    "not_found_platforms": ["x.com"]
+  },
+  "records": {
+    "sources": [
+      {
+        "source_id": "src_openai_devpost_winners_2025_10_01",
+        "title": "And the winners are…",
+        "publisher": "Devpost (OpenAI Open Model Hackathon)",
+        "platform": "devpost",
+        "url": "https://openai.devpost.com/updates/37529-and-the-winners-are",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "The winner announcement is scheduled for October 1st!",
+        "claim_scope": "Official winner list + descriptions for OpenAI Open Model Hackathon categories."
+      },
+      {
+        "source_id": "src_openai_devpost_schedule_2025_10_01",
+        "title": "Off to the judging panel!",
+        "publisher": "Devpost (OpenAI Open Model Hackathon)",
+        "platform": "devpost",
+        "url": "https://openai.devpost.com/updates/38014-off-to-the-judging-panel",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "The winner announcement is scheduled for October 1st!",
+        "claim_scope": "Timeline confirmation for winner announcement date."
+      },
+      {
+        "source_id": "src_youcom_winners_2025_11_04",
+        "title": "Announcing the Winners of the You.com Agentic Hackathon 2025!",
+        "publisher": "You.com",
+        "platform": "you.com",
+        "url": "https://you.com/resources/the-winners-of-the-you-com-agentic-hackathon-2025",
+        "published_date": "2025-11-04",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "The problem Mina addresses is that founders, investors, and creators waste time searching across multiple sources for startup trends, funding activity, and new product launches.",
+        "claim_scope": "Official You.com hackathon winners + problem framing blurbs for winning projects."
+      },
+      {
+        "source_id": "src_qdrant_vector_space_winners_2025_09_29",
+        "title": "Thinking Outside the Bot with 2025 Hackathon Winners",
+        "publisher": "Qdrant",
+        "platform": "qdrant.tech",
+        "url": "https://qdrant.tech/blog/vector-space-hackathon-winners-2025/",
+        "published_date": "2025-09-29",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "A 3D product exploration experience that turns e-commerce discovery into an explorable world.",
+        "claim_scope": "Official Qdrant hackathon winners list + project descriptions + repos."
+      },
+      {
+        "source_id": "src_flower_decentralized_winners_2025_10_22",
+        "title": "Announcing the Decentralized AI Hackathon Winners",
+        "publisher": "Flower",
+        "platform": "flower.ai",
+        "url": "https://flower.ai/blog/2025-10-22-decentralized-hackathon-sf-winners/",
+        "published_date": "2025-10-22",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "what if we could use AI to help detect skin cancer early, while keeping sensitive medical images private?",
+        "claim_scope": "Official Flower hackathon winners + first-person motivation/problem framing."
+      },
+      {
+        "source_id": "src_baseten_spc_llamathon_2025_05_16",
+        "title": "SPC hackathon winners build with Llama 3.1 on Baseten",
+        "publisher": "Baseten",
+        "platform": "baseten.com",
+        "url": "https://www.baseten.com/blog/spc-hackathon-winners-build-with-llama-3-1-on-baseten/",
+        "published_date": "2025-05-16",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "TestNinja uses deterministic Python code, not AI tools, to extract the most relevant context for test generation.",
+        "claim_scope": "Hackathon finalist/winner project details + motivation and approach quotes."
+      },
+      {
+        "source_id": "src_ibm_flashsystem_ai_2026_02_10",
+        "title": "IBM Introduces Autonomous Storage with New FlashSystem Portfolio Powered by Agentic AI",
+        "publisher": "IBM Newsroom",
+        "platform": "ibm.com",
+        "url": "https://newsroom.ibm.com/next-generation-ibm-flashsystem-portfolio",
+        "published_date": "2026-02-10",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "IBM today unveiled the next generation of IBM FlashSystem, co-run by agentic AI, ushering in a new era of autonomous storage.",
+        "claim_scope": "Product launch announcement + positioning and claimed operational benefits."
+      },
+      {
+        "source_id": "src_backbase_ai_banking_2025_05_02",
+        "title": "Backbase Launches World’s First AI-Powered Banking Platform, Putting Banks back in Growth Mode",
+        "publisher": "Access Newswire",
+        "platform": "accessnewswire.com",
+        "url": "https://www.accessnewswire.com/newsroom/en/banking-and-financial-services/backbase-launches-world%E2%80%99s-first-ai-powered-banking-platform-putting-1022719",
+        "published_date": "2025-05-02",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Banks don't need more pilots - they need outcomes.",
+        "claim_scope": "Product launch + founder framing + platform positioning."
+      },
+      {
+        "source_id": "src_greenhouse_ai_tools_2025_05_07",
+        "title": "Greenhouse Unveils New AI-Driven Products at UNLEASH to Streamline Hiring in Saturated Job Market",
+        "publisher": "PRNewswire",
+        "platform": "prnewswire.com",
+        "url": "https://www.prnewswire.com/news-releases/greenhouse-unveils-new-ai-driven-products-at-unleash-to-streamline-hiring-in-saturated-job-market-302448087.html",
+        "published_date": "2025-05-07",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Recruiters are drowning in applications. Since the release of ChatGPT, they've faced a 134% spike in applications per job.",
+        "claim_scope": "Product launch + explicit pain framing + feature list."
+      },
+      {
+        "source_id": "src_hope_ai_prnewswire_2025_05_28",
+        "title": "Bit Cloud Launches Hope AI, Enabling Developers to Build Complex Applications in a Few Hours",
+        "publisher": "PRNewswire",
+        "platform": "prnewswire.com",
+        "url": "https://www.prnewswire.com/il/news-releases/bit-cloud-launches-hope-ai-enabling-developers-to-build-complex-applications-in-a-few-hours-302466854.html",
+        "published_date": "2025-05-28",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Hope AI functions as an intelligent software architect, leveraging existing, proven components to compose professional and practical software solutions.",
+        "claim_scope": "Product GA announcement + founder framing + positioning."
+      },
+      {
+        "source_id": "src_cisionone_ai_suite_2025_05_22",
+        "title": "Cision Launches Integrated AI Suite Across Global CisionOne Platform, Transforming the PR Workflow with Built-in Intelligence",
+        "publisher": "PRNewswire",
+        "platform": "prnewswire.com",
+        "url": "https://www.prnewswire.com/sv/pressmeddelanden/cision-launches-integrated-ai-suite-across-global-cisionone-platform-transforming-the-pr-workflow-with-built-in-intelligence-302462377.html",
+        "published_date": "2025-05-22",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "We've taken a thoughtful approach to applying AI in ways that directly address the real needs of PR and Communications teams—adding powerful tools that save time and create smarter workflows.",
+        "claim_scope": "Feature launch + problem framing for comms teams."
+      },
+      {
+        "source_id": "src_athean_launch_2025_05_15",
+        "title": "Athean Launches with New AI-Powered Sales Platform to Supercharge Prospecting",
+        "publisher": "PRNewswire",
+        "platform": "prnewswire.com",
+        "url": "https://www.prnewswire.com/news-releases/athean-launches-with-new-ai-powered-sales-platform-to-supercharge-prospecting-302456043.html",
+        "published_date": "2025-05-15",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Sales reps are inundated with countless tools for prospecting, valuable data is siloed, and time is lost in the endless switching between platforms.",
+        "claim_scope": "Product launch + explicit pain framing."
+      },
+      {
+        "source_id": "src_shopsight_launch_2025_05_06",
+        "title": "ShopSight Launches AI-Powered Platform to Inspire the Future of Brand Engagement",
+        "publisher": "AIJourn (PRNewswire reprint)",
+        "platform": "aijourn.com",
+        "url": "https://aijourn.com/shopsight-launches-ai-powered-platform-to-inspire-the-future-of-brand-engagement/",
+        "published_date": "2025-05-06",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "The most important insights a brand can get are directly from a consumer, but channels to facilitate that connection have been limited.",
+        "claim_scope": "Product launch + founder pain framing for consumer insights and brand engagement."
+      },
+      {
+        "source_id": "src_mww_prisma_labs_ai_2025_05_13",
+        "title": "MikeWorldWide PR Agency Launches PRISMA Labs.ai: A New AI Intelligence Layer for Modern Communications",
+        "publisher": "PRNewswire",
+        "platform": "prnewswire.com",
+        "url": "https://www.prnewswire.com/news-releases/mikeworldwide-pr-agency-launches-prisma-labsai-a-new-ai-intelligence-layer-for-modern-communications-302454135.html",
+        "published_date": "2025-05-13",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Your brand no longer lives just on your website, in earned media, or on social—it lives in the answers AI delivers.",
+        "claim_scope": "Platform launch + explicit framing of 'AI answers' as reputational surface."
+      },
+      {
+        "source_id": "src_hn_hope_ai_2025_05_28",
+        "title": "Bit Cloud Launches Hope AI, Enabling Developers to Build Complex Applications",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=44142895",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Bit Cloud (bit.cloud) today announced the general availability of Hope AI, its new AI-powered development agent…",
+        "claim_scope": "Distribution/discussion link for Hope AI announcement (reposts PR text)."
+      },
+      {
+        "source_id": "src_producthunt_hope_ai",
+        "title": "Hope AI. by Bit Cloud",
+        "publisher": "Product Hunt",
+        "platform": "producthunt",
+        "url": "https://www.producthunt.com/products/hope-ai-by-bit-cloud",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "The intelligent architect agent that builds and composes professional software, including fully-featured platforms…",
+        "claim_scope": "Product Hunt listing describing Hope AI."
+      },
+      {
+        "source_id": "src_linkedin_ameya_testninja_post",
+        "title": "LinkedIn post (TestNinja hackathon win) — Ameya Jadhav",
+        "publisher": "LinkedIn",
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/posts/ameyajadhav_we-won-most-interesting-technical-achievement-activity-7226294361829847040-0jIU",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": null,
+        "claim_scope": "Secondary source link referenced by Baseten article for TestNinja."
+      },
+      {
+        "source_id": "src_linkedin_irfan_vibecheck_post",
+        "title": "LinkedIn post (VibeCheck finalist) — Irfan Manji",
+        "publisher": "LinkedIn",
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/posts/irfanmanji_we-made-it-to-the-finals-in-an-adrenaline-fueled-activity-7226259416021356545-wPXV",
+        "published_date": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": null,
+        "claim_scope": "Secondary source link referenced by Baseten article for VibeCheck."
+      },
+      {
+        "source_id": "src_hn_gryph_46857391",
+        "title": "Show HN: Gryph – Audit Trail for AI Coding Agents (Claude Code, Cursor, Gemini)",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=46857391",
+        "published_date": null,
+        "published_date_text": "56 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "git diff… doesn't show: Files the agent read but didn't change; Commands it ran; The sequence of actions…",
+        "claim_scope": "User painpoint + product description for audit trails of AI coding agents."
+      },
+      {
+        "source_id": "src_hn_sentinel_47351975",
+        "title": "MCP server that audits AI agent reasoning before decisions commit",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=47351975",
+        "published_date": null,
+        "published_date_text": "18 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "agents report high confidence on decisions backed by stale evidence… an agent's stated confidence and its actual reliability are different things…",
+        "claim_scope": "Founder problem framing + solution approach for pre-commit reasoning audits."
+      },
+      {
+        "source_id": "src_hn_article12_logging_47230438",
+        "title": "Show HN: Open-Source Article 12 Logging Infrastructure for the EU AI Act",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=47230438",
+        "published_date": null,
+        "published_date_text": "27 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "prove exactly what happened for a specific AI decision X months ago (and demonstrate that the log trail had not been altered)",
+        "claim_scope": "Problem framing for tamper-evident inference logging and decision reconstruction."
+      },
+      {
+        "source_id": "src_hn_tansive_44499658",
+        "title": "Show HN: Tansive – AI Agents that won't accidentally restart your prod database",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=44499658",
+        "published_date": null,
+        "published_date_text": "8 months ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "How do you prevent an agent from accidentally restarting production pods? How do you audit what it actually did when something goes wrong?",
+        "claim_scope": "Problem framing + feature list for agent runtime controls/guardrails."
+      },
+      {
+        "source_id": "src_hn_keypost_46635989",
+        "title": "Show HN: Keypost – Policy enforcement for MCP pipelines",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=46635989",
+        "published_date": null,
+        "published_date_text": "73 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "no standard way to control who can call what, with which parameters, or under what limits… enforces deterministic policies before tools run.",
+        "claim_scope": "Product description and problem framing for MCP policy enforcement."
+      },
+      {
+        "source_id": "src_hn_satgate_47002845",
+        "title": "Show HN: SatGate – Budget enforcement proxy for MCP tool calls (L402/macaroons)",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=47002845",
+        "published_date": null,
+        "published_date_text": "45 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "MCP gives agents tool access with no economic controls… an agent stuck in a retry loop… burns real money…",
+        "claim_scope": "Problem framing + solution concept for budget controls on agent tool calls."
+      },
+      {
+        "source_id": "src_hn_runtime_fence_46928612",
+        "title": "Show HN: Runtime Fence – Kill switch for AI agents",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=46928612",
+        "published_date": null,
+        "published_date_text": "51 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Built this after an AI agent deleted my database at 2AM… emergency stop controls… blocks dangerous actions…",
+        "claim_scope": "Problem framing + solution description for agent kill switches and guardrails."
+      },
+      {
+        "source_id": "src_hn_licitra_sentry_47262394",
+        "title": "HN comment: LICITRA-SENTRY signed execution tickets",
+        "publisher": "Hacker News",
+        "platform": "hackernews",
+        "url": "https://news.ycombinator.com/item?id=47262394",
+        "published_date": null,
+        "published_date_text": "25 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "signed ticket containing agent identity, tool name, hash of the exact request payload, and expiration… proxy verifies… recomputes the request hash…",
+        "claim_scope": "Runtime enforceability and anti-mutation approval binding for agent tool execution."
+      },
+      {
+        "source_id": "src_reddit_traceprompt_audit_1mxetdf",
+        "title": "Traceprompt - open-source SDK for tamper-proof LLM audit trails",
+        "publisher": "Reddit (r/LLMDevs)",
+        "platform": "reddit",
+        "url": "https://www.reddit.com/r/LLMDevs/comments/1mxetdf/traceprompt_opensource_sdk_for_tamperproof_llm/",
+        "published_date": null,
+        "published_date_text": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "open-source SDK… generates tamper-proof audit trails… The goal is to make “prove nothing changed” boring.",
+        "claim_scope": "Founder framing + feature outline for tamper-proof audit trails with BYOK and proofs."
+      },
+      {
+        "source_id": "src_reddit_utcp_mcp_bridge_1mnet0j",
+        "title": "How I built an MCP server that creates 1,000+ GitHub tools by connecting natively to their API",
+        "publisher": "Reddit (r/vscode)",
+        "platform": "reddit",
+        "url": "https://www.reddit.com/r/vscode/comments/1mnet0j/how_i_built_an_mcp_server_that_creates_1000/",
+        "published_date": null,
+        "published_date_text": null,
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "stop re-writing the same tool wrappers… ingests API specs… exposes them as typed MCP tools. No per-API glue code.",
+        "claim_scope": "Problem framing + solution for spec-to-tool generation (OpenAPI/Postman → MCP tools)."
+      },
+      {
+        "source_id": "src_ph_coreguard_ai",
+        "title": "CoreGuard AI",
+        "publisher": "Product Hunt",
+        "platform": "producthunt",
+        "url": "https://www.producthunt.com/products/coreguard-ai",
+        "published_date": null,
+        "published_date_text": "Listing viewed 2026-03-31 (Product Hunt launch date not available in retrieved excerpt)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "proxy between your users and any GenAI tool… block PII, enforce model policies, and get visibility into how AI is being used.",
+        "claim_scope": "Maker/launch description for proxy-based GenAI governance."
+      },
+      {
+        "source_id": "src_ph_complylint_thread",
+        "title": "ComplyLint: Shift-left for GDPR & AI Act, Developer-first Compliance Tool",
+        "publisher": "Product Hunt",
+        "platform": "producthunt",
+        "url": "https://www.producthunt.com/p/self-promotion/complylint-shift-left-for-gdpr-ai-act-developer-first-compliance-tool",
+        "published_date": null,
+        "published_date_text": "Thread viewed 2026-03-31 (post date not available in retrieved excerpt)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Compliance with GDPR and the upcoming EU AI Act is often reactive… leaving developers to fix things last-minute.",
+        "claim_scope": "Problem framing + planned feature list for shift-left compliance tooling."
+      },
+      {
+        "source_id": "src_ph_ai_act_readiness_pack",
+        "title": "AI Act Readiness Pack",
+        "publisher": "Product Hunt",
+        "platform": "producthunt",
+        "url": "https://www.producthunt.com/products/ai-act-readiness-pack?launch=ai-act-readiness-pack",
+        "published_date": null,
+        "published_date_text": "11mo ago (relative on Product Hunt, retrieved 2026-03-31)",
+        "retrieved_at": "2026-03-31T00:00:00Z",
+        "quote": "Self‑audit the EU AI Act in a weekend — Notion + gap matrix… export an investor‑ready PDF in under 2 hours.",
+        "claim_scope": "Launch pitch and included components for a self-audit toolkit."
+      }
+    ],
+    "events": [
+      {
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "event_name": "OpenAI Open Model Hackathon",
+        "event_type": "hackathon",
+        "start_date": null,
+        "end_date": null,
+        "location": "Virtual",
+        "organizer": "OpenAI / Devpost",
+        "source_id": "src_openai_devpost_winners_2025_10_01"
+      },
+      {
+        "event_id": "evt_youcom_agentic_hackathon_2025",
+        "event_name": "You.com Agentic Hackathon 2025",
+        "event_type": "hackathon",
+        "start_date": null,
+        "end_date": null,
+        "location": "Virtual",
+        "organizer": "You.com",
+        "source_id": "src_youcom_winners_2025_11_04"
+      },
+      {
+        "event_id": "evt_qdrant_vector_space_hackathon_2025",
+        "event_name": "Qdrant Vector Space Hackathon 2025",
+        "event_type": "hackathon",
+        "start_date": null,
+        "end_date": null,
+        "location": "Berlin (winners announced at Vector Space Day)",
+        "organizer": "Qdrant",
+        "source_id": "src_qdrant_vector_space_winners_2025_09_29"
+      },
+      {
+        "event_id": "evt_flower_decentralized_ai_hackathon_2025",
+        "event_name": "Flower Decentralized AI Hackathon (SF)",
+        "event_type": "hackathon",
+        "start_date": "2025-09-26",
+        "end_date": "2025-09-26",
+        "location": "Stanford University (Jen-Hsun Huang Engineering Center)",
+        "organizer": "Flower",
+        "source_id": "src_flower_decentralized_winners_2025_10_22"
+      },
+      {
+        "event_id": "evt_spc_llamathon_2025",
+        "event_name": "South Park Commons “Llamathon” (Llama 3.1 hackathon)",
+        "event_type": "hackathon",
+        "start_date": null,
+        "end_date": null,
+        "location": null,
+        "organizer": "South Park Commons",
+        "source_id": "src_baseten_spc_llamathon_2025_05_16"
+      }
+    ],
+    "products": [
+      {
+        "product_id": "prod_robochef",
+        "product_name": "RoboChef: GPT-OSS Powered Kitchen Assistant",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-10-01",
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "primary_source_id": "src_openai_devpost_winners_2025_10_01",
+        "canonical_url": "https://devpost.com/software/robochef-gpt-oss-powered-kitchen-assistant",
+        "one_liner": "Natural language cooking instructions → sequential robot actions with live UI tracking.",
+        "domain": "robotics"
+      },
+      {
+        "product_id": "prod_scent_printer",
+        "product_name": "A Printer… for Smell (AI “Scent Songs”)",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-10-01",
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "primary_source_id": "src_openai_devpost_winners_2025_10_01",
+        "canonical_url": "https://openai.devpost.com/submissions/791663-a-printer-for-smell-ai-scent-songs",
+        "one_liner": "Prompt → JSON scent recipe + timeline → robotic dosing + diffuser crossfade to create evolving aromas.",
+        "domain": "hardware"
+      },
+      {
+        "product_id": "prod_memory_palace",
+        "product_name": "Memory Palace (offline-first AI companion)",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-10-01",
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "primary_source_id": "src_openai_devpost_winners_2025_10_01",
+        "canonical_url": "https://openai.devpost.com/submissions/781238-memory-palace",
+        "one_liner": "Offline-first companion to help people with memory loss reconnect with their past via local media and narratives.",
+        "domain": "health"
+      },
+      {
+        "product_id": "prod_dental_assessment_gpt",
+        "product_name": "Dental Assessment GPT",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-10-01",
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "primary_source_id": "src_openai_devpost_winners_2025_10_01",
+        "canonical_url": "https://openai.devpost.com/submissions/787822-dental-assessment-gpt",
+        "one_liner": "Evidence-based dental assessments and treatment plans from structured case data.",
+        "domain": "health"
+      },
+      {
+        "product_id": "prod_bota",
+        "product_name": "bota (autonomous Dota 2 agent)",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-10-01",
+        "event_id": "evt_openai_open_model_hackathon_2025",
+        "primary_source_id": "src_openai_devpost_winners_2025_10_01",
+        "canonical_url": "https://openai.devpost.com/submissions/780961-bota",
+        "one_liner": "LLM-driven agent that plays 1v1 Dota 2 with observable reasoning.",
+        "domain": "gaming"
+      },
+      {
+        "product_id": "prod_mina",
+        "product_name": "MINA (startup research assistant)",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-11-04",
+        "event_id": "evt_youcom_agentic_hackathon_2025",
+        "primary_source_id": "src_youcom_winners_2025_11_04",
+        "canonical_url": "https://github.com/SummerBreezeChang/MINA",
+        "one_liner": "Turns messy web data into structured startup/trend/funding insights with verified links.",
+        "domain": "research_intelligence"
+      },
+      {
+        "product_id": "prod_rag_pipeline_v2",
+        "product_name": "RAG Pipeline V2",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-11-04",
+        "event_id": "evt_youcom_agentic_hackathon_2025",
+        "primary_source_id": "src_youcom_winners_2025_11_04",
+        "canonical_url": null,
+        "one_liner": "Multi-format doc parsing + retrieval + answer generation with citations; targets numerical accuracy and hallucination reduction.",
+        "domain": "document_automation"
+      },
+      {
+        "product_id": "prod_vector_vintage",
+        "product_name": "Vector Vintage",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-09-26",
+        "event_id": "evt_qdrant_vector_space_hackathon_2025",
+        "primary_source_id": "src_qdrant_vector_space_winners_2025_09_29",
+        "canonical_url": "https://github.com/kanungle/vector-vintage-public",
+        "one_liner": "3D product exploration with an LLM guide over vector search + graph curation.",
+        "domain": "commerce_discovery"
+      },
+      {
+        "product_id": "prod_dermacheck",
+        "product_name": "Dermacheck",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-09-26",
+        "event_id": "evt_flower_decentralized_ai_hackathon_2025",
+        "primary_source_id": "src_flower_decentralized_winners_2025_10_22",
+        "canonical_url": null,
+        "one_liner": "Mobile app for skin lesion analysis using federated learning to preserve privacy.",
+        "domain": "privacy_first_clinical_ai"
+      },
+      {
+        "product_id": "prod_testninja",
+        "product_name": "TestNinja",
+        "product_type": "hackathon_demo",
+        "org_name": null,
+        "status": "winner",
+        "launch_or_demo_date": "2025-05-16",
+        "event_id": "evt_spc_llamathon_2025",
+        "primary_source_id": "src_baseten_spc_llamathon_2025_05_16",
+        "canonical_url": "https://www.ameyajadhav.xyz/work/testninja",
+        "one_liner": "PR-triggered, dependency-graph context builder + LLM writes tests for modified code.",
+        "domain": "devtools_testing"
+      },
+      {
+        "product_id": "prod_ibm_flashsystem_ai",
+        "product_name": "IBM FlashSystem.ai (agentic AI for storage ops)",
+        "product_type": "enterprise_product",
+        "org_name": "IBM",
+        "status": "launched",
+        "launch_or_demo_date": "2026-02-10",
+        "event_id": null,
+        "primary_source_id": "src_ibm_flashsystem_ai_2026_02_10",
+        "canonical_url": "https://www.ibm.com/products/flashsystem",
+        "one_liner": "AI agents as co-admins to automate storage management, threat analysis, and recovery recommendations.",
+        "domain": "infrastructure_ops"
+      },
+      {
+        "product_id": "prod_backbase_ai_banking",
+        "product_name": "Backbase AI-powered Banking Platform",
+        "product_type": "enterprise_product",
+        "org_name": "Backbase",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-02",
+        "event_id": null,
+        "primary_source_id": "src_backbase_ai_banking_2025_05_02",
+        "canonical_url": "https://www.backbase.com/",
+        "one_liner": "Unifies digital sales + servicing with agentic AI and a data foundation for banking workflows.",
+        "domain": "regulated_agentic_ai"
+      },
+      {
+        "product_id": "prod_greenhouse_ai_tools",
+        "product_name": "Greenhouse AI recruiting tools (Spring 2025 release)",
+        "product_type": "enterprise_product",
+        "org_name": "Greenhouse",
+        "status": "announced",
+        "launch_or_demo_date": "2025-05-07",
+        "event_id": null,
+        "primary_source_id": "src_greenhouse_ai_tools_2025_05_07",
+        "canonical_url": "https://www.greenhouse.com/",
+        "one_liner": "AI filters, outreach personalization, scorecard generation, and interview summaries to reduce recruiter workload.",
+        "domain": "hiring"
+      },
+      {
+        "product_id": "prod_hope_ai",
+        "product_name": "Hope AI (Bit Cloud)",
+        "product_type": "startup_product",
+        "org_name": "Bit Cloud",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-28",
+        "event_id": null,
+        "primary_source_id": "src_hope_ai_prnewswire_2025_05_28",
+        "canonical_url": "https://bit.cloud/products/hope-ai",
+        "one_liner": "AI software architect that composes reusable components into production-grade applications with maintainability in mind.",
+        "domain": "ai_software_engineering"
+      },
+      {
+        "product_id": "prod_cisionone_ai_suite",
+        "product_name": "CisionOne integrated AI suite",
+        "product_type": "enterprise_product",
+        "org_name": "Cision",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-22",
+        "event_id": null,
+        "primary_source_id": "src_cisionone_ai_suite_2025_05_22",
+        "canonical_url": null,
+        "one_liner": "AI assistant + summarization + pitch support to automate PR/comms workflows.",
+        "domain": "comms_ops"
+      },
+      {
+        "product_id": "prod_athean",
+        "product_name": "Athean",
+        "product_type": "startup_product",
+        "org_name": "Athean",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-15",
+        "event_id": null,
+        "primary_source_id": "src_athean_launch_2025_05_15",
+        "canonical_url": "https://www.athean.com/",
+        "one_liner": "Centralizes prospecting tools and data; AI prioritizes who to contact, when, and why.",
+        "domain": "sales"
+      },
+      {
+        "product_id": "prod_shopsight",
+        "product_name": "ShopSight",
+        "product_type": "startup_product",
+        "org_name": "ShopSight",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-06",
+        "event_id": null,
+        "primary_source_id": "src_shopsight_launch_2025_05_06",
+        "canonical_url": "https://shopsight.co/",
+        "one_liner": "GenAI-powered, gamified design challenges to gather consumer insights and help brands predict trends.",
+        "domain": "consumer_insights"
+      },
+      {
+        "product_id": "prod_prisma_labs_ai",
+        "product_name": "PRISMA Labs.ai (with PreBunk™)",
+        "product_type": "enterprise_product",
+        "org_name": "MikeWorldWide",
+        "status": "launched",
+        "launch_or_demo_date": "2025-05-13",
+        "event_id": null,
+        "primary_source_id": "src_mww_prisma_labs_ai_2025_05_13",
+        "canonical_url": "https://www.mww.com/prisma-ai/",
+        "one_liner": "AI intelligence layer for modern comms; includes proactive narrative defense for the 'AI answers' surface.",
+        "domain": "reputation_ops"
+      },
+      {
+        "product_id": "prod_gryph",
+        "product_name": "Gryph (audit trail for AI coding agents)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "56 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_gryph_46857391",
+        "canonical_url": "https://github.com/safedep/gryph",
+        "one_liner": "Local-first audit log of AI coding agent actions beyond git diffs (reads, writes, commands, sequences).",
+        "domain": "agent_observability"
+      },
+      {
+        "product_id": "prod_sentinel_mcp",
+        "product_name": "SENTINEL (pre-commit agent reasoning audit via MCP)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "18 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_sentinel_47351975",
+        "canonical_url": "https://espiradev.org/blog/sentinel-ai-reasoning-observatory.html",
+        "one_liner": "Audits evidence freshness/completeness and gates agent decisions before tool actions commit.",
+        "domain": "agent_governance"
+      },
+      {
+        "product_id": "prod_article12_logging_lib",
+        "product_name": "Article 12 audit logging library (EU AI Act)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "27 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_article12_logging_47230438",
+        "canonical_url": "https://systima.ai/blog/open-source-article-12-audit-logging",
+        "one_liner": "Append-only, tamper-evident logging of inference calls to reconstruct AI decisions for compliance.",
+        "domain": "ai_compliance_logging"
+      },
+      {
+        "product_id": "prod_tansive",
+        "product_name": "Tansive (agent runtime guardrails)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "8 months ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_tansive_44499658",
+        "canonical_url": "https://github.com/tansive/tansive",
+        "one_liner": "Declarative catalog + runtime policy enforcement + session pinning + tamper-evident logs for production agents.",
+        "domain": "agent_runtime_security"
+      },
+      {
+        "product_id": "prod_keypost",
+        "product_name": "Keypost (policy enforcement for MCP pipelines)",
+        "product_type": "startup_product",
+        "org_name": "Keypost",
+        "status": "beta",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "73 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_keypost_46635989",
+        "canonical_url": "https://keypost.ai/",
+        "one_liner": "Drop-in proxy that enforces deterministic allow/deny, parameter constraints, rate/cost limits, and auditing for MCP tool calls.",
+        "domain": "mcp_policy_enforcement"
+      },
+      {
+        "product_id": "prod_satgate",
+        "product_name": "SatGate (budget enforcement proxy for MCP tools)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "45 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_satgate_47002845",
+        "canonical_url": "https://news.ycombinator.com/item?id=47002845",
+        "one_liner": "Enforces per-tool budgets on agent tool calls to prevent runaway spend.",
+        "domain": "agent_finops"
+      },
+      {
+        "product_id": "prod_runtime_fence",
+        "product_name": "Runtime Fence (AI agent kill switch)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "51 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_runtime_fence_46928612",
+        "canonical_url": "https://github.com/RunTimeAdmin/ai-agent-killswitch",
+        "one_liner": "Emergency stop controls + dangerous-action blocking + spending limits + audit trail for autonomous agents.",
+        "domain": "agent_safety_controls"
+      },
+      {
+        "product_id": "prod_licitra_sentry",
+        "product_name": "LICITRA-SENTRY (signed execution tickets for tools)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "prototype",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "25 days ago (relative on Hacker News, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_hn_licitra_sentry_47262394",
+        "canonical_url": "https://github.com/narendrakumarnutalapati/licitra-sentry",
+        "one_liner": "Binds approvals to exact tool payloads using signed tickets to block mutation/replay and enforce runtime authorization.",
+        "domain": "agent_action_authorization"
+      },
+      {
+        "product_id": "prod_traceprompt",
+        "product_name": "Traceprompt (tamper-proof LLM audit trails SDK)",
+        "product_type": "open_source_project",
+        "org_name": "Traceprompt",
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "event_id": null,
+        "primary_source_id": "src_reddit_traceprompt_audit_1mxetdf",
+        "canonical_url": "https://github.com/traceprompt/traceprompt-node",
+        "one_liner": "SDK wrapper that generates verifiable audit trails (BYOK + hash chaining + Merkle anchoring) and exportable audit packs.",
+        "domain": "ai_audit_trails"
+      },
+      {
+        "product_id": "prod_utcp_mcp_bridge",
+        "product_name": "UTCP-MCP-Bridge (spec → typed MCP tools)",
+        "product_type": "open_source_project",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "event_id": null,
+        "primary_source_id": "src_reddit_utcp_mcp_bridge_1mnet0j",
+        "canonical_url": "https://github.com/universal-tool-calling-protocol/utcp-mcp",
+        "one_liner": "Ingests OpenAPI/Postman specs to auto-expose APIs as typed MCP tools (no per-API glue code).",
+        "domain": "tooling_generation"
+      },
+      {
+        "product_id": "prod_coreguard_ai",
+        "product_name": "CoreGuard AI (GenAI governance proxy)",
+        "product_type": "startup_product",
+        "org_name": "CoreGuard AI",
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "event_id": null,
+        "primary_source_id": "src_ph_coreguard_ai",
+        "canonical_url": "https://www.producthunt.com/products/coreguard-ai",
+        "one_liner": "Proxy between users and GenAI tools to block PII, enforce policies, and provide visibility into usage.",
+        "domain": "genai_governance"
+      },
+      {
+        "product_id": "prod_complylint",
+        "product_name": "ComplyLint (shift-left GDPR/EU AI Act compliance)",
+        "product_type": "startup_product",
+        "org_name": "ComplyLint",
+        "status": "idea_validation",
+        "launch_or_demo_date": null,
+        "event_id": null,
+        "primary_source_id": "src_ph_complylint_thread",
+        "canonical_url": "https://www.producthunt.com/p/self-promotion/complylint-shift-left-for-gdpr-ai-act-developer-first-compliance-tool",
+        "one_liner": "Developer-first compliance checks (pre-commit, traceability, reports) to prevent last-minute compliance scrambles.",
+        "domain": "shift_left_compliance"
+      },
+      {
+        "product_id": "prod_ai_act_readiness_pack",
+        "product_name": "AI Act Readiness Pack",
+        "product_type": "startup_product",
+        "org_name": null,
+        "status": "launched",
+        "launch_or_demo_date": null,
+        "launch_or_demo_date_text": "11mo ago (relative on Product Hunt, retrieved 2026-03-31)",
+        "event_id": null,
+        "primary_source_id": "src_ph_ai_act_readiness_pack",
+        "canonical_url": "https://www.producthunt.com/products/ai-act-readiness-pack?launch=ai-act-readiness-pack",
+        "one_liner": "Template-driven self-audit toolkit to assess EU AI Act gaps and export investor-ready documentation quickly.",
+        "domain": "compliance_templates"
+      }
+    ],
+    "product_details": [
+      {
+        "detail_id": "pd_prod_robochef",
+        "product_id": "prod_robochef",
+        "user_painpoint": "Users can describe a dish but translating intent into coordinated robotic steps is complex; kitchen execution is brittle without an orchestrator.",
+        "solution": "Natural language instructions are broken into sequential steps and executed by a robotic arm with live progress tracking.",
+        "features": ["natural language task parsing", "step-by-step plan generation", "robot action orchestration", "live UI progress tracking"]
+      },
+      {
+        "detail_id": "pd_prod_mina",
+        "product_id": "prod_mina",
+        "user_painpoint": "Startup research is fragmented; users waste time searching multiple sources for trends, funding, and launches.",
+        "solution": "One-page research assistant that summarizes recent articles into structured insights with verified links.",
+        "features": ["multiple research modes (trends/startups/funding)", "deduping/noise filtering", "structured cards with tags", "verified source links"]
+      },
+      {
+        "detail_id": "pd_prod_hope_ai",
+        "product_id": "prod_hope_ai",
+        "user_painpoint": "Codegen tools produce snippets and prototypes but struggle with architecture integrity and long-term maintainability.",
+        "solution": "An agentic software architect composes proven components into cohesive systems with developer control.",
+        "features": ["architecture proposals from prompts/specs", "component composition and reuse", "documentation generation", "test coverage generation", "DevOps integrations (per announcement)"]
+      },
+      {
+        "detail_id": "pd_prod_gryph",
+        "product_id": "prod_gryph",
+        "user_painpoint": "Teams can't see what coding agents did across sessions beyond git diffs (reads/commands/sequence).",
+        "solution": "Local audit trail that records agent actions to a queryable store.",
+        "features": ["hooks into multiple coding agents", "local SQLite log store", "filters by time/agent/file/action", "sensitive file pattern protections"]
+      },
+      {
+        "detail_id": "pd_prod_tansive",
+        "product_id": "prod_tansive",
+        "user_painpoint": "Agents can restart prod resources, leak data, or be prompt-injected; production workflows need guardrails.",
+        "solution": "Runtime policy enforcement and session pinning around agent tool calls with tamper-evident logs.",
+        "features": ["declarative agent/tool catalog", "policy enforcement (allow/deny by env)", "session pinning (data boundary transforms)", "tamper-evident hash-linked logs", "language-agnostic tool support"]
+      },
+      {
+        "detail_id": "pd_prod_keypost",
+        "product_id": "prod_keypost",
+        "user_painpoint": "MCP exposes powerful tools without standard policy controls (who can call what, with which parameters, under what limits).",
+        "solution": "Proxy that enforces deterministic policies at the tool-call boundary.",
+        "features": ["allow/deny rules", "parameter constraints", "rate limits", "cost limits", "auditing", "no agent changes required (per post)"]
+      },
+      {
+        "detail_id": "pd_prod_satgate",
+        "product_id": "prod_satgate",
+        "user_painpoint": "Agents can burn money via retries because auth controls don't cap spend.",
+        "solution": "Budget-enforcing proxy in front of MCP tools that blocks once budgets are reached.",
+        "features": ["per-tool budgets", "transparent relay proxy", "budget threshold blocking", "operational visibility via proxy layer"]
+      },
+      {
+        "detail_id": "pd_prod_runtime_fence",
+        "product_id": "prod_runtime_fence",
+        "user_painpoint": "Autonomous agents can take destructive actions (e.g., deleting databases) without an emergency stop.",
+        "solution": "Kill switch with action-level blocking and spend limits plus audit trail.",
+        "features": ["emergency stop controls", "dangerous action blocking", "spending limits", "audit trail"]
+      },
+      {
+        "detail_id": "pd_prod_licitra_sentry",
+        "product_id": "prod_licitra_sentry",
+        "user_painpoint": "Approvals can be bypassed or mutated; teams need to ensure the executed tool call matches what was approved.",
+        "solution": "Signed execution tickets bind agent identity, tool name, and payload hash; proxy verifies before execution.",
+        "features": ["signed execution tickets", "payload hash binding", "expiry-based authorization", "proxy verification", "anti-replay protections (as described)"]
+      },
+      {
+        "detail_id": "pd_prod_traceprompt",
+        "product_id": "prod_traceprompt",
+        "user_painpoint": "Teams need immutable, verifiable audit trails for LLM usage (compliance and incident investigation).",
+        "solution": "SDK wraps LLM calls and emits tamper-proof logs with BYOK and exportable audit packs.",
+        "features": ["BYOK with KMS (as described)", "append-only hash-chained logs", "Merkle anchoring (as described)", "audit pack export + verification"]
+      },
+      {
+        "detail_id": "pd_prod_utcp_mcp_bridge",
+        "product_id": "prod_utcp_mcp_bridge",
+        "user_painpoint": "Tooling hell: developers rewrite wrappers for every API despite existing specs.",
+        "solution": "Ingest OpenAPI/Postman specs and auto-expose typed MCP tools without per-API glue code.",
+        "features": ["OpenAPI/Swagger ingestion", "Postman collection ingestion", "typed tool generation", "OAuth/env auth handling (as described)", "streamed responses (as described)"]
+      },
+      {
+        "detail_id": "pd_prod_coreguard_ai",
+        "product_id": "prod_coreguard_ai",
+        "user_painpoint": "Companies adopt GenAI but hit privacy, security, and governance walls and lack visibility into usage.",
+        "solution": "Proxy between users and GenAI tools to block PII and enforce model policies while providing usage visibility.",
+        "features": ["PII blocking", "model policy enforcement", "usage visibility", "tool-agnostic proxy coverage (ChatGPT/Claude/Gemini per post)"]
+      },
+      {
+        "detail_id": "pd_prod_complylint",
+        "product_id": "prod_complylint",
+        "user_painpoint": "Compliance (GDPR/EU AI Act) is handled late; developers are left with last-minute remediation.",
+        "solution": "Shift-left, developer-first compliance checks integrated into GitHub and pre-commit workflows, with audit-ready reports.",
+        "features": ["GitHub integration (planned)", "data annotation/usage alerts (planned)", "pre-commit compliance checks (planned)", "model traceability flags (planned)", "auto-generated audit reports (planned)"]
+      },
+      {
+        "detail_id": "pd_prod_ai_act_readiness_pack",
+        "product_id": "prod_ai_act_readiness_pack",
+        "user_painpoint": "Founders and small teams need quick, low-cost EU AI Act self-audits to satisfy investors without lawyers.",
+        "solution": "Copy-ready workspace and gap matrix to self-audit and export investor-ready documentation quickly.",
+        "features": ["Notion workspace templates", "gap matrix (color-coded)", "exportable PDF outputs", "prompt pack (as listed)"]
+      }
+    ],
+    "problem_statements": [
+      {
+        "problem_id": "prob_hope_ai_architecture_gap",
+        "product_id": "prod_hope_ai",
+        "user_persona": "Professional developers / engineering orgs",
+        "job_to_be_done": "Ship maintainable, production-grade software faster than traditional build cycles.",
+        "pain_statement": "Codegen tools can write code, but struggle to architect robust, enterprise-grade systems that remain maintainable over time.",
+        "evidence_source_id": "src_hope_ai_prnewswire_2025_05_28",
+        "evidence_quote": "While today's AI can generate code, the leap to architecting robust, enterprise-grade software ... is fraught with complexity.",
+        "constraints": { "security": true, "maintainability": true, "enterprise_standards": true }
+      },
+      {
+        "problem_id": "prob_greenhouse_application_overload",
+        "product_id": "prod_greenhouse_ai_tools",
+        "user_persona": "Recruiters / hiring teams",
+        "job_to_be_done": "Identify qualified candidates and run structured hiring processes efficiently.",
+        "pain_statement": "Recruiters face overwhelming application volumes (inflated further by generative AI), creating screening and coordination bottlenecks.",
+        "evidence_source_id": "src_greenhouse_ai_tools_2025_05_07",
+        "evidence_quote": "Recruiters are drowning in applications... faced a 134% spike in applications per job.",
+        "constraints": { "fairness": true, "speed": true, "signal_quality": true }
+      },
+      {
+        "problem_id": "prob_backbase_outcomes_not_pilots",
+        "product_id": "prod_backbase_ai_banking",
+        "user_persona": "Banks (operations, sales, customer service)",
+        "job_to_be_done": "Operationalize AI for growth and efficiency under regulatory constraints.",
+        "pain_statement": "Banks are constrained by legacy systems and fragmented data; they need production outcomes rather than endless AI pilots.",
+        "evidence_source_id": "src_backbase_ai_banking_2025_05_02",
+        "evidence_quote": "Banks don't need more pilots - they need outcomes.",
+        "constraints": { "compliance": true, "auditability": true, "legacy_systems": true }
+      },
+      {
+        "problem_id": "prob_cision_pr_pressure",
+        "product_id": "prod_cisionone_ai_suite",
+        "user_persona": "PR / communications teams",
+        "job_to_be_done": "Monitor coverage, summarize, and execute outreach efficiently.",
+        "pain_statement": "Comms teams are under pressure to do more with fewer resources; workflow automation and integrated insight generation are needed.",
+        "evidence_source_id": "src_cisionone_ai_suite_2025_05_22",
+        "evidence_quote": "adding powerful tools that save time and create smarter workflows.",
+        "constraints": { "workflow_fit": true, "low_learning_curve": true }
+      },
+      {
+        "problem_id": "prob_athean_tool_overload",
+        "product_id": "prod_athean",
+        "user_persona": "Sales reps / GTM teams",
+        "job_to_be_done": "Prospect and engage high-quality accounts with context.",
+        "pain_statement": "Prospecting is slowed by tool overload and siloed context; reps lose time switching between platforms instead of building relationships.",
+        "evidence_source_id": "src_athean_launch_2025_05_15",
+        "evidence_quote": "Sales reps are inundated with countless tools... time is lost in the endless switching between platforms.",
+        "constraints": { "integrations": true, "data_unification": true }
+      },
+      {
+        "problem_id": "prob_shopsight_consumer_insights_gap",
+        "product_id": "prod_shopsight",
+        "user_persona": "Brands / retail marketers",
+        "job_to_be_done": "Get fast, reliable consumer insights to predict trends and reduce waste.",
+        "pain_statement": "Brands lack direct consumer insight channels; traditional research/forecasting is slow and indirect.",
+        "evidence_source_id": "src_shopsight_launch_2025_05_06",
+        "evidence_quote": "channels to facilitate that connection have been limited.",
+        "constraints": { "speed": true, "authenticity": true }
+      },
+      {
+        "problem_id": "prob_prisma_ai_answers_surface",
+        "product_id": "prod_prisma_labs_ai",
+        "user_persona": "Comms / reputation leaders",
+        "job_to_be_done": "Protect and shape brand reputation in the AI-answer era.",
+        "pain_statement": "Brand reputation now depends on how AI systems answer questions about you; misinformation or outdated content can become the 'truth' users see.",
+        "evidence_source_id": "src_mww_prisma_labs_ai_2025_05_13",
+        "evidence_quote": "Your brand ... lives in the answers AI delivers.",
+        "constraints": { "monitoring": true, "narrative_control": true }
+      },
+      {
+        "problem_id": "prob_mina_startup_research_waste",
+        "product_id": "prod_mina",
+        "user_persona": "Founders / investors / operators",
+        "job_to_be_done": "Track startup trends, funding, and launches quickly with credible sources.",
+        "pain_statement": "Startup research is fragmented across many sources; users waste time assembling a coherent picture.",
+        "evidence_source_id": "src_youcom_winners_2025_11_04",
+        "evidence_quote": "founders, investors, and creators waste time searching across multiple sources ...",
+        "constraints": { "source_quality": true, "freshness": true }
+      },
+      {
+        "problem_id": "prob_rag_pipeline_manual_extraction",
+        "product_id": "prod_rag_pipeline_v2",
+        "user_persona": "Accounting / legal / financial teams",
+        "job_to_be_done": "Extract and answer from messy document sets with citations.",
+        "pain_statement": "Manual extraction from mixed-format documents is slow and error-prone; teams need unified parsing + retrieval + grounded answers.",
+        "evidence_source_id": "src_youcom_winners_2025_11_04",
+        "evidence_quote": "Organizations waste hours manually extracting key data from scattered PDFs, Word, Excel, and images.",
+        "constraints": { "citations": true, "numeric_accuracy": true, "multimodal": true }
+      },
+      {
+        "problem_id": "prob_dermacheck_private_medical_images",
+        "product_id": "prod_dermacheck",
+        "user_persona": "Patients + clinicians",
+        "job_to_be_done": "Get early skin lesion risk signals without centralizing sensitive images.",
+        "pain_statement": "Skin-cancer screening help is valuable, but medical images are sensitive; privacy-preserving training and inference are needed.",
+        "evidence_source_id": "src_flower_decentralized_winners_2025_10_22",
+        "evidence_quote": "detect skin cancer early, while keeping sensitive medical images private?",
+        "constraints": { "privacy": true, "clinical_sensitivity": true }
+      },
+      {
+        "problem_id": "prob_gryph_agent_opacity",
+        "product_id": "prod_gryph",
+        "user_persona": "Developers / security / platform engineering",
+        "job_to_be_done": "Understand and audit what AI coding agents did across sessions.",
+        "pain_statement": "Git diffs alone do not capture agent reads, commands, or action sequences, making incidents hard to reconstruct.",
+        "evidence_source_id": "src_hn_gryph_46857391",
+        "evidence_quote": "git diff… doesn't show: Files the agent read but didn't change; Commands it ran; The sequence of actions…",
+        "constraints": { "local_first": true, "auditability": true }
+      },
+      {
+        "problem_id": "prob_tansive_prod_guardrails",
+        "product_id": "prod_tansive",
+        "user_persona": "DevOps / platform engineering",
+        "job_to_be_done": "Run agents in production workflows safely.",
+        "pain_statement": "A bad prompt or prompt injection can cause destructive actions (e.g., restarting prod pods); teams need enforceable runtime controls.",
+        "evidence_source_id": "src_hn_tansive_44499658",
+        "evidence_quote": "How do you prevent an agent from accidentally restarting production pods? How do you audit what it actually did when something goes wrong?",
+        "constraints": { "policy_enforcement": true, "auditability": true }
+      },
+      {
+        "problem_id": "prob_keypost_mcp_policy_gap",
+        "product_id": "prod_keypost",
+        "user_persona": "Agent platform teams / security engineering",
+        "job_to_be_done": "Enforce deterministic constraints on tool calls without rewriting agents.",
+        "pain_statement": "MCP tool ecosystems lack standard policy enforcement (who/what/params/limits) at the runtime boundary.",
+        "evidence_source_id": "src_hn_keypost_46635989",
+        "evidence_quote": "no standard way to control who can call what, with which parameters, or under what limits…",
+        "constraints": { "deterministic_enforcement": true, "no_agent_changes": true }
+      },
+      {
+        "problem_id": "prob_satgate_cost_controls",
+        "product_id": "prod_satgate",
+        "user_persona": "Teams running agents with paid tool APIs",
+        "job_to_be_done": "Prevent runaway tool spend from agent retries.",
+        "pain_statement": "Tool access has auth controls but not economic controls; retry loops can burn significant spend.",
+        "evidence_source_id": "src_hn_satgate_47002845",
+        "evidence_quote": "MCP gives agents tool access with no economic controls… an agent stuck in a retry loop… burns real money…",
+        "constraints": { "budgeting": true }
+      },
+      {
+        "problem_id": "prob_runtime_fence_killswitch",
+        "product_id": "prod_runtime_fence",
+        "user_persona": "Ops teams deploying autonomous agents",
+        "job_to_be_done": "Stop agents quickly and prevent destructive operations.",
+        "pain_statement": "Agents can delete data or execute dangerous commands; teams need an emergency stop and action-level blocking.",
+        "evidence_source_id": "src_hn_runtime_fence_46928612",
+        "evidence_quote": "Built this after an AI agent deleted my database at 2AM… emergency stop controls…",
+        "constraints": { "safety_controls": true, "incident_response": true }
+      },
+      {
+        "problem_id": "prob_licitra_payload_binding",
+        "product_id": "prod_licitra_sentry",
+        "user_persona": "Security engineering / regulated ops",
+        "job_to_be_done": "Ensure executed tool calls match approved payloads.",
+        "pain_statement": "Approvals without payload binding allow mutation/replay and reduce enforceability of controls.",
+        "evidence_source_id": "src_hn_licitra_sentry_47262394",
+        "evidence_quote": "signed ticket… hash of the exact request payload… proxy verifies… recomputes the request hash…",
+        "constraints": { "cryptographic_binding": true, "auditability": true }
+      },
+      {
+        "problem_id": "prob_traceprompt_tamper_proof_audit",
+        "product_id": "prod_traceprompt",
+        "user_persona": "Regulated LLM developers (fintech/healthcare) + compliance engineering",
+        "job_to_be_done": "Generate verifiable audit trails for LLM usage without exposing plaintext.",
+        "pain_statement": "Teams stitch logs manually but lack immutability proofs and portable evidence packs for audits.",
+        "evidence_source_id": "src_reddit_traceprompt_audit_1mxetdf",
+        "evidence_quote": "open-source SDK… generates tamper-proof audit trails… make “prove nothing changed” boring.",
+        "constraints": { "byok": true, "immutability": true }
+      },
+      {
+        "problem_id": "prob_utcp_tooling_hell",
+        "product_id": "prod_utcp_mcp_bridge",
+        "user_persona": "Developers building agent tool ecosystems",
+        "job_to_be_done": "Expose many APIs as callable tools quickly.",
+        "pain_statement": "Developers repeatedly rewrite tool wrappers for every API despite existing OpenAPI/Postman specs.",
+        "evidence_source_id": "src_reddit_utcp_mcp_bridge_1mnet0j",
+        "evidence_quote": "stop re-writing the same tool wrappers… No per-API glue code.",
+        "constraints": { "spec_variability": true, "auth": true }
+      },
+      {
+        "problem_id": "prob_coreguard_governance_proxy",
+        "product_id": "prod_coreguard_ai",
+        "user_persona": "Security/compliance leaders enabling employee GenAI usage",
+        "job_to_be_done": "Prevent data leakage and enforce GenAI policies across tools.",
+        "pain_statement": "GenAI adoption increases privacy/security risk; teams need centralized controls and visibility.",
+        "evidence_source_id": "src_ph_coreguard_ai",
+        "evidence_quote": "proxy between your users and any GenAI tool… block PII, enforce model policies, and get visibility…",
+        "constraints": { "low_latency": true, "broad_coverage": true }
+      },
+      {
+        "problem_id": "prob_complylint_shift_left",
+        "product_id": "prod_complylint",
+        "user_persona": "Developers shipping AI features",
+        "job_to_be_done": "Catch GDPR/EU AI Act issues before production.",
+        "pain_statement": "Compliance is reactive and handled late, leaving developers with last-minute fixes and report generation.",
+        "evidence_source_id": "src_ph_complylint_thread",
+        "evidence_quote": "Compliance with GDPR and the upcoming EU AI Act is often reactive… leaving developers to fix things last-minute.",
+        "constraints": { "shift_left": true, "reporting": true }
+      },
+      {
+        "problem_id": "prob_ai_act_readiness_pack_self_audit",
+        "product_id": "prod_ai_act_readiness_pack",
+        "user_persona": "Founders / small teams building AI products",
+        "job_to_be_done": "Self-audit EU AI Act requirements quickly and produce investor-ready artifacts.",
+        "pain_statement": "Regulation is long and complex; teams need fast scoping and documentation without lawyers.",
+        "evidence_source_id": "src_ph_ai_act_readiness_pack",
+        "evidence_quote": "Self‑audit the EU AI Act in a weekend… export an investor‑ready PDF in under 2 hours.",
+        "constraints": { "low_cost": true, "speed": true }
+      }
+    ],
+    "value_triangle_scores": [
+      {
+        "score_id": "score_prod_hope_ai",
+        "product_id": "prod_hope_ai",
+        "score_user": 4,
+        "score_founder": 4,
+        "score_investor": 4,
+        "rationale": {
+          "user": "Addresses recurring dev pain: architecture + maintainability beyond snippets.",
+          "founder": "Monetizable via seats/usage; moat via component ecosystem + workflow integration.",
+          "investor": "Large market, crowded space, but differentiated if governance/lifecycle depth wins."
+        },
+        "scored_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "score_id": "score_prod_backbase",
+        "product_id": "prod_backbase_ai_banking",
+        "score_user": 4,
+        "score_founder": 4,
+        "score_investor": 5,
+        "rationale": {
+          "user": "High value if it reduces legacy friction and improves servicing/sales.",
+          "founder": "Enterprise platform economics + switching costs.",
+          "investor": "Large regulated market; long cycles but durable contracts."
+        },
+        "scored_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "score_id": "score_prod_greenhouse",
+        "product_id": "prod_greenhouse_ai_tools",
+        "score_user": 5,
+        "score_founder": 4,
+        "score_investor": 4,
+        "rationale": {
+          "user": "Directly targets application overload and admin burden.",
+          "founder": "Feature expansion on incumbent ATS base.",
+          "investor": "HR tech is large; differentiation depends on trust and workflow lock-in."
+        },
+        "scored_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "score_id": "score_prod_testninja",
+        "product_id": "prod_testninja",
+        "score_user": 4,
+        "score_founder": 4,
+        "score_investor": 4,
+        "rationale": {
+          "user": "CI quality and dev velocity are recurring pains.",
+          "founder": "Moat via deterministic context extraction + repo integration.",
+          "investor": "Devtools budgets exist; competitive but expanding."
+        },
+        "scored_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "score_id": "score_prod_mina",
+        "product_id": "prod_mina",
+        "score_user": 4,
+        "score_founder": 3,
+        "score_investor": 4,
+        "rationale": {
+          "user": "Clear time-sink problem with daily frequency for some roles.",
+          "founder": "Moat depends on data pipelines + workflow embedding.",
+          "investor": "Large knowledge-work market; crowded, but verifiability is a wedge."
+        },
+        "scored_at": "2026-03-31T00:00:00Z"
+      }
+    ],
+    "gaps": [
+      {
+        "gap_id": "gap_regulated_agent_audit_layer",
+        "product_id": "prod_backbase_ai_banking",
+        "domain": "regulated_agentic_ai",
+        "unaddressed_pain": "Independent audit/assurance layer for agent behavior (policy compliance, guardrail tests, incident forensics, and evidence packs).",
+        "why_unclaimed": "Audits are bespoke and fragmented; agent tooling lacks standardized, regulator-friendly evidence artifacts across vendors.",
+        "gap_score": 10,
+        "assumptions": { "buyers": ["banks", "insurers", "fintechs"], "build_3_months": true, "needs_partners": ["GRC", "agent frameworks"] },
+        "created_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "gap_id": "gap_hiring_authenticity",
+        "product_id": "prod_greenhouse_ai_tools",
+        "domain": "hiring",
+        "unaddressed_pain": "Authenticity and fraud resistance: AI-generated resumes, credential validation, interview integrity signals, and synthetic candidate detection.",
+        "why_unclaimed": "Requires partnerships (identity/education, background checks), risk models, and deep ATS workflow integration to avoid false positives.",
+        "gap_score": 9,
+        "assumptions": { "buyers": ["ATS vendors", "enterprises", "staffing firms"], "build_3_months": true },
+        "created_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "gap_id": "gap_llm_to_robotics_safety",
+        "product_id": "prod_robochef",
+        "domain": "robotics",
+        "unaddressed_pain": "Safety validation and certification workflow for LLM→actuation: simulation, constraints, regression safety tests, and safety-case export.",
+        "why_unclaimed": "Safety/compliance is fragmented and domain-specific; most agent demos stop at prototype without standardized evidence generation.",
+        "gap_score": 9,
+        "assumptions": { "buyers": ["robotics startups", "industrial automation"], "build_3_months": true },
+        "created_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "gap_id": "gap_verifiable_change_tracking",
+        "product_id": "prod_mina",
+        "domain": "research_intelligence",
+        "unaddressed_pain": "Change tracking + provenance scoring: what changed since last report, why it matters, and how credible each claim is.",
+        "why_unclaimed": "Needs strong entity resolution, deduplication, and citation graphs across heterogeneous sources; hard to do reliably at scale.",
+        "gap_score": 8,
+        "assumptions": { "buyers": ["strategy teams", "VC/PE", "product intel"], "build_3_months": true },
+        "created_at": "2026-03-31T00:00:00Z"
+      },
+      {
+        "gap_id": "gap_numeric_fidelity_doc_automation",
+        "product_id": "prod_rag_pipeline_v2",
+        "domain": "document_automation",
+        "unaddressed_pain": "Audit-ready numeric fidelity (reconciliation checks, extraction confidence, traceable transformations) for high-stakes documents.",
+        "why_unclaimed": "Requires domain-specific evaluation and standardized evidence trails; generic RAG stacks do not guarantee numeric correctness.",
+        "gap_score": 8,
+        "assumptions": { "buyers": ["accounting firms", "legal ops", "finance teams"], "build_3_months": true },
+        "created_at": "2026-03-31T00:00:00Z"
+      }
+    ],
+    "opportunities": [
+      {
+        "opportunity_id": "opp_agent_assurance",
+        "opportunity_title": "Agent Audit & Assurance Layer (regulated-grade)",
+        "opportunity_domain": "regulated_agentic_ai",
+        "opportunity_summary": "A cross-framework assurance pipeline that tests and documents agent behavior (policy compliance, tool-use traces, red-team suites) and produces regulator-friendly evidence packs.",
+        "gap_ids": ["gap_regulated_agent_audit_layer"],
+        "opportunity_score": 10,
+        "founder_action": "Ship an 'agent assurance CI' product with adapters for common agent frameworks and enterprise identity/logging stacks; sell first to regulated ops teams.",
+        "investor_thesis": "As agents move from pilots to production in regulated industries, assurance becomes mandatory infrastructure with recurring compliance spend and high switching costs."
+      },
+      {
+        "opportunity_id": "opp_hiring_trust_layer",
+        "opportunity_title": "Hiring Authenticity & Fraud-Resistance",
+        "opportunity_domain": "hiring",
+        "opportunity_summary": "A trust layer for ATS pipelines that verifies candidate authenticity (credentials, provenance, interview integrity) and reduces synthetic-candidate risk.",
+        "gap_ids": ["gap_hiring_authenticity"],
+        "opportunity_score": 9,
+        "founder_action": "Integrate as a workflow step in ATS/recruiting tools; start with high-risk roles and build a labeled fraud corpus with partners.",
+        "investor_thesis": "AI-inflated application volume creates a new risk budget; the winning trust rail becomes embedded across the HR stack."
+      },
+      {
+        "opportunity_id": "opp_robotics_safety_toolkit",
+        "opportunity_title": "LLM→Robotics Safety Certification Toolkit",
+        "opportunity_domain": "robotics",
+        "opportunity_summary": "Simulation-first safety tests, constraint enforcement, and safety-case export for natural-language robotic task agents.",
+        "gap_ids": ["gap_llm_to_robotics_safety"],
+        "opportunity_score": 9,
+        "founder_action": "Provide a test harness + SDK that robot teams run before deployment; focus on repeatable safety primitives and reporting.",
+        "investor_thesis": "Embodied agents will be gated by safety evidence; a cross-platform toolchain can become the standard for compliance and scaling."
+      },
+      {
+        "opportunity_id": "opp_change_tracking_intel",
+        "opportunity_title": "Verifiable Change-Tracking Research Intelligence",
+        "opportunity_domain": "research_intelligence",
+        "opportunity_summary": "Daily/weekly briefs that emphasize what changed, how confident the system is, and why each source is credible—backed by a citation graph.",
+        "gap_ids": ["gap_verifiable_change_tracking"],
+        "opportunity_score": 8,
+        "founder_action": "Start with one persona (VC associates, product intel) and deliver 'delta-first' reports with strong entity resolution and deduping.",
+        "investor_thesis": "Information overload is universal, but verifiability is scarce; workflow embedding drives retention and efficient growth."
+      },
+      {
+        "opportunity_id": "opp_numeric_fidelity_docs",
+        "opportunity_title": "Audit-Ready Document Automation with Numeric Fidelity",
+        "opportunity_domain": "document_automation",
+        "opportunity_summary": "A RAG+extraction stack optimized for numbers you can sign: reconciliation, tabular integrity, and exportable audit packets.",
+        "gap_ids": ["gap_numeric_fidelity_doc_automation"],
+        "opportunity_score": 8,
+        "founder_action": "Focus on finance/legal docs first; differentiate via evals, deterministic checks, and 'evidence-first' exports (PDF/Excel).",
+        "investor_thesis": "RAG is commoditizing, but trustworthy extraction is not; defensibility comes from vertical evals and compliance artifacts."
+      }
+    ],
+    "tags": [
+      { "tag_id": "tag_hn", "tag": "hackernews_covered", "tag_group": "coverage" },
+      { "tag_id": "tag_ph", "tag": "producthunt_covered", "tag_group": "coverage" },
+      { "tag_id": "tag_li", "tag": "linkedin_covered", "tag_group": "coverage" }
+    ],
+    "product_tags": [
+      { "product_tag_id": "pt_hope_hn", "product_id": "prod_hope_ai", "tag_id": "tag_hn" },
+      { "product_tag_id": "pt_hope_ph", "product_id": "prod_hope_ai", "tag_id": "tag_ph" },
+      { "product_tag_id": "pt_testninja_li", "product_id": "prod_testninja", "tag_id": "tag_li" }
+    ]
+  }
+}

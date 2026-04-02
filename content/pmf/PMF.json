@@ -1,0 +1,216 @@
+{
+  "meta": {
+    "title": "Hackamap — PMF Voxel Layer Model",
+    "version": "1.0.0",
+    "description": "Product-Market Fit modelled as a 3-layer bipartite graph. Each node carries three voxel dimensions: Money (Capital-Market Fit), Man (Founder-Market Fit), Machine (Tech-Market Fit). Voxel height encodes fit score 0–1.",
+    "layers": ["PRODUCT", "SOLUTION", "MARKET"],
+    "dimensions": ["money", "man", "machine"]
+  },
+
+  "voxelDimensions": [
+    {
+      "id": "money",
+      "label": "Money — Capital",
+      "fit": "CMF",
+      "fullName": "Capital-Market Fit",
+      "description": "Funding runway, monetisation model, and investor-market alignment",
+      "color": "#EF9F27",
+      "colorDark": "#BA7517"
+    },
+    {
+      "id": "man",
+      "label": "Man — Founder",
+      "fit": "FMF",
+      "fullName": "Founder-Market Fit",
+      "description": "Domain expertise, lived experience of the problem, and network in the target market",
+      "color": "#D85A30",
+      "colorDark": "#993C1D"
+    },
+    {
+      "id": "machine",
+      "label": "Machine — Tech Stack",
+      "fit": "TMF",
+      "fullName": "Tech-Market Fit",
+      "description": "Technical capability, build speed, scalability, and stack-to-problem alignment",
+      "color": "#1D9E75",
+      "colorDark": "#0F6E56"
+    }
+  ],
+
+  "layers": [
+    {
+      "id": "product",
+      "level": 0,
+      "label": "PRODUCT",
+      "sublabel": "Individual startups / hackathon builds",
+      "threeY": -4.5,
+      "color": "#1D9E75",
+      "plateOpacity": 0.06,
+      "maxVoxelHeight": 1.0,
+      "nodes": [
+        {
+          "id": "hackamap",
+          "label": "Hackamap",
+          "tagline": "PMF gap canvas — bipartite D3 knowledge graph",
+          "techStack": ["D3.js", "TiDB Cloud", "Bright Data", "Zeabur"],
+          "scores": { "money": 0.50, "man": 0.80, "machine": 0.70 },
+          "pmfScore": 0.67,
+          "gridX": -8, "gridZ": 0
+        },
+        {
+          "id": "angelbot",
+          "label": "AngelBot",
+          "tagline": "Telegram bot that surfaces investor matches via Angel.co",
+          "techStack": ["Telegram Bot Father", "Agnes AI", "OpenClaw", "TiDB"],
+          "scores": { "money": 0.70, "man": 0.50, "machine": 0.60 },
+          "pmfScore": 0.60,
+          "gridX": -4, "gridZ": 0
+        },
+        {
+          "id": "mvpforge",
+          "label": "MVPForge",
+          "tagline": "AI-generated MVP scaffolding from problem statement",
+          "techStack": ["Claude API", "Replit", "ZenMux", "mem9"],
+          "scores": { "money": 0.30, "man": 0.70, "machine": 0.90 },
+          "pmfScore": 0.63,
+          "gridX": 0, "gridZ": 0
+        },
+        {
+          "id": "genzlaunch",
+          "label": "GenZLaunch",
+          "tagline": "TikTok-first launch playbook generator for Gen Z products",
+          "techStack": ["TikTok API", "Agnes AI", "Bright Data"],
+          "scores": { "money": 0.50, "man": 0.60, "machine": 0.50 },
+          "pmfScore": 0.53,
+          "gridX": 4, "gridZ": 0
+        },
+        {
+          "id": "cofind",
+          "label": "CoFind",
+          "tagline": "Co-founder matching with Founder-Market Fit scoring",
+          "techStack": ["mem9", "TiDB", "Telegram", "OpenClaw"],
+          "scores": { "money": 0.20, "man": 0.90, "machine": 0.40 },
+          "pmfScore": 0.50,
+          "gridX": 8, "gridZ": 0
+        }
+      ]
+    },
+
+    {
+      "id": "solution",
+      "level": 1,
+      "label": "SOLUTION",
+      "sublabel": "Product features / functionality clusters",
+      "threeY": 0,
+      "color": "#7F77DD",
+      "plateOpacity": 0.06,
+      "maxVoxelHeight": 1.4,
+      "nodes": [
+        {
+          "id": "network",
+          "label": "Network",
+          "tagline": "Founder-to-founder and founder-to-investor connections",
+          "tools": ["CoFoundersLab", "Angel.co"],
+          "scores": { "money": 0.50, "man": 0.80, "machine": 0.40 },
+          "gridX": -5.5, "gridZ": 0
+        },
+        {
+          "id": "launch",
+          "label": "Launch Platforms",
+          "tagline": "Public launch visibility and early user acquisition",
+          "tools": ["Product Hunt", "BetaList", "AppSumo LTD"],
+          "scores": { "money": 0.40, "man": 0.60, "machine": 0.70 },
+          "gridX": -1.8, "gridZ": 0
+        },
+        {
+          "id": "build",
+          "label": "Build & Hire",
+          "tagline": "AI-assisted building and on-demand technical talent",
+          "tools": ["Replit / Lovable", "Fiverr / Toptal"],
+          "scores": { "money": 0.60, "man": 0.50, "machine": 0.90 },
+          "gridX": 1.8, "gridZ": 0
+        },
+        {
+          "id": "funding",
+          "label": "Funding & Growth",
+          "tagline": "Pre-revenue capital and distribution-scale channels",
+          "tools": ["YC / Batch apply", "TikTok for Business"],
+          "scores": { "money": 0.90, "man": 0.70, "machine": 0.50 },
+          "gridX": 5.5, "gridZ": 0
+        }
+      ]
+    },
+
+    {
+      "id": "market",
+      "level": 2,
+      "label": "MARKET",
+      "sublabel": "Problem clusters (unsolved / under-served)",
+      "threeY": 4.5,
+      "color": "#D85A30",
+      "plateOpacity": 0.06,
+      "maxVoxelHeight": 1.8,
+      "nodes": [
+        {
+          "id": "team",
+          "label": "Team Building",
+          "tagline": "Finding co-founders and first technical hires",
+          "problems": ["Find co-founders", "Hire first engineer"],
+          "gapScore": 0.30,
+          "scores": { "money": 0.30, "man": 1.00, "machine": 0.40 },
+          "gridX": -5.5, "gridZ": 0
+        },
+        {
+          "id": "validation",
+          "label": "Validation",
+          "tagline": "Rapid idea validation and Gen Z market penetration",
+          "problems": ["Validate idea fast", "Market to Gen Z"],
+          "gapScore": 0.52,
+          "scores": { "money": 0.40, "man": 0.70, "machine": 0.60 },
+          "gridX": -1.8, "gridZ": 0
+        },
+        {
+          "id": "growth",
+          "label": "Growth",
+          "tagline": "First 100 users and low-cost MVP construction",
+          "problems": ["First 100 users", "Build MVP cheap"],
+          "gapScore": 0.58,
+          "scores": { "money": 0.50, "man": 0.60, "machine": 0.80 },
+          "gridX": 1.8, "gridZ": 0
+        },
+        {
+          "id": "capital",
+          "label": "Capital",
+          "tagline": "Pre-revenue funding and AI product pricing strategy",
+          "problems": ["Pre-revenue funding", "AI product pricing"],
+          "gapScore": 1.00,
+          "scores": { "money": 1.00, "man": 0.50, "machine": 0.30 },
+          "gridX": 5.5, "gridZ": 0
+        }
+      ]
+    }
+  ],
+
+  "edges": [
+    { "id": "e01", "from": "hackamap",   "to": "network",  "layers": "product->solution" },
+    { "id": "e02", "from": "hackamap",   "to": "launch",   "layers": "product->solution" },
+    { "id": "e03", "from": "angelbot",   "to": "funding",  "layers": "product->solution" },
+    { "id": "e04", "from": "angelbot",   "to": "network",  "layers": "product->solution" },
+    { "id": "e05", "from": "mvpforge",   "to": "build",    "layers": "product->solution" },
+    { "id": "e06", "from": "genzlaunch", "to": "launch",   "layers": "product->solution" },
+    { "id": "e07", "from": "cofind",     "to": "network",  "layers": "product->solution" },
+    { "id": "e08", "from": "network",    "to": "team",     "layers": "solution->market" },
+    { "id": "e09", "from": "network",    "to": "capital",  "layers": "solution->market" },
+    { "id": "e10", "from": "launch",     "to": "validation","layers": "solution->market" },
+    { "id": "e11", "from": "launch",     "to": "growth",   "layers": "solution->market" },
+    { "id": "e12", "from": "build",      "to": "growth",   "layers": "solution->market" },
+    { "id": "e13", "from": "funding",    "to": "capital",  "layers": "solution->market" }
+  ],
+
+  "fitFormula": {
+    "pmfScore": "geometric_mean(CMF_alignment, FMF_alignment, TMF_alignment)",
+    "dimensionAlignment": "min(product[dim], market[dim]) / max(product[dim], market[dim])",
+    "gapScore": "log(asks+1) / (solution_count+1)",
+    "opportunityThreshold": 0.85
+  }
+}

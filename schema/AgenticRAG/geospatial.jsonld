@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:GeospatialMode",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.2.9",
+  "schemaVersion": "1.3.0",
   "rdfs:label": [
     { "@value": "Geospatial Mode", "@language": "en-us" },
     { "@value": "地理空间模式", "@language": "zh-cn" }
@@ -409,6 +409,24 @@
         },
         {
           "@value": "应用是否在缩略图面板内嵌入使用与地理空间模式相同样式 URL 和代理配置的非交互 MapLibre 底图预览。当存在地理空间邻近中心时，实现可以将缩略图底图的中心和缩放级别与该中心/半径保持同步。缩略图预览应保持装饰性（不捕获指针事件），同时现有 SVG 图概览和视口矩形仍然作为交互的唯一来源。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "initialCamera3d": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Initial 3D globe camera", "@language": "en-us" },
+        { "@value": "3D 地球初始相机", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Deterministic initial camera for 3D render mode (MapLibre Globe). A recommended neutral shape is: { center: [lng, lat], zoom: number, pitch: number, bearing: number }. When omitted, implementations should use a safe default (for example Singapore center, zoom 2.8, pitch 0, bearing 0). Implementations must apply the initial camera as a single jumpTo-equivalent call with zero padding and must not run iterative zoom solvers, repeated jumpTo calls, multi-step recalc loops, or passive auto-fit overrides at 3D startup. Explicit fit requests (user-initiated or data-driven) remain fully functional.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "3D 渲染模式（MapLibre Globe）的确定性初始相机。建议的中性形态为：{ center: [lng, lat], zoom: number, pitch: number, bearing: number }。未设置时，实现应使用安全默认值（例如新加坡中心、zoom 2.8、pitch 0、bearing 0）。实现必须以单次 jumpTo 等效调用（零 padding）应用初始相机，禁止在 3D 启动时运行迭代式 zoom 解算器、重复 jumpTo 调用、多步重算循环或被动自动适配覆盖。显式适配请求（用户发起或数据驱动）保持完全可用。",
           "@language": "zh-cn"
         }
       ],

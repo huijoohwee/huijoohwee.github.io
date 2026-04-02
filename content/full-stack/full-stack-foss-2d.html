@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hackamap · Full-Stack FOSS · Galaxy Map</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020811;--surface:#07111f;--border:#0f2035;--text:#8ab4d4;--dim:#1e3a52;--accent:#00d4ff}
+body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;height:100vh;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,180,255,.009) 2px,rgba(0,180,255,.009) 4px);pointer-events:none;z-index:300}
+body::after{content:'';position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,180,255,.3),transparent);animation:scan 14s linear infinite;pointer-events:none;z-index:301}
+@keyframes scan{0%{top:-2px}100%{top:100vh}}
+header{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(2,8,17,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:18px;z-index:50;backdrop-filter:blur(12px)}
+.logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--accent);letter-spacing:-.3px}
+.logo span{color:var(--dim)}
+.sep{width:1px;height:16px;background:var(--border)}
+.tag{font-size:8px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase}
+.hst{display:flex;gap:16px;margin-left:auto;font-size:10px;color:var(--dim)}
+.hst strong{color:var(--accent)}
+.live{display:flex;align-items:center;gap:5px;font-size:10px;color:#22c55e}
+.ld{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+#cv{position:fixed;top:48px;left:0;right:0;bottom:0}
+.panel{position:fixed;background:rgba(7,17,31,.94);border:1px solid var(--border);border-radius:7px;padding:13px;backdrop-filter:blur(8px);z-index:40}
+#ctrl{top:64px;left:12px;width:188px}
+.pt{font-size:8px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin-bottom:11px}
+.cg{margin-bottom:10px}
+.lbl{font-size:10px;color:var(--dim);margin-bottom:4px}
+select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 6px;border-radius:4px;outline:none;cursor:pointer}
+.btn{width:100%;background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 8px;border-radius:4px;cursor:pointer;text-align:left;margin-top:3px;transition:.18s all}
+.btn:hover,.btn.on{border-color:var(--accent);color:var(--accent)}
+.btn.on{background:rgba(0,212,255,.06)}
+#tip{top:64px;right:12px;width:248px;opacity:0;transform:translateX(14px);transition:.2s all;pointer-events:none}
+#tip.on{opacity:1;transform:translateX(0)}
+.tt{font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.tl{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.3}
+.tr{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border);color:var(--dim)}
+.tr:last-of-type{border:none}
+.tr strong{color:var(--text);font-weight:500}
+.p0b{display:inline-block;background:rgba(192,132,252,.18);border:1px solid rgba(192,132,252,.5);color:#c084fc;font-size:8px;padding:1px 6px;border-radius:3px;margin-bottom:8px;letter-spacing:1.5px}
+.bar{margin-top:8px;height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.bf{height:100%;border-radius:1px}
+.link{fill:none}
+.spoke{transition:opacity .18s}
+.node-g{cursor:pointer}
+.node-g.dim circle,.node-g.dim text{opacity:.06}
+.hub-g.dim{opacity:.06}
+.link.dim,.spoke.dim{opacity:.03!important}
+@keyframes dashSpin{to{stroke-dashoffset:-220}}
+.hring{animation:dashSpin 9s linear infinite}
+@keyframes gPulse{0%,100%{opacity:.7}50%{opacity:1}}
+.p0ring{animation:gPulse 1.2s ease-in-out infinite}
+#leg{position:fixed;bottom:12px;left:12px;font-size:9px;color:var(--dim);display:flex;gap:12px;align-items:center}
+.li{display:flex;align-items:center;gap:4px}
+.lc{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Hacka<span>map</span></div>
+  <div class="sep"></div>
+  <div class="tag">Full-Stack FOSS · Galaxy Map</div>
+  <div class="hst">
+    <div class="live"><div class="ld"></div>LIVE</div>
+    <div><strong>16</strong> tools</div>
+    <div><strong>8</strong> super-clusters</div>
+    <div><strong>18</strong> data flows</div>
+    <div><strong>$0</strong>/month TCO</div>
+  </div>
+</header>
+<div id="cv"></div>
+<div class="panel" id="ctrl">
+  <div class="pt">Controls</div>
+  <div class="cg"><div class="lbl">Filter super-cluster</div>
+    <select id="scf">
+      <option value="all">All clusters</option>
+      <option value="h-infra">Infra &amp; SCM</option>
+      <option value="h-scraping">Scraping</option>
+      <option value="h-ai">AI Pipeline</option>
+      <option value="h-storage">Storage &amp; Dedup</option>
+      <option value="h-queue">Queue &amp; Pipeline</option>
+      <option value="h-api">API &amp; Edge</option>
+      <option value="h-bot">Alerts &amp; Bot</option>
+      <option value="h-frontend">Frontend &amp; Deploy</option>
+    </select>
+  </div>
+  <div class="cg"><div class="lbl">Toggle layers</div>
+    <button class="btn on" id="bspoke">⊛ Spokes ON</button>
+    <button class="btn on" id="bflow">→ Data Flow ON</button>
+    <button class="btn on" id="blabel">⬡ Labels ON</button>
+    <button class="btn" id="breset">↺ Reset</button>
+  </div>
+</div>
+<div class="panel" id="tip">
+  <div class="tt" id="t-sc">—</div>
+  <div id="t-p0"></div>
+  <div class="tl" id="t-name">—</div>
+  <div class="tr"><span>Layer</span><strong id="t-layer">—</strong></div>
+  <div class="tr"><span>Hour</span><strong id="t-hour">—</strong></div>
+  <div class="tr"><span>Risk</span><strong id="t-risk">—</strong></div>
+  <div class="tr"><span>License</span><strong id="t-lic">—</strong></div>
+  <div class="tr"><span>TCO</span><strong id="t-tco">$0/month</strong></div>
+  <div class="bar"><div class="bf" id="t-bar"></div></div>
+</div>
+<div id="leg">
+  <div class="li"><div class="lc" style="background:#c084fc;box-shadow:0 0 5px #c084fc"></div>P0 critical</div>
+  <div class="li"><div class="lc" style="background:#f87171"></div>Medium risk</div>
+  <div class="li"><div class="lc" style="background:none;border:2px solid #3a5570;border-radius:50%"></div>Hub</div>
+  <div class="li"><div class="lc" style="background:#3a5570;width:14px;height:1px;border-radius:0"></div>Spoke</div>
+  <div class="li"><div class="lc" style="background:#22c55e;width:14px;height:1px;border-radius:0"></div>Data flow</div>
+</div>
+<script>
+const SC_DEF=[
+  {id:'h-infra',    name:'Infra & SCM',       color:'#64748b',sc:'infra'},
+  {id:'h-scraping', name:'Scraping',           color:'#06b6d4',sc:'scraping'},
+  {id:'h-ai',       name:'AI Pipeline',        color:'#a78bfa',sc:'ai'},
+  {id:'h-storage',  name:'Storage & Dedup',    color:'#f59e0b',sc:'storage'},
+  {id:'h-queue',    name:'Queue & Pipeline',   color:'#f43f5e',sc:'queue'},
+  {id:'h-api',      name:'API & Edge',         color:'#22c55e',sc:'api'},
+  {id:'h-bot',      name:'Alerts & Bot',       color:'#c084fc',sc:'bot'},
+  {id:'h-frontend', name:'Frontend & Deploy',  color:'#2dd4bf',sc:'frontend'},
+];
+const TOOLS=[
+  {id:'t01',hub:'h-infra',   name:'GitHub + Actions',  layer:'SCM/CI-CD',    hour:'H0:00',risk:'Low',p0:false,lic:'MIT tooling'},
+  {id:'t02',hub:'h-scraping',name:'Reddit API (PRAW)',  layer:'Scraping',     hour:'H0:20',risk:'Low',p0:false,lic:'MIT'},
+  {id:'t03',hub:'h-scraping',name:'HN Algolia API',     layer:'Scraping',     hour:'H0:20',risk:'Low',p0:false,lic:'Free API'},
+  {id:'t04',hub:'h-scraping',name:'PH API v2 GraphQL',  layer:'Scraping',     hour:'H0:20',risk:'Low',p0:false,lic:'Free API'},
+  {id:'t05',hub:'h-ai',      name:'OpenClaw',           layer:'Orchestration',hour:'H0:30',risk:'Low',p0:false,lic:'Free'},
+  {id:'t06',hub:'h-ai',      name:'LiteLLM proxy',      layer:'AI Proxy',     hour:'H0:40',risk:'Low',p0:false,lic:'MIT'},
+  {id:'t07',hub:'h-ai',      name:'DeepSeek chat',      layer:'AI Model',     hour:'H0:40',risk:'Med',p0:false,lic:'Apache 2.0'},
+  {id:'t08',hub:'h-storage', name:'JSON Local Store',   layer:'Dedup/Cache',  hour:'H0:50',risk:'Low',p0:false,lic:'MIT'},
+  {id:'t09',hub:'h-storage', name:'Neon PostgreSQL',    layer:'Database',     hour:'H1:00',risk:'Low',p0:false,lic:'Apache 2.0'},
+  {id:'t10',hub:'h-queue',   name:'BullMQ',             layer:'Queue',        hour:'H1:30',risk:'Low',p0:false,lic:'MIT'},
+  {id:'t11',hub:'h-queue',   name:'Upstash Redis',      layer:'Queue Infra',  hour:'H1:30',risk:'Low',p0:false,lic:'MIT client'},
+  {id:'t12',hub:'h-queue',   name:'node-cron',          layer:'Scheduler',    hour:'H1:30',risk:'Low',p0:false,lic:'MIT'},
+  {id:'t13',hub:'h-api',     name:'Cloudflare Worker',  layer:'API/Edge',     hour:'H1:15',risk:'Low',p0:false,lic:'Free tier'},
+  {id:'t14',hub:'h-bot',     name:'Telegram Bot',       layer:'Alerts/Bot',   hour:'H1:45',risk:'Low',p0:true, lic:'MIT'},
+  {id:'t15',hub:'h-frontend',name:'D3.js v7',           layer:'Canvas',       hour:'H2:00',risk:'Low',p0:true, lic:'MIT'},
+  {id:'t16',hub:'h-frontend',name:'Cloudflare Pages',   layer:'CDN/Hosting',  hour:'H2:55',risk:'Low',p0:true, lic:'Free tier'},
+];
+const FLOW_DEF=[
+  ['t01','t02'],['t01','t03'],['t01','t04'],
+  ['t02','t05'],['t03','t05'],['t04','t05'],
+  ['t05','t06'],['t06','t07'],['t07','t08'],
+  ['t08','t09'],['t09','t10'],['t09','t13'],
+  ['t10','t11'],['t10','t12'],
+  ['t13','t14'],['t13','t15'],['t14','t15'],
+  ['t15','t16'],
+];
+
+const ctn=document.getElementById('cv');
+const W=ctn.clientWidth,H=ctn.clientHeight;
+const CX=W/2,CY=H/2+20,HR=Math.min(W,H)*.37;
+const scMap=Object.fromEntries(SC_DEF.map(s=>[s.id,s]));
+
+SC_DEF.forEach((s,i)=>{
+  const a=(i/SC_DEF.length)*2*Math.PI-Math.PI/2;
+  s.x=s.fx=CX+Math.cos(a)*HR; s.y=s.fy=CY+Math.sin(a)*HR;
+  s.type='hub';
+});
+TOOLS.forEach(t=>{
+  const sc=scMap[t.hub];
+  t.color=sc.color; t.type='tool';
+  t.x=sc.fx+(Math.random()-.5)*80;
+  t.y=sc.fy+(Math.random()-.5)*80;
+});
+
+const allNodes=[...SC_DEF,...TOOLS];
+const tMap=Object.fromEntries(TOOLS.map(t=>[t.id,t]));
+const spokes=TOOLS.map(t=>({source:t.hub,target:t.id,isSpoke:true,cl:t.hub}));
+const flows=FLOW_DEF.map(([s,t])=>({source:s,target:t,isSpoke:false,srcSc:tMap[s]?.hub}));
+const allLinks=[...spokes,...flows];
+
+const svg=d3.select('#cv').append('svg').attr('width',W).attr('height',H);
+const defs=svg.append('defs');
+function addGlow(id,std){
+  const f=defs.append('filter').attr('id',id).attr('x','-80%').attr('y','-80%').attr('width','260%').attr('height','260%');
+  f.append('feGaussianBlur').attr('stdDeviation',std).attr('result','c');
+  const m=f.append('feMerge');m.append('feMergeNode').attr('in','c');m.append('feMergeNode').attr('in','SourceGraphic');
+}
+addGlow('g1',3);addGlow('g2',6);addGlow('g3',10);addGlow('gh',5);
+
+// Arrow markers per SC
+SC_DEF.forEach(s=>{
+  defs.append('marker').attr('id',`arr-${s.sc}`).attr('viewBox','0 -3 7 6')
+    .attr('refX',7).attr('refY',0).attr('markerWidth',5).attr('markerHeight',5).attr('orient','auto')
+    .append('path').attr('d','M0,-3L7,0L0,3').attr('fill',s.color).attr('opacity',.7);
+});
+// Dot grid
+const dp=defs.append('pattern').attr('id','dg').attr('width',32).attr('height',32).attr('patternUnits','userSpaceOnUse');
+dp.append('circle').attr('cx',16).attr('cy',16).attr('r',.7).attr('fill','#0d2035').attr('opacity',.8);
+svg.append('rect').attr('width',W).attr('height',H).attr('fill','url(#dg)');
+
+// Radar rings
+const base=svg.append('g');
+[.12,.22,.33,.43].forEach(f=>{
+  base.append('circle').attr('cx',CX).attr('cy',CY).attr('r',Math.min(W,H)*f)
+    .attr('fill','none').attr('stroke','#0a1e32').attr('stroke-width',.8);
+});
+// Cross-hairs
+[[CX,48,CX,H],[0,CY,W,CY]].forEach(([x1,y1,x2,y2])=>{
+  base.append('line').attr('x1',x1).attr('y1',y1).attr('x2',x2).attr('y2',y2)
+    .attr('stroke','#091b2d').attr('stroke-width',.6).attr('stroke-dasharray','2,12');
+});
+
+const spokeG=svg.append('g');
+const flowG=svg.append('g');
+const hubG=svg.append('g');
+const nodeG=svg.append('g');
+
+// Spokes
+const spokeEls=spokeG.selectAll('.spoke').data(spokes).join('line').attr('class','spoke')
+  .attr('stroke',d=>scMap[d.cl].color).attr('stroke-width',.8)
+  .attr('stroke-dasharray','3,7').attr('opacity',.22);
+
+// Flow edges
+const flowEls=flowG.selectAll('.link').data(flows).join('path').attr('class','link')
+  .attr('stroke',d=>scMap[d.srcSc]?.color||'#3a5570').attr('stroke-width',1.2)
+  .attr('opacity',.38).attr('marker-end',d=>`url(#arr-${scMap[d.srcSc]?.sc||'infra'})`);
+
+// Hubs
+const hubEls=hubG.selectAll('.hub-g').data(SC_DEF).join('g').attr('class','hub-g');
+hubEls.append('circle').attr('r',52).attr('fill',d=>d.color).attr('fill-opacity',.025);
+hubEls.append('circle').attr('class','hring').attr('r',33)
+  .attr('fill','none').attr('stroke',d=>d.color).attr('stroke-width',1.4)
+  .attr('stroke-opacity',.5).attr('stroke-dasharray','14,9');
+hubEls.append('circle').attr('r',21).attr('fill',d=>d.color).attr('fill-opacity',.12)
+  .attr('stroke',d=>d.color).attr('stroke-width',1).attr('stroke-opacity',.4).attr('filter','url(#gh)');
+hubEls.append('text').attr('text-anchor','middle').attr('dy',5)
+  .attr('fill',d=>d.color).attr('fill-opacity',.9)
+  .attr('font-family','JetBrains Mono').attr('font-size',11).attr('font-weight',700)
+  .text(d=>TOOLS.filter(t=>t.hub===d.id).length);
+hubEls.append('text').attr('text-anchor','middle').attr('dy',46)
+  .attr('fill',d=>d.color).attr('fill-opacity',.6)
+  .attr('font-family','JetBrains Mono').attr('font-size',8).attr('letter-spacing',1.5)
+  .text(d=>d.name.toUpperCase().slice(0,12));
+
+// Tool nodes
+const getR=d=>d.p0?13:d.risk==='Med'?12:10;
+const nodeEls=nodeG.selectAll('.node-g').data(TOOLS).join('g').attr('class','node-g');
+nodeEls.filter(d=>d.p0).append('circle').attr('class','p0ring')
+  .attr('r',d=>getR(d)+8).attr('fill',d=>d.color).attr('fill-opacity',.08);
+nodeEls.filter(d=>d.risk==='Med').append('circle')
+  .attr('r',d=>getR(d)+6).attr('fill','#f87171').attr('fill-opacity',.07);
+nodeEls.append('circle').attr('r',d=>getR(d))
+  .attr('fill',d=>d.color).attr('fill-opacity',d=>d.p0?.88:.65)
+  .attr('stroke',d=>d.p0?'#c084fc':d.color).attr('stroke-width',d=>d.p0?1.8:1)
+  .attr('stroke-opacity',.85)
+  .attr('filter',d=>d.p0?'url(#g2)':d.risk==='Med'?'url(#g1)':null);
+nodeEls.append('text').attr('dy',-17).attr('text-anchor','middle')
+  .attr('fill',d=>d.color).attr('fill-opacity',.8)
+  .attr('font-family','JetBrains Mono').attr('font-size',8)
+  .attr('class','nlbl').text(d=>d.name.slice(0,16));
+nodeEls.append('text').attr('dy',d=>getR(d)+11).attr('text-anchor','middle')
+  .attr('fill',d=>d.color).attr('fill-opacity',.45)
+  .attr('font-family','JetBrains Mono').attr('font-size',7).attr('class','hlbl')
+  .text(d=>d.hour);
+
+// Simulation
+const sim=d3.forceSimulation(allNodes)
+  .force('x',d3.forceX(d=>d.type==='hub'?null:scMap[d.hub]?.fx||CX).strength(d=>d.type==='hub'?0:.32))
+  .force('y',d3.forceY(d=>d.type==='hub'?null:scMap[d.hub]?.fy||CY).strength(d=>d.type==='hub'?0:.32))
+  .force('charge',d3.forceManyBody().strength(d=>d.type==='hub'?-12:-85))
+  .force('col',d3.forceCollide(d=>d.type==='hub'?36:getR(d)+14))
+  .force('link',d3.forceLink(allLinks).id(d=>d.id)
+    .strength(d=>d.isSpoke?.48:.015).distance(d=>d.isSpoke?88:W*.5))
+  .alphaDecay(.022)
+  .on('tick',tick);
+
+function tick(){
+  spokeEls.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+  flowEls.attr('d',d=>{
+    const sx=d.source.x,sy=d.source.y,tx=d.target.x,ty=d.target.y;
+    const ang=Math.atan2(ty-sy,tx-sx);
+    const tr=getR(d.target)+8;
+    const ex=tx-Math.cos(ang)*tr, ey=ty-Math.sin(ang)*tr;
+    const mx=(sx+ex)/2+Math.sin(ang)*30, my=(sy+ey)/2-Math.cos(ang)*30;
+    return `M${sx},${sy}Q${mx},${my} ${ex},${ey}`;
+  });
+  hubEls.attr('transform',d=>`translate(${d.x},${d.y})`);
+  nodeEls.attr('transform',d=>`translate(${d.x},${d.y})`);
+}
+
+// Tooltip
+const tip=document.getElementById('tip');
+function showTip(d){
+  const isHub=d.type==='hub';
+  document.getElementById('t-sc').textContent=(isHub?'SUPER-CLUSTER':scMap[d.hub]?.name.toUpperCase()||'—');
+  document.getElementById('t-sc').style.color=d.color;
+  const p0El=document.getElementById('t-p0');
+  p0El.innerHTML=d.p0?'<div class="p0b">P0 CRITICAL</div>':'';
+  document.getElementById('t-name').textContent=d.name;
+  document.getElementById('t-layer').textContent=isHub?(TOOLS.filter(t=>t.hub===d.id).length+' tools'):d.layer;
+  document.getElementById('t-hour').textContent=d.hour||'—';
+  document.getElementById('t-risk').textContent=d.risk||'—';
+  document.getElementById('t-lic').textContent=d.lic||'—';
+  const b=document.getElementById('t-bar');
+  const pct=d.p0?100:d.risk==='Med'?60:30;
+  b.style.width=pct+'%'; b.style.background=d.color;
+  tip.classList.add('on');
+}
+function hideTip(){tip.classList.remove('on');}
+
+function dimAll(keepNodes,keepHubs,spokeFn,flowFn){
+  nodeEls.classed('dim',n=>!keepNodes.has(n.id));
+  hubEls.classed('dim',h=>!keepHubs.has(h.id));
+  spokeEls.classed('dim',l=>!spokeFn(l));
+  flowEls.classed('dim',l=>!flowFn(l));
+}
+function clearDim(){nodeEls.classed('dim',false);hubEls.classed('dim',false);spokeEls.classed('dim',false);flowEls.classed('dim',false);}
+
+hubEls.on('mouseenter',function(e,d){
+  showTip(d);
+  const cids=new Set(TOOLS.filter(t=>t.hub===d.id).map(t=>t.id));
+  dimAll(cids,new Set([d.id]),l=>cids.has(l.target.id||l.target),l=>cids.has(l.source.id||l.source)||cids.has(l.target.id||l.target));
+}).on('mouseleave',()=>{hideTip();clearDim();});
+
+nodeEls.on('mouseenter',function(e,d){
+  showTip(d);
+  const conn=new Set([d.id,d.hub]);
+  FLOW_DEF.forEach(([s,t])=>{if(s===d.id)conn.add(t);if(t===d.id)conn.add(s);});
+  dimAll(new Set([d.id]),new Set([d.hub]),
+    l=>(l.target.id||l.target)===d.id,
+    l=>(l.source.id||l.source)===d.id||(l.target.id||l.target)===d.id);
+}).on('mouseleave',()=>{hideTip();clearDim();});
+
+// Drag
+nodeEls.call(d3.drag()
+  .on('start',(e,d)=>{if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
+  .on('drag', (e,d)=>{d.fx=e.x;d.fy=e.y;})
+  .on('end',  (e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
+
+// Zoom
+svg.call(d3.zoom().scaleExtent([.3,4]).on('zoom',ev=>{
+  [base,spokeG,flowG,hubG,nodeG].forEach(g=>g.attr('transform',ev.transform));
+}));
+
+// Controls
+let spkOn=true,flowOn=true,lblOn=true;
+document.getElementById('bspoke').addEventListener('click',function(){
+  spkOn=!spkOn; spokeG.style('display',spkOn?null:'none');
+  this.textContent=spkOn?'⊛ Spokes ON':'⊛ Spokes OFF'; this.classList.toggle('on',spkOn);
+});
+document.getElementById('bflow').addEventListener('click',function(){
+  flowOn=!flowOn; flowG.style('display',flowOn?null:'none');
+  this.textContent=flowOn?'→ Data Flow ON':'→ Data Flow OFF'; this.classList.toggle('on',flowOn);
+});
+document.getElementById('blabel').addEventListener('click',function(){
+  lblOn=!lblOn; nodeG.selectAll('.nlbl,.hlbl').style('display',lblOn?null:'none');
+  hubEls.selectAll('text').style('display',lblOn?null:'none');
+  this.textContent=lblOn?'⬡ Labels ON':'⬡ Labels OFF'; this.classList.toggle('on',lblOn);
+});
+document.getElementById('breset').addEventListener('click',()=>{
+  document.getElementById('scf').value='all';
+  [nodeEls,hubEls,spokeEls,flowEls].forEach(s=>s.style('display',null));
+  svg.transition().duration(600).call(d3.zoom().scaleExtent([.3,4]).transform,d3.zoomIdentity);
+});
+document.getElementById('scf').addEventListener('change',function(){
+  const v=this.value;
+  if(v==='all'){nodeEls.style('display',null);hubEls.style('display',null);spokeEls.style('display',null);flowEls.style('display',null);return;}
+  nodeEls.style('display',d=>d.hub===v?null:'none');
+  hubEls.style('display',h=>h.id===v?null:'none');
+  spokeEls.style('display',l=>{const t=l.target.id||l.target;return TOOLS.find(n=>n.id===t)?.hub===v?null:'none';});
+  flowEls.style('display',l=>{const s=l.source.id||l.source,t=l.target.id||l.target;return(tMap[s]?.hub===v||tMap[t]?.hub===v)?null:'none';});
+});
+</script>
+</body>
+</html>

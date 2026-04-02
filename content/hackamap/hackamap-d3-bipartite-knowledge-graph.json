@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.1.0",
+  "product": "Hackamap",
+  "canvas": "PMF Bipartite + Hub-and-Spoke Knowledge Graph",
+  "generated_at": "2026-03-28T00:00:00Z",
+
+  "meta": {
+    "total_member_nodes": 23,
+    "total_hub_nodes": 8,
+    "total_nodes": 31,
+    "total_problems": 12,
+    "total_solutions": 11,
+    "total_cross_edges": 15,
+    "total_spoke_edges": 23,
+    "total_edges": 38,
+    "top_pmf_node": "p12",
+    "top_pmf_score": 6.75,
+    "top_gap_node": "p12",
+    "top_gap_score": 4.5,
+    "last_updated": "2026-03-27T12:46:30Z",
+
+    "layout": {
+      "type": "bipartite + hub-and-spoke",
+      "problems_x": "27% viewport width",
+      "solutions_x": "73% viewport width",
+      "cluster_y_spacing": "22% viewport height per cluster",
+      "hub_position": "pinned at (clX, clY) — fx/fy fixed",
+      "spoke_force": "forceLink strength=0.42 distance=70px",
+      "member_repulsion": "forceManyBody strength=-95 per member",
+      "hub_repulsion": "forceManyBody strength=-8 (minimal, hubs are pinned)",
+      "cross_link_force": "forceLink strength=0.012 distance=46% viewport width"
+    },
+
+    "cluster_gap_ratios": {
+      "team":       { "ratio": 0.31, "label": "Team Building",    "color": "#f59e0b", "side": "problem", "member_count": 3 },
+      "validation": { "ratio": 0.72, "label": "Validation",       "color": "#9f7cff", "side": "problem", "member_count": 3 },
+      "growth":     { "ratio": 0.55, "label": "Growth",           "color": "#f43f5e", "side": "problem", "member_count": 3 },
+      "capital":    { "ratio": 1.00, "label": "Capital",          "color": "#c084fc", "side": "problem", "member_count": 3 },
+      "network":    { "ratio": null, "label": "Network",          "color": "#06b6d4", "side": "solution","member_count": 3 },
+      "launch":     { "ratio": null, "label": "Launch Platforms", "color": "#22c55e", "side": "solution","member_count": 3 },
+      "build":      { "ratio": null, "label": "Build & Hire",     "color": "#2dd4bf", "side": "solution","member_count": 3 },
+      "funding":    { "ratio": null, "label": "Funding & Growth", "color": "#3b82f6", "side": "solution","member_count": 2 }
+    },
+
+    "pmf_formula": "gap_score × urgency_weight × LOG(source_count + 1) × specificity_multiplier",
+    "gap_score_formula": "LOG(asks + 1) / (solution_count + 1)",
+    "specificity_multipliers": { "named_tool": 1.5, "domain_specific": 1.2, "vague": 0.8 },
+    "alert_threshold_pmf": 3.0,
+
+    "canvas_encoding": {
+      "member_radius":    "gap_score sqrt scale 7–20px; solution fixed 9px",
+      "hub_outer_ring":   "r=26, spinning dashed stroke (stroke-dasharray 12,8), 9s rotation",
+      "hub_inner_fill":   "r=18, cluster color at 11% opacity + glow filter gh",
+      "hub_ambient_halo": "r=38, cluster color at 4% opacity",
+      "hub_label":        "member count (integer) centered + cluster name below at dy=42",
+      "spoke_line":       "straight line, stroke-dasharray 3,6, opacity=0.22, cluster color",
+      "node_glow":        "pmf>1.5→g1(3px) pmf>3→g2(7px) pmf>5→g3(12px)",
+      "pulse_speed":      "gap_velocity>0.7→0.85s, >0.4→1.6s",
+      "cross_edge_curve": "cubic bezier, opacity=0.12+strength×0.38",
+      "cluster_badge":    "problem cluster headers: XX% gap ratio"
+    }
+  },
+
+  "clusters": [
+    { "id": "team",       "name": "Team Building",    "side": "problem",  "color": "#f59e0b", "hub_id": "h-team",       "gap_ratio": 0.31, "member_count": 3, "cross_edges": 4, "spoke_edges": 3 },
+    { "id": "validation", "name": "Validation",       "side": "problem",  "color": "#9f7cff", "hub_id": "h-validation", "gap_ratio": 0.72, "member_count": 3, "cross_edges": 4, "spoke_edges": 3 },
+    { "id": "growth",     "name": "Growth",           "side": "problem",  "color": "#f43f5e", "hub_id": "h-growth",     "gap_ratio": 0.55, "member_count": 3, "cross_edges": 4, "spoke_edges": 3 },
+    { "id": "capital",    "name": "Capital",          "side": "problem",  "color": "#c084fc", "hub_id": "h-capital",    "gap_ratio": 1.00, "member_count": 3, "cross_edges": 2, "spoke_edges": 3 },
+    { "id": "network",    "name": "Network",          "side": "solution", "color": "#06b6d4", "hub_id": "h-network",    "gap_ratio": null, "member_count": 3, "cross_edges": 3, "spoke_edges": 3 },
+    { "id": "launch",     "name": "Launch Platforms", "side": "solution", "color": "#22c55e", "hub_id": "h-launch",     "gap_ratio": null, "member_count": 3, "cross_edges": 4, "spoke_edges": 3 },
+    { "id": "build",      "name": "Build & Hire",     "side": "solution", "color": "#2dd4bf", "hub_id": "h-build",      "gap_ratio": null, "member_count": 3, "cross_edges": 3, "spoke_edges": 3 },
+    { "id": "funding",    "name": "Funding & Growth", "side": "solution", "color": "#3b82f6", "hub_id": "h-funding",    "gap_ratio": null, "member_count": 2, "cross_edges": 2, "spoke_edges": 2 }
+  ],
+
+  "hub_nodes": [
+    { "id": "h-team",       "type": "hub", "cluster": "team",       "label": "Team Building",    "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#f59e0b", "gap_ratio": 0.31 },
+    { "id": "h-validation", "type": "hub", "cluster": "validation", "label": "Validation",       "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#9f7cff", "gap_ratio": 0.72 },
+    { "id": "h-growth",     "type": "hub", "cluster": "growth",     "label": "Growth",           "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#f43f5e", "gap_ratio": 0.55 },
+    { "id": "h-capital",    "type": "hub", "cluster": "capital",    "label": "Capital",          "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#c084fc", "gap_ratio": 1.00 },
+    { "id": "h-network",    "type": "hub", "cluster": "network",    "label": "Network",          "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#06b6d4", "gap_ratio": null },
+    { "id": "h-launch",     "type": "hub", "cluster": "launch",     "label": "Launch Platforms", "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#22c55e", "gap_ratio": null },
+    { "id": "h-build",      "type": "hub", "cluster": "build",      "label": "Build & Hire",     "members": 3, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#2dd4bf", "gap_ratio": null },
+    { "id": "h-funding",    "type": "hub", "cluster": "funding",    "label": "Funding & Growth", "members": 2, "position": "pinned", "ring_r": 26, "inner_r": 18, "halo_r": 38, "color": "#3b82f6", "gap_ratio": null }
+  ],
+
+  "member_nodes": [
+    { "id":"p1",  "type":"problem",  "cluster":"team",       "hub":"h-team",       "label":"Finding co-founders remotely",   "gap_score":1.80,"pmf_score":2.70,"gap_velocity":0.30,"source_count":2,"specificity":"domain_specific","solution_count":3,"alert":false, "canvas":{"radius":12,"glow":"g1","pulse":"none","border_px":1.2}},
+    { "id":"p2",  "type":"problem",  "cluster":"team",       "hub":"h-team",       "label":"Async team coordination",         "gap_score":0.90,"pmf_score":1.10,"gap_velocity":0.10,"source_count":1,"specificity":"domain_specific","solution_count":1,"alert":false, "canvas":{"radius":9, "glow":null,  "pulse":"none","border_px":1.2}},
+    { "id":"p3",  "type":"problem",  "cluster":"team",       "hub":"h-team",       "label":"Equity splitting disputes",        "gap_score":1.20,"pmf_score":1.80,"gap_velocity":0.20,"source_count":2,"specificity":"domain_specific","solution_count":1,"alert":false, "canvas":{"radius":10,"glow":"g1","pulse":"none","border_px":1.2}},
+    { "id":"p4",  "type":"problem",  "cluster":"validation", "hub":"h-validation", "label":"AI agent memory persistence",      "gap_score":3.37,"pmf_score":5.24,"gap_velocity":0.82,"source_count":1,"specificity":"named_tool",      "solution_count":1,"alert":true,  "canvas":{"radius":17,"glow":"g2","pulse":"fast","border_px":1.2}},
+    { "id":"p5",  "type":"problem",  "cluster":"validation", "hub":"h-validation", "label":"No-code MVP testing pipeline",     "gap_score":2.10,"pmf_score":3.20,"gap_velocity":0.45,"source_count":2,"specificity":"domain_specific","solution_count":2,"alert":true,  "canvas":{"radius":13,"glow":"g2","pulse":"medium","border_px":1.2}},
+    { "id":"p6",  "type":"problem",  "cluster":"validation", "hub":"h-validation", "label":"Getting first 10 users",           "gap_score":1.50,"pmf_score":2.30,"gap_velocity":0.25,"source_count":3,"specificity":"vague",           "solution_count":2,"alert":false, "canvas":{"radius":11,"glow":"g1","pulse":"none","border_px":2.0}},
+    { "id":"p7",  "type":"problem",  "cluster":"growth",     "hub":"h-growth",     "label":"Churn prediction for B2B SaaS",    "gap_score":2.40,"pmf_score":3.60,"gap_velocity":0.60,"source_count":2,"specificity":"named_tool",      "solution_count":1,"alert":true,  "canvas":{"radius":14,"glow":"g2","pulse":"medium","border_px":1.2}},
+    { "id":"p8",  "type":"problem",  "cluster":"growth",     "hub":"h-growth",     "label":"Viral loop design for dev tools",  "gap_score":1.90,"pmf_score":2.90,"gap_velocity":0.35,"source_count":1,"specificity":"domain_specific","solution_count":2,"alert":false, "canvas":{"radius":12,"glow":"g1","pulse":"none","border_px":1.2}},
+    { "id":"p9",  "type":"problem",  "cluster":"growth",     "hub":"h-growth",     "label":"SEO vs paid acquisition ROI",      "gap_score":2.80,"pmf_score":3.40,"gap_velocity":0.70,"source_count":3,"specificity":"domain_specific","solution_count":0,"alert":true,  "canvas":{"radius":15,"glow":"g2","pulse":"fast","border_px":2.0}},
+    { "id":"p10", "type":"problem",  "cluster":"capital",    "hub":"h-capital",    "label":"Pre-seed without warm intro",      "gap_score":4.10,"pmf_score":6.15,"gap_velocity":0.90,"source_count":4,"specificity":"domain_specific","solution_count":1,"alert":true,  "canvas":{"radius":19,"glow":"g3","pulse":"fast","border_px":2.0}},
+    { "id":"p11", "type":"problem",  "cluster":"capital",    "hub":"h-capital",    "label":"SAFE vs priced round confusion",   "gap_score":3.80,"pmf_score":5.70,"gap_velocity":0.85,"source_count":3,"specificity":"named_tool",      "solution_count":1,"alert":true,  "canvas":{"radius":18,"glow":"g3","pulse":"fast","border_px":2.0}},
+    { "id":"p12", "type":"problem",  "cluster":"capital",    "hub":"h-capital",    "label":"Revenue-based financing options",  "gap_score":4.50,"pmf_score":6.75,"gap_velocity":0.95,"source_count":2,"specificity":"domain_specific","solution_count":0,"alert":true,  "canvas":{"radius":20,"glow":"g3","pulse":"fast","border_px":1.2}},
+    { "id":"s1",  "type":"solution", "cluster":"network",    "hub":"h-network",    "label":"YC Co-Founder Matching",           "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":5,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s2",  "type":"solution", "cluster":"network",    "hub":"h-network",    "label":"Lunchclub AI",                     "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":3,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s3",  "type":"solution", "cluster":"network",    "hub":"h-network",    "label":"On Deck Fellowship",               "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":4,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s4",  "type":"solution", "cluster":"launch",     "hub":"h-launch",     "label":"Product Hunt",                     "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":8,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s5",  "type":"solution", "cluster":"launch",     "hub":"h-launch",     "label":"Betalist",                         "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":4,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s6",  "type":"solution", "cluster":"launch",     "hub":"h-launch",     "label":"Hacker News",                      "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":7,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s7",  "type":"solution", "cluster":"build",      "hub":"h-build",      "label":"LangGraph by LangChain",           "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":3,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s8",  "type":"solution", "cluster":"build",      "hub":"h-build",      "label":"Cursor IDE",                       "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":5,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s9",  "type":"solution", "cluster":"build",      "hub":"h-build",      "label":"Replit",                           "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":4,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s10", "type":"solution", "cluster":"funding",    "hub":"h-funding",    "label":"Carta SAFE Manager",               "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":6,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}},
+    { "id":"s11", "type":"solution", "cluster":"funding",    "hub":"h-funding",    "label":"AngelList",                        "gap_score":0,   "pmf_score":0,   "gap_velocity":0,   "source_count":5,"specificity":"named_tool",      "solution_count":null,"alert":false,"canvas":{"radius":9,"glow":null,"pulse":"none","border_px":2.0}}
+  ],
+
+  "cross_edges": [
+    { "id":"e01","problem_id":"p1", "solution_id":"s1", "strength":0.85,"type":"strong"},
+    { "id":"e02","problem_id":"p1", "solution_id":"s2", "strength":0.70,"type":"strong"},
+    { "id":"e03","problem_id":"p1", "solution_id":"s3", "strength":0.60,"type":"moderate"},
+    { "id":"e04","problem_id":"p2", "solution_id":"s8", "strength":0.40,"type":"weak"},
+    { "id":"e05","problem_id":"p3", "solution_id":"s10","strength":0.50,"type":"moderate"},
+    { "id":"e06","problem_id":"p4", "solution_id":"s7", "strength":0.40,"type":"weak"},
+    { "id":"e07","problem_id":"p5", "solution_id":"s4", "strength":0.60,"type":"moderate"},
+    { "id":"e08","problem_id":"p5", "solution_id":"s5", "strength":0.55,"type":"moderate"},
+    { "id":"e09","problem_id":"p6", "solution_id":"s6", "strength":0.65,"type":"moderate"},
+    { "id":"e10","problem_id":"p6", "solution_id":"s4", "strength":0.50,"type":"moderate"},
+    { "id":"e11","problem_id":"p7", "solution_id":"s7", "strength":0.30,"type":"weak"},
+    { "id":"e12","problem_id":"p8", "solution_id":"s4", "strength":0.40,"type":"weak"},
+    { "id":"e13","problem_id":"p8", "solution_id":"s6", "strength":0.50,"type":"moderate"},
+    { "id":"e14","problem_id":"p10","solution_id":"s11","strength":0.20,"type":"weak"},
+    { "id":"e15","problem_id":"p11","solution_id":"s10","strength":0.30,"type":"weak"}
+  ],
+
+  "spoke_edges": [
+    { "id":"sp01","hub_id":"h-team",       "member_id":"p1", "cluster":"team",       "force_strength":0.42,"distance_px":70},
+    { "id":"sp02","hub_id":"h-team",       "member_id":"p2", "cluster":"team",       "force_strength":0.42,"distance_px":70},
+    { "id":"sp03","hub_id":"h-team",       "member_id":"p3", "cluster":"team",       "force_strength":0.42,"distance_px":70},
+    { "id":"sp04","hub_id":"h-validation", "member_id":"p4", "cluster":"validation", "force_strength":0.42,"distance_px":70},
+    { "id":"sp05","hub_id":"h-validation", "member_id":"p5", "cluster":"validation", "force_strength":0.42,"distance_px":70},
+    { "id":"sp06","hub_id":"h-validation", "member_id":"p6", "cluster":"validation", "force_strength":0.42,"distance_px":70},
+    { "id":"sp07","hub_id":"h-growth",     "member_id":"p7", "cluster":"growth",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp08","hub_id":"h-growth",     "member_id":"p8", "cluster":"growth",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp09","hub_id":"h-growth",     "member_id":"p9", "cluster":"growth",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp10","hub_id":"h-capital",    "member_id":"p10","cluster":"capital",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp11","hub_id":"h-capital",    "member_id":"p11","cluster":"capital",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp12","hub_id":"h-capital",    "member_id":"p12","cluster":"capital",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp13","hub_id":"h-network",    "member_id":"s1", "cluster":"network",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp14","hub_id":"h-network",    "member_id":"s2", "cluster":"network",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp15","hub_id":"h-network",    "member_id":"s3", "cluster":"network",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp16","hub_id":"h-launch",     "member_id":"s4", "cluster":"launch",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp17","hub_id":"h-launch",     "member_id":"s5", "cluster":"launch",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp18","hub_id":"h-launch",     "member_id":"s6", "cluster":"launch",     "force_strength":0.42,"distance_px":70},
+    { "id":"sp19","hub_id":"h-build",      "member_id":"s7", "cluster":"build",      "force_strength":0.42,"distance_px":70},
+    { "id":"sp20","hub_id":"h-build",      "member_id":"s8", "cluster":"build",      "force_strength":0.42,"distance_px":70},
+    { "id":"sp21","hub_id":"h-build",      "member_id":"s9", "cluster":"build",      "force_strength":0.42,"distance_px":70},
+    { "id":"sp22","hub_id":"h-funding",    "member_id":"s10","cluster":"funding",    "force_strength":0.42,"distance_px":70},
+    { "id":"sp23","hub_id":"h-funding",    "member_id":"s11","cluster":"funding",    "force_strength":0.42,"distance_px":70}
+  ],
+
+  "whitespace": [
+    { "problem_id":"p9",  "label":"SEO vs paid acquisition ROI",    "cluster":"growth",  "hub":"h-growth",  "gap_score":2.80,"note":"0 cross-edges — isolated in bipartite layer"},
+    { "problem_id":"p12", "label":"Revenue-based financing options", "cluster":"capital", "hub":"h-capital", "gap_score":4.50,"note":"0 cross-edges — top opportunity, hub-spoke shows isolation clearly"}
+  ]
+}

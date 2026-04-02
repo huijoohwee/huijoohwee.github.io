@@ -1,0 +1,690 @@
+{
+  "meta": {
+    "title": "Full-Stack AI-Native 0→1 Knowledge Graph",
+    "description": "Hub-and-spoke radial graph: 5 super-cluster hubs, problem nodes orbit at r1, solution nodes orbit at r2. Bridge edges cross clusters. Designed for D3.js forceSimulation or radial layout.",
+    "version": "1.0.0",
+    "layout": {
+      "type": "star",
+      "variant": "hub-and-spoke",
+      "orbitLevels": [0, 1, 2],
+      "orbitLabels": ["hub", "problem", "solution"],
+      "conceptOrbit": 1.5,
+      "clusterAngleStep": 72,
+      "clusterAngles": {
+        "c-fe":  90,
+        "c-be":  162,
+        "c-llm": 234,
+        "c-orc": 306,
+        "c-inf": 18
+      },
+      "orbitRadii": {
+        "hub":      0,
+        "problem":  200,
+        "concept":  280,
+        "solution": 380
+      }
+    }
+  },
+
+  "clusters": [
+    {
+      "id": "c-fe",
+      "label": "Frontend",
+      "color": "#6366f1",
+      "colorDark": "#818cf8",
+      "icon": "monitor",
+      "angle": 90,
+      "layer": "F",
+      "description": "UI, state management, data visualisation, streaming display"
+    },
+    {
+      "id": "c-be",
+      "label": "Backend",
+      "color": "#22c55e",
+      "colorDark": "#4ade80",
+      "icon": "server",
+      "angle": 162,
+      "layer": "B",
+      "description": "REST API, business logic, data access, job orchestration entry point"
+    },
+    {
+      "id": "c-llm",
+      "label": "LLM Runtime",
+      "color": "#f59e0b",
+      "colorDark": "#fbbf24",
+      "icon": "cpu",
+      "angle": 234,
+      "layer": "L",
+      "description": "Local inference, prompt management, embeddings, context control"
+    },
+    {
+      "id": "c-orc",
+      "label": "Multi-Agent Orchestration",
+      "color": "#ec4899",
+      "colorDark": "#f472b6",
+      "icon": "git-branch",
+      "angle": 306,
+      "layer": "O",
+      "description": "Agent coordination, state machine routing, task queues, inter-agent comms"
+    },
+    {
+      "id": "c-inf",
+      "label": "DevOps / Infra",
+      "color": "#64748b",
+      "colorDark": "#94a3b8",
+      "icon": "package",
+      "angle": 18,
+      "layer": "D",
+      "description": "Containerisation, environment management, CI/CD, cloud deploy"
+    }
+  ],
+
+  "nodes": [
+
+    { "id": "hub-fe",  "label": "Frontend Hub",              "type": "hub", "cluster": "c-fe",  "orbit": 0, "meta": { "foss": true, "local": true, "freeTier": true } },
+    { "id": "hub-be",  "label": "Backend Hub",               "type": "hub", "cluster": "c-be",  "orbit": 0, "meta": { "foss": true, "local": true, "freeTier": true } },
+    { "id": "hub-llm", "label": "LLM Runtime Hub",           "type": "hub", "cluster": "c-llm", "orbit": 0, "meta": { "foss": true, "local": true, "freeTier": false } },
+    { "id": "hub-orc", "label": "Orchestration Hub",         "type": "hub", "cluster": "c-orc", "orbit": 0, "meta": { "foss": true, "local": true, "freeTier": false } },
+    { "id": "hub-inf", "label": "Infra / DevOps Hub",        "type": "hub", "cluster": "c-inf", "orbit": 0, "meta": { "foss": true, "local": true, "freeTier": true } },
+
+    {
+      "id": "p-fe-1",
+      "label": "No UI Framework",
+      "type": "problem",
+      "cluster": "c-fe",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "No component model, no reactive rendering, no bundler — raw HTML doesn't scale",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-fe-2",
+      "label": "No State Management",
+      "type": "problem",
+      "cluster": "c-fe",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Prop-drilling, inconsistent UI state, no single source of truth",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-fe-3",
+      "label": "No Realtime / Streaming UI",
+      "type": "problem",
+      "cluster": "c-fe",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "LLM tokens arrive incrementally; polling is too slow and wastes resources",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-fe-4",
+      "label": "No Data Visualisation Layer",
+      "type": "problem",
+      "cluster": "c-fe",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Agent dependency graphs and knowledge maps need a programmable canvas",
+        "phase": 4,
+        "priority": "P2"
+      }
+    },
+
+    {
+      "id": "p-be-1",
+      "label": "No REST API Layer",
+      "type": "problem",
+      "cluster": "c-be",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "No HTTP interface between frontend and backend logic",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-be-2",
+      "label": "No Data Persistence",
+      "type": "problem",
+      "cluster": "c-be",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "In-memory state lost on restart; no multi-session history",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-be-3",
+      "label": "No Authentication",
+      "type": "problem",
+      "cluster": "c-be",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "API is open to the world; no user identity for multi-tenant use",
+        "phase": 4,
+        "priority": "P2"
+      }
+    },
+    {
+      "id": "p-be-4",
+      "label": "No Background Job Queue",
+      "type": "problem",
+      "cluster": "c-be",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Long-running agent runs block HTTP request threads and time out",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+
+    {
+      "id": "p-llm-1",
+      "label": "No Local Inference Runtime",
+      "type": "problem",
+      "cluster": "c-llm",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Cloud LLM APIs cost money and add latency; zero-cost TCO requires local inference",
+        "phase": 0,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-llm-2",
+      "label": "No Prompt Management",
+      "type": "problem",
+      "cluster": "c-llm",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Hard-coded prompt strings don't scale; need versioned, composable templates",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-llm-3",
+      "label": "No Vector Embeddings",
+      "type": "problem",
+      "cluster": "c-llm",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Can't do semantic search or RAG without embedding generation",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-llm-4",
+      "label": "No Context Window Control",
+      "type": "problem",
+      "cluster": "c-llm",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Unbounded context overflows the model's window and degrades quality",
+        "phase": 2,
+        "priority": "P2"
+      }
+    },
+
+    {
+      "id": "p-orc-1",
+      "label": "No Agent Architecture",
+      "type": "problem",
+      "cluster": "c-orc",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "A single LLM call can't reason, search, draft, and critique in one pass",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-orc-2",
+      "label": "No Task Routing",
+      "type": "problem",
+      "cluster": "c-orc",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "No mechanism to direct work to the right agent at the right step",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-orc-3",
+      "label": "No Inter-Agent Communication",
+      "type": "problem",
+      "cluster": "c-orc",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Agents need to pass structured state between each other without tight coupling",
+        "phase": 2,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-orc-4",
+      "label": "No Agent Observability",
+      "type": "problem",
+      "cluster": "c-orc",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Opaque agent execution makes debugging and performance tuning impossible",
+        "phase": 3,
+        "priority": "P2"
+      }
+    },
+
+    {
+      "id": "p-inf-1",
+      "label": "No Containerisation",
+      "type": "problem",
+      "cluster": "c-inf",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Works on my machine ≠ works on any machine; deps need isolation",
+        "phase": 1,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-inf-2",
+      "label": "No Env Management",
+      "type": "problem",
+      "cluster": "c-inf",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "API keys, URLs, and secrets hard-coded in source = security and portability risk",
+        "phase": 0,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-inf-3",
+      "label": "No Frontend Deployment",
+      "type": "problem",
+      "cluster": "c-inf",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "Localhost-only app can't be shared, demoed, or iterated with users",
+        "phase": 5,
+        "priority": "P1"
+      }
+    },
+    {
+      "id": "p-inf-4",
+      "label": "No Backend Deployment",
+      "type": "problem",
+      "cluster": "c-inf",
+      "orbit": 1,
+      "meta": {
+        "painPoint": "API must be reachable from the deployed frontend and from remote collaborators",
+        "phase": 5,
+        "priority": "P1"
+      }
+    },
+
+    {
+      "id": "s-fe-1",
+      "label": "React + Vite",
+      "type": "solution",
+      "cluster": "c-fe",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 1, "solves": "p-fe-1", "url": "https://vite.dev", "estMin": 5 }
+    },
+    {
+      "id": "s-fe-2",
+      "label": "Zustand",
+      "type": "solution",
+      "cluster": "c-fe",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 1, "solves": "p-fe-2", "url": "https://zustand-demo.pmnd.rs", "estMin": 5 }
+    },
+    {
+      "id": "s-fe-3",
+      "label": "EventSource (SSE)",
+      "type": "solution",
+      "cluster": "c-fe",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-fe-3", "url": "https://developer.mozilla.org/en-US/docs/Web/API/EventSource", "estMin": 8 }
+    },
+    {
+      "id": "s-fe-4",
+      "label": "D3.js",
+      "type": "solution",
+      "cluster": "c-fe",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 4, "solves": "p-fe-4", "url": "https://d3js.org", "estMin": 10 }
+    },
+    {
+      "id": "s-fe-5",
+      "label": "Tailwind CSS v4",
+      "type": "solution",
+      "cluster": "c-fe",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 1, "solves": "p-fe-1", "url": "https://tailwindcss.com", "estMin": 3 }
+    },
+
+    {
+      "id": "s-be-1",
+      "label": "FastAPI + Uvicorn",
+      "type": "solution",
+      "cluster": "c-be",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 1, "solves": "p-be-1", "url": "https://fastapi.tiangolo.com", "estMin": 10 }
+    },
+    {
+      "id": "s-be-2",
+      "label": "Supabase Postgres",
+      "type": "solution",
+      "cluster": "c-be",
+      "orbit": 2,
+      "meta": { "foss": true, "local": false, "freeTier": true, "phase": 1, "solves": "p-be-2", "url": "https://supabase.com", "estMin": 10 }
+    },
+    {
+      "id": "s-be-3",
+      "label": "Supabase Auth",
+      "type": "solution",
+      "cluster": "c-be",
+      "orbit": 2,
+      "meta": { "foss": true, "local": false, "freeTier": true, "phase": 4, "solves": "p-be-3", "url": "https://supabase.com/docs/guides/auth", "estMin": 10 }
+    },
+    {
+      "id": "s-be-4",
+      "label": "BullMQ + Redis",
+      "type": "solution",
+      "cluster": "c-be",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": false, "phase": 1, "solves": "p-be-4", "url": "https://bullmq.io", "estMin": 10 }
+    },
+    {
+      "id": "s-be-5",
+      "label": "Pydantic v2",
+      "type": "solution",
+      "cluster": "c-be",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-be-1", "url": "https://docs.pydantic.dev", "estMin": 8 }
+    },
+
+    {
+      "id": "s-llm-1",
+      "label": "Ollama",
+      "type": "solution",
+      "cluster": "c-llm",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": false, "phase": 0, "solves": "p-llm-1", "url": "https://ollama.com", "estMin": 15 }
+    },
+    {
+      "id": "s-llm-2",
+      "label": "llama3.2:3b",
+      "type": "solution",
+      "cluster": "c-llm",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": false, "phase": 0, "solves": "p-llm-1", "url": "https://ollama.com/library/llama3.2", "estMin": 10, "note": "Pull once in Phase 0 — 2GB download" }
+    },
+    {
+      "id": "s-llm-3",
+      "label": "nomic-embed-text",
+      "type": "solution",
+      "cluster": "c-llm",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": false, "phase": 0, "solves": "p-llm-3", "url": "https://ollama.com/library/nomic-embed-text", "estMin": 5 }
+    },
+    {
+      "id": "s-llm-4",
+      "label": "LangChain / LangGraph",
+      "type": "solution",
+      "cluster": "c-llm",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-llm-4", "url": "https://python.langchain.com", "estMin": 5 }
+    },
+    {
+      "id": "s-llm-5",
+      "label": "Prompt Template System",
+      "type": "solution",
+      "cluster": "c-llm",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-llm-2", "url": null, "estMin": 9, "note": "prompts/base.py + prompts/tasks.py in Python dataclasses" }
+    },
+
+    {
+      "id": "s-orc-1",
+      "label": "LangGraph",
+      "type": "solution",
+      "cluster": "c-orc",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-orc-1", "url": "https://langchain-ai.github.io/langgraph", "estMin": 10 }
+    },
+    {
+      "id": "s-orc-2",
+      "label": "Researcher Agent",
+      "type": "solution",
+      "cluster": "c-orc",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-orc-3", "url": null, "estMin": 10 }
+    },
+    {
+      "id": "s-orc-3",
+      "label": "Synthesizer Agent",
+      "type": "solution",
+      "cluster": "c-orc",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-orc-3", "url": null, "estMin": 10 }
+    },
+    {
+      "id": "s-orc-4",
+      "label": "Critic Agent",
+      "type": "solution",
+      "cluster": "c-orc",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-orc-3", "url": null, "estMin": 8 }
+    },
+    {
+      "id": "s-orc-5",
+      "label": "State Graph Router",
+      "type": "solution",
+      "cluster": "c-orc",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 2, "solves": "p-orc-2", "url": "https://langchain-ai.github.io/langgraph/concepts/low_level", "estMin": 10 }
+    },
+
+    {
+      "id": "s-inf-1",
+      "label": "Docker Compose",
+      "type": "solution",
+      "cluster": "c-inf",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 1, "solves": "p-inf-1", "url": "https://docs.docker.com/compose", "estMin": 7 }
+    },
+    {
+      "id": "s-inf-2",
+      "label": "Railway",
+      "type": "solution",
+      "cluster": "c-inf",
+      "orbit": 2,
+      "meta": { "foss": false, "local": false, "freeTier": true, "phase": 5, "solves": "p-inf-4", "url": "https://railway.app", "estMin": 8 }
+    },
+    {
+      "id": "s-inf-3",
+      "label": "Vercel",
+      "type": "solution",
+      "cluster": "c-inf",
+      "orbit": 2,
+      "meta": { "foss": false, "local": false, "freeTier": true, "phase": 5, "solves": "p-inf-3", "url": "https://vercel.com", "estMin": 7 }
+    },
+    {
+      "id": "s-inf-4",
+      "label": "python-dotenv",
+      "type": "solution",
+      "cluster": "c-inf",
+      "orbit": 2,
+      "meta": { "foss": true, "local": true, "freeTier": true, "phase": 0, "solves": "p-inf-2", "url": "https://pypi.org/project/python-dotenv", "estMin": 2 }
+    },
+    {
+      "id": "s-inf-5",
+      "label": "GitHub (FOSS + Actions CI)",
+      "type": "solution",
+      "cluster": "c-inf",
+      "orbit": 2,
+      "meta": { "foss": true, "local": false, "freeTier": true, "phase": 0, "solves": "p-inf-2", "url": "https://github.com", "estMin": 3 }
+    },
+
+    {
+      "id": "con-foss",
+      "label": "FOSS-first Constraint",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "Every tool must have an open-source license. No vendor lock-in at the stack level.", "crossCluster": true }
+    },
+    {
+      "id": "con-local",
+      "label": "Local > Cloud",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "Prefer on-device execution (Ollama, Redis Docker) over cloud inference to achieve zero-cost TCO.", "crossCluster": true }
+    },
+    {
+      "id": "con-zero-cost",
+      "label": "Zero-Cost TCO",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "Total cost of ownership = $0 at MVP stage. Free Tier cloud + local compute.", "crossCluster": true }
+    },
+    {
+      "id": "con-stream",
+      "label": "Token Streaming",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "LLM tokens streamed via SSE from Ollama → FastAPI → EventSource → React UI. No polling.", "crossCluster": true }
+    },
+    {
+      "id": "con-e2e",
+      "label": "End-to-End Journey",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "User prompt → API → Queue → Agent Graph → LLM → DB → Realtime → UI. Full closed loop.", "crossCluster": true }
+    },
+    {
+      "id": "con-mvp",
+      "label": "Lean MVP (0→1)",
+      "type": "concept",
+      "cluster": null,
+      "orbit": 1.5,
+      "meta": { "description": "Ship the thinnest vertical slice that demonstrates full-stack AI-native capability in 3 hours.", "crossCluster": true }
+    }
+  ],
+
+  "edges": [
+
+    { "id": "spk-hub-fe-p-fe-1",  "source": "hub-fe",  "target": "p-fe-1",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-fe-p-fe-2",  "source": "hub-fe",  "target": "p-fe-2",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-fe-p-fe-3",  "source": "hub-fe",  "target": "p-fe-3",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-fe-p-fe-4",  "source": "hub-fe",  "target": "p-fe-4",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-be-p-be-1",  "source": "hub-be",  "target": "p-be-1",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-be-p-be-2",  "source": "hub-be",  "target": "p-be-2",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-be-p-be-3",  "source": "hub-be",  "target": "p-be-3",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-be-p-be-4",  "source": "hub-be",  "target": "p-be-4",  "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-llm-p-llm-1","source": "hub-llm", "target": "p-llm-1", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-llm-p-llm-2","source": "hub-llm", "target": "p-llm-2", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-llm-p-llm-3","source": "hub-llm", "target": "p-llm-3", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-llm-p-llm-4","source": "hub-llm", "target": "p-llm-4", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-orc-p-orc-1","source": "hub-orc", "target": "p-orc-1", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-orc-p-orc-2","source": "hub-orc", "target": "p-orc-2", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-orc-p-orc-3","source": "hub-orc", "target": "p-orc-3", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-orc-p-orc-4","source": "hub-orc", "target": "p-orc-4", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-inf-p-inf-1","source": "hub-inf", "target": "p-inf-1", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-inf-p-inf-2","source": "hub-inf", "target": "p-inf-2", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-inf-p-inf-3","source": "hub-inf", "target": "p-inf-3", "type": "spoke", "label": "pain point" },
+    { "id": "spk-hub-inf-p-inf-4","source": "hub-inf", "target": "p-inf-4", "type": "spoke", "label": "pain point" },
+
+    { "id": "spk-hub-fe-s-fe-1",   "source": "hub-fe",  "target": "s-fe-1",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-fe-s-fe-2",   "source": "hub-fe",  "target": "s-fe-2",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-fe-s-fe-3",   "source": "hub-fe",  "target": "s-fe-3",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-fe-s-fe-4",   "source": "hub-fe",  "target": "s-fe-4",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-fe-s-fe-5",   "source": "hub-fe",  "target": "s-fe-5",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-be-s-be-1",   "source": "hub-be",  "target": "s-be-1",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-be-s-be-2",   "source": "hub-be",  "target": "s-be-2",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-be-s-be-3",   "source": "hub-be",  "target": "s-be-3",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-be-s-be-4",   "source": "hub-be",  "target": "s-be-4",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-be-s-be-5",   "source": "hub-be",  "target": "s-be-5",   "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-llm-s-llm-1", "source": "hub-llm", "target": "s-llm-1",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-llm-s-llm-2", "source": "hub-llm", "target": "s-llm-2",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-llm-s-llm-3", "source": "hub-llm", "target": "s-llm-3",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-llm-s-llm-4", "source": "hub-llm", "target": "s-llm-4",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-llm-s-llm-5", "source": "hub-llm", "target": "s-llm-5",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-orc-s-orc-1", "source": "hub-orc", "target": "s-orc-1",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-orc-s-orc-2", "source": "hub-orc", "target": "s-orc-2",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-orc-s-orc-3", "source": "hub-orc", "target": "s-orc-3",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-orc-s-orc-4", "source": "hub-orc", "target": "s-orc-4",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-orc-s-orc-5", "source": "hub-orc", "target": "s-orc-5",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-inf-s-inf-1", "source": "hub-inf", "target": "s-inf-1",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-inf-s-inf-2", "source": "hub-inf", "target": "s-inf-2",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-inf-s-inf-3", "source": "hub-inf", "target": "s-inf-3",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-inf-s-inf-4", "source": "hub-inf", "target": "s-inf-4",  "type": "spoke", "label": "solution orbit" },
+    { "id": "spk-hub-inf-s-inf-5", "source": "hub-inf", "target": "s-inf-5",  "type": "spoke", "label": "solution orbit" },
+
+    { "id": "sol-fe-1-p-fe-1",   "source": "p-fe-1",  "target": "s-fe-1",   "type": "solves", "label": "solves" },
+    { "id": "sol-fe-2-p-fe-2",   "source": "p-fe-2",  "target": "s-fe-2",   "type": "solves", "label": "solves" },
+    { "id": "sol-fe-3-p-fe-3",   "source": "p-fe-3",  "target": "s-fe-3",   "type": "solves", "label": "solves" },
+    { "id": "sol-fe-4-p-fe-4",   "source": "p-fe-4",  "target": "s-fe-4",   "type": "solves", "label": "solves" },
+    { "id": "sol-be-1-p-be-1",   "source": "p-be-1",  "target": "s-be-1",   "type": "solves", "label": "solves" },
+    { "id": "sol-be-2-p-be-2",   "source": "p-be-2",  "target": "s-be-2",   "type": "solves", "label": "solves" },
+    { "id": "sol-be-3-p-be-3",   "source": "p-be-3",  "target": "s-be-3",   "type": "solves", "label": "solves" },
+    { "id": "sol-be-4-p-be-4",   "source": "p-be-4",  "target": "s-be-4",   "type": "solves", "label": "solves" },
+    { "id": "sol-llm-1-p-llm-1", "source": "p-llm-1", "target": "s-llm-1",  "type": "solves", "label": "solves" },
+    { "id": "sol-llm-2-p-llm-1", "source": "p-llm-1", "target": "s-llm-2",  "type": "solves", "label": "provides model" },
+    { "id": "sol-llm-3-p-llm-3", "source": "p-llm-3", "target": "s-llm-3",  "type": "solves", "label": "solves" },
+    { "id": "sol-llm-4-p-llm-4", "source": "p-llm-4", "target": "s-llm-4",  "type": "solves", "label": "solves" },
+    { "id": "sol-llm-5-p-llm-2", "source": "p-llm-2", "target": "s-llm-5",  "type": "solves", "label": "solves" },
+    { "id": "sol-orc-1-p-orc-1", "source": "p-orc-1", "target": "s-orc-1",  "type": "solves", "label": "solves" },
+    { "id": "sol-orc-2-p-orc-3", "source": "p-orc-3", "target": "s-orc-2",  "type": "solves", "label": "agent node" },
+    { "id": "sol-orc-3-p-orc-3", "source": "p-orc-3", "target": "s-orc-3",  "type": "solves", "label": "agent node" },
+    { "id": "sol-orc-4-p-orc-3", "source": "p-orc-3", "target": "s-orc-4",  "type": "solves", "label": "agent node" },
+    { "id": "sol-orc-5-p-orc-2", "source": "p-orc-2", "target": "s-orc-5",  "type": "solves", "label": "solves" },
+    { "id": "sol-inf-1-p-inf-1", "source": "p-inf-1", "target": "s-inf-1",  "type": "solves", "label": "solves" },
+    { "id": "sol-inf-2-p-inf-4", "source": "p-inf-4", "target": "s-inf-2",  "type": "solves", "label": "solves" },
+    { "id": "sol-inf-3-p-inf-3", "source": "p-inf-3", "target": "s-inf-3",  "type": "solves", "label": "solves" },
+    { "id": "sol-inf-4-p-inf-2", "source": "p-inf-2", "target": "s-inf-4",  "type": "solves", "label": "solves" },
+
+    { "id": "con-fe-stream",    "source": "hub-fe",  "target": "con-stream",    "type": "concept", "label": "requires" },
+    { "id": "con-llm-stream",   "source": "hub-llm", "target": "con-stream",    "type": "concept", "label": "emits" },
+    { "id": "con-llm-local",    "source": "hub-llm", "target": "con-local",     "type": "concept", "label": "constraint" },
+    { "id": "con-inf-zero",     "source": "hub-inf", "target": "con-zero-cost", "type": "concept", "label": "governs" },
+    { "id": "con-inf-foss",     "source": "hub-inf", "target": "con-foss",      "type": "concept", "label": "governs" },
+    { "id": "con-foss-zero",    "source": "con-foss","target": "con-zero-cost", "type": "concept", "label": "enables" },
+    { "id": "con-mvp-e2e",      "source": "con-mvp", "target": "con-e2e",       "type": "concept", "label": "requires" },
+
+    { "id": "brd-fe-be-rest",   "source": "hub-fe",  "target": "hub-be",  "type": "bridge", "label": "REST API",         "protocol": "HTTP/JSON",     "direction": "bidirectional" },
+    { "id": "brd-fe-be-sse",    "source": "hub-be",  "target": "hub-fe",  "type": "bridge", "label": "SSE stream",       "protocol": "text/event-stream", "direction": "unidirectional" },
+    { "id": "brd-be-llm",       "source": "hub-be",  "target": "hub-llm", "type": "bridge", "label": "Ollama HTTP",      "protocol": "HTTP/JSON",     "direction": "bidirectional" },
+    { "id": "brd-be-orc",       "source": "hub-be",  "target": "hub-orc", "type": "bridge", "label": "Task Queue",       "protocol": "BullMQ/Redis",  "direction": "bidirectional" },
+    { "id": "brd-orc-llm",      "source": "hub-orc", "target": "hub-llm", "type": "bridge", "label": "LLM tool calls",  "protocol": "LangGraph+HTTP","direction": "bidirectional" },
+    { "id": "brd-be-inf",       "source": "hub-be",  "target": "hub-inf", "type": "bridge", "label": "Dockerfile",      "protocol": "Docker",        "direction": "unidirectional" },
+    { "id": "brd-fe-inf",       "source": "hub-fe",  "target": "hub-inf", "type": "bridge", "label": "Vercel deploy",   "protocol": "Git push",      "direction": "unidirectional" },
+    { "id": "brd-orc-fe",       "source": "hub-orc", "target": "hub-fe",  "type": "bridge", "label": "Realtime push",   "protocol": "Supabase RT",   "direction": "unidirectional" }
+  ],
+
+  "stats": {
+    "totalNodes": 56,
+    "totalEdges": 83,
+    "nodesByType": { "hub": 5, "problem": 20, "solution": 25, "concept": 6 },
+    "edgesByType": { "spoke": 45, "solves": 23, "concept": 7, "bridge": 8 },
+    "clusters": 5,
+    "fossNodes": 49,
+    "freeTierNodes": 30,
+    "localOnlyNodes": 32
+  }
+}

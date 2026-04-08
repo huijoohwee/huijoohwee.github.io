@@ -728,11 +728,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "OpenAI-compatible /v1/chat/completions endpoint used by the Canvas Chat surface. Treated as a workspace-level setting and expected to be domain-agnostic (for example a local server such as LM Studio’s OpenAI compatibility mode, or a vLLM gateway).",
+          "@value": "OpenAI-compatible chat endpoint used by the Canvas Chat surface. Local LM Studio calls must route through the same-origin proxy path instead of direct localhost URLs; remote OpenAI-style endpoints remain HTTPS and domain-agnostic.",
           "@language": "en-us"
         },
         {
-          "@value": "由 Canvas 聊天界面使用的 OpenAI 兼容 /v1/chat/completions 端点，作为工作区级设置存在，预期为与领域无关的通用地址（例如 LM Studio 的 OpenAI 兼容模式，或 vLLM 网关）。",
+          "@value": "由 Canvas 聊天界面使用的 OpenAI 兼容聊天端点。本地 LM Studio 调用必须通过同源代理路径转发，而不是直接访问 localhost；远程 OpenAI 风格端点保持为 HTTPS 且与领域无关。",
           "@language": "zh-cn"
         }
       ]
@@ -745,11 +745,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Model name or identifier sent in Chat Completions requests (for example lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-8bit). For OpenAI-compatible local servers, the safe way to discover the expected value is to query /v1/models and reuse one of the returned ids. Validation is structural only and does not assume vendor-specific semantics.",
+          "@value": "Model identifier sent in chat requests. Implementations should discover valid ids via /v1/models, normalize legacy defaults, extract real upstream error text, and may auto-switch to a discovered working model when the configured id is invalid.",
           "@language": "en-us"
         },
         {
-          "@value": "在 Chat Completions 请求中发送的模型名称或标识（例如 deepseek-ai/DeepSeek-R1-0528-Qwen3-8B）。对 OpenAI 兼容的本地服务，推荐通过查询 /v1/models 并复用返回的 id 来确定期望值。仅做结构性校验，不假设供应商特定语义。",
+          "@value": "在聊天请求中发送的模型标识。实现应通过 /v1/models 发现可用 id，规范化旧默认值，提取真实上游错误文本，并可在配置的 id 无效时自动切换到已发现的可用模型。",
           "@language": "zh-cn"
         }
       ]
@@ -779,14 +779,49 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Optional system message prepended to Chat requests. Encouraged to remain neutral and metadata-focused so that Chat behavior stays aligned with AgenticRAG’s domain-agnostic principles.",
+          "@value": "Optional system message prepended to chat requests. Should remain neutral and metadata-focused so behavior stays domain-agnostic even when workspace-wide file context and selection-derived snippets are enabled.",
           "@language": "en-us"
         },
         {
-          "@value": "可选的系统级提示信息，在聊天请求前置发送。建议保持中立且以元数据为中心，以便聊天行为与 AgenticRAG 的领域无关原则保持一致。",
+          "@value": "在聊天请求前置发送的可选系统提示信息，应保持中立且以元数据为中心，即使启用了工作区范围文件上下文和选中节点片段，也要保证行为保持领域无关。",
           "@language": "zh-cn"
         }
       ]
+    },
+    "chatApiKey": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat API key", "@language": "en-us" },
+        { "@value": "聊天 API 密钥", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional API key forwarded by the same-origin chat proxy to the configured provider (for example OpenAI or LM Studio). Must never be logged or stored in plaintext exports.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "由同源聊天代理转发到配置的提供方（如 OpenAI 或 LM Studio）的可选 API 密钥。禁止在日志或明文导出中记录。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "chatContextScope": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat context scope", "@language": "en-us" },
+        { "@value": "聊天上下文范围", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Controls whether chat context uses selection-only graph snippets, workspace-wide file context, or a hybrid of both. Allowed values: \"selection\" | \"workspace\" (default) | \"hybrid\".",
+          "@language": "en-us"
+        },
+        {
+          "@value": "控制聊天上下文使用仅选中图结构片段、工作区范围文件上下文，还是两者混合。允许值：\"selection\" | \"workspace\"（默认）| \"hybrid\"。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["selection", "workspace", "hybrid"]
     },
     "youtubeTranscriptOutputDir": {
       "@type": "xsd:string",

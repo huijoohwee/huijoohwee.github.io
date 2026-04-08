@@ -161,6 +161,16 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Monaco editor initialization must apply the latest hydrated file contents at create-time to avoid an empty editor during async imports or `kgWebpageView` toggles.
 - Lossless round-trip: when Markdown is rendered to HTML/DOM for preview, embed the exact Markdown source in a non-executing payload so HTML imports can restore the Markdown exactly (MD → HTML → MD).
 
+### Markdown In-Place Editor Palette (Viewer Read mode)
+
+- Viewer Read mode may enable click-and-edit contentEditable blocks for headings/paragraphs/lists/quotes/callouts/code/HTML via a shared MarkdownBlockContainer wrapper. The underlying SSOT remains Markdown text; there is no WYSIWYG-only model.
+- Selecting text inside an editable block surfaces a selection-aware bubble toolbar (palette) positioned near the selection. The palette reuses shared floating-menu SSOT classes and theme tokens and exposes inline formatting (bold/italic/underline/strike/inline code/link), heading/list/quote transforms, color/highlight palette, checklist/divider insertion, and structural actions (duplicate/delete/comment).
+- Slash commands are supported as a lightweight command palette: typing `/` near the caret at the start of a line (or after whitespace) opens a small menu aligned with the caret that triggers the same heading/list/quote/code/checklist transforms as the palette. Detection is line-local and must not rescan the entire document on every keystroke; the menu hides when the trailing slash context disappears or focus leaves.
+- Cmd/Ctrl+K opens an inline link edit popover near the current selection. The popover uses the same SSOT floating-menu styles, exposes a single URL field, and applies `[label](href)` Markdown wraps over the current selection on Apply; Cancel or empty href leaves the document unchanged. No separate link state store or background URL validation loops are allowed.
+- All palette, slash, and link actions are view-only, bounded Markdown text transforms driven by the shared formatting pipeline; they must not mutate GraphData, layout, or zoom and must respect the FORBID-copy policy enforced at the viewer root and code-block copy buttons. Implementations must gate selection-change listeners with `requestAnimationFrame` and skip no-op commits to avoid churn, render jitter, or infinite selection listeners.
+- WYSIWYG-ish in-place editing must preserve read-mode typography and spacing for inline code and lists, including list-to-list gaps and mixed paragraph→code→list sequences; entering contentEditable must not change layout, margins, or padding.
+- View↔Edit WYSIWYG-ish parity helpers should be centralized in a shared layer (e.g., quote/callout contiguous line-range mapping, no-op replace-line guards, bounded typography/spacing capture) rather than duplicated per surface; schema clients must avoid scattering regex/range/guard logic that can drift, conflict, or create commit/blur loops.
+
 ### Webpage Per-Document Fidelity Controls
 
 - Per-doc frontmatter may override conversion/rendering fidelity when needed, but the default is **Auto**: Script/Imgs/Fid are inferred from shared rich-media + iframe heuristics and do not require frontmatter. Optional keys: `kgWebpageScriptPolicy: allow|strip`, `kgWebpageIncludeImages: true|false`, `kgWebpageFidelityLevel: 1|2|3|4`.
@@ -170,6 +180,18 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 
 ## COMPLY
 `/GitHub/{huijoohwee.github.io/guidelines/{codebase-neutrality-guidelines.md,codebase-maintainability-guidelines.md},knowgrph/todo.md#L5-21}`
+
+### Title and title-like inline editing
+- Titles and title-like labels (Markdown headings, workspace property names) render truncated with ellipsis at rest, reuse the same typography in in-place html editors or rename inputs, reveal full text on focus via horizontal scroll, and forbid alternate WYSIWYG title stacks or layout/spacing drift on edit-open.
+
+### Runtime sync, chunking, and deploy (Knowgrph)
+- Runtime sync and GraphTableDb writes must be gated by revision, collapsedGroupIdsKey, and viewKey, driven by the shared coalesced scheduler, and must avoid ad-hoc timers, uncontrolled polling, or background churn under rapid workspace switching.
+- Build chunking enforces a soft <500 kB minified chunk target using package-level vendor manualChunks for react, d3, ui, three, maplibre, monaco, mermaid, and elk, and forbids deep source-level splits that can introduce init-order cycles or forwardRef/monaco runtime failures.
+- Deployments sync `canvas/dist` into `huijoohwee/content/knowgrph` via scripts/sync-pages-knowgrph.mjs, exclude cesium, vendor/mermaid, demo, examples, and large test fixtures, mirror index.html into `/knowgrph`, and rely on `_redirects` + `_headers` for Cloudflare Pages route resolution and caching semantics.
+- Mermaid and ELK layouts must be loaded via package dynamic imports rather than custom vendor bundles, keeping bundling predictable and preventing legacy `vendor/mermaid` payloads from re-entering Pages artifacts.
+
+### Chunk-size & mobile responsiveness (Knowgrph)
+- Heavy tool surfaces (Toolbar/menus/MainPanel/MarkdownWorkspace/export bridge/Graph Data Table/Mermaid preview) must remain behavior-identical while loading as lazy bundles; Canvas entry and Toolbar stay lean, and background renderer warm-mount/prefetch are gated by device memory/CPU/save-data so low-end/mobile devices avoid hidden heavy work.
 
 ## ALIGN (Semantic Definition)
 - **GRAPHS Elements:** nodes, Node Quick Editors, edges, graph layers (subgraphs, groups, clusters, communities), labels, text

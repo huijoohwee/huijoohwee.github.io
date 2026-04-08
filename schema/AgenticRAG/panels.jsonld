@@ -48,6 +48,26 @@
         "@language": "zh-cn"
       }
     ],
+    "markdownInlineBubbleToolbar": [
+      {
+        "@value": "Markdown Viewer Read mode may enable in-place block editing via a shared MarkdownBlockContainer wrapper: clicking a block enters a contentEditable surface with no extra borders/shadows, and selection within the block surfaces a floating bubble toolbar. The bubble palette reuses SSOT floating menu classes and theme tokens and exposes inline formatting (bold/italic/underline/strike/inline code/link), heading/list/quote transforms, color/highlight palette, checklist/divider insertion, and structural actions (duplicate/delete/comment). All actions operate as bounded Markdown text transforms via the shared formatting pipeline and must not introduce a separate WYSIWYG model, background recomputation loops, or graph/layout mutations. FORBID-copy policy is enforced at the viewer root and in code-block copy buttons so bubble actions cannot bypass copy restrictions.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Viewer Read 模式可以通过共享的 MarkdownBlockContainer 包装启用原位块编辑：点击块进入无额外边框/阴影的 contentEditable 表面，在块内选择文本时弹出浮动气泡工具条。气泡调色板复用 SSOT 浮动菜单类与主题 token，提供内联格式（粗体/斜体/下划线/删除线/行内代码/链接）、标题/列表/引用变换、颜色/高亮调色板、清单项/分隔线插入以及结构动作（复制块/删除块/注释包裹）。所有动作都通过共享格式化流水线执行为有界的 Markdown 文本变换，不得引入独立的 WYSIWYG 文档模型、后台重算循环或图/布局变更。FORBID‑copy 策略必须在 Viewer 根节点与代码块 Copy 按钮上生效，禁止气泡操作绕过复制限制。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownSlashCommandsAndLinkPopover": [
+      {
+        "@value": "Markdown in-place editor supports a lightweight slash-command palette and inline link edit popover using the same floating-menu SSOT. When the user types \"/\" near the caret at the start of a line (or after whitespace), a slash menu appears near the caret and offers heading/list/quote/code/checklist/section actions; detection must be line-local and must not rescan the entire document on each keystroke, and the menu hides when the trailing slash context disappears. Cmd/Ctrl+K opens an inline link popover near the current selection with a single URL field and Apply/Cancel buttons styled via the shared bubble/popover classes; applying a link wraps the current selection as [label](href) in Markdown, while cancel/empty href leaves the document unchanged. Both features are selection-scoped and view-only: they operate solely on Markdown text and must not modify GraphData or layout, must respect the FORBID-copy policy, and must avoid infinite selection listeners or re-render churn by gating selection updates with requestAnimationFrame and skipping no-op commits.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown 原位编辑器支持轻量级斜杠命令调色板与内联链接编辑弹层，并复用同一套浮动菜单 SSOT。当用户在行首或空白之后输入“/”时，会在光标附近弹出斜杠菜单，提供标题/列表/引用/代码块/清单/分隔线等动作；检测必须局限于当前行，禁止在每次按键时重新扫描整篇文档，且当末尾斜杠上下文消失时菜单需自动隐藏。Cmd/Ctrl+K 会在当前选择附近打开内联链接编辑弹层，包含一个 URL 输入框与 Apply/Cancel 按钮，并使用共享的气泡/弹层样式；应用链接时将当前选择包装为 Markdown 的 [label](href)，而取消或空 URL 必须保持文档不变。两者都严格基于选择并且仅作用于文本层：只能修改 Markdown 文本，不得改变 GraphData 或布局；必须遵守 FORBID‑copy 策略，并通过 requestAnimationFrame 限制选择更新、跳过无变化提交，防止选择监听死循环或渲染抖动。",
+        "@language": "zh-cn"
+      }
+    ],
     "markdownRightClickShowOnIn": [
       {
         "@value": "Right Click opens the app-level \"Show on/in …\" toolbar at the exact pointer position; avoid Monaco default context menus so behavior is consistent across Editor/Viewer/Presentation.",
@@ -55,6 +75,16 @@
       },
       {
         "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条；避免使用 Monaco 默认菜单以保证 Editor/Viewer/Presentation 行为一致。",
+        "@language": "zh-cn"
+      }
+    ],
+    "titleAndEllipsisInlineEdit": [
+      {
+        "@value": "Title and title-like labels that truncate with ellipsis in panel headers (for example, Markdown headings and workspace property names) must reuse the same typography in in-place html editors or rename inputs, reveal full text on focus via horizontal scroll, and forbid per-surface WYSIWYG title variants or layout/spacing drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在面板头部使用省略号截断的标题与类标题标签（如 Markdown 标题、工作区属性名）在原位 html 编辑或重命名输入时必须复用相同排版，并在获得焦点时通过水平滚动展示完整文本；禁止为单个界面引入独立的 WYSIWYG 标题变体或排版/间距漂移。",
         "@language": "zh-cn"
       }
     ],
@@ -75,6 +105,16 @@
       },
       {
         "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区包含布局开关（Explorer 展开/收起与 Canvas pane 显示/隐藏）；Canvas pane 显示状态通过 `kg:ui:workspace:canvasPaneOpen` 持久化，Canvas pane 宽度通过 `kg:ui:workspace:previewWidthPx` 持久化。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarChunkAndMobileResponsiveness": [
+      {
+        "@value": "Toolbar, MainPanel, MarkdownWorkspace, and workspace export/actions panels must treat heavy surfaces as lazy-loaded bundles wired through the Floating Panel and Editor Workspace contracts; behavior must remain identical, but bundles load only when opened, and reintroducing eager monolithic Toolbar/Canvas/Workspace tool stacks is forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar、MainPanel、MarkdownWorkspace 与 Workspace 导出/动作面板必须将重型表面视为通过 Floating Panel 与 Editor Workspace 契约连接的惰性加载 bundle：保持行为一致，仅在面板打开时加载 bundle；禁止重新引入早期的 Toolbar/Canvas/Workspace 单体工具堆栈。",
         "@language": "zh-cn"
       }
     ],
@@ -115,6 +155,16 @@
       },
       {
         "@value": "Graph Data Table（Graph Table）是用于查看当前 GraphData 的工作区工具表面。必须实现为滚动稳定的 Canvas fast-grid：单一滚动宿主 + 与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。表头必须在水平滚动时与表体保持对齐：使用 DOM 表头覆层，并以同一滚动宿主的 -scrollLeft 进行平移；同时对 canvas 做裁剪，禁止绘制进入表头带。表头支持靠右边缘拖拽调整列宽、指针拖拽进行列重排；点击表头应选中整列。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与宿主共享的 Canvas 画布表面与 TOC 同步选择时需避免滚动跳动循环。",
+        "@language": "zh-cn"
+      }
+    ],
+    "multiDimTableModeSplit": [
+      {
+        "@value": "Toolbar Document Mode “Multi-dimensional Table Mode” is scoped to Canvas layout and may only toggle graph-level multiDimTableModeEnabled; Workspace Editor “Workspace: Multi-dimensional Table” is scoped to workspaceEditorMode and Graph Data Table panels only. Cross-wiring between these mode families or duplicating SSOT across panel surfaces is forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar Document Mode「Multi-dimensional Table Mode」仅作用于 Canvas 布局，只能切换图级 multiDimTableModeEnabled；Workspace Editor「Workspace: Multi-dimensional Table」仅作用于 workspaceEditorMode 与 Graph Data Table 面板。禁止在这两类模式之间交叉连线，或在不同面板表面复制 SSOT。",
         "@language": "zh-cn"
       }
     ],

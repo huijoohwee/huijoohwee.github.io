@@ -218,6 +218,16 @@
         "@language": "zh-cn"
       }
     ],
+    "multiDimTableModeSplit": [
+      {
+        "@value": "Document Mode “Multi-dimensional Table Mode” is a Canvas layout mode that only toggles multiDimTableModeEnabled for graph layout and must not open or configure Workspace Graph Data Table views; Workspace “Workspace: Multi-dimensional Table” controls only workspaceEditorMode and Graph Data Table UI and must not toggle canvas multiDimTableModeEnabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Document Mode「Multi-dimensional Table Mode」是 Canvas 布局模式，只能切换 multiDimTableModeEnabled 以控制图布局，禁止打开或配置 Workspace Graph Data Table 视图；Workspace「Workspace: Multi-dimensional Table」只负责 workspaceEditorMode 与表格 UI，禁止更改 Canvas multiDimTableModeEnabled。",
+        "@language": "zh-cn"
+      }
+    ],
     "panZoomParityGeospatial": [
       {
         "@value": "Geospatial mode must honor the same viewportControlsPreset semantics as 2D canvas surfaces. In map preset: slippy-map interactions are enabled (drag-pan, scroll/pinch zoom) and shift-drag may be reserved for box-zoom/selection without triggering pan. In design preset: wheel defaults to panning; zoom on wheel requires Ctrl/Cmd (trackpad pinch counts as zoom), and pointer-drag panning is restricted to middle/right drag or Space+drag. Interactions must be gated when the Geospatial surface is not active.",
@@ -255,6 +265,26 @@
       },
       {
         "@value": "富媒体节点（image/svg/video/iframe）必须通过共享且领域无关的 URL/元数据启发式进行检测，并在每个画布中通过有界的 DOM overlay 池进行渲染（适用于 2D D3/Flow/Design 以及 3D）。Overlay 必须通过共享的 RAF 合并调度器跟随节点运动，并在每个画布上复用单一 overlay 表面；Script/Imgs/Fid 的默认行为必须保持为 auto，由共享的富媒体 + iframe 启发式驱动，在 Markdown Viewer、Canvas、Design 与 Geospatial 模式间保持一致；每文档 frontmatter 覆盖仅作为可选逃生阀，不能成为正常富媒体渲染的前提条件。",
+        "@language": "zh-cn"
+      }
+    ],
+    "lowEndDeviceFriendlyLoading": [
+      {
+        "@value": "Canvas should treat low-end devices as first-class: gate background renderer warm-mount and prefetch by navigator.deviceMemory, navigator.hardwareConcurrency, and connection.saveData/effectiveType; avoid prefetching non-active heavy 2D/3D bundles when memory/CPU are low or Save-Data/2g is detected, so entry interactions remain responsive.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas 必须将低端设备视为一等公民：根据 navigator.deviceMemory、navigator.hardwareConcurrency 与 connection.saveData/effectiveType 对后台渲染器的 warm-mount 与预取做 gate；在内存/CPU 紧张或检测到 Save-Data/2g 时避免预取非激活的重型 2D/3D bundle，从而保持入口交互响应。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolSurfaceLazySplitPoints": [
+      {
+        "@value": "Heavy tool surfaces (Toolbar menus/launch, MainPanel, MarkdownWorkspace, workspace export bridge, Graph Data Table) should be modeled as lazy boundaries: keep behavior identical while loading them on demand as separate bundles, and forbid reintroducing eager monolithic Toolbar/Canvas/Workspace bundles that cause churn or freeze on low-end browsers.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "重型工具表面（工具栏菜单/Launch、MainPanel、MarkdownWorkspace、Workspace 导出桥、Graph Data Table）应建模为“惰性边界”：在保持行为一致的前提下按需加载为独立 bundle，禁止重新引入将 Toolbar/Canvas/Workspace 打包为单体的大 bundle，从而在低端浏览器上造成卡顿或冻结。",
         "@language": "zh-cn"
       }
     ],

@@ -63,6 +63,54 @@
     {
       "@value": "Markdown Viewer 布局与导出：在 Viewer 与 Split 模式下，article 内容宽度应稳定为容器 section 宽度的 80%；切换 Explorer 展开/收起与工作区 Canvas pane 显示/隐藏不得改变该规则。Save As 支持导出 Markdown/JSON/JSON-LD 与 PDF；PDF 导出使用页面内 print 流水线（无弹窗）并清理临时打印 DOM。",
       "@language": "zh-cn"
+    },
+    {
+      "@value": "In-place Markdown editing palette: Viewer Read mode may enable click-and-edit contentEditable blocks with a selection-aware bubble toolbar, slash-command menu (\"/\" near caret), and inline link edit popover (Cmd/Ctrl+K). All operations are implemented as bounded Markdown text transforms via the shared formatting pipeline (no alternate WYSIWYG document model), reuse a single floating-menu SSOT (bubble/palette/popover classes and theme tokens), and respect a FORBID-copy policy enforced at the viewer root and code-block copy buttons. Actions are selection-scoped and view-only: they must not mutate GraphData, layout, or zoom, and must avoid churny recomputation or infinite selection listeners by gating selection updates with requestAnimationFrame and skipping no-op commits.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "原位 Markdown 编辑调色板：Viewer Read 模式可启用点击即改的 contentEditable 区块，并配套基于选择的气泡工具条、斜杠命令菜单（光标附近输入“/”）以及内联链接编辑弹层（Cmd/Ctrl+K）。所有操作都通过共享格式化流水线作为有界的 Markdown 文本变换实现（不存在独立的 WYSIWYG 文档模型），复用唯一的浮动菜单 SSOT（气泡/调色板/弹层类名与主题 token），并遵守在 Viewer 根节点与代码块 Copy 按钮上执行的 FORBID‑copy 策略。这些动作严格基于当前选择且仅为视图层：不得修改 GraphData、布局或缩放；必须通过 requestAnimationFrame 限制选择更新，并跳过无变化提交，防止抖动式重算或选择监听死循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Inline-code in-place editing must reuse the exact read surface (css-var colors, font, line-height, padding, ring/border) so View→Edit never changes inline-code layout; edit contentEditable surfaces may only apply Markdown text transforms and must not introduce new typography or spacing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "行内代码原位编辑必须复用与 Read 模式完全相同的视觉表面（基于 css-var 的颜色、字体、行高、内边距与描边/轮廓），确保 View→Edit 不改变行内代码布局；contentEditable 编辑面仅允许执行 Markdown 文本变换，禁止新增或修改排版与间距。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "View↔Edit parity for inline code and lists is enforced via shared SSOT paths: a centralized inline-code parity module defines view/edit classes consumed by both MarkdownInlineRenderer and MarkdownBlockContainer html normalization, and a list layout SSOT module defines shared marker/indent/spacing and row gutter alignment reused by MarkdownListBlock so contentEditable entry never introduces per-surface typography or spacing drift beyond intentional, code-backed parity tightening.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "行内代码与列表的 View↔Edit 一致性通过共享 SSOT 路径强制实现：集中式行内代码 parity 模块定义 View/Edit 共用类，并由 MarkdownInlineRenderer 与 MarkdownBlockContainer HTML 规范化共同消费；列表布局 SSOT 模块统一定义标记/缩进/间距与行级 gutter 对齐，由 MarkdownListBlock 复用，确保进入 contentEditable 不会在各界面引入额外的排版或间距漂移，除非是有意且经代码实现的保真度微调。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "View↔Edit WYSIWYG-ish parity helpers must be centralized: clients should use a single shared helper layer for contiguous quote-/callout-line range mapping, no-op replace-line detection, and bounded typography/spacing capture, and must not duplicate ad-hoc regex/range/guard logic across surfaces or introduce churny commit/blur loops.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "View↔Edit WYSIWYG 式一致性辅助逻辑必须集中管理：客户端应通过单一共享 helper 层统一处理连续引用/Callout 行区间映射、无变化行替换检测以及有界的排版/间距捕获，禁止在不同界面重复实现临时性的正则/行号/防护逻辑或引入抖动式提交/失焦循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Title and title-like text (Markdown headings and workspace property names) must render truncated with ellipsis at rest, reuse the same typography in in-place html editors, reveal full text on focus via horizontal scroll, and forbid alternate WYSIWYG title stacks or layout/spacing drift when entering edit.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "标题与类标题文本（Markdown 标题与工作区属性名称）在静止状态必须使用省略号截断，并在原位 html 编辑器中复用相同排版；获得焦点时通过水平滚动展示完整文本；进入编辑时禁止引入平行的 WYSIWYG 标题栈或排版/间距漂移。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Floating selection toolbar SSOT: MarkdownBlockContainer and markdownFloatingSelectionToolbar own selection capture, floating summary toggles, and palette button handlers; all floating palettes must reuse these helpers and must not introduce duplicate floating toolbars, per-surface interaction handlers, or churny recompute loops.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "浮动选择工具条 SSOT：MarkdownBlockContainer 与 markdownFloatingSelectionToolbar 统一负责选择捕获、浮动 summary 切换与调色板按钮处理；所有浮动调色板必须复用这些 helper，不得引入重复工具条、界面特有交互处理或抖动式重算循环。",
+      "@language": "zh-cn"
     }
   ],
   "markdownUiGuidelines": {

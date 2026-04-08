@@ -1541,6 +1541,27 @@
       "source": "node:knowgrph:doc:knowgrph-parser-document",
       "target": "node:schema:agenticrag:youtube",
       "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:markdown-ssot-ui->markdown-title-ellipsis",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-markdown-ssot-ui-contract-document",
+      "target": "node:schema:agenticrag:markdown",
+      "label": "mapsTitleEllipsis"
+    },
+    {
+      "@id": "edge:doc:markdown-editor-mode->markdown-title-ellipsis",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-markdown-editor-mode-contract-document",
+      "target": "node:schema:agenticrag:markdown",
+      "label": "mapsTitleEllipsis"
+    },
+    {
+      "@id": "edge:doc:ui-ux-design->panel-title-ellipsis",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-ui-ux-design-document",
+      "target": "node:schema:agenticrag:panels",
+      "label": "mapsTitleEllipsis"
     }
   ]
 }

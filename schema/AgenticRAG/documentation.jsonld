@@ -105,5 +105,17 @@
         "@language": "zh-cn"
       }
     ]
+  },
+  "repo_hygiene": {
+    "principles": [
+      {
+        "@value": "Before optimization or refactor work, clean unrelated pending changes, keep only scoped code/test diffs, and treat generated deploy artifacts (such as content/knowgrph) as outputs mirrored from build pipelines rather than hand-edited configuration.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在进行优化或重构前，应清理与变更无关的暂存修改，只保留范围明确的代码/测试 diff，并将生成的部署工件（如 content/knowgrph）视为来自构建流水线的输出，而非手工编辑的配置。",
+        "@language": "zh-cn"
+      }
+    ]
   }
 }

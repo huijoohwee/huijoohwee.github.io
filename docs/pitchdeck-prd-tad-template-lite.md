@@ -10,7 +10,7 @@ doc:
   license: "{{license}}"
 
 # ── VARIABLES (invoke `@` toolbar to CRUD) ───────────────────────────────────
-# All {{key}} references in body prose resolve from here.
+# All {{key}} references in body prose and flow: block resolve from here.
 # Type `@` anywhere to open the floating variable toolbar.
 project:     "[Project Name]"
 tagline-a:   "[Tagline A]"
@@ -28,7 +28,7 @@ persona-primary:   "[Primary Persona]"
 persona-secondary: "[Secondary Persona]"
 persona-tertiary:  "[Tertiary Persona]"
 
-# pain → solution (shared sample)
+# pain → solution
 pain-a:    "[Pain point A]"
 pain-b:    "[Pain point B]"
 pain-c:    "[Pain point C]"
@@ -90,11 +90,11 @@ nodes:
   - @node:milestone:b:       { label: "{{milestone-b}}", status: placeholder }
 
   # PRD
-  - @node:prd:goal:          { label: "[Goal]",                status: placeholder }
+  - @node:prd:goal:          { label: "[Goal]",                    status: placeholder }
   - @node:prd:story-u1:      { label: "U1 {{persona-primary}}",   status: placeholder }
   - @node:prd:story-u2:      { label: "U2 {{persona-secondary}}", status: placeholder }
   - @node:prd:story-u3:      { label: "U3 {{persona-tertiary}}",  status: placeholder }
-  - @node:prd:criteria:      { label: "Acceptance Criteria",   status: placeholder }
+  - @node:prd:criteria:      { label: "Acceptance Criteria",       status: placeholder }
 
   # TAD — tools
   - @node:tad:ai-proxy:      { label: "{{ai-proxy}}",      status: placeholder }
@@ -115,177 +115,450 @@ nodes:
   - @node:tad:layer-alert:    { label: "Alert",    status: placeholder }
 
   # critical path
-  - @node:path:p0:           { label: "P0 Risk Task",        status: placeholder }
-  - @node:path:demo:         { label: "DEMO READY H[N:MM]",  status: placeholder }
+  - @node:path:p0:           { label: "P0 Risk Task",       status: placeholder }
+  - @node:path:demo:         { label: "DEMO READY H[N:MM]", status: placeholder }
 
 # ── EDGES ─────────────────────────────────────────────────────────────────────
-# Sigil: @edge:source→target · rel label
-# Hex node in Mermaid: e_id{{"@edge:id · rel"}}
 edges:
-  - id: @edge:pain→feature     · motivates
-  - id: @edge:feature→prd      · specced-in
-  - id: @edge:prd→tad          · implemented-by
-  - id: @edge:score→alert      · triggers       condition: "score > {{threshold}}"
-  - id: @edge:stack→cost       · costed-in
-  - id: @edge:p0→demo          · gates
+  - id: @edge:pain→feature      · motivates
+  - id: @edge:feature→prd       · specced-in
+  - id: @edge:prd→tad           · implemented-by
+  - id: @edge:score→alert       · triggers       condition: "score > {{threshold}}"
+  - id: @edge:stack→cost        · costed-in
+  - id: @edge:p0→demo           · gates
   - id: @edge:ai-proxy→classify · routes
 
 # ── CLUSTERS ─────────────────────────────────────────────────────────────────
 clusters:
-  - @cluster:pitch: { label: "PART 1 · Pitch Deck", members: [persona:*, pain:*, feature:*, market:*, milestone:*] }
-  - @cluster:prd:   { label: "PART 2 · PRD",        members: [prd:*] }
-  - @cluster:tad:   { label: "PART 3 · TAD",        members: [tad:*] }
+  - @cluster:pitch: { label: "PART 1 · Pitch Deck",    members: [persona:*, pain:*, feature:*, market:*, milestone:*] }
+  - @cluster:prd:   { label: "PART 2 · PRD",           members: [prd:*] }
+  - @cluster:tad:   { label: "PART 3 · TAD",           members: [tad:*] }
   - @cluster:path:  { label: "PART 4 · Critical Path", members: [path:*] }
-  - @cluster:cost:  { label: "PART 5 · Cost",        members: [meta:tco, tad:stack] }
+  - @cluster:cost:  { label: "PART 5 · Cost",          members: [meta:tco, tad:stack] }
 
 # ── AI CHAT UI ───────────────────────────────────────────────────────────────
-# The graph canvas exposes an AI Chat UI. Each node is a chat context.
-# Clicking a node opens a chat thread scoped to that node's cluster.
-# Suggested prompts auto-generated from node label + edge relationships.
 ai-chat:
-  model:    "{{ai-model}}"
-  proxy:    "{{ai-proxy}}"
-  scope:    node          # chat context = clicked node + 1-hop neighbours
+  model:  "{{ai-model}}"
+  proxy:  "{{ai-proxy}}"
+  scope:  node          # clicked node + 1-hop neighbours
   prompts:
     - "What pain does {{pain-a}} solve?"
     - "How does {{feature-1}} address {{pain-a}}?"
     - "What is the acceptance criterion for {{score-name}}?"
     - "Explain the edge between {{ai-proxy}} and the classify layer."
     - "What would change if {{threshold}} were lowered?"
+    - "What does this flow node output when {{pain-a}} is the input?"
 
-# ── MERMAID KNOWLEDGE GRAPH ──────────────────────────────────────────────────
+# ── FLOW EDITOR (interactive + computable) ───────────────────────────────────
+# Canvas renders two modes from the same graph data:
+#   mermaid:  static knowledge graph (read-only)
+#   flow:     interactive workflow editor (computable; handles; live data)
+#
+# Node types:
+#   input   — data source; source handles only; no upstream
+#   default — transform / compute step; target + source handles
+#   output  — terminal / sink; target handles only
+#   custom  — AI Chat UI; score display; alert trigger
+#
+# Handle names use snake_case matching PostgreSQL column names.
+# compute: functions are pure (inputs) => outputs; no side effects.
+# All {{key}} references resolve from frontmatter before canvas renders.
+flow:
+  direction: LR
+  edgeType:  smoothstep
+  snapToGrid: true
+  gridSize:   20
+  computed:   true      # upstream changes propagate to downstream nodes
+
+  nodes:
+
+    # ── INPUT NODES ── (source handles only; no upstream) ──────────────────
+
+    - id: fn-persona
+      type: input
+      label: "{{persona-primary}}"
+      position: { x: 0, y: 0 }
+      handles:
+        source: [pain_signal]
+      data:
+        pain_a:  "{{pain-a}}"
+        pain_b:  "{{pain-b}}"
+        pain_c:  "{{pain-c}}"
+        goal:    "[primary goal]"
+      annotation: "`bg#E1F5EE:input`"
+
+    - id: fn-sources
+      type: input
+      label: "[N] data sources"
+      position: { x: 0, y: 160 }
+      handles:
+        source: [raw_items]
+      data:
+        source_a: "[Source A]"
+        source_b: "[Source B]"
+        source_c: "[Source C]"
+        rate_limit: "[N] req/min"
+      annotation: "`bg#E1F5EE:input`"
+
+    - id: fn-config
+      type: input
+      label: "frontmatter config"
+      position: { x: 0, y: 320 }
+      handles:
+        source: [vars]
+      data:
+        threshold:     "{{threshold}}"
+        score_formula: "{{score-formula}}"
+        ai_proxy:      "{{ai-proxy}}"
+        ai_model:      "{{ai-model}}"
+      annotation: "`bg#E1F5EE:input`"
+
+    # ── DEFAULT NODES ── (compute steps; target + source handles) ──────────
+
+    - id: fn-ingest
+      type: default
+      label: "ingest + dedup"
+      position: { x: 260, y: 160 }
+      handles:
+        target: [raw_items, vars]
+        source: [clean_items]
+      compute: |
+        (inputs) => ({
+          clean_items: inputs.raw_items
+            .filter(item => !inputs.vars.seen_ids?.includes(item.id))
+            .map(item => ({ ...item, ingested_at: new Date().toISOString() }))
+        })
+      data: {}
+
+    - id: fn-classify
+      type: default
+      label: "classify via {{ai-proxy}}"
+      position: { x: 520, y: 80 }
+      handles:
+        target: [clean_items, vars]
+        source: [typed_nodes]
+      compute: |
+        (inputs) => ({
+          typed_nodes: inputs.clean_items.map(item => ({
+            ...item,
+            type:     item.type ?? '[type_a]',
+            tags:     item.tags ?? [],
+            metadata: item.metadata ?? {}
+          }))
+        })
+      data:
+        proxy: "{{ai-proxy}}"
+        model: "{{ai-model}}"
+        batch: "[N]"
+
+    - id: fn-score
+      type: default
+      label: "score: {{score-name}}"
+      position: { x: 520, y: 240 }
+      handles:
+        target: [typed_nodes, vars]
+        source: [scored_nodes, alert_signal]
+      compute: |
+        (inputs) => {
+          const scored = inputs.typed_nodes.map(n => ({
+            ...n,
+            score: eval(inputs.vars.score_formula.replace('n', JSON.stringify(n)))
+          }));
+          return {
+            scored_nodes:  scored,
+            alert_signal:  scored.filter(n => n.score > Number(inputs.vars.threshold))
+          };
+        }
+      data:
+        formula:   "{{score-formula}}"
+        threshold: "{{threshold}}"
+
+    - id: fn-store
+      type: default
+      label: "{{db}} upsert"
+      position: { x: 780, y: 160 }
+      handles:
+        target: [scored_nodes]
+        source: [persisted_payload]
+      compute: |
+        (inputs) => ({
+          persisted_payload: inputs.scored_nodes.map(n => ({
+            id:        n.id,
+            type:      n.type,
+            label:     n.label,
+            metadata:  n.metadata,
+            score:     n.score,
+            persisted: true
+          }))
+        })
+      data:
+        db: "{{db}}"
+
+    - id: fn-api
+      type: default
+      label: "API → JSON payload"
+      position: { x: 1040, y: 160 }
+      handles:
+        target: [persisted_payload]
+        source: [json_payload]
+      compute: |
+        (inputs) => ({
+          json_payload: {
+            nodes: inputs.persisted_payload,
+            edges: [],
+            generated_at: new Date().toISOString()
+          }
+        })
+      data:
+        endpoint: "/api/[primary_endpoint]"
+        poll_ms:  "[N]"
+
+    # ── OUTPUT NODES ── (terminal sinks; target handles only) ──────────────
+
+    - id: fn-canvas
+      type: output
+      label: "canvas + AI Chat UI"
+      position: { x: 1300, y: 80 }
+      handles:
+        target: [json_payload]
+      data:
+        render:     "[visualization type]"
+        chat_scope: node
+        chat_proxy: "{{ai-proxy}}"
+        chat_model: "{{ai-model}}"
+      annotation: "`bg#EAF3DE:output`"
+
+    - id: fn-alert
+      type: output
+      label: "{{alert-channel}} alert"
+      position: { x: 1300, y: 280 }
+      handles:
+        target: [alert_signal]
+      data:
+        channel:   "{{alert-channel}}"
+        message:   "{{score-name}} > {{threshold}} detected"
+        debounce:  "[N]s per entity"
+      annotation: "`bg#FCEBEB:output`"
+
+    # ── CUSTOM NODES ── (score readout; feature showcase) ──────────────────
+
+    - id: fn-score-display
+      type: custom
+      label: "{{score-name}} readout"
+      position: { x: 780, y: 340 }
+      handles:
+        target: [scored_nodes]
+        source: []
+      data:
+        display:   gauge
+        min:       0
+        max:       1
+        threshold: "{{threshold}}"
+      annotation: "`#185FA5|bg#E6F1FB:custom`"
+
+    - id: fn-feature-gate
+      type: custom
+      label: "{{feature-1}} gate"
+      position: { x: 260, y: 0 }
+      handles:
+        target: [pain_signal]
+        source: [raw_items]
+      compute: |
+        (inputs) => ({
+          raw_items: inputs.pain_signal ? [{ id: 'seed', label: inputs.pain_signal.pain_a }] : []
+        })
+      data:
+        feature: "{{feature-1}}"
+        enabled: true
+      annotation: "`#185FA5|bg#E6F1FB:custom`"
+
+  edges:
+    # input → default
+    - id: fe-persona-gate
+      source: fn-persona
+      sourceHandle: pain_signal
+      target: fn-feature-gate
+      targetHandle: pain_signal
+      label: "{{persona-primary}} triggers"
+      animated: true
+
+    - id: fe-gate-ingest
+      source: fn-feature-gate
+      sourceHandle: raw_items
+      target: fn-ingest
+      targetHandle: raw_items
+      label: "seeded items"
+      animated: true
+
+    - id: fe-sources-ingest
+      source: fn-sources
+      sourceHandle: raw_items
+      target: fn-ingest
+      targetHandle: raw_items
+      label: "raw items"
+      animated: true
+
+    - id: fe-config-ingest
+      source: fn-config
+      sourceHandle: vars
+      target: fn-ingest
+      targetHandle: vars
+      label: "config"
+      animated: false
+
+    - id: fe-config-classify
+      source: fn-config
+      sourceHandle: vars
+      target: fn-classify
+      targetHandle: vars
+      animated: false
+
+    - id: fe-config-score
+      source: fn-config
+      sourceHandle: vars
+      target: fn-score
+      targetHandle: vars
+      animated: false
+
+    # default → default
+    - id: fe-ingest-classify
+      source: fn-ingest
+      sourceHandle: clean_items
+      target: fn-classify
+      targetHandle: clean_items
+      label: "clean items"
+      animated: true
+
+    - id: fe-classify-score
+      source: fn-classify
+      sourceHandle: typed_nodes
+      target: fn-score
+      targetHandle: typed_nodes
+      label: "typed + tagged"
+      animated: true
+
+    - id: fe-score-store
+      source: fn-score
+      sourceHandle: scored_nodes
+      target: fn-store
+      targetHandle: scored_nodes
+      label: "{{score-name}} attached"
+      animated: true
+
+    - id: fe-score-display
+      source: fn-score
+      sourceHandle: scored_nodes
+      target: fn-score-display
+      targetHandle: scored_nodes
+      animated: true
+
+    - id: fe-store-api
+      source: fn-store
+      sourceHandle: persisted_payload
+      target: fn-api
+      targetHandle: persisted_payload
+      label: "persisted"
+      animated: true
+
+    # default → output
+    - id: fe-api-canvas
+      source: fn-api
+      sourceHandle: json_payload
+      target: fn-canvas
+      targetHandle: json_payload
+      label: "{{solution}}"
+      animated: true
+
+    - id: fe-score-alert
+      source: fn-score
+      sourceHandle: alert_signal
+      target: fn-alert
+      targetHandle: alert_signal
+      label: "> {{threshold}}"
+      animated: true
+
+# ── MERMAID KNOWLEDGE GRAPH (static; same graph as flow:) ────────────────────
 # Shape → primitive:
 #   @node      →  n_id["label"]       rect      [ ]
-#   @node stub →  n_id{"label"}       diamond   { }   (placeholder/unresolved)
+#   @node stub →  n_id{"label"}       diamond   { }
 #   @edge      →  e_id{{"label"}}     hexagon   {{ }}
 #   @cluster   →  subgraph id         subgraph
-#   @cluster   →  cc_id(("@cluster")) circle    (( )) (inline ref)
 mermaid: |
   %%{init: {"theme":"base","themeVariables":{"primaryColor":"#E1F5EE","primaryTextColor":"#085041","primaryBorderColor":"#1D9E75","lineColor":"#5F5E5A","secondaryColor":"#E6F1FB","tertiaryColor":"#FAEEDA"}}}%%
-  flowchart TB
+  flowchart LR
 
-    %% ── shape key ────────────────────────────────────────────────
-    %% [ ]    rect          @node entity
-    %% { }    diamond       @node stub / placeholder
-    %% {{ }}  hexagon       @edge named relation
-    %% (( ))  circle        @cluster inline ref · terminal
+    %% ── shape key ────────────────────────────────────────────────────────
+    %% [ ]    rect          entity / step
+    %% { }    diamond       decision / stub
+    %% {{ }}  hexagon       named @edge relation
+    %% (( ))  circle        terminal
     %% [/ /]  parallelogram input / output
     %% [( )]  cylinder      data store
+    %% @{}    v11 shape API custom node type
 
-    %% ── variable refs (resolved from frontmatter via `@` toolbar) ──
-    %% {{project}}  {{persona-primary}}  {{pain-a}}  {{solution}}
-    %% {{ai-proxy}} {{ai-model}}         {{db}}      {{score-name}}
+    %% ── variable refs resolved from frontmatter via `@` toolbar ─────────
+    %% {{project}} {{persona-primary}} {{pain-a}} {{solution}}
+    %% {{ai-proxy}} {{ai-model}} {{db}} {{score-name}} {{threshold}}
 
-    %% ── classDef ──────────────────────────────────────────────────
-    classDef persona  fill:#E1F5EE,stroke:#1D9E75,color:#085041,stroke-width:1.5px
-    classDef problem  fill:#FBEAF0,stroke:#D4537E,color:#72243E,stroke-width:1.5px
-    classDef feature  fill:#E6F1FB,stroke:#378ADD,color:#0C447C,stroke-width:1.5px
-    classDef process  fill:#FAEEDA,stroke:#BA7517,color:#633806,stroke-width:1.5px
+    %% ── classDef ─────────────────────────────────────────────────────────
+    classDef inp      fill:#E1F5EE,stroke:#1D9E75,color:#085041,stroke-width:2px
+    classDef dflt     fill:#E6F1FB,stroke:#378ADD,color:#0C447C,stroke-width:1.5px
+    classDef out      fill:#EAF3DE,stroke:#639922,color:#27500A,stroke-width:2px
+    classDef custom   fill:#EEEDFE,stroke:#7F77DD,color:#3C3489,stroke-width:1.5px
     classDef store    fill:#F1EFE8,stroke:#888780,color:#444441,stroke-width:1px
-    classDef output   fill:#EAF3DE,stroke:#639922,color:#27500A,stroke-width:1.5px
-    classDef terminal fill:#EEEDFE,stroke:#7F77DD,color:#3C3489,stroke-width:2px
-    classDef chat     fill:#FCEBEB,stroke:#E24B4A,color:#501313,stroke-width:1.5px
+    classDef alert    fill:#FCEBEB,stroke:#E24B4A,color:#501313,stroke-width:2px
+    classDef problem  fill:#FBEAF0,stroke:#D4537E,color:#72243E,stroke-width:1.5px
 
-    %% ── PART 1 · Pitch Deck ──────────────────────────────────────
-    subgraph cluster_pitch["PART 1 · Pitch Deck"]
-      direction TB
-      n_who(["{{persona-primary}}"])
-      n_pain_a["{{pain-a}}"]
-      n_pain_b["{{pain-b}}"]
-      n_pain_c{"{{pain-c}}"}
-      e_motivates{{"motivates"}}
-      n_feat1["{{feature-1}}"]
-      n_feat2["{{feature-2}}"]
-      n_feat3["{{feature-3}}"]
-      n_tam[/"{{tam}} TAM"/]
-      n_ms_a["{{milestone-a}}"]
-      n_ms_b{"{{milestone-b}}"}
+    %% ── INPUT nodes [/ /] ────────────────────────────────────────────────
+    fn_persona[/"{{persona-primary}}\n(input)"/]
+    fn_sources[/"[N] data sources\n(input)"/]
+    fn_config[/"frontmatter config\n(input)"/]
 
-      n_who -->|faces| n_pain_a
-      n_who -->|faces| n_pain_b
-      n_who -->|faces| n_pain_c
-      n_pain_a --> e_motivates
-      n_pain_b --> e_motivates
-      n_pain_c --> e_motivates
-      e_motivates --> n_feat1
-      e_motivates --> n_feat2
-      e_motivates --> n_feat3
-      n_tam -->|contextualizes| n_ms_a
-    end
+    %% ── DEFAULT nodes [ ] ────────────────────────────────────────────────
+    fn_gate["{{feature-1}} gate\n(default)"]
+    fn_ingest["ingest + dedup\n(default)"]
+    fn_classify{{"classify via {{ai-proxy}}\n(default)"}}
+    fn_score["score: {{score-name}}\n(default)"]
+    fn_store[("{{db}} upsert\n(default)")]
+    fn_api["API → JSON payload\n(default)"]
 
-    %% ── PART 2 · PRD ─────────────────────────────────────────────
-    subgraph cluster_prd["PART 2 · PRD"]
-      direction TB
-      n_goal["[Goal]"]
-      n_u1["U1 {{persona-primary}}"]
-      n_u2["U2 {{persona-secondary}}"]
-      n_u3["U3 {{persona-tertiary}}"]
-      n_ac["Acceptance Criteria"]
+    %% ── OUTPUT nodes [/ /] ───────────────────────────────────────────────
+    fn_canvas[/"canvas + AI Chat UI\n(output)"/]
+    fn_alert[/"{{alert-channel}} alert\n(output)"/]
 
-      n_u1 -->|traced-to| n_ac
-      n_u2 -->|traced-to| n_ac
-      n_u3 -->|traced-to| n_ac
-      n_goal -->|accepted-via| n_ac
-    end
+    %% ── CUSTOM nodes @{} ─────────────────────────────────────────────────
+    fn_score_display@{ shape: diamond, label: "{{score-name}} readout\n(custom)" }
 
-    %% ── PART 3 · TAD pipeline ────────────────────────────────────
-    subgraph cluster_tad["PART 3 · TAD"]
-      direction LR
-      n_ingest[/"Ingest"/]
-      n_classify{{"Classify via {{ai-proxy}}"}}
-      n_score[["Score: {{score-name}}"]]
-      n_db[("{{db}}")]
-      n_api["API"]
-      n_present[/"Present"/]
-      n_alert(["Alert {{alert-channel}}"])
-      n_chat@{ shape: lean-r, label: "AI Chat UI" }
+    %% ── edges ────────────────────────────────────────────────────────────
+    fn_persona     -->|pain_signal| fn_gate
+    fn_sources     -->|raw_items|   fn_ingest
+    fn_gate        -->|raw_items|   fn_ingest
+    fn_config      -->|vars|        fn_ingest
+    fn_config      -->|vars|        fn_classify
+    fn_config      -->|vars|        fn_score
+    fn_ingest      -->|clean_items| fn_classify
+    fn_classify    -->|typed_nodes| fn_score
+    fn_score       -->|scored_nodes| fn_store
+    fn_score       -->|scored_nodes| fn_score_display
+    fn_score       -->|"> {{threshold}}"| fn_alert
+    fn_store       -->|persisted|   fn_api
+    fn_api         -->|"{{solution}}"| fn_canvas
 
-      n_ingest --> n_classify --> n_score --> n_db
-      n_db --> n_api --> n_present
-      n_score -->|"> {{threshold}}"| n_alert
-      n_present --> n_chat
-    end
+    %% ── class assignments ────────────────────────────────────────────────
+    class fn_persona,fn_sources,fn_config inp
+    class fn_gate,fn_ingest,fn_score,fn_store,fn_api dflt
+    class fn_classify dflt
+    class fn_canvas out
+    class fn_alert alert
+    class fn_score_display custom
 
-    %% ── PART 4 · Critical Path ───────────────────────────────────
-    subgraph cluster_path["PART 4 · Critical Path"]
-      direction LR
-      n_p0["P0 Risk Task"]
-      n_demo(("DEMO READY"))
-
-      n_p0 -->|gates| n_demo
-    end
-
-    %% ── PART 5 · Cost ────────────────────────────────────────────
-    subgraph cluster_cost["PART 5 · Cost"]
-      n_tco["{{tco}} TCO"]
-    end
-
-    %% ── cross-cluster edges ───────────────────────────────────────
-    cluster_pitch -->|"specced-in"| cluster_prd
-    cluster_prd   -->|"implemented-by"| cluster_tad
-    cluster_tad   -->|"sequenced-by"| cluster_path
-    n_feat1       -->|"costed-in"| n_tco
-    n_ms_a        -->|milestone| n_demo
-    n_ms_b        -->|milestone| n_demo
-
-    %% ── class assignments ────────────────────────────────────────
-    class n_who,n_u1,n_u2,n_u3 persona
-    class n_pain_a,n_pain_b,n_pain_c problem
-    class n_feat1,n_feat2,n_feat3 feature
-    class n_classify,e_motivates process
-    class n_db store
-    class n_present,n_api output
-    class n_demo terminal
-    class n_chat chat
-
-    %% ── click → AI Chat UI (node-scoped chat context) ────────────
-    click n_who    "#part-1--pitch-deck" "Chat: who is {{persona-primary}}?"
-    click n_pain_a "#slide-1--problem"   "Chat: what drives {{pain-a}}?"
-    click n_feat1  "#slide-2--solution"  "Chat: how does {{feature-1}} work?"
-    click n_classify "#tad-pipeline"     "Chat: explain the classify layer"
-    click n_score  "#tad-pipeline"       "Chat: what is {{score-formula}}?"
-    click n_chat   "#ai-chat-ui"         "Open AI Chat UI"
-    click n_demo   "#part-4--critical-path" "Chat: what gates the demo?"
+    %% ── click → AI Chat UI ───────────────────────────────────────────────
+    click fn_persona    "#slide-1--problem"   "Chat: who is {{persona-primary}}?"
+    click fn_classify   "#tad-pipeline"       "Chat: explain classify via {{ai-proxy}}"
+    click fn_score      "#tad-pipeline"       "Chat: what is {{score-formula}}?"
+    click fn_canvas     "#ai-chat-ui"         "Open AI Chat UI"
+    click fn_alert      "#part-4--critical-path" "Chat: what triggers the alert?"
+    click fn_config     "#variable--reference-guidelines" "Chat: edit vars with @ toolbar"
 ---
 
 # {{project}}<!-- @node:project:name -->
@@ -311,6 +584,10 @@ mermaid: |
 
 No tool cross-references [signal A] against [signal B].
 
+The flow editor models this directly: `@node:fn-persona` is an **input node**
+carrying `{{pain-a}}`, `{{pain-b}}`, `{{pain-c}}` as source data — the
+`pain_signal` handle triggers the `{{feature-1}} gate` default node downstream.
+
 ---
 
 ### Slide 2 · Solution
@@ -319,7 +596,7 @@ No tool cross-references [signal A] against [signal B].
 
 1. **{{feature-1}}<!-- @node:feature:1 -->** — [one-sentence capability + mechanism]
 2. **{{feature-2}}<!-- @node:feature:2 -->** — [one number / metric that quantifies the insight]
-3. **{{feature-3}}<!-- @node:feature:3 -->** — [interactive capability that reveals the insight]
+3. **{{feature-3}}<!-- @node:feature:3 -->** — [interactive or exploratory capability]
 
 One [artifact]. Built in {{timeline}}. Updated [cadence].
 
@@ -327,15 +604,23 @@ One [artifact]. Built in {{timeline}}. Updated [cadence].
 
 ### Slide 3 · Live Demo Flow
 
+The flow editor is the live demo. Three **input nodes** feed the pipeline;
+two **output nodes** surface results to the audience:
+
 ```
-[Source A] → [Ingest] → [Classify via {{ai-proxy}} + {{ai-model}}] → [Score: {{score-name}}]
-                                                                              ↓
-                                          [{{db}}] → [API] → [Canvas · AI Chat UI]
-                                                                              ↓
-                                                            [Alert: {{alert-channel}}]
+INPUT                  DEFAULT                              OUTPUT
+─────────────────────────────────────────────────────────────────────────────
+[persona-primary] ──pain_signal──▶ [feature gate] ──raw_items──┐
+[N data sources]  ──raw_items───▶ [ingest+dedup]  ◀────────────┘
+                                        │ clean_items
+[frontmatter]─────vars──┬──────▶ [classify {{ai-proxy}}]──typed_nodes──▶
+                        ├──────▶ [score {{score-name}}] ──scored_nodes──▶ [{{db}}] ──▶ [API] ──▶ [canvas + AI Chat UI] (OUTPUT)
+                        └──────▶                        ──> {{threshold}} ──────────────────────▶ [{{alert-channel}} alert]  (OUTPUT)
 ```
 
-**Demo moment:** [Describe the on-stage live action and audience payoff].
+**Demo moment:** author clicks the `{{persona-primary}}` input node on canvas →
+edits `{{pain-a}}` via the `@` toolbar → upstream propagates live through all
+compute nodes → canvas and alert output nodes update in real time.
 
 ---
 
@@ -357,6 +642,7 @@ One [artifact]. Built in {{timeline}}. Updated [cadence].
 | {{score-name}} (quantified) | ✅ | ❌ | ❌ | ❌ |
 | Real-time {{alert-channel}} alerts | ✅ | ❌ | ❌ cadence | ❌ |
 | Open-source / {{tco}} | ✅ | ❌ paid | ❌ paid | ✅ |
+| Flow editor (interactive + computable) | ✅ | ❌ | ❌ | ❌ |
 | AI Chat UI on canvas | ✅ | ❌ | ❌ | ❌ |
 
 ---
@@ -386,6 +672,7 @@ One [artifact]. Built in {{timeline}}. Updated [cadence].
 2. Surface a [visualization type] in a [client type] — [auth requirement]
 3. Compute **{{score-name}}<!-- @node:tad:score -->** per [primary entity]
 4. Alert via {{alert-channel}}<!-- @node:tad:alert-channel --> when `{{score-name}} > {{threshold}}`
+5. Expose an interactive flow editor on the canvas — input nodes editable by author; output nodes update computably
 
 ### Non-goals (MVP)
 
@@ -399,19 +686,29 @@ One [artifact]. Built in {{timeline}}. Updated [cadence].
 
 **U3 — {{persona-tertiary}}<!-- @node:prd:story-u3 -->:** I add [inputs] to my watchlist and receive {{alert-channel}} alerts when `{{score-name}} > {{threshold}}`.
 
-### AI Chat UI<!-- @node:tad:ai-proxy -->
+### Flow Editor Node Types<!-- @node:tad:layer-present -->
 
-The graph canvas has an embedded AI Chat UI. Clicking any node opens a chat thread scoped to that node + its 1-hop neighbours. The AI (routed via {{ai-proxy}} → {{ai-model}}) answers questions grounded in the node's data.
+| Node type | Handles | `compute:` | Canvas role |
+|---|---|---|---|
+| `input` | source only | none — static data | persona; data sources; frontmatter config |
+| `default` | target + source | pure `(inputs) => outputs` | ingest; classify; score; store; API |
+| `output` | target only | none — terminal sink | canvas + AI Chat UI; {{alert-channel}} alert |
+| `custom` | any | optional | score readout gauge; feature gate; [custom widget] |
 
-Suggested prompts auto-generated per node:
+### AI Chat UI
+
+Clicking any node opens a chat thread scoped to that node + 1-hop neighbours.
+The AI (routed via {{ai-proxy}} → {{ai-model}}) answers questions grounded in
+the node's `data:` and the connected handle values at the time of click.
 
 | Node clicked | Suggested prompt |
 |---|---|
-| {{persona-primary}} | "What pain does this persona face?" |
-| {{pain-a}} | "What feature addresses this pain?" |
-| {{feature-1}} | "What is the acceptance criterion for this feature?" |
-| {{score-name}} | "Explain {{score-formula}} in plain language." |
-| [any edge] | "Why does this relationship exist?" |
+| `fn-persona` (input) | "What pain does {{persona-primary}} face?" |
+| `fn-classify` (default) | "Explain the classify step via {{ai-proxy}}." |
+| `fn-score` (default) | "What is {{score-formula}} in plain language?" |
+| `fn-canvas` (output) | "What data is this output node currently displaying?" |
+| `fn-alert` (output) | "What threshold condition triggers this alert?" |
+| `fn-config` (input) | "Which variables affect the score output most?" |
 
 ### Acceptance Criteria<!-- @node:prd:criteria -->
 
@@ -420,8 +717,9 @@ Suggested prompts auto-generated per node:
 | Ingest | ≥[N] items per source per run; zero crashes |
 | Classify | Latency < [N]s per item; schema validated |
 | {{score-name}} | Updates visible in canvas within [N]s of recompute |
-| Canvas | Loads ≤[N]s; zoom/pan smooth |
-| AI Chat UI | Response < [N]s; scoped to clicked node |
+| Flow editor | Input node edit → output node update in ≤[N]s; no manual refresh |
+| Canvas | Loads ≤[N]s; zoom/pan smooth; handles snap to grid |
+| AI Chat UI | Response < [N]s; scoped to clicked node + 1-hop |
 | {{alert-channel}} alert | Delivered < [N] min after trigger |
 
 ---
@@ -451,26 +749,43 @@ Suggested prompts auto-generated per node:
 
 ```sql
 CREATE TABLE [primary_entity] (
-  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  type       TEXT CHECK (type IN ('[type_a]', '[type_b]')),
-  label      VARCHAR(255),
-  metadata   JSONB,
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  type         TEXT CHECK (type IN ('[type_a]', '[type_b]')),
+  label        VARCHAR(255),
+  metadata     JSONB,
   {{score-name}} FLOAT DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT now()
+  created_at   TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE [relationship_entity] (
-  source_id UUID REFERENCES [primary_entity](id),
-  target_id UUID REFERENCES [primary_entity](id),
-  weight    FLOAT,
-  PRIMARY KEY (source_id, target_id)
+CREATE TABLE flow_nodes (
+  id          TEXT PRIMARY KEY,
+  doc_id      TEXT,
+  type        TEXT CHECK (type IN ('input','default','output','custom')),
+  label       TEXT,
+  position    JSONB,             -- {"x": N, "y": N}
+  handles     JSONB,             -- {"source":["h1"],"target":["h2"]}
+  data        JSONB,             -- node payload; mirrors metadata col
+  compute_fn  TEXT,              -- raw compute: function string
+  created_at  TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE INDEX ON [relationship_entity](source_id);
-CREATE INDEX ON [relationship_entity](target_id);
+CREATE TABLE flow_edges (
+  id             TEXT PRIMARY KEY,
+  doc_id         TEXT,
+  source         TEXT REFERENCES flow_nodes(id),
+  source_handle  TEXT,
+  target         TEXT REFERENCES flow_nodes(id),
+  target_handle  TEXT,
+  label          TEXT,
+  animated       BOOLEAN DEFAULT false,
+  created_at     TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX ON flow_nodes USING GIN (data);
+CREATE INDEX ON flow_edges (source, target);
 ```
 
-`{{score-name}}`<!-- @node:tad:formula --> = `{{score-formula}}` — computed on upsert trigger.
+`{{score-name}}`<!-- @node:tad:formula --> = `{{score-formula}}` — computed on upsert trigger; mirrored in `fn-score` default node `compute:` function.
 
 ### Pipeline
 
@@ -478,24 +793,30 @@ CREATE INDEX ON [relationship_entity](target_id);
 
 **Alert path**: `{{score-name}} > {{threshold}}`<!-- @node:tad:threshold --> → {{alert-channel}}<!-- @node:tad:layer-alert -->
 
-| Layer | Input | Output | Key directive |
-|---|---|---|---|
-| Ingest | [source URLs] | raw items | rate-limit per source; retry on 429; isolate errors |
-| Classify | raw items | typed + tagged nodes | route via {{ai-proxy}}; validate JSON response; batch [N] per call |
-| Score | upserted node | `{{score-name}}` float | deterministic formula; single config location; no hardcoded literals |
-| API | {{db}} nodes/edges | JSON payload | edge-hosted; ≤[N]ms p99; warm with [N]s frontend poll |
-| Canvas + AI Chat | JSON payload | interactive graph | node click → scoped chat context; suggest prompts from edge relationships |
-| Alert | score + watchlist | {{alert-channel}} DM | debounce per entity per [window]; read threshold from env |
+| Layer | Flow node | Type | Input handle | Output handle | Key directive |
+|---|---|---|---|---|---|
+| Persona | `fn-persona` | `input` | — | `pain_signal` | static; editable via `@` toolbar |
+| Sources | `fn-sources` | `input` | — | `raw_items` | rate-limit per source; retry on 429 |
+| Config | `fn-config` | `input` | — | `vars` | all `{{key}}` values; single source of truth |
+| Feature gate | `fn-feature-gate` | `custom` | `pain_signal` | `raw_items` | enables/disables feature at runtime |
+| Ingest | `fn-ingest` | `default` | `raw_items`, `vars` | `clean_items` | dedup against cache; isolate source errors |
+| Classify | `fn-classify` | `default` | `clean_items`, `vars` | `typed_nodes` | route via {{ai-proxy}}; validate JSON; batch [N] |
+| Score | `fn-score` | `default` | `typed_nodes`, `vars` | `scored_nodes`, `alert_signal` | `{{score-formula}}`; deterministic; single config |
+| Store | `fn-store` | `default` | `scored_nodes` | `persisted_payload` | upsert to {{db}}; flush local cache |
+| API | `fn-api` | `default` | `persisted_payload` | `json_payload` | edge-hosted; ≤[N]ms p99 |
+| Canvas | `fn-canvas` | `output` | `json_payload` | — | renders graph; AI Chat UI on node click |
+| Alert | `fn-alert` | `output` | `alert_signal` | — | {{alert-channel}} DM; debounce per entity |
 
 ### Design Decisions
 
 | Decision | Rationale | Pros | Cons | Mitigation |
 |---|---|---|---|---|
+| `input` nodes for persona + config | Author-editable without code | Live propagation on `@` toolbar edit | Must re-run compute chain | Debounce compute on rapid edits |
+| `output` nodes for canvas + alert | Clear terminal contract | No accidental downstream side-effects | Cannot be chained further | Use `custom` node if intermediate output needed |
+| `compute:` pure functions | Testable; reproducible | Swap formula via `@` toolbar; no state | No async fetch in compute | Pre-fetch in `input` node data; pass via handle |
 | Local-first cache | Zero infra; instant dedup | $0; zero latency | Lost on reset | Flush to {{db}} on interval |
 | {{ai-proxy}} router | Model-agnostic | Swap via config; testable | +[N]ms hop | Self-host locally |
-| DB trigger for {{score-name}} | Atomic with upsert | No race condition | DB-specific SQL | Abstract into tested pure function |
 | AI Chat scoped to node | Context-relevant answers | Precise; low token cost | No cross-graph queries | 1-hop neighbour expansion on demand |
-| {{tco}} TCO | Accessibility; community trust | No billing risk; forkable | Free tier limits | Document all limits; upgrade paths |
 
 ---
 
@@ -506,20 +827,22 @@ CREATE INDEX ON [relationship_entity](target_id);
 | Task | Hour | ☐ | Category |
 |---|---|---|---|
 | Repo init + infra config + hosting | 0:00 | ☐ | Infra |
-| {{db}}<!-- @node:tad:db --> — provision + schema + score trigger | 0:10 | ☐ | DB |
+| {{db}}<!-- @node:tad:db --> — provision + schema (`flow_nodes`, `flow_edges`, score trigger) | 0:10 | ☐ | DB |
 | Ingest — fetch raw items from [N] sources | 0:20 | ☐ | Scrape |
 | {{ai-proxy}} + {{ai-model}} — classify + tag | 0:40 | ☐ | AI |
 | Dedup cache → {{db}} upsert + `{{score-formula}}` trigger | 1:00 | ☐ | DB + Logic |
 | API endpoint → JSON payload | 1:15 | ☐ | API |
 | {{queue}} — score recalc pipeline | 1:30 | ☐ | Queue |
-| {{alert-channel}} bot — token + `{{score-name}} > {{threshold}}` alert | 1:45 | ☐ | Alert · **P0**<!-- @node:path:p0 --> |
-| Canvas scaffold + node/edge render | 2:00 | ☐ | Frontend |
-| AI Chat UI — node click → scoped chat | 2:20 | ☐ | AI + Frontend |
-| Wire API → canvas; poll [N]s | 2:40 | ☐ | Integration |
+| {{alert-channel}} bot — `{{score-name}} > {{threshold}}` alert | 1:45 | ☐ | Alert · **P0**<!-- @node:path:p0 --> |
+| Canvas scaffold — flow editor; input / default / output / custom nodes | 2:00 | ☐ | Frontend |
+| Wire `fn-config` input node → `@` toolbar variable CRUD | 2:15 | ☐ | Frontend + DX |
+| `compute:` chain — ingest → classify → score → store → API | 2:25 | ☐ | Logic |
+| AI Chat UI — node click → scoped chat via {{ai-proxy}} | 2:35 | ☐ | AI + Frontend |
+| Wire API → canvas output node; poll [N]s | 2:45 | ☐ | Integration |
 | `git push` → CI/CD → auto-deploy | 2:55 | ☐ | Deploy |
 | **DEMO READY**<!-- @node:path:demo --> | **[N:MM]** | **☐** | **Demo · P0** |
 
-> **P0 risk<!-- @node:path:p0 -->:** {{alert-channel}} alert loop is the most commonly missed milestone — wire and test before polishing the UI.
+> **P0 risk<!-- @node:path:p0 -->:** {{alert-channel}} alert loop is the most commonly missed milestone — wire and test before polishing the flow editor UI.
 
 ---
 
@@ -527,16 +850,15 @@ CREATE INDEX ON [relationship_entity](target_id);
 
 | Tool | Role | Local/Cloud | Free tier | Risk |
 |---|---|---|---|---|
-| [Scraper] | Ingest raw items | Local | Unlimited | Low |
-| {{ai-proxy}} | Route classify calls | Local | Self-hosted | Low |
-| {{ai-model}} | Classify + tag | Cloud API | [N] req/day | ⚠️ batch carefully |
+| [Scraper] | `fn-sources` input node | Local | Unlimited | Low |
+| {{ai-proxy}} | `fn-classify` default node | Local | Self-hosted | Low |
+| {{ai-model}} | Classify + tag; AI Chat | Cloud API | [N] req/day | ⚠️ batch carefully |
 | {{queue}} | Score recalc jobs | Local | Self-hosted | Low |
 | [Local cache] | Dedup session | Local | Disk only | Low |
-| {{db}} | Persist nodes + score | Cloud DB | [N] GB | Low |
-| [API hosting] | Edge JSON endpoint | Edge | [N] req/day | Low |
-| [Frontend hosting] | Static canvas CDN | Edge | Unlimited | Low |
-| {{alert-channel}} | DM alerts | Cloud | Unlimited | Low |
-| {{ai-proxy}} → {{ai-model}} | AI Chat UI | Local → Cloud | Shared with classify | Low |
+| {{db}} | `fn-store` + `flow_nodes` + `flow_edges` | Cloud DB | [N] GB | Low |
+| [API hosting] | `fn-api` default node | Edge | [N] req/day | Low |
+| [Frontend hosting] | `fn-canvas` output node | Edge | Unlimited | Low |
+| {{alert-channel}} | `fn-alert` output node | Cloud | Unlimited | Low |
 | **Total**<!-- @node:cost:total --> | | **Local-first** | | **{{tco}}** |
 
 ---
@@ -545,11 +867,13 @@ CREATE INDEX ON [relationship_entity](target_id);
 
 | Context | Directive |
 |---|---|
-| Credentials | Always read from env vars; forbid committed secrets |
+| Credentials | Always read from env vars via `fn-config` input node; forbid committed secrets |
 | AI calls | Route via {{ai-proxy}}; forbid direct model SDK in business logic |
+| `compute:` side effects | Pure functions only; forbid fetch/mutation inside `compute:` |
+| Input node as sink | `input` nodes have source handles only; forbid target handles on input nodes |
+| Output node as source | `output` nodes have target handles only; forbid source handles on output nodes |
 | Classification drops | Log and retry malformed responses; forbid silent discard |
 | Stale cache | Flush on interval; forbid serving without TTL check |
-| Monolithic pipeline | Separate ingest/classify/score/render; forbid single-file pipeline |
 | AI Chat unbounded | Scope to node + 1-hop; forbid full-graph context per message |
 
 ---
@@ -558,11 +882,11 @@ CREATE INDEX ON [relationship_entity](target_id);
 
 ```
 - [ ] Signal; surface {{score-name}} over noise; forbid ambiguous outputs
-- [ ] Modularity; isolate ingest, classify, score, render; forbid monolithic pipelines
+- [ ] Modularity; isolate input/default/output/custom node types; forbid mixed-role nodes
 - [ ] Neutrality; route via {{ai-proxy}}; forbid hardcoded model SDK calls
-- [ ] Reliability; isolate source errors; forbid full-pipeline halt on single failure
-- [ ] Transparency; expose {{score-formula}}; forbid opaque rankings
-- [ ] Conversability; scope AI Chat to node context; forbid unbounded full-graph queries
+- [ ] Computability; compute: functions are pure; forbid side effects in compute chain
+- [ ] Transparency; expose {{score-formula}} in fn-score data:; forbid opaque scoring
+- [ ] Conversability; scope AI Chat to node + 1-hop; forbid unbounded full-graph queries
 ```
 
 ---

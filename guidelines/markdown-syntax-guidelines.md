@@ -470,6 +470,297 @@ INSERT INTO hackathon_demos (
 
 ---
 
+## Flow Graph / Workflow Editor Guidelines
+
+### Rationale
+
+The knowledge graph canvas supports a ReactFlow-style workflow editor mode
+alongside the static Mermaid diagram. In workflow editor mode the graph is
+interactive and computable: nodes have typed input/output handles, edges carry
+live data, and node state is computed from upstream values — exactly as in
+https://reactflow.dev/learn/advanced-use/computing-flows.
+
+Markdown is the authoring format. The canvas renderer reads the frontmatter
+`flow:` block and body `@node` / `@edge` sigils and hydrates a ReactFlow graph.
+
+### Concept map — Mermaid vs. Flow Editor
+
+| Concept | Mermaid (static) | Flow editor (interactive) |
+|---|---|---|
+| Node | `n_id["label"]` | `@node:id` with `handles:` and `data:` |
+| Edge | `n_a --> n_b` | `@edge:source:handle→target:handle` |
+| Node type | `classDef` shape | `type:` field (`input`/`default`/`output`/`custom`) |
+| Computed value | none | `compute:` function on node |
+| Live data | none | `data:` JSONB on node; updated on upstream change |
+| Subgraph | `subgraph` | `@cluster:id` → ReactFlow `<Panel>` or grouping node |
+| Click | `click` handler | `onNodeClick` → AI Chat UI scoped to node |
+
+### Frontmatter — `flow:` block
+
+Declared in YAML frontmatter alongside `mermaid:`. The canvas renderer uses
+`flow:` for the interactive editor and `mermaid:` for the static diagram view.
+Both represent the same graph — authors write one; the canvas maintains sync.
+
+```yaml
+---
+flow:
+  direction: LR          # LR | TB | RL | BT
+  edgeType: smoothstep   # default | straight | step | smoothstep | bezier
+  snapToGrid: true
+  gridSize: 20
+  computed: true         # enable computing flows (upstream → downstream)
+  nodes:
+    - id: n-scrape
+      type: input
+      label: scrape event URLs
+      position: { x: 0, y: 0 }
+      handles:
+        source: [urls]
+      data:
+        url: "{{demo_url}}"
+        confidence: high
+
+    - id: n-extract
+      type: default
+      label: "{{solution}}"
+      position: { x: 220, y: 0 }
+      handles:
+        target: [urls]
+        source: [demos]
+      compute: |
+        (inputs) => ({
+          demos: inputs.urls.map(u => ({ url: u, extracted: true }))
+        })
+      data: {}
+
+    - id: n-gallery
+      type: output
+      label: project gallery
+      position: { x: 440, y: 0 }
+      handles:
+        target: [demos]
+      data:
+        winner_badge: true
+        demo_link: "{{demo_url}}"
+        repo_link: TBD
+
+  edges:
+    - id: e-scrape-extract
+      source: n-scrape
+      sourceHandle: urls
+      target: n-extract
+      targetHandle: urls
+      label: scrape → extract
+      animated: true
+
+    - id: e-extract-gallery
+      source: n-extract
+      sourceHandle: demos
+      target: n-gallery
+      targetHandle: demos
+      label: "{{subject}} → gallery"
+      animated: true
+---
+```
+
+### Node type conventions
+
+| `type` | ReactFlow equivalent | Use for | Handle rule |
+|---|---|---|---|
+| `input` | `<InputNode>` | data source; no upstream | source handles only |
+| `default` | `<DefaultNode>` | transform / compute step | both target + source handles |
+| `output` | `<OutputNode>` | terminal / sink | target handles only |
+| `custom` | `<CustomNode>` | AI Chat UI; score display; alert | any handle config |
+
+### Handle naming convention
+
+Handles are named by the data type they carry, using the same `snake_case`
+as PostgreSQL column names. This makes the handle-to-JSONB mapping direct.
+
+| Handle name | Data type | PostgreSQL column |
+|---|---|---|
+| `urls` | `string[]` | `url JSONB` |
+| `demos` | `object[]` | `metadata JSONB` |
+| `score` | `float` | `confidence FLOAT` |
+| `winners` | `object[]` | `award TEXT` |
+| `signal` | `boolean` | — (ephemeral) |
+
+### `compute:` function
+
+Each `default` node may declare a `compute:` inline function. The canvas
+evaluates it whenever upstream handle data changes — exactly as ReactFlow's
+computing flows pattern.
+
+```yaml
+compute: |
+  (inputs) => ({
+    demos: inputs.urls
+      .filter(u => u.confidence === 'high')
+      .map(u => ({
+        url:          u.url,
+        winner_badge: true,
+        demo_link:    u.url,
+        repo_link:    null
+      }))
+  })
+```
+
+Rules:
+- `inputs` is a map of `handleName → value` from all connected upstream edges
+- return value is a map of `handleName → value` pushed to all connected downstream edges
+- `TBD` inputs are treated as `null`; node shows a `@flag:waiting` state
+- `compute:` is pure — no side effects; no fetch; no mutation of other nodes
+
+### Edge sigil (body prose)
+
+Edges declared in the `flow:` block are the canonical source of truth.
+Body prose may reference them with the `@edge` sigil for inline annotation:
+
+```
+`@edge:n-scrape:urls→n-extract:urls` carries raw scraped URLs to the extract step.
+`@edge:n-extract:demos→n-gallery:demos` delivers `{{subject}}`-tagged demos to the gallery.
+```
+
+Sigil format: `` `@edge:sourceId:sourceHandle→targetId:targetHandle` ``
+
+### Annotation on flow nodes
+
+Color sigils and `@` annotation sigils apply to node `label` and `data` fields:
+
+```yaml
+- id: n-extract
+  label: "`#D85A30:urgent` {{solution}}"
+  data:
+    note: "`@flag:low confidence source; verify before publish`"
+```
+
+Resolved in the canvas as a colored node label + flag badge on the node card.
+
+### Variable references in `flow:` block
+
+All `{{key}}` references in the `flow:` block resolve from frontmatter before
+the canvas renders. This means node labels, edge labels, handle data, and
+`compute:` function strings are all variable-aware.
+
+```yaml
+- id: n-gallery
+  label: "{{solution}}"           # resolves to: publish a project gallery...
+  data:
+    subject: "{{subject}}"        # resolves to: hackathon winners
+    goal:    "{{goal}}"           # resolves to: a single page to browse winning demos
+```
+
+### PostgreSQL JSONB mapping — flow nodes and edges
+
+Flow nodes and edges are stored as JSONB rows, mirroring the `hackamap-demos`
+schema. The `data:` field maps directly to `metadata JSONB`.
+
+```sql
+CREATE TABLE flow_nodes (
+  id          TEXT PRIMARY KEY,
+  doc_id      TEXT,
+  type        TEXT CHECK (type IN ('input','default','output','custom')),
+  label       TEXT,
+  position    JSONB,              -- {"x": 0, "y": 0}
+  handles     JSONB,              -- {"source":["urls"],"target":["demos"]}
+  data        JSONB,              -- arbitrary node data; mirrors metadata col
+  compute_fn  TEXT,               -- raw compute: function string
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE flow_edges (
+  id              TEXT PRIMARY KEY,
+  doc_id          TEXT,
+  source          TEXT REFERENCES flow_nodes(id),
+  source_handle   TEXT,
+  target          TEXT REFERENCES flow_nodes(id),
+  target_handle   TEXT,
+  label           TEXT,
+  animated        BOOLEAN DEFAULT false,
+  created_at      TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX ON flow_nodes USING GIN (data);
+CREATE INDEX ON flow_edges (source, target);
+```
+
+### Sample — full flow for the shared sample
+
+The sample models the exact pipeline:
+`{{subject}}` need `{{action}}`; builders want `{{goal}}`.
+`{{solution}}`.
+
+```yaml
+flow:
+  direction: LR
+  edgeType: smoothstep
+  computed: true
+  nodes:
+    - id: n-winners
+      type: input
+      label: "{{subject}}"
+      position: { x: 0, y: 80 }
+      handles:
+        source: [signal]
+      data:
+        pain: "need {{action}}"
+        goal: "{{goal}}"
+
+    - id: n-scrape
+      type: default
+      label: scrape demo URLs
+      position: { x: 220, y: 0 }
+      handles:
+        target: [signal]
+        source: [urls]
+      compute: |
+        (inputs) => ({ urls: inputs.signal ? ["https://treehacks-2026.devpost.com/project-gallery"] : [] })
+
+    - id: n-extract
+      type: default
+      label: extract + tag demos
+      position: { x: 440, y: 0 }
+      handles:
+        target: [urls]
+        source: [demos]
+      compute: |
+        (inputs) => ({
+          demos: inputs.urls.map(u => ({
+            url: u, winner_badge: true, confidence: 'high'
+          }))
+        })
+
+    - id: n-gallery
+      type: output
+      label: "{{solution}}"
+      position: { x: 660, y: 80 }
+      handles:
+        target: [demos]
+      data:
+        subject:  "{{subject}}"
+        goal:     "{{goal}}"
+        demo_url: "https://treehacks-2026.devpost.com/project-gallery"
+        repo_url: TBD
+
+  edges:
+    - { id: e1, source: n-winners, sourceHandle: signal, target: n-scrape,  targetHandle: signal, animated: true }
+    - { id: e2, source: n-scrape,  sourceHandle: urls,   target: n-extract, targetHandle: urls,   animated: true }
+    - { id: e3, source: n-extract, sourceHandle: demos,  target: n-gallery, targetHandle: demos,  animated: true, label: "winner-marked demos" }
+```
+
+### Shared cell conventions — additions for flow editor
+
+| Convention | Symbol | Parse rule | Example |
+|---|---|---|---|
+| Node reference | `` `@node:id` `` | resolve to flow node by `id` | `` `@node:n-gallery` `` |
+| Edge reference | `` `@edge:src:h→tgt:h` `` | resolve to flow edge | `` `@edge:n-scrape:urls→n-extract:urls` `` |
+| Computed value | `compute: \|` YAML block | pure fn; inputs → outputs map | see `compute:` above |
+| Handle | `handleName` in `handles:` | `snake_case`; matches PG column | `urls`, `demos`, `score` |
+| Node type | `input` / `default` / `output` / `custom` | ReactFlow node type | `type: output` |
+
+
+---
+
 ## Text Guidelines
 
 ### Titles and ellipsis

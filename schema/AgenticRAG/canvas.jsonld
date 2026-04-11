@@ -198,6 +198,16 @@
         "@language": "zh-cn"
       }
     ],
+    "lazyLoadingGates": [
+      {
+        "@value": "Heavy feature surfaces (Monaco editor, MapLibre GeoJSON previews, Mermaid diagrams, GLTF exporter) should be lazy-loaded per feature surface, and entry/vendor preloads must avoid auto-mounting these bundles on page load so low-end and mobile devices remain responsive.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "重量级特性表面（Monaco 编辑器、MapLibre GeoJSON 预览、Mermaid 图、GLTF 导出器）应按功能表面懒加载，入口与 vendor 预加载必须避免在页面加载时自动挂载这些 bundle，以保持低端设备与移动端的响应性。",
+        "@language": "zh-cn"
+      }
+    ],
     "panZoomParity2d": [
       {
         "@value": "2D renderer variants (D3, Flow, Design, Flow Editor) must share one SSOT mapping for viewport controls (preset + selection + wheel/trackpad/pinch zoom): consistent preset semantics (`viewportControlsPreset`: map vs design) for pan/zoom/select, wheel delta normalization, zoom sensitivity, and pointer-anchored zoom. Flow Editor must never override the stored preset; selection-on-drag must be opt-in via a persisted setting (e.g., `flowEditorSelectionOnDrag`). Wheel/pinch zoom must be continuous (no discrete stepping) and may rAF-batch deltas; all renderers should apply a short anchored easing animation to avoid per-frame delta clumping and feel continuous; cancel on pan/drag and cleanup RAF on unmount. Trackpad pinch should be supported both as ctrl/meta wheel events and (where emitted) Safari `gesture*` events on canvas surfaces. Wheel pan must be consistent across renderers and apply the same pan speed composition (schema `panSpeed` × `flowWheelPanSpeedMultiplier`), independent of current zoom k. Zoom magnitude/increment, ctrl/meta pinch boost, pan speed multiplier, and smoothing durations may be user-tunable via MainPanel Settings (persisted) but must remain bounded; defaults may be upgraded once via a versioned persisted key to improve pinch responsiveness without overriding user-tuned values. Fit/Selection zoom action durations and zoom modes (pin/fit-to-screen/zoom-to-selection) may also be user-tunable and must be enforced consistently across all 2D renderers. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom so zooming never triggers horizontal/vertical page scrolling.",

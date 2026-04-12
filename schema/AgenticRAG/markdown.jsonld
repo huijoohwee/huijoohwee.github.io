@@ -65,7 +65,7 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "In-place Markdown editing palette: Viewer Read mode may enable click-and-edit contentEditable blocks with a selection-aware bubble toolbar, slash-command menu (\"/\" near caret), and inline link edit popover (Cmd/Ctrl+K). All operations are implemented as bounded Markdown text transforms via the shared formatting pipeline (no alternate WYSIWYG document model), reuse a single floating-menu SSOT (bubble/palette/popover classes and theme tokens), and respect a FORBID-copy policy enforced at the viewer root and code-block copy buttons. Actions are selection-scoped and view-only: they must not mutate GraphData, layout, or zoom, and must avoid churny recomputation or infinite selection listeners by gating selection updates with requestAnimationFrame and skipping no-op commits.",
+      "@value": "In-place Markdown editing palette: Viewer Read mode may enable click-and-edit contentEditable blocks with a selection-aware bubble toolbar, slash-command menu (\"/\" near caret), and inline link edit popover (Cmd/Ctrl+K). All operations are bounded Markdown text transforms via the shared formatting pipeline and floating-menu SSOT. Edit surfaces must reuse read-surface layout/typography (including indent/padding/margin/border/caret/whitespace/tab-size). Actions are selection-scoped and view-only: do not mutate GraphData/layout/zoom, gate selection sync with requestAnimationFrame, skip no-op commits, keep actionable buttons on shared hand-cursor tokens + pointer-down guards, and route variable Apply through shared applyVariableToken only (no direct DOM mutation).",
       "@language": "en-us"
     },
     {
@@ -73,7 +73,7 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Inline-code in-place editing must reuse the exact read surface (css-var colors, font, line-height, padding, ring/border) so View→Edit never changes inline-code layout; edit contentEditable surfaces may only apply Markdown text transforms and must not introduce new typography or spacing.",
+      "@value": "Inline-code in-place editing must reuse the exact read surface (css-var colors, font, line-height, padding, ring/border, caret/whitespace/tab-size) so View→Edit never changes inline-code layout; edit contentEditable surfaces may only apply Markdown text transforms and must not introduce new typography or spacing.",
       "@language": "en-us"
     },
     {
@@ -105,11 +105,19 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Floating selection toolbar SSOT: MarkdownBlockContainer and markdownFloatingSelectionToolbar own selection capture, floating summary toggles, and palette button handlers; all floating palettes must reuse these helpers and must not introduce duplicate floating toolbars, per-surface interaction handlers, or churny recompute loops.",
+      "@value": "Floating selection toolbar SSOT: MarkdownBlockContainer and markdownFloatingSelectionToolbar own selection capture, floating summary toggles, and palette button handlers; all floating palettes must reuse these helpers, shared hand-cursor class tokens, and shared pointer-down guards. Do not introduce duplicate toolbars, per-surface handlers, direct editor DOM mutation paths, or churny recompute loops.",
       "@language": "en-us"
     },
     {
       "@value": "浮动选择工具条 SSOT：MarkdownBlockContainer 与 markdownFloatingSelectionToolbar 统一负责选择捕获、浮动 summary 切换与调色板按钮处理；所有浮动调色板必须复用这些 helper，不得引入重复工具条、界面特有交互处理或抖动式重算循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Markdown Read Viewer data-view controls (Table, Multi-dimensional Table, Kanban) must use semantic landmarks (`header/nav/aside`) and shared high-z floating menu layers so controls remain clickable and are never occluded by sticky headers or neighboring surfaces.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Markdown Read Viewer 的数据视图控件（表格、多维表、看板）必须使用语义化地标（`header/nav/aside`），并复用高层级浮动菜单样式，确保控件可点击且不会被 sticky 表头或相邻界面遮挡。",
       "@language": "zh-cn"
     }
   ],

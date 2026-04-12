@@ -1331,6 +1331,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-superagent-swarm-checklist",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-superagent-swarm-checklist.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-superagent-swarm-checklist.md"
+      },
+      "documentPath": "docs/documents/knowgrph-superagent-swarm-checklist.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-system-design-document",
       "@type": "kg:Node",
       "labels": [
@@ -1360,6 +1376,22 @@
         "relPath": "docs/documents/knowgrph-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-telegram-import-url-tco-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-telegram-import-url-tco-plan.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-telegram-import-url-tco-plan.md"
+      },
+      "documentPath": "docs/documents/knowgrph-telegram-import-url-tco-plan.md",
       "language": "en-us"
     },
     {
@@ -1473,6 +1505,20 @@
       "label": "mapsTo"
     },
     {
+      "@id": "edge:doc:markdown-editor-mode->markdown-title-ellipsis",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-markdown-editor-mode-contract-document",
+      "target": "node:schema:agenticrag:markdown",
+      "label": "mapsTitleEllipsis"
+    },
+    {
+      "@id": "edge:doc:markdown-ssot-ui->markdown-title-ellipsis",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-markdown-ssot-ui-contract-document",
+      "target": "node:schema:agenticrag:markdown",
+      "label": "mapsTitleEllipsis"
+    },
+    {
       "@id": "edge:doc:metadata->metadata",
       "@type": "kg:Edge",
       "source": "node:knowgrph:doc:knowgrph-metadata-document",
@@ -1536,32 +1582,18 @@
       "label": "mapsTo"
     },
     {
-      "@id": "edge:doc:youtube->youtube",
-      "@type": "kg:Edge",
-      "source": "node:knowgrph:doc:knowgrph-parser-document",
-      "target": "node:schema:agenticrag:youtube",
-      "label": "mapsTo"
-    },
-    {
-      "@id": "edge:doc:markdown-ssot-ui->markdown-title-ellipsis",
-      "@type": "kg:Edge",
-      "source": "node:knowgrph:doc:knowgrph-markdown-ssot-ui-contract-document",
-      "target": "node:schema:agenticrag:markdown",
-      "label": "mapsTitleEllipsis"
-    },
-    {
-      "@id": "edge:doc:markdown-editor-mode->markdown-title-ellipsis",
-      "@type": "kg:Edge",
-      "source": "node:knowgrph:doc:knowgrph-markdown-editor-mode-contract-document",
-      "target": "node:schema:agenticrag:markdown",
-      "label": "mapsTitleEllipsis"
-    },
-    {
       "@id": "edge:doc:ui-ux-design->panel-title-ellipsis",
       "@type": "kg:Edge",
       "source": "node:knowgrph:doc:knowgrph-ui-ux-design-document",
       "target": "node:schema:agenticrag:panels",
       "label": "mapsTitleEllipsis"
+    },
+    {
+      "@id": "edge:doc:youtube->youtube",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-parser-document",
+      "target": "node:schema:agenticrag:youtube",
+      "label": "mapsTo"
     }
   ]
 }

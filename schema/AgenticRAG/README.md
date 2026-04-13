@@ -74,6 +74,10 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Expand published HackaMap runs by adding verified non-empty variants with stable suffixes, then regenerate query outputs and republish the bundle.
 - Prefer parameter axes that constrain event and demo subsets directly; published year-series runs for `2024`/`2025`/`2026` are safe builder inputs.
 - Mobile/PWA metadata for `/knowgrph` must come from `knowgrph/canvas` source and be mirrored by Pages sync, not patched in `content/knowgrph`.
+- Public bipartite controls should consume published `runtime.mobile_pwa` hints for compact stacking and safe-area spacing instead of host-specific breakpoint forks.
+- Bipartite ingest must normalize `api`/`fixture`/`workspace` source metadata and `cross`/`spoke` edge roles through shared helpers; forbid renderer styling, fallback payloads, or workspace detection that depend on `/api/graph`, sample content, or filename-only JSON cues.
+- Shared 2D renderer behavior must derive D3-like, surface-mount, and minimap rules from central helpers; workspace JSON fallback parsing must stay generic and workspace bipartite payloads must retain workspace source metadata.
+- Adjacent 2D surfaces must also reuse shared renderer-id and family helpers in persistence, store bootstrap/setters, minimap/editor gating, and D3 scene/schema activation instead of repeating inline renderer allowlists.
 
 ### Canvas Zoom/Fit SSOT (Knowgrph)
 

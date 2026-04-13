@@ -68,6 +68,12 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Prefer rebasing when syncing Knowgrph↔Schema changes to keep one linear history for contract updates.
 - If conflicts involve `knowgrph/canvas/src/components/GraphCanvas/scene.ts`, preserve idempotent initialization (no “double-fit” jump) and schema-driven fit (`readFitAllOptions` + `fitAllTransform`).
 - Never hand-merge `knowgrph/canvas/tsconfig.tsbuildinfo`; regenerate via `npm --prefix canvas run check` or `npm --prefix canvas run build`.
+- Public HackaMap delivery must prefer precomputed `hackamap_api_graph.json`; graph→bipartite fallback is resilience-only.
+- HackaMap runtime metadata must stay browser-fetchable from the published SSOT pipeline contract and `/api/graph?view=meta`, not a second manifest.
+- HackaMap preset builders must derive parameter choices from published runs and apply exact published matches only.
+- Expand published HackaMap runs by adding verified non-empty variants with stable suffixes, then regenerate query outputs and republish the bundle.
+- Prefer parameter axes that constrain event and demo subsets directly; published year-series runs for `2024`/`2025`/`2026` are safe builder inputs.
+- Mobile/PWA metadata for `/knowgrph` must come from `knowgrph/canvas` source and be mirrored by Pages sync, not patched in `content/knowgrph`.
 
 ### Canvas Zoom/Fit SSOT (Knowgrph)
 

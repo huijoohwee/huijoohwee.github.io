@@ -128,6 +128,26 @@
         "@language": "zh-cn"
       }
     ],
+    "mainPanelTabMetadataSsot": [
+      {
+        "@value": "MainPanel must derive tab labels, searchable tabs, search placeholders, and footer copy from one tab metadata path, let header/search/footer plus key-value rows wrap responsively, and keep Settings lazy-load helpers off toolbar-owned init bridges.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "MainPanel 必须从单一 tab 元数据路径推导标签、可搜索 tab、搜索占位文案与页脚文案，并让 header/搜索/页脚与 key-value 行在窄宽度下响应式换行，同时让 Settings 延迟加载辅助逻辑避开 toolbar 所属初始化桥接。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelViewMetadataSsot": [
+      {
+        "@value": "Floating Panel must derive view buttons, shared header status chips, full-height body rules, and renderer-only header actions from one shell metadata path; cap width to the viewport, wrap header/status rows, keep only the active view mounted, and forbid per-view shell drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 必须从单一壳层元数据路径推导视图按钮、共享 header 状态 chips、全高正文规则与仅 renderer 可见的 header 动作；宽度需受 viewport 约束、header/状态行需可换行、只挂载当前激活视图并禁止逐视图壳层漂移。",
+        "@language": "zh-cn"
+      }
+    ],
     "toolbarNavigateMode": [
       {
         "@value": "Toolbar includes a Navigate button that clears selection and forces single-select. It replaces any floating mode rail and must reuse the same canonical selection/mode state.",

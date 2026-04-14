@@ -29,6 +29,7 @@
     "datasetFetchLimitsSurface": "Expose timeout/max-bytes in a single canonical surface (e.g. Workflow Step 3). Do not duplicate Dataset fetch limits inputs in the Geo side panel.",
     "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest.",
     "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets (for example via a per-code-block “Add as Dataset” action in Markdown Viewer/Presentation).",
+    "markdownGeoJsonLoadGraphAutoEnable": "When a fenced Markdown GeoJSON block loads as GraphData and auto-enable is allowed, extract requests through one shared helper and reuse the same geospatial auto-enable path as `.geojson` imports; forbid Markdown-only mode toggles.",
     "devRemoteFetchProxy": "On localhost/dev, cross-origin map assets may be fetched via a same-origin proxy endpoint (e.g. /__fetch_remote). The proxy must return full, untruncated response bodies for JSON and binary assets (style JSON, glyph PBF, tile PBF/PNG) and must not prematurely abort upstream fetches on request close events.",
     "markdownItineraryPoiDerivation": "If a local Markdown document contains itinerary-style structure (e.g. headings with location tokens such as airport codes), implementations may derive POIs from section metadata, resolve coordinates using a bounded in-memory index built from already-registered point datasets (records or GeoJSON points), and render a lightweight details panel (rich media links/images) when a POI is selected. The derivation must remain dataset-agnostic and configuration-driven."
   },
@@ -59,11 +60,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "MapLibre vector style URL for the basemap provider (defaulting to an OpenFreeMap Liberty style endpoint if not configured, or a self-hosted style URL). The canonical OpenFreeMap Liberty style URL is https://tiles.openfreemap.org/styles/liberty (note: no /style.json). Implementations should allow configuration rather than hardcoding a single provider, should require an absolute http(s) URL, should reject embedded user credentials (e.g. https://user:pass@host/...), and should fall back to a safe default style when the configured URL is invalid. Implementations may normalize known provider endpoints (for example accept an OpenFreeMap URL ending with /style.json and normalize it to the canonical endpoint).",
+          "@value": "Optional MapLibre vector style URL for non-default basemap paths. The host default path may stay on a high-fidelity local SVG fallback when style is blank, invalid, or normalized away. Implementations should require absolute http(s) URLs, reject embedded credentials, normalize known provider endpoints, use memoized `10°` minor and `30°` major graticule styling, and forbid square raster fallback contracts.",
           "@language": "en-us"
         },
         {
-          "@value": "用于底图提供方的 MapLibre 矢量样式 URL（若未配置则默认使用 OpenFreeMap Liberty 样式端点，或自托管样式 URL）。OpenFreeMap Liberty 样式的规范 URL 为 https://tiles.openfreemap.org/styles/liberty（注意：不带 /style.json）。实现应支持配置而非硬编码单一提供方；应要求绝对的 http(s) URL；应拒绝包含用户凭据的 URL（例如 https://user:pass@host/...）；当配置 URL 无效时应回退到安全的默认样式。实现可对已知提供方端点（例如接受以 /style.json 结尾的 OpenFreeMap URL，并规范化为统一端点）做规范化。",
+          "@value": "用于非默认底图路径的可选 MapLibre 矢量样式 URL。若样式为空、无效或被规范化移除，宿主默认路径可保持在高保真本地 SVG 回退。实现应要求绝对 http(s) URL、拒绝嵌入凭据、规范化已知提供方端点、使用记忆化的 `10°` 次网格与 `30°` 主网格样式，并禁止方形栅格回退合约。",
           "@language": "zh-cn"
         }
       ],

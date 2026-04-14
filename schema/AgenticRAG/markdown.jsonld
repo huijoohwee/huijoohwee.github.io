@@ -17,6 +17,14 @@
       "@language": "zh-cn"
     },
     {
+      "@value": "Frontmatter flow Markdown imports must resolve frontmatter variables first, then a second pass of dotted node-scoped refs like `{{node.data.key}}` before labels and data finalize.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Frontmatter Flow Markdown 导入必须先解析 frontmatter 变量，再进行 `{{node.data.key}}` 这类点路径节点作用域引用的第二次解析，随后才最终写入 label 与 data。",
+      "@language": "zh-cn"
+    },
+    {
       "@value": "Markdown text SSOT: Editor, Viewer, and Presentation must render the same markdown text source for the active document. Implementations must not require strict path equality between an active document path (e.g. sandbox/docs/demo.md) and a stored document name (e.g. demo.md); prefer store/imported markdown when identities match by basename, and fall back to store/imported text on fs-load failure for that same match to prevent an empty editor while the preview still has content.",
       "@language": "en-us"
     },

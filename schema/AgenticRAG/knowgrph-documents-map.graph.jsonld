@@ -659,6 +659,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-frontend-document-interactions-and-operations",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-frontend-document-interactions-and-operations.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-frontend-document-interactions-and-operations.md"
+      },
+      "documentPath": "docs/documents/knowgrph-frontend-document-interactions-and-operations.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-frontend-document",
       "@type": "kg:Node",
       "labels": [
@@ -752,6 +768,38 @@
         "relPath": "docs/documents/knowgrph-graph-elements-and-configs-semantics-document.md"
       },
       "documentPath": "docs/documents/knowgrph-graph-elements-and-configs-semantics-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graphrag-pipeline-in-action-prd-tad-tad-core",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graphrag-pipeline-in-action-prd-tad-tad-core.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad-tad-core.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad-tad-core.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md"
+      },
+      "documentPath": "docs/documents/knowgrph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md",
       "language": "en-us"
     },
     {
@@ -867,6 +915,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad-extension-delivery-and-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mapping-stack-prd-tad-extension-delivery-and-validation.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad-extension-delivery-and-validation.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad-extension-delivery-and-validation.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad-integration-contracts-and-patterns",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mapping-stack-prd-tad-integration-contracts-and-patterns.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad-integration-contracts-and-patterns.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad-integration-contracts-and-patterns.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -912,6 +992,22 @@
         "relPath": "docs/documents/knowgrph-markdown-processing-document.md"
       },
       "documentPath": "docs/documents/knowgrph-markdown-processing-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-slide-styling-guidelines-advanced-and-export",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-slide-styling-guidelines-advanced-and-export.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines-advanced-and-export.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-slide-styling-guidelines-advanced-and-export.md",
       "language": "en-us"
     },
     {

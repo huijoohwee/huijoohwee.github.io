@@ -63,6 +63,14 @@
       {
         "@value": "以 Markdown 作为唯一真源；站点生成仅增加路由与导航，不改变内容语义。",
         "@language": "zh-cn"
+      },
+      {
+        "@value": "Oversized Markdown documents stay split at stable section boundaries into companion files; keep the original filename as the canonical sub-600-line index and keep explicit continuation links.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "过大的 Markdown 文档应保持按稳定章节边界拆分为 companion 文件；保留原文件名作为 600 行以内的规范索引，并保留明确的续读链接。",
+        "@language": "zh-cn"
       }
     ],
     "file_conventions": [

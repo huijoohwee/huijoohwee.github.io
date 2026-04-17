@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Settings",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.18",
+  "schemaVersion": "1.0.19",
   "rdfs:label": [
     { "@value": "Settings", "@language": "en-us" },
     { "@value": "设置", "@language": "zh-cn" }
@@ -720,6 +720,24 @@
       ],
       "allowed_values": ["system", "light", "dark"]
     },
+    "chatAuthMode": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Chat auth mode", "@language": "en-us" },
+        { "@value": "聊天鉴权模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Selects server-managed keys (default) vs BYOK. In serverManaged mode the same-origin proxy injects provider auth from environment; in byok mode the user supplies an API key for the current session only and it must not be persisted.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "选择服务端托管密钥（默认）或 BYOK。serverManaged 模式下同源代理从环境变量注入提供方鉴权；byok 模式下用户仅在当前会话提供密钥，且禁止持久化保存。",
+          "@language": "zh-cn"
+        }
+      ],
+      "allowed_values": ["serverManaged", "byok"]
+    },
     "chatEndpointUrl": {
       "@type": "xsd:string",
       "rdfs:label": [
@@ -796,11 +814,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Optional API key forwarded by the same-origin chat proxy to the configured provider (for example OpenAI or LM Studio). Must never be logged or stored in plaintext exports.",
+          "@value": "Optional BYOK API key forwarded by the same-origin chat proxy to the configured provider. Must never be logged, stored in plaintext exports, or persisted across sessions; serverManaged mode uses proxy-injected env keys instead.",
           "@language": "en-us"
         },
         {
-          "@value": "由同源聊天代理转发到配置的提供方（如 OpenAI 或 LM Studio）的可选 API 密钥。禁止在日志或明文导出中记录。",
+          "@value": "由同源聊天代理转发到配置提供方的可选 BYOK API 密钥。禁止在日志或明文导出中记录，且禁止跨会话持久化；serverManaged 模式改用代理注入的环境变量密钥。",
           "@language": "zh-cn"
         }
       ]

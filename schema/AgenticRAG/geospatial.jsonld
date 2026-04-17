@@ -60,11 +60,30 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Optional MapLibre vector style URL for non-default basemap paths. The host default path may stay on a high-fidelity local SVG fallback when style is blank, invalid, or normalized away. Implementations should require absolute http(s) URLs, reject embedded credentials, normalize known provider endpoints, use memoized `10°` minor and `30°` major graticule styling, and forbid square raster fallback contracts.",
+          "@value": "Optional MapLibre vector style URL for MapLibre view modes. Blank style should resolve to a safe MapLibre default style URL. Absolute http(s) style URLs may be persisted for explicit non-default styles. SVG fallback mode should remain explicit and continue to forbid square raster fallback contracts.",
           "@language": "en-us"
         },
         {
-          "@value": "用于非默认底图路径的可选 MapLibre 矢量样式 URL。若样式为空、无效或被规范化移除，宿主默认路径可保持在高保真本地 SVG 回退。实现应要求绝对 http(s) URL、拒绝嵌入凭据、规范化已知提供方端点、使用记忆化的 `10°` 次网格与 `30°` 主网格样式，并禁止方形栅格回退合约。",
+          "@value": "用于 MapLibre 视图模式的可选 MapLibre 矢量样式 URL。样式为空时应回退到安全的 MapLibre 默认样式 URL。可持久化绝对 http(s) 样式 URL 作为显式非默认样式。SVG 回退模式应保持显式选择并继续禁止方形栅格回退合约。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapViewMode": {
+      "@type": "xsd:string",
+      "enum": ["2d", "2d-svg", "3d"],
+      "rdfs:label": [
+        { "@value": "Map view mode", "@language": "en-us" },
+        { "@value": "地图视图模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "View mode for geospatial rendering: 2d (MapLibre), 2d-svg (high-fidelity SVG fallback), or 3d (MapLibre). Implementations should keep one SSOT mode value and avoid duplicate mode state paths.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "地理空间渲染视图模式：2d（MapLibre）、2d-svg（高保真 SVG 回退）或 3d（MapLibre）。实现应保持单一真源模式值并避免重复模式状态路径。",
           "@language": "zh-cn"
         }
       ],

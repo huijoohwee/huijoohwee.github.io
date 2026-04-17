@@ -138,6 +138,16 @@
         "@language": "zh-cn"
       }
     ],
+    "floatingPanelChatSessionFileAndMarkdownContract": [
+      {
+        "@value": "FloatingPanel Chat must enforce a markdown-syntax-guidelines-aligned response contract and keep one same-session workspace chat history file: append all successful turns to a single `kgc_yyyymmddhhmmss.md` under `chatLocalStorageRootPath` (unless explicitly configured), and do not create per-message chat files. In `chatKnowgrph` mode, `New Chat` must create/open a fresh `kgc_*.md` and route the next turn to that file. Commit one final assistant bubble: concise bullets (≤50 words) plus a workspace link to the current `kgc_*.md`. For `chatKnowgrph`, keep the leading block of `kgc_*.md` as the latest standalone parser-valid computing-flow-compatible KGC document, move same-session history into a trailing section, and require ordered sections plus non-empty `subject/action/goal/solution/request_md/solution_md`; when the model drifts, synthesize a deterministic KGC turn and preserve full prose in `request_md: |` + `solution_md: |`. Reserve one optional `response:` YAML block for standard chat responses, not the persisted `chatKnowgrph` KGC contract.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "FloatingPanel Chat 必须遵循 markdown-syntax-guidelines 对响应格式的约束，并在同一会话内保持单一工作区聊天历史文件：所有成功轮次都追加到 `chatLocalStorageRootPath` 下同一个 `kgc_yyyymmddhhmmss.md`（除非显式配置），不得按消息创建多个聊天文件。最终仅提交一个助手气泡：精炼要点（≤50 词）+ 指向当前 `kgc_*.md` 的工作区链接。对 `chatKnowgrph`，必须让 `kgc_*.md` 的首段始终是最新、可被解析器直接消费、符合 computing-flow sample 的独立 KGC 文档，并把同会话历史移到尾部区段；验收前要求有序 section 且 `subject/action/goal/solution/request_md/solution_md` 非空；当模型漂移时，合成确定性的 KGC turn，并用 `request_md: |` + `solution_md: |` 保留完整正文。可选的 `response:` YAML 块只适用于标准聊天响应，不属于持久化的 `chatKnowgrph` KGC 合约。",
+        "@language": "zh-cn"
+      }
+    ],
     "floatingPanelViewMetadataSsot": [
       {
         "@value": "Floating Panel must derive view buttons, shared header status chips, full-height body rules, and renderer-only header actions from one shell metadata path; cap width to the viewport, wrap header/status rows, keep only the active view mounted, and forbid per-view shell drift.",

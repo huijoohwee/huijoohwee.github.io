@@ -499,6 +499,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-chat-ai-markdown-pipeline-document.fallback-recovery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-chat-ai-markdown-pipeline-document.fallback-recovery.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.fallback-recovery.md"
+      },
+      "documentPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.fallback-recovery.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-chat-ai-markdown-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-chat-ai-markdown-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-codebase-index-document",
       "@type": "kg:Node",
       "labels": [
@@ -1379,6 +1411,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-settings-document-schema-and-specs",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-settings-document-schema-and-specs.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-settings-document-schema-and-specs.md"
+      },
+      "documentPath": "docs/documents/knowgrph-settings-document-schema-and-specs.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-settings-document",
       "@type": "kg:Node",
       "labels": [
@@ -1584,6 +1632,22 @@
         "relPath": "docs/documents/knowgrph-wireframe-enhanced-document.md"
       },
       "documentPath": "docs/documents/knowgrph-wireframe-enhanced-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:markdown-syntax-guidelines",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "markdown-syntax-guidelines.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/markdown-syntax-guidelines.md"
+      },
+      "documentPath": "docs/documents/markdown-syntax-guidelines.md",
       "language": "en-us"
     },
     {

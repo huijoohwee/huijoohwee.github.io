@@ -9,10 +9,10 @@ layout: cover
 aspectRatio: 16/9
 lang: en-US
 authors:
-  - A. Author 1
-  - B. Author 2
+  - A. HUI Joo Hwee
+  - B. airvio
 date: "2026-02-23"
-venue: "Example City"
+venue: "Singapore"
 url: "airvio.co"
 subject: "hackathon winners"
 action: "durable distribution beyond the weekend"

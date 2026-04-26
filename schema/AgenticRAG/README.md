@@ -67,6 +67,8 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 ### Git Rebase / Conflict Resolution (Cross‑Repo)
 
 - Prefer rebasing when syncing Knowgrph↔Schema changes to keep one linear history for contract updates.
+- Integrations pipeline docs must follow one-row-one-directive (max 50 words per directive) and keep runtime/doc behavior tied to one shared TS SSOT source.
+- Cross-repo integration directives are indexed at `knowgrph/docs/documents/knowgrph-integrations-ssot-sync-directives.md`.
 - Oversized `knowgrph/docs/documents` markdown stays split at stable section boundaries into companion files; keep the original filename as the canonical sub-600-line index and keep explicit continuation links to the companions.
 - KGC run lineage must stay explicit across docs and schema references: `kgc-trace_<ts>.md` -> `kgc_<ts>.md` (`Run`) -> `kgc-output_<ts>.md`.
 - Widget (Image/Video) documentation must describe one shared widget-bundle SSOT so JSON and Markdown projections remain parity-safe for `registry` and `graph` content.

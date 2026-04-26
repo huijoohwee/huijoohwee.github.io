@@ -181,6 +181,13 @@ python3 schema/AgenticRAG/sync_map.py --mode write
 python3 schema/AgenticRAG/sync_map.py --mode check
 ```
 
+### Integrations SSOT Sync Directives (Knowgrph)
+
+- Text/Image/Video widget pipelines must consume shared TS SSOT rows in runtime panels and generate static references from the same source scripts only.
+- MainPanel Integrations, Workflow Manager, and FloatingPanel Props Panel widget fields must stay schema-synchronized through shared field builders.
+- For directive updates, use one-row-one-directive wording (max 50 words per directive cell) in `knowgrph/todo-log.md` and `knowgrph/docs/documents/knowgrph-integrations-ssot-sync-directives.md`.
+- Oversized markdown docs must be sharded into companion files with continuation links; canonical originals stay under 600 lines.
+
 ## 🚀 Quick Start
 
 ### 1. **Reference Context in Your Data**

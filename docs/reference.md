@@ -54,6 +54,13 @@
 
 ---
 
+## Template Contracts
+
+| [Pitchdeck PRD TAD Frontmatter Contract](./pitchdeck-prd-tad-frontmatter-contract.md) | Canonical author-facing contract for the frontmatter-first pitchdeck templates |
+| [KGC AI Pipeline PRD TAD](./kgc-ai-pipeline-prd-tad.md) | Broader `kgc-pipeline/v1` frontmatter-first pipeline contract |
+
+---
+
 ## Demo
 
 | [Cargill Datathon](https://cargilldatathon.vercel.app/) | Cargill Datathon is a datathon for Cargill |

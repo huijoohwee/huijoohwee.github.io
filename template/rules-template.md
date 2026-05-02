@@ -2,6 +2,36 @@
 
 ## project-rules.md
 
+### 20260502
+
+```
+CODE HYGIENE
+- Lean MVP, SSOT, MECE, single-responsibility; <600 lines/file, <500kB chunks
+- Meaningful names (no abbrev except i/j/k); comment why, not what
+- No deep nesting, duplication, circular deps, hardcodes, silent failures
+
+ARCHITECTURE
+- Centralize config/constants; reuse shared utilities
+- Appropriate data structures, abstraction, early returns
+- Parallelise where possible; defer computation; release resources promptly
+
+PIPELINE
+- Optimize: batch, cache, chunk, virtualize, shard, lazy-load
+- Ensure thread safety; prevent race conditions
+
+CONFLICTS & STALE CODE
+- Neutralize from root/upstream; forbid downstream patches/alias remapping
+- Remove 100% legacy/stale/conflicting code; no backward-compat shims
+
+VALIDATION
+- Test focused diffs only; no indefinite full-codebase runs
+- Resolve issues; verify no regressions
+
+POST-TASK
+- Update cross-repo + API docs
+- Suggest next: /GitHub/knowgrph/{todo-log.md, docs/}, /GitHub/huijoohwee.github.io/schema/AgenticRAG
+```
+
 ```
 - ENFORCE Lean, MVP, SSOT, schema compliance, memoization, single-responsibility, <600 lines/file, <500kB chunks
 - CENTRALIZE config & constants (`COPY_*`, `LS_KEY_*`); REUSE shared utilities

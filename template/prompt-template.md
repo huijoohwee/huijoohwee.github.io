@@ -2,6 +2,8 @@
 
 ---
 
+`npm run dev`
+
 ```
 # UPDATE Dev to Prod -> PUSH to `airvio.co/knowgrph`
 - (FIX) Prod looks different from Dev
@@ -33,3 +35,7 @@ Toolbar -> Workspace View (Editor Workspace, Multi-dimensional Table), EXPLORER,
 ## AVOID, CLEANUP, FORBID churn, conflict, duplicate, freeze, infinite loop, hardcode, legacy, re-calculation, re-computation, re-rendering, stale; REUSE shared semantic-key helper, NEUTRALIZE from root/source/upstream (FORBID bug/issue exist at first place; layer local/downstream patches/stacking aliases; NO NEED backward compatibility by remapping legacy; REMOVE 100% legacy/stale/conflicting codes/hardcode fixtures/tests); REDUCE the hot-path cost without changing behavior, USE semantic signatures (NOT raw array identities), cache node/edge lookups per graph revision; only when widget mode is actually active -> BUILD the large widget bundle
 
 ---
+
+```
+EXTRACT repeated sequence into one helper that bundles filesystems persistence plus the shared writeback commit, while leaving the per-view content generation local
+```

@@ -467,6 +467,54 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-byteplus-openark-chat-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-byteplus-openark-chat-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-byteplus-openark-chat-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-byteplus-openark-chat-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-byteplus-openark-image-generation-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-byteplus-openark-image-generation-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-byteplus-openark-image-generation-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-byteplus-openark-image-generation-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-byteplus-openark-video-generation-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-byteplus-openark-video-generation-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-byteplus-openark-video-generation-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-byteplus-openark-video-generation-api-reference.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-canvas-default-initialization-document",
       "@type": "kg:Node",
       "labels": [
@@ -480,7 +528,8 @@
         "relPath": "docs/documents/knowgrph-canvas-default-initialization-document.md"
       },
       "documentPath": "docs/documents/knowgrph-canvas-default-initialization-document.md",
-      "language": "en-us"
+      "language": "en-us",
+      "chunk_text": "Initialization bootstrap contract: source text comes from huijoohwee/docs, materializes the 3-file workspace family (/README.md, /knowgrph-video-demo.md, /knowgrph-maps-grabmap-multim-demo.md), and treats frontmatter as the SSOT for D3, Flow Editor, and Geospatial landing without renderer seepage."
     },
     {
       "@id": "node:knowgrph:doc:knowgrph-canvas-document",
@@ -707,6 +756,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-flow-run-all-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-flow-run-all-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-flow-run-all-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-flow-run-all-reference.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-frontend-document-interactions-and-operations",
       "@type": "kg:Node",
       "labels": [
@@ -752,6 +817,38 @@
         "relPath": "docs/documents/knowgrph-geospatial-mode-document.md"
       },
       "documentPath": "docs/documents/knowgrph-geospatial-mode-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-grabmaps-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-grabmaps-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-grabmaps-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-grabmaps-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-grabmaps-sgp-administrative-areas-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-grabmaps-sgp-administrative-areas-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-grabmaps-sgp-administrative-areas-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-grabmaps-sgp-administrative-areas-reference.md",
       "language": "en-us"
     },
     {
@@ -931,6 +1028,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-integrations-ssot-sync-directives",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-integrations-ssot-sync-directives.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-integrations-ssot-sync-directives.md"
+      },
+      "documentPath": "docs/documents/knowgrph-integrations-ssot-sync-directives.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract",
       "@type": "kg:Node",
       "labels": [
@@ -1008,6 +1121,22 @@
         "relPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-mapping-stack-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-maps-grabmap",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-maps-grabmap.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-maps-grabmap.md"
+      },
+      "documentPath": "docs/documents/knowgrph-maps-grabmap.md",
       "language": "en-us"
     },
     {
@@ -1091,6 +1220,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mcp",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mcp.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mcp.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mcp.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-mermaid-frontmatter-document",
       "@type": "kg:Node",
       "labels": [
@@ -1168,6 +1313,22 @@
         "relPath": "docs/documents/knowgrph-native-overlap-resolution-document.md"
       },
       "documentPath": "docs/documents/knowgrph-native-overlap-resolution-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-natural-language-commands-md",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-natural-language-commands-md.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-natural-language-commands-md.md"
+      },
+      "documentPath": "docs/documents/knowgrph-natural-language-commands-md.md",
       "language": "en-us"
     },
     {
@@ -1296,7 +1457,8 @@
         "relPath": "docs/documents/knowgrph-pipeline-document.md"
       },
       "documentPath": "docs/documents/knowgrph-pipeline-document.md",
-      "language": "en-us"
+      "language": "en-us",
+      "chunk_text": "Pipeline contract: workspace initialization seeds load from huijoohwee/docs, keep root-level activation ids for the canonical 3-file family, and forbid post-parse autosuggest or metadata helpers from overriding explicit initialization-file frontmatter renderer and surface modes."
     },
     {
       "@id": "node:knowgrph:doc:knowgrph-pipeline-map.graph",
@@ -1312,6 +1474,38 @@
         "relPath": "docs/documents/knowgrph-pipeline-map.graph.json"
       },
       "documentPath": "docs/documents/knowgrph-pipeline-map.graph.json",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pitchdeck-frontmatter-template-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pitchdeck-frontmatter-template-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pitchdeck-frontmatter-template-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pitchdeck-frontmatter-template-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-pitchdeck",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pitchdeck.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pitchdeck.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pitchdeck.md",
       "language": "en-us"
     },
     {
@@ -1475,6 +1669,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-site-selection-widget",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-site-selection-widget.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-site-selection-widget.md"
+      },
+      "documentPath": "docs/documents/knowgrph-site-selection-widget.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-source-files-import-document",
       "@type": "kg:Node",
       "labels": [
@@ -1488,7 +1698,8 @@
         "relPath": "docs/documents/knowgrph-source-files-import-document.md"
       },
       "documentPath": "docs/documents/knowgrph-source-files-import-document.md",
-      "language": "en-us"
+      "language": "en-us",
+      "chunk_text": "Source Files bootstrap contract: huijoohwee/docs is the source-text SSOT, workspaceFs materializes /README.md, /knowgrph-video-demo.md, and /knowgrph-maps-grabmap-multim-demo.md into the local workspace root, and workspaceSeedSourceFiles keeps their canonical activation/source-file ids aligned."
     },
     {
       "@id": "node:knowgrph:doc:knowgrph-spreadsheet-storage-document",
@@ -1504,6 +1715,54 @@
         "relPath": "docs/documents/knowgrph-spreadsheet-storage-document.md"
       },
       "documentPath": "docs/documents/knowgrph-spreadsheet-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-stripe-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-stripe-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-stripe-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-stripe-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-stripe-mcp-service.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-stripe-mcp-service.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-stripe-mcp-service.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-stripe-mcp-service.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-stripe-mcp-service",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-stripe-mcp-service.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-stripe-mcp-service.md"
+      },
+      "documentPath": "docs/documents/knowgrph-stripe-mcp-service.md",
       "language": "en-us"
     },
     {
@@ -1635,6 +1894,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-wechat-mini-program",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-wechat-mini-program.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-wechat-mini-program.md"
+      },
+      "documentPath": "docs/documents/knowgrph-wechat-mini-program.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-wireframe-enhanced-document",
       "@type": "kg:Node",
       "labels": [
@@ -1648,6 +1923,22 @@
         "relPath": "docs/documents/knowgrph-wireframe-enhanced-document.md"
       },
       "documentPath": "docs/documents/knowgrph-wireframe-enhanced-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-workspace-export-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-workspace-export-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-workspace-export-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-workspace-export-reference.md",
       "language": "en-us"
     },
     {

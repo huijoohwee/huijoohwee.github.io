@@ -1,6 +1,8 @@
 # Hackamap — Full Stack · Critical Path · End-to-End Data Flow
 ### FOSS › TCO › Free Tier · Local-first · Solo · 3-Hour Build
 
+> Historical archive note: this artifact preserves the original 3-hour Hackamap build plan and its bipartite-era canvas terminology as a dated implementation snapshot, not as the current Knowgrph Flowchart naming contract.
+
 > **Reading key:** Every row = one tool/component. Columns span three dimensions simultaneously:
 > **STACK** (what it is) · **CRITICAL PATH** (when you touch it) · **DATA FLOW** (what goes in and out).
 > Sort or filter any column as you would in Airtable.

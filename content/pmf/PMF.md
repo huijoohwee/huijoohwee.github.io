@@ -3,6 +3,8 @@
 **Hackamap — Product-Market Fit Framework**
 `v1.0.0 · FOSS · 3-hour hackathon build`
 
+> Historical archive note: this document preserves the original hackathon-era PMF build description, including bipartite-era renderer wording, as a dated product snapshot rather than the current Knowgrph Flowchart contract.
+
 ---
 
 ## Concept

@@ -2,18 +2,18 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.27",
+  "schemaVersion": "1.0.28",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D: D3 Graph/D3 Bipartite/Flow/Design/Flow Editor, 3D, Voxel, Geospatial) do not drift or contaminate each other at runtime.",
+      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D: D3 Graph/Flowchart/Flow/Design/Flow Editor, 3D, Voxel, Geospatial) do not drift or contaminate each other at runtime.",
       "@language": "en-us"
     },
     {
-      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免不同渲染器（2D：D3 Graph/D3 Bipartite/Flow/Design/Flow Editor，3D，Voxel，Geospatial）在运行时发生漂移或相互污染。",
+      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免不同渲染器（2D：D3 Graph/Flowchart/Flow/Design/Flow Editor，3D，Voxel，Geospatial）在运行时发生漂移或相互污染。",
       "@language": "zh-cn"
     }
   ],
@@ -35,6 +35,16 @@
       },
       {
         "@value": "视图状态与缓存必须通过显式 key 隔离。2D 渲染器变体（D3/Flow/Design/Flow Editor）的 zoom 视图 key 必须按变体隔离，防止跨变体复用相机变换。zoom 与 layout 的 key 都必须来自同一份 schema→布局引擎指纹（必须包含 schema.layout.flow）。不同布局 key 之间禁止共享布局缓存。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterActivationAuthority": [
+      {
+        "@value": "When a workspace bootstrap or exact UI import activates a frontmatter-preset Markdown document, that activated document becomes the raw-frontmatter authority before composed source-file replay or metadata/layout helpers run. A previously active document must not reapply stale renderer or surface choices over the newly activated preset document.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当工作区启动或精确 UI 导入激活带 frontmatter 预设的 Markdown 文档时，该被激活文档必须先成为 raw-frontmatter 权威来源，然后才允许 composed source-file replay 或 metadata/layout helper 运行。此前已激活的文档不得把过期的 renderer 或 surface 选择重新覆盖到新激活的预设文档上。",
         "@language": "zh-cn"
       }
     ],
@@ -380,11 +390,11 @@
     ],
     "edgeTypesGlobalSsot": [
       {
-        "@value": "Edge visual types are controlled globally via schema.layout.edges.type∈{bezier,straight,step,smoothstep} and applied consistently across 2D D3/D3 Bipartite, Flow, Design, Flow Editor, and 3D. Global edge type is renderer-neutral, view-only, and must not change GraphData; it selects the path shape used for rendering while edge labels, structural fields, and semantics remain unchanged. Per-edge visual properties such as visual:width or visual:edgeType inside edge.properties may refine presentation but must not introduce domain-specific edge semantics.",
+        "@value": "Edge visual types are controlled globally via schema.layout.edges.type∈{bezier,straight,step,smoothstep} and applied consistently across 2D D3/Flowchart, Flow, Design, Flow Editor, and 3D. Global edge type is renderer-neutral, view-only, and must not change GraphData; it selects the path shape used for rendering while edge labels, structural fields, and semantics remain unchanged. Per-edge visual properties such as visual:width or visual:edgeType inside edge.properties may refine presentation but must not introduce domain-specific edge semantics.",
         "@language": "en-us"
       },
       {
-        "@value": "边的可视化类型由全局字段 schema.layout.edges.type∈{bezier,straight,step,smoothstep} 控制，并在 2D D3/D3 Bipartite、Flow、Design、Flow Editor 以及 3D 之间保持一致。全局 Edge Type 是与渲染器无关的纯视图开关，不得修改 GraphData，仅用于选择渲染时采用的路径形状；边的标签、结构字段与语义保持不变。边级的 visual:width 及 edge.properties 中的 visual:edgeType 等可视属性只能细化呈现效果，禁止引入任何特定领域的语义含义。",
+        "@value": "边的可视化类型由全局字段 schema.layout.edges.type∈{bezier,straight,step,smoothstep} 控制，并在 2D D3/Flowchart、Flow、Design、Flow Editor 以及 3D 之间保持一致。全局 Edge Type 是与渲染器无关的纯视图开关，不得修改 GraphData，仅用于选择渲染时采用的路径形状；边的标签、结构字段与语义保持不变。边级的 visual:width 及 edge.properties 中的 visual:edgeType 等可视属性只能细化呈现效果，禁止引入任何特定领域的语义含义。",
         "@language": "zh-cn"
       }
     ],
@@ -466,21 +476,21 @@
         "@language": "zh-cn"
       }
     ],
-    "bipartiteSuperGroups2dD3": [
+    "flowchartSuperGroups2d": [
       {
-        "@value": "The 2D D3 Bipartite renderer must treat bipartite graphs (nodes with type∈{problem,solution} and cluster ids from metadata) as a nested super-group hierarchy: a root Bipartite super-group over all bipartite nodes, side super-groups for Problems/Solutions, and per-cluster groups under each side. This hierarchy is expressed structurally via subgraphs (kg:subgraphs metadata) and reused by layout/fit/visibility; renderer-specific flags must not fork a parallel grouping model.",
+        "@value": "The 2D Flowchart renderer must treat Flowchart graphs (nodes with type∈{problem,solution} and cluster ids from metadata) as a nested super-group hierarchy: a root Flowchart super-group over all Flowchart nodes, side super-groups for Problems/Solutions, and per-cluster groups under each side. This hierarchy is expressed structurally via subgraphs (kg:subgraphs metadata) and reused by layout/fit/visibility; renderer-specific flags must not fork a parallel grouping model.",
         "@language": "en-us"
       },
       {
-        "@value": "2D D3 的 Bipartite 渲染器必须将二部图（节点 type∈{problem,solution} 且 cluster id 来自元数据）视为嵌套的 super-group 层级：根 Bipartite super-group 覆盖所有二部节点，其下按侧划分 Problems/Solutions super-group，再在每一侧下根据 cluster 建立子分组。该层级必须通过结构化的子图（kg:subgraphs 元数据）表达，并被 layout/fit/visibility 复用；禁止通过渲染器特定标志建立并行的分组模型。",
+        "@value": "2D 的 Flowchart 渲染器必须将 Flowchart 图（节点 type∈{problem,solution} 且 cluster id 来自元数据）视为嵌套的 super-group 层级：根 Flowchart super-group 覆盖所有 Flowchart 节点，其下按侧划分 Problems/Solutions super-group，再在每一侧下根据 cluster 建立子分组。该层级必须通过结构化的子图（kg:subgraphs 元数据）表达，并被 layout/fit/visibility 复用；禁止通过渲染器特定标志建立并行的分组模型。",
         "@language": "zh-cn"
       },
       {
-        "@value": "Bipartite layouts must keep problem/solution nodes in separated left/right lanes derived from shared layout/index anchors and schema-only force knobs. Super-group/group envelopes and headers are part of fit geometry and must remain visible during interaction (click/drag/zoom) without requiring renderer switching. Edge visibility in Bipartite mode uses schema + per-edge visual width/opacity only; highlight/dimming must never fully hide the bipartite line structure when nodes remain visible.",
+        "@value": "Flowchart layouts must keep problem/solution nodes in separated left/right lanes derived from shared layout/index anchors and schema-only force knobs. Super-group/group envelopes and headers are part of fit geometry and must remain visible during interaction (click/drag/zoom) without requiring renderer switching. Edge visibility in Flowchart mode uses schema + per-edge visual width/opacity only; highlight/dimming must never fully hide the Flowchart line structure when nodes remain visible.",
         "@language": "en-us"
       },
       {
-        "@value": "Bipartite 布局必须通过共享的布局/index 锚点与仅由 schema 控制的力参数，将 problem/solution 节点保持在左右分离的“车道”中。super-group/group 的边界与标题属于 fit 几何的一部分，交互（点击/拖拽/缩放）期间必须保持可见，无需通过切换渲染器来“找回”分组。Bipartite 模式下边的可见性只能由 schema 与每条边的可视宽度/不透明度控制；即使存在高亮/弱化，也不得在节点可见时完全隐藏二部“连线”结构。",
+        "@value": "Flowchart 布局必须通过共享的布局/index 锚点与仅由 schema 控制的力参数，将 problem/solution 节点保持在左右分离的“车道”中。super-group/group 的边界与标题属于 fit 几何的一部分，交互（点击/拖拽/缩放）期间必须保持可见，无需通过切换渲染器来“找回”分组。Flowchart 模式下边的可见性只能由 schema 与每条边的可视宽度/不透明度控制；即使存在高亮/弱化，也不得在节点可见时完全隐藏 Flowchart“连线”结构。",
         "@language": "zh-cn"
       }
     ]

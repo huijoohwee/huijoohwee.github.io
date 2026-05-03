@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Pipeline",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.10",
+  "schemaVersion": "1.0.11",
   "rdfs:comment": [
     {
       "@value": "Defines the high-level, domain-agnostic GraphRAG pipeline surface. Configuration is externalized and structurally validated. Runtime import→render flows must be order-safe and batch-aware: bulk imports coalesce change notifications, and late async completions must not override the current user-selected view. Imports default to local execution for sensitive data (PDF→Markdown native local provider with optional online enrichment behind explicit configuration; bounded image persistence via data: URI embedding with safe same-origin cache fallback). Webpage import converts URL→Markdown for graph alignment and exposes view-only projections (Markdown/JSON/HTML) controlled by neutral frontmatter keys (kgWebpageUrl/kgWebpageView). Conversion is browser-native (sandboxed iframe DOM export) with bounded same-origin proxy fetch fallback (supporting both remote URLs and local workspace files), and upgrades fidelity for JS-rendered content without external headless browser dependencies. A dedicated layout export mode uses the same sandboxed bridge (kg-export-dom) to capture URL-agnostic DOM layout snapshots (webpageLayout) with neutral HTML/CSS/JS heuristics (bounding boxes + sanitized style/attrs only) and bounded multi-round sampling keyed by timeout/networkIdle/domQuiet/viewport/element caps. Website import (sitemap/tree) persists per-page artifacts and should expose a small progress snapshot for polling; UI polling must be bounded/backoff-aware and workspace writes must be concurrency-limited to prevent freezes. UI render surfaces consume a single SSOT-derived active graph render view (keyword base → optional frontmatter filter → optional group collapse). Cross-repo modularity is enforced via declared package entrypoints, SSOT shared graph types (grph-shared/graph/types), and centrally defined namespaced persistence keys. Render-stage caches isolate all render-affecting toggles (view keys, media density/toggles); 2D renderer variant toggles must not reseed layouts or reset viewports. State-sync and indexing stages must use revision+viewKey gating and shared coalesced scheduler keys per concern (workspace FS, source files, per-document UI, tables, markdown SSOT) instead of ad-hoc timers. Public graph pipelines should prefer precomputed, deterministic API payload artifacts over duplicating runtime graph-to-view transforms in multiple hosts; fallback transforms may exist only as bounded resilience paths. Published mobile runtime hints should drive compact API-backed controls and safe-area spacing instead of host-specific breakpoint forks. Mobile/web install metadata must remain source-owned in the app build pipeline, not hand-patched in mirrored deploy artifacts.",
@@ -18,6 +18,14 @@
     },
     {
       "@value": "已安装 PWA shell 必须通过同一共享 runtime helper 识别 `standalone`、`fullscreen` 与 `minimal-ui`，并发布 display/install/offline/update 数据集以支持纯 CSS shell 调优。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Workspace Markdown imports with explicit canvas frontmatter must be activation-order-safe: the first imported document promoted for focus becomes the active authority before composed source-file replay, preserving frontmatter-selected D3, Flow Editor, or Geospatial landing without stale overrides from the previously selected document.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "带显式 canvas frontmatter 的工作区 Markdown 导入必须具备激活顺序安全：被提升为聚焦目标的首个导入文档，必须先成为 active authority，然后才允许 composed source-file replay 运行，从而保留 frontmatter 指定的 D3、Flow Editor 或 Geospatial 落点，禁止此前已选中文档产生过期覆盖。",
       "@language": "zh-cn"
     }
   ],

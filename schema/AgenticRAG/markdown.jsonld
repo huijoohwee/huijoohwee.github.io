@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.36",
+  "schemaVersion": "1.0.37",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -38,6 +38,14 @@
     },
     {
       "@value": "跨界面 Markdown 同步：Slides Gallery、Graph Data 与 Canvas 的投影视图必须渲染同一份当前文档 Markdown 文本 SSOT，且不得在不同 activeDocumentPath 之间复用已记忆化的 Markdown token 缓存；仅当缓存记录的 tokensPath 与 activeDocumentPath 相同才可复用（防止跨文档串扰与视图切换时内容消失）。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Frontmatter-preset Markdown import activation is order-safe: the document chosen for focus by the exact UI import flow becomes the active raw-frontmatter authority before composed source-file replay. Previously selected documents must not overwrite the imported document's frontmatter-selected renderer or surface landing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "带 frontmatter 预设的 Markdown 导入激活必须具备顺序安全：精确 UI 导入流程选中用于聚焦的文档，必须先成为 active raw-frontmatter 权威来源，然后才允许 composed source-file replay 运行。此前已选择的文档不得覆盖导入文档由 frontmatter 指定的 renderer 或 surface 落点。",
       "@language": "zh-cn"
     },
     {

@@ -6,7 +6,9 @@
     "build_time_hours": 3,
     "tco": "$0/month",
     "stack_philosophy": "FOSS (MIT/Apache/BSD) > TCO > Free Tier · Local-first · Solo sequential build",
-    "generated": "2026-03-29"
+    "generated": "2026-03-29",
+    "historicalArchive": true,
+    "historicalContext": "Preserves the original 3-hour Hackamap build plan and bipartite-era canvas terminology as a dated implementation snapshot, not the current Knowgrph Flowchart naming contract."
   },
 
   "stack": [

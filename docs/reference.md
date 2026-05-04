@@ -61,6 +61,12 @@
 
 ---
 
+## Topology Contracts
+
+| [HJH Topology Document](./documents/hjh-topology-document.md) | Shared PRD/TAD-style cross-repo topology for `knowgrph`, `singabldr`, `huijoohwee`, and Cloudflare Pages |
+
+---
+
 ## Demo
 
 | [Cargill Datathon](https://cargilldatathon.vercel.app/) | Cargill Datathon is a datathon for Cargill |

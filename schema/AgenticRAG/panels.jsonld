@@ -138,6 +138,16 @@
         "@language": "zh-cn"
       }
     ],
+    "storageConflictActionReuse": [
+      {
+        "@value": "Storage sync conflict UX must reuse the shared toast/log/runtime action path. Toast cards and History log rows may render the same action descriptors (`Keep Local`, `Accept Remote`, `Review Log`) and dispatch through one shared UI action runtime; duplicate conflict-only panels or modals are forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "存储同步冲突 UX 必须复用共享的 toast/log/runtime 动作路径。Toast 卡片与 History 日志行可以渲染同一组动作描述符（`Keep Local`、`Accept Remote`、`Review Log`），并通过同一个共享 UI action runtime 分发；禁止新增专属的冲突面板或模态框。",
+        "@language": "zh-cn"
+      }
+    ],
     "floatingPanelChatSessionFileAndMarkdownContract": [
       {
         "@value": "FloatingPanel Chat must enforce a markdown-syntax-guidelines-aligned response contract and keep one same-session `chatKnowgrph` workspace file: write the latest validated `kgc-pipeline/v1` base-template KGC document into the active `kgc_yyyymmddhhmmss.md` under `chatLocalStorageRootPath` (unless explicitly configured), and do not create per-message chat files. In `chatKnowgrph` mode, `New Chat` must create/open a fresh `kgc_*.md` and route the next turn to that file. Commit one final assistant bubble: concise bullets (≤50 words) plus a workspace link to the current `kgc_*.md`. Canonical acceptance must enforce frontmatter↔body linkage (base-template allows dotted `runtime.*` refs) and normalize only `links.self_ref` from the filename. Reserve one optional `response:` YAML block for standard chat responses, not the persisted `chatKnowgrph` KGC contract.",

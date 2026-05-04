@@ -36,7 +36,7 @@ Repo: `huijoohwee` (Vite + static content + Cloudflare Pages Functions)
 
 ### Performance sanity checks
 - Asset size review (largest deploy artifacts):
-  - `content/singabldr/assets/app-F2P7J5VB.js` ~824KB
+- `content/singabldr/assets/app.rebundled.js` (main Singabldr bundle)
   - `content/hackamap/hackamap-graph.json` ~620KB
 - Attempted `npm run build` in this environment, but it failed because `node_modules` appears to contain macOS/darwin Rollup native packages, not Linux ones.
 
@@ -136,4 +136,3 @@ Repo: `huijoohwee` (Vite + static content + Cloudflare Pages Functions)
 - [ ] Add private/loopback blocking (or allowlist) to `link-preview` + `link-proxy`.
 - [ ] Add baseline security headers in `_headers`.
 - [ ] Ensure CI/build uses clean installs (`npm ci`) and doesn’t deploy `node_modules/`.
-

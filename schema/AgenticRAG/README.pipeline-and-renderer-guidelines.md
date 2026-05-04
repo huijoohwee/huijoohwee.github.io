@@ -69,7 +69,7 @@
 - Date columns: infer ISO-like date strings as `kind: date` so the Date editor behavior is available end-to-end from imports; treat `text → date` upgrades as safe-only.
 - Sync stability: gate RxDB sync by a `(revision, collapsedGroupIdsKey, viewKey)` triple and respect Canvas interaction/sync modes. In static interaction mode, use structure-only revisions (graphContentRevision) so position-only drags do not cause table recomputation; in interactive interaction mode, use full graph revisions (graphDataRevision) only when Workspace Sync Mode is realtime. Manual sync disables auto sync and exposes a single **Sync now** action in the Graph Table header; realtime uses the same pipeline triggered by revision changes and deduped via last-write/last-sync gates so collapsed-view toggles update the table without introducing render/rewrite loops.
 
-### Graph Data Table (Curation Table) (curagrph)
+### Graph Data Table (Curation Table) (singabldr)
 
 - The curation Graph Data Table is a DOM `<table>` surface (BottomPanel / curation views) over the same SSOT-derived active graph render view.
 - Sticky header and optional frozen first data column must remain aligned with horizontal scroll; avoid empty sticky overlays that block pointer interaction.
@@ -147,7 +147,7 @@
 - Repo hygiene: never commit `.knowgrph-workspace/**`, `node_modules/**`, or `backups/**` (store workspace artifacts under `sandbox/.knowgrph-workspace/` via symlink); if large artifacts were committed previously, purge history via `git-filter-repo` and force-push rewritten `main`.
 
 ## Pipeline Discipline
-- Scope: `/GitHub/{knowgrph,gympgrph,curagrph}` → import → render.
+- Scope: `/GitHub/{knowgrph,gympgrph,singabldr}` → import → render.
 - Support all `/GitHub/sandbox/` test data; no hardcoding.
 - FORBID absolute local sandbox paths (e.g. `/Users/.../GitHub/sandbox/...`) in code/tests; use sandbox-root helpers + basenames or repo-local fixtures.
 - Use semantic HTML for surface boundaries; use `div` for layout-only wrappers.

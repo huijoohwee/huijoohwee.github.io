@@ -121,7 +121,23 @@
         "@language": "en-us"
       },
       {
+        "@value": "For multi-app Pages delivery, keep each app in its own Dev SSOT repo, sync only generated publish surfaces into the shared publish repo, and keep public route ownership isolated per app.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "When a canonical Markdown document exceeds the line cap, keep the original path as the sub-600-line index, move overflow into companion files with explicit continuation links, and refresh sync artifacts so canonical and companion docs remain separately addressable.",
+        "@language": "en-us"
+      },
+      {
         "@value": "在进行优化或重构前，应清理与变更无关的暂存修改，只保留范围明确的代码/测试 diff，并将生成的部署工件（如 content/knowgrph）视为来自构建流水线的输出，而非手工编辑的配置。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "对于多应用 Pages 发布，应让每个应用保持独立的 Dev SSOT 仓库，只把生成后的发布面同步到共享发布仓库，并按应用隔离公共路由所有权。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "当规范 Markdown 文档超过行数上限时，应保留原路径作为 600 行以内的索引文件，将溢出内容移入带明确续读链接的 companion 文件，并刷新同步工件，使规范文件与 companion 文件都能被单独寻址。",
         "@language": "zh-cn"
       }
     ]

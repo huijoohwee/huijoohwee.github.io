@@ -384,6 +384,24 @@
       "@language": "zh-cn"
     }
   ],
+  "storageSyncContracts": [
+    {
+      "@value": "Canonical Markdown remains Git-owned source text; browser editing stays local-first through RxDB; optional Cloudflare Worker + D1 sync may pull remote document updates back into the visible Source Files workspace so Canvas recomposes through the existing runtime path rather than a second import flow.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "规范 Markdown 仍是 Git 管理的源文本；浏览器编辑通过 RxDB 保持 local-first；可选的 Cloudflare Worker + D1 同步可将远端文档更新拉回可见的 Source Files 工作区，使 Canvas 通过现有运行时路径重组，而不是走第二套导入流程。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Storage-sync conflicts should retain local outbox records until resolution and reuse the shared toast/log action surfaces instead of introducing a markdown-specific conflict UI.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "存储同步冲突应在解决前保留本地 outbox 记录，并复用共享的 toast/log 动作表面，而不是引入 Markdown 专属的冲突 UI。",
+      "@language": "zh-cn"
+    }
+  ],
   "localMarkdownCrud": {
     "supportedActions": [
       {

@@ -36,7 +36,7 @@ POST-TASK
 - ENFORCE Lean, MVP, SSOT, schema compliance, memoization, single-responsibility, <600 lines/file, <500kB chunks
 - CENTRALIZE config & constants (`COPY_*`, `LS_KEY_*`); REUSE shared utilities
 - OPTIMIZE happy-path pipeline (batch/cache/chunk/loading/memory/rendering/sharding/virtualization)
-- APPLY MECE, early returns, appropriate abstraction; RESOLVE issues; PREVENT cross-repo conflicts: `/GitHub/{knowgrph,curagrph,gympgrph}`
+- APPLY MECE, early returns, appropriate abstraction; RESOLVE issues; PREVENT cross-repo conflicts: `/GitHub/{knowgrph,singabldr,gympgrph}`
 - NAME meaningfully (no abbrev except i/j/k); GROUP related code; COMMENT why not what
 - AVOID deep nesting, unnecessary object creation/cloning, redundant calc/render, memory leaks
 - DEFER computation; RELEASE resources promptly; IDENTIFY parallelizable tasks

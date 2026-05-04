@@ -69,7 +69,11 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Prefer rebasing when syncing Knowgrph↔Schema changes to keep one linear history for contract updates.
 - Integrations pipeline docs must follow one-row-one-directive (max 50 words per directive) and keep runtime/doc behavior tied to one shared TS SSOT source.
 - Cross-repo integration directives are indexed at `knowgrph/docs/documents/knowgrph-integrations-ssot-sync-directives.md`.
+- Multi-app publish topology keeps `knowgrph` and `singabldr` as separate Dev SSOT repos, syncs only generated app surfaces into `huijoohwee`, and keeps `airvio.co/knowgrph` and `airvio.co/singabldr` route ownership isolated.
 - Oversized `knowgrph/docs/documents` markdown stays split at stable section boundaries into companion files; keep the original filename as the canonical sub-600-line index and keep explicit continuation links to the companions.
+- Storage docs follow the same sharding rule: `knowgrph-storage-document.md` stays the canonical sub-600-line index, companion files carry schema/runtime detail, and the docs map must keep canonical and companion files as separate nodes.
+- Knowgrph storage remains Git-markdown canonical plus browser-local RxDB working state, with optional Cloudflare Worker + D1 shared sync; pulled remote records must re-enter visible `sourceFiles` through the existing runtime path rather than a second import flow.
+- Storage sync conflict resolution must reuse the shared toast/log/runtime action path; the same action descriptors may appear in toast cards and History log rows, and duplicate conflict-only panels or modals are forbidden.
 - KGC run lineage must stay explicit across docs and schema references: `kgc-trace_<ts>.md` -> `kgc_<ts>.md` (`Run`) -> `kgc-output_<ts>.md`.
 - Widget (Image/Video) documentation must describe one shared widget-bundle SSOT so JSON and Markdown projections remain parity-safe for `registry` and `graph` content.
 - Ingest→parse→render doc sync should treat `knowgrph-computing-data-flows-import-render-pipeline-document.md` and the computing-flow sample as the canonical fixture/doc pair; companion-file sharding must preserve the original doc path for stable sync-map references.

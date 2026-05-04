@@ -628,6 +628,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-cross-repo-publish-topology",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-cross-repo-publish-topology.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-cross-repo-publish-topology.md"
+      },
+      "documentPath": "docs/documents/knowgrph-cross-repo-publish-topology.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-database",
       "@type": "kg:Node",
       "labels": [
@@ -1715,6 +1731,38 @@
         "relPath": "docs/documents/knowgrph-spreadsheet-storage-document.md"
       },
       "documentPath": "docs/documents/knowgrph-spreadsheet-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-storage-document-runtime-and-conflict-ux",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storage-document-runtime-and-conflict-ux.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storage-document-runtime-and-conflict-ux.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storage-document-runtime-and-conflict-ux.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-storage-document-schemas-and-topology",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storage-document-schemas-and-topology.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storage-document-schemas-and-topology.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storage-document-schemas-and-topology.md",
       "language": "en-us"
     },
     {

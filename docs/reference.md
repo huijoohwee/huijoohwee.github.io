@@ -64,6 +64,7 @@
 ## Topology Contracts
 
 | [HJH Topology Document](./documents/hjh-topology-document.md) | Shared PRD/TAD-style cross-repo topology for `knowgrph`, `singabldr`, `huijoohwee`, and Cloudflare Pages |
+| [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Commit-backed canonical shared directive log for cross-repo workspace tasks that do not belong to one app repo |
 
 ---
 

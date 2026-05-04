@@ -108,6 +108,7 @@ If a repo still contains duplicated publish-side source, remove it from the publ
 
 ## Cross-References
 
+- Shared directive log: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`
 - Knowgrph canonical companion: `knowgrph/docs/documents/knowgrph-cross-repo-publish-topology.md`
 - Singabldr canonical companion: `singabldr/docs/documents/singabldr-cross-repo-publish-topology.md`
 - Shared schema guidance: `huijoohwee.github.io/schema/AgenticRAG/{README.md,documentation.jsonld}`

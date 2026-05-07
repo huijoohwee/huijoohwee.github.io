@@ -12,6 +12,8 @@ authors:
   - A. HUI Joo Hwee
   - B. airvio
 date: "2026-02-23"
+updated: "2026-05-05"
+media_grid_version: "1.0"
 venue: "Singapore"
 url: "airvio.co"
 subject: "hackathon winners"
@@ -215,25 +217,17 @@ Pain point and solution from the shared sample, with annotation sigils applied:
 
 ### Rationale
 
-`{{variable}}` is the industry-standard template interpolation syntax (Handlebars,
-Mustache, Jinja2, Liquid, GitHub Actions). It signals "this is a placeholder" to
-both humans and machines, is mobile-friendly, and passes through Markdown renderers
-as literal text — always readable as a fallback.
+`{{variable}}` is the industry-standard template interpolation syntax (Handlebars, Mustache, Jinja2, Liquid, GitHub Actions). 
+It signals "this is a placeholder" to both humans and machines, is mobile-friendly, and passes through Markdown renderers as literal text — always readable as a fallback.
 
-**Floating variable toolbar:** type `@` anywhere in the document to invoke a
-floating CRUD toolbar for creating, reading, updating, and deleting `{{variable}}`
-declarations. The toolbar is the single management surface for all variables —
-no need to hunt for `{{key:value}}` declarations scattered across the document.
+**Floating variable toolbar:** type `@` anywhere in the document to invoke a floating CRUD toolbar for creating, reading, updating, and deleting `{{variable}}` declarations. 
+The toolbar is the single management surface for all variables — no need to hunt for `{{key:value}}` declarations scattered across the document.
 
-**Mermaid scope rule:** `{{}}` inside a fenced `mermaid` block retains its
-Mermaid meaning (hexagon node shape). `{{}}` outside Mermaid blocks is exclusively
-the variable/reference sigil. The two contexts are mutually exclusive by block
-boundary and never overlap.
+**Mermaid scope rule:** `{{}}` inside a fenced `mermaid` block retains its Mermaid meaning (hexagon node shape). `{{}}` outside Mermaid blocks is exclusively the variable/reference sigil. 
+The two contexts are mutually exclusive by block boundary and never overlap.
 
-**YAML frontmatter harmonisation:** `{{key}}` in body prose resolves from
-frontmatter keys first. A `{{subject}}` reference resolves from
-`subject: "hackathon winners"` in the YAML frontmatter — no separate inline
-declaration needed when the key already exists in frontmatter.
+**YAML frontmatter harmonisation:** `{{key}}` in body prose resolves from frontmatter keys first. 
+A `{{subject}}` reference resolves from `subject: "hackathon winners"` in the YAML frontmatter — no separate inline declaration needed when the key already exists in frontmatter.
 
 ### Syntax
 
@@ -261,9 +255,8 @@ Type `@` to open the toolbar. Operations available:
 | Update | `@ → Edit key` | updates frontmatter value; all `{{key}}` references resolve to new value |
 | Delete | `@ → Delete key` | removes frontmatter key; orphaned `{{key}}` render as literal fallback |
 
-All `{{variable}}` CRUD is centralised in frontmatter. Inline `{{key:value}}`
-declarations are write-once shortcuts — use the `@` toolbar to manage them
-after first declaration.
+All `{{variable}}` CRUD is centralised in frontmatter. 
+Inline `{{key:value}}` declarations are write-once shortcuts — use the `@` toolbar to manage them after first declaration.
 
 ### YAML frontmatter → `{{}}` mapping
 
@@ -294,8 +287,7 @@ publish a project gallery with winner-marked submissions and links to demos/repo
 
 ### Sample — variable in table cell
 
-Table referencing frontmatter keys — one declaration, reused across all rows
-that share the same pain point and solution:
+Table referencing frontmatter keys — one declaration, reused across all rows that share the same pain point and solution:
 
 | id | Pain Point | Solution |
 |---|---|---|
@@ -474,14 +466,14 @@ INSERT INTO hackathon_demos (
 
 ### Rationale
 
-The knowledge graph canvas supports a ReactFlow-style workflow editor mode
-alongside the static Mermaid diagram. In workflow editor mode the graph is
-interactive and computable: nodes have typed input/output handles, edges carry
-live data, and node state is computed from upstream values — exactly as in
-https://reactflow.dev/learn/advanced-use/computing-flows.
+The knowledge graph canvas supports a ReactFlow-style workflow editor mode alongside the static Mermaid diagram. 
+In workflow editor mode the graph is interactive and computable: 
+nodes have typed input/output handles, 
+edges carry live data, and 
+node state is computed from upstream values — exactly as in https://reactflow.dev/learn/advanced-use/computing-flows.
 
-Markdown is the authoring format. The canvas renderer reads the frontmatter
-`flow:` block and body `@node` / `@edge` sigils and hydrates a ReactFlow graph.
+Markdown is the authoring format. 
+The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edge` sigils and hydrates a ReactFlow graph.
 
 ### Concept map — Mermaid vs. Flow Editor
 
@@ -497,8 +489,8 @@ Markdown is the authoring format. The canvas renderer reads the frontmatter
 
 ### Frontmatter — `flow:` block
 
-Declared in YAML frontmatter alongside `mermaid:`. The canvas renderer uses
-`flow:` for the interactive editor and `mermaid:` for the static diagram view.
+Declared in YAML frontmatter alongside `mermaid:`. 
+The canvas renderer uses `flow:` for the interactive editor and `mermaid:` for the static diagram view.
 Both represent the same graph — authors write one; the canvas maintains sync.
 
 ```yaml
@@ -571,6 +563,7 @@ flow:
 | `default` | `<DefaultNode>` | transform / compute step | both target + source handles |
 | `output` | `<OutputNode>` | terminal / sink | target handles only |
 | `custom` | `<CustomNode>` | AI Chat UI; score display; alert | any handle config |
+| `custom` + `mediaType:` | `<MediaNode>` | image / video / audio / iframe / code / model block; declared via `<!-- media -->` comment marker | `media` source handle only; see Rich Media Grid Guidelines |
 
 ### Handle naming convention
 
@@ -584,6 +577,7 @@ as PostgreSQL column names. This makes the handle-to-JSONB mapping direct.
 | `score` | `float` | `confidence FLOAT` |
 | `winners` | `object[]` | `award TEXT` |
 | `signal` | `boolean` | — (ephemeral) |
+| `media` | `object` | `data JSONB` — typed media node; see Rich Media Grid Guidelines |
 
 ### `compute:` function
 
@@ -638,8 +632,8 @@ Resolved in the canvas as a colored node label + flag badge on the node card.
 
 ### Variable references in `flow:` block
 
-All `{{key}}` references in the `flow:` block resolve from frontmatter before
-the canvas renders. This means node labels, edge labels, handle data, and
+All `{{key}}` references in the `flow:` block resolve from frontmatter before the canvas renders. 
+This means node labels, edge labels, handle data, and
 `compute:` function strings are all variable-aware.
 
 ```yaml
@@ -652,8 +646,8 @@ the canvas renders. This means node labels, edge labels, handle data, and
 
 ### PostgreSQL JSONB mapping — flow nodes and edges
 
-Flow nodes and edges are stored as JSONB rows, mirroring the `hackamap-demos`
-schema. The `data:` field maps directly to `metadata JSONB`.
+Flow nodes and edges are stored as JSONB rows, mirroring the `hackamap-demos` schema. 
+The `data:` field maps directly to `metadata JSONB`.
 
 ```sql
 CREATE TABLE flow_nodes (
@@ -757,7 +751,470 @@ flow:
 | Computed value | `compute: \|` YAML block | pure fn; inputs → outputs map | see `compute:` above |
 | Handle | `handleName` in `handles:` | `snake_case`; matches PG column | `urls`, `demos`, `score` |
 | Node type | `input` / `default` / `output` / `custom` | ReactFlow node type | `type: output` |
+| Media node reference | `` `@node:m-{id}` `` | resolve to single media node by `id`; `m-` prefix convention | `` `@node:m-gallery-output` `` |
+| Media row container reference | `` `@node:mr-{id}` `` | resolve to `media-row` container node; `mr-` prefix convention | `` `@node:mr-phase1-compare` `` |
+| Edge from media node | `` `@edge:m-{id}:media→n-{id}:{handle}` `` | edge from `media` source handle to downstream node | `` `@edge:m-gallery-output:media→n-extract:demos` `` |
 
+
+---
+
+## Rich Media Grid Guidelines
+
+### Rationale
+
+Native Markdown supports only `![]()` image syntax. 
+All other media types — video, audio, iframe embeds, code playgrounds — require raw HTML, which breaks JSONB portability and introduces XSS surface. 
+The KGC comment-marker convention is extended here to cover all rich media types using the same `<!-- key: value | … -->` pipe-delimited pattern already established for annotation sigils and variable references. 
+No new fence syntax is introduced; blank-line separation remains the node boundary convention.
+
+Three design goals drive every rule in this section:
+
+1. **Token efficiency** — comment markers are ~3–5× smaller than equivalent HTML wrappers
+2. **JSONB portability** — every media block maps to a single typed `data:` JSONB object with no intermediate transformation
+3. **Graceful fallback** — non-canvas Markdown renderers see either a valid `![]()` image, a bare URL, or descriptive prose; never broken HTML
+
+### Media type taxonomy
+
+| `type` | Markdown surface | Canvas node | Fallback (non-canvas) |
+|---|---|---|---|
+| `image` | `![]()` | `<ImageNode>` | native `<img>` |
+| `video` | bare URL or `![]()` | `<VideoNode>` | bare URL as link |
+| `audio` | bare URL | `<AudioNode>` | bare URL as link |
+| `iframe` | bare URL | `<IframeNode>` | bare URL as link |
+| `code` | fenced code block | `<CodeNode>` | standard fenced block |
+| `model` | bare URL (`.glb`/`.gltf`) | `<ModelNode>` | bare URL as link |
+
+`type` is inferred from file extension or URL pattern when not declared explicitly in the comment marker. Explicit declaration always wins.
+
+### Comment marker syntax
+
+All media comment markers follow the same pipe-delimited pattern used throughout this document:
+
+```
+<!-- media | type: TYPE | key: value | key: value -->
+```
+
+The `type:` key is the only required key for non-image media. 
+All other keys are optional and order-independent. 
+Unknown keys are silently ignored (forward-compatible).
+
+**Key reference — all media types**
+
+| Key | Required | Type | Notes |
+|---|---|---|---|
+| `type` | yes (non-image) | `image` / `video` / `audio` / `iframe` / `code` / `model` | inferred from extension if omitted |
+| `alt` | yes (informational) | prose string | canvas node `label`; overrides `![]` bracket text |
+| `caption` | no | prose string or `{{key}}` | rendered below media in canvas |
+| `src` | no | URL or path | overrides the URL/path on the line below; use for programmatic generation |
+| `aspect` | no | `16/9` / `4/3` / `1/1` / `9/16` | default `16/9` for video/iframe; `auto` for image |
+| `autoplay` | no | `true` / `false` | video/audio only; default `false` |
+| `loop` | no | `true` / `false` | video/audio only; default `false` |
+| `muted` | no | `true` / `false` | video only; default `true` when `autoplay: true` |
+| `controls` | no | `true` / `false` | video/audio only; default `true` |
+| `poster` | no | URL or path | video only; thumbnail before play |
+| `sandbox` | no | space-separated token list | iframe only; default `allow-scripts allow-same-origin` |
+| `allow` | no | feature-policy string | iframe only; e.g. `fullscreen; autoplay` |
+| `lang` | no | language identifier | `code` type only; e.g. `python`, `ts` |
+| `flag` | no | `@flag:value` | forwarded to node `data.flag`; parsed as `@flag` sigil |
+| `ref` | no | `{{key}}` | resolves variable as `caption` or `alt` source |
+| `confidence` | no | `low` / `medium` / `high` | maps to dashed / partial / solid node stroke; default `high` |
+
+**Rules**
+
+- Comment marker must appear on the line **immediately preceding** its media URL or `![]()` line. No blank line between marker and media.
+- Pipe characters (`|`) are the key separator inside comment markers — never use `|` inside key values. Use an em-dash (`—`) instead.
+- `alt:` in the comment marker takes precedence over `![]` bracket text. Keep `![]` text as a non-canvas prose fallback.
+- `{{key}}` in any value resolves from frontmatter following the standard resolution order: frontmatter → inline declaration → fallback → literal.
+- Annotation sigil (`` `#HEX:text` ``) is **not valid inside `![]` brackets** — alt text is plain prose only. Apply sigil in the comment marker `alt:` value if color annotation on the node label is needed.
+- `alt:` values must not contain pipe characters; em-dash (`—`) is the preferred separator.
+
+### Row-by-row layout (default)
+
+One blank line between media blocks. Each block is an independent canvas node.
+The canvas renderer never infers adjacency across blank lines.
+
+**Syntax**
+
+```markdown
+<!-- media | type: image | alt: Scrape pipeline overview — Phase 1 | caption: Phase 1 signal collection -->
+![Scrape pipeline overview — Phase 1](./assets/scrape-pipeline.png)
+
+<!-- media | type: video | alt: {{subject}} demo walkthrough | aspect: 16/9 | controls: true -->
+https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4
+
+<!-- media | type: iframe | alt: Live project gallery — devpost.com | aspect: 16/9 | sandbox: allow-scripts allow-same-origin | caption: {{solution}} -->
+https://treehacks-2026.devpost.com/project-gallery
+
+<!-- media | type: audio | alt: Founder pitch audio — {{subject}} | controls: true -->
+https://demo.airvio.co/assets/pitch-audio.mp3
+```
+
+Each block resolves to a single typed node in `flow_nodes`. Blank-line separation = node boundary.
+
+### Side-by-side layout (opt-in)
+
+`<!-- media-row -->` / `<!-- /media-row -->` is the only syntax that collapses adjacent media blocks into a single row node. 
+Without this wrapper, two media lines separated only by a newline (no blank line) are still treated as independent nodes by the canvas renderer.
+
+**No blank lines** are permitted inside a `media-row` wrapper — blank lines break node boundary detection.
+
+**Syntax**
+
+```markdown
+<!-- media-row | cols: 2 | gap: md -->
+<!-- media | type: image | alt: Before — raw demo list -->
+![Before — raw demo list](./assets/before.png)
+<!-- media | type: image | alt: After — winner-marked gallery -->
+![After — winner-marked gallery](./assets/gallery-output.png)
+<!-- /media-row -->
+```
+
+**`media-row` container keys**
+
+| Key | Required | Values | Notes |
+|---|---|---|---|
+| `cols` | yes | `2` / `3` / `4` | column count; all children share equal width |
+| `gap` | no | `sm` / `md` / `lg` | gutter between cells; default `md` |
+| `align` | no | `start` / `center` / `end` | vertical alignment of cells; default `start` |
+| `caption` | no | prose string or `{{key}}` | row-level caption rendered below the container |
+| `flag` | no | `@flag:value` | forwarded to row node `data.flag` |
+
+Mixed media types are permitted inside a row: 
+an image and a video may share one `<!-- media-row -->` container. 
+Each child retains its own `type:` and child-level keys.
+
+### Side-by-side vs. row-by-row — decision table
+
+| Criterion | Row-by-row | Side-by-side |
+|---|---|---|
+| Canvas node type | one typed node per media block | one `media-row` container node wrapping N children |
+| `@node` sigil reference | `` `@node:m-{id}` `` per block | `` `@node:mr-{id}` `` references the row container |
+| JSONB `type` | `image` / `video` / `audio` / `iframe` / `code` / `model` | `media-row` |
+| Blank-line requirement | one blank line between blocks | **no** blank lines inside `<!-- media-row -->…<!-- /media-row -->` |
+| Viewport behaviour | full-width; canvas reflows per breakpoint | fixed `cols` count; horizontal overflow on narrow viewports |
+| Token cost | lower — no wrapper markers | slightly higher — open/close container tags |
+| Handle wiring | each node wires independently | row node exposes a single `media` source handle |
+| Recommended for | **all default authoring** | explicit comparison layouts only: before/after, A/B, multi-angle |
+
+**Default: row-by-row.** Use side-by-side only when the spatial comparison between items is the primary semantic content (e.g., before/after renders, A/B design variants, multi-camera video).
+
+### Alt-text convention
+
+Alt text is the primary semantic label of a media node. 
+It maps to the canvas node `label` field and to `metadata.alt` in JSONB. 
+The same convention applies to all media types — not only images.
+
+| Context | Convention | Example |
+|---|---|---|
+| Diagram / screenshot | `[noun phrase] — [context]` | `Scrape pipeline overview — Phase 1` |
+| Chart / data visual | `[chart type]: [metric] [period]` | `Bar chart: gap scores Q1 2026` |
+| Video walkthrough | `[subject] demo walkthrough — [event]` | `{{subject}} demo walkthrough — TreeHacks 2026` |
+| Audio clip | `[speaker/type] [topic]` | `Founder pitch audio — {{subject}}` |
+| Iframe embed | `[page title] — [domain]` | `Live project gallery — devpost.com` |
+| 3-D model | `[object name] [format]` | `Orbital gap mesh — GLB` |
+| Logo / icon | `[brand/project] logo` | `airvio logo` |
+| Decorative | empty string `""` | `alt: ""` — omit from canvas node label |
+| Variable-resolved | `{{key}}` in alt | `alt: {{subject}} demo screenshot` |
+
+**Rules**
+
+- Alt text is **never empty for informational media** — empty alt is reserved for
+  decorative-only assets that carry no semantic content (`decorative: true` in JSONB).
+- `{{key}}` in `alt:` resolves from frontmatter before canvas render, following the
+  standard resolution order.
+- Annotation sigil is **not valid in `![]` brackets** — plain prose only in `![]`.
+  Apply `` `#HEX:text` `` in the comment marker `alt:` key if colored node labels
+  are required.
+- `alt:` may not contain `|` (pipe) — use em-dash `—` as internal separator.
+
+### Annotation sigil on media nodes
+
+Color sigils and `@flag` annotation sigils apply to media node `label` and `data` fields in the same way as for flow nodes:
+
+```yaml
+- id: m-scrape-pipeline
+  label: "`#D85A30:urgent` Scrape pipeline overview — Phase 1"
+  data:
+    note: "`@flag:low confidence source; verify before publish`"
+```
+
+In body prose, the same sigil applies via the comment marker `alt:` key:
+
+```markdown
+<!-- media | type: image | alt: `#D85A30:urgent` Scrape pipeline overview — Phase 1 | flag: @flag:verify -->
+![Scrape pipeline overview — Phase 1](./assets/scrape-pipeline.png)
+```
+
+### Variable references in media comment markers
+
+All `{{key}}` references in comment marker values resolve from frontmatter before canvas render — identical to the resolution pipeline for body prose and `flow:` nodes.
+
+```markdown
+<!-- media | type: video | alt: {{subject}} demo walkthrough | caption: {{solution}} -->
+https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4
+```
+
+Resolved (using shared sample frontmatter):
+
+```
+alt:     hackathon winners demo walkthrough
+caption: publish a project gallery with winner-marked submissions and links to demos/repos
+```
+
+### `flow:` block — media nodes in frontmatter
+
+Media nodes are declared in the `flow:` block using `type: custom` with a `mediaType:` sub-key in `data:`. 
+This mirrors the existing `custom` node convention and keeps the `flow:` schema backward-compatible.
+
+```yaml
+flow:
+  direction: LR
+  edgeType: smoothstep
+  computed: true
+  nodes:
+    - id: m-scrape-pipeline
+      type: custom
+      label: "Scrape pipeline overview — Phase 1"
+      position: { x: 0, y: 160 }
+      handles:
+        source: [media]
+      data:
+        mediaType: image
+        src: ./assets/scrape-pipeline.png
+        alt: "Scrape pipeline overview — Phase 1"
+        caption: "Phase 1 signal collection"
+        confidence: high
+
+    - id: m-demo-walkthrough
+      type: custom
+      label: "{{subject}} demo walkthrough — TreeHacks 2026"
+      position: { x: 0, y: 320 }
+      handles:
+        source: [media]
+      data:
+        mediaType: video
+        src: https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4
+        alt: "{{subject}} demo walkthrough — TreeHacks 2026"
+        aspect: "16/9"
+        controls: true
+        autoplay: false
+        muted: true
+        confidence: high
+
+    - id: m-gallery-iframe
+      type: custom
+      label: "Live project gallery — devpost.com"
+      position: { x: 0, y: 480 }
+      handles:
+        source: [media]
+      data:
+        mediaType: iframe
+        src: https://treehacks-2026.devpost.com/project-gallery
+        alt: "Live project gallery — devpost.com"
+        aspect: "16/9"
+        sandbox: "allow-scripts allow-same-origin"
+        confidence: high
+
+    - id: mr-phase1-compare
+      type: custom
+      label: "Phase 1 before / after comparison"
+      position: { x: 0, y: 640 }
+      handles:
+        source: [media]
+      data:
+        mediaType: media-row
+        cols: 2
+        gap: md
+        caption: "{{subject}} — before and after"
+        items:
+          - alt: "Before — raw demo list"
+            src: ./assets/before.png
+          - alt: "After — winner-marked gallery"
+            src: ./assets/gallery-output.png
+        confidence: high
+```
+
+### Parse function
+
+Extends the existing `parseSigil()` pattern; both functions coexist without overlap.
+
+```js
+function parseMediaMarker(commentText) {
+  // strip <!-- and -->
+  const inner = commentText.replace(/^<!--\s*/, '').replace(/\s*-->$/, '');
+  const parts  = inner.split('|').map(s => s.trim());
+
+  // first token is the block type keyword: 'media' or 'media-row'
+  const blockType = parts[0]; // 'media' | 'media-row'
+
+  const meta = { blockType };
+  for (const part of parts.slice(1)) {
+    const colonIdx = part.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key   = part.slice(0, colonIdx).trim();
+    const value = part.slice(colonIdx + 1).trim();
+    meta[key] = value;
+  }
+
+  // coerce boolean strings
+  for (const k of ['autoplay', 'loop', 'muted', 'controls']) {
+    if (meta[k] !== undefined) meta[k] = meta[k] === 'true';
+  }
+
+  // coerce numeric strings
+  if (meta.cols !== undefined) meta.cols = parseInt(meta.cols, 10);
+
+  return meta;
+}
+```
+
+**Usage example**
+
+```js
+parseMediaMarker(
+  '<!-- media | type: video | alt: hackathon winners demo walkthrough | aspect: 16/9 | controls: true | autoplay: false -->'
+);
+// →
+// {
+//   blockType: 'media',
+//   type:      'video',
+//   alt:       'hackathon winners demo walkthrough',
+//   aspect:    '16/9',
+//   controls:  true,
+//   autoplay:  false
+// }
+```
+
+### PostgreSQL JSONB mapping
+
+| Media syntax | JSONB `type` | JSONB shape |
+|---|---|---|
+| Row-by-row image | `image` | `{"type":"image","alt":"...","src":"...","caption":null,"flag":null,"confidence":"high"}` |
+| Row-by-row video | `video` | `{"type":"video","alt":"...","src":"...","aspect":"16/9","controls":true,"autoplay":false,"muted":true,"poster":null,"confidence":"high"}` |
+| Row-by-row audio | `audio` | `{"type":"audio","alt":"...","src":"...","controls":true,"autoplay":false,"loop":false,"confidence":"high"}` |
+| Row-by-row iframe | `iframe` | `{"type":"iframe","alt":"...","src":"...","aspect":"16/9","sandbox":"allow-scripts allow-same-origin","allow":null,"confidence":"high"}` |
+| Row-by-row code | `code` | `{"type":"code","alt":"...","lang":"python","src":null,"confidence":"high"}` |
+| Row-by-row model | `model` | `{"type":"model","alt":"...","src":"...","confidence":"high"}` |
+| Side-by-side container | `media-row` | `{"type":"media-row","cols":2,"gap":"md","caption":"...","items":[{"type":"image","alt":"...","src":"..."},{"type":"image","alt":"...","src":"..."}],"confidence":"high"}` |
+| Decorative image | `image` | `{"type":"image","alt":"","src":"...","decorative":true}` |
+
+```sql
+CREATE TABLE media_nodes (
+  id           TEXT PRIMARY KEY,
+  doc_id       TEXT,
+  media_type   TEXT CHECK (media_type IN (
+                 'image','video','audio','iframe','code','model','media-row'
+               )),
+  label        TEXT,                    -- resolved alt text
+  src          TEXT,                    -- URL or path; null for code nodes
+  data         JSONB,                   -- full typed JSONB object above
+  position     JSONB,                   -- {"x": 0, "y": 0}
+  confidence   TEXT CHECK (confidence IN ('low','medium','high')),
+  created_at   TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX ON media_nodes USING GIN (data);
+CREATE INDEX ON media_nodes (doc_id, media_type);
+```
+
+**Sample inserts — shared sample document**
+
+```sql
+-- row-by-row image
+INSERT INTO media_nodes (id, doc_id, media_type, label, src, data, confidence) VALUES (
+  'm-scrape-pipeline', 'hackamap-demos', 'image',
+  'Scrape pipeline overview — Phase 1',
+  './assets/scrape-pipeline.png',
+  '{"type":"image","alt":"Scrape pipeline overview — Phase 1","src":"./assets/scrape-pipeline.png","caption":"Phase 1 signal collection","flag":null,"confidence":"high"}'::jsonb,
+  'high'
+);
+
+-- row-by-row video
+INSERT INTO media_nodes (id, doc_id, media_type, label, src, data, confidence) VALUES (
+  'm-demo-walkthrough', 'hackamap-demos', 'video',
+  'hackathon winners demo walkthrough — TreeHacks 2026',
+  'https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4',
+  '{"type":"video","alt":"hackathon winners demo walkthrough — TreeHacks 2026","src":"https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4","aspect":"16/9","controls":true,"autoplay":false,"muted":true,"poster":null,"confidence":"high"}'::jsonb,
+  'high'
+);
+
+-- row-by-row iframe
+INSERT INTO media_nodes (id, doc_id, media_type, label, src, data, confidence) VALUES (
+  'm-gallery-iframe', 'hackamap-demos', 'iframe',
+  'Live project gallery — devpost.com',
+  'https://treehacks-2026.devpost.com/project-gallery',
+  '{"type":"iframe","alt":"Live project gallery — devpost.com","src":"https://treehacks-2026.devpost.com/project-gallery","aspect":"16/9","sandbox":"allow-scripts allow-same-origin","allow":null,"confidence":"high"}'::jsonb,
+  'high'
+);
+
+-- side-by-side media-row
+INSERT INTO media_nodes (id, doc_id, media_type, label, src, data, confidence) VALUES (
+  'mr-phase1-compare', 'hackamap-demos', 'media-row',
+  'Phase 1 before / after comparison',
+  null,
+  '{"type":"media-row","cols":2,"gap":"md","caption":"hackathon winners — before and after","items":[{"type":"image","alt":"Before — raw demo list","src":"./assets/before.png"},{"type":"image","alt":"After — winner-marked gallery","src":"./assets/gallery-output.png"}],"confidence":"high"}'::jsonb,
+  'high'
+);
+```
+
+### Sample — full compliant media blocks
+
+**Row-by-row (default)**
+
+```markdown
+<!-- media | type: image | alt: Scrape pipeline overview — Phase 1 | caption: Phase 1 signal collection -->
+![Scrape pipeline overview — Phase 1](./assets/scrape-pipeline.png)
+
+<!-- media | type: video | alt: {{subject}} demo walkthrough — TreeHacks 2026 | aspect: 16/9 | controls: true | poster: ./assets/walkthrough-poster.png -->
+https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4
+
+<!-- media | type: audio | alt: Founder pitch audio — {{subject}} | controls: true -->
+https://demo.airvio.co/assets/pitch-audio.mp3
+
+<!-- media | type: iframe | alt: Live project gallery — devpost.com | aspect: 16/9 | sandbox: allow-scripts allow-same-origin | caption: {{solution}} -->
+https://treehacks-2026.devpost.com/project-gallery
+
+<!-- media | type: model | alt: Orbital gap mesh — GLB | confidence: medium -->
+https://demo.airvio.co/assets/gap-mesh.glb
+```
+
+**Side-by-side (opt-in — comparative layout)**
+
+```markdown
+<!-- media-row | cols: 2 | gap: md | caption: {{subject}} — before and after -->
+<!-- media | type: image | alt: Before — raw demo list -->
+![Before — raw demo list](./assets/before.png)
+<!-- media | type: image | alt: After — winner-marked gallery -->
+![After — winner-marked gallery](./assets/gallery-output.png)
+<!-- /media-row -->
+```
+
+**Mixed-type side-by-side (image + video)**
+
+```markdown
+<!-- media-row | cols: 2 | gap: lg | caption: Pipeline diagram alongside live walkthrough -->
+<!-- media | type: image | alt: Scrape pipeline overview — Phase 1 -->
+![Scrape pipeline overview — Phase 1](./assets/scrape-pipeline.png)
+<!-- media | type: video | alt: {{subject}} demo walkthrough | aspect: 16/9 | controls: true -->
+https://demo.airvio.co/assets/treehacks-2026-walkthrough.mp4
+<!-- /media-row -->
+```
+
+### Shared cell conventions — additions for media nodes
+
+Extends the convention tables from the Multi-dimensional Table Guidelines and Flow Graph / Workflow Editor Guidelines sections.
+
+| Convention | Symbol | Parse rule | Example |
+|---|---|---|---|
+| Media node reference | `` `@node:m-{id}` `` | resolve to single media node by `id`; `m-` prefix | `` `@node:m-gallery-output` `` |
+| Row container reference | `` `@node:mr-{id}` `` | resolve to `media-row` container node; `mr-` prefix | `` `@node:mr-phase1-compare` `` |
+| Edge from media node | `` `@edge:m-{id}:media→n-{id}:{handle}` `` | edge from `media` source handle to downstream node | `` `@edge:m-gallery-output:media→n-extract:demos` `` |
+| Alt variable | `{{key}}` in `alt:` | resolve from frontmatter; standard resolution order | `alt: {{subject}} demo screenshot` |
+| Caption variable | `{{key}}` in `caption:` | resolve from frontmatter | `caption: {{solution}}` |
+| Decorative flag | `alt: ""` | `decorative: true` in JSONB; omit from canvas label | `alt: ""` |
+| Media type | `type: video` etc. | typed node; inferred from extension if omitted | `type: iframe` |
+| Confidence | `confidence: high` | solid stroke; `low` = dashed; `medium` = partial | `confidence: medium` |
+| Flag annotation | `flag: @flag:value` | forwarded to `data.flag`; rendered as flag badge on node | `flag: @flag:verify source` |
 
 ---
 
@@ -765,14 +1222,8 @@ flow:
 
 ### Titles and ellipsis
 
-Long headings and title-like labels should be written as normal markdown text; UI
-truncates with ellipsis at rest and reveals the full title on inline edit via
-horizontal scroll, so authors must not embed manual ellipsis or hard line breaks
-solely to simulate truncation.
+Long headings and title-like labels should be written as normal markdown text; UI truncates with ellipsis at rest and reveals the full title on inline edit via horizontal scroll, so authors must not embed manual ellipsis or hard line breaks solely to simulate truncation.
 
 ### Normal prose
 
-Normal prose (paragraphs, table cells) should flow as complete sentences without
-manual layout breaks; use `...` only when it carries semantic meaning in the
-content, not as a visual truncation hack (wrapping and clipping remain UI
-responsibilities).
+Normal prose (paragraphs, table cells) should flow as complete sentences without manual layout breaks; use `...` only when it carries semantic meaning in the content, not as a visual truncation hack (wrapping and clipping remain UI responsibilities).

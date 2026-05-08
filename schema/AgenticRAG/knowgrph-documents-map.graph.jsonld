@@ -1782,6 +1782,57 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-pwa",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pwa.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pwa.md",
+        "scope": "PWA — manifest, service worker, install UX, share target, offline shell, regression tests"
+      },
+      "documentPath": "docs/documents/knowgrph-pwa.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-storage-sync-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storage-sync-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storage-sync-document.md",
+        "scope": "Storage & Sync SSOT — Worker + D1 + RxDB + conflict UX + public doc view + deep link canvas rendering"
+      },
+      "documentPath": "docs/documents/knowgrph-storage-sync-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-multi-user-collaboration-prd.tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md",
+        "scope": "Multi-user auth, authorization, role-based access, SSOT transition PRD-TAD"
+      },
+      "documentPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-stripe-api-reference",
       "@type": "kg:Node",
       "labels": [

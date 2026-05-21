@@ -64,6 +64,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 7. Define quality attribute scenarios: performance, security, scalability, observability
 8. Plan deployment strategy and migration path
 9. Render architecture diagrams (Mermaid); compile component inventory table
+10. Derive `/goal` conditions from acceptance criteria — each criterion must be expressible as a verifiable completion condition that Claude Code can evaluate from its own output
 
 **Gate**: product manager validates TAD preserves user value before Phase 3.
 
@@ -72,7 +73,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 
 1. Establish bidirectional traceability: `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 2. Confirm no implementation detail in PRD; no business logic in TAD
-3. QA validates all acceptance criteria are testable
+3. QA validates all acceptance criteria are testable **and expressible as `/goal` conditions** — each criterion must have a stated check Claude can surface in conversation (exit code, file count, test result, queue state)
 4. Stakeholders approve scope and success metrics
 5. Resolve or formally track all open questions
 
@@ -85,6 +86,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Update PRD and TAD together whenever requirements shift
 - Re-run relevant gate reviews for breaking changes
 - Archive superseded ADRs; do not delete
+- Re-derive `/goal` conditions whenever acceptance criteria change; stale conditions produce false completions
 
 ---
 
@@ -176,13 +178,119 @@ Source → [Ingest] → [Transform] → [Store] → [Serve] → Consumer
 
 ---
 
-## CID Reference Table
+## Agentic Implementation Verification
+
+A well-formed PRD acceptance criterion **is** a well-formed `/goal` condition. This section connects PRD requirements to autonomous implementation via Claude Code's [`/goal`](https://code.claude.com/docs/en/goal) command, which sets a verifiable completion condition and keeps Claude working across turns until a separate evaluator model confirms it is met.
+
+### The Criterion → Condition Pipeline
+
+Every acceptance criterion written at Phase 1 should be traceable to a `/goal` condition used at implementation time. The same three properties that make a criterion testable make a condition evaluable:
+
+| PRD Property | `/goal` Property | Shared Requirement |
+|---|---|---|
+| Observable outcome | Evaluator-verifiable | Claude surfaces proof in the conversation |
+| Stated check | Stated check | How completion is demonstrated (`npm test`, `git status`, etc.) |
+| Scope constraint | Constraint clause | What must not change on the way there |
+
+**Translation pattern**:
+```
+Given [context] When [action] Then [outcome]
+   ↓
+/goal [outcome] verified by [check] with [constraint]
+```
+
+**Example**:
+```
+Criterion:  Given a valid token, when /refresh is called, then a 200 response
+            is returned within 200 ms with a refreshed JWT.
+
+/goal condition:  all tests in test/auth pass, /refresh returns 200 under
+                  200 ms per load test output, and no other test file is modified
+```
+
+### Autonomous Workflow Selection
+
+Three Claude Code approaches keep a session running between prompts. Choose based on what triggers the next turn:
+
+| Approach | Next turn starts when | Stops when | Use for |
+|---|---|---|---|
+| `/goal` | Previous turn finishes | Evaluator confirms condition met | Substantial work with a verifiable end state |
+| `/loop` | Time interval elapses | You stop it, or Claude judges done | Recurring checks, polling, timed sweeps |
+| Stop hook | Previous turn finishes | Your script or prompt decides | Custom evaluation logic, deterministic checks |
+
+`/goal` and auto mode are complementary: auto mode removes per-tool prompts within a turn; `/goal` removes per-turn prompts across turns. A fresh small fast model (Haiku by default) evaluates the condition, so completion is decided independently of the model doing the work.
+
+### Writing Evaluable Conditions
+
+A `/goal` condition is judged against what Claude has **already surfaced in the conversation** — the evaluator does not run commands or read files independently. Write conditions as things Claude's own output can demonstrate.
+
+**Structure of a strong condition:**
+1. **One measurable end state** — a test result, build exit code, file count, or empty queue
+2. **A stated check** — how Claude proves it (`npm test exits 0`, `git status is clean`)
+3. **Constraints that matter** — what must not change (`no other test file is modified`)
+4. **Optional bound** — `or stop after N turns` to cap runaway loops
+
+**Well-formed examples** (directly derivable from Given-When-Then criteria):
+```
+/goal all tests in test/auth pass and the lint step exits 0
+
+/goal CHANGELOG.md has an entry for every merged PR this sprint and no
+      existing entries are modified
+
+/goal the migration script runs without errors and row counts in
+      users and orders match pre-migration snapshots, or stop after 15 turns
+```
+
+**Anti-patterns** (mirror vague acceptance criteria):
+```
+❌ /goal the code looks good          → no observable proof
+❌ /goal refactoring is complete      → no stated check, no end state
+❌ /goal performance is improved      → no measurable threshold
+```
+
+### Traceability Extension
+
+Extend the existing traceability pattern to include the implementation condition:
+
+```
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]
+```
+
+Record derived conditions in the TAD component specification alongside the acceptance criteria they implement. This ensures conditions stay synchronized when requirements evolve (see Phase 4 directive above).
+
+### Running a Goal
+
+Set a goal from the Claude Code terminal; it starts a turn immediately:
+```
+/goal all tests in test/auth pass and the lint step is clean
+```
+
+Check status at any time:
+```
+/goal
+```
+
+Clear before completion:
+```
+/goal clear
+```
+
+Run non-interactively to completion in a single invocation:
+```
+claude -p "/goal CHANGELOG.md has an entry for every PR merged this week"
+```
+
+**Requirements**: `/goal` runs only in workspaces where the trust dialog has been accepted. It is unavailable when `disableAllHooks` or `allowManagedHooksOnly` is set.
+
+---
+
+
 
 Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | Directive`
 
 | Context         | Intent                               | Directive                                                                                      |
 |-----------------|--------------------------------------|-----------------------------------------------------------------------------------------------|
-| Acceptance      | Define verifiable criteria           | - [ ] Specify testable criteria; enable verification; forbid ambiguous requirements           |
+| Acceptance      | Define verifiable criteria           | - [ ] Specify testable criteria expressible as `/goal` conditions; enable verification; forbid ambiguous requirements |
 | Accountability  | Assign clear ownership               | - [ ] Name responsible parties; assign ownership; forbid unassigned features                  |
 | Adaptability    | Enable configuration-driven design   | - [ ] Design configurably; enable adaptation; forbid hardcoded solutions                      |
 | Alignment       | Synchronize team understanding       | - [ ] Review with stakeholders; synchronize understanding; forbid siloed development          |
@@ -209,7 +317,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
-| Goals           | Define measurable objectives         | - [ ] Set quantifiable goals; define objectives; forbid vague aspirations                     |
+| Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as `/goal` conditions; define objectives; forbid vague aspirations |
 | Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
 | Integration     | Specify connection points            | - [ ] Define integration interfaces; specify connections; forbid undocumented interfaces      |
@@ -252,7 +360,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Sequencing      | Order feature delivery               | - [ ] Plan release sequence; order delivery; forbid dependency-blind scheduling               |
 | Simplicity      | Prefer minimal solutions             | - [ ] Choose simple approaches; prefer minimalism; forbid over-engineering                    |
 | Stories         | Write user narratives                | - [ ] Use "As a…I want…So that"; write narratives; forbid technical task lists                |
-| Success         | Define completion criteria           | - [ ] Specify done conditions; define success; forbid ambiguous done states                   |
+| Success         | Define completion criteria           | - [ ] Specify done conditions as observable, evaluator-verifiable states; define success; forbid ambiguous done states |
 | Testability     | Enable verification                  | - [ ] Design for testing; enable verification; forbid untestable requirements                 |
 | Timelines       | Define delivery schedules            | - [ ] Set release dates; define timelines; forbid open-ended commitments                      |
 | Traceability    | Link requirements to implementation  | - [ ] Maintain requirement IDs; link specs; forbid orphaned specs                             |
@@ -289,6 +397,9 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 ### Acceptance Criteria
 **Given** [context] **When** [action] **Then** [outcome]
 
+> **`/goal` translation**: `[outcome] verified by [stated check] with [constraint]`
+> Example: `all tests in test/[feature] pass and no other test file is modified`
+
 ### Success Metrics
 | Metric | Baseline | Target | Timeline |
 |--------|----------|--------|----------|
@@ -324,6 +435,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 **Interfaces**: [API contracts]
 **Dependencies**: [Required components/services]
 **Configuration**: [Externalized parameters]
+**`/goal` Conditions**: [Derived from acceptance criteria — one evaluable condition per criterion]
 
 ### Integration Contracts
 **Interface**: [Name] | **Protocol**: [HTTP/gRPC/etc] | **Format**: [JSON/Protobuf] | **Errors**: [Strategy]
@@ -435,6 +547,12 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ Data flows without typed schemas, workflows without error paths, journeys without friction mapping  
 → ✅ Typed schemas at every boundary, full-path workflows, stage-complete journeys
 
+❌ Acceptance criteria that cannot be demonstrated by Claude's own output ("looks good", "is complete", "is improved")  
+→ ✅ Every criterion expressible as a `/goal` condition: one measurable end state + a stated check + any scope constraints
+
+❌ `/goal` conditions set at implementation without re-checking the PRD when requirements change  
+→ ✅ Traceability maintained across `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]`; conditions updated in lockstep with criteria
+
 ---
 
 ## Validation Checklist
@@ -445,12 +563,14 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] Data flows typed at every stage boundary with persistence and error handling documented
 - [ ] User stories follow "As a… I want… So that" format
 - [ ] Acceptance criteria use Given-When-Then with observable outcomes
+- [ ] Every acceptance criterion translatable to a `/goal` condition: one measurable end state + a stated check + scope constraints
 - [ ] Features prioritized via MoSCoW with rationale
 - [ ] Components have single responsibility; interfaces specified with explicit contracts
 - [ ] Architectural decisions documented with ADRs
 - [ ] Architecture diagrams use Mermaid (not ASCII for >5 nodes)
 - [ ] Component inventory table accompanies every architecture diagram
 - [ ] PRD-to-TAD traceability established via `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
+- [ ] `/goal` conditions recorded in TAD component specs and traced to source criteria
 - [ ] No implementation detail in PRD; no business logic in TAD
 
 **Post-Documentation Review**:
@@ -483,9 +603,10 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics · `/goal` closes the loop from criterion to verified implementation"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
 - **Flow patterns anchor**: user journeys, workflows, and data flows connect abstract requirements to observable system behavior; every feature traces through all three
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
 - **SVO clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
+- **`/goal` closes**: every acceptance criterion becomes an evaluable completion condition; the traceability chain extends from PRD through TAD to autonomous implementation verification

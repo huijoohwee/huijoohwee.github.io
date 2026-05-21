@@ -1227,3 +1227,566 @@ Long headings and title-like labels should be written as normal markdown text; U
 ### Normal prose
 
 Normal prose (paragraphs, table cells) should flow as complete sentences without manual layout breaks; use `...` only when it carries semantic meaning in the content, not as a visual truncation hack (wrapping and clipping remain UI responsibilities).
+
+---
+
+## Comment Guidelines
+
+### Rationale
+
+HTML comment syntax (`<!-- ... -->`) is already the established marker convention for
+media and future structured blocks. Three comment intents exist in practice and must be
+distinguishable at parse time with no ambiguity:
+
+1. **Machine markers** — already defined (`<!-- media | … -->`, `<!-- callout | … -->`, etc.)
+2. **Author notes** — private, stripped before publish; never emitted to JSONB
+3. **Review annotations** — collaborative thread stubs; emitted to JSONB as `comment` nodes
+
+A single `//` prefix (borrowing POSIX/C line-comment convention) gates author notes.
+A `comment` block keyword gates review annotations, consistent with all other block markers.
+No new fence syntax is introduced.
+
+Token cost rationale: `<!-- // ... -->` adds only 9 characters of overhead per note vs.
+44+ for an HTML `<span>` or a fenced block — the smallest viable delimiter that survives
+all Markdown renderers as a no-op.
+
+### Syntax
+
+| Pattern | Intent | Parsed? | JSONB emitted? |
+|---|---|---|---|
+| `<!-- // author note -->` | private note; stripped at publish | stripped | no |
+| `<!-- // @todo: text -->` | task for the author; stripped at publish | stripped | no |
+| `<!-- comment \| id: c-{id} \| author: name \| text: prose -->` | review annotation | yes | `comment` node |
+| `<!-- /comment -->` | closes inline comment range | yes | closes range |
+
+### Author notes (`//`)
+
+```markdown
+<!-- // verify demo URL before publish -->
+<!-- // @todo: replace placeholder with final copy from marketing -->
+<!-- // @todo: confirm award category with TreeHacks organizers -->
+```
+
+Rules:
+- First non-whitespace characters inside the comment must be `//`
+- Everything after `//` is free prose — no key:value parsing
+- `@todo:` prefix is a convention for task-flavoured notes; not parsed separately
+- Author notes are **invisible to the canvas renderer** and stripped before JSONB serialisation
+- Author notes may appear anywhere: inline between paragraphs, inside `flow:` frontmatter prose, or adjacent to media markers
+- Author notes do **not** interact with `@flag` or sigil syntax — they are opaque strings
+
+### Review comments (`comment` marker)
+
+For collaborative annotation that should survive publish and appear in JSONB:
+
+```markdown
+<!-- comment | id: c-001 | author: A. HUI | text: Confirm this matches Phase 2 output schema -->
+![Scrape pipeline overview — Phase 1](./assets/scrape-pipeline.png)
+<!-- /comment -->
+```
+
+Key reference:
+
+| Key | Required | Notes |
+|---|---|---|
+| `id` | yes | `c-{slug}` prefix; unique per document |
+| `author` | yes | display name; no `\|` characters |
+| `text` | yes | prose annotation; no `\|` characters; use em-dash `—` as separator |
+| `resolved` | no | `true` / `false`; default `false` |
+| `ref` | no | `c-{id}` of parent comment for threaded replies |
+
+```markdown
+<!-- comment | id: c-002 | author: B. airvio | ref: c-001 | text: Updated — matches schema v1.2 -->
+<!-- /comment -->
+```
+
+### Parse function
+
+```js
+function parseComment(commentText) {
+  const inner = commentText.replace(/^<!--\s*/, '').replace(/\s*-->$/, '');
+
+  // author note — strip, never emit
+  if (inner.trimStart().startsWith('//')) return { type: 'author-note', text: inner.replace(/^\s*\/\/\s*/, '') };
+
+  const parts = inner.split('|').map(s => s.trim());
+  if (parts[0] !== 'comment') return null;
+
+  const meta = { type: 'comment' };
+  for (const part of parts.slice(1)) {
+    const colonIdx = part.indexOf(':');
+    if (colonIdx === -1) continue;
+    meta[part.slice(0, colonIdx).trim()] = part.slice(colonIdx + 1).trim();
+  }
+  if (meta.resolved !== undefined) meta.resolved = meta.resolved === 'true';
+  return meta;
+}
+```
+
+### PostgreSQL JSONB mapping
+
+| Markdown pattern | JSONB `type` | JSONB shape |
+|---|---|---|
+| `<!-- // ... -->` | — | stripped; not stored |
+| `<!-- comment \| … -->` | `comment` | `{"type":"comment","id":"c-001","author":"A. HUI","text":"...","resolved":false,"ref":null}` |
+| `<!-- comment \| ref: c-001 … -->` | `comment` | `{"type":"comment","id":"c-002","ref":"c-001","author":"B. airvio","text":"...","resolved":false}` |
+
+```sql
+CREATE TABLE doc_comments (
+  id          TEXT PRIMARY KEY,          -- c-{slug}
+  doc_id      TEXT,
+  author      TEXT,
+  text        TEXT,
+  resolved    BOOLEAN DEFAULT false,
+  ref         TEXT REFERENCES doc_comments(id),  -- threaded reply parent
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX ON doc_comments (doc_id, resolved);
+```
+
+### Inline range + appendix pattern
+
+The canonical pattern for long comments: a paired `@comment:c-{id}` sigil wraps the
+target text in the body; the full annotation lives in the appendix after `---`.
+
+```markdown
+Singapore is `@comment:c-001`AI`@comment:c-001`-ready.
+
+---
+
+<!-- appendix -->
+
+<!-- comment | id: c-001 | author: A. Hui | text: "AI-ready" references the
+Singapore National AI Strategy 2.0 published by MDDI in December 2023.
+Confirm whether to hyperlink directly to the MDDI report or cite as footnote
+before publish. Cross-check with the {{solution}} positioning statement to
+ensure alignment. -->
+<!-- /comment -->
+
+<!-- /appendix -->
+```
+
+The open and close sigils share the same `id`. The canvas renders a highlight or
+underline on the wrapped text that opens the annotation on click — identical resolution
+to `commentRangeStart` / `commentRangeEnd` in OOXML.
+
+Range rules:
+- Open sigil immediately before target text, close sigil immediately after — no spaces inside the pair
+- Range sigils may wrap a single word, a phrase, or a full sentence
+- Range sigils must **not** span a block boundary (paragraph break, heading, media node)
+- A range sigil with no matching appendix comment is a parse warning; rendered as plain text
+- Long comments (>80 chars) must use the appendix pattern — inline wrapping `<!-- comment -->` is reserved for short targeted annotations only
+
+JSONB shape with range:
+
+```json
+{
+  "type": "comment",
+  "id": "c-001",
+  "author": "A. Hui",
+  "text": "\"AI-ready\" references the Singapore National AI Strategy 2.0...",
+  "resolved": false,
+  "range": {
+    "text": "AI",
+    "context": "Singapore is AI-ready."
+  }
+}
+```
+
+`range.text` captures the wrapped string; `range.context` captures the surrounding
+sentence for the comment panel without requiring a node position lookup.
+
+### Appendix block
+
+```markdown
+---
+
+<!-- appendix -->
+
+<!-- // @todo: document-wide author notes first -->
+
+<!-- comment | id: c-001 | author: A. Hui | text: Long annotation... -->
+<!-- /comment -->
+
+<!-- comment | id: c-002 | author: B. airvio | ref: c-001 | text: Reply... -->
+<!-- /comment -->
+
+[^1]: Footnote definitions last.
+
+<!-- metadata | type: key | value: Ctrl+S | note: Save shortcut used in the toolbar instructions. -->
+
+<!-- /appendix -->
+```
+
+Appendix rules:
+- `<!-- appendix -->` / `<!-- /appendix -->` appears **once per document**, after the terminal `---` divider
+- Ordering inside appendix: author notes (`<!-- // … -->`) → comment blocks (ordered by body appearance) → footnote definitions (`[^n]: …`) → document metadata
+- Content inside `<!-- appendix -->` is **never rendered to the canvas body**
+- Comments and footnotes are emitted to JSONB; author notes are stripped
+
+### Document metadata appendix marker
+
+Inline semantic metadata often needs document-level explanatory prose without turning the
+body into a review thread. The appendix uses a single-line machine marker:
+
+```markdown
+<!-- metadata | type: key | value: Ctrl+S | note: Save shortcut used in the toolbar instructions. -->
+<!-- metadata | type: ui-path | value: File › Export | note: Matches the macOS desktop menu label. -->
+<!-- metadata | type: url | value: https://devpost.com | note: Canonical external destination for the submission page. -->
+```
+
+Key reference:
+
+| Key | Required | Notes |
+|---|---|---|
+| `type` | yes | one of `key` / `ui-path` / `id` / `url` / `enum` / `date` / `hash` |
+| `value` | yes | raw semantic value as it appears after the sigil prefix |
+| `note` | yes | explanatory prose; no `\|` characters |
+
+Rules:
+- Metadata appendix markers appear **only** inside `<!-- appendix -->`
+- Metadata markers are document-level metadata, never canvas body nodes
+- Metadata markers appear **after** footnote definitions
+- Metadata markers do not use a close marker; all content is carried in key:value pairs
+- A metadata appendix marker does **not** replace the body sigil; the body remains the canonical inline semantic source
+- `type` must match the semantic type declared by the body sigil (`@key:` → `key`, `$url:` → `url`, etc.)
+
+JSONB shape:
+
+| Markdown pattern | JSONB shape |
+|---|---|
+| `<!-- metadata \| type: key \| value: Ctrl+S \| note: ... -->` | `{"type":"key","value":"Ctrl+S","note":"..."}` |
+| `<!-- metadata \| type: url \| value: https://devpost.com \| note: ... -->` | `{"type":"url","value":"https://devpost.com","note":"..."}` |
+
+Metadata appendix entries are emitted to document metadata collections, not review-comment tables.
+
+### Shared cell conventions — additions for comments
+
+| Convention | Symbol | Parse rule | Example |
+|---|---|---|---|
+| Comment range open/close | `` `@comment:c-{id}` `` | paired sigil wrapping target text | `` `@comment:c-001`AI`@comment:c-001` `` |
+| Author note (inline) | `<!-- // text -->` | strip at publish; never rendered | `<!-- // placeholder -->` |
+
+---
+
+## Callout / Admonition Guidelines
+
+### Rationale
+
+Prose blocks that carry editorial weight — warnings, tips, notices — require a block-level
+container that is visually distinct in the canvas without introducing raw HTML.
+The `<!-- callout | … -->` / `<!-- /callout -->` wrapper follows the identical
+`<!-- media-row -->` / `<!-- /media-row -->` open/close pattern already established,
+keeping the parser surface minimal and the token overhead to ~2 markers per block.
+
+Token cost comparison:
+
+| Format | Characters | Approx tokens |
+|---|---|---|
+| `<div class="callout warning"><p>text</p></div>` | 48 | ~15 |
+| `<!-- callout \| type: warning -->\ntext\n<!-- /callout -->` | 55 | ~14 |
+| `> ⚠️ text` (blockquote workaround) | 12 | ~5 (but no structured type) |
+
+The comment-marker approach matches blockquote token cost when the `type:` key is the
+only key declared, and adds semantic structure blockquote cannot provide.
+
+### Syntax
+
+```markdown
+<!-- callout | type: warning | title: Before you publish -->
+Confirm all `{{variable}}` references resolve. Unresolved references render as
+literal `{{key}}` in non-canvas renderers.
+<!-- /callout -->
+```
+
+### `type` values
+
+| `type` | Visual intent | Border color (canvas) |
+|---|---|---|
+| `info` | neutral note or tip | `#378ADD` (blue) |
+| `warning` | caution; review before acting | `#BA7517` (amber) |
+| `danger` | breaking or destructive action | `#D4537E` (red) |
+| `tip` | positive suggestion or shortcut | `#1D9E75` (green) |
+| `note` | authorial aside; lower emphasis | `#888780` (grey) |
+
+Colors are drawn from the existing `classDef` palette in the frontmatter Mermaid block.
+
+### Key reference
+
+| Key | Required | Notes |
+|---|---|---|
+| `type` | yes | one of `info` / `warning` / `danger` / `tip` / `note` |
+| `title` | no | short heading rendered above body prose |
+| `flag` | no | `@flag:value`; forwarded to node `data.flag` |
+| `id` | no | `callout-{slug}`; enables `@node:callout-{slug}` reference |
+
+### Rules
+
+- Body between `<!-- callout -->` and `<!-- /callout -->` is standard Markdown prose
+- **No blank lines** inside the callout wrapper (blank lines break node boundary detection, consistent with `media-row`)
+- `{{key}}` in `title:` and body prose resolves from frontmatter following standard resolution order
+- Annotation sigil (`` `#HEX:text` ``) is valid in body prose but **not** in `title:` key value
+- Callouts **may not nest** — a `<!-- callout -->` inside another callout is a parse error
+- `<!-- /callout -->` must appear on its own line with no trailing content
+
+### Sample
+
+```markdown
+<!-- callout | type: info | title: Variable resolution order -->
+Frontmatter keys take highest priority. Inline `{{key:value}}` declarations are
+write-once; use the `@` toolbar to update them after first declaration.
+<!-- /callout -->
+
+<!-- callout | type: warning | title: media-row blank-line restriction -->
+No blank lines are permitted inside `<!-- media-row -->` wrappers.
+A blank line breaks node boundary detection and splits the row into independent nodes.
+<!-- /callout -->
+
+<!-- callout | type: danger | title: Sigil in ![] brackets is invalid -->
+`#HEX:text` annotation sigil must never appear inside `![]()` alt-text brackets.
+Apply sigil via the `alt:` key in the comment marker instead.
+<!-- /callout -->
+```
+
+### PostgreSQL JSONB mapping
+
+| Markdown pattern | JSONB `type` | JSONB shape |
+|---|---|---|
+| `<!-- callout \| type: info … -->` | `callout` | `{"type":"callout","calloutType":"info","title":"...","body":"...","confidence":"high"}` |
+
+```sql
+ALTER TABLE flow_nodes ADD COLUMN IF NOT EXISTS callout_type TEXT
+  CHECK (callout_type IN ('info','warning','danger','tip','note'));
+
+-- callout nodes stored as type = 'custom' with data.mediaType = 'callout'
+-- consistent with media node convention
+```
+
+### Body + appendix pattern
+
+Callouts belong in the body. However, a callout whose body prose exceeds ~80 chars
+and is **editorial** rather than instructional (a review note, a staged draft block)
+should be deferred to the appendix using an `@node:callout-{id}` inline reference in
+the body and the full callout block in the appendix.
+
+```markdown
+Singapore is `@node:callout-ai-strategy`AI-ready`@node:callout-ai-strategy`.
+
+---
+
+<!-- appendix -->
+
+<!-- callout | id: callout-ai-strategy | type: warning | title: AI-ready definition pending -->
+"AI-ready" currently references MDDI Strategy 2.0 (December 2023). Confirm
+whether to update the reference to the 2025 refresh before publish.
+Cross-check with the {{solution}} positioning statement for alignment.
+<!-- /callout -->
+
+<!-- /appendix -->
+```
+
+Callout-in-appendix rules:
+- `id` key is **required** when the callout is deferred to the appendix (optional in body)
+- The body inline reference is a paired `` `@node:callout-{id}` `` sigil wrapping the relevant phrase — same range convention as `@comment:c-{id}`
+- Callouts deferred to the appendix are **not rendered** in the canvas body; the canvas renders only the inline reference highlight
+- Instructional callouts (warnings, tips about syntax) belong in the body, not the appendix
+
+### Shared cell conventions — additions for callouts
+
+| Convention | Symbol | Parse rule | Example |
+|---|---|---|---|
+| Callout reference (body) | `` `@node:callout-{id}` `` | resolve to callout node by `id` | `` `@node:callout-ai-strategy` `` |
+| Callout range (appendix-deferred) | paired `` `@node:callout-{id}` `` | wraps target phrase; callout lives in appendix | `` `@node:callout-ai-strategy`AI-ready`@node:callout-ai-strategy` `` |
+
+---
+
+## Footnote / Citation Guidelines
+
+### Rationale
+
+Standard Markdown footnote syntax (`[^n]` / `[^n]: …`) is already familiar, passes
+through most renderers as formatted footnotes or inline superscripts, and maps cleanly
+to a `footnotes` array on the document JSONB node.
+No new sigil is introduced — this section formalises the convention and defines the
+JSONB shape so citations are queryable.
+
+Token cost: `[^1]` (4 chars, ~2 tokens) inline + `[^1]: prose` definition is the
+smallest possible citation marker; zero overhead vs. any alternative.
+
+### Syntax
+
+```markdown
+Hackathon winners need durable distribution beyond the weekend.[^1]
+The gallery publishes winner-marked submissions with links to demos and repos.[^2]
+
+[^1]: TreeHacks 2026 post-event survey — April 2026; n=47 respondents.
+[^2]: {{solution}} — first shipped 2026-04-04.
+```
+
+### Rules
+
+- Footnote references `[^n]` use sequential integers starting at `1`; alphanumeric slugs (`[^treehacks]`) are also valid
+- Definitions `[^n]: prose` are placed at the end of the section or document — never inline mid-paragraph
+- `{{key}}` in footnote definition prose resolves from frontmatter following standard resolution order
+- Annotation sigil (`` `#HEX:text` ``) is **not valid** inside footnote definitions — plain prose only
+- A footnote reference with no matching definition is a parse warning; rendered as literal `[^n]`
+- Footnote definitions are **not** canvas nodes — they are document-level metadata
+
+### PostgreSQL JSONB mapping
+
+| Markdown pattern | JSONB shape |
+|---|---|
+| `[^1]` inline ref | `{"op":"footnote-ref","ref":"1"}` in the containing text node |
+| `[^1]: prose` definition | `{"ref":"1","text":"TreeHacks 2026 post-event survey..."}` in `doc.footnotes[]` |
+
+```sql
+CREATE TABLE doc_footnotes (
+  doc_id  TEXT,
+  ref     TEXT,          -- "1", "2", or slug
+  text    TEXT,          -- resolved prose (variables already substituted)
+  PRIMARY KEY (doc_id, ref)
+);
+```
+
+---
+
+## Inline Semantic Markup Guidelines
+
+### Rationale
+
+Three categories of inline content recur across the document corpus and currently have
+no syntax:
+
+1. **Keyboard shortcuts and UI paths** — needed for procedural docs; raw `<kbd>` HTML
+   breaks XSS safety rules
+2. **Typed inline codes** — distinguishing a record `id` from a `url` from an `enum`
+   value inside a table cell or prose improves JSONB fidelity and canvas node styling
+3. **Inline status badges** — confidence and flag status are already defined for nodes
+   and table cells; inline prose needs the same lightweight badge
+
+All three use a `@prefix:value` sigil consistent with the existing
+`` `@node:id` ``, `` `@edge:…` ``, and `@flag:value` conventions.
+No new delimiter characters are introduced.
+
+Token cost comparison (keyboard shortcut example):
+
+| Format | Characters | Approx tokens |
+|---|---|---|
+| `<kbd>Ctrl</kbd>+<kbd>S</kbd>` | 30 | ~10 |
+| `` `@key:Ctrl+S` `` | 14 | ~5 |
+
+### Keyboard shortcuts and UI paths
+
+| Pattern | Meaning | Example |
+|---|---|---|
+| `` `@key:Ctrl+S` `` | keyboard shortcut badge | `` `@key:Ctrl+S` `` |
+| `` `@key:⌘+K` `` | Mac modifier key shortcut | `` `@key:⌘+K` `` |
+| `` `@ui:File › Export` `` | menu or UI path breadcrumb | `` `@ui:File › Export › PDF` `` |
+
+Rules:
+- `@key:` value is the shortcut string verbatim; `+` separates keys; use `⌘ ⌥ ⇧ ⌃` for Mac modifiers
+- `@ui:` value uses `›` (U+203A) as the path separator — never `>` or `/`
+- Neither sigil accepts `{{key}}` variable interpolation — UI labels are static strings
+- Neither sigil is valid inside `![]` alt-text brackets
+
+### Typed inline codes
+
+Distinguishes semantic categories of backtick-wrapped values without adding visual noise.
+The `$type:` prefix is stripped at render time; the canvas applies type-appropriate styling.
+
+| Pattern | Semantic type | Example |
+|---|---|---|
+| `` `$id:demo-015` `` | record identifier | `` `$id:demo-015` `` |
+| `` `$url:https://…` `` | typed URL (renders as link) | `` `$url:https://devpost.com` `` |
+| `` `$enum:high` `` | controlled vocabulary value | `` `$enum:high` `` |
+| `` `$date:2026-04-04` `` | ISO 8601 date scalar | `` `$date:2026-04-04` `` |
+| `` `$hash:#D85A30` `` | hex colour reference | `` `$hash:#D85A30` `` |
+
+Rules:
+- Type prefix must be one of the five above; unknown prefixes fall back to plain inline code
+- `$url:` value must be a fully qualified URL including scheme (`https://`)
+- `$enum:` value must match the declared `CHECK` constraint values for the relevant column
+- `$date:` value must be strict ISO 8601 (`YYYY-MM-DD`); partial dates are invalid
+- `$hash:` value must be a 6-digit hex colour (`#RRGGBB`); shorthand is invalid
+- Typed inline codes **do not compose** with annotation sigil (`#HEX:text`) — they are mutually exclusive within one backtick span
+
+### Token cost summary — all inline semantic sigils
+
+| Sigil | Characters | Approx tokens | HTML equivalent | HTML tokens |
+|---|---|---|---|---|
+| `` `@key:Ctrl+S` `` | 14 | ~5 | `<kbd>Ctrl</kbd>+<kbd>S</kbd>` | ~10 |
+| `` `@ui:File › Export` `` | 20 | ~6 | `<span class="ui-path">File &rsaquo; Export</span>` | ~16 |
+| `` `$id:demo-015` `` | 14 | ~4 | `<code class="id">demo-015</code>` | ~11 |
+| `` `$url:https://x` `` | 17 | ~5 | `<a href="https://x">https://x</a>` | ~12 |
+| `` `$enum:high` `` | 12 | ~4 | `<span class="enum">high</span>` | ~10 |
+
+### PostgreSQL JSONB mapping
+
+| Markdown sigil | JSONB shape |
+|---|---|
+| `` `@key:Ctrl+S` `` | `{"type":"key","value":"Ctrl+S"}` |
+| `` `@ui:File › Export` `` | `{"type":"ui-path","value":"File › Export"}` |
+| `` `$id:demo-015` `` | `{"type":"id","value":"demo-015"}` |
+| `` `$url:https://…` `` | `{"type":"url","value":"https://…"}` |
+| `` `$enum:high` `` | `{"type":"enum","value":"high"}` |
+| `` `$date:2026-04-04` `` | `{"type":"date","value":"2026-04-04"}` |
+| `` `$hash:#D85A30` `` | `{"type":"hash","value":"#D85A30"}` |
+
+### Shared cell conventions — additions for inline semantic markup
+
+Extends the convention tables from the Annotation Guidelines and Multi-dimensional Table Guidelines sections.
+
+| Convention | Symbol | Parse rule | Example |
+|---|---|---|---|
+| Keyboard shortcut | `` `@key:value` `` | type = `key`; render as badge | `` `@key:⌘+K` `` |
+| UI path | `` `@ui:path` `` | type = `ui-path`; `›` separator | `` `@ui:File › Export` `` |
+| Record ID | `` `$id:value` `` | type = `id` | `` `$id:demo-015` `` |
+| URL | `` `$url:value` `` | type = `url`; render as link | `` `$url:https://devpost.com` `` |
+| Enum value | `` `$enum:value` `` | type = `enum` | `` `$enum:high` `` |
+| Date scalar | `` `$date:YYYY-MM-DD` `` | type = `date`; ISO 8601 | `` `$date:2026-04-04` `` |
+| Hex colour | `` `$hash:#RRGGBB` `` | type = `hash` | `` `$hash:#D85A30` `` |
+| Metadata appendix entry | `<!-- metadata \| type: ... \| value: ... \| note: ... -->` | appendix-only document metadata note | `<!-- metadata | type: key | value: Ctrl+S | note: Save shortcut used in toolbar copy. -->` |
+
+---
+
+## Master Sigil Reference
+
+All inline sigils defined across this document, consolidated for parse-order reference.
+Parser resolves in the order listed; earlier rules take priority.
+
+| Sigil | Section | Token cost | JSONB type | Composes with `{{}}` |
+|---|---|---|---|---|
+| `` `#HEX:text` `` | Annotation | ~5 | `object` (color) | yes |
+| `` `bg#HEX:text` `` | Annotation | ~5 | `object` (bg) | yes |
+| `` `#HEX\|bg#HEX:text` `` | Annotation | ~7 | `object` (color+bg) | yes |
+| `==text==` | Annotation | ~3 | `string` (highlight) | yes |
+| `{{key}}` | Variable | ~2 | `object` (ref) | — (is the interpolation) |
+| `{{key:value}}` | Variable | ~4 | `object` (def) | — |
+| `{{key\|fallback}}` | Variable | ~3 | `object` (ref+fallback) | — |
+| `` `@node:id` `` | Flow editor | ~4 | node ref | no |
+| `` `@edge:…` `` | Flow editor | ~6 | edge ref | no |
+| `` `@node:m-{id}` `` | Rich media | ~5 | media node ref | no |
+| `` `@node:mr-{id}` `` | Rich media | ~5 | media-row ref | no |
+| `` `@comment:c-{id}` `` | Comments | ~5 | comment ref | no |
+| `` `@node:callout-{id}` `` | Callouts | ~6 | callout ref | no |
+| `` `@key:value` `` | Inline semantic | ~5 | `{type:"key"}` | no |
+| `` `@ui:path` `` | Inline semantic | ~6 | `{type:"ui-path"}` | no |
+| `` `$id:value` `` | Inline semantic | ~4 | `{type:"id"}` | no |
+| `` `$url:value` `` | Inline semantic | ~5 | `{type:"url"}` | no |
+| `` `$enum:value` `` | Inline semantic | ~4 | `{type:"enum"}` | no |
+| `` `$date:YYYY-MM-DD` `` | Inline semantic | ~4 | `{type:"date"}` | no |
+| `` `$hash:#RRGGBB` `` | Inline semantic | ~4 | `{type:"hash"}` | no |
+| `[^n]` | Footnote | ~2 | inline ref | no |
+
+**Parse disambiguation rules:**
+
+1. A backtick span starting with `#[0-9a-fA-F]{6}` → annotation sigil
+2. A backtick span starting with `bg#` → background annotation sigil
+3. A backtick span starting with `@node:` / `@edge:` / `@comment:` → reference sigil
+4. A backtick span starting with `@key:` / `@ui:` → inline semantic (UI)
+5. A backtick span starting with `$id:` / `$url:` / `$enum:` / `$date:` / `$hash:` → inline semantic (typed code)
+6. A backtick span matching none of the above → plain inline code
+7. `{{…}}` outside a fenced `mermaid` block → variable reference/declaration
+8. `==…==` → default highlight
+9. `[^n]` with a matching `[^n]: …` definition → footnote reference

@@ -612,6 +612,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-codex-goal-setup",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-codex-goal-setup.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-codex-goal-setup.md"
+      },
+      "documentPath": "docs/documents/knowgrph-codex-goal-setup.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-computing-data-flows-import-render-pipeline-document",
       "@type": "kg:Node",
       "labels": [
@@ -625,6 +641,22 @@
         "relPath": "docs/documents/knowgrph-computing-data-flows-import-render-pipeline-document.md"
       },
       "documentPath": "docs/documents/knowgrph-computing-data-flows-import-render-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-crawler-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-crawler-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-crawler-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-crawler-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1092,6 +1124,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-manus-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-manus-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-manus-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-manus-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-mapping-stack-prd-tad-extension-delivery-and-validation",
       "@type": "kg:Node",
       "labels": [
@@ -1236,22 +1284,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-mcp",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-mcp.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-mcp.md"
-      },
-      "documentPath": "docs/documents/knowgrph-mcp.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-mermaid-frontmatter-document",
       "@type": "kg:Node",
       "labels": [
@@ -1316,6 +1348,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd.tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-multi-user-collaboration-prd.tad.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-multi-user-collaboration-prd.tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-native-overlap-resolution-document",
       "@type": "kg:Node",
       "labels": [
@@ -1361,6 +1425,22 @@
         "relPath": "docs/documents/knowgrph-ontology-document.md"
       },
       "documentPath": "docs/documents/knowgrph-ontology-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-open-pencil-inspired-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-open-pencil-inspired-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-open-pencil-inspired-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-open-pencil-inspired-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1557,6 +1637,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-pwa",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pwa.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pwa.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pwa.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-renderer-document",
       "@type": "kg:Node",
       "labels": [
@@ -1734,68 +1830,35 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-storage-document-runtime-and-conflict-ux",
+      "@id": "node:knowgrph:doc:knowgrph-storage-schemas-document",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "knowgrph-storage-document-runtime-and-conflict-ux.md"
+        "knowgrph-storage-schemas-document.md"
       ],
       "properties": {
         "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-storage-document-runtime-and-conflict-ux.md"
+        "relPath": "docs/documents/knowgrph-storage-schemas-document.md"
       },
-      "documentPath": "docs/documents/knowgrph-storage-document-runtime-and-conflict-ux.md",
+      "documentPath": "docs/documents/knowgrph-storage-schemas-document.md",
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-storage-document-schemas-and-topology",
+      "@id": "node:knowgrph:doc:knowgrph-storage-sync-document.companion",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "knowgrph-storage-document-schemas-and-topology.md"
+        "knowgrph-storage-sync-document.companion.md"
       ],
       "properties": {
         "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-storage-document-schemas-and-topology.md"
+        "relPath": "docs/documents/knowgrph-storage-sync-document.companion.md"
       },
-      "documentPath": "docs/documents/knowgrph-storage-document-schemas-and-topology.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-storage-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-storage-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-storage-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-storage-document.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-pwa",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-pwa.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-pwa.md",
-        "scope": "PWA — manifest, service worker, install UX, share target, offline shell, regression tests"
-      },
-      "documentPath": "docs/documents/knowgrph-pwa.md",
+      "documentPath": "docs/documents/knowgrph-storage-sync-document.companion.md",
       "language": "en-us"
     },
     {
@@ -1809,75 +1872,25 @@
       ],
       "properties": {
         "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-storage-sync-document.md",
-        "scope": "Storage & Sync SSOT — Worker + D1 + RxDB + conflict UX + public doc view + deep link canvas rendering"
+        "relPath": "docs/documents/knowgrph-storage-sync-document.md"
       },
       "documentPath": "docs/documents/knowgrph-storage-sync-document.md",
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd-tad",
+      "@id": "node:knowgrph:doc:knowgrph-superagent-harness",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "knowgrph-multi-user-collaboration-prd.tad.md"
+        "knowgrph-superagent-harness.md"
       ],
       "properties": {
         "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md",
-        "scope": "Multi-user auth, authorization, role-based access, SSOT transition PRD-TAD"
+        "relPath": "docs/documents/knowgrph-superagent-harness.md"
       },
-      "documentPath": "docs/documents/knowgrph-multi-user-collaboration-prd.tad.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-stripe-api-reference",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-stripe-api-reference.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-stripe-api-reference.md"
-      },
-      "documentPath": "docs/documents/knowgrph-stripe-api-reference.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-stripe-mcp-service.companion",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-stripe-mcp-service.companion.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-stripe-mcp-service.companion.md"
-      },
-      "documentPath": "docs/documents/knowgrph-stripe-mcp-service.companion.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-stripe-mcp-service",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-stripe-mcp-service.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-stripe-mcp-service.md"
-      },
-      "documentPath": "docs/documents/knowgrph-stripe-mcp-service.md",
+      "documentPath": "docs/documents/knowgrph-superagent-harness.md",
       "language": "en-us"
     },
     {

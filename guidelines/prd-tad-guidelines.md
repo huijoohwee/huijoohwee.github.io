@@ -180,11 +180,14 @@ Source → [Ingest] → [Transform] → [Store] → [Serve] → Consumer
 
 ## Agentic Implementation Verification
 
-A well-formed PRD acceptance criterion **is** a well-formed `/goal` condition. This section connects PRD requirements to autonomous implementation via Claude Code's [`/goal`](https://code.claude.com/docs/en/goal) command, which sets a verifiable completion condition and keeps Claude working across turns until a separate evaluator model confirms it is met.
+A well-formed PRD acceptance criterion **is** a well-formed `/goal` condition. 
+This section connects PRD requirements to autonomous implementation via Claude Code's [`/goal`](https://code.claude.com/docs/en/goal) command, 
+which sets a verifiable completion condition and keeps Claude working across turns until a separate evaluator model confirms it is met.
 
 ### The Criterion → Condition Pipeline
 
-Every acceptance criterion written at Phase 1 should be traceable to a `/goal` condition used at implementation time. The same three properties that make a criterion testable make a condition evaluable:
+Every acceptance criterion written at Phase 1 should be traceable to a `/goal` condition used at implementation time. 
+The same three properties that make a criterion testable make a condition evaluable:
 
 | PRD Property | `/goal` Property | Shared Requirement |
 |---|---|---|
@@ -201,11 +204,9 @@ Given [context] When [action] Then [outcome]
 
 **Example**:
 ```
-Criterion:  Given a valid token, when /refresh is called, then a 200 response
-            is returned within 200 ms with a refreshed JWT.
+Criterion:  Given a valid token, when /refresh is called, then a 200 response is returned within 200 ms with a refreshed JWT.
 
-/goal condition:  all tests in test/auth pass, /refresh returns 200 under
-                  200 ms per load test output, and no other test file is modified
+/goal condition:  all tests in test/auth pass, /refresh returns 200 under 200 ms per load test output, and no other test file is modified
 ```
 
 ### Autonomous Workflow Selection
@@ -218,11 +219,13 @@ Three Claude Code approaches keep a session running between prompts. Choose base
 | `/loop` | Time interval elapses | You stop it, or Claude judges done | Recurring checks, polling, timed sweeps |
 | Stop hook | Previous turn finishes | Your script or prompt decides | Custom evaluation logic, deterministic checks |
 
-`/goal` and auto mode are complementary: auto mode removes per-tool prompts within a turn; `/goal` removes per-turn prompts across turns. A fresh small fast model (Haiku by default) evaluates the condition, so completion is decided independently of the model doing the work.
+`/goal` and auto mode are complementary: auto mode removes per-tool prompts within a turn; `/goal` removes per-turn prompts across turns. 
+A fresh small fast model (Haiku by default) evaluates the condition, so completion is decided independently of the model doing the work.
 
 ### Writing Evaluable Conditions
 
-A `/goal` condition is judged against what Claude has **already surfaced in the conversation** — the evaluator does not run commands or read files independently. Write conditions as things Claude's own output can demonstrate.
+A `/goal` condition is judged against what Claude has **already surfaced in the conversation** — the evaluator does not run commands or read files independently. 
+Write conditions as things Claude's own output can demonstrate.
 
 **Structure of a strong condition:**
 1. **One measurable end state** — a test result, build exit code, file count, or empty queue
@@ -234,11 +237,9 @@ A `/goal` condition is judged against what Claude has **already surfaced in the 
 ```
 /goal all tests in test/auth pass and the lint step exits 0
 
-/goal CHANGELOG.md has an entry for every merged PR this sprint and no
-      existing entries are modified
+/goal CHANGELOG.md has an entry for every merged PR this sprint and no existing entries are modified
 
-/goal the migration script runs without errors and row counts in
-      users and orders match pre-migration snapshots, or stop after 15 turns
+/goal the migration script runs without errors and row counts in users and orders match pre-migration snapshots, or stop after 15 turns
 ```
 
 **Anti-patterns** (mirror vague acceptance criteria):
@@ -256,7 +257,8 @@ Extend the existing traceability pattern to include the implementation condition
 PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]
 ```
 
-Record derived conditions in the TAD component specification alongside the acceptance criteria they implement. This ensures conditions stay synchronized when requirements evolve (see Phase 4 directive above).
+Record derived conditions in the TAD component specification alongside the acceptance criteria they implement. 
+This ensures conditions stay synchronized when requirements evolve (see Phase 4 directive above).
 
 ### Running a Goal
 
@@ -280,7 +282,8 @@ Run non-interactively to completion in a single invocation:
 claude -p "/goal CHANGELOG.md has an entry for every PR merged this week"
 ```
 
-**Requirements**: `/goal` runs only in workspaces where the trust dialog has been accepted. It is unavailable when `disableAllHooks` or `allowManagedHooksOnly` is set.
+**Requirements**: `/goal` runs only in workspaces where the trust dialog has been accepted. 
+It is unavailable when `disableAllHooks` or `allowManagedHooksOnly` is set.
 
 ---
 

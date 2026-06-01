@@ -419,6 +419,22 @@
       }
     },
     {
+      "@id": "node:knowgrph:doc:fix-202604061300",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "fix-202604061300.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/fix-202604061300.md"
+      },
+      "documentPath": "docs/documents/fix-202604061300.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-2d-renderer-enhancement-design",
       "@type": "kg:Node",
       "labels": [
@@ -432,6 +448,134 @@
         "relPath": "docs/documents/knowgrph-2d-renderer-enhancement-design.md"
       },
       "documentPath": "docs/documents/knowgrph-2d-renderer-enhancement-design.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-cloudflare-isitagentready",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-cloudflare-isitagentready.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-cloudflare-isitagentready.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-cloudflare-isitagentready.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-prd-tad.runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-prd-tad.runtime.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-prd-tad.runtime.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-prd-tad.runtime.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agent-ready-webmcp-release-note-20260522",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agent-ready-webmcp-release-note-20260522.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agent-ready-webmcp-release-note-20260522.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agent-ready-webmcp-release-note-20260522.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-commerce-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-commerce-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-commerce-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-commerce-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agnes-ai-api-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agnes-ai-api-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agnes-ai-api-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agnes-ai-api-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -580,6 +724,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-cloudflare-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-cloudflare-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-cloudflare-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-cloudflare-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-codebase-index-document",
       "@type": "kg:Node",
       "labels": [
@@ -593,6 +753,22 @@
         "relPath": "docs/documents/knowgrph-codebase-index-document.md"
       },
       "documentPath": "docs/documents/knowgrph-codebase-index-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-codebase-responsibility-flow",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-codebase-responsibility-flow.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-codebase-responsibility-flow.md"
+      },
+      "documentPath": "docs/documents/knowgrph-codebase-responsibility-flow.md",
       "language": "en-us"
     },
     {
@@ -1092,6 +1268,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-llm-prompt-contract-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-llm-prompt-contract-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-llm-prompt-contract-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-llm-prompt-contract-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-llm-prompt-contract-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-llm-prompt-contract-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-llm-prompt-contract",
       "@type": "kg:Node",
       "labels": [
@@ -1121,6 +1329,22 @@
         "relPath": "docs/documents/knowgrph-local-storage-document.md"
       },
       "documentPath": "docs/documents/knowgrph-local-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-commerce-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-commerce-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-commerce-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-commerce-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1284,6 +1508,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mcp",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mcp.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mcp.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mcp.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-mermaid-frontmatter-document",
       "@type": "kg:Node",
       "labels": [
@@ -1345,6 +1585,22 @@
         "relPath": "docs/documents/knowgrph-metadata-document.md"
       },
       "documentPath": "docs/documents/knowgrph-metadata-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-modularity-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-modularity-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-modularity-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-modularity-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1605,6 +1861,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-pixverse-mcp-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-pixverse-mcp-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-pixverse-mcp-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-pixverse-mcp-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-port-handles-and-subgraph-layout-document",
       "@type": "kg:Node",
       "labels": [
@@ -1653,6 +1925,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-query-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-query-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-query-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-query-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-renderer-document",
       "@type": "kg:Node",
       "labels": [
@@ -1682,6 +1970,22 @@
         "relPath": "docs/documents/knowgrph-repo-hygiene-document.md"
       },
       "documentPath": "docs/documents/knowgrph-repo-hygiene-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-research-agent-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-research-agent-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-research-agent-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-research-agent-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1781,6 +2085,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-single-file-html-page-export",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-single-file-html-page-export.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-single-file-html-page-export.md"
+      },
+      "documentPath": "docs/documents/knowgrph-single-file-html-page-export.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-site-selection-widget",
       "@type": "kg:Node",
       "labels": [
@@ -1875,6 +2195,54 @@
         "relPath": "docs/documents/knowgrph-storage-sync-document.md"
       },
       "documentPath": "docs/documents/knowgrph-storage-sync-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-strybldr-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-strybldr-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-strybldr-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-strybldr-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-stryfork-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-stryfork-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-stryfork-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-stryfork-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-strytree-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-strytree-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-strytree-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-strytree-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -1990,6 +2358,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-token-economics-model-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-token-economics-model-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-token-economics-model-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-token-economics-model-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-token-economics-model-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-token-economics-model-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-token-economics-model-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-token-economics-model-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-ui-ux-design-document",
       "@type": "kg:Node",
       "labels": [
@@ -2003,6 +2403,22 @@
         "relPath": "docs/documents/knowgrph-ui-ux-design-document.md"
       },
       "documentPath": "docs/documents/knowgrph-ui-ux-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-vdeoxpln-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-vdeoxpln-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-vdeoxpln-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-vdeoxpln-prd-tad.md",
       "language": "en-us"
     },
     {

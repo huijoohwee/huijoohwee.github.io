@@ -1,4 +1,21 @@
+---
+title: "Generic GraphRAG Pipeline: Token Linking to Corpus Reasoning"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Generic GraphRAG Pipeline: Token Linking to Corpus Reasoning
+
+## Markdown YAML Frontmatter Enforcement
+
+- Canonical pipeline specs, orchestration docs, threshold profiles, and runtime-ready Markdown artifacts must start with a valid YAML frontmatter block as the first block in the file.
+- Frontmatter is the SSOT for pipeline metadata, active variants, stage-level configuration, and reusable context keys referenced elsewhere in the document.
+- Canonical authored pipeline docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrappers.
+- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> execute fidelity.
+- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read pipeline metadata deterministically.
+- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 
 ## Foundational Axioms
 

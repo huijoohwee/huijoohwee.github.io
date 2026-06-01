@@ -1,9 +1,25 @@
+---
+title: "HJH Workspace Todo Log"
+doc_type: "Cross-Repo Planning Ledger"
+version: "1.0.0"
+status: "active"
+date: "2026-05-04"
+lang: "en-US"
+owners:
+  - "Cross-repo shared directives"
+frontmatter_contract: "required"
+---
+
 # HJH Workspace Todo Log
 
-**Version**: 1.0.0  
-**Date**: 2026-05-04  
-**Status**: Active  
-**Owner**: Cross-repo shared directives
+## Planning Ledger Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this cross-repo planning ledger.
+- This document is a canonical authored shared todo/workspace log, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for shared directives, cross-repo planning rows, and workspace-wide ledger ownership.
+- Dated sections and one-row-one-directive entries belong to the live ledger body; do not duplicate ledger ownership in ad hoc inline metadata blocks or downstream mirrors.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical planning prose.
+- Shared directive meaning, migration rules, and next-step recommendations must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 Commit-backed canonical home for workspace-wide directives that span multiple repos and do not belong to one app-only `todo-log.md`.
 

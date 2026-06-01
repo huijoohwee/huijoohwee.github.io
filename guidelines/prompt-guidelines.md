@@ -1,3 +1,11 @@
+---
+title: "Prompt Guidelines"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Prompt Guidelines
 
 ## Core Principles
@@ -7,6 +15,15 @@
 **GFM-Enhanced, CommonMark-Safe**: Design for visual richness (tables, task lists, collapsibles) -> ensure graceful degradation -> test without extensions
 
 **Domain-Agnostic Templates**: Use `{{ semantic_placeholders }}` -> zero hardcoding -> universal algorithms -> schema-driven detection
+
+## Markdown YAML Frontmatter Enforcement
+
+- Canonical prompt docs and prompt-ready Markdown artifacts start with a valid YAML frontmatter block as the first block in the file.
+- Frontmatter is the SSOT for metadata, prompt variables, provenance, active variants, and reusable context keys resolved by `{{ placeholders }}`.
+- Canonical authored prompts use plain YAML for frontmatter and body-adjacent schema blocks; do not default to typed wrapper syntax in normal prompt authoring.
+- Normalized `{key, type, value}` wrappers are allowed only in dedicated validation fixtures that explicitly test prompt ingestion or graph payload fidelity.
+- Quote YAML scalars that contain reserved punctuation so strict parsers can read prompt metadata deterministically.
+- Malformed frontmatter is a source defect, not an acceptable fallback path; fix the YAML instead of depending on silent parser recovery.
 
 ---
 

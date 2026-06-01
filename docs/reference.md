@@ -1,5 +1,20 @@
+---
+title: "Reference"
+doc_type: "Reference Index"
+status: "active"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Reference
 
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this reference index.
+- This document is a canonical authored reference index, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for reference lists, cross-links, and curated resource hubs.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical reference prose.
+- Reference curation and cross-link meaning must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 
 

@@ -1,4 +1,21 @@
+---
+title: "Webpage Markdown Guidelines"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Webpage Markdown Guidelines
+
+## Markdown YAML Frontmatter Enforcement
+
+- Canonical webpage-to-Markdown specs, extraction docs, capture templates, and runtime-ready Markdown artifacts must start with a valid YAML frontmatter block as the first block in the file.
+- Frontmatter is the SSOT for source metadata, extraction scope, active variants, provenance, and reusable context keys resolved elsewhere in the document.
+- Canonical authored webpage Markdown docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrappers.
+- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> extract fidelity.
+- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read extraction metadata deterministically.
+- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 
 ## Overview
 

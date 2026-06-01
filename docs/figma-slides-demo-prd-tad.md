@@ -17,6 +17,14 @@ source_basis:
 
 # Figma Slides Demo Canvas - PRD + TAD
 
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this PRD/TAD.
+- This document is a canonical authored PRD/TAD reconstruction, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for PRD/TAD, workflow, and architecture docs.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical planning prose.
+- Runtime, product, and architecture conclusions must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
+
 ## 1. Document Purpose
 
 This document reconstructs the likely product requirements and technical architecture behind the live `aoshe.ng/aie` experience: a collaborative canvas combining a Figma slide deck, seeded interactive demo cards, and inline AI-assisted branching/editing.
@@ -691,4 +699,3 @@ A platform-ready version rather than a single curated demo route.
 - [x] Integration contracts documented
 - [x] Requirement-to-implementation traceability included
 - [x] Open questions and assumptions made explicit
-

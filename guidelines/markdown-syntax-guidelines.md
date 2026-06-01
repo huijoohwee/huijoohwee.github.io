@@ -132,6 +132,16 @@ mermaid: |
 
 ---
 
+## Markdown YAML Frontmatter Contract
+
+Markdown documents that drive Knowgrph parsing, rendering, prompting, scripting, or runtime switching must open with a valid YAML frontmatter block as the first block in the file.
+
+- Treat the opening `--- ... ---` block as the canonical metadata and variable SSOT.
+- Keep canonical authored Markdown in plain YAML for frontmatter keys, `flow:`, and related body-facing contracts.
+- Reserve normalized `{key, type, value}` wrappers for dedicated E2E ingestion fixtures only, not for general syntax examples or canonical authored docs.
+- Quote YAML scalars when they contain reserved punctuation such as `:` or other content that can invalidate inline YAML maps.
+- Do not rely on silent parser fallback when YAML is malformed; malformed frontmatter is an authoring defect that must be fixed at source.
+
 ## Annotation Guidelines
 
 ### Rationale
@@ -228,6 +238,8 @@ The two contexts are mutually exclusive by block boundary and never overlap.
 
 **YAML frontmatter harmonisation:** `{{key}}` in body prose resolves from frontmatter keys first. 
 A `{{subject}}` reference resolves from `subject: "hackathon winners"` in the YAML frontmatter — no separate inline declaration needed when the key already exists in frontmatter.
+
+**Canonical authoring split:** use plain YAML in authored docs and syntax guidelines; use typed `{key, type, value}` wrappers only in normalized validation fixtures that explicitly test ingest -> parse -> render behavior.
 
 ### Syntax
 
@@ -474,6 +486,7 @@ node state is computed from upstream values — exactly as in https://reactflow.
 
 Markdown is the authoring format. 
 The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edge` sigils and hydrates a ReactFlow graph.
+`2D Renderer: Animatic` reuses this same frontmatter-first `flow:` authoring contract; timeline-specific timing stays under `timeline.beats.*` beside the shared graph syntax instead of introducing a parallel animatic-only Markdown dialect.
 
 ### Concept map — Mermaid vs. Flow Editor
 
@@ -492,6 +505,20 @@ The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edg
 Declared in YAML frontmatter alongside `mermaid:`. 
 The canvas renderer uses `flow:` for the interactive editor and `mermaid:` for the static diagram view.
 Both represent the same graph — authors write one; the canvas maintains sync.
+The same `flow:` block is the canonical graph authoring surface for both `kgCanvas2dRenderer: "flowEditor"` and `kgCanvas2dRenderer: "animatic"`.
+
+Canonical authored Markdown uses plain YAML scalars, arrays, and objects in the `flow:` block.
+Normalized E2E pipeline fixtures may wrap individual values as `{key, type, value}` after parsing so ingestion, validation, and Canvas rendering can audit the typed graph payload explicitly.
+
+Normalized E2E example:
+
+```yaml
+flow:
+  nodes:
+    - id: {key: id, type: string, value: "w-text-script"}
+      label: {key: label, type: string, value: "Text Script Widget"}
+      handles: {key: handles, type: object, value: {target: ["prompt_in"], source: ["text_out"]}}
+```
 
 ```yaml
 ---

@@ -1,6 +1,22 @@
+---
+title: "Full-Stack 0→1 Critical Path Tracker"
+doc_type: "Architecture Tracker"
+status: "active"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Full-Stack 0→1 Critical Path Tracker
 <!-- Universal · FOSS · Free Tier · Local-first · Solo Founder MVP · 3-Hour Sprint -->
 <!-- Scope: Frontend → Backend → LLM → Multi-Agent Orchestration → Deploy -->
+
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this architecture tracker.
+- This document is a canonical authored planning and architecture tracker, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for architecture plans, stack trackers, and execution-roadmap docs.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical planning prose.
+- Runtime, stack, and delivery guidance must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 ---
 

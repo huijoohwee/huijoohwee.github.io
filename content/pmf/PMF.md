@@ -1,9 +1,25 @@
+---
+title: "PMF Voxel Layer Model"
+doc_type: "Product Snapshot"
+status: "historical"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # PMF Voxel Layer Model
 
 **Hackamap — Product-Market Fit Framework**
 `v1.0.0 · FOSS · 3-hour hackathon build`
 
 > Historical archive note: this document preserves the original hackathon-era PMF build description, including bipartite-era renderer wording, as a dated product snapshot rather than the current Knowgrph Flowchart contract.
+
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this historical product snapshot.
+- This document is a canonical authored archive/snapshot, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for historical product docs, architecture snapshots, and archived framework notes.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical archive prose.
+- Historical interpretation and renderer-contract boundaries must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 ---
 

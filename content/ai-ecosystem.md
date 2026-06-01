@@ -1,4 +1,20 @@
+---
+title: "AI Ecosystem"
+doc_type: "Content Hub"
+status: "active"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # AI Ecosystem
+
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this content hub.
+- This document is a canonical authored content index, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for content galleries, curated ecosystem notes, and showcase collections.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical content prose.
+- Content curation and archive meaning must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 
 ## Gallery
@@ -34,4 +50,3 @@ Trae Travel AI
 [Travel-AI](https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7423892590258798592)
 
 ## hackahack
-

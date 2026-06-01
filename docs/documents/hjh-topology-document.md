@@ -1,9 +1,24 @@
+---
+title: "HJH Topology Document"
+doc_type: "PRD + TAD"
+version: "1.0.0"
+status: "active"
+date: "2026-05-04"
+lang: "en-US"
+owners:
+  - "cross-repo topology docs"
+frontmatter_contract: "required"
+---
+
 # HJH Topology Document
 
-**Version**: 1.0.0  
-**Date**: 2026-05-04  
-**Status**: Active  
-**Owner**: Cross-repo topology docs
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this topology PRD/TAD.
+- This document is a canonical authored topology contract, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for cross-repo topology, deployment, and ownership docs.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical topology prose.
+- Cross-repo topology and publish-boundary decisions must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 ## Feature: Cross-Repo Dev, Publish, and Cloudflare Topology
 

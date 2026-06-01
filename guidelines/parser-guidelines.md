@@ -1,3 +1,11 @@
+---
+title: "Parser Guidelines"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Parser Guidelines
 
 ## Core Principles
@@ -5,6 +13,15 @@
 **Structure-Aware Extraction**: Parser detects document structure -> preserves provenance -> segments into semantic units | Format-agnostic interfaces | Configuration-driven chunking | Zero format assumptions
 
 **Provenance Primacy**: All extracted units track source location, block type, parent hierarchy | Bidirectional links between semantics and source structure
+
+## Markdown YAML Frontmatter Enforcement
+
+- Markdown parsers must treat the opening YAML frontmatter block as the canonical metadata owner when it is present.
+- The frontmatter block must be the first block in the file; parsers should not infer equivalent metadata from later prose or duplicate body declarations.
+- Canonical authored Markdown remains plain YAML; normalized `{key, type, value}` wrappers are additive validation-fixture syntax, not the default authored contract.
+- Parsers must surface explicit warnings when frontmatter YAML is malformed instead of silently treating invalid metadata as acceptable input.
+- Parser repair is a recovery path only; malformed YAML still represents invalid source that should be corrected upstream.
+- Scalars containing reserved punctuation must be quoted so strict YAML parsing stays deterministic across ingestion paths.
 
 ---
 

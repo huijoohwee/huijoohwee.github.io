@@ -1,4 +1,20 @@
+---
+title: "Knowledge Graph JSON-LD Schema v1.0.0"
+doc_type: "Schema Index"
+status: "active"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Knowledge Graph JSON-LD Schema v1.0.0
+
+## Markdown YAML Frontmatter Contract
+
+- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this schema index.
+- This document is a canonical authored schema README, not a typed validation fixture or generated registry surface.
+- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for schema indexes, sync rules, and renderer/pipeline contract overviews.
+- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical schema prose.
+- Cross-repo sync and schema decisions must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
 
 > **Compliant with:** structural-only, domain-agnostic pipeline principles  
 > **Languages:** English (en-us), Chinese (zh-cn)  
@@ -99,12 +115,16 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Source-file ingest should skip duplicate pending parses when the same file text hash is already loading while preserving stale-job and latest-hash writeback guards.
 - Knowgrph initialization-file bootstrap must treat `huijoohwee/docs` as the source-text SSOT, materialize the canonical 3-file family (`README.md`, `knowgrph-video-demo.md`, `knowgrph-maps-grabmap-multim-demo.md`) into the workspace root, and keep those root-level paths as the stable activation/source-file ids.
 - Initialization-file Canvas View switching must stay frontmatter-driven: `README.md` -> 2D D3 + Frontmatter Mode, `knowgrph-video-demo.md` -> 2D Flow Editor + Frontmatter Mode, `knowgrph-maps-grabmap-multim-demo.md` -> Geospatial Mode.
+- Canonical authored Markdown and reusable templates must keep `flow:` in plain YAML scalars, arrays, and objects; normalized `{key, type, value}` wrappers are reserved for E2E ingestion/parsing/rendering fixtures after parsing.
+- Flow Editor initialization fixtures such as `knowgrph-video-demo.md` should declare the full explicit frontmatter preset (`kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `kgMultiDimTableModeEnabled`, `kgDocumentStructureBaselineLock`) so Canvas View switching remains deterministic.
 - Exact UI imports must promote the first imported preset document to the active raw-frontmatter authority before composed source-file replay, so the previously selected document cannot overwrite the imported document's renderer or surface landing.
 - Metadata/layout autosuggest paths must not coerce block-layout initialization files away from an explicit frontmatter-selected renderer or geospatial surface.
 - Frontmatter flow imports should resolve frontmatter variables first, then a second pass of dotted node-scoped refs like `{{node.data.key}}` before labels/data finalize.
+- `kgCanvas2dRenderer: "animatic"` must reuse the same canonical `flow:` frontmatter graph contract as `kgCanvas2dRenderer: "flowEditor"` and keep timeline timing additive under `timeline.beats.*`; do not introduce a parallel animatic-only markdown dialect.
 - Flowchart ingest must normalize `api`/`fixture`/`workspace` source metadata and `cross`/`spoke` edge roles through shared helpers; forbid renderer styling, fallback payloads, or workspace detection that depend on `/api/graph`, sample content, or filename-only JSON cues.
 - Shared workspace Flowchart fallback parsing must use neutral workspace source/context ids and inline parse hints; forbid fake `.json` fallback names or `workspace-json` identity tokens.
 - Shared 2D renderer behavior must derive D3-like, surface-mount, and minimap rules from central helpers; workspace JSON fallback parsing must stay generic and workspace Flowchart payloads must retain workspace source metadata.
+- Shared 2D renderer menus must derive renderer order and short labels from the same shared renderer spec used by frontmatter normalization; toolbar surfaces may keep local icon/title presentation only.
 - Adjacent 2D surfaces must also reuse shared renderer-id and family helpers in persistence, store bootstrap/setters, minimap/editor gating, and D3 scene/schema activation instead of repeating inline renderer allowlists.
 - 2D renderer initialization across D3 Graph, Flowchart, Flow Canvas, Design, and Flow Editor should compute fit and group envelopes from the same display-derived node and cluster bounds so switching variants preserves visible extents; Flow Editor additionally extends these envelopes with quick-editor overlay extents as described below.
 - Flow Editor group containment should merge explicit group bounds with computed member-footprint AABBs (including configured padding/label-top offsets) so initialization keeps quick-editor-driven surfaces within layer/subgraph/cluster/group envelopes.
@@ -118,7 +138,10 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - MainPanel should derive searchable tabs, search placeholders, and footer labels from one tab metadata path, let header/search/footer plus key-value rows wrap responsively, and keep Settings lazy-load helpers off toolbar-owned init bridges.
 - MainPanel Integrations should expose a distinct Integrations tab icon, prefer BytePlus ModelArk as the default official AI profile with OpenAI secondary, route provider auth/model refresh through one proxy-backed chat contract, and auto-expand matching Settings groups when Chat launches a `chat` search so AI routing state is immediately visible.
 - FloatingPanel Chat and MainPanel Flow Editor Manager should both reflect the same shared official AI profile summary (provider, region, model) and link configuration back to MainPanel Settings instead of introducing duplicate provider controls.
-- FloatingPanel Chat should inject a strict Markdown response contract system prompt; standard chat responses may include one optional `response:` YAML metadata block for parameterized follow-up turns, while `chatKnowgrph` persists only the structured KGC base-template contract (`kgc-pipeline/v1`). Treat streaming as a Workspace-only concern: write in-progress turns into the active `kgc_*.md` document (Split viewer tail-follow) while Chat UI shows only one final assistant bubble: concise bullets (≤50 words) plus a workspace link to the current `kgc_yyyymmddhhmmss.md`. In `chatKnowgrph` mode, `New Chat` creates and opens a new `kgc_*.md` in Workspace Editor and routes the next turn there.
+- FloatingPanel Chat should inject a strict Markdown response contract system prompt; standard chat responses may include one optional `response:` YAML metadata block for parameterized follow-up turns, while `chatKnowgrph` persists only the structured KGC base-template contract (`kgc-pipeline/v1`).
+- Treat streaming as a Workspace-only concern: write in-progress turns into the active `kgc_*.md` document, keep Chat UI to one final assistant bubble plus the workspace link, and avoid any second graph-apply runtime.
+- Streaming lineage should also stay on the shared workspace path: persist one timestamped session folder with `chat-stream-log_*`, `chat-stream-report*`, and additive dereferenced share/report markdown artifacts derived through the shared URL-content import pipeline.
+- Oversized streaming source docs in `knowgrph/docs/documents` must keep the original filename as the canonical sub-600 index and move detail into companion markdown files linked by explicit Continuation notes.
 - `chatKnowgrph` canonical acceptance must enforce frontmatter↔body linkage: all body `{{key}}` refs must be declared in YAML frontmatter (base-template allows dotted `runtime.*` refs), and persistence only normalizes `links.self_ref` from the `kgc_yyyymmddhhmmss.md` filename.
 - FloatingPanel Chat should optionally append chat exchanges into a workspace Markdown file (configurable path; default create `chh_yyyymmddhhmmss.md` under `chatLocalStorageRootPath` on first success) so Chat history is viewable and editable in the Workspace Editor Split view without relying on server log artifacts.
 - Chat history storage should remain explicit: `local` writes to workspace files; `cloud` reserves a URL field and must remain inert until a real sync backend exists.

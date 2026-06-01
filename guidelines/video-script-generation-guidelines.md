@@ -1,8 +1,25 @@
+---
+title: "Video Script Generation Guidelines"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Video Script Generation Guidelines
 
 ## Overview
 
 **Video script generation pipelines**: implement subject-agnostic designs to maximise applicability, adapt across formats, platforms, and tones to ensure versatility, avoid hardcoded narrative assumptions to preserve flexibility, apply general-purpose beat structures to enhance reusability, configure all creative parameters externally to enable customisation, define single-responsibility script nodes to maintain clarity, orchestrate with metadata to secure traceability, expose typed port handles to enable fan-out and fan-in wiring, and avoid embedded copy to reduce fragility.
+
+## Markdown YAML Frontmatter Enforcement
+
+- Every canonical video script spec, prompt sheet, storyboard seed, and runtime-ready Markdown doc starts with a valid YAML frontmatter block as the first block in the file.
+- Canonical authored script docs keep frontmatter, `flow:`, and related script metadata in plain YAML; do not replace normal authoring syntax with typed wrappers.
+- Use normalized `{key, type, value}` wrappers only in dedicated validation fixtures that audit ingest -> parse -> render fidelity for script graphs.
+- Put reusable variables, beat metadata, tone, POV, active variants, and placeholder sources in YAML frontmatter or shared config nodes instead of inline resolved copy.
+- Quote YAML scalars that contain reserved punctuation so strict parsers do not reject script metadata.
+- Treat malformed frontmatter as an upstream authoring defect; do not rely on silent fallback, inline copy patches, or renderer-specific rescue logic.
 
 ---
 

@@ -22,6 +22,15 @@ These guidelines define the canonical YAML frontmatter contract for documents th
 
 Switch-sensitive `*.md` files should be authored as directly runnable canonical seeds by adding the explicit Canvas View frontmatter block at the top of the file.
 
+## Enforcement Rules
+
+- The YAML frontmatter block must be the first block in the Markdown file; do not place prose, comments, HTML, or code fences before it.
+- Canonical authored docs use plain YAML for frontmatter keys, `flow:`, `timeline.*`, and related schema-bearing sections.
+- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test E2E ingest -> parse -> render behavior.
+- Scalars that contain reserved punctuation, including inline values with `:`, must be quoted so the frontmatter remains valid YAML under strict parsers.
+- Parser repair or warning paths are safety nets, not authoring targets; malformed YAML frontmatter must be treated as invalid source that needs correction upstream.
+- Do not split metadata ownership across duplicate blocks, renderer-only aliases, or body-only mirror declarations when the same value belongs in frontmatter.
+
 ## Context-Intent-Directive
 
 | Context | Intent | Directive |
@@ -65,6 +74,24 @@ kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
+Timeline demo / Animatic / Frontmatter Mode:
+
+```yaml
+kgCanvasSurfaceMode: "2d"
+kgCanvasRenderMode: "2d"
+kgCanvas2dRenderer: "animatic"
+kgDocumentSemanticMode: "document"
+kgFrontmatterModeEnabled: true
+kgMultiDimTableModeEnabled: false
+kgDocumentStructureBaselineLock: false
+```
+
+Animatic authoring contract:
+
+- Reuse the same canonical Markdown YAML syntax as Flow Editor: `flow:` remains the graph authoring surface.
+- Optional timeline timing lives beside that shared graph contract under `timeline.beats.*`.
+- Do not introduce a parallel animatic-only body syntax or renderer-specific frontmatter alias block.
+
 3D surface / Document Mode:
 
 ```yaml
@@ -90,18 +117,47 @@ kgDocumentStructureBaselineLock: false
 
 Reference document for Geospatial Mode structure:
 
-- `/Users/huijoohwee/Documents/GitHub/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
 
 Canonical seed documents aligned to the explicit vocabulary:
 
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/README.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-seeded.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-sea.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-the-general.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
+- `knowgrph/README.md`
+- `knowgrph/knowgrph-video-demo.md`
+- `knowgrph/knowgrph-video-demo-seeded.md`
+- `knowgrph/knowgrph-video-demo-sea.md`
+- `knowgrph/knowgrph-video-demo-the-general.md`
+- `sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
+- `sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
+
+## E2E Normalized Frontmatter
+
+Canonical authored Markdown stays plain YAML for source-of-truth authoring, for example:
+
+```yaml
+flow:
+  nodes:
+    - id: n-scrape
+      type: input
+      label: scrape event URLs
+```
+
+E2E ingestion and rendering fixtures may use a normalized typed wrapper shape after parsing so the pipeline can validate `key`, `type`, and `value` explicitly:
+
+```yaml
+flow:
+  nodes:
+    - id: {key: id, type: string, value: "w-text-script"}
+      type: {key: type, type: string, value: "TextGeneration"}
+      label: {key: label, type: string, value: "Text Script Widget"}
+```
+
+Contract split:
+
+- Use plain YAML in canonical authored docs and guideline examples unless the fixture is specifically validating the normalized E2E graph payload.
+- Use `{key, type, value}` wrappers only in normalized validation fixtures that audit ingestion -> parsing -> rendering on Canvas.
+- Keep the typed-wrapper scope additive: wrappers validate payload fidelity but do not replace canonical YAML authoring syntax in normal docs.
+- Do not hardcode machine-local absolute repo paths inside canonical docs or guideline references; use repo-relative paths or placeholders instead.
 
 ## Configuration Reference
 
@@ -120,6 +176,7 @@ Supported `kgCanvas2dRenderer` values:
 | `"d3"` | D3 document graph | Use for README-style document landing |
 | `"flowchart"` | Flowchart renderer | Use only when Flowchart rendering is the explicit target |
 | `"flow"` | Flow Canvas renderer | Avoid for widget-bundle canonical docs because it is frontmatter-only and can hide widget expectations |
+| `"animatic"` | Native animatic timeline renderer | Use for timeline playback/editing while reusing the same `flow:` and `timeline.beats.*` YAML contract as Flow Editor |
 | `"flowEditor"` | Flow Editor renderer | Use for widget-bundle and rich-media documents |
 | `"design"` | Design renderer | Use only when design layout is the explicit target |
 
@@ -167,10 +224,12 @@ widget_bundle:
 ## Validation Guidelines
 
 - [ ] Reviewers confirm the frontmatter block is the first block in the file.
+- [ ] Reviewers confirm the YAML frontmatter parses cleanly under a strict parser with no recovery-only dependency.
 - [ ] Reviewers confirm switch-sensitive `*.md` files are directly runnable canonical seeds with explicit Canvas View frontmatter.
 - [ ] Reviewers confirm `kgCanvasSurfaceMode` is explicit for switch-sensitive documents.
 - [ ] Reviewers confirm `README.md`-style files use `kgCanvas2dRenderer: "d3"`.
 - [ ] Reviewers confirm widget-bundle files use `kgCanvas2dRenderer: "flowEditor"`.
+- [ ] Reviewers confirm animatic timeline files use `kgCanvas2dRenderer: "animatic"` while reusing the same canonical `flow:` YAML syntax as Flow Editor.
 - [ ] Reviewers confirm 3D examples pair `kgCanvasSurfaceMode: "3d"` with `kgCanvas3dMode`.
 - [ ] Reviewers confirm geospatial examples use `kgCanvasSurfaceMode: "geospatial"` instead of relying on stored geospatial state.
 - [ ] Reviewers confirm `kgMultiDimTableModeEnabled` is explicitly set for switch-sensitive documents.
@@ -187,3 +246,4 @@ widget_bundle:
 - Do not rely on persisted Geospatial Mode when the document itself is map-first.
 - Do not mix Flow Editor widget bundles with cross-renderer proxy behavior.
 - Do not treat renderer aliases as the canonical authoring format.
+- Do not leave invalid inline YAML scalars unquoted and expect parser repair to recover them silently.

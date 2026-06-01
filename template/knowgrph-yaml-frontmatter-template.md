@@ -100,6 +100,8 @@ flow:
 
 **From default document state to Flow Editor landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Flow Editor plus Frontmatter Mode.
 
+**From default document state to Animatic landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "animatic"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Flow Editor and treating `timeline.beats.*` as additive timing metadata.
+
 **From document preset to 3D landing**: Author sets `kgCanvasSurfaceMode: "3d"` and optionally `kgCanvas3dMode: "3d"` or `kgCanvas3dMode: "voxel"` -> runtime lands on 3D surface mode and disables Geospatial Mode.
 
 **From document preset to Geospatial landing**: Author sets `kgCanvasSurfaceMode: "geospatial"` and a compatible `kgCanvas2dRenderer` such as `flowEditor` -> runtime enables Geospatial Mode while preserving the requested 2D renderer for widget-panel overlays.
@@ -112,6 +114,7 @@ flow:
 |---|---|
 | README-style document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "d3"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
 | Widget bundle document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
+| Animatic timeline document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "animatic"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + shared `flow:` graph + optional `timeline.beats.*` timing |
 | 3D document | `kgCanvasSurfaceMode: "3d"` + `kgCanvasRenderMode: "3d"` + optional `kgCanvas3dMode: "3d"` or `"voxel"` |
 | Geospatial document | `kgCanvasSurfaceMode: "geospatial"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
 
@@ -138,6 +141,24 @@ kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
+
+Canonical Animatic preset:
+
+```yaml
+kgCanvasSurfaceMode: "2d"
+kgCanvasRenderMode: "2d"
+kgCanvas2dRenderer: "animatic"
+kgDocumentSemanticMode: "document"
+kgFrontmatterModeEnabled: true
+kgMultiDimTableModeEnabled: false
+kgDocumentStructureBaselineLock: false
+```
+
+Animatic authoring contract:
+
+- Reuse the same canonical `flow:` frontmatter graph contract as Flow Editor.
+- Keep timeline timing additive under `timeline.beats.*`.
+- Do not introduce a parallel animatic-only markdown dialect.
 
 Canonical 3D preset:
 
@@ -184,7 +205,7 @@ Canonical seed examples aligned to this vocabulary:
 | `kgCanvasSurfaceMode` | Selects the top-level surface mode | `"2d"`, `"3d"`, `"geospatial"` |
 | `kgCanvasRenderMode` | Selects 2D or 3D canvas landing | `"2d"`, `"3d"` |
 | `kgCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
-| `kgCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"flowEditor"`, `"design"` |
+| `kgCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"animation"`, `"flowEditor"`, `"design"` |
 | `kgDocumentSemanticMode` | Selects the document semantic mode | `"document"`, `"keyword"` |
 | `kgFrontmatterModeEnabled` | Enables Frontmatter Mode | `true`, `false` |
 | `kgMultiDimTableModeEnabled` | Enables Multi-dimensional Table Mode | `true`, `false` |
@@ -198,6 +219,7 @@ Canonical seed examples aligned to this vocabulary:
 - [ ] Documenters keep `kgFrontmatterModeEnabled: true` for switchable canvas-view documents.
 - [ ] Documenters keep `kgMultiDimTableModeEnabled: false` for README-style and Flow Editor widget-bundle documents unless table mode is the explicit target.
 - [ ] Documenters use `flowEditor` for widget-bundle documents and avoid `Flow Canvas` or `Flowchart` labels in canonical examples.
+- [ ] Documenters use `animation` only when the file reuses the shared `flow:` graph contract and keeps timing under `timeline.beats.*`.
 - [ ] Documenters use `kgCanvas3dMode` only when `kgCanvasSurfaceMode: "3d"` is the target.
 - [ ] Documenters use `kgCanvasSurfaceMode: "geospatial"` for map-first documents instead of relying on stored Geospatial Mode state.
 - [ ] Documenters keep widget-bundle behavior flags aligned with Flow Editor ownership when widgets or rich media panels are present.

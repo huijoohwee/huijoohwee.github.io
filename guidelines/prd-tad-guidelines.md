@@ -1,4 +1,21 @@
+---
+title: "PRD & TAD Guidelines"
+doc_type: "Guidelines"
+date: "2026-05-27"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # PRD & TAD Guidelines
+
+## Markdown YAML Frontmatter Enforcement
+
+- Canonical PRD, TAD, and combined PRD/TAD Markdown docs must start with a valid YAML frontmatter block as the first block in the file.
+- Frontmatter is the SSOT for document identity, status, versioning, renderer activation, and reusable metadata referenced by the body specification.
+- Canonical authored PRD/TAD docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with typed wrapper records.
+- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.
+- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read planning and architecture metadata deterministically.
+- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 
 ## Overview
 
@@ -8,9 +25,74 @@
 
 **Governing standards**: structure documents with user-centric narratives; design architectures with domain-agnostic patterns; specify measurable outcomes; maintain requirement-to-implementation traceability; apply iterative refinement; separate concerns systematically.
 
+**Solo-dev AI-native orientation**: these guidelines are calibrated for a solo founder or small team operating an AI-native product stack. Every decision is evaluated through four compounding lenses — **min-viable-max-value** (ship the smallest artifact that delivers the largest user impact), **TCO-zero** (prefer FOSS and zero-egress infrastructure; make cost a first-class architectural constraint), **token economics** (treat LLM token consumption as a measurable engineering metric at every pipeline boundary), and **harness-first** (orchestrate AI capabilities through composable, observable harnesses rather than ad-hoc prompt calls). These lenses do not replace the core PRD/TAD standards — they sharpen prioritization, constrain architecture choices, and accelerate validation cycles.
+
 ---
 
-## CID Framework
+## Solo-Dev AI-Native Orientation
+
+### Four Compounding Lenses
+
+| Lens | Definition | Applied In |
+|---|---|---|
+| **Min-Viable-Max-Value** | Ship the smallest scope that maximises user impact per hour invested | Phase 0 validation, MoSCoW, success metrics |
+| **TCO-Zero** | Total cost of ownership defaults to zero; every paid dependency requires explicit justification against a FOSS alternative | Phase 0 gate, ADR, Quality Attributes |
+| **Token Economics** | LLM token consumption (input + output + cache hit rate) is a measurable system metric, not an afterthought | Data flows, Component specs, Quality Attributes |
+| **Harness-First** | AI capabilities are accessed through structured, observable harnesses (typed inputs → typed outputs → logged decisions) rather than raw prompt calls | TAD components, Integration contracts, orchestration diagrams |
+
+### AI-Native Harness Pattern
+
+Every AI-powered component in the TAD must conform to the harness contract:
+
+```
+Caller → [Harness: schema-validated input] → [LLM / model] → [Harness: schema-validated output + cost log] → Consumer
+```
+
+**Harness requirements**:
+- Input schema validated before token spend; reject malformed inputs without calling the model
+- Output schema validated after response; surface structured errors, not raw LLM failures
+- Cost log emitted per call: `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }`
+- Fallback path defined for every harness: degraded-mode response or upstream error propagation
+
+### Orchestration Topology
+
+Document AI orchestration as one of three patterns:
+
+| Pattern | Structure | When to Use |
+|---|---|---|
+| **Sequential** | A → B → C, each harness feeds the next | Single-path pipelines, linear enrichment |
+| **Fan-out / Fan-in** | A → [B, C, D] → E aggregates | Parallel model calls, ensemble scoring |
+| **Agentic loop** | A → decision → [branch or retry] → exit condition | Multi-step reasoning, tool-use agents, `/goal`-driven tasks |
+
+Render orchestration topology as a `flowchart LR` or `sequenceDiagram` in the TAD. Every loop must specify a **max-iteration bound** and a **circuit-breaker condition** to cap runaway token spend.
+
+### ROI Calculation Template
+
+For every feature, estimate return on investment before implementation:
+
+```
+ROI Score = (User Impact × Reach) / (Build Hours + Monthly TCO + Token Cost / Month)
+
+User Impact : 1–5 scale (pain severity × frequency)
+Reach       : estimated monthly active users or sessions
+Build Hours : solo-dev estimate including documentation
+Monthly TCO : infrastructure + API cost at target load
+Token Cost  : estimated tokens/month × model price/1M tokens
+```
+
+Features below ROI threshold (team-defined) are deferred to `Could / Won't` in MoSCoW. Document the calculation in the PRD success metrics section.
+
+### FOSS-First Decision Rule
+
+When selecting any dependency, library, or infrastructure component:
+1. **Identify FOSS alternatives** — document at least one in every ADR
+2. **Default to FOSS** unless the proprietary option provides >2× value at <0.5× TCO over 12 months
+3. **Prefer zero-egress** storage and CDN (e.g. R2, Cloudflare) over metered alternatives
+4. **Record the decision** in the ADR with explicit TCO comparison at projected scale
+
+---
+
+
 
 ### Definition
 - **Context**: focus domain of concern
@@ -34,8 +116,10 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 3. Map the current user journey to locate friction points
 4. State a falsifiable problem hypothesis
 5. Gain stakeholder alignment on problem scope
+6. Run a preliminary **ROI score** and **TCO estimate**; confirm problem is worth solving at projected cost
+7. Identify whether the solution requires an AI harness, FOSS tools, or proprietary APIs — flag any dependency with non-zero egress or token cost
 
-**Gate**: proceed only when problem is validated and scoped.
+**Gate**: proceed only when problem is validated, scoped, and ROI-positive at estimated TCO.
 
 ### Phase 1 — PRD Authoring
 **Translate validated problems into structured requirements.**
@@ -45,12 +129,13 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 3. Map user journey: trigger → steps → decision points → outcome
 4. Decompose epics into user stories (As a… I want… So that…)
 5. Write Given-When-Then acceptance criteria per story
-6. Apply MoSCoW prioritization to feature set
-7. Define success metrics: baseline → target → timeline
+6. Apply MoSCoW prioritization to feature set **with explicit ROI score and TCO estimate per feature**; use **min-viable-max-value** framing — default to the smallest scope delivering the highest impact
+7. Define success metrics: baseline → target → timeline; include **token cost / month** and **monthly TCO** as first-class metrics for any AI-powered feature
 8. Enumerate scope boundaries and explicit exclusions
 9. Log open questions and unresolved assumptions
+10. Flag every dependency: FOSS, zero-TCO, or justify proprietary selection inline
 
-**Gate**: architects review PRD for technical feasibility before Phase 2.
+**Gate**: architects review PRD for technical feasibility **and TCO/token-budget alignment** before Phase 2.
 
 ### Phase 2 — TAD Authoring
 **Translate PRD requirements into verifiable architecture.**
@@ -60,13 +145,15 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 3. Map data flows: source → transform → store → consume
 4. Specify integration contracts: protocol, payload schema, error handling
 5. Map user workflows to system sequence diagrams
-6. Document architectural decisions with ADR format
-7. Define quality attribute scenarios: performance, security, scalability, observability
-8. Plan deployment strategy and migration path
-9. Render architecture diagrams (Mermaid); compile component inventory table
-10. Derive `/goal` conditions from acceptance criteria — each criterion must be expressible as a verifiable completion condition that Claude Code can evaluate from its own output
+6. Document architectural decisions with ADR format; **every ADR must include a TCO comparison and FOSS-first evaluation**
+7. Define quality attribute scenarios: performance, security, scalability, observability, **token cost, TCO**
+8. Design AI-powered components as **harnesses** (typed input schema → model call → typed output schema → cost log); specify the orchestration topology (sequential / fan-out / agentic loop) and **max-iteration bound** for every loop
+9. Estimate **token budget per pipeline**: average prompt tokens + completion tokens + cache hit rate at target load; flag pipelines exceeding budget threshold
+10. Plan deployment strategy and migration path; default to zero-egress infrastructure
+11. Render architecture diagrams (Mermaid); compile component inventory table
+12. Derive `/goal` conditions from acceptance criteria — each criterion must be expressible as a verifiable completion condition that Claude Code can evaluate from its own output
 
-**Gate**: product manager validates TAD preserves user value before Phase 3.
+**Gate**: product manager validates TAD preserves user value **and** ROI/TCO envelope before Phase 3.
 
 ### Phase 3 — Alignment & Review
 **Verify PRD ↔ TAD coherence and stakeholder sign-off.**
@@ -74,8 +161,10 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 1. Establish bidirectional traceability: `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 2. Confirm no implementation detail in PRD; no business logic in TAD
 3. QA validates all acceptance criteria are testable **and expressible as `/goal` conditions** — each criterion must have a stated check Claude can surface in conversation (exit code, file count, test result, queue state)
-4. Stakeholders approve scope and success metrics
-5. Resolve or formally track all open questions
+4. Stakeholders approve scope and success metrics; **confirm token budget and TCO are within acceptable envelope**
+5. Verify every AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
+6. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
+7. Resolve or formally track all open questions
 
 **Gate**: both documents version-stamped and baselined before implementation begins.
 
@@ -87,6 +176,8 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Re-run relevant gate reviews for breaking changes
 - Archive superseded ADRs; do not delete
 - Re-derive `/goal` conditions whenever acceptance criteria change; stale conditions produce false completions
+- **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
+- **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
 
 ---
 
@@ -319,8 +410,10 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
+| FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as `/goal` conditions; define objectives; forbid vague aspirations |
+| Harness         | Wrap AI calls in typed, observable contracts | - [ ] Define harness input/output schemas; emit cost log per call; specify fallback path; forbid raw unstructured prompt calls in production pipelines |
 | Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
 | Integration     | Specify connection points            | - [ ] Define integration interfaces; specify connections; forbid undocumented interfaces      |
@@ -333,6 +426,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Mapping         | Trace requirements to implementation | - [ ] Link specs to code; trace mapping; forbid orphaned requirements                         |
 | Metrics         | Define success measures              | - [ ] Specify KPIs; define metrics; forbid unmeasured outcomes                                |
 | Migration       | Plan transition strategies           | - [ ] Define migration paths; plan transitions; forbid breaking changes without migration     |
+| Min-Viable      | Maximise value per scope unit        | - [ ] Define the smallest deliverable that satisfies the acceptance criterion; score ROI before expanding scope; forbid feature bloat without user-impact justification |
 | Modularity      | Design independent components        | - [ ] Enforce module boundaries; design modularly; forbid monolithic systems                  |
 | Monitoring      | Specify observability needs          | - [ ] Define telemetry requirements; specify monitoring; forbid unmonitored systems           |
 | MoSCoW          | Prioritize via framework             | - [ ] Apply Must/Should/Could/Won't; prioritize systematically; forbid unprioritized backlogs |
@@ -341,6 +435,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Non-functional  | Specify quality attributes           | - [ ] Define performance/security/usability; specify attributes; forbid functional-only reqs  |
 | Objectives      | Align with business goals            | - [ ] Connect to strategy; align objectives; forbid misaligned features                       |
 | Observability   | Enable system transparency           | - [ ] Design for monitoring; enable observability; forbid black-box implementations           |
+| Orchestration   | Design composable AI pipelines       | - [ ] Specify orchestration topology (sequential/fan-out/agentic loop); set max-iteration bounds; forbid unbounded agentic loops without circuit-breaker conditions |
 | Outcomes        | Define measurable results            | - [ ] Specify outcome metrics; define results; forbid output-only metrics                     |
 | Patterns        | Apply proven solutions               | - [ ] Use established patterns; apply solutions; forbid anti-patterns                         |
 | Performance     | Specify response requirements        | - [ ] Define latency/throughput; specify performance; forbid unspecified latency              |
@@ -355,6 +450,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Resilience      | Design for failure tolerance         | - [ ] Plan for failures; design resiliently; forbid fragile systems                           |
 | Reuse           | Leverage existing components         | - [ ] Identify reusable parts; leverage existing; forbid reinvention                          |
 | Risk            | Assess potential issues              | - [ ] Identify risks; assess impact; forbid risk-blind planning                               |
+| ROI             | Justify investment with return       | - [ ] Compute ROI score (impact × reach / build + TCO + token cost) before Phase 1 gate; rank features by ROI; forbid zero-ROI items in Must/Should tiers |
 | Scalability     | Specify growth requirements          | - [ ] Define scale targets; specify growth; forbid fixed-capacity designs                     |
 | Scenarios       | Provide usage examples               | - [ ] Write scenario walkthroughs; provide examples; forbid example-free specifications       |
 | Scope           | Define boundaries explicitly         | - [ ] State what's included/excluded; define scope; forbid unbounded features                 |
@@ -364,8 +460,10 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Simplicity      | Prefer minimal solutions             | - [ ] Choose simple approaches; prefer minimalism; forbid over-engineering                    |
 | Stories         | Write user narratives                | - [ ] Use "As a…I want…So that"; write narratives; forbid technical task lists                |
 | Success         | Define completion criteria           | - [ ] Specify done conditions as observable, evaluator-verifiable states; define success; forbid ambiguous done states |
+| TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend); document in ADR; forbid uncosted architectural decisions |
 | Testability     | Enable verification                  | - [ ] Design for testing; enable verification; forbid untestable requirements                 |
 | Timelines       | Define delivery schedules            | - [ ] Set release dates; define timelines; forbid open-ended commitments                      |
+| Token Economics | Treat token spend as an engineering metric | - [ ] Estimate prompt + completion tokens per pipeline call; track cache hit rate; set cost-per-request budget; forbid pipelines without token budget estimates |
 | Traceability    | Link requirements to implementation  | - [ ] Maintain requirement IDs; link specs; forbid orphaned specs                             |
 | Trade-offs      | Document decision factors            | - [ ] Analyze pros/cons; document trade-offs; forbid unexplored alternatives                  |
 | Uncertainty     | Acknowledge unknowns                 | - [ ] Flag assumptions; acknowledge uncertainty; forbid false certainty                       |
@@ -373,6 +471,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | User            | Center on user needs                 | - [ ] Start with user problems; center on users; forbid technology-first requirements         |
 | Validation      | Define acceptance tests              | - [ ] Specify test scenarios; define validation; forbid subjective validation                 |
 | Value           | Justify feature investment           | - [ ] Estimate ROI; justify value; forbid value-free development                              |
+| Vendor          | Evaluate dependency risk             | - [ ] Assess vendor lock-in risk; document exit strategy for every proprietary dependency; forbid undocumented single-vendor dependencies |
 | Versioning      | Track document evolution             | - [ ] Use semantic versioning; track changes; forbid unversioned changes                      |
 | Workflows       | Map user processes                   | - [ ] Chart process flows; map workflows; forbid workflow-free features                       |
 
@@ -406,9 +505,16 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 ### Success Metrics
 | Metric | Baseline | Target | Timeline |
 |--------|----------|--------|----------|
+| [User metric] | | | |
+| Token cost / month | [est.] | [budget] | |
+| Monthly TCO | [est.] | [budget] | |
+| ROI Score | — | [threshold] | [sprint] |
 
 ### MoSCoW Priority
-[Must / Should / Could / Won't — with rationale]
+[Must / Should / Could / Won't — with ROI score and rationale per tier]
+
+### Min-Viable Scope
+[Smallest deliverable that satisfies the Must-tier acceptance criteria; explicitly excludes all Could/Won't items]
 
 ### Out of Scope
 [Explicitly excluded items]
@@ -438,6 +544,14 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 **Interfaces**: [API contracts]
 **Dependencies**: [Required components/services]
 **Configuration**: [Externalized parameters]
+**FOSS / Vendor**: [FOSS | Proprietary — if proprietary, link to ADR with TCO justification]
+**Harness Contract** *(AI components only)*:
+  - Input schema: [typed fields]
+  - Output schema: [typed fields]
+  - Cost log fields: `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }`
+  - Fallback path: [degraded response | upstream error]
+**Token Budget** *(AI components only)*: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/request]
+**Orchestration Topology** *(AI components only)*: [Sequential | Fan-out | Agentic loop — max N iterations, circuit-breaker: condition]
 **`/goal` Conditions**: [Derived from acceptance criteria — one evaluable condition per criterion]
 
 ### Integration Contracts
@@ -447,12 +561,14 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 See ADR-[N] for each significant decision.
 
 ### Quality Attributes
-| Attribute     | Scenario                           | Pattern             | Validation         |
-|---------------|------------------------------------|---------------------|--------------------|
-| Performance   | [Load → latency requirement]       | [Architectural fix] | [Test approach]    |
-| Scalability   | [Growth → capacity requirement]    | [Architectural fix] | [Test approach]    |
-| Security      | [Threat → protection requirement]  | [Architectural fix] | [Test approach]    |
-| Observability | [Signal → monitoring requirement]  | [Architectural fix] | [Test approach]    |
+| Attribute       | Scenario                                      | Pattern                   | Validation              |
+|-----------------|-----------------------------------------------|---------------------------|-------------------------|
+| Performance     | [Load → latency requirement]                  | [Architectural fix]       | [Test approach]         |
+| Scalability     | [Growth → capacity requirement]               | [Architectural fix]       | [Test approach]         |
+| Security        | [Threat → protection requirement]             | [Architectural fix]       | [Test approach]         |
+| Observability   | [Signal → monitoring requirement]             | [Architectural fix]       | [Test approach]         |
+| Token Cost      | [Target load → max tokens/request budget]     | Harness + caching + prompt compression | Cost log sampling; alert on p95 overrun |
+| TCO             | [12-month projected spend vs zero-TCO target] | FOSS-first + zero-egress infra | Monthly cost audit; ADR review |
 
 ### Deployment Strategy
 [Blue-green / canary / rolling — with rollback plan]
@@ -480,9 +596,18 @@ See ADR-[N] for each significant decision.
 
 ### Alternatives Considered
 1. [Option]: [Pros / Cons]
+2. [FOSS alternative]: [Pros / Cons — always required]
 
 ### Rationale
 [Why this decision]
+
+### TCO Impact
+| Dimension | Chosen Option | Best FOSS Alternative | Delta / 12 months |
+|---|---|---|---|
+| Infra cost | [$/mo] | [$/mo] | [+/- $] |
+| Egress cost | [$/mo] | [$/mo] | [+/- $] |
+| Token cost  | [$/mo] | [$/mo] | [+/- $] |
+| Vendor risk | [Low/Med/High] | [Low] | — |
 
 ### Consequences
 - **Positive**: [Benefits]
@@ -556,6 +681,21 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ `/goal` conditions set at implementation without re-checking the PRD when requirements change  
 → ✅ Traceability maintained across `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]`; conditions updated in lockstep with criteria
 
+❌ Raw, unstructured LLM prompt calls in production pipelines; no input/output validation; no cost logging  
+→ ✅ Every AI call wrapped in a harness with typed schemas, cost log emission, and a documented fallback path
+
+❌ Unbounded agentic loops; orchestration topologies with no max-iteration bound or circuit-breaker  
+→ ✅ Every loop specifies max iterations and a circuit-breaker exit condition; token spend is bounded and observable
+
+❌ Proprietary dependencies selected without a FOSS comparison; undocumented vendor lock-in; uncosted egress  
+→ ✅ Every ADR lists a FOSS alternative with 12-month TCO comparison; zero-egress infrastructure preferred by default
+
+❌ Features sized without ROI scoring; Must-tier items with no user impact justification; scope bloat  
+→ ✅ Every feature carries an explicit ROI score before entering MoSCoW; min-viable scope defined before implementation begins
+
+❌ Token cost treated as invisible or negligible; no prompt/completion budget per pipeline  
+→ ✅ Token budget (prompt + completion + cache hit rate) estimated in TAD; actuals tracked each sprint and compared to estimates
+
 ---
 
 ## Validation Checklist
@@ -567,9 +707,15 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] User stories follow "As a… I want… So that" format
 - [ ] Acceptance criteria use Given-When-Then with observable outcomes
 - [ ] Every acceptance criterion translatable to a `/goal` condition: one measurable end state + a stated check + scope constraints
-- [ ] Features prioritized via MoSCoW with rationale
+- [ ] Features prioritized via MoSCoW **with ROI score and rationale per feature**
+- [ ] **Min-viable scope** explicitly stated for Must-tier features before implementation begins
+- [ ] **Token budget estimated** for every AI-powered pipeline: prompt tokens + completion tokens + cache hit rate at target load
+- [ ] **Monthly TCO estimated** for every dependency; FOSS-first decision recorded in ADR
+- [ ] **ROI score computed** for every Must/Should feature using `(impact × reach) / (build + TCO + token cost)`
 - [ ] Components have single responsibility; interfaces specified with explicit contracts
-- [ ] Architectural decisions documented with ADRs
+- [ ] **AI components have harness contract**: typed input schema, typed output schema, cost log fields, fallback path
+- [ ] **Orchestration topology specified** for every AI pipeline: sequential / fan-out / agentic loop; max-iteration bound and circuit-breaker condition defined for loops
+- [ ] Architectural decisions documented with ADRs **including TCO comparison and FOSS alternative**
 - [ ] Architecture diagrams use Mermaid (not ASCII for >5 nodes)
 - [ ] Component inventory table accompanies every architecture diagram
 - [ ] PRD-to-TAD traceability established via `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
@@ -581,8 +727,10 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] Development team confirms TAD provides sufficient guidance
 - [ ] QA confirms acceptance criteria are objectively testable
 - [ ] Success metrics defined with baseline, target, and timeline
-- [ ] Quality attributes specified with measurable scenarios
+- [ ] Quality attributes specified with measurable scenarios; **token cost and TCO attributes present for AI-powered components**
 - [ ] Open questions resolved or formally tracked
+- [ ] **Token budget actuals vs estimates reviewed** each sprint; projections updated on model pricing or traffic changes
+- [ ] **FOSS alternatives re-evaluated** if any dependency TCO crosses the 12-month justification threshold
 
 ---
 
@@ -591,6 +739,8 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 **Product Manager** → defines user problems, maps user journeys, writes stories and acceptance criteria, prioritizes via MoSCoW, defines success metrics → produces user-centric PRDs enabling valuable feature delivery
 
 **System Architect** → designs component interactions, maps data flows, specifies interfaces, documents ADRs, defines quality attributes, plans deployment → establishes technical foundation enabling scalable implementation
+
+**Solo Founder / AI Orchestrator** *(collapses all roles in a solo-dev context)* → validates ROI before writing any doc, applies min-viable-max-value lens to MoSCoW, designs harness contracts for every AI component, sets token budgets, maintains FOSS-first ADRs, tracks TCO actuals each sprint → ships high-ROI features at near-zero infrastructure cost while keeping the codebase auditable and the AI pipelines observable
 
 **UX Designer** → creates personas, maps user journeys, validates usability requirements, provides design guidance → ensures user-centered design principles guide feature development
 

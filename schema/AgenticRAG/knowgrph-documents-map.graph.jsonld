@@ -820,6 +820,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-computing-data-flows-react-flow-inspiration-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-computing-data-flows-react-flow-inspiration-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-computing-data-flows-react-flow-inspiration-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-computing-data-flows-react-flow-inspiration-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-crawler-prd-tad",
       "@type": "kg:Node",
       "labels": [

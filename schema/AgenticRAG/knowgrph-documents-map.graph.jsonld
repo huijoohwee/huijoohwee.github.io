@@ -1364,6 +1364,118 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-help-cheatsheet",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-help-cheatsheet.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-help-cheatsheet.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-help-cheatsheet.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-help-dev",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-help-dev.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-help-dev.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-help-dev.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-help-icons",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-help-icons.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-help-icons.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-help-icons.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-help-shortcuts",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-help-shortcuts.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-help-shortcuts.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-help-shortcuts.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-section-descriptions",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-section-descriptions.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-section-descriptions.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-section-descriptions.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-tabs",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-tabs.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-tabs.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-tabs.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-workflow-links",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-workflow-links.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-workflow-links.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-workflow-links.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-manus-prd-tad",
       "@type": "kg:Node",
       "labels": [

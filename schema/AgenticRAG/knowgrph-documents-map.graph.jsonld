@@ -868,6 +868,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-csv-json-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-csv-json-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-csv-json-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-csv-json-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-database",
       "@type": "kg:Node",
       "labels": [
@@ -2611,6 +2627,22 @@
         "relPath": "docs/documents/knowgrph-workspace-export-reference.md"
       },
       "documentPath": "docs/documents/knowgrph-workspace-export-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-xr-mode-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-xr-mode-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-xr-mode-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-xr-mode-prd-tad.md",
       "language": "en-us"
     },
     {

@@ -139,8 +139,8 @@
         { "@value": "Flow Editor：浮层滚轮代理", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "When enabled, wheel pan/zoom gestures that originate over Flow Editor fly-out overlays (Node Quick Editor panels) are forwarded to the 2D canvas unless the overlay can scroll in that direction.", "@language": "en-us" },
-        { "@value": "启用后，当鼠标指针位于 Flow Editor 的浮层（Node Quick Editor 面板）上时，滚轮平移/缩放手势会被转发到 2D 画布；若浮层在该方向可滚动则不转发。", "@language": "zh-cn" }
+        { "@value": "When enabled, wheel pan/zoom gestures that originate over Flow Editor fly-out overlays (Flow Editor widget panels) are forwarded to the 2D canvas unless the overlay can scroll in that direction.", "@language": "en-us" },
+        { "@value": "启用后，当鼠标指针位于 Flow Editor 的浮层（Flow Editor widget 面板）上时，滚轮平移/缩放手势会被转发到 2D 画布；若浮层在该方向可滚动则不转发。", "@language": "zh-cn" }
       ]
     },
     "markdownWordWrap": {

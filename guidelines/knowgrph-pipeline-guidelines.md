@@ -17,6 +17,38 @@ frontmatter_contract: "required"
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read pipeline metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 
+## Flow Editor Computing-Flow Contract
+
+- Runtime-ready computing-flow fixtures should describe graph execution with semantic port keys, normalized schema paths, and explicit frontmatter flow settings.
+- Flow Editor-ready Markdown must declare the renderer landing explicitly when it is intended to open as a runnable canvas document: `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, an explicit `kgMultiDimTableModeEnabled` value, and `kgDocumentStructureBaselineLock: false`.
+- Simple Flow Editor seeds should use `kgMultiDimTableModeEnabled: false` to avoid unintended table takeover. Computing-flow demos that intentionally expose Workflow Manager / Multi-dimensional Table companion views may set `kgMultiDimTableModeEnabled: true`, but must also set `kgWorkflowManagerModeEnabled: true` and validate that Flow Editor remains the renderer authority.
+- `handles.source` and `handles.target` may declare which semantic keys appear on each side of a widget, but the keys themselves remain the authored `key` / `portKey` values used by edges and connected-value lookup.
+- Flow edges must bind through authored semantic keys (`sourceHandle`, `targetHandle`, `flow:sourcePortKey`, `flow:targetPortKey`, or implicit socket-derived keys). Do not remap ports to `handles.source`, `handles.target`, display labels, filenames, or demo-specific aliases.
+- Authoring templates should use plain YAML `flow:` nodes, edges, `handles`, and `"flow:portTypes"`. Normalized `{key, type, value}` envelopes are reserved for dedicated validation fixtures that intentionally audit ingest -> parse -> render fidelity.
+- Flow Editor KTV rows that share a normalized schema path with a functional port should render as one inline-editable row with the port handle attached. Documentation and tests should treat duplicate read-only port rows for the same semantic key as invalid.
+- Computing-flow execution must use shared graph/registry readers and bounded propagation. Renderers may display connected values, but they must not recompute graph state, rewrite topology, or depend on fixture filenames.
+- Run-all or phase execution writes results into existing nodes and payload fields only; it must preserve layout, panel frames, edge topology, and authored port keys.
+- Rich Media Panel outputs remain normal flow nodes. Text output uses `output`, image output uses `imageUrl`, inline chart or HTML output uses `outputSrcDoc`, and `outputSrcDoc` is the render authority when helper text is also present.
+- Validation must cover the full ingestion -> parsing -> rendering pipeline: parser warnings are zero, Flow Editor mounts the frontmatter graph, semantic ports attach to the intended rows, connected values propagate through shared helpers, and Rich Media Panel previews resolve through shared panel/media owners.
+
+### Flow Editor Computing-Flow Validation Minimum
+
+- Parse every runnable template or demo through the Markdown parser and fail on warnings before browser validation.
+- Assert graph counts from authored data, not from fixture filenames or hardcoded demo ids.
+- Assert mode ownership from frontmatter: Flow Editor remains `kgCanvas2dRenderer: "flowEditor"`, table mode is explicit, and Workflow Manager is enabled only when the document intentionally exposes workflow sections.
+- Include focused tests for `markdown.frontmatterFlowGraph.*`, `baseline.flowEditor.frontmatterFlow.*`, `flow.compute.inline.*`, and `flow.dataflow.connectedValues.*` when a change touches ports, computed values, or panel previews.
+- For publish-side docs, validate from the docs mirror path (`/docs/<file>.md`) so Source Files ingestion, parser application, and Flow Editor rendering share the same route used by local demos.
+- Browser smoke should use stable DOM contracts such as `data-kg-flow-editor-surface-root` and `data-kg-rich-media-panel`, plus one concrete panel-output signal (`iframe[srcdoc]`, `img[src^="data:image/"]`, or visible editable KTV row).
+
+## Long-Horizon SuperAgent Harness Guidelines
+
+- SuperAgent harness metadata such as `superagent_harness_template` and `superagent_harness_demo` is run-planning context; it must not create a second markdown parser, GraphData builder, Flow Editor renderer, provider dispatcher, memory store, or graph apply path.
+- Long-horizon runs should name a message gateway, run memory, tools, skills, role-scoped subagents, sandbox/workspace outputs, budgets, trace files, and a review gate for minutes-to-hours work.
+- DeerFlow may be cited only as conceptual inspiration or an optional gateway provider. Do not copy DeerFlow code, prompts, topology, skill packs, memory layout, or architecture into Knowgrph docs or fixtures.
+- The `flow:` block remains the graph SSOT. A harness may add explicit nodes/edges only by authoring them under `flow:` with normal semantic ports and shared Rich Media Panel output keys.
+- Rich Media Panel outputs stay field-driven: text uses `output`, images use `imageUrl`, video uses `videoUrl`, and charts/inline HTML use `outputSrcDoc`.
+- Validation must prove parser warnings are zero, authored graph counts are stable, `kgCanvas2dRenderer: "flowEditor"` remains authoritative, and harness metadata does not change nodes, edges, or rendered surface ownership.
+
 ## Foundational Axioms
 
 - **Semantic Primacy**: Parser extracts intent and relationships from meaning, not syntax
@@ -523,6 +555,8 @@ System MUST synthesize answers from unified corpus graph dynamically
 - [ ] Are feedback loops functional and convergent? -> REQUIRED
 - [ ] Does corpus reasoning scale to 1000+ documents? -> REQUIRED
 - [ ] Are all provenance links bidirectional and complete? -> REQUIRED
+- [ ] Do computing-flow fixtures keep semantic port keys stable from ingest -> parse -> compute -> render? -> REQUIRED
+- [ ] Do renderer docs forbid duplicate KTV rows when field and port share one schema path? -> REQUIRED
 
 ---
 

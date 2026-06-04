@@ -19,6 +19,8 @@ frontmatter_contract: "required"
 - Markdown parsers must treat the opening YAML frontmatter block as the canonical metadata owner when it is present.
 - The frontmatter block must be the first block in the file; parsers should not infer equivalent metadata from later prose or duplicate body declarations.
 - Canonical authored Markdown remains plain YAML; normalized `{key, type, value}` wrappers are additive validation-fixture syntax, not the default authored contract.
+- When normalized Flow Editor fixtures use `{key, type, value}` wrappers, parsers must preserve the wrapper `key` as the semantic field/port key and must not substitute declaration container names such as `handles.source` or `handles.target`.
+- Parsers must preserve `superagent_harness_template`, `superagent_harness_demo`, and related harness metadata as frontmatter metadata. They must not convert those sections into graph nodes or edges unless the author declares them under `flow:`.
 - Parsers must surface explicit warnings when frontmatter YAML is malformed instead of silently treating invalid metadata as acceptable input.
 - Parser repair is a recovery path only; malformed YAML still represents invalid source that should be corrected upstream.
 - Scalars containing reserved punctuation must be quoted so strict YAML parsing stays deterministic across ingestion paths.

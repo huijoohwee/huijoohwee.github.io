@@ -6,6 +6,12 @@
 
 **Governing standards**: TypeScript source is the authoritative SSOT; markdown index files are generated artifacts; CLI script produces deterministic output; drift detection prevents stale documentation; provider-specific logic lives in SSOT source rows, not in the generation pipeline.
 
+## Local SuperAgent API/MCP Reference Policy
+
+- API and MCP references must distinguish local stdio/MCP SuperAgent tools from deployed HTTP APIs. Do not document a mutating deployed SuperAgent endpoint unless source owners, auth, tests, and deployment proof exist.
+- SuperAgent reference rows must point to native Knowgrph owners such as `knowgrph_parser`, repo goal scripts, and local MCP contracts.
+- DeerFlow rows may describe the optional gateway provider only; they must not imply copied DeerFlow architecture, skill packs, memory, sandbox layout, or Flow Editor renderer ownership.
+
 ---
 
 ## CID Framework

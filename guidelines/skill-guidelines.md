@@ -12,6 +12,13 @@ This document integrates multi-repo orchestration patterns with system design pr
 
 **Development guidelines**: avoid monolithic changes to sustain agility, prevent synchronous dependencies to reduce fragility, eliminate circular references to secure reliability, define schema contracts to uphold clarity, integrate through stable exports to enable adaptability, and bound contexts with explicit ownership to guarantee accountability.
 
+## Long-Horizon SuperAgent Skill Policy
+
+- Skills are progressive capability modules for native harness runs; they must declare inputs, outputs, owner, budget, and validation proof before execution.
+- Skill outputs must return through shared markdown/frontmatter, GraphData, Flow Editor, and Rich Media Panel contracts instead of mutating renderer state directly.
+- External skill packs may inspire capability categories only. Do not copy DeerFlow skill code, prompts, directory topology, sandbox scripts, or memory layout.
+- Cross-repo skills must be located through configuration and SSOT docs, not absolute paths or repo-specific hidden assumptions.
+
 ---
 
 ## CID Framework for Multi-Repo Development

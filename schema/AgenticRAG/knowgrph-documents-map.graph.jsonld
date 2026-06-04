@@ -980,22 +980,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-flow-editor-node-quick-editor-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-flow-editor-node-quick-editor-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-flow-editor-node-quick-editor-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-flow-editor-node-quick-editor-document.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-flow-editor-pan-zoom-overlay-failsafe-document",
       "@type": "kg:Node",
       "labels": [
@@ -1009,6 +993,22 @@
         "relPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md"
       },
       "documentPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-flow-editor-widget-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-flow-editor-widget-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-flow-editor-widget-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-flow-editor-widget-document.md",
       "language": "en-us"
     },
     {
@@ -2643,6 +2643,22 @@
         "relPath": "docs/documents/knowgrph-xr-mode-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-xr-mode-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md",
       "language": "en-us"
     },
     {

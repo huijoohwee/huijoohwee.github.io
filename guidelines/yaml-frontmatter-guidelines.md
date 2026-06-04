@@ -38,9 +38,10 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 | Canvas View | Preserve deterministic landing | - [ ] Declare all Canvas View keys in frontmatter; preserve deterministic landing; forbid partial renderer-only presets |
 | Document Modes | Keep frontmatter as SSOT | - [ ] Set `kgDocumentSemanticMode` and `kgFrontmatterModeEnabled` together; keep frontmatter as SSOT; forbid implicit mode carryover |
 | Initialization Files | Support Source Files switching | - [ ] Use canonical presets on seed documents; support switching; forbid relying on stale runtime state |
-| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `kgMultiDimTableModeEnabled: false` when D3 or Flow Editor frontmatter landing is the target; avoid unintended mode takeover; forbid ambiguous table-mode defaults |
+| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `kgMultiDimTableModeEnabled` explicitly; use `false` for simple D3/Flow Editor landings and `true` only when Workflow Manager / Multi-dimensional Table companion views are intentional; forbid ambiguous table-mode defaults |
 | Surface Modes | Keep surface state frontmatter-driven | - [ ] Set `kgCanvasSurfaceMode` explicitly; keep surface state frontmatter-driven; forbid stored geospatial or 3D carryover |
 | Widget Bundles | Preserve overlay ownership | - [ ] Keep Flow Editor widget behavior flags explicit; preserve overlay ownership; forbid cross-renderer proxy interference |
+| SuperAgent Harness | Preserve harness metadata without renderer drift | - [ ] Keep `superagent_harness_template` / `superagent_harness_demo` as metadata unless nodes are explicitly authored under `flow:`; forbid second parser, renderer, provider, memory, or graph apply owners |
 
 ## Architecture Overview
 
@@ -73,6 +74,37 @@ kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
+
+Computing-flow demo / Flow Editor / Workflow Manager companion:
+
+```yaml
+kgCanvasSurfaceMode: "2d"
+kgCanvasRenderMode: "2d"
+kgCanvas2dRenderer: "flowEditor"
+kgDocumentSemanticMode: "document"
+kgFrontmatterModeEnabled: true
+kgMultiDimTableModeEnabled: true
+kgDocumentStructureBaselineLock: false
+kgWorkflowManagerModeEnabled: true
+```
+
+Long-horizon SuperAgent template metadata:
+
+```yaml
+superagent_harness_template:
+  schema_version: "knowgrph-superagent-harness-template/v1"
+  harness_id: "example_superagent_harness"
+  mode: "local-template-long-horizon"
+  inspiration_policy: "deer-flow-inspired concepts only; no copied code, no copied architecture"
+  native_owners:
+    - "knowgrph_parser/superagent_harness.py"
+    - "mcp/local-tool-contract.js"
+  capabilities:
+    message_gateway: ["MainPanel Integrations", "FloatingPanel Chat", "local MCP"]
+    outputs: ["output", "imageUrl", "videoUrl", "outputSrcDoc"]
+```
+
+This block is metadata. It does not author graph nodes, change `kgCanvas2dRenderer`, or bypass the shared Markdown parser.
 
 Timeline demo / Animatic / Frontmatter Mode:
 
@@ -157,6 +189,8 @@ Contract split:
 - Use plain YAML in canonical authored docs and guideline examples unless the fixture is specifically validating the normalized E2E graph payload.
 - Use `{key, type, value}` wrappers only in normalized validation fixtures that audit ingestion -> parsing -> rendering on Canvas.
 - Keep the typed-wrapper scope additive: wrappers validate payload fidelity but do not replace canonical YAML authoring syntax in normal docs.
+- In Flow Editor fixtures, the wrapper `key` is the semantic field/port key. Declaration containers such as `handles.source` and `handles.target` describe side membership only and must not replace row keys, edge handle keys, or connected-value schema paths.
+- If a normalized field row and a declared input/output port resolve to the same schema path, the renderer should expose one inline-editable KTV row with the port handle on that row, not a duplicate non-inline port row.
 - Do not hardcode machine-local absolute repo paths inside canonical docs or guideline references; use repo-relative paths or placeholders instead.
 
 ## Configuration Reference
@@ -233,8 +267,11 @@ widget_bundle:
 - [ ] Reviewers confirm 3D examples pair `kgCanvasSurfaceMode: "3d"` with `kgCanvas3dMode`.
 - [ ] Reviewers confirm geospatial examples use `kgCanvasSurfaceMode: "geospatial"` instead of relying on stored geospatial state.
 - [ ] Reviewers confirm `kgMultiDimTableModeEnabled` is explicitly set for switch-sensitive documents.
+- [ ] Reviewers confirm `kgWorkflowManagerModeEnabled: true` appears only when workflow sections or table companion rendering are intentional, and that Flow Editor remains the renderer authority.
 - [ ] Reviewers confirm canonical docs use normalized values instead of aliases.
 - [ ] Reviewers confirm widget-bundle docs keep the Flow Editor behavior contract when overlays are present.
+- [ ] Reviewers confirm normalized Flow Editor fixtures map `{key,type,value}` rows by semantic key / schema path and do not render `handles.source` or `handles.target` as substitute port keys.
+- [ ] Reviewers confirm matching field/port rows are consolidated into one inline-editable KTV row with the functional handle attached.
 
 ## Anti-Patterns
 
@@ -247,3 +284,4 @@ widget_bundle:
 - Do not mix Flow Editor widget bundles with cross-renderer proxy behavior.
 - Do not treat renderer aliases as the canonical authoring format.
 - Do not leave invalid inline YAML scalars unquoted and expect parser repair to recover them silently.
+- Do not split one semantic Flow Editor driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.

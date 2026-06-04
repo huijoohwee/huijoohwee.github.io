@@ -8,6 +8,16 @@
 
 **System design principles**: architect distributed-first systems to maximize scalability, design stateless services to preserve simplicity, communicate through events to enable adaptability, bound contexts with backward-compatible interfaces to maintain stability, degrade gracefully with circuit breakers to ensure resilience, apply strategic caching and storage choices to optimize performance, enforce multi-layer defense with zero-trust to secure integrity, and instrument comprehensive observability to guarantee transparency.
 
+## Long-Horizon Agent System Directives
+
+- Message gateway; accept durable tasks through one bounded ingress; forbid scattered ad-hoc run starters.
+- Memory; persist run state, trace, and artifacts in one native owner; forbid copied external memory layouts or stale parallel stores.
+- Tools and skills; register capabilities through explicit contracts; forbid hidden provider-specific tool branches.
+- Subagents; scope roles to planner, worker, verifier, and synthesizer contracts; forbid unbounded autonomous loops.
+- Sandbox; write generated artifacts into a reviewable workspace; forbid direct renderer mutation from tool output.
+- Review gate; require parser, graph, rich-media, and cost/trace proof before completion; forbid silent success.
+- External inspiration; cite DeerFlow only for high-level long-horizon concepts or optional gateway use; forbid copied code, prompts, topology, skills, or architecture.
+
 ---
 
 ## Context—Intent—Directive (CID) Framework
@@ -567,11 +577,13 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 - Engineers implement robust layout caching with revision-aware keys (layer:mode:fm:revision) to avoid stale layouts
 - Engineers skip initial layout calculation when topology is unchanged and cache is valid (>95% coverage)
 - Engineers decouple layout computation (Dagre/Force) from rendering loop (D3/Canvas)
+- Engineers decouple computing-flow propagation from renderer DOM state; graph/registry helpers compute connected values, while renderer panels display and edit canonical fields
 - Engineers enforce rectangular node shapes for structured layouts (Mermaid/Tree) to maximize readability
 - Engineers normalize disparate node types (Stadium/Cylinder) to uniform rectangles for layout consistency
 - Engineers implement incremental updates for window resizing instead of full re-layout to eliminate jank
 - Engineers memoize expensive text measurement and wrapping utilities to reduce layout overhead
 - Engineers refactor and remove redundant calculation logic to streamline the rendering pipeline
+- Engineers consolidate duplicate field/port surfaces by schema path; one semantic Flow Editor key maps to one editable KTV row when the field and port describe the same value
 
 **Engineers implement resilience patterns**
 - Engineers enable graceful degradation
@@ -680,6 +692,8 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 ❌ Implicit contracts (no schema definitions) → ✅ Schema-mediated contracts  
 ❌ Single points of failure → ✅ Redundancy and failover  
 ❌ Unbounded queues/thread pools → ✅ Capacity limits and backpressure  
+❌ Renderer-local recomputation of graph data → ✅ Shared compute helpers with bounded propagation
+❌ Duplicate UI rows for one semantic field/port → ✅ Schema-path keyed row consolidation
 
 ---
 
@@ -696,6 +710,7 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 - [ ] Engineers verify p99 latency <500ms for critical paths
 - [ ] Engineers review database queries with explain plans
 - [ ] Engineers confirm CDN coverage for static assets
+- [ ] Engineers verify computing-flow renderers reuse shared connected-value helpers and avoid renderer-local recomputation loops
 
 **SREs execute resilience validation**:
 - [ ] SREs configure circuit breakers on external dependencies

@@ -97,11 +97,11 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Viewer header controls are actionable-only: hide Content mode controls when no real switch exists, hide Node Quick Editor when unavailable, hide non-actionable header formatting, and render Display toggles only on markdown read surfaces.",
+      "@value": "Viewer header controls are actionable-only: hide Content mode controls when no real switch exists, hide Flow Editor widget when unavailable, hide non-actionable header formatting, and render Display toggles only on markdown read surfaces.",
       "@language": "en-us"
     },
     {
-      "@value": "Viewer header 控件必须仅在可执行时渲染：无真实模式切换时隐藏 Content 控件，Node Quick Editor 不可用时隐藏，隐藏无效格式化入口，且 Display 开关仅在 markdown read surface 渲染。",
+      "@value": "Viewer header 控件必须仅在可执行时渲染：无真实模式切换时隐藏 Content 控件，Flow Editor widget 不可用时隐藏，隐藏无效格式化入口，且 Display 开关仅在 markdown read surface 渲染。",
       "@language": "zh-cn"
     },
     {

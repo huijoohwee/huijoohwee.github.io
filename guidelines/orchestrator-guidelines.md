@@ -8,6 +8,16 @@
 
 ---
 
+## Long-Horizon SuperAgent Orchestration
+
+- Orchestrators must accept durable objectives through one message gateway and write run state, trace, memory observations, and artifacts through one native owner.
+- Role-scoped agents may plan, research, code, create, verify, and synthesize, but they must share bounded budgets and explicit stop conditions.
+- Tools and skills must be registered by contract before execution. Provider-specific tool calls must remain upstream of parser, GraphData, Flow Editor, and Rich Media Panel ownership.
+- DeerFlow may be referenced only for conceptual long-horizon patterns or optional local gateway use. Do not copy DeerFlow code, prompts, topology, skill packs, or memory/sandbox layout.
+- Harness metadata in Markdown is orchestration context; graph topology is authored only through `flow:` and rendered through the shared pipeline.
+
+---
+
 ## Document Parsing
 
 ### Component: DocumentParser

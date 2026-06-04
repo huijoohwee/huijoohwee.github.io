@@ -39,8 +39,8 @@ schema/AgenticRAG/
 ├── colors.jsonld                             # Lean Startup MVP palette (renderer directive)
 ├── canvas.jsonld                             # Canvas/renderer integration directives
 ├── panels.jsonld                             # Panel/pane interaction directives (UI contract)
-├── flow-node-quick-editor-bundle.jsonld       # Node Quick Editor bundle import/export contract
-├── video-generation-node-quick-editor.jsonld  # VideoGeneration node quick editor contract
+├── flow-widget-bundle.jsonld       # Flow Editor widget bundle import/export contract
+├── video-generation-widget.jsonld  # VideoGeneration widget contract
 ├── curation.jsonld                           # Graph Data curation surfaces (tables/editors/presentation)
 ├── settings.jsonld                           # Settings surface (config-driven behavior)
 ├── settings-flow.jsonld                      # Settings provenance flow (modules/classes/functions/line ranges)
@@ -126,10 +126,10 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - Shared 2D renderer behavior must derive D3-like, surface-mount, and minimap rules from central helpers; workspace JSON fallback parsing must stay generic and workspace Flowchart payloads must retain workspace source metadata.
 - Shared 2D renderer menus must derive renderer order and short labels from the same shared renderer spec used by frontmatter normalization; toolbar surfaces may keep local icon/title presentation only.
 - Adjacent 2D surfaces must also reuse shared renderer-id and family helpers in persistence, store bootstrap/setters, minimap/editor gating, and D3 scene/schema activation instead of repeating inline renderer allowlists.
-- 2D renderer initialization across D3 Graph, Flowchart, Flow Canvas, Design, and Flow Editor should compute fit and group envelopes from the same display-derived node and cluster bounds so switching variants preserves visible extents; Flow Editor additionally extends these envelopes with quick-editor overlay extents as described below.
-- Flow Editor group containment should merge explicit group bounds with computed member-footprint AABBs (including configured padding/label-top offsets) so initialization keeps quick-editor-driven surfaces within layer/subgraph/cluster/group envelopes.
-- Flow Editor containment must also union zoom-aware pinned quick-editor panel world extents for member nodes and seed new pinned editors evenly by containment-group envelopes (viewport-centered fallback) to avoid startup clumping and panel-box overflow.
-- For `frontmatter-flow`, quick-editor node/handle/edge rendering should be flow-derived SSOT: include only declared flow node ids plus typed ports referenced by handles/edges/registry, suppress synthetic fallback handles in overlays, and do not render absent hardcoded ports such as `compute`/`data`.
+- 2D renderer initialization across D3 Graph, Flowchart, Flow Canvas, Design, and Flow Editor should compute fit and group envelopes from the same display-derived node and cluster bounds so switching variants preserves visible extents; Flow Editor additionally extends these envelopes with widget overlay extents as described below.
+- Flow Editor group containment should merge explicit group bounds with computed member-footprint AABBs (including configured padding/label-top offsets) so initialization keeps widget-driven surfaces within layer/subgraph/cluster/group envelopes.
+- Flow Editor containment must also union zoom-aware pinned widget panel world extents for member nodes and seed new pinned editors evenly by containment-group envelopes (viewport-centered fallback) to avoid startup clumping and panel-box overflow.
+- For `frontmatter-flow`, widget node/handle/edge rendering should be flow-derived SSOT: include only declared flow node ids plus typed ports referenced by handles/edges/registry, suppress synthetic fallback handles in overlays, and do not render absent hardcoded ports such as `compute`/`data`.
 - Frontmatter-flow parser surfaces should treat `flow` as canonical and avoid synthetic placeholders: skip legacy top-level `edges` when flow metadata exists, keep endpoint ids as declared, and emit subgraph metadata only from explicit `kg:subgraphs` plus cluster derivation.
 - Frontmatter `flow:` metadata should centralize `direction`, `edgeType`, and `computed`; Flow, Flow Editor, and runtime dataflow must consume one shared helper instead of re-parsing settings per surface.
 - Frontmatter `computed:false` must disable runtime `flow:compute` hydration only; parse-time variable/template resolution remains unchanged to preserve authored markdown labels and text.

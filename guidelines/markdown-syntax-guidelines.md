@@ -139,6 +139,7 @@ Markdown documents that drive Knowgrph parsing, rendering, prompting, scripting,
 - Treat the opening `--- ... ---` block as the canonical metadata and variable SSOT.
 - Keep canonical authored Markdown in plain YAML for frontmatter keys, `flow:`, and related body-facing contracts.
 - Reserve normalized `{key, type, value}` wrappers for dedicated E2E ingestion fixtures only, not for general syntax examples or canonical authored docs.
+- Keep long-horizon harness blocks such as `superagent_harness_template` and `superagent_harness_demo` as frontmatter metadata unless graph nodes and edges are explicitly authored under `flow:`.
 - Quote YAML scalars when they contain reserved punctuation such as `:` or other content that can invalidate inline YAML maps.
 - Do not rely on silent parser fallback when YAML is malformed; malformed frontmatter is an authoring defect that must be fixed at source.
 
@@ -478,26 +479,26 @@ INSERT INTO hackathon_demos (
 
 ### Rationale
 
-The knowledge graph canvas supports a ReactFlow-style workflow editor mode alongside the static Mermaid diagram. 
+The knowledge graph canvas supports a native Flow Editor workflow mode alongside the static Mermaid diagram.
 In workflow editor mode the graph is interactive and computable: 
 nodes have typed input/output handles, 
 edges carry live data, and 
-node state is computed from upstream values — exactly as in https://reactflow.dev/learn/advanced-use/computing-flows.
+node state is computed from upstream values through shared Knowgrph flow helpers.
 
 Markdown is the authoring format. 
-The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edge` sigils and hydrates a ReactFlow graph.
+The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edge` sigils and hydrates the native Flow Editor graph.
 `2D Renderer: Animatic` reuses this same frontmatter-first `flow:` authoring contract; timeline-specific timing stays under `timeline.beats.*` beside the shared graph syntax instead of introducing a parallel animatic-only Markdown dialect.
 
 ### Concept map — Mermaid vs. Flow Editor
 
-| Concept | Mermaid (static) | Flow editor (interactive) |
+| Concept | Mermaid (static) | Flow Editor (interactive) |
 |---|---|---|
 | Node | `n_id["label"]` | `@node:id` with `handles:` and `data:` |
 | Edge | `n_a --> n_b` | `@edge:source:handle→target:handle` |
 | Node type | `classDef` shape | `type:` field (`input`/`default`/`output`/`custom`) |
 | Computed value | none | `compute:` function on node |
 | Live data | none | `data:` JSONB on node; updated on upstream change |
-| Subgraph | `subgraph` | `@cluster:id` → ReactFlow `<Panel>` or grouping node |
+| Subgraph | `subgraph` | `@cluster:id` -> grouping node or Flow Editor containment |
 | Click | `click` handler | `onNodeClick` → AI Chat UI scoped to node |
 
 ### Frontmatter — `flow:` block
@@ -509,6 +510,8 @@ The same `flow:` block is the canonical graph authoring surface for both `kgCanv
 
 Canonical authored Markdown uses plain YAML scalars, arrays, and objects in the `flow:` block.
 Normalized E2E pipeline fixtures may wrap individual values as `{key, type, value}` after parsing so ingestion, validation, and Canvas rendering can audit the typed graph payload explicitly.
+
+Long-horizon SuperAgent metadata may sit beside `flow:` in frontmatter, but it is not graph topology by itself. It can name message gateway, memory, tools, skills, subagents, sandbox/workspace outputs, budgets, trace files, and review gates; the renderer still reads graph topology only from `flow:` and body graph sigils. DeerFlow references in those blocks are conceptual inspiration or optional gateway configuration only, with no copied code, prompts, topology, skills, memory layout, or renderer ownership.
 
 Normalized E2E example:
 
@@ -584,13 +587,13 @@ flow:
 
 ### Node type conventions
 
-| `type` | ReactFlow equivalent | Use for | Handle rule |
+| `type` | Flow Editor role | Use for | Handle rule |
 |---|---|---|---|
-| `input` | `<InputNode>` | data source; no upstream | source handles only |
-| `default` | `<DefaultNode>` | transform / compute step | both target + source handles |
-| `output` | `<OutputNode>` | terminal / sink | target handles only |
-| `custom` | `<CustomNode>` | AI Chat UI; score display; alert | any handle config |
-| `custom` + `mediaType:` | `<MediaNode>` | image / video / audio / iframe / code / model block; declared via `<!-- media -->` comment marker | `media` source handle only; see Rich Media Grid Guidelines |
+| `input` | source widget | data source; no upstream | source handles only |
+| `default` | transform widget | transform / compute step | both target + source handles |
+| `output` | sink widget | terminal / sink | target handles only |
+| `custom` | custom widget | AI Chat UI; score display; alert | any handle config |
+| `custom` + `mediaType:` | media widget | image / video / audio / iframe / code / model block; declared via `<!-- media -->` comment marker | `media` source handle only; see Rich Media Grid Guidelines |
 
 ### Handle naming convention
 
@@ -608,9 +611,9 @@ as PostgreSQL column names. This makes the handle-to-JSONB mapping direct.
 
 ### `compute:` function
 
-Each `default` node may declare a `compute:` inline function. The canvas
-evaluates it whenever upstream handle data changes — exactly as ReactFlow's
-computing flows pattern.
+Each `default` node may declare a `compute:` inline function. The Flow Editor
+evaluates it through shared computing-flow helpers whenever upstream handle data
+changes.
 
 ```yaml
 compute: |
@@ -777,7 +780,7 @@ flow:
 | Edge reference | `` `@edge:src:h→tgt:h` `` | resolve to flow edge | `` `@edge:n-scrape:urls→n-extract:urls` `` |
 | Computed value | `compute: \|` YAML block | pure fn; inputs → outputs map | see `compute:` above |
 | Handle | `handleName` in `handles:` | `snake_case`; matches PG column | `urls`, `demos`, `score` |
-| Node type | `input` / `default` / `output` / `custom` | ReactFlow node type | `type: output` |
+| Node type | `input` / `default` / `output` / `custom` | Flow Editor node role | `type: output` |
 | Media node reference | `` `@node:m-{id}` `` | resolve to single media node by `id`; `m-` prefix convention | `` `@node:m-gallery-output` `` |
 | Media row container reference | `` `@node:mr-{id}` `` | resolve to `media-row` container node; `mr-` prefix convention | `` `@node:mr-phase1-compare` `` |
 | Edge from media node | `` `@edge:m-{id}:media→n-{id}:{handle}` `` | edge from `media` source handle to downstream node | `` `@edge:m-gallery-output:media→n-extract:demos` `` |
@@ -1791,8 +1794,8 @@ Parser resolves in the order listed; earlier rules take priority.
 | `{{key}}` | Variable | ~2 | `object` (ref) | — (is the interpolation) |
 | `{{key:value}}` | Variable | ~4 | `object` (def) | — |
 | `{{key\|fallback}}` | Variable | ~3 | `object` (ref+fallback) | — |
-| `` `@node:id` `` | Flow editor | ~4 | node ref | no |
-| `` `@edge:…` `` | Flow editor | ~6 | edge ref | no |
+| `` `@node:id` `` | Flow Editor | ~4 | node ref | no |
+| `` `@edge:…` `` | Flow Editor | ~6 | edge ref | no |
 | `` `@node:m-{id}` `` | Rich media | ~5 | media node ref | no |
 | `` `@node:mr-{id}` `` | Rich media | ~5 | media-row ref | no |
 | `` `@comment:c-{id}` `` | Comments | ~5 | comment ref | no |

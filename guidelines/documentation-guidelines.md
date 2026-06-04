@@ -14,6 +14,9 @@ frontmatter_contract: "required"
 - Frontmatter is the SSOT for document metadata, provenance, active variants, workflow state, and reusable context keys referenced elsewhere in the document.
 - Canonical authored documentation uses plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrappers.
 - Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.
+- Documentation for Flow Editor computing-flow fixtures must state semantic port-key ownership, schema-path based KTV row consolidation, and the shared compute helper that owns connected-value propagation.
+- Documentation for long-horizon SuperAgent harnesses must state the native Knowgrph owner chain, the no-copy DeerFlow inspiration boundary, and whether the surface is local-only or deployed.
+- Harness metadata sections must be described as metadata unless explicit graph nodes/edges are authored under `flow:`.
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read documentation metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 

@@ -30,6 +30,9 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 - Scalars that contain reserved punctuation, including inline values with `:`, must be quoted so the frontmatter remains valid YAML under strict parsers.
 - Parser repair or warning paths are safety nets, not authoring targets; malformed YAML frontmatter must be treated as invalid source that needs correction upstream.
 - Do not split metadata ownership across duplicate blocks, renderer-only aliases, or body-only mirror declarations when the same value belongs in frontmatter.
+- Keep one frontmatter block per Markdown document. Do not close frontmatter, place metadata in the body, and reopen or mirror schema-bearing YAML later in the file.
+- Flow Editor graph topology, node metadata, renderer presets, workflow sections, and KGC-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
+- Use node-owned fields such as `kgc:readingSummary` for concise machine-readable node summaries in normalized fixtures. Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` sections to mirror frontmatter.
 
 ## Context-Intent-Directive
 
@@ -42,12 +45,25 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 | Surface Modes | Keep surface state frontmatter-driven | - [ ] Set `kgCanvasSurfaceMode` explicitly; keep surface state frontmatter-driven; forbid stored geospatial or 3D carryover |
 | Widget Bundles | Preserve overlay ownership | - [ ] Keep Flow Editor widget behavior flags explicit; preserve overlay ownership; forbid cross-renderer proxy interference |
 | SuperAgent Harness | Preserve harness metadata without renderer drift | - [ ] Keep `superagent_harness_template` / `superagent_harness_demo` as metadata unless nodes are explicitly authored under `flow:`; forbid second parser, renderer, provider, memory, or graph apply owners |
+| MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic KGC backfill or renderer-local graph patches |
+| Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for Flow Editor topology |
 
 ## Architecture Overview
 
 **From initialization-file selection to rendered canvas**: Source Files selection -> ingestion -> frontmatter parsing -> shared preset resolution -> source-file graph materialization -> post-graph Canvas View application -> visible document content and graph.
 
 **From `*.md` document to directly runnable seed**: Authors declare the full Canvas View preset in the opening YAML block -> import and initialization paths consume the same explicit seed contract -> no prior renderer or surface state is required.
+
+## Markdown Body Structure
+
+For frontmatter-driven Knowgrph documents, the body is a human-readable projection of the same authored state, not another machine authority.
+
+- Start the body after the single closing `---` with one `#` heading.
+- Use body sections for purpose, workflow explanation, validation evidence, and inspection steps.
+- Reference frontmatter node ids and edge ids with inline code when helpful.
+- Keep reusable summaries on their owning frontmatter nodes, commonly as `kgc:readingSummary` in normalized fixtures.
+- Do not put a second YAML-like metadata block in the body.
+- Do not put `flow:`, `nodes:`, `edges:`, `@node:`, or `@edge:` declarations in the body to mirror the frontmatter graph.
 
 ## Canonical Presets
 
@@ -105,6 +121,8 @@ superagent_harness_template:
 ```
 
 This block is metadata. It does not author graph nodes, change `kgCanvas2dRenderer`, or bypass the shared Markdown parser.
+
+MCP-structured FloatingPanel Chat responses may materialize equivalent frontmatter-flow records only through the shared submit validation and structured-content projection owners. A literal MCP result with renderable `structuredContent` finalizes without KGC retry, then lands in Editor Workspace and renders Widgets, Rich Media Panels, Cards, media, inline compute, and edges through the same `flow:` contract.
 
 Timeline demo / Animatic / Frontmatter Mode:
 
@@ -258,6 +276,7 @@ widget_bundle:
 ## Validation Guidelines
 
 - [ ] Reviewers confirm the frontmatter block is the first block in the file.
+- [ ] Reviewers confirm there is exactly one frontmatter block and no body-side metadata mirror.
 - [ ] Reviewers confirm the YAML frontmatter parses cleanly under a strict parser with no recovery-only dependency.
 - [ ] Reviewers confirm switch-sensitive `*.md` files are directly runnable canonical seeds with explicit Canvas View frontmatter.
 - [ ] Reviewers confirm `kgCanvasSurfaceMode` is explicit for switch-sensitive documents.
@@ -272,6 +291,7 @@ widget_bundle:
 - [ ] Reviewers confirm widget-bundle docs keep the Flow Editor behavior contract when overlays are present.
 - [ ] Reviewers confirm normalized Flow Editor fixtures map `{key,type,value}` rows by semantic key / schema path and do not render `handles.source` or `handles.target` as substitute port keys.
 - [ ] Reviewers confirm matching field/port rows are consolidated into one inline-editable KTV row with the functional handle attached.
+- [ ] Reviewers confirm Flow Editor documents do not contain `## KGC Reading Layer` or line-start `@node:` / `@edge:` body mirrors.
 
 ## Anti-Patterns
 
@@ -285,3 +305,5 @@ widget_bundle:
 - Do not treat renderer aliases as the canonical authoring format.
 - Do not leave invalid inline YAML scalars unquoted and expect parser repair to recover them silently.
 - Do not split one semantic Flow Editor driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.
+- Do not close frontmatter early and place `title`, renderer presets, `workflow_sections`, `socket_types`, or `flow:` in the Markdown body.
+- Do not keep parallel KGC reading sections in the body when the same node summaries can live on the frontmatter node records.

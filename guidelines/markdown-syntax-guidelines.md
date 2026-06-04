@@ -140,6 +140,7 @@ Markdown documents that drive Knowgrph parsing, rendering, prompting, scripting,
 - Keep canonical authored Markdown in plain YAML for frontmatter keys, `flow:`, and related body-facing contracts.
 - Reserve normalized `{key, type, value}` wrappers for dedicated E2E ingestion fixtures only, not for general syntax examples or canonical authored docs.
 - Keep long-horizon harness blocks such as `superagent_harness_template` and `superagent_harness_demo` as frontmatter metadata unless graph nodes and edges are explicitly authored under `flow:`.
+- Keep Flow Editor graph topology, node metadata, renderer presets, workflow sections, and reusable KGC-reading summaries in the opening frontmatter block. Body sections may explain or reference the graph, but must not mirror it with a second `flow:` block, `## KGC Reading Layer`, or line-start `@node:` / `@edge:` declarations.
 - Quote YAML scalars when they contain reserved punctuation such as `:` or other content that can invalidate inline YAML maps.
 - Do not rely on silent parser fallback when YAML is malformed; malformed frontmatter is an authoring defect that must be fixed at source.
 
@@ -486,15 +487,16 @@ edges carry live data, and
 node state is computed from upstream values through shared Knowgrph flow helpers.
 
 Markdown is the authoring format. 
-The canvas renderer reads the frontmatter `flow:` block and body `@node` / `@edge` sigils and hydrates the native Flow Editor graph.
+The canvas renderer hydrates the native Flow Editor graph from the opening frontmatter `flow:` block.
+Body `@node` / `@edge` spans are references only when a specific parser contract enables them; they are not a second Flow Editor topology or KGC-reading source.
 `2D Renderer: Animatic` reuses this same frontmatter-first `flow:` authoring contract; timeline-specific timing stays under `timeline.beats.*` beside the shared graph syntax instead of introducing a parallel animatic-only Markdown dialect.
 
 ### Concept map — Mermaid vs. Flow Editor
 
 | Concept | Mermaid (static) | Flow Editor (interactive) |
 |---|---|---|
-| Node | `n_id["label"]` | `@node:id` with `handles:` and `data:` |
-| Edge | `n_a --> n_b` | `@edge:source:handle→target:handle` |
+| Node | `n_id["label"]` | `flow.nodes[*]` with `id`, `type`, `handles`, and node fields |
+| Edge | `n_a --> n_b` | `flow.edges[*]` with `source`, `target`, `sourceHandle`, and `targetHandle` |
 | Node type | `classDef` shape | `type:` field (`input`/`default`/`output`/`custom`) |
 | Computed value | none | `compute:` function on node |
 | Live data | none | `data:` JSONB on node; updated on upstream change |
@@ -511,7 +513,7 @@ The same `flow:` block is the canonical graph authoring surface for both `kgCanv
 Canonical authored Markdown uses plain YAML scalars, arrays, and objects in the `flow:` block.
 Normalized E2E pipeline fixtures may wrap individual values as `{key, type, value}` after parsing so ingestion, validation, and Canvas rendering can audit the typed graph payload explicitly.
 
-Long-horizon SuperAgent metadata may sit beside `flow:` in frontmatter, but it is not graph topology by itself. It can name message gateway, memory, tools, skills, subagents, sandbox/workspace outputs, budgets, trace files, and review gates; the renderer still reads graph topology only from `flow:` and body graph sigils. DeerFlow references in those blocks are conceptual inspiration or optional gateway configuration only, with no copied code, prompts, topology, skills, memory layout, or renderer ownership.
+Long-horizon SuperAgent metadata may sit beside `flow:` in frontmatter, but it is not graph topology by itself. It can name message gateway, memory, tools, skills, subagents, sandbox/workspace outputs, budgets, trace files, and review gates; the renderer still reads graph topology only from frontmatter `flow:`. DeerFlow references in those blocks are conceptual inspiration or optional gateway configuration only, with no copied code, prompts, topology, skills, memory layout, or renderer ownership.
 
 Normalized E2E example:
 
@@ -776,8 +778,8 @@ flow:
 
 | Convention | Symbol | Parse rule | Example |
 |---|---|---|---|
-| Node reference | `` `@node:id` `` | resolve to flow node by `id` | `` `@node:n-gallery` `` |
-| Edge reference | `` `@edge:src:h→tgt:h` `` | resolve to flow edge | `` `@edge:n-scrape:urls→n-extract:urls` `` |
+| Node reference | `` `@node:id` `` | optional inline reference to a frontmatter-owned node by `id`; not a topology declaration | `` `@node:n-gallery` `` |
+| Edge reference | `` `@edge:src:h→tgt:h` `` | optional inline reference to a frontmatter-owned edge; not a topology declaration | `` `@edge:n-scrape:urls→n-extract:urls` `` |
 | Computed value | `compute: \|` YAML block | pure fn; inputs → outputs map | see `compute:` above |
 | Handle | `handleName` in `handles:` | `snake_case`; matches PG column | `urls`, `demos`, `score` |
 | Node type | `input` / `default` / `output` / `custom` | Flow Editor node role | `type: output` |

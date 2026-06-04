@@ -10,7 +10,7 @@
 
 - Durable runs must record objective, model/provider mode, tool calls, token/cost estimates, retry decisions, artifacts, and final verifier status.
 - Minutes-to-hours work must be bounded by explicit budgets, stop conditions, backoff, and resumable trace files.
-- LLM outputs that will touch Canvas must pass through the same frontmatter-first KGC validation gate as normal chat output.
+- LLM outputs that will touch Canvas must pass through the shared chat validation gate: frontmatter-first KGC validation or renderable literal MCP structured-surface acceptance before workspace/canvas apply.
 - DeerFlow-inspired orchestration must remain provider-neutral and no-copy: use native prompt templates, native tool contracts, native memory, and native trace formats.
 
 ---

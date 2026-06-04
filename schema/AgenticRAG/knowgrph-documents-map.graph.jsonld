@@ -2422,6 +2422,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-swarm-prediction-engine-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-swarm-prediction-engine-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-swarm-prediction-engine-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-swarm-prediction-engine-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-system-design-document",
       "@type": "kg:Node",
       "labels": [

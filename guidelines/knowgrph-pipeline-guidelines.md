@@ -16,6 +16,14 @@ frontmatter_contract: "required"
 - Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> execute fidelity.
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read pipeline metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
+- Pipeline docs must keep one frontmatter block and one human-readable body. Do not place `title`, renderer presets, `workflow_sections`, `socket_types`, `flow:`, nodes, edges, or KGC-reading summaries in a second body-side YAML layer.
+
+## Markdown Body Structure Contract
+
+- The Markdown body starts after the single closing `---` and is a projection for humans: purpose, architecture, validation, inspection steps, and evidence.
+- Body tables may reference frontmatter node ids, edge ids, field paths, and test names, but must not re-author the machine graph.
+- Flow Editor topology belongs to frontmatter `flow.nodes` and `flow.edges`; concise reusable node summaries belong on the owning frontmatter node, commonly as `kgc:readingSummary` in normalized fixtures.
+- Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` blocks to mirror frontmatter.
 
 ## Flow Editor Computing-Flow Contract
 
@@ -28,8 +36,9 @@ frontmatter_contract: "required"
 - Flow Editor KTV rows that share a normalized schema path with a functional port should render as one inline-editable row with the port handle attached. Documentation and tests should treat duplicate read-only port rows for the same semantic key as invalid.
 - Computing-flow execution must use shared graph/registry readers and bounded propagation. Renderers may display connected values, but they must not recompute graph state, rewrite topology, or depend on fixture filenames.
 - Run-all or phase execution writes results into existing nodes and payload fields only; it must preserve layout, panel frames, edge topology, and authored port keys.
-- Rich Media Panel outputs remain normal flow nodes. Text output uses `output`, image output uses `imageUrl`, inline chart or HTML output uses `outputSrcDoc`, and `outputSrcDoc` is the render authority when helper text is also present.
-- Validation must cover the full ingestion -> parsing -> rendering pipeline: parser warnings are zero, Flow Editor mounts the frontmatter graph, semantic ports attach to the intended rows, connected values propagate through shared helpers, and Rich Media Panel previews resolve through shared panel/media owners.
+- MCP-structured chat outputs remain normal flow data. Literal MCP `result.structuredContent`, `response.structuredContent`, or structured `result.content[]` records may declare widgets, panels, cards, media, safe `flow:compute`, and handle-bearing edges; submit validation accepts a renderable structured surface without KGC retry or synthetic KGC text.
+- Rich Media Panel outputs remain normal flow nodes. Text output uses `output`, image output uses `imageUrl`, audio uses `audioUrl`, video uses `videoUrl`, inline chart or HTML output uses `outputSrcDoc`, and `outputSrcDoc` is the render authority when helper text is also present.
+- Validation must cover the full ingestion -> parsing -> rendering pipeline: parser warnings are zero, Flow Editor mounts the frontmatter graph, semantic ports attach to the intended rows, connected values and inline compute propagate through shared helpers, and Widgets, Cards, Rich Media Panels, media previews, and edges resolve through shared owners.
 
 ### Flow Editor Computing-Flow Validation Minimum
 
@@ -39,6 +48,7 @@ frontmatter_contract: "required"
 - Include focused tests for `markdown.frontmatterFlowGraph.*`, `baseline.flowEditor.frontmatterFlow.*`, `flow.compute.inline.*`, and `flow.dataflow.connectedValues.*` when a change touches ports, computed values, or panel previews.
 - For publish-side docs, validate from the docs mirror path (`/docs/<file>.md`) so Source Files ingestion, parser application, and Flow Editor rendering share the same route used by local demos.
 - Browser smoke should use stable DOM contracts such as `data-kg-flow-editor-surface-root` and `data-kg-rich-media-panel`, plus one concrete panel-output signal (`iframe[srcdoc]`, `img[src^="data:image/"]`, or visible editable KTV row).
+- Publish-demo hygiene should reject body-side `## KGC Reading Layer`, line-start `@node:`, line-start `@edge:`, and body `flow:` mirrors for frontmatter-driven Flow Editor documents.
 
 ## Long-Horizon SuperAgent Harness Guidelines
 
@@ -46,7 +56,7 @@ frontmatter_contract: "required"
 - Long-horizon runs should name a message gateway, run memory, tools, skills, role-scoped subagents, sandbox/workspace outputs, budgets, trace files, and a review gate for minutes-to-hours work.
 - DeerFlow may be cited only as conceptual inspiration or an optional gateway provider. Do not copy DeerFlow code, prompts, topology, skill packs, memory layout, or architecture into Knowgrph docs or fixtures.
 - The `flow:` block remains the graph SSOT. A harness may add explicit nodes/edges only by authoring them under `flow:` with normal semantic ports and shared Rich Media Panel output keys.
-- Rich Media Panel outputs stay field-driven: text uses `output`, images use `imageUrl`, video uses `videoUrl`, and charts/inline HTML use `outputSrcDoc`.
+- Rich Media Panel outputs stay field-driven: text uses `output`, images use `imageUrl`, audio uses `audioUrl`, video uses `videoUrl`, and charts/inline HTML use `outputSrcDoc`.
 - Validation must prove parser warnings are zero, authored graph counts are stable, `kgCanvas2dRenderer: "flowEditor"` remains authoritative, and harness metadata does not change nodes, edges, or rendered surface ownership.
 
 ## Foundational Axioms

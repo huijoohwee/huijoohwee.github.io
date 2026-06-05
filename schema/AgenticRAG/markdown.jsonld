@@ -394,6 +394,14 @@
       "@language": "zh-cn"
     },
     {
+      "@value": "Cloudflare D1 document writes treat workspaceId plus canonicalPath as the storage identity. Seed, Source Files, and Share URL producers must converge on one row instead of creating duplicate ids for the same canonical document.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Cloudflare D1 文档写入以 workspaceId 加 canonicalPath 作为存储身份。Seed、Source Files 与 Share URL 生产者必须收敛到同一行，而不是为同一规范文档创建重复 id。",
+      "@language": "zh-cn"
+    },
+    {
       "@value": "Storage-sync conflicts should retain local outbox records until resolution and reuse the shared toast/log action surfaces instead of introducing a markdown-specific conflict UI.",
       "@language": "en-us"
     },

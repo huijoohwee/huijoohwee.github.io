@@ -9,11 +9,11 @@
   ],
   "rdfs:comment": [
     {
-      "@value": "Neutral, dataset-agnostic renderer color palette used by Knowgrph Canvas for JSON-LD graphs that follow the AgenticRAG schema. The palette is tuned for Lean Startup style workflows and shared across property, document-structure, and semantic layer modes so that the same node and edge colors apply regardless of how layers are grouped. Renderers treat these colors as a recommendation: schema files remain structural-only and domain-agnostic, and visual properties can always be overridden at runtime or via schema.nodeStyles and schema.edgeStyles.",
+      "@value": "Neutral, dataset-agnostic renderer color palette used by Knowgrph Canvas for JSON-LD graphs that follow the AgenticRAG schema. The palette is tuned for Lean Startup style workflows and shared across property, document-structure, and semantic layer modes so that the same node and edge colors apply regardless of how layers are grouped. Knowgrph renderer controls should read palette defaults and schema.metadata['renderer:palette'] overrides through one shared helper instead of local default merges. Renderers treat these colors as a recommendation: schema files remain structural-only and domain-agnostic, and visual properties can always be overridden at runtime or via schema.nodeStyles and schema.edgeStyles.",
       "@language": "en-us"
     },
     {
-      "@value": "为遵循 AgenticRAG 架构的 JSON-LD 图提供的中立、数据集无关的渲染器颜色调色板。该调色板针对精益创业风格工作流进行调整，并在属性模式、文档结构模式和语义模式之间共享，使相同的节点和边颜色在不同图层分组策略下保持一致。渲染器将这些颜色视为推荐值：模式文件本身依然只描述结构且领域无关，可视属性始终可以在运行时或通过 schema.nodeStyles 和 schema.edgeStyles 进行覆盖。",
+      "@value": "为遵循 AgenticRAG 架构的 JSON-LD 图提供的中立、数据集无关的渲染器颜色调色板。该调色板针对精益创业风格工作流进行调整，并在属性模式、文档结构模式和语义模式之间共享，使相同的节点和边颜色在不同图层分组策略下保持一致。Knowgrph 渲染器控件应通过同一个共享 helper 读取调色板默认值和 schema.metadata['renderer:palette'] 覆盖值，而不是在局部重复默认值合并。渲染器将这些颜色视为推荐值：模式文件本身依然只描述结构且领域无关，可视属性始终可以在运行时或通过 schema.nodeStyles 和 schema.edgeStyles 进行覆盖。",
       "@language": "zh-cn"
     }
   ],

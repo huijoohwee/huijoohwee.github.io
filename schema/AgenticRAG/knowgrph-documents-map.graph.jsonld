@@ -419,22 +419,6 @@
       }
     },
     {
-      "@id": "node:knowgrph:doc:fix-202604061300",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "fix-202604061300.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/fix-202604061300.md"
-      },
-      "documentPath": "docs/documents/fix-202604061300.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-2d-renderer-enhancement-design",
       "@type": "kg:Node",
       "labels": [
@@ -753,22 +737,6 @@
         "relPath": "docs/documents/knowgrph-codebase-index-document.md"
       },
       "documentPath": "docs/documents/knowgrph-codebase-index-document.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-codebase-responsibility-flow",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-codebase-responsibility-flow.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-codebase-responsibility-flow.md"
-      },
-      "documentPath": "docs/documents/knowgrph-codebase-responsibility-flow.md",
       "language": "en-us"
     },
     {

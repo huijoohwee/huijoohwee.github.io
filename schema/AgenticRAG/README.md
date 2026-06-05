@@ -79,6 +79,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Source:** `knowgrph/docs/documents` (repo-relative)
 - **Target artifact:** `schema/AgenticRAG/knowgrph-documents-map.graph.jsonld`
 - **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
+- **Config artifact root:** Knowgrph repo config artifacts resolve from `data/config/{graphrag,schema,orchestrator,llm-chat}`; schema docs must mirror that source-owned tree and must not preserve alternate root-level config folders.
 
 ### Git Rebase / Conflict Resolution (Cross‑Repo)
 

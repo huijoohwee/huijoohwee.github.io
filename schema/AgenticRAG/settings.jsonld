@@ -710,11 +710,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "UI theme preference. \"light\" and \"dark\" are explicit. \"system\" resolves via prefers-color-scheme and should update by subscribing to matchMedia change events (no polling). Implementations should treat CSS variables as the source of truth and avoid hardcoding colors outside the centralized token layer.",
+          "@value": "UI theme preference. \"light\" and \"dark\" are explicit. \"system\" resolves via prefers-color-scheme and should update by subscribing to matchMedia change events (no polling). Toolbar should expose one Theme button that cycles System, Light, and Dark from a shared option source; settings surfaces may show direct choices but must use the same mode order. Implementations should treat CSS variables as the source of truth and avoid hardcoding colors outside the centralized token layer.",
           "@language": "en-us"
         },
         {
-          "@value": "UI 主题偏好设置。\"light\" 与 \"dark\" 为显式指定，\"system\" 通过 prefers-color-scheme 解析，并应通过订阅 matchMedia 的 change 事件更新（禁止轮询）。实现应以 CSS 变量作为唯一真实来源，并避免在集中化 token 层之外硬编码颜色。",
+          "@value": "UI 主题偏好设置。\"light\" 与 \"dark\" 为显式指定，\"system\" 通过 prefers-color-scheme 解析，并应通过订阅 matchMedia 的 change 事件更新（禁止轮询）。Toolbar 应提供一个 Theme 按钮，并按共享选项来源在 System、Light、Dark 之间循环；settings 表面可以显示直接选项，但必须使用同一模式顺序。实现应以 CSS 变量作为唯一真实来源，并避免在集中化 token 层之外硬编码颜色。",
           "@language": "zh-cn"
         }
       ],

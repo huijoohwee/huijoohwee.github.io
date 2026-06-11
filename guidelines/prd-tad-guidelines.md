@@ -1,12 +1,39 @@
 ---
 title: "PRD & TAD Guidelines"
 doc_type: "Guidelines"
-date: "2026-05-27"
+version: "1.1.0"
+date: "2026-06-09"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
 
 # PRD & TAD Guidelines
+
+## Scope & Neutrality Contract
+
+- **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
+- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent.
+- **Project-/file-agnostic**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
+- **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
+
+## Module Index
+
+- `scope--neutrality-contract` — universality, neutrality, agnosticism, modularity rules
+- `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
+- `overview` — what PRD/TAD are and the governing standards
+- `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules
+- `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
+- `from-0-to-1-prd--tad-creation-process` — phase-gated authoring process
+- `flow-patterns` — user journey, workflow, and data flow templates
+- `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive
+- `cid-directive-matrix` — alphabetical, project-agnostic directive mantras
+- `core-templates` — PRD, TAD, and ADR templates
+- `architecture-diagram-standards` — diagram format rules
+- `prd--tad-integration` — separation of concerns and traceability
+- `anti-pattern-guards` — prohibited patterns and their corrections
+- `validation-checklist` — pre-implementation and post-documentation gates
+- `roleactionoutcome` — role-to-deliverable mapping
+- `mantra-application` — the framing mantra
 
 ## Markdown YAML Frontmatter Enforcement
 
@@ -62,7 +89,7 @@ Document AI orchestration as one of three patterns:
 |---|---|---|
 | **Sequential** | A → B → C, each harness feeds the next | Single-path pipelines, linear enrichment |
 | **Fan-out / Fan-in** | A → [B, C, D] → E aggregates | Parallel model calls, ensemble scoring |
-| **Agentic loop** | A → decision → [branch or retry] → exit condition | Multi-step reasoning, tool-use agents, `/goal`-driven tasks |
+| **Agentic loop** | A → decision → [branch or retry] → exit condition | Multi-step reasoning, tool-use agents, completion-condition-driven tasks |
 
 Render orchestration topology as a `flowchart LR` or `sequenceDiagram` in the TAD. Every loop must specify a **max-iteration bound** and a **circuit-breaker condition** to cap runaway token spend.
 
@@ -92,7 +119,9 @@ When selecting any dependency, library, or infrastructure component:
 
 ---
 
+## Directive Grammar (CID)
 
+Every directive in this guideline set is expressed with a uniform, project-agnostic grammar so it can be lifted into any context unchanged. The `CID Directive Matrix` section applies this grammar.
 
 ### Definition
 - **Context**: focus domain of concern
@@ -151,7 +180,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 9. Estimate **token budget per pipeline**: average prompt tokens + completion tokens + cache hit rate at target load; flag pipelines exceeding budget threshold
 10. Plan deployment strategy and migration path; default to zero-egress infrastructure
 11. Render architecture diagrams (Mermaid); compile component inventory table
-12. Derive `/goal` conditions from acceptance criteria — each criterion must be expressible as a verifiable completion condition that Claude Code can evaluate from its own output
+12. Derive Verifiable Completion Conditions (VCCs) from acceptance criteria — each criterion must be expressible as a condition an autonomous agent can evaluate from its own surfaced output
 
 **Gate**: product manager validates TAD preserves user value **and** ROI/TCO envelope before Phase 3.
 
@@ -160,7 +189,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 
 1. Establish bidirectional traceability: `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 2. Confirm no implementation detail in PRD; no business logic in TAD
-3. QA validates all acceptance criteria are testable **and expressible as `/goal` conditions** — each criterion must have a stated check Claude can surface in conversation (exit code, file count, test result, queue state)
+3. QA validates all acceptance criteria are testable **and expressible as VCCs** — each criterion must have a stated check the agent can surface in its own output (exit code, file count, test result, queue state)
 4. Stakeholders approve scope and success metrics; **confirm token budget and TCO are within acceptable envelope**
 5. Verify every AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
 6. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
@@ -175,7 +204,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Update PRD and TAD together whenever requirements shift
 - Re-run relevant gate reviews for breaking changes
 - Archive superseded ADRs; do not delete
-- Re-derive `/goal` conditions whenever acceptance criteria change; stale conditions produce false completions
+- Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
 - **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
 - **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
 
@@ -269,122 +298,99 @@ Source → [Ingest] → [Transform] → [Store] → [Serve] → Consumer
 
 ---
 
-## Agentic Implementation Verification
+## Autonomous Implementation Verification
 
-A well-formed PRD acceptance criterion **is** a well-formed `/goal` condition. 
-This section connects PRD requirements to autonomous implementation via Claude Code's [`/goal`](https://code.claude.com/docs/en/goal) command, 
-which sets a verifiable completion condition and keeps Claude working across turns until a separate evaluator model confirms it is met.
+A well-formed PRD acceptance criterion **is** a well-formed **Verifiable Completion Condition (VCC)**. A VCC is a tool-agnostic primitive: a single, evaluator-checkable end state plus the proof of how it is demonstrated. This section is intentionally vendor-neutral — it defines the VCC contract, then lists interchangeable reference implementations.
+
+### The VCC Primitive
+
+A VCC has three required parts and one optional bound:
+
+| Part | Definition |
+|---|---|
+| **End state** | One measurable, observable outcome (test result, build exit code, file count, empty queue, response time) |
+| **Stated check** | How the outcome is demonstrated (`<test command> exits 0`, `status is clean`) |
+| **Constraint** | What must not change while reaching the end state |
+| **Bound** *(optional)* | A cap such as "stop after N iterations" to prevent runaway loops |
+
+A VCC is judged against what the executing agent has **already surfaced in its own output** — the evaluator does not independently run commands or read files. Write conditions as things the agent's output can demonstrate.
 
 ### The Criterion → Condition Pipeline
 
-Every acceptance criterion written at Phase 1 should be traceable to a `/goal` condition used at implementation time. 
-The same three properties that make a criterion testable make a condition evaluable:
+Every acceptance criterion written at Phase 1 is traceable to a VCC used at implementation time. The three properties that make a criterion testable make a VCC evaluable:
 
-| PRD Property | `/goal` Property | Shared Requirement |
+| PRD Property | VCC Property | Shared Requirement |
 |---|---|---|
-| Observable outcome | Evaluator-verifiable | Claude surfaces proof in the conversation |
-| Stated check | Stated check | How completion is demonstrated (`npm test`, `git status`, etc.) |
+| Observable outcome | Evaluator-verifiable | The agent surfaces proof in its own output |
+| Stated check | Stated check | How completion is demonstrated (`<test command>`, `status check`, etc.) |
 | Scope constraint | Constraint clause | What must not change on the way there |
 
 **Translation pattern**:
 ```
 Given [context] When [action] Then [outcome]
    ↓
-/goal [outcome] verified by [check] with [constraint]
+Verify [outcome] by [check] with [constraint] (optionally: stop after N iterations)
 ```
 
-**Example**:
+**Example** (placeholders only — substitute your own identifiers):
 ```
-Criterion:  Given a valid token, when /refresh is called, then a 200 response is returned within 200 ms with a refreshed JWT.
+Criterion:  Given a valid token, when the refresh endpoint is called, then a 200 response is returned within 200 ms with a refreshed token.
 
-/goal condition:  all tests in test/auth pass, /refresh returns 200 under 200 ms per load test output, and no other test file is modified
+VCC:  all tests in [auth test suite] pass, the refresh endpoint returns 200 under 200 ms per load-test output, and no other test file is modified
 ```
 
-### Autonomous Workflow Selection
-
-Three Claude Code approaches keep a session running between prompts. Choose based on what triggers the next turn:
-
-| Approach | Next turn starts when | Stops when | Use for |
-|---|---|---|---|
-| `/goal` | Previous turn finishes | Evaluator confirms condition met | Substantial work with a verifiable end state |
-| `/loop` | Time interval elapses | You stop it, or Claude judges done | Recurring checks, polling, timed sweeps |
-| Stop hook | Previous turn finishes | Your script or prompt decides | Custom evaluation logic, deterministic checks |
-
-`/goal` and auto mode are complementary: auto mode removes per-tool prompts within a turn; `/goal` removes per-turn prompts across turns. 
-A fresh small fast model (Haiku by default) evaluates the condition, so completion is decided independently of the model doing the work.
-
-### Writing Evaluable Conditions
-
-A `/goal` condition is judged against what Claude has **already surfaced in the conversation** — the evaluator does not run commands or read files independently. 
-Write conditions as things Claude's own output can demonstrate.
-
-**Structure of a strong condition:**
-1. **One measurable end state** — a test result, build exit code, file count, or empty queue
-2. **A stated check** — how Claude proves it (`npm test exits 0`, `git status is clean`)
-3. **Constraints that matter** — what must not change (`no other test file is modified`)
-4. **Optional bound** — `or stop after N turns` to cap runaway loops
+### Writing Strong VCCs
 
 **Well-formed examples** (directly derivable from Given-When-Then criteria):
 ```
-/goal all tests in test/auth pass and the lint step exits 0
+Verify: all tests in [auth test suite] pass and the lint step exits 0
 
-/goal CHANGELOG.md has an entry for every merged PR this sprint and no existing entries are modified
+Verify: [changelog] has an entry for every merged change this sprint and no existing entries are modified
 
-/goal the migration script runs without errors and row counts in users and orders match pre-migration snapshots, or stop after 15 turns
+Verify: the migration runs without errors and row counts in [table A] and [table B] match pre-migration snapshots, or stop after 15 iterations
 ```
 
 **Anti-patterns** (mirror vague acceptance criteria):
 ```
-❌ /goal the code looks good          → no observable proof
-❌ /goal refactoring is complete      → no stated check, no end state
-❌ /goal performance is improved      → no measurable threshold
+❌ Verify: the code looks good          → no observable proof
+❌ Verify: refactoring is complete       → no stated check, no end state
+❌ Verify: performance is improved       → no measurable threshold
 ```
+
+### Reference Implementations
+
+A VCC is mechanism-independent. Any of the following can host it; choose by what triggers the next iteration and how completion is judged. Each is a non-binding example — swap freely.
+
+| Mechanism class | Next iteration starts when | Completion judged by | Example tooling |
+|---|---|---|---|
+| Completion-condition command | Previous iteration finishes | Independent evaluator confirms the condition | An autonomous coding agent's "goal/condition" command (e.g. Claude Code [`/goal`](https://code.claude.com/docs/en/goal)) |
+| Timed loop | A time interval elapses | Operator stops it, or agent judges done | Any scheduler/poller running a recurring check |
+| Stop/exit hook | Previous iteration finishes | A deterministic script decides | CI gate, pre-merge hook, custom evaluator script |
+
+**Implementation-neutral requirements** (apply regardless of mechanism):
+- A **separate evaluator** decides completion, independent of the agent doing the work, so the verdict is not self-graded.
+- The evaluator judges only **surfaced output**; the agent must emit the proof (logs, exit codes, counts) into its own transcript.
+- Every loop carries an explicit **iteration bound** and circuit-breaker, consistent with the Orchestration Topology rules.
 
 ### Traceability Extension
 
-Extend the existing traceability pattern to include the implementation condition:
+Extend the traceability pattern to include the implementation condition:
 
 ```
-PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition]
 ```
 
-Record derived conditions in the TAD component specification alongside the acceptance criteria they implement. 
-This ensures conditions stay synchronized when requirements evolve (see Phase 4 directive above).
-
-### Running a Goal
-
-Set a goal from the Claude Code terminal; it starts a turn immediately:
-```
-/goal all tests in test/auth pass and the lint step is clean
-```
-
-Check status at any time:
-```
-/goal
-```
-
-Clear before completion:
-```
-/goal clear
-```
-
-Run non-interactively to completion in a single invocation:
-```
-claude -p "/goal CHANGELOG.md has an entry for every PR merged this week"
-```
-
-**Requirements**: `/goal` runs only in workspaces where the trust dialog has been accepted. 
-It is unavailable when `disableAllHooks` or `allowManagedHooksOnly` is set.
+Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see Phase 4).
 
 ---
 
+## CID Directive Matrix
 
-
-Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | Directive`
+Each row is a universal, neutral, project-agnostic mantra in `Context | Intent | Directive` grammar (see Directive Grammar (CID)). Rows are sorted A→Z and contain no project, vendor, or file references.
 
 | Context         | Intent                               | Directive                                                                                      |
 |-----------------|--------------------------------------|-----------------------------------------------------------------------------------------------|
-| Acceptance      | Define verifiable criteria           | - [ ] Specify testable criteria expressible as `/goal` conditions; enable verification; forbid ambiguous requirements |
+| Acceptance      | Define verifiable criteria           | - [ ] Specify testable criteria expressible as VCCs; enable verification; forbid ambiguous requirements |
 | Accountability  | Assign clear ownership               | - [ ] Name responsible parties; assign ownership; forbid unassigned features                  |
 | Adaptability    | Enable configuration-driven design   | - [ ] Design configurably; enable adaptation; forbid hardcoded solutions                      |
 | Alignment       | Synchronize team understanding       | - [ ] Review with stakeholders; synchronize understanding; forbid siloed development          |
@@ -412,7 +418,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
-| Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as `/goal` conditions; define objectives; forbid vague aspirations |
+| Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as VCCs; define objectives; forbid vague aspirations |
 | Harness         | Wrap AI calls in typed, observable contracts | - [ ] Define harness input/output schemas; emit cost log per call; specify fallback path; forbid raw unstructured prompt calls in production pipelines |
 | Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
@@ -499,8 +505,8 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
 ### Acceptance Criteria
 **Given** [context] **When** [action] **Then** [outcome]
 
-> **`/goal` translation**: `[outcome] verified by [stated check] with [constraint]`
-> Example: `all tests in test/[feature] pass and no other test file is modified`
+> **VCC translation**: `Verify [outcome] by [stated check] with [constraint]`
+> Example: `all tests in [feature test suite] pass and no other test file is modified`
 
 ### Success Metrics
 | Metric | Baseline | Target | Timeline |
@@ -552,7 +558,7 @@ Each row is a universal, neutral, project-agnostic mantra: `Context | Intent | D
   - Fallback path: [degraded response | upstream error]
 **Token Budget** *(AI components only)*: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/request]
 **Orchestration Topology** *(AI components only)*: [Sequential | Fan-out | Agentic loop — max N iterations, circuit-breaker: condition]
-**`/goal` Conditions**: [Derived from acceptance criteria — one evaluable condition per criterion]
+**VCC Conditions**: [Derived from acceptance criteria — one evaluable condition per criterion]
 
 ### Integration Contracts
 **Interface**: [Name] | **Protocol**: [HTTP/gRPC/etc] | **Format**: [JSON/Protobuf] | **Errors**: [Strategy]
@@ -633,7 +639,7 @@ See ADR-[N] for each significant decision.
 - Every architecture diagram must be accompanied by a component inventory table
 - Retain plain code blocks for JSON contracts, API payloads, and configuration examples
 
-**Token Economics**: Mermaid reduces LLM context token consumption ~70–85% vs equivalent ASCII art, while providing auto-layout, GitHub-native rendering, and structured parseability.
+**Token Economics**: Mermaid reduces LLM context token consumption ~70–85% vs equivalent ASCII art, while providing auto-layout, platform-native rendering (most Markdown hosts and viewers), and structured parseability.
 
 ---
 
@@ -675,11 +681,11 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ Data flows without typed schemas, workflows without error paths, journeys without friction mapping  
 → ✅ Typed schemas at every boundary, full-path workflows, stage-complete journeys
 
-❌ Acceptance criteria that cannot be demonstrated by Claude's own output ("looks good", "is complete", "is improved")  
-→ ✅ Every criterion expressible as a `/goal` condition: one measurable end state + a stated check + any scope constraints
+❌ Acceptance criteria that cannot be demonstrated by the executing agent's own output ("looks good", "is complete", "is improved")  
+→ ✅ Every criterion expressible as a VCC: one measurable end state + a stated check + any scope constraints
 
-❌ `/goal` conditions set at implementation without re-checking the PRD when requirements change  
-→ ✅ Traceability maintained across `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ /goal [condition]`; conditions updated in lockstep with criteria
+❌ VCCs set at implementation without re-checking the PRD when requirements change  
+→ ✅ Traceability maintained across `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition]`; conditions updated in lockstep with criteria
 
 ❌ Raw, unstructured LLM prompt calls in production pipelines; no input/output validation; no cost logging  
 → ✅ Every AI call wrapped in a harness with typed schemas, cost log emission, and a documented fallback path
@@ -706,7 +712,7 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] Data flows typed at every stage boundary with persistence and error handling documented
 - [ ] User stories follow "As a… I want… So that" format
 - [ ] Acceptance criteria use Given-When-Then with observable outcomes
-- [ ] Every acceptance criterion translatable to a `/goal` condition: one measurable end state + a stated check + scope constraints
+- [ ] Every acceptance criterion translatable to a VCC: one measurable end state + a stated check + scope constraints
 - [ ] Features prioritized via MoSCoW **with ROI score and rationale per feature**
 - [ ] **Min-viable scope** explicitly stated for Must-tier features before implementation begins
 - [ ] **Token budget estimated** for every AI-powered pipeline: prompt tokens + completion tokens + cache hit rate at target load
@@ -719,7 +725,7 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] Architecture diagrams use Mermaid (not ASCII for >5 nodes)
 - [ ] Component inventory table accompanies every architecture diagram
 - [ ] PRD-to-TAD traceability established via `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
-- [ ] `/goal` conditions recorded in TAD component specs and traced to source criteria
+- [ ] VCCs recorded in TAD component specs and traced to source criteria
 - [ ] No implementation detail in PRD; no business logic in TAD
 
 **Post-Documentation Review**:
@@ -756,10 +762,10 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics · `/goal` closes the loop from criterion to verified implementation"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
 - **Flow patterns anchor**: user journeys, workflows, and data flows connect abstract requirements to observable system behavior; every feature traces through all three
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
 - **SVO clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
-- **`/goal` closes**: every acceptance criterion becomes an evaluable completion condition; the traceability chain extends from PRD through TAD to autonomous implementation verification
+- **VCC closes**: every acceptance criterion becomes an evaluable completion condition (mechanism-agnostic); the traceability chain extends from PRD through TAD to autonomous implementation verification

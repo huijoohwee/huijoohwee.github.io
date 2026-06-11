@@ -1,9 +1,9 @@
 ---
 title: "HJH Topology Document"
 doc_type: "PRD + TAD"
-version: "1.0.0"
+version: "1.0.1"
 status: "active"
-date: "2026-05-04"
+date: "2026-06-10"
 lang: "en-US"
 owners:
   - "cross-repo topology docs"
@@ -67,6 +67,21 @@ Knowgrph and Singabldr need one deploy topology that preserves separate Dev SSOT
 
 **From app-owned source to public routes**: `knowgrph` or `singabldr` → app build and validation → sync generated surfaces into `huijoohwee` → Cloudflare Pages serves isolated routes under `airvio.co`
 
+**Runtime boundary note (`knowgrph` / `agentic-canvas-os`)**: this document is
+the shared **publish topology** contract, not the full runtime topology for the
+Knowgrph video-remix product split. For that product specifically:
+
+- `knowgrph` remains the control-plane + contract SSOT and publishes the
+  Cloudflare surfaces under `airvio.co/knowgrph`.
+- `agentic-canvas-os` is the realized split product repo for the user-facing
+  runtime shell.
+- The product runtime path is Vercel web + same-origin Vercel Agent-API as the
+  **primary/default** browser path, with AWS Agent-API as the **fallback/proof**
+  path.
+- The live canvas is consumed through the run-scoped Knowgrph `doc-view` iframe
+  surface; MCP is the orchestration/control-plane transport, not the browser
+  canvas-render transport.
+
 ### Component Specifications
 
 **Component**: `knowgrph`  
@@ -116,6 +131,14 @@ Knowgrph and Singabldr need one deploy topology that preserves separate Dev SSOT
 ### Deployment Strategy
 
 Cloudflare Pages deploys from `huijoohwee`; `knowgrph` publishes `airvio.co/knowgrph`; the local `singabldr` checkout backed by `huijoohwee/singabldr` publishes `airvio.co/singabldr`; app repos never deploy directly to Pages without syncing their generated outputs first.
+
+For the Knowgrph product split, keep this distinction explicit:
+
+- **Publish topology**: `knowgrph` -> `huijoohwee` -> Cloudflare Pages for the
+  public `airvio.co/knowgrph` surfaces.
+- **Runtime topology**: `agentic-canvas-os` deploys its Vercel primary path and
+  AWS fallback path outside the Pages publish repo; `huijoohwee` does not own
+  those runtime app sources.
 
 ### Migration Path
 

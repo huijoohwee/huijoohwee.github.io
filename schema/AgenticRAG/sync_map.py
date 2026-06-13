@@ -60,8 +60,8 @@ def find_github_root(start: Path) -> Path:
     return start.parents[len(start.parents) - 1]
 
 
-def detect_language_from_filename(filename: str) -> Literal["en-us", "zh-cn"]:
-    lowered = filename.lower()
+def detect_language_from_path(path_fragment: str) -> Literal["en-us", "zh-cn"]:
+    lowered = path_fragment.lower()
     if ".zh-cn." in lowered or lowered.endswith(".zh-cn.md") or lowered.endswith(".zh-cn.json"):
         return "zh-cn"
     if ".en-us." in lowered or lowered.endswith(".en-us.md") or lowered.endswith(".en-us.json"):
@@ -113,43 +113,51 @@ def safe_list_str(value: Any) -> list[str] | None:
     return value
 
 
-def get_node_filename(node: GraphItem) -> str | None:
+def normalize_doc_rel_path(path_value: str) -> str:
+    normalized = path_value.replace("\\", "/").lstrip("./")
+    prefix = "docs/documents/"
+    if normalized.startswith(prefix):
+        return normalized[len(prefix) :]
+    return normalized
+
+
+def get_node_doc_rel_path(node: GraphItem) -> str | None:
     name = safe_list_str(node.get("name"))
     if name and len(name) == 1:
-        return name[0]
+        return normalize_doc_rel_path(name[0])
     document_path = node.get("documentPath")
     if isinstance(document_path, str):
-        return Path(document_path).name
+        return normalize_doc_rel_path(document_path)
     properties = node.get("properties")
     if isinstance(properties, dict):
         rel_path = properties.get("relPath")
         if isinstance(rel_path, str):
-            return Path(rel_path).name
+            return normalize_doc_rel_path(rel_path)
     return None
 
 
-def build_doc_node_id(filename: str) -> str:
-    if filename.endswith(".md"):
-        base = filename[:-3]
-    elif filename.endswith(".json"):
-        base = filename[:-5]
+def build_doc_node_id(doc_rel_path: str) -> str:
+    if doc_rel_path.endswith(".md"):
+        base = doc_rel_path[:-3]
+    elif doc_rel_path.endswith(".json"):
+        base = doc_rel_path[:-5]
     else:
-        base = Path(filename).stem
-    base = base.replace(" ", "-")
+        base = Path(doc_rel_path).stem
+    base = base.replace("/", "--").replace(" ", "-")
     return f"node:knowgrph:doc:{base}"
 
 
-def upsert_document_node(existing: GraphItem | None, filename: str) -> GraphItem:
-    file_rel_path = f"docs/documents/{filename}"
-    language = detect_language_from_filename(filename)
-    node_id = build_doc_node_id(filename)
+def upsert_document_node(existing: GraphItem | None, doc_rel_path: str) -> GraphItem:
+    file_rel_path = f"docs/documents/{doc_rel_path}"
+    language = detect_language_from_path(doc_rel_path)
+    node_id = build_doc_node_id(doc_rel_path)
 
     if existing is None:
         return {
             "@id": node_id,
             "@type": "kg:Node",
             "labels": ["Document"],
-            "name": [filename],
+            "name": [doc_rel_path],
             "properties": {"repo": "knowgrph", "relPath": file_rel_path},
             "documentPath": file_rel_path,
             "language": language,
@@ -159,23 +167,23 @@ def upsert_document_node(existing: GraphItem | None, filename: str) -> GraphItem
     updated["@id"] = updated.get("@id") if isinstance(updated.get("@id"), str) else node_id
     updated["@type"] = "kg:Node"
     updated["labels"] = ["Document"]
-    updated["name"] = [filename]
+    updated["name"] = [doc_rel_path]
     updated["properties"] = {"repo": "knowgrph", "relPath": file_rel_path}
     updated["documentPath"] = file_rel_path
     updated["language"] = language
     return updated
 
 
-def iter_doc_filenames(docs_dir: Path) -> list[str]:
+def iter_doc_rel_paths(docs_dir: Path) -> list[str]:
     if not docs_dir.is_dir():
         raise FileNotFoundError(f"docs dir not found: {docs_dir}")
-    filenames = []
-    for path in docs_dir.iterdir():
+    rel_paths = []
+    for path in docs_dir.rglob("*"):
         if not path.is_file():
             continue
         if path.name.endswith(".md") or path.name.endswith(".json"):
-            filenames.append(path.name)
-    return sorted(filenames)
+            rel_paths.append(path.relative_to(docs_dir).as_posix())
+    return sorted(rel_paths)
 
 
 def without_removed_edges(edges: Iterable[GraphItem], removed_node_ids: set[str]) -> list[GraphItem]:
@@ -204,7 +212,7 @@ def sort_edges(edges: list[GraphItem]) -> list[GraphItem]:
     return sorted(edges, key=edge_key)
 
 
-def sync_map(map_obj: JsonObject, docs_filenames: list[str]) -> tuple[JsonObject, dict[str, Any]]:
+def sync_map(map_obj: JsonObject, docs_rel_paths: list[str]) -> tuple[JsonObject, dict[str, Any]]:
     metadata = map_obj.get("metadata")
     if not isinstance(metadata, dict):
         metadata = {}
@@ -231,27 +239,27 @@ def sync_map(map_obj: JsonObject, docs_filenames: list[str]) -> tuple[JsonObject
         else:
             keep_other_nodes.append(node)
 
-    existing_by_filename: dict[str, GraphItem] = {}
+    existing_by_rel_path: dict[str, GraphItem] = {}
     for node in knowgrph_doc_nodes:
-        filename = get_node_filename(node)
-        if filename:
-            existing_by_filename[filename] = node
+        doc_rel_path = get_node_doc_rel_path(node)
+        if doc_rel_path:
+            existing_by_rel_path[doc_rel_path] = node
 
-    desired_set = set(docs_filenames)
-    existing_set = set(existing_by_filename.keys())
+    desired_set = set(docs_rel_paths)
+    existing_set = set(existing_by_rel_path.keys())
     to_add = sorted(desired_set - existing_set)
     to_remove = sorted(existing_set - desired_set)
     to_keep = sorted(desired_set & existing_set)
 
     updated_doc_nodes: list[GraphItem] = []
-    for filename in to_keep:
-        updated_doc_nodes.append(upsert_document_node(existing_by_filename.get(filename), filename))
-    for filename in to_add:
-        updated_doc_nodes.append(upsert_document_node(None, filename))
+    for doc_rel_path in to_keep:
+        updated_doc_nodes.append(upsert_document_node(existing_by_rel_path.get(doc_rel_path), doc_rel_path))
+    for doc_rel_path in to_add:
+        updated_doc_nodes.append(upsert_document_node(None, doc_rel_path))
 
     removed_node_ids: set[str] = set()
-    for filename in to_remove:
-        node = existing_by_filename.get(filename)
+    for doc_rel_path in to_remove:
+        node = existing_by_rel_path.get(doc_rel_path)
         if node and isinstance(node.get("@id"), str):
             removed_node_ids.add(node["@id"])
 
@@ -261,13 +269,13 @@ def sync_map(map_obj: JsonObject, docs_filenames: list[str]) -> tuple[JsonObject
     updated_graph: list[GraphItem] = []
     updated_graph.extend(schema_nodes)
     updated_graph.extend(keep_other_nodes)
-    updated_graph.extend(sorted(updated_doc_nodes, key=lambda n: get_node_filename(n) or ""))
+    updated_graph.extend(sorted(updated_doc_nodes, key=lambda n: get_node_doc_rel_path(n) or ""))
     updated_graph.extend(updated_edges)
     updated_graph.extend(other_items)
 
     map_obj["@graph"] = updated_graph
     stats = {
-        "sourceFilesCount": len(docs_filenames),
+        "sourceFilesCount": len(docs_rel_paths),
         "existingDocNodesCount": len(existing_set),
         "addedDocNodesCount": len(to_add),
         "removedDocNodesCount": len(to_remove),
@@ -294,7 +302,7 @@ def main(argv: list[str]) -> int:
 
     original_text = map_file.read_text(encoding="utf-8")
     map_obj = json.loads(original_text)
-    docs_filenames = iter_doc_filenames(docs_dir)
+    docs_filenames = iter_doc_rel_paths(docs_dir)
 
     updated_obj, report = sync_map(map_obj, docs_filenames)
     updated_text = dump_json(updated_obj)

@@ -27,6 +27,12 @@ Commit-backed canonical home for workspace-wide directives that span multiple re
 - **Table cells**: MUST fill-up all cells in the table; FORBID empty/`-` cells.
 - **Migration rule**: keep shared directives here; do not recreate a live workspace-root `todo-log.md`.
 
+## 2026-06-13
+
+| Context | Intent | Directive | Module | Class/Object | Function/Method | Input | Output | Decision Logic | Next Step Recommendation | Updated Date |
+|--------|--------|-----------|--------|-----------------|-------|--------|----------------|--------------------------|--------------------------|--------------|
+| Recursive Knowgrph docs-map sync | Keep cross-repo schema artifacts aware of nested Knowgrph document families | Update the AgenticRAG sync owner to recurse through `knowgrph/docs/documents/**`, preserve relative paths for nested families such as `knowgrph-api-reference` and `knowgrph-mcp`, regenerate the docs map, and document that recursive-source contract in shared schema guidance. | `huijoohwee.github.io/{docs/documents/hjh-workspace-todo-log.md,schema/AgenticRAG/{sync_map.py,README.md,knowgrph-documents-map.graph.jsonld}}`, `knowgrph/{todo-log.md,docs/documents/**}` | Cross-repo docs sync contract | `iter_doc_rel_paths`, `get_node_doc_rel_path`, `sync_map.py --mode write` | Canonical docs tree with nested markdown/json documents | Refreshed docs map and shared recursive-source guidance | The sync artifact must be generated from the full canonical docs tree, not only top-level filenames, so nested PRD/TAD, API-reference, and companion docs never disappear from the shared graph. | Run `python3 huijoohwee.github.io/schema/AgenticRAG/sync_map.py --mode check` after future nested doc additions or folder reshapes. | 2026-06-13 |
+
 ## 2026-05-04
 
 | Context | Intent | Directive | Module | Class/Object | Function/Method | Input | Output | Decision Logic | Next Step Recommendation | Updated Date |

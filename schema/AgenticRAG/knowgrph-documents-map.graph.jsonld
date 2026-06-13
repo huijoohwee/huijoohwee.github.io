@@ -2358,22 +2358,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-stryfork-prd-tad",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-stryfork-prd-tad.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-stryfork-prd-tad.md"
-      },
-      "documentPath": "docs/documents/knowgrph-stryfork-prd-tad.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-strytree-prd-tad",
       "@type": "kg:Node",
       "labels": [

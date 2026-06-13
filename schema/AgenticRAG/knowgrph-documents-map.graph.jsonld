@@ -579,6 +579,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-artifact-media-storage-architecture",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-artifact-media-storage-architecture.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-artifact-media-storage-architecture.md"
+      },
+      "documentPath": "docs/documents/knowgrph-artifact-media-storage-architecture.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-backend-document",
       "@type": "kg:Node",
       "labels": [
@@ -769,6 +785,22 @@
         "relPath": "docs/documents/knowgrph-codex-goal-setup.md"
       },
       "documentPath": "docs/documents/knowgrph-codex-goal-setup.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-compute-integrity-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-compute-integrity-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-compute-integrity-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-compute-integrity-document.md",
       "language": "en-us"
     },
     {

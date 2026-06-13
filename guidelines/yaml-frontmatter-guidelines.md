@@ -307,3 +307,150 @@ widget_bundle:
 - Do not split one semantic Flow Editor driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.
 - Do not close frontmatter early and place `title`, renderer presets, `workflow_sections`, `socket_types`, or `flow:` in the Markdown body.
 - Do not keep parallel KGC reading sections in the body when the same node summaries can live on the frontmatter node records.
+
+
+## Runnable Demo Compliance
+
+Every `*-demo.md` file that uses `kgCanvas2dRenderer: "flowEditor"` must be runnable without any configuration outside the document itself. The following keys are required in the frontmatter:
+
+```yaml
+schema: "kgc-computing-flow/v1"
+kgWorkflowManagerModeEnabled: true
+kgAutoSaveEnabled: true
+kgAutoSaveDebounceMs: 1500
+kgAutoSaveOn: ["nodeEdit", "runComplete", "approval", "assetReady"]
+```
+
+### Diagram kinds and rendering surfaces
+
+The parser (`deriveFlowDiagramsWidgets`) reads every `flow_diagrams` entry. The rendering path depends on the diagram kind and declared routing keys:
+
+| Diagram type | `floatingPanelView` | `bottomPanelTab` | FloatingPanel | BottomPanel | RichMediaPanel in canvas |
+|---|---|---|---|---|---|
+| `mermaid_architecture` | `"architecture"` | `"architecture"` | row list (`renderMode="list"`) | chart (`renderMode="diagram"`) | **skipped** when routing keys set |
+| `mermaid_eventmodeling` | `"eventModeling"` | `"eventModeling"` | row list (`renderMode="list"`) | chart (`renderMode="diagram"`) | **skipped** when routing keys set |
+| `mermaid_flowchart` | `"flowchart"` | `"flowchart"` | row list (node/edge terms) | chart (node topology) | **skipped** when routing keys set |
+| `mermaid_gitgraph` | `"gitGraph"` | `"gitGraph"` | row list | chart | **skipped** when routing keys set |
+| `mermaid_gantt` | `"gantt"` | `"gantt"` | row list | chart | **skipped** when routing keys set |
+| `mermaid_timeline` | `"timeline"` | `"timeline"` | row list | chart | **skipped** when routing keys set |
+| any type (no routing keys) | — | — | — | — | ✓ always derived |
+
+**Universal rule**: when both `floatingPanelView` AND `bottomPanelTab` are declared on a `flow_diagrams` entry, the parser skips ALL derived canvas nodes (source, compute, panel) and ALL edges for that entry. The FloatingPanel and BottomPanel read directly from the raw frontmatter YAML text via `useMermaidStructuredDiagramDocument` — no canvas nodes needed.
+
+Without routing keys, the standard derivation always applies: `FlowDiagramSource → TextGeneration → RichMediaPanel`.
+
+**There are no exceptions by diagram kind** — the skip is purely a function of whether routing keys are declared.
+
+### Required routing keys on each typed `flow_diagrams` entry
+
+```yaml
+flow_diagrams:
+  value:
+    my_diagram:
+      type: mermaid_architecture        # or mermaid_eventmodeling / mermaid_flowchart / mermaid_gitgraph / mermaid_gantt
+      floatingPanelView: "architecture" # exact string from FloatingPanelView type
+      floatingPanelOpen: true           # open FloatingPanel on load
+      bottomPanelTab: "architecture"    # exact string from BottomSurfaceTab type
+      bottomPanelOpen: true             # open BottomPanel on load
+      value: |-
+        architecture-beta
+        ...
+```
+
+These strings must exactly match the `BottomSurfaceTab` and `FloatingPanelView` union types in `src/hooks/store/store-types/core.ts` and `graph-state-chat-import.ts`.
+
+The routing key contract applies to ALL diagram types — there are no kind-specific exceptions.
+
+### Doc-level panel open keys
+
+Declare which panel is open when the document loads:
+
+```yaml
+kgBottomPanelOpen: true
+kgBottomPanelTab: "eventModeling"   # the most informative diagram type
+kgFloatingPanelOpen: true
+kgFloatingPanelView: "eventModeling"
+```
+
+### Prohibition: stale pre-authored `flow-diagram-*` nodes
+
+Never commit `flow-diagram-{key}-source`, `flow-diagram-{key}-compute`, or `flow-diagram-{key}-panel` nodes to the `flow:` block. The parser's `appendNodeIfMissing` check means a pre-authored node permanently blocks re-derivation, bypassing the `routedToPanelSurfaces` skip logic and causing typed diagrams to appear in the canvas or Rich Media Panel path.
+
+The parser derives all `flow-diagram-*` nodes at load time from the `flow_diagrams:` frontmatter entries. The `flow:` block must not contain them.
+
+### Image and video Rich Media Panel typing
+
+Image and video output nodes must use typed fields:
+
+```yaml
+- id: panel_image_output
+  type: RichMediaPanel
+  media_type: image
+  replayWithoutLlm: true
+  imageAssetUrl: {key: imageAssetUrl, type: image_url, value: "https://..."}
+
+- id: panel_video_output
+  type: RichMediaPanel
+  media_type: video
+  replayWithoutLlm: true
+  videoUrl: {key: videoUrl, type: video_url, value: "https://..."}
+```
+
+### Enforcement
+
+| Layer | What it checks | Trigger |
+|---|---|---|
+| `doc:sanity` `checkRunnableFlowEditorDemoCompliance` | Required template keys, routing keys per diagram entry | Every `prebuild` |
+| `test:ci` `testFlowEditorDemoRunnableStructure` | InputWidget, compute nodes, typed panel handles, routing keys | Every CI run |
+| `test:ci` `testMarkdownFrontmatterFlowGraphPublishedAgenticCanvasOsDemoArchitectureAndEventModeling` | Routing keys present; no derived panel for routed entries | Every CI run |
+| Kiro hook `runnable-demo-compliance-check` | Runs `doc:sanity` on every `*-demo.md` save | File save |
+
+Run manually from `knowgrph/canvas/`:
+
+```bash
+npm run doc:sanity
+```
+
+## Compute Integrity
+
+Every compute function must produce correct, deterministic output from its declared input values.
+
+### Forbidden: `* 1000` scaling multipliers
+
+Input fields store real dollar amounts. No secondary scaling:
+
+```js
+// FORBIDDEN — legacy thousands-scale convention
+const rev0 = rn('input_initial_revenue', 42) * 1000;
+const thr  = mt * 1000;
+
+// CORRECT — read dollar value directly
+const rev0 = rn('input_initial_revenue', 420000);
+const thr  = mt;
+```
+
+### Forbidden: stale frozen materialized output
+
+Commit output fields in idle state (empty) or exactly matching a fresh compute run. Forbidden:
+
+- `run_status: "done"` with frozen markdown `output` from a prior run with different inputs
+- Hardcoded inflated values: `$150,529,352`, `$350,000,000`, `$360,944,612`, `$1,061,546 at 37%`
+
+Correct idle state:
+
+```yaml
+output: {key: output, type: markdown, value: ""}
+imageUrl: {key: imageUrl, type: svg_data_uri, value: ""}
+outputSrcDoc: {key: outputSrcDoc, type: html_srcdoc, value: ""}
+run_status: {key: run_status, type: string, value: "idle"}
+```
+
+### Enforcement
+
+| Layer | What it checks | Trigger |
+|---|---|---|
+| `doc:sanity` `checkComputeIntegrity` | `* 1000` bugs, inflated values, frozen `run_status:done` | Every `prebuild` |
+| `test:ci` `testFlowEditorComputeIntegrity` | Same as above | Every CI run |
+| Kiro hook | Runs `doc:sanity` on every `*-demo.md` save | File save |
+
+See `knowgrph/docs/documents/knowgrph-compute-integrity-document.md` for the full parser logic, routing key contract, diagram kinds table, and companion source file references.

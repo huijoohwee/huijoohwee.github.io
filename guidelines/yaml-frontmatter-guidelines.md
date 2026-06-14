@@ -33,6 +33,9 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 - Keep one frontmatter block per Markdown document. Do not close frontmatter, place metadata in the body, and reopen or mirror schema-bearing YAML later in the file.
 - Flow Editor graph topology, node metadata, renderer presets, workflow sections, and KGC-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
 - Use node-owned fields such as `kgc:readingSummary` for concise machine-readable node summaries in normalized fixtures. Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` sections to mirror frontmatter.
+- Runnable demo documents that need parser/routing portability should include `kgParserRoutingContract` in opening frontmatter. The contract names parser logic, routing keys, diagram kinds, render surfaces, edge policy, and fork policy in one source-owned block.
+- `kgParserRoutingContract.routingKeys` must point to existing canonical keys such as `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, and `kgStrybldrStoryboard`. Do not add duplicate aliases for the same runtime concept.
+- `kgParserRoutingContract.edgePolicy` and `kgParserRoutingContract.forkPolicy` must preserve authored topology. A document may declare edges through `flow.edges`, workflow edges, Mermaid diagrams, or Strybldr storyboard payloads, but it must not mirror those same edges in body prose as a second machine-readable graph.
 
 ## Context-Intent-Directive
 
@@ -47,6 +50,7 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 | SuperAgent Harness | Preserve harness metadata without renderer drift | - [ ] Keep `superagent_harness_template` / `superagent_harness_demo` as metadata unless nodes are explicitly authored under `flow:`; forbid second parser, renderer, provider, memory, or graph apply owners |
 | MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic KGC backfill or renderer-local graph patches |
 | Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for Flow Editor topology |
+| Parser Routing | Keep diagram and workflow dispatch source-owned | - [ ] Declare parser routing keys, diagram kinds, surfaces, edges, and fork policy in `kgParserRoutingContract`; forbid renderer-local aliases, stale routing carryover, and body-side topology mirrors |
 
 ## Architecture Overview
 

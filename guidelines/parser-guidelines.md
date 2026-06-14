@@ -25,6 +25,16 @@ frontmatter_contract: "required"
 - Parser repair is a recovery path only; malformed YAML still represents invalid source that should be corrected upstream.
 - Scalars containing reserved punctuation must be quoted so strict YAML parsing stays deterministic across ingestion paths.
 
+## Knowgrph Parser Routing Contract
+
+- Runtime-ready demo documents should declare `kgParserRoutingContract.version: "knowgrph-parser-routing/v1"` in opening frontmatter when they are intended to drive Canvas routing.
+- Parser logic is source-owned: opening frontmatter, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, `kgStrybldrStoryboard`, and authored workflow payloads are the canonical inputs; renderers must not infer replacement graph keys from filenames, labels, body mirrors, or prior UI state.
+- Routing keys remain neutral and explicit: `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `kgMultiDimTableModeEnabled`, and `kgDocumentStructureBaselineLock`.
+- Supported diagram kinds are declared as data, not renderer code paths: `mermaid_flowchart`, `mermaid_gitgraph`, `mermaid_architecture`, `mermaid_eventmodeling`, `mermaid_gantt`, `frontmatter_flow`, and `strybldr_storyboard`.
+- Supported surfaces are projections over the same parsed graph authority: `2D Renderer: Flow Editor`, `2D Renderer: Storyboard`, and BottomPanel/FloatingPanel Mermaid panels.
+- Edge policy: explicit `graphData.edges`, `flow.edges`, `workflow.edges`, and diagram edges are the SSOT. Renderers may filter visible connectors but must not synthesize conflicting topology, remap legacy edge labels, or hide fork/publish edges declared by source metadata.
+- Fork policy: fork, branch, candidate, approval, review, and publish metadata remain authored fields and must surface through parsed graph nodes/edges without downstream alias stacking.
+
 ---
 
 ## Document Parsing

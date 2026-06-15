@@ -1060,6 +1060,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-chat-skill-release-note-20260615",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-chat-skill-release-note-20260615.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-chat-skill-release-note-20260615.md"
+      },
+      "documentPath": "docs/documents/knowgrph-chat-skill-release-note-20260615.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-cloudflare-document",
       "@type": "kg:Node",
       "labels": [

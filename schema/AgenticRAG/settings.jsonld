@@ -100,11 +100,11 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "Controls how Canvas→Graph Data Table and GraphTableDb sync occurs. `manual` (default) disables automatic sync and surfaces a single “Sync now” action; `realtime` enables revision+viewKey-gated auto sync that uses structure-only revisions in static interaction mode and full graph revisions in interactive mode, avoiding loops and background churn.",
+          "@value": "Controls how Canvas→Graph Data Table and GraphRecordDb sync occurs. `manual` (default) disables automatic sync and surfaces a single “Sync now” action; `realtime` enables revision+viewKey-gated auto sync that uses structure-only revisions in static interaction mode and full graph revisions in interactive mode, avoiding loops and background churn.",
           "@language": "en-us"
         },
         {
-          "@value": "控制 Canvas→图数据表与 GraphTableDb 的同步方式。`manual`（默认）禁用自动同步，仅提供一次性的“Sync now” 操作；`realtime` 启用基于修订号与 viewKey 的自动同步：在 static 交互模式下仅使用结构修订，在 interactive 模式下使用完整图修订，从而避免循环与后台抖动。",
+          "@value": "控制 Canvas→图数据表与 GraphRecordDb 的同步方式。`manual`（默认）禁用自动同步，仅提供一次性的“Sync now” 操作；`realtime` 启用基于修订号与 viewKey 的自动同步：在 static 交互模式下仅使用结构修订，在 interactive 模式下使用完整图修订，从而避免循环与后台抖动。",
           "@language": "zh-cn"
         }
       ],

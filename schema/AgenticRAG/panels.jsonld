@@ -120,11 +120,11 @@
     ],
     "toolbarCanvasInteractionAndSyncModes": [
       {
-        "@value": "Toolbar includes Canvas Interaction Mode and Workspace Sync Mode toggle buttons adjacent to the Document Mode control. These toggles are thin shells over shared SSOT settings (`infiniteCanvasInteractionMode∈{static,interactive}`, `canvasWorkspaceSyncMode∈{manual,realtime}`) used by MainPanel Settings and the Interaction panel. Static interaction mode runs 2D D3 force layout to a bounded stable state and then freezes simulation, forwarding rich-media/markdown overlay wheel/pan to the canvas so pan/zoom remain primary and Graph Data Table/GraphTableDb treat position-only updates as non-syncing metadata; Interactive keeps D3 forces running and enables full overlay interactivity while still using the same GraphData/layout keys and revision-gated sync. Manual sync disables automatic GraphTableDb sync from Canvas and exposes a single 'Sync now' action in the Graph Table header; Real-time enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) using structure-only revisions in static mode and full graph revisions in interactive mode, deduped via last-write/last-sync gates. Panel UI must not introduce alternate interaction/sync flags; Toolbar buttons and Settings must always remain in lockstep.",
+        "@value": "Toolbar includes Canvas Interaction Mode and Workspace Sync Mode toggle buttons adjacent to the Document Mode control. These toggles are thin shells over shared SSOT settings (`infiniteCanvasInteractionMode∈{static,interactive}`, `canvasWorkspaceSyncMode∈{manual,realtime}`) used by MainPanel Settings and the Interaction panel. Static interaction mode runs 2D D3 force layout to a bounded stable state and then freezes simulation, forwarding rich-media/markdown overlay wheel/pan to the canvas so pan/zoom remain primary and Graph Data Table/GraphRecordDb treat position-only updates as non-syncing metadata; Interactive keeps D3 forces running and enables full overlay interactivity while still using the same GraphData/layout keys and revision-gated sync. Manual sync disables automatic GraphRecordDb sync from Canvas and exposes a single 'Sync now' action in the Graph Table header; Real-time enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) using structure-only revisions in static mode and full graph revisions in interactive mode, deduped via last-write/last-sync gates. Panel UI must not introduce alternate interaction/sync flags; Toolbar buttons and Settings must always remain in lockstep.",
         "@language": "en-us"
       },
       {
-        "@value": "Toolbar 在 Document Mode 控件旁边包含 Canvas Interaction Mode 与 Workspace Sync Mode 开关按钮。这些开关只是共享 SSOT 设置（`infiniteCanvasInteractionMode∈{static,interactive}`、`canvasWorkspaceSyncMode∈{manual,realtime}`）的轻量外壳，与 MainPanel Settings 与 Interaction 面板共用。static 交互模式会将 2D D3 力导向布局运行到有界稳定状态后冻结模拟，并将富媒体/Markdown 覆盖层的滚轮/平移事件转发给画布，使平移/缩放保持为主交互，并让 Graph Data Table/GraphTableDb 将纯位置更新视为“非同步元数据”；interactive 模式则保持 D3 力导向布局持续运行，并启用完整覆盖层交互，同时仍复用相同的 GraphData/布局 key 与基于修订号的同步。manual 同步模式禁用从 Canvas 到 GraphTableDb 的自动同步，仅在 Graph Table 表头提供一次性的“Sync now” 操作；realtime 模式则启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步：在 static 模式下仅使用结构修订，在 interactive 模式下使用完整图修订，并通过 last-write/last-sync 门控去重。面板 UI 不得引入平行的交互/同步标志；Toolbar 按钮与 Settings 必须始终保持一致。",
+        "@value": "Toolbar 在 Document Mode 控件旁边包含 Canvas Interaction Mode 与 Workspace Sync Mode 开关按钮。这些开关只是共享 SSOT 设置（`infiniteCanvasInteractionMode∈{static,interactive}`、`canvasWorkspaceSyncMode∈{manual,realtime}`）的轻量外壳，与 MainPanel Settings 与 Interaction 面板共用。static 交互模式会将 2D D3 力导向布局运行到有界稳定状态后冻结模拟，并将富媒体/Markdown 覆盖层的滚轮/平移事件转发给画布，使平移/缩放保持为主交互，并让 Graph Data Table/GraphRecordDb 将纯位置更新视为“非同步元数据”；interactive 模式则保持 D3 力导向布局持续运行，并启用完整覆盖层交互，同时仍复用相同的 GraphData/布局 key 与基于修订号的同步。manual 同步模式禁用从 Canvas 到 GraphRecordDb 的自动同步，仅在 Graph Table 表头提供一次性的“Sync now” 操作；realtime 模式则启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步：在 static 模式下仅使用结构修订，在 interactive 模式下使用完整图修订，并通过 last-write/last-sync 门控去重。面板 UI 不得引入平行的交互/同步标志；Toolbar 按钮与 Settings 必须始终保持一致。",
         "@language": "zh-cn"
       }
     ],
@@ -165,6 +165,16 @@
       },
       {
         "@value": "Floating Panel 必须从单一壳层元数据路径推导视图按钮、共享 header 状态 chips、全高正文规则与仅 renderer 可见的 header 动作；宽度需受 viewport 约束、header/状态行需可换行、只挂载当前激活视图并禁止逐视图壳层漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelMediaStorageSync": [
+      {
+        "@value": "FloatingPanel Media is the shared catalog for uploaded and AI/LLM-generated image/audio/video. Upload Media and card-field `@ Upload Media` must reuse one upload helper and one inventory builder, then insert a typography-preserving inline media chip. Cloudflare persistence is split by service: R2 stores binary blobs, D1 stores asset metadata and provenance, KV stores short-lived access URL cache entries only when bound, and Durable Objects store collaboration room sync notifications.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "FloatingPanel Media 是上传媒体与 AI/LLM 生成的图片、音频、视频的共享目录。Upload Media 与卡片字段中的 `@ Upload Media` 必须复用同一个上传 helper 与同一个 inventory builder，并插入不改变周围排版的内联媒体 chip。Cloudflare 持久化按服务拆分：R2 保存二进制 blob，D1 保存资产元数据与 provenance，KV 仅在绑定时保存短期访问 URL 缓存，Durable Objects 保存协作 room 同步通知。",
         "@language": "zh-cn"
       }
     ],

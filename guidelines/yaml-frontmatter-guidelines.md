@@ -36,6 +36,7 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 - Runnable demo documents that need parser/routing portability should include `kgParserRoutingContract` in opening frontmatter. The contract names parser logic, routing keys, diagram kinds, render surfaces, edge policy, and fork policy in one source-owned block.
 - `kgParserRoutingContract.routingKeys` must point to existing canonical keys such as `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, and `kgStrybldrStoryboard`. Do not add duplicate aliases for the same runtime concept.
 - `kgParserRoutingContract.edgePolicy` and `kgParserRoutingContract.forkPolicy` must preserve authored topology. A document may declare edges through `flow.edges`, workflow edges, Mermaid diagrams, or Strybldr storyboard payloads, but it must not mirror those same edges in body prose as a second machine-readable graph.
+- Storyboard-facing documents must keep renderer identity canonical as `kgCanvas2dRenderer: "storyboard"` while relying on shared Flow Editor toolbar helpers and shared Workspace/Kanban data-view utility owners at runtime; do not encode renderer-local utility forks or alias renderers in frontmatter.
 
 ## Context-Intent-Directive
 
@@ -51,6 +52,7 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 | MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic KGC backfill or renderer-local graph patches |
 | Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for Flow Editor topology |
 | Parser Routing | Keep diagram and workflow dispatch source-owned | - [ ] Declare parser routing keys, diagram kinds, surfaces, edges, and fork policy in `kgParserRoutingContract`; forbid renderer-local aliases, stale routing carryover, and body-side topology mirrors |
+| Storyboard / Workspace Reuse | Keep shared utility ownership neutral | - [ ] Keep Storyboard frontmatter on canonical `storyboard`; reuse shared toolbar and Workspace/Kanban utility owners at runtime; forbid alias renderers or frontmatter-local utility forks |
 
 ## Architecture Overview
 
@@ -145,6 +147,21 @@ Animatic authoring contract:
 - Reuse the same canonical Markdown YAML syntax as Flow Editor: `flow:` remains the graph authoring surface.
 - Optional timeline timing lives beside that shared graph contract under `timeline.beats.*`.
 - Do not introduce a parallel animatic-only body syntax or renderer-specific frontmatter alias block.
+
+Storyboard / Strybldr / Frontmatter Mode:
+
+```yaml
+kgCanvasSurfaceMode: "2d"
+kgCanvasRenderMode: "2d"
+kgCanvas2dRenderer: "storyboard"
+kgDocumentSemanticMode: "document"
+kgFrontmatterModeEnabled: true
+kgMultiDimTableModeEnabled: false
+kgDocumentStructureBaselineLock: false
+```
+
+- Storyboard cards may project graph-backed fields differently, but toolbar/data-view affordances still reuse shared Flow Editor and Workspace/Kanban utility owners at runtime.
+- Do not replace `storyboard` with `strybldr` or introduce alternate frontmatter aliases for the same surface.
 
 3D surface / Document Mode:
 

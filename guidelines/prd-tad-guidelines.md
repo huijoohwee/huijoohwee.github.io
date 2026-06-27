@@ -1,8 +1,8 @@
 ---
 title: "PRD & TAD Guidelines"
 doc_type: "Guidelines"
-version: "1.1.0"
-date: "2026-06-09"
+version: "1.2.0"
+date: "2026-06-24"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -13,7 +13,7 @@ frontmatter_contract: "required"
 
 - **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
 - **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent.
-- **Project-/file-agnostic**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
+- **Agnosticism**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 
 ## Module Index
@@ -24,7 +24,8 @@ frontmatter_contract: "required"
 - `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
 - `from-0-to-1-prd--tad-creation-process` — phase-gated authoring process
-- `flow-patterns` — user journey, workflow, and data flow templates
+- `flow-patterns` — user journey, workflow, data flow, orchestration/harness flow, and topology templates
+- `time-to-value` — first-success latency gate, metric, and template (Phase 0 gate + PRD metric)
 - `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive
 - `cid-directive-matrix` — alphabetical, project-agnostic directive mantras
 - `core-templates` — PRD, TAD, and ADR templates
@@ -147,8 +148,9 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 5. Gain stakeholder alignment on problem scope
 6. Run a preliminary **ROI score** and **TCO estimate**; confirm problem is worth solving at projected cost
 7. Identify whether the solution requires an AI harness, FOSS tools, or proprietary APIs — flag any dependency with non-zero egress or token cost
+8. Estimate **time-to-value (TTV)**: count the minimum steps a target persona must complete from zero state (prerequisites installed, no configuration done) to first successful outcome; set an acceptable TTV ceiling before Phase 1 begins; flag if TTV exceeds threshold
 
-**Gate**: proceed only when problem is validated, scoped, and ROI-positive at estimated TCO.
+**Gate**: proceed only when problem is validated, scoped, ROI-positive at estimated TCO, and TTV is within acceptable ceiling.
 
 ### Phase 1 — PRD Authoring
 **Translate validated problems into structured requirements.**
@@ -159,7 +161,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 4. Decompose epics into user stories (As a… I want… So that…)
 5. Write Given-When-Then acceptance criteria per story
 6. Apply MoSCoW prioritization to feature set **with explicit ROI score and TCO estimate per feature**; use **min-viable-max-value** framing — default to the smallest scope delivering the highest impact
-7. Define success metrics: baseline → target → timeline; include **token cost / month** and **monthly TCO** as first-class metrics for any AI-powered feature
+7. Define success metrics: baseline → target → timeline; include **token cost / month**, **monthly TCO**, and **time-to-value (TTV)** as first-class metrics for any AI-powered feature
 8. Enumerate scope boundaries and explicit exclusions
 9. Log open questions and unresolved assumptions
 10. Flag every dependency: FOSS, zero-TCO, or justify proprietary selection inline
@@ -174,13 +176,15 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 3. Map data flows: source → transform → store → consume
 4. Specify integration contracts: protocol, payload schema, error handling
 5. Map user workflows to system sequence diagrams
-6. Document architectural decisions with ADR format; **every ADR must include a TCO comparison and FOSS-first evaluation**
-7. Define quality attribute scenarios: performance, security, scalability, observability, **token cost, TCO**
-8. Design AI-powered components as **harnesses** (typed input schema → model call → typed output schema → cost log); specify the orchestration topology (sequential / fan-out / agentic loop) and **max-iteration bound** for every loop
-9. Estimate **token budget per pipeline**: average prompt tokens + completion tokens + cache hit rate at target load; flag pipelines exceeding budget threshold
-10. Plan deployment strategy and migration path; default to zero-egress infrastructure
-11. Render architecture diagrams (Mermaid); compile component inventory table
-12. Derive Verifiable Completion Conditions (VCCs) from acceptance criteria — each criterion must be expressible as a condition an autonomous agent can evaluate from its own surfaced output
+6. Map **Orchestration/Harness Flow** for every AI-powered pipeline: define dispatcher, executor, observer, and consumer roles; specify routing logic, max-iteration bound, and circuit-breaker condition
+7. Map **Topology**: enumerate all runtime components, their connection types (sync/async/stream), trust boundaries, and data residency for the deployed system
+8. Document architectural decisions with ADR format; **every ADR must include a TCO comparison and FOSS-first evaluation**
+9. Define quality attribute scenarios: performance, security, scalability, observability, **token cost, TCO**
+10. Design AI-powered components as **harnesses** (typed input schema → model call → typed output schema → cost log); specify the orchestration topology (sequential / fan-out / agentic loop) and **max-iteration bound** for every loop
+11. Estimate **token budget per pipeline**: average prompt tokens + completion tokens + cache hit rate at target load; flag pipelines exceeding budget threshold
+12. Plan deployment strategy and migration path; default to zero-egress infrastructure
+13. Render architecture diagrams (Mermaid); compile component inventory table
+14. Derive Verifiable Completion Conditions (VCCs) from acceptance criteria — each criterion must be expressible as a condition an autonomous agent can evaluate from its own surfaced output
 
 **Gate**: product manager validates TAD preserves user value **and** ROI/TCO envelope before Phase 3.
 
@@ -190,10 +194,11 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 1. Establish bidirectional traceability: `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 2. Confirm no implementation detail in PRD; no business logic in TAD
 3. QA validates all acceptance criteria are testable **and expressible as VCCs** — each criterion must have a stated check the agent can surface in its own output (exit code, file count, test result, queue state)
-4. Stakeholders approve scope and success metrics; **confirm token budget and TCO are within acceptable envelope**
+4. Stakeholders approve scope and success metrics; **confirm token budget, TCO, and TTV target are within acceptable envelope**
 5. Verify every AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
-6. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
-7. Resolve or formally track all open questions
+6. Confirm Topology diagram is present and data residency is stated for every storage node
+7. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
+8. Resolve or formally track all open questions
 
 **Gate**: both documents version-stamped and baselined before implementation begins.
 
@@ -212,7 +217,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 
 ## Flow Patterns
 
-Three canonical flow types bridge user intent (PRD) to system behavior (TAD). Every feature must trace through all three.
+Five canonical flow types bridge user intent (PRD) to system behavior (TAD). Every feature must trace through all five.
 
 ### User Journey Flow
 **Maps how a persona moves from trigger to outcome across system touchpoints.**
@@ -295,6 +300,119 @@ Source → [Ingest] → [Transform] → [Store] → [Serve] → Consumer
 - Specify data schema at every stage boundary; forbid undocumented format transitions
 - Document persistence layer and retention policy for every Store stage
 - Map every TAD data flow to a PRD user journey stage; forbid orphaned data flows
+
+### Time-to-Value (TTV)
+**Measures the minimum number of steps and elapsed time for a target persona to move from zero state to first successful outcome.**
+
+TTV is not a flow diagram — it is a gate metric that governs all five flows. It is estimated in Phase 0, stated as a target in PRD success metrics, and validated by tracing the shortest possible path through the User Journey Flow, Work Flow, and Orchestration/Harness Flow end-to-end.
+
+```
+T₀ (zero state: prerequisites only, no config) → T₁ (install / configure) → T₂ (first input) → T✓ (first successful outcome)
+
+TTV = T✓ − T₀   (elapsed clock time for target persona)
+TTV steps = count of distinct manual actions between T₀ and T✓
+```
+
+**TTV Template** *(recorded in PRD success metrics)*:
+```markdown
+## Time-to-Value: [Feature / Product]
+
+| Dimension          | Estimate      | Target ceiling | Validation method          |
+|--------------------|---------------|----------------|----------------------------|
+| TTV steps          | [N steps]     | [≤ N steps]    | Walk-through on clean env  |
+| TTV elapsed time   | [N min]       | [≤ N min]      | Timed first-run test       |
+| First-value action | [Description] | —              | Observable output defined  |
+| Persona            | [ID]          | —              | Persona defined in PRD     |
+```
+
+**Directives**:
+- Estimate TTV steps and elapsed time in Phase 0 before writing any PRD story; flag if TTV exceeds the acceptable ceiling
+- Include TTV as a named row in PRD success metrics; forbid success metric tables without a TTV entry for any user-facing feature
+- Validate TTV on a clean environment before Phase 3 sign-off; forbid TTV estimates that have never been walked through
+- Reduce TTV by shortening the Orchestration/Harness Flow (fewer required inputs before first output) and the Topology (fewer required services before first run); forbid TTV reductions that compromise security or data integrity
+
+### Orchestration/Harness Flow
+**Maps how an agent harness routes, dispatches, executes, and observes AI calls through a pipeline.**
+
+Distinct from Workflow (task-actor sequencing) and Data Flow (data movement): Orchestration/Harness Flow traces the *control path* — how inputs are validated, which executor handles them, how outputs are verified, and how cost is observed.
+
+```
+Trigger → [Harness: validate input] → [Dispatcher/Router] → [Executor: model call] → [Harness: validate output + emit cost log] → [Consumer] ↘ [Observer/Logger]
+```
+
+**Orchestration/Harness Flow Template**:
+```markdown
+## Orchestration/Harness Flow: [Pipeline Name]
+
+**Trigger**: [Event or condition initiating the pipeline]
+**Topology pattern**: [Sequential | Fan-out/Fan-in | Agentic loop]
+**Max iterations** *(loops only)*: [N] | **Circuit-breaker**: [exit condition]
+**Token budget**: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/call]
+
+| Role       | Component          | Input schema        | Output schema       | Cost log emitted | Fallback                    |
+|------------|--------------------|---------------------|---------------------|------------------|-----------------------------|
+| Dispatcher | [Component]        | [Typed payload]     | [Routed payload]    | —                | [Reject with typed error]   |
+| Executor   | [Harness + model]  | [Typed prompt]      | [Typed response]    | ✓ (required)     | [Degraded mode / retry / upstream error] |
+| Observer   | [Logger / monitor] | [Cost log stream]   | [Metric / alert]    | —                | [Silent fail; log gap]      |
+| Consumer   | [Downstream]       | [Typed response]    | [Artifact / state]  | —                | [Upstream error propagation]|
+```
+
+**Happy path** *(inline after table)*:
+1. Trigger fires → Dispatcher validates input schema → routes to Executor
+2. Executor calls model → Harness validates output schema → emits cost log
+3. Observer records cost log → Consumer receives typed output
+4. If loop: evaluate exit condition; if not met and iterations < max → repeat from step 1
+
+**Alternate paths**:
+- Input schema invalid: Dispatcher rejects before token spend; returns typed error upstream
+- Output schema invalid: Harness retries up to N; escalates to fallback after max retries
+- Max iterations reached without meeting circuit-breaker: exit with partial result; surface iteration-limit error
+
+**Error paths**:
+- Model API unavailable: Executor fallback activates; degraded response or upstream error propagated
+- Cost log emission fails: Observer silent-fails; pipeline continues; gap flagged in monitoring
+
+**Postconditions**: cost log persisted; typed output delivered to Consumer or typed error returned; no unbounded token spend
+
+**Directives**:
+- Document an Orchestration/Harness Flow for every AI-powered pipeline before implementation; forbid AI pipelines with no flow spec
+- Every Executor role must emit a cost log entry per call; forbid Executor nodes with no cost log field
+- Every agentic loop must state max iterations and a circuit-breaker condition in the flow template; forbid unbounded loops
+- Map every Orchestration/Harness Flow to its parent Workflow and its Data Flow; forbid orphaned harness flows with no journey anchor
+- Render Orchestration/Harness Flows with `sequenceDiagram` (multi-actor) or `flowchart LR` (single-path); use subgraphs to bound loop sections
+
+### Topology
+**Maps the structural connection and runtime placement of all components at a stated point in time.**
+
+Distinct from Orchestration/Harness Flow (execution sequence) and Data Flow (data movement): Topology is a *structural snapshot* — which components exist, where they run, how they connect, and where data lives.
+
+```
+[Boundary: runtime / zone / trust domain]
+  └─ [Node A: role · type] ──sync──▶ [Node B: role · type]
+                            ──async─▶ [Node C: role · type] ──▶ [Store D: persistence type · residency]
+```
+
+**Topology Template**:
+```markdown
+## Topology: [System Name] v[version] — [Date or milestone]
+
+**Boundaries**: [Runtime environments, network zones, or trust domains in scope]
+
+| Node        | Role                                         | Type                         | Connects to   | Connection type     | Data residency     |
+|-------------|----------------------------------------------|------------------------------|---------------|---------------------|--------------------|
+| [Component] | [Producer / Consumer / Router / Store / Gateway] | [Service / Function / DB / Queue / CDN] | [Node(s)] | [Sync REST / Async queue / Stream / Batch] | [Local / Region / Cloud provider] |
+
+**Runtime diagram**: [Mermaid `flowchart TB` — nodes grouped by boundary using subgraphs]
+**Version notes**: [What changed from prior topology version]
+```
+
+**Directives**:
+- Document topology for every system with ≥3 components; forbid undocumented multi-component connection maps
+- Name every connection type explicitly (sync REST, async queue, event stream, batch job); forbid implicit or unlabelled connections
+- State data residency for every storage node; forbid topology diagrams with unlocated data stores
+- Map every Topology node to a Component Specification in the TAD; forbid topology nodes without a corresponding TAD entry
+- Version-stamp every topology update; archive prior versions; forbid in-place overwrites without a version note
+- Render Topology with `flowchart TB` using subgraphs per boundary; forbid mixing topology with data flow or sequence diagrams
 
 ---
 
@@ -469,7 +587,9 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend); document in ADR; forbid uncosted architectural decisions |
 | Testability     | Enable verification                  | - [ ] Design for testing; enable verification; forbid untestable requirements                 |
 | Timelines       | Define delivery schedules            | - [ ] Set release dates; define timelines; forbid open-ended commitments                      |
+| Time-to-Value   | Minimise first-success latency       | - [ ] Estimate TTV steps and elapsed time in Phase 0; include TTV as a named success metric in every user-facing PRD; validate on a clean environment before Phase 3 sign-off; forbid TTV reductions that compromise security or data integrity |
 | Token Economics | Treat token spend as an engineering metric | - [ ] Estimate prompt + completion tokens per pipeline call; track cache hit rate; set cost-per-request budget; forbid pipelines without token budget estimates |
+| Topology        | Map structural component connections       | - [ ] Document runtime topology for systems with ≥3 components; name every connection type and data residency; version-stamp every topology change; forbid unlabelled connections or unlocated data stores |
 | Traceability    | Link requirements to implementation  | - [ ] Maintain requirement IDs; link specs; forbid orphaned specs                             |
 | Trade-offs      | Document decision factors            | - [ ] Analyze pros/cons; document trade-offs; forbid unexplored alternatives                  |
 | Uncertainty     | Acknowledge unknowns                 | - [ ] Flag assumptions; acknowledge uncertainty; forbid false certainty                       |
@@ -512,6 +632,8 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Metric | Baseline | Target | Timeline |
 |--------|----------|--------|----------|
 | [User metric] | | | |
+| Time-to-value (TTV steps) | [est.] | [≤ N steps] | |
+| Time-to-value (TTV elapsed) | [est.] | [≤ N min] | |
 | Token cost / month | [est.] | [budget] | |
 | Monthly TCO | [est.] | [budget] | |
 | ROI Score | — | [threshold] | [sprint] |
@@ -541,8 +663,39 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 **From [input] to [output]**: System → [component flow] → delivers [outcome]
 
 ### Journey → System Mapping
-| Journey Stage | Workflow        | Data Flow       | Component        |
-|---------------|-----------------|-----------------|------------------|
+| Journey Stage | Workflow        | Data Flow       | Orchestration/Harness Flow | Topology Node(s) | Component        |
+|---------------|-----------------|-----------------|---------------------------|------------------|------------------|
+
+### Topology
+**Version**: [N] — [Date or milestone]
+**Boundaries**: [Runtime environments, zones, or trust domains]
+
+| Node | Role | Type | Connects to | Connection type | Data residency |
+|------|------|------|-------------|----------------|----------------|
+| [Component] | [Producer/Consumer/Router/Store/Gateway] | [Service/Function/DB/Queue] | [Node(s)] | [Sync/Async/Stream] | [Local/Region/Cloud] |
+
+```mermaid
+flowchart TB
+  subgraph [Boundary name]
+    [NodeA]([Component A\nrole])
+    [NodeB]([Component B\nrole])
+  end
+  [NodeA] -- sync --> [NodeB]
+```
+
+### Orchestration/Harness Flows
+*(One block per AI-powered pipeline)*
+
+**Pipeline**: [Name]  
+**Topology pattern**: [Sequential | Fan-out/Fan-in | Agentic loop] | **Max iterations**: [N] | **Circuit-breaker**: [condition]  
+**Token budget**: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/call]
+
+| Role | Component | Input schema | Output schema | Cost log | Fallback |
+|------|-----------|-------------|--------------|----------|----------|
+| Dispatcher | [Component] | [Typed payload] | [Routed payload] | — | [Typed error] |
+| Executor | [Harness + model] | [Typed prompt] | [Typed response] | ✓ required | [Degraded / retry] |
+| Observer | [Logger] | [Cost log stream] | [Metric / alert] | — | [Silent fail] |
+| Consumer | [Downstream] | [Typed response] | [Artifact / state] | — | [Upstream error] |
 
 ### Component Specifications
 **Component**: [Name]
@@ -627,13 +780,15 @@ See ADR-[N] for each significant decision.
 
 **Mermaid is the mandatory diagram format.**
 
-| Diagram Type           | Mermaid Syntax              | When to Use                                      |
-|------------------------|-----------------------------|--------------------------------------------------|
-| Component topology     | `flowchart TB`              | System architecture, module relationships        |
-| Data flow / pipeline   | `flowchart LR`              | Linear stages, DAG pipelines                     |
-| User workflow          | `sequenceDiagram`           | Multi-actor flows, request/response, events      |
-| Parallel orchestration | `flowchart TB` + subgraphs  | Multi-agent, concurrent, multi-locale flows      |
-| Component inventory    | Markdown table              | Module inventory, status tracking, file mapping  |
+| Diagram Type               | Mermaid Syntax                | When to Use                                                  |
+|----------------------------|-------------------------------|--------------------------------------------------------------|
+| Component topology         | `flowchart TB`                | System architecture, module relationships                    |
+| Data flow / pipeline       | `flowchart LR`                | Linear stages, DAG pipelines                                 |
+| User workflow              | `sequenceDiagram`             | Multi-actor flows, request/response, events                  |
+| Parallel orchestration     | `flowchart TB` + subgraphs    | Multi-agent, concurrent, multi-locale flows                  |
+| Orchestration/Harness flow | `sequenceDiagram` or `flowchart LR` | AI pipeline routing, dispatcher→executor→observer→consumer chain, loop bounds |
+| Topology                   | `flowchart TB` + subgraphs per boundary | Runtime component map, connection types, trust boundaries, data residency |
+| Component inventory        | Markdown table                | Module inventory, status tracking, file mapping              |
 
 - Forbid ASCII art for any diagram exceeding 5 nodes
 - Every architecture diagram must be accompanied by a component inventory table
@@ -702,6 +857,15 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ Token cost treated as invisible or negligible; no prompt/completion budget per pipeline  
 → ✅ Token budget (prompt + completion + cache hit rate) estimated in TAD; actuals tracked each sprint and compared to estimates
 
+❌ Time-to-value not estimated in Phase 0; no TTV target in PRD success metrics; first-run path never walked through on a clean environment  
+→ ✅ TTV steps and elapsed time estimated in Phase 0; TTV stated as a named success metric in PRD; validated on a clean environment before Phase 3 sign-off
+
+❌ AI pipelines documented only as data flows or workflows; no named dispatcher, executor, observer, or consumer roles; no cost log field specified; no circuit-breaker for loops  
+→ ✅ Every AI pipeline has an Orchestration/Harness Flow with typed roles, cost log fields, fallback paths, and — for loops — a max-iteration bound and circuit-breaker condition
+
+❌ Multi-component systems with no topology diagram; connection types left implicit; storage nodes with no data residency stated; topology overwritten in place with no version note  
+→ ✅ Topology documented for every system with ≥3 components; every connection labelled (sync/async/stream); every storage node carries data residency; topology version-stamped on every change
+
 ---
 
 ## Validation Checklist
@@ -718,6 +882,10 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] **Token budget estimated** for every AI-powered pipeline: prompt tokens + completion tokens + cache hit rate at target load
 - [ ] **Monthly TCO estimated** for every dependency; FOSS-first decision recorded in ADR
 - [ ] **ROI score computed** for every Must/Should feature using `(impact × reach) / (build + TCO + token cost)`
+- [ ] **Time-to-value (TTV) estimated** in Phase 0 — steps and elapsed time recorded; TTV target stated as a named row in PRD success metrics for every user-facing feature
+- [ ] **Orchestration/Harness Flow documented** for every AI-powered pipeline: dispatcher, executor, observer, and consumer roles named; cost log fields specified; fallback paths defined
+- [ ] **Agentic loops** carry max-iteration bound and circuit-breaker condition in the Orchestration/Harness Flow template
+- [ ] **Topology documented** for every system with ≥3 components: all connection types labelled (sync/async/stream); data residency stated for every storage node; Mermaid `flowchart TB` with subgraphs per boundary present
 - [ ] Components have single responsibility; interfaces specified with explicit contracts
 - [ ] **AI components have harness contract**: typed input schema, typed output schema, cost log fields, fallback path
 - [ ] **Orchestration topology specified** for every AI pipeline: sequential / fan-out / agentic loop; max-iteration bound and circuit-breaker condition defined for loops
@@ -735,6 +903,8 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] Success metrics defined with baseline, target, and timeline
 - [ ] Quality attributes specified with measurable scenarios; **token cost and TCO attributes present for AI-powered components**
 - [ ] Open questions resolved or formally tracked
+- [ ] **TTV validated** on a clean environment (prerequisites only, no pre-configuration); actual steps and elapsed time recorded and compared to Phase 0 estimate
+- [ ] **Topology diagram reviewed**: all nodes map to TAD Component Specifications; no orphaned topology nodes; version note present
 - [ ] **Token budget actuals vs estimates reviewed** each sprint; projections updated on model pricing or traffic changes
 - [ ] **FOSS alternatives re-evaluated** if any dependency TCO crosses the 12-month justification threshold
 
@@ -765,7 +935,7 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 **"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
-- **Flow patterns anchor**: user journeys, workflows, and data flows connect abstract requirements to observable system behavior; every feature traces through all three
+- **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
 - **SVO clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
 - **VCC closes**: every acceptance criterion becomes an evaluable completion condition (mechanism-agnostic); the traceability chain extends from PRD through TAD to autonomous implementation verification

@@ -47,7 +47,8 @@
       "code-derived by default",
       "structural only",
       "no domain semantics",
-      "drift-resistant"
+      "drift-resistant",
+      "generated mirror artifacts"
     ],
     "lineRange": {
       "format": "relative/path.ts:L123; relative/path.tsx:L456",
@@ -56,7 +57,17 @@
     "overrideRules": [
       "Allow markdown documents to override placeholder text fields.",
       "Do not override code-derived modules/classes/functions by default."
-    ]
+    ],
+    "mirrorPolicy": {
+      "generatedArtifacts": [
+        "canvas/public/settings-flow.json",
+        "canvas/src/features/settings/settings-flow.schema.json"
+      ],
+      "publishMirror": "huijoohwee/knowgrph/settings-flow.json",
+      "rules": [
+        "Treat generated settings-flow outputs as canonical release artifacts.",
+        "Do not hand-edit publish-mirror copies downstream."
+      ]
+    }
   }
 }
-

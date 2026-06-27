@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.21",
+  "schemaVersion": "1.0.22",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -98,6 +98,46 @@
         "@language": "zh-cn"
       }
     ],
+    "timelineVideoSequencePanelSplit": [
+      {
+        "@value": "Video-sequence surfaces split by responsibility: `kgCanvas2dRenderer: \"media\"` previews rich media and playable sequence sources only; BottomPanel `Timeline` owns transport, playhead, cut/splice, selected-clip nudge/trim/snap/split editing, scopes, audio mix, and Mermaid Gantt writeback; FloatingPanel `Timeline` owns parsed row/list inspection only. Playback state must flow through shared timeline transport/controller owners, not panel-local store reads.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视频序列表面必须按职责拆分：`kgCanvas2dRenderer: \"media\"` 仅负责富媒体与可播放序列源的预览；BottomPanel `Timeline` 负责 transport、playhead、cut/splice、selected-clip nudge/trim/snap/split 编辑、scopes、audio mix 与 Mermaid Gantt 回写；FloatingPanel `Timeline` 仅负责解析后的行/列表查看。播放状态必须通过共享 timeline transport/controller owner 流动，禁止面板本地直接读取 store。",
+        "@language": "zh-cn"
+      }
+    ],
+    "timelineVideoSequenceExportBoundary": [
+      {
+        "@value": "Edited-media export is a derived browser-runtime surface over the same compiled sequence plan used by preview/edit. It must reuse shared source/metadata helpers, neutral browser media APIs (`captureStream`, `MediaRecorder`, `createMediaElementSource`), and delayed blob download revocation; it must not introduce a parallel export-specific source registry or success-path probe cleanup. Shared progress/cancel semantics belong to that same helper boundary: preparing/rendering/finalizing labels, shared abort detection, active-button cancellation, abort-safe cleanup, and the structured `kind`/`phase`/`percentage`/`completedSegments`/`totalSegments` payload must not fork into panel-local implementations or label parsing. Shared export-plan validation belongs there too: empty plans or plans without any positive-duration source range must fail through the upstream validator before recorder/runtime work starts, and surface enablement should reuse that same rule. Shared export error taxonomy belongs there too: abort, capability, plan, source, and runtime failures must resolve through shared export error codes/messages and shared feedback mapping so surfaces reuse one canonical message boundary instead of panel-local fallback copy. Shared export outcomes belong there too: downloaded/cancelled/failed results should reuse one structured upstream payload with canonical message, toast kind, filename, and error-code fields. Shared export event telemetry belongs there too: progress events and terminal outcome events should reuse one structured `onEvent` envelope so surfaces/logging subscribe once instead of splitting progress and outcome callbacks. Shared export session history belongs there too: bounded run snapshots should reuse one shared reducer/history model with run id, filename base, timing, progress, and terminal outcome fields so future history/retry/audit surfaces do not rebuild run state from toasts. Shared export retry/replay belongs there too: previous runs should resolve replay through one stale-plan-safe request helper that requires no active export and a matching current compiled plan before retrying. Shared export retry control belongs there too: retry buttons should derive enabled/disabled state and copy from one shared retry-control helper over the latest retryable session instead of panel-local heuristics. Shared export session surface belongs there too: recent-export strips should render from one shared session-surface model with upstream detail labels, empty-state copy, and retry affordances instead of panel-local row formatting. Shared export session tone/style belongs there too: recent-export rows should reuse one shared semantic tone/mode helper so running, downloaded, cancelled, and failed states do not fork into surface-local style mapping. Shared export session selection belongs there too: recent-export surfaces should choose visible runs through one shared ordering/filter helper that can prioritize the latest retryable run, keep active runs visible, apply optional status filters, and then fall back to recency. Export teardown must finalize through one cleanup path so recorder-stop failure or cancellation still releases tracks, disconnects/closes Web Audio, and clears the video element.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "编辑后媒体导出是建立在与预览/编辑相同编译序列计划之上的派生浏览器运行时表面。它必须复用共享 source/metadata helper、中立浏览器媒体 API（`captureStream`、`MediaRecorder`、`createMediaElementSource`）以及延迟 blob 下载 revoke；禁止引入并行的导出专用 source registry 或成功路径 probe cleanup。共享 progress/cancel 语义也属于同一 helper boundary：preparing/rendering/finalizing 标签、共享 abort detection、active-button cancellation、abort-safe cleanup，以及结构化 `kind`/`phase`/`percentage`/`completedSegments`/`totalSegments` payload 均不得分叉成 panel-local 实现或依赖 label parsing。共享 export-plan validation 也属于这里：空计划或不包含任何正时长 source range 的计划，必须在 recorder/runtime work 启动前通过上游 validator 直接失败，surface enablement 也应复用同一规则。共享 export error taxonomy 也属于这里：abort、capability、plan、source 与 runtime failure 必须通过共享 export error code/message 与共享 feedback mapping 统一解析，禁止 surface 侧再发明 panel-local fallback copy。共享 export outcome 也属于这里：downloaded/cancelled/failed 结果必须复用同一份上游结构化 payload，包含 canonical message、toast kind、filename 与 error-code 字段。共享 export event telemetry 也属于这里：progress event 与 terminal outcome event 必须复用同一份结构化 `onEvent` envelope，禁止 surfaces/logging 再拆分成平行 callback shape。共享 export session history 也属于这里：bounded run snapshot 必须复用同一份共享 reducer/history model，包含 run id、filename base、timing、progress 与 terminal outcome 字段，禁止 surfaces 再从 toast 重建 run state。共享 export retry/replay 也属于这里：previous run 必须通过同一份 stale-plan-safe request helper 解析 replay，要求当前没有活动导出且 current compiled plan 仍与前次 run snapshot 匹配。共享 export retry control 也属于这里：retry button 必须从同一份 shared retry-control helper 与 latest retryable session 推导 enabled/disabled state 与 copy，禁止 panel-local heuristic。共享 export session surface 也属于这里：recent-export strip 必须从同一份 shared session-surface model 推导 detail label、empty-state copy 与 retry affordance，禁止 panel-local row formatting。共享 export session tone/style 也属于这里：recent-export row 必须从同一份 shared semantic tone/mode helper 推导 styling metadata，禁止 surfaces 本地映射 running/downloaded/cancelled/failed 状态到样式。共享 export session selection 也属于这里：recent-export row 必须通过同一份 shared ordering/filter helper 解析 visible runs，可优先 latest retryable run、保留 active run、应用 status filter，再退回 recency。导出收尾必须通过单一 cleanup path 完成，因此即使 recorder stop 失败或取消，也仍需释放 tracks、disconnect/close Web Audio，并清理 video element。",
+        "@language": "zh-cn"
+      }
+    ],
+    "timelinePreviewSyncAnimationBoundary": [
+      {
+        "@value": "Selected-row preview alignment, playhead-active family emphasis, ruler activity markers, and native `data-kg-animation-*` timing must flow through one shared preview-sync plan plus shared source-activity models. Media Canvas, BottomPanel `Timeline`, and FloatingPanel `Timeline` must not fork activity or animation heuristics.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "selected-row 预览对齐、playhead 驱动的 family 强调、ruler activity marker 与原生 `data-kg-animation-*` timing 必须通过同一份 shared preview-sync plan 与 shared source-activity model 流动。Media Canvas、BottomPanel `Timeline` 与 FloatingPanel `Timeline` 禁止分叉 activity 或 animation heuristic。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeHarness": [
+      {
+        "@value": "Rich-media browser verification is a Dev-only runtime boundary owned by Knowgrph source: `RichMediaBrowserSmokePage` plus `npm run test:smoke:rich-media:browser` should validate shared `RichMediaPanel` surfaces for markdown preview/edit, iframe/srcDoc, snapshot iframe, click-to-open overlay, image zoom wheel, video HTML fallback, audio, and flow-editor chrome visibility while writing one screenshot artifact. Flow-editor drag/resize callback counters remain covered by focused component regressions until browser drag instrumentation becomes deterministic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "富媒体浏览器验证是由 Knowgrph 源码拥有的 Dev-only 运行时边界：`RichMediaBrowserSmokePage` 与 `npm run test:smoke:rich-media:browser` 应验证共享 `RichMediaPanel` 表面上的 markdown preview/edit、iframe/srcDoc、snapshot iframe、click-to-open overlay、image zoom wheel、video HTML fallback、audio 与 flow-editor chrome visibility，并产出单张截图工件。flow-editor drag/resize callback counter 在浏览器拖拽注入具备确定性之前，仍由聚焦的组件级回归测试覆盖。",
+        "@language": "zh-cn"
+      }
+    ],
     "toolbarEditorWorkspaceToggle": [
       {
         "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor workspace includes layout toggles (Explorer open/closed and Canvas pane open/closed); Canvas pane open state persists via `kg:ui:workspace:canvasPaneOpen` and Canvas pane width persists via `kg:ui:workspace:previewWidthPx`. Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",
@@ -170,11 +210,11 @@
     ],
     "floatingPanelMediaStorageSync": [
       {
-        "@value": "FloatingPanel Media is the shared catalog for uploaded and AI/LLM-generated image/audio/video. Upload Media and card-field `@ Upload Media` must reuse one upload helper and one inventory builder, then insert a typography-preserving inline media chip. Cloudflare persistence is split by service: R2 stores binary blobs, D1 stores asset metadata and provenance, KV stores short-lived access URL cache entries only when bound, and Durable Objects store collaboration room sync notifications.",
+        "@value": "FloatingPanel Media is the shared catalog for uploaded and AI/LLM-generated image/audio/video. Upload Media and card-field `@ Upload Media` must reuse one upload helper and one inventory builder, then insert a typography-preserving inline media chip. The same inventory projects through native grid cards and three-row list items, not legacy key/type/value columns. Media thumbnails and Storyboard card/reference media previews use shared hover/focus-appearing translucent kind, info, open-link, and Download Media overlays; thumbnail clicks open the shared preview lightbox without replacing insert/rename/delete/open-link behavior. Uploaded media surfaces editable media descriptions and `#` metadata fields rather than storage-status copy. Cloudflare persistence is split by service: R2 stores binary blobs, D1 stores asset metadata and provenance, KV stores short-lived access URL cache entries only when bound, and Durable Objects store collaboration room sync notifications.",
         "@language": "en-us"
       },
       {
-        "@value": "FloatingPanel Media 是上传媒体与 AI/LLM 生成的图片、音频、视频的共享目录。Upload Media 与卡片字段中的 `@ Upload Media` 必须复用同一个上传 helper 与同一个 inventory builder，并插入不改变周围排版的内联媒体 chip。Cloudflare 持久化按服务拆分：R2 保存二进制 blob，D1 保存资产元数据与 provenance，KV 仅在绑定时保存短期访问 URL 缓存，Durable Objects 保存协作 room 同步通知。",
+        "@value": "FloatingPanel Media 是上传媒体与 AI/LLM 生成的图片、音频、视频的共享目录。Upload Media 与卡片字段中的 `@ Upload Media` 必须复用同一个上传 helper 与同一个 inventory builder，并插入不改变周围排版的内联媒体 chip。同一个 inventory 通过原生 grid cards 与三行 list items 投影，而不是旧的 key/type/value columns。媒体缩略图以及 Storyboard 卡片/引用媒体预览使用共享的 hover/focus 出现的半透明 kind、info、open-link 与 Download Media 覆层；点击缩略图打开共享 preview lightbox，不替代 insert/rename/delete/open-link 行为。上传媒体展示可编辑媒体描述与 `#` 元数据字段，而不是 storage-status 文案。Cloudflare 持久化按服务拆分：R2 保存二进制 blob，D1 保存资产元数据与 provenance，KV 仅在绑定时保存短期访问 URL 缓存，Durable Objects 保存协作 room 同步通知。",
         "@language": "zh-cn"
       }
     ],

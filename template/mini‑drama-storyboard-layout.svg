@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" font-family="-apple-system, 'Segoe UI', 'Noto Sans', sans-serif">
+  <title>Mini-Drama Storyboard &#x2014; Variant A (Classic Split) &#xB7; 16:9</title>
+  <desc>Neutral, brand-agnostic mini-drama storyboard template: full-width title band, 6x6 numbered beat grid, 3x3 9:16 poster-wall funnel, full-width image band.</desc>
+
+  <style>
+    .canvas   { fill: #ffffff; }
+    .band     { fill: #f4f4f5; stroke: #d4d4d8; stroke-width: 1.5; }
+    .bandlbl  { fill: #71717a; font-size: 34px; font-weight: 600; letter-spacing: 2px; text-anchor: middle; }
+    .bandsub  { fill: #a1a1aa; font-size: 18px; letter-spacing: 1px; text-anchor: middle; }
+    .crop     { fill: none; stroke: #c4c4c8; stroke-width: 1.5; stroke-dasharray: 10 8; }
+    .cell     { fill: #ffffff; stroke: #d4d4d8; stroke-width: 1.5; }
+    .badge    { fill: #18181b; }
+    .badgetxt { fill: #ffffff; font-size: 13px; font-weight: 700; text-anchor: middle; }
+    .subcn    { fill: #71717a; font-size: 15px; text-anchor: middle; }
+    .suben    { fill: #a1a1aa; font-size: 13px; font-style: italic; text-anchor: middle; }
+    .secttl   { fill: #52525b; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-anchor: middle; }
+    .slot     { fill: #fafafa; stroke: #d4d4d8; stroke-width: 1.5; }
+    .slotc    { fill: #fafafa; stroke: #18181b; stroke-width: 3; }
+    .sloteq   { fill: #d4d4d8; font-size: 26px; font-weight: 700; text-anchor: middle; }
+    .slotbun  { fill: #52525b; font-size: 15px; font-weight: 700; text-anchor: middle; }
+    .slotpr   { fill: #a1a1aa; font-size: 13px; text-anchor: middle; }
+    .ribbon   { fill: #18181b; }
+    .ribbontx { fill: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-anchor: middle; }
+    .beatband { fill: #18181b; }
+    .beattx   { fill: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; text-anchor: middle; }
+  </style>
+
+  <rect class="canvas" x="0" y="0" width="1920" height="1080"/>
+
+  <!-- ===================== TITLE BAND (top, full width, h=190) ===================== -->
+  <g id="title">
+    <rect class="band" x="0" y="0" width="1920" height="190"/>
+    <text class="bandlbl" x="960" y="98">&#x6807;&#x9898; / TITLE</text>
+    <text class="bandsub" x="960" y="138">&#x5267;&#x540D; &#xB7; &#x96C6;&#x6570; &#xB7; &#x65F6;&#x957F;  |  Series &#xB7; Episode &#xB7; Runtime</text>
+  </g>
+
+  <!-- ===================== 6x6 BEAT GRID (left of main row) ===================== -->
+  <g id="grid">
+    <!-- Row 0, y=206 -->
+    <g><rect class="cell" x="24" y="206" width="235" height="104"/><rect class="badge" x="32" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="227">01</text><text class="subcn" x="141" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="294">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="206" width="235" height="104"/><rect class="badge" x="275" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="227">02</text><text class="subcn" x="384" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="294">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="206" width="235" height="104"/><rect class="badge" x="518" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="227">03</text><text class="subcn" x="627" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="294">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="206" width="235" height="104"/><rect class="badge" x="761" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="227">04</text><text class="subcn" x="870" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="294">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="206" width="235" height="104"/><rect class="badge" x="1004" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="227">05</text><text class="subcn" x="1113" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="294">Subtitle EN</text></g>
+    <g><rect class="cell" x="1239" y="206" width="235" height="104"/><rect class="badge" x="1247" y="214" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="227">06</text><text class="subcn" x="1356" y="276">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1356" y="294">Subtitle EN</text></g>
+
+    <!-- Row 1, y=318 -->
+    <g><rect class="cell" x="24" y="318" width="235" height="104"/><rect class="badge" x="32" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="339">07</text><text class="subcn" x="141" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="406">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="318" width="235" height="104"/><rect class="badge" x="275" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="339">08</text><text class="subcn" x="384" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="406">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="318" width="235" height="104"/><rect class="badge" x="518" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="339">09</text><text class="subcn" x="627" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="406">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="318" width="235" height="104"/><rect class="badge" x="761" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="339">10</text><text class="subcn" x="870" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="406">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="318" width="235" height="104"/><rect class="badge" x="1004" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="339">11</text><text class="subcn" x="1113" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="406">Subtitle EN</text></g>
+    <g><rect class="cell" x="1239" y="318" width="235" height="104"/><rect class="badge" x="1247" y="326" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="339">12</text><text class="subcn" x="1356" y="388">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1356" y="406">Subtitle EN</text></g>
+
+    <!-- Row 2, y=430 -->
+    <g><rect class="cell" x="24" y="430" width="235" height="104"/><rect class="badge" x="32" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="451">13</text><text class="subcn" x="141" y="500">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="518">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="430" width="235" height="104"/><rect class="badge" x="275" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="451">14</text><text class="subcn" x="384" y="500">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="518">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="430" width="235" height="104"/><rect class="badge" x="518" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="451">15</text><text class="subcn" x="627" y="500">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="518">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="430" width="235" height="104"/><rect class="badge" x="761" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="451">16</text><text class="subcn" x="870" y="500">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="518">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="430" width="235" height="104"/><rect class="badge" x="1004" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="451">17</text><text class="subcn" x="1113" y="500">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="518">Subtitle EN</text></g>
+    <!-- Cell 18: mid-roll cliffhanger -->
+    <g><rect class="cell" x="1239" y="430" width="235" height="104"/><rect class="badge" x="1247" y="438" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="451">18</text><rect class="beatband" x="1239" y="508" width="235" height="26"/><text class="beattx" x="1356" y="525">&#x60AC;&#x5FF5; &#xB7; MID-ROLL CLIFFHANGER</text></g>
+
+    <!-- Row 3, y=542 -->
+    <g><rect class="cell" x="24" y="542" width="235" height="104"/><rect class="badge" x="32" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="563">19</text><text class="subcn" x="141" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="630">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="542" width="235" height="104"/><rect class="badge" x="275" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="563">20</text><text class="subcn" x="384" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="630">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="542" width="235" height="104"/><rect class="badge" x="518" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="563">21</text><text class="subcn" x="627" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="630">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="542" width="235" height="104"/><rect class="badge" x="761" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="563">22</text><text class="subcn" x="870" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="630">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="542" width="235" height="104"/><rect class="badge" x="1004" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="563">23</text><text class="subcn" x="1113" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="630">Subtitle EN</text></g>
+    <g><rect class="cell" x="1239" y="542" width="235" height="104"/><rect class="badge" x="1247" y="550" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="563">24</text><text class="subcn" x="1356" y="612">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1356" y="630">Subtitle EN</text></g>
+
+    <!-- Row 4, y=654 -->
+    <g><rect class="cell" x="24" y="654" width="235" height="104"/><rect class="badge" x="32" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="675">25</text><text class="subcn" x="141" y="724">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="742">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="654" width="235" height="104"/><rect class="badge" x="275" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="675">26</text><text class="subcn" x="384" y="724">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="742">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="654" width="235" height="104"/><rect class="badge" x="518" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="675">27</text><text class="subcn" x="627" y="724">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="742">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="654" width="235" height="104"/><rect class="badge" x="761" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="675">28</text><text class="subcn" x="870" y="724">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="742">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="654" width="235" height="104"/><rect class="badge" x="1004" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="675">29</text><text class="subcn" x="1113" y="724">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="742">Subtitle EN</text></g>
+    <!-- Cell 30: paid content hook -->
+    <g><rect class="cell" x="1239" y="654" width="235" height="104"/><rect class="badge" x="1247" y="662" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="675">30</text><rect class="beatband" x="1239" y="732" width="235" height="26"/><text class="beattx" x="1356" y="749">&#x4ED8;&#x8D39;&#x94A9;&#x5B50; &#xB7; PAID HOOK</text></g>
+
+    <!-- Row 5, y=766 -->
+    <g><rect class="cell" x="24" y="766" width="235" height="104"/><rect class="badge" x="32" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="48" y="787">31</text><text class="subcn" x="141" y="836">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="141" y="854">Subtitle EN</text></g>
+    <g><rect class="cell" x="267" y="766" width="235" height="104"/><rect class="badge" x="275" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="291" y="787">32</text><text class="subcn" x="384" y="836">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="384" y="854">Subtitle EN</text></g>
+    <g><rect class="cell" x="510" y="766" width="235" height="104"/><rect class="badge" x="518" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="534" y="787">33</text><text class="subcn" x="627" y="836">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="627" y="854">Subtitle EN</text></g>
+    <g><rect class="cell" x="753" y="766" width="235" height="104"/><rect class="badge" x="761" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="777" y="787">34</text><text class="subcn" x="870" y="836">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="870" y="854">Subtitle EN</text></g>
+    <g><rect class="cell" x="996" y="766" width="235" height="104"/><rect class="badge" x="1004" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="1020" y="787">35</text><text class="subcn" x="1113" y="836">&#x5B57;&#x5E55;&#x4E2D;&#x6587;</text><text class="suben" x="1113" y="854">Subtitle EN</text></g>
+    <!-- Cell 36: clear CTA -->
+    <g><rect class="cell" x="1239" y="766" width="235" height="104"/><rect class="badge" x="1247" y="774" width="32" height="19" rx="4"/><text class="badgetxt" x="1263" y="787">36</text><rect class="beatband" x="1239" y="844" width="235" height="26"/><text class="beattx" x="1356" y="861">&#x884C;&#x52A8;&#x53F7;&#x53EC; &#xB7; CLEAR CTA</text></g>
+  </g>
+
+  <!-- ===================== 3x3 POSTER-WALL FUNNEL (right of main row) ===================== -->
+  <g id="funnel">
+    <text class="secttl" x="1693" y="184">&#x6D77;&#x62A5;&#x5899;&#x6F0F;&#x6597; / POSTER-WALL FUNNEL</text>
+
+    <!-- Row 0 (entry tier), y=198 -->
+    <g><rect class="slot" x="1490" y="198" width="119" height="212" rx="6"/><text class="sloteq" x="1549" y="290">9:16</text><text class="slotbun" x="1549" y="350">EP 1&#x2013;10</text><text class="slotpr" x="1549" y="372">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <g><rect class="slot" x="1633" y="198" width="119" height="212" rx="6"/><text class="sloteq" x="1692" y="290">9:16</text><text class="slotbun" x="1692" y="350">EP 1&#x2013;20</text><text class="slotpr" x="1692" y="372">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <g><rect class="slot" x="1776" y="198" width="119" height="212" rx="6"/><text class="sloteq" x="1835" y="290">9:16</text><text class="slotbun" x="1835" y="350">EP 1&#x2013;30</text><text class="slotpr" x="1835" y="372">&#xA5;&#x2014; / $&#x2014;</text></g>
+
+    <!-- Row 1 (core tier), y=434 -->
+    <g><rect class="slot" x="1490" y="434" width="119" height="212" rx="6"/><text class="sloteq" x="1549" y="526">9:16</text><text class="slotbun" x="1549" y="586">&#x5168;&#x96C6; ALL</text><text class="slotpr" x="1549" y="608">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <!-- Center slot (#5): MOST POPULAR -->
+    <g><rect class="slotc" x="1633" y="434" width="119" height="212" rx="6"/><rect class="ribbon" x="1633" y="434" width="119" height="28" rx="6"/><text class="ribbontx" x="1692" y="453">&#x6700;&#x53D7;&#x6B22;&#x8FCE; &#xB7; MOST POPULAR</text><text class="sloteq" x="1692" y="536">9:16</text><text class="slotbun" x="1692" y="592">&#x8D85;&#x503C;&#x5408;&#x96C6;</text><text class="slotpr" x="1692" y="614">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <g><rect class="slot" x="1776" y="434" width="119" height="212" rx="6"/><text class="sloteq" x="1835" y="526">9:16</text><text class="slotbun" x="1835" y="586">&#x5408;&#x96C6;+&#x82B1;&#x7D6E;</text><text class="slotpr" x="1835" y="608">&#xA5;&#x2014; / $&#x2014;</text></g>
+
+    <!-- Row 2 (premium tier), y=670 -->
+    <g><rect class="slot" x="1490" y="670" width="119" height="212" rx="6"/><text class="sloteq" x="1549" y="762">9:16</text><text class="slotbun" x="1549" y="822">&#x5C0A;&#x4EAB;&#x7248;</text><text class="slotpr" x="1549" y="844">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <g><rect class="slot" x="1633" y="670" width="119" height="212" rx="6"/><text class="sloteq" x="1692" y="762">9:16</text><text class="slotbun" x="1692" y="822">&#x793C;&#x5305; GIFT</text><text class="slotpr" x="1692" y="844">&#xA5;&#x2014; / $&#x2014;</text></g>
+    <g><rect class="slot" x="1776" y="670" width="119" height="212" rx="6"/><text class="sloteq" x="1835" y="762">9:16</text><text class="slotbun" x="1835" y="822">&#x4F1A;&#x5458; VIP</text><text class="slotpr" x="1835" y="844">&#xA5;&#x2014; / $&#x2014;</text></g>
+  </g>
+
+  <!-- ===================== IMAGE BAND (bottom, full width, h=190) ===================== -->
+  <g id="image">
+    <rect class="band" x="0" y="890" width="1920" height="190"/>
+    <rect class="crop" x="24" y="912" width="1872" height="146" rx="6"/>
+    <text class="bandlbl" x="960" y="978">&#x914D;&#x56FE; / IMAGE</text>
+    <text class="bandsub" x="960" y="1018">&#x5173;&#x952E;&#x5E27; &#xB7; &#x6D77;&#x62A5; &#xB7; &#x7F29;&#x7565;&#x56FE;  |  Key Frame &#xB7; Poster &#xB7; Thumbnail</text>
+  </g>
+</svg>

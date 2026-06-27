@@ -1,36 +1,66 @@
 ---
 title: "Documentation Guidelines"
 doc_type: "Guidelines"
-date: "2026-05-27"
+version: "2.0.0"
+date: "2026-06-25"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
 
 # Documentation Guidelines
 
-## Markdown YAML Frontmatter Enforcement
+## Scope & Neutrality Contract
 
-- Canonical documentation specs, process docs, runbooks, and runtime-ready Markdown artifacts must start with a valid YAML frontmatter block as the first block in the file.
-- Frontmatter is the SSOT for document metadata, provenance, active variants, workflow state, and reusable context keys referenced elsewhere in the document.
-- Canonical authored documentation uses plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrappers.
-- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.
-- Documentation for Flow Editor computing-flow fixtures must state semantic port-key ownership, schema-path based KTV row consolidation, and the shared compute helper that owns connected-value propagation.
-- Documentation for long-horizon SuperAgent harnesses must state the native Knowgrph owner chain, the no-copy DeerFlow inspiration boundary, and whether the surface is local-only or deployed.
-- Harness metadata sections must be described as metadata unless explicit graph nodes/edges are authored under `flow:`.
-- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read documentation metadata deterministically.
-- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
+- **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
+- **Neutral**: name capabilities and roles by their function, never by a brand or project. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent.
+- **Agnostic**: documentation standards are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
+- **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 
-## Overview
+## Module Index
 
-**Semantic orchestration documentation**: capture responsibilities to preserve clarity, forbid hardcoded domains to sustain neutrality, drive schemas through configuration to enable adaptability, separate structure from semantics to maintain coherence, build cross-domain pipelines to guarantee interoperability, and trace provenance with confidence to secure accountability.
-
-**Team guidelines**: ensure clarity over datasets to prevent ambiguity, log parameters reproducibly to guarantee transparency, measure quality via metrics to uphold standards, maintain audit trails with schema evolution to strengthen resilience.
-
-**Documentation standards**: layer flows with component specs to ensure structural clarity, align domain-agnostic schemas with CID annotations to preserve neutrality, trace provenance with confidence to secure accountability, apply metrics-based QA to uphold quality, safeguard against anti-patterns to prevent fragility, and optimize feedback loops with schema versioning to sustain resilience.
+- `scope--neutrality-contract` — universality, neutrality, agnosticism, modularity rules
+- `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
+- `overview` — what documentation guidelines govern and the ruling standards
+- `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
+- `required-document-sections` — mandatory sections and their authoring contracts
+- `component-documentation-template` — From/To transformation pattern and SVO directives
+- `flow-patterns-documentation` — documenting the five canonical flow types
+- `provenance-and-traceability` — bidirectional linking, confidence propagation, extraction tracking
+- `quality-metrics-documentation` — extraction, unification, query, and pipeline metrics
+- `schema-and-api-documentation` — contract documentation, query interfaces, export formats
+- `maintenance-documentation` — feedback loops, schema evolution, audit trails, automation contracts
+- `cid-directive-matrix` — alphabetical, project-agnostic documentation directives
+- `anti-pattern-guards` — prohibited patterns and their corrections
+- `documentation-validation-checklist` — pre-commit, review, and post-documentation gates
+- `role-action-outcome` — role-to-deliverable mapping
+- `mantra-application` — the framing mantra
 
 ---
 
-## Context—Intent—Directive (CID) Framework
+## Markdown YAML Frontmatter Enforcement
+
+- Canonical documentation specs, process docs, runbooks, and runtime-ready Markdown artifacts must start with a valid YAML frontmatter block as the first block in the file.
+- Frontmatter is the SSOT for document identity, status, versioning, renderer activation, and reusable metadata referenced by the body specification.
+- Canonical authored documentation uses plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrapper records.
+- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest → parse → render or ingest → parse → validate fidelity.
+- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read documentation metadata deterministically.
+- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
+
+---
+
+## Overview
+
+**Documentation guidelines**: capture component responsibilities to preserve clarity; forbid hardcoded domains to sustain neutrality; drive schemas through configuration to enable adaptability; separate structure from semantics to maintain coherence; build cross-domain pipelines to guarantee interoperability; trace provenance with confidence to secure accountability.
+
+**Governing standards**: structure documents with transformation flows; align domain-agnostic schemas with CID annotations; trace provenance with confidence; apply metrics-based quality assurance; safeguard against anti-patterns; optimize feedback loops with schema versioning.
+
+**Solo-dev AI-native orientation**: documentation for AI-powered systems must additionally capture harness contracts, orchestration topology, token budgets, and verifiable completion conditions (VCCs) — aligned with the PRD/TAD guidelines. Documentation is not complete until every AI pipeline's dispatcher, executor, observer, and consumer roles are named and every agentic loop has a stated max-iteration bound and circuit-breaker.
+
+---
+
+## Directive Grammar (CID)
+
+Every directive in this guideline set is expressed with a uniform, project-agnostic grammar so it can be lifted into any context unchanged.
 
 ### Definition
 - **Context**: focus domain of concern
@@ -38,698 +68,603 @@ frontmatter_contract: "required"
 - **Directive**: explicit prohibition or required safeguard
 
 ### Sorting
-Each line/column is organized alphabetically (A→Z) for clarity and neutrality.
+Each entry is organized alphabetically (A→Z) for clarity and neutrality.
 
 ---
 
-## Three-Beat Mantra Form
+## Required Document Sections
 
-Each line is a three-beat `Context; Intent; Directive` mantra:
-
-- Accountability; secure via provenance tracing; forbid untracked origins
-- Adaptability; enable cross-domain deployment; forbid hardcoded domains
-- Adjustment; document parameter tuning; forbid undocumented changes
-- Aggregation; explain corpus-wide metrics; forbid unclear computation
-- Algorithms; describe universal operations; forbid domain-specific methods
-- Alignment; synchronize with CID annotations; forbid unmarked specifications
-- Ambiguity; ensure clarity over datasets; forbid vague specifications
-- Annotations; mark with intent-directive patterns; forbid unannotated schemas
-- Anti-patterns; list forbidden violations; forbid undocumented bad practices
-- API; explain query processing logic; forbid undocumented endpoints
-- Architecture; define layer flow specifications; forbid undocumented structure
-- Artifacts; specify output structures; forbid implicit outputs
-- Atomic; express single operations; forbid compound actions
-- Audit; document logging requirements; forbid unlogged decisions
-- Automation; define docs:update workflows; forbid undocumented scripts
-- Backward; maintain compatibility requirements; forbid breaking changes
-- Bidirectional; specify node-to-source tracking; forbid unidirectional references
-- Boundaries; avoid dataset coupling; forbid domain-specific examples
-- Breaking; provide migration scripts; forbid unmitigated disruptions
-- Capture; document responsibilities clearly; forbid ambiguous documentation
-- Citation; document coverage metrics; forbid unmeasured traceability
-- Classification; map intent to query types; forbid undocumented mappings
-- Clarity; preserve structural understanding; forbid obscure architectures
-- Clustering; describe grouping operations; forbid implicit algorithms
-- Coherence; maintain structure-semantic separation; forbid coupled documentation
-- Complexity; document scalability characteristics; forbid unanalyzed performance
-- Components; provide intent-directive patterns; forbid incomplete specifications
-- Computation; document metric calculation methods; forbid opaque calculations
-- Confidence; track score propagation; forbid untracked certainty
-- Configuration; document adaptive parameters; forbid hardcoded values
-- Constraints; provide structural validation rules; forbid semantic validation in structure
-- Context; explain vocabulary mapping; forbid implicit vocabularies
-- Contracts; specify requirements; forbid implicit agreements
-- Convergence; explain detection mechanisms; forbid undetected loops
-- Coreference; document resolution tracking; forbid untracked references
-- Corpus; require diversity validation; forbid single-domain validation
-- Coverage; define neutral status matrices; forbid domain-specific indicators
-- Criteria; provide format selection guidance; forbid arbitrary format choices
-- Cross-document; measure unification reach; forbid isolated document processing
-- Cypher; document Neo4j transformations; forbid undocumented exports
-- Dataset; avoid coupling in examples; forbid hardcoded data references
-- Decay; specify confidence reduction; forbid static confidence scores
-- Decisions; log for reproducibility; forbid unlogged choices
-- Defaults; derive from statistical principles; forbid project-tuned values
-- Depth; explain traversal adjustment; forbid fixed traversal limits
-- Directives; express as subject-verb-object; forbid compound statements
-- Distance; document embedding similarity; forbid undocumented comparisons
-- Diversity; validate across domains; forbid narrow testing
-- Documentation; structure with transformation flows; forbid flat documentation
-- Domain; test blindness systematically; forbid domain assumptions
-- Downstream; specify integration use cases; forbid unclear targets
-- DuckDB; document relational transformations; forbid undocumented exports
-- Duplicates; track unification rates; forbid unmeasured merging
-- Embedding; explain coherence computation; forbid implicit similarity
-- Entities; measure coherence metrics; forbid unmeasured quality
-- Evolution; document schema versioning; forbid unversioned changes
-- Execution; enable reproducible pipelines; forbid unreproducible runs
-- Export; document format transformations; forbid undocumented conversions
-- Extraction; define quality measures; forbid unmeasured extraction
-- Features; specify input requirements; forbid implicit dependencies
-- Feedback; document monitoring procedures; forbid unmonitored systems
-- Fields; distinguish required from optional; forbid ambiguous specifications
-- Flow; define layer progression; forbid undocumented pipelines
-- Follow-up; measure query relevance; forbid unmeasured interaction
-- Forbidden; list hardcoding violations; forbid undocumented restrictions
-- Formatting; preserve context via metadata; forbid context loss
-- Fragility; safeguard via anti-pattern docs; forbid undocumented risks
-- Gates; document quality thresholds; forbid unvalidated documentation
-- Geo; document spatial metadata; forbid undocumented location fields
-- Graphs; embed schema_version metadata; forbid unversioned graphs
-- GraphML; document XML transformations; forbid undocumented exports
-- Guidance; provide refactoring instructions; forbid unclear migration paths
-- Hardcoding; forbid in documentation examples; forbid project-specific samples
-- Heuristics; document without domain coupling; forbid domain-specific logic
-- Impact; explain parameter effects; forbid unexplained parameters
-- Implementers; enable domain adaptation; forbid implementation-specific docs
-- Inference; document schema-based methods; forbid implicit inference logic
-- Ingestion; document pipeline stages; forbid undocumented transformations
-- Integration; document quality gate alignment; forbid isolated documentation
-- Intent; provide classification mappings; forbid unmapped query types
-- Interoperability; build cross-domain pipelines; forbid domain-locked documentation
-- Intervals; specify collection frequencies; forbid unmeasured monitoring
-- Iterations; log tuning history; forbid untracked adjustments
-- JSON-LD; specify contract requirements; forbid implicit schemas
-- Labels; document required fields; forbid undocumented node properties
-- Latency; document query performance; forbid unmeasured query speed
-- Layers; capture flow specifications; forbid undocumented architecture
-- Linking; specify bidirectional mechanisms; forbid unidirectional tracking
-- Logging; specify retention requirements; forbid unclear audit trails
-- Lookup; map to single-node retrieval; forbid undocumented retrieval
-- Magnitudes; document adjustment scales; forbid unbounded parameter changes
-- Maintenance; document monitoring procedures; forbid undocumented operations
-- Mappings; document field transformations; forbid implicit conversions
-- Matrices; define stewardship columns; forbid individual-based assignments
-- Measure; define extraction quality; forbid unmeasured extraction
-- Mentions; track consistency metrics; forbid unmeasured resolution
-- Merge; log decision rationale; forbid unexplained unifications
-- Metadata; preserve formatting context; forbid context-stripped documentation
-- Methods; label extraction techniques; forbid unlabeled extractions
-- Metrics; define computation methods; forbid unmeasured quality
-- Migration; provide breaking change scripts; forbid unmitigated breaking changes
-- Monitoring; document feedback procedures; forbid unmonitored loops
-- Multi-hop; track confidence through reasoning; forbid untracked inference chains
-- Names; specify component identifiers; forbid ambiguous naming
-- Neutral; express indicators domain-free; forbid project-specific symbols
-- Neutrality; align schemas domain-agnostically; forbid domain assumptions
-- Nodes; document source tracking; forbid untracked node origins
-- Operations; list as atomic SVO statements; forbid compound actions
-- Optimization; document A/B testing frameworks; forbid untested thresholds
-- Orchestration; capture semantic architecture; forbid structural-only specs
-- Outcomes; specify transformation deliverables; forbid unclear outputs
-- Outputs; define schema structures; forbid implicit formats
-- Parameters; document with impact descriptions; forbid unexplained settings
-- Parsing; separate from metadata preservation; forbid conflated specifications
-- Participation; track in coverage matrices; forbid unclear artifact generation
-- Paths; document directed search strategies; forbid undocumented graph traversal
-- Patterns; provide intent-directive templates; forbid ad-hoc documentation styles
-- Performance; document optimization history; forbid untracked optimizations
-- Precision; define extraction accuracy; forbid unmeasured correctness
-- Preservation; explain metadata continuity; forbid metadata loss
-- Privacy; address in audit documentation; forbid unaddressed sensitive data
-- Procedures; document rollback strategies; forbid unclear failure handling
-- Processing; explain query logic systematically; forbid opaque query handling
-- Propagation; document confidence computation; forbid untracked score flow
-- Properties; document optional field usage; forbid undocumented optional data
-- Provenance; trace with confidence scores; forbid untracked lineage
-- Quality; apply metrics-based standards; forbid unmeasured documentation quality
-- Query; document interface specifications; forbid undocumented query patterns
-- Ranges; document line preservation; forbid lost source locations
-- Rates; document conflict resolution; forbid unmeasured conflict handling
-- Recall; measure against gold standard; forbid unmeasured extraction coverage
-- Refactoring; provide before/after examples; forbid unclear transformation steps
-- Referential; check integrity constraints; forbid unchecked references
-- Regeneration; document artifact automation; forbid manual artifact updates
-- Relevance; measure answer quality; forbid unmeasured response accuracy
-- Rendering; document pipeline stages; forbid undocumented visualization
-- Reproducibility; log parameters systematically; forbid unreproducible documentation
-- Requirements; document field necessity; forbid ambiguous mandatory fields
-- Resilience; optimize feedback loops; forbid fragile monitoring
-- Resolution; track conflict handling; forbid unresolved conflicts
-- Responsibilities; capture component duties; forbid unclear component roles
-- Results; provide query structure specs; forbid implicit query responses
-- Retention; specify logging durations; forbid unclear audit lifecycles
-- Retrieval; document traversal strategies; forbid undocumented graph queries
-- Rollback; provide degradation procedures; forbid unclear failure responses
-- Rules; provide structural validation; forbid semantic validation
-- Scalability; document complexity characteristics; forbid unanalyzed performance limits
-- Schema; version with semantic rules; forbid arbitrary schema changes
-- Scores; document threshold tuning; forbid undocumented thresholds
-- Scripts; provide for breaking changes; forbid manual schema migrations
-- Search; map query types to strategies; forbid implicit query routing
-- Selection; document format criteria; forbid arbitrary export choices
-- Semantic; separate from structural docs; forbid conflated specifications
-- Semantics; clarify via SVO specifications; forbid ambiguous technical writing
-- Sensitivity; document tuning ranges; forbid unbounded parameter adjustments
-- Separation; maintain structure-semantic divide; forbid coupled documentation
-- Similarity; document computation methods; forbid undocumented distance functions
-- Single; maintain operation atomicity; forbid compound directive statements
-- Source; document node tracking mechanisms; forbid untracked node origins
-- Specifications; provide component intent patterns; forbid incomplete technical specs
-- Standards; layer flows with component specs; forbid ad-hoc documentation
-- State; express input/output explicitly; forbid implicit transformations
-- Statistical; derive defaults from principles; forbid arbitrary baseline values
-- Status; define neutral coverage matrices; forbid project-specific coverage tracking
-- Stewardship; name roles not individuals; forbid individual-based documentation ownership
-- Structural; provide validation checklists; forbid semantic property checks
-- Structure; define output artifact formats; forbid undocumented data shapes
-- Subject-Verb-Object; express directives grammatically; forbid unclear operational statements
-- SVO; structure component documentation; forbid non-grammatical specifications
-- Syntactic; document path length metrics; forbid undocumented distance measures
-- Systems; enable cross-domain adaptation; forbid domain-locked specifications
-- Tables; use multi-column for coverage; forbid flat coverage documentation
-- Techniques; label extraction methods; forbid unlabeled extraction approaches
-- Templates; provide transformation patterns; forbid inconsistent documentation styles
-- Testing; document domain blindness; forbid single-domain validation
-- Thresholds; document tuning mechanisms; forbid hardcoded quality gates
-- Traceability; enable via comprehensive docs; forbid incomplete provenance documentation
-- Tracking; specify node-to-source mechanisms; forbid untracked data lineage
-- Transformation; document using From-To patterns; forbid unclear state transitions
-- Transparency; log parameters reproducibly; forbid opaque parameter documentation
-- Transitive; apply confidence decay rules; forbid static multi-hop confidence
-- Traversal; explain strategy selection; forbid undocumented graph navigation
-- Triggers; specify feedback loop activation; forbid unclear quality thresholds
-- Tuning; log iteration history; forbid untracked parameter changes
-- Types; avoid domain-specific entities; forbid entity-specific documentation
-- Unification; define quality measures; forbid unmeasured entity merging
-- Universal; describe operations abstractly; forbid domain-coupled algorithms
-- Validation; provide structural checklists; forbid semantic validation in schema
-- Variance; measure entity coherence; forbid unmeasured entity quality
-- Versioning; apply semantic rules to schemas; forbid arbitrary version changes
-- Violations; list explicitly with guidance; forbid undocumented anti-patterns
-- Vocabulary; explain @context mapping; forbid implicit semantic definitions
-- Workflows; document docs:update automation; forbid undocumented generation processes
-
----
-
-## Context—Intent—Directive Table
-
-Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | Intent | Directive`
-
-| Context             | Intent                              | Directive                                                                                      |
-|---------------------|-------------------------------------|------------------------------------------------------------------------------------------------|
-| Accountability      | Secure via provenance tracing       | - [ ] Trace provenance with confidence; secure accountability; forbid untracked origins       |
-| Adaptability        | Enable cross-domain deployment      | - [ ] Drive schemas via config; enable adaptability; forbid hardcoded domains                 |
-| Adjustment          | Document parameter tuning           | - [ ] Specify adjustment magnitudes; document tuning; forbid undocumented changes             |
-| Aggregation         | Explain corpus-wide metrics         | - [ ] Document aggregation methods; explain metrics; forbid unclear computation               |
-| Algorithms          | Describe universal operations       | - [ ] Use universal patterns; describe algorithms; forbid domain-specific methods             |
-| Alignment           | Synchronize with CID annotations    | - [ ] Align schemas with CID; synchronize annotations; forbid unmarked specifications         |
-| Ambiguity           | Ensure clarity over datasets        | - [ ] Prevent ambiguity; ensure clarity; forbid vague specifications                          |
-| Annotations         | Mark with intent-directive patterns | - [ ] Annotate with CID; mark specifications; forbid unannotated schemas                      |
-| Anti-patterns       | List forbidden violations           | - [ ] Document prohibited patterns; list violations; forbid undocumented bad practices        |
-| API                 | Explain query processing logic      | - [ ] Document API interfaces; explain processing; forbid undocumented endpoints              |
-| Architecture        | Define layer flow specifications    | - [ ] Capture architecture flows; define layers; forbid undocumented structure                |
-| Artifacts           | Specify output structures           | - [ ] Document output artifacts; specify structures; forbid implicit outputs                  |
-| Atomic              | Express single operations           | - [ ] List atomic operations; express singly; forbid compound actions                         |
-| Audit               | Document logging requirements       | - [ ] Specify audit trails; document logging; forbid unlogged decisions                       |
-| Automation          | Define docs:update workflows        | - [ ] Document automation contracts; define workflows; forbid undocumented scripts            |
-| Backward            | Maintain compatibility requirements | - [ ] Preserve backward compatibility; maintain stability; forbid breaking changes            |
-| Bidirectional       | Specify node-to-source tracking     | - [ ] Document bidirectional links; specify tracking; forbid unidirectional references        |
-| Boundaries          | Avoid dataset coupling              | - [ ] Maintain layer boundaries; avoid coupling; forbid domain-specific examples              |
-| Breaking            | Provide migration scripts           | - [ ] Handle breaking changes; provide migrations; forbid unmitigated disruptions            |
-| Capture             | Document responsibilities clearly   | - [ ] Capture responsibilities; preserve clarity; forbid ambiguous documentation              |
-| Citation            | Document coverage metrics           | - [ ] Specify citation coverage; document metrics; forbid unmeasured traceability             |
-| Classification      | Map intent to query types           | - [ ] Document intent classification; map query types; forbid undocumented mappings           |
-| Clarity             | Preserve structural understanding   | - [ ] Layer flows with specs; ensure clarity; forbid obscure architectures                    |
-| Clustering          | Describe grouping operations        | - [ ] Document clustering methods; describe operations; forbid implicit algorithms            |
-| Coherence           | Maintain structure-semantic separation| - [ ] Separate structure from semantics; maintain coherence; forbid coupled documentation   |
-| Complexity          | Document scalability characteristics| - [ ] Specify complexity; document scalability; forbid unanalyzed performance                 |
-| Components          | Provide intent-directive patterns   | - [ ] Document component specs; provide patterns; forbid incomplete specifications            |
-| Computation         | Document metric calculation methods | - [ ] Explain computation methods; document metrics; forbid opaque calculations               |
-| Confidence          | Track score propagation             | - [ ] Document confidence propagation; track scores; forbid untracked certainty               |
-| Configuration       | Document adaptive parameters        | - [ ] Specify configuration schemas; document parameters; forbid hardcoded values             |
-| Constraints         | Provide structural validation rules | - [ ] Document constraints; provide rules; forbid semantic validation in structure            |
-| Context             | Explain vocabulary mapping          | - [ ] Document @context usage; explain mapping; forbid implicit vocabularies                  |
-| Contracts           | Specify JSON-LD requirements        | - [ ] Document schema contracts; specify requirements; forbid implicit agreements             |
-| Convergence         | Explain detection mechanisms        | - [ ] Document convergence detection; explain mechanisms; forbid undetected loops             |
-| Coreference         | Document resolution tracking        | - [ ] Specify coreference methods; document tracking; forbid untracked references             |
-| Corpus              | Require diversity validation        | - [ ] Test across 3+ domains; require diversity; forbid single-domain validation              |
-| Coverage            | Define neutral status matrices      | - [ ] Document coverage matrices; define neutrally; forbid domain-specific indicators         |
-| Criteria            | Provide format selection guidance   | - [ ] Document selection criteria; provide guidance; forbid arbitrary format choices          |
-| Cross-document      | Measure unification reach           | - [ ] Specify cross-document coverage; measure reach; forbid isolated document processing     |
-| Cypher              | Document Neo4j transformations      | - [ ] Specify Cypher mappings; document transformations; forbid undocumented exports          |
-| Dataset             | Avoid coupling in examples          | - [ ] Forbid dataset coupling; avoid specific examples; forbid hardcoded data references      |
-| Decay               | Specify confidence reduction        | - [ ] Document confidence decay; specify reduction; forbid static confidence scores           |
-| Decisions           | Log for reproducibility             | - [ ] Document merge decisions; log systematically; forbid unlogged choices                   |
-| Defaults            | Derive from statistical principles  | - [ ] Provide statistical defaults; derive systematically; forbid project-tuned values        |
-| Depth               | Explain traversal adjustment        | - [ ] Document adaptive depth; explain adjustment; forbid fixed traversal limits              |
-| Directives          | Express as subject-verb-object      | - [ ] List SVO directives; express atomically; forbid compound statements                     |
-| Distance            | Document embedding similarity       | - [ ] Specify distance metrics; document similarity; forbid undocumented comparisons          |
-| Diversity           | Validate across domains             | - [ ] Require corpus diversity; validate broadly; forbid narrow testing                       |
-| Documentation       | Structure with transformation flows | - [ ] Layer flows with specs; structure clearly; forbid flat documentation                    |
-| Domain              | Test blindness systematically       | - [ ] Document domain blindness tests; validate neutrality; forbid domain assumptions         |
-| Downstream          | Specify integration use cases       | - [ ] Document downstream usage; specify integration; forbid unclear targets                  |
-| DuckDB              | Document relational transformations | - [ ] Specify DuckDB mappings; document transformations; forbid undocumented exports          |
-| Duplicates          | Track unification rates             | - [ ] Document duplicate rates; track unification; forbid unmeasured merging                  |
-| Embedding           | Explain coherence computation       | - [ ] Document embedding methods; explain coherence; forbid implicit similarity               |
-| Entities            | Measure coherence metrics           | - [ ] Specify entity coherence; measure intra-cluster variance; forbid unmeasured quality     |
-| Evolution           | Document schema versioning          | - [ ] Track schema evolution; document versioning; forbid unversioned changes                 |
-| Execution           | Enable reproducible pipelines       | - [ ] Log execution parameters; enable reproducibility; forbid unreproducible runs            |
-| Export              | Document format transformations     | - [ ] Specify export mappings; document transformations; forbid undocumented conversions      |
-| Extraction          | Define quality measures             | - [ ] Document extraction metrics; define quality; forbid unmeasured extraction               |
-| Features            | Specify input requirements          | - [ ] Document input features; specify requirements; forbid implicit dependencies             |
-| Feedback            | Document monitoring procedures      | - [ ] Explain feedback loops; document monitoring; forbid unmonitored systems                 |
-| Fields              | Distinguish required from optional  | - [ ] Document field requirements; distinguish types; forbid ambiguous specifications         |
-| Flow                | Define layer progression            | - [ ] Specify layer flows; define progression; forbid undocumented pipelines                  |
-| Follow-up           | Measure query relevance             | - [ ] Document follow-up relevance; measure quality; forbid unmeasured interaction            |
-| Forbidden           | List hardcoding violations          | - [ ] Document forbidden patterns; list violations; forbid undocumented restrictions          |
-| Formatting          | Preserve context via metadata       | - [ ] Document formatting preservation; maintain context; forbid context loss                 |
-| Fragility           | Safeguard via anti-pattern docs     | - [ ] Document fragility prevention; safeguard quality; forbid undocumented risks             |
-| Gates               | Document quality thresholds         | - [ ] Integrate with quality gates; document thresholds; forbid unvalidated documentation     |
-| Geo                 | Document spatial metadata           | - [ ] Specify geo field usage; document spatial data; forbid undocumented location fields     |
-| Graphs              | Embed schema_version metadata       | - [ ] Document version embedding; track schema versions; forbid unversioned graphs            |
-| GraphML             | Document XML transformations        | - [ ] Specify GraphML mappings; document transformations; forbid undocumented exports         |
-| Guidance            | Provide refactoring instructions    | - [ ] Document refactoring guidance; provide instructions; forbid unclear migration paths     |
-| Hardcoding          | Forbid in documentation examples    | - [ ] Eliminate hardcoded examples; forbid domains; forbid project-specific samples           |
-| Heuristics          | Document without domain coupling    | - [ ] Describe heuristics generically; document methods; forbid domain-specific logic         |
-| Impact              | Explain parameter effects           | - [ ] Document impact descriptions; explain effects; forbid unexplained parameters            |
-| Implementers        | Enable domain adaptation            | - [ ] Write for implementers; enable adaptation; forbid implementation-specific docs          |
-| Inference           | Document schema-based methods       | - [ ] Specify inference methods; document schemas; forbid implicit inference logic            |
-| Ingestion           | Document pipeline stages            | - [ ] Specify ingestion flows; document stages; forbid undocumented transformations           |
-| Integration         | Document quality gate alignment     | - [ ] Align with quality gates; document integration; forbid isolated documentation           |
-| Intent              | Provide classification mappings     | - [ ] Map intent to actions; provide classifications; forbid unmapped query types             |
-| Interoperability    | Build cross-domain pipelines        | - [ ] Enable interoperability; build universally; forbid domain-locked documentation          |
-| Intervals           | Specify collection frequencies      | - [ ] Document metric intervals; specify frequencies; forbid unmeasured monitoring            |
-| Iterations          | Log tuning history                  | - [ ] Record tuning iterations; log systematically; forbid untracked adjustments              |
-| JSON-LD             | Specify contract requirements       | - [ ] Document JSON-LD contracts; specify fields; forbid implicit schemas                     |
-| Labels              | Document required fields            | - [ ] Specify label requirements; document fields; forbid undocumented node properties        |
-| Latency             | Document query performance          | - [ ] Measure traversal efficiency; document latency; forbid unmeasured query speed           |
-| Layers              | Capture flow specifications         | - [ ] Document layer flows; capture specs; forbid undocumented architecture                   |
-| Linking             | Specify bidirectional mechanisms    | - [ ] Document linking mechanisms; specify bidirectional; forbid unidirectional tracking      |
-| Logging             | Specify retention requirements      | - [ ] Document logging requirements; specify retention; forbid unclear audit trails           |
-| Lookup              | Map to single-node retrieval        | - [ ] Document lookup strategies; map query types; forbid undocumented retrieval              |
-| Magnitudes          | Document adjustment scales          | - [ ] Specify adjustment magnitudes; document scales; forbid unbounded parameter changes      |
-| Maintenance         | Document monitoring procedures      | - [ ] Specify maintenance docs; document procedures; forbid undocumented operations           |
-| Mappings            | Document field transformations      | - [ ] Specify field mappings; document transformations; forbid implicit conversions           |
-| Matrices            | Define stewardship columns          | - [ ] Document coverage matrices; define roles; forbid individual-based assignments           |
-| Measure             | Define extraction quality           | - [ ] Specify quality measures; define metrics; forbid unmeasured extraction                  |
-| Mentions            | Track consistency metrics           | - [ ] Document mention consistency; track coreferences; forbid unmeasured resolution          |
-| Merge               | Log decision rationale              | - [ ] Document merge decisions; log rationale; forbid unexplained unifications               |
-| Metadata            | Preserve formatting context         | - [ ] Document metadata usage; preserve context; forbid context-stripped documentation        |
-| Methods             | Label extraction techniques         | - [ ] Tag extraction methods; label techniques; forbid unlabeled extractions                  |
-| Metrics             | Define computation methods          | - [ ] Document metrics-based QA; define methods; forbid unmeasured quality                    |
-| Migration           | Provide breaking change scripts     | - [ ] Document migration scripts; provide transitions; forbid unmitigated breaking changes    |
-| Monitoring          | Document feedback procedures        | - [ ] Specify monitoring procedures; document feedback; forbid unmonitored loops              |
-| Multi-hop           | Track confidence through reasoning  | - [ ] Document multi-hop tracking; track confidence; forbid untracked inference chains        |
-| Names               | Specify component identifiers       | - [ ] Document component names; specify identifiers; forbid ambiguous naming                  |
-| Neutral             | Express indicators domain-free      | - [ ] Use neutral indicators; express domain-free; forbid project-specific symbols            |
-| Neutrality          | Align schemas domain-agnostically   | - [ ] Preserve neutrality; align domain-free; forbid domain assumptions                       |
-| Nodes               | Document source tracking            | - [ ] Specify node tracking; document sources; forbid untracked node origins                  |
-| Operations          | List as atomic SVO statements       | - [ ] Express operations atomically; list via SVO; forbid compound actions                    |
-| Optimization        | Document A/B testing frameworks     | - [ ] Specify threshold optimization; document A/B tests; forbid untested thresholds          |
-| Orchestration       | Capture semantic architecture       | - [ ] Document orchestration; capture semantics; forbid structural-only specs                 |
-| Outcomes            | Specify transformation deliverables | - [ ] Document outcomes; specify deliverables; forbid unclear outputs                         |
-| Outputs             | Define schema structures            | - [ ] Specify output schemas; define structures; forbid implicit formats                      |
-| Parameters          | Document with impact descriptions   | - [ ] Specify configuration params; document impact; forbid unexplained settings              |
-| Parsing             | Separate from metadata preservation | - [ ] Document parsing separately; maintain metadata; forbid conflated specifications         |
-| Participation       | Track in coverage matrices          | - [ ] Document participation; track coverage; forbid unclear artifact generation              |
-| Paths               | Document directed search strategies | - [ ] Specify path search; document strategies; forbid undocumented graph traversal           |
-| Patterns            | Provide intent-directive templates  | - [ ] Document patterns; provide templates; forbid ad-hoc documentation styles                |
-| Performance         | Document optimization history       | - [ ] Log performance tuning; document history; forbid untracked optimizations                |
-| Precision           | Define extraction accuracy          | - [ ] Specify precision metrics; define accuracy; forbid unmeasured correctness               |
-| Preservation        | Explain metadata continuity         | - [ ] Document preservation methods; explain continuity; forbid metadata loss                 |
-| Privacy             | Address in audit documentation      | - [ ] Explain privacy considerations; address concerns; forbid unaddressed sensitive data     |
-| Procedures          | Document rollback strategies        | - [ ] Specify rollback procedures; document recovery; forbid unclear failure handling         |
-| Processing          | Explain query logic systematically  | - [ ] Document processing logic; explain systematically; forbid opaque query handling         |
-| Propagation         | Document confidence computation     | - [ ] Specify confidence propagation; document computation; forbid untracked score flow       |
-| Properties          | Document optional field usage       | - [ ] Specify property fields; document usage; forbid undocumented optional data              |
-| Provenance          | Trace with confidence scores        | - [ ] Document provenance tracing; track confidence; forbid untracked lineage                 |
-| Quality             | Apply metrics-based standards       | - [ ] Document quality metrics; apply standards; forbid unmeasured documentation quality      |
-| Query               | Document interface specifications   | - [ ] Specify query interfaces; document APIs; forbid undocumented query patterns             |
-| Ranges              | Document line preservation          | - [ ] Specify line ranges; document preservation; forbid lost source locations                |
-| Rates               | Document conflict resolution        | - [ ] Specify resolution rates; document conflicts; forbid unmeasured conflict handling       |
-| Recall              | Measure against gold standard       | - [ ] Document recall metrics; measure completeness; forbid unmeasured extraction coverage    |
-| Refactoring         | Provide before/after examples       | - [ ] Document refactoring guidance; provide examples; forbid unclear transformation steps    |
-| Referential         | Check integrity constraints         | - [ ] Document referential integrity; check constraints; forbid unchecked references          |
-| Regeneration        | Document artifact automation        | - [ ] Specify regeneration scripts; document automation; forbid manual artifact updates       |
-| Relevance           | Measure answer quality              | - [ ] Document answer relevance; measure quality; forbid unmeasured response accuracy         |
-| Rendering           | Document pipeline stages            | - [ ] Specify rendering flows; document stages; forbid undocumented visualization             |
-| Reproducibility     | Log parameters systematically       | - [ ] Enable reproducibility; log parameters; forbid unreproducible documentation             |
-| Requirements        | Document field necessity            | - [ ] Specify field requirements; document necessity; forbid ambiguous mandatory fields       |
-| Resilience          | Optimize feedback loops             | - [ ] Sustain resilience; optimize loops; forbid fragile monitoring                           |
-| Resolution          | Track conflict handling             | - [ ] Document conflict resolution; track decisions; forbid unresolved conflicts              |
-| Responsibilities    | Capture component duties            | - [ ] Document responsibilities; capture duties; forbid unclear component roles               |
-| Results             | Provide query structure specs       | - [ ] Document result structures; provide specs; forbid implicit query responses              |
-| Retention           | Specify logging durations           | - [ ] Document retention periods; specify durations; forbid unclear audit lifecycles          |
-| Retrieval           | Document traversal strategies       | - [ ] Specify retrieval strategies; document traversal; forbid undocumented graph queries     |
-| Rollback            | Provide degradation procedures      | - [ ] Document rollback procedures; provide recovery; forbid unclear failure responses        |
-| Rules               | Provide structural validation       | - [ ] Document validation rules; provide structural checks; forbid semantic validation        |
-| Scalability         | Document complexity characteristics | - [ ] Specify scalability; document complexity; forbid unanalyzed performance limits          |
-| Schema              | Version with semantic rules         | - [ ] Apply semantic versioning; version schemas; forbid arbitrary schema changes             |
-| Scores              | Document threshold tuning           | - [ ] Specify confidence scores; document tuning; forbid undocumented thresholds              |
-| Scripts             | Provide for breaking changes        | - [ ] Document migration scripts; provide transitions; forbid manual schema migrations        |
-| Search              | Map query types to strategies       | - [ ] Document search mapping; specify strategies; forbid implicit query routing              |
-| Selection           | Document format criteria            | - [ ] Provide selection criteria; document formats; forbid arbitrary export choices           |
-| Semantic            | Separate from structural docs       | - [ ] Maintain semantic separation; document independently; forbid conflated specifications   |
-| Semantics           | Clarify via SVO specifications      | - [ ] Clarify specification semantics; use SVO; forbid ambiguous technical writing            |
-| Sensitivity         | Document tuning ranges              | - [ ] Specify sensitivity ranges; document tuning; forbid unbounded parameter adjustments     |
-| Separation          | Maintain structure-semantic divide  | - [ ] Separate structure from semantics; maintain divide; forbid coupled documentation        |
-| Similarity          | Document computation methods        | - [ ] Specify similarity metrics; document methods; forbid undocumented distance functions    |
-| Single              | Maintain operation atomicity        | - [ ] List single operations; maintain atomicity; forbid compound directive statements        |
-| Source              | Document node tracking mechanisms   | - [ ] Specify source tracking; document mechanisms; forbid untracked node origins             |
-| Specifications      | Provide component intent patterns   | - [ ] Document component specs; provide patterns; forbid incomplete technical specs           |
-| Standards           | Layer flows with component specs    | - [ ] Apply documentation standards; layer systematically; forbid ad-hoc documentation        |
-| State               | Express input/output explicitly     | - [ ] Document state transitions; express explicitly; forbid implicit transformations         |
-| Statistical         | Derive defaults from principles     | - [ ] Use statistical principles; derive defaults; forbid arbitrary baseline values           |
-| Status              | Define neutral coverage matrices    | - [ ] Document status neutrally; define matrices; forbid project-specific coverage tracking   |
-| Stewardship         | Name roles not individuals          | - [ ] Assign to roles; name stewards; forbid individual-based documentation ownership         |
-| Structural          | Provide validation checklists       | - [ ] Document structural validation; provide checklists; forbid semantic property checks     |
-| Structure           | Define output artifact formats      | - [ ] Specify structure; define formats; forbid undocumented data shapes                      |
-| Subject-Verb-Object | Express directives grammatically    | - [ ] Use SVO directives; express grammatically; forbid unclear operational statements        |
-| SVO                 | Structure component documentation   | - [ ] Apply SVO structure; document components; forbid non-grammatical specifications         |
-| Syntactic           | Document path length metrics        | - [ ] Specify syntactic metrics; document paths; forbid undocumented distance measures        |
-| Systems             | Enable cross-domain adaptation      | - [ ] Document systems neutrally; enable adaptation; forbid domain-locked specifications      |
-| Tables              | Use multi-column for coverage       | - [ ] Structure as tables; use multi-column; forbid flat coverage documentation               |
-| Techniques          | Label extraction methods            | - [ ] Document techniques; label methods; forbid unlabeled extraction approaches              |
-| Templates           | Provide transformation patterns     | - [ ] Use documentation templates; provide patterns; forbid inconsistent documentation styles |
-| Testing             | Document domain blindness           | - [ ] Specify testing requirements; document blindness; forbid single-domain validation       |
-| Thresholds          | Document tuning mechanisms          | - [ ] Specify thresholds; document tuning; forbid hardcoded quality gates                     |
-| Traceability        | Enable via comprehensive docs       | - [ ] Document traceability; enable tracking; forbid incomplete provenance documentation      |
-| Tracking            | Specify node-to-source mechanisms   | - [ ] Document tracking mechanisms; specify methods; forbid untracked data lineage            |
-| Transformation      | Document using From-To patterns     | - [ ] Express transformations; use From-To patterns; forbid unclear state transitions         |
-| Transparency        | Log parameters reproducibly         | - [ ] Ensure transparency; log reproducibly; forbid opaque parameter documentation            |
-| Transitive          | Apply confidence decay rules        | - [ ] Document transitive edges; apply decay; forbid static multi-hop confidence              |
-| Traversal           | Explain strategy selection          | - [ ] Document traversal logic; explain selection; forbid undocumented graph navigation       |
-| Triggers            | Specify feedback loop activation    | - [ ] Document reprocessing triggers; specify activation; forbid unclear quality thresholds   |
-| Tuning              | Log iteration history               | - [ ] Document tuning iterations; log history; forbid untracked parameter changes             |
-| Types               | Avoid domain-specific entities      | - [ ] Document types generically; avoid domains; forbid entity-specific documentation         |
-| Unification         | Define quality measures             | - [ ] Document unification metrics; define measures; forbid unmeasured entity merging         |
-| Universal           | Describe operations abstractly      | - [ ] Use universal operations; describe abstractly; forbid domain-coupled algorithms         |
-| Validation          | Provide structural checklists       | - [ ] Document validation guidelines; provide checklists; forbid semantic validation in schema|
-| Variance            | Measure entity coherence            | - [ ] Document intra-cluster variance; measure coherence; forbid unmeasured entity quality    |
-| Versioning          | Apply semantic rules to schemas     | - [ ] Document schema versioning; apply semantic rules; forbid arbitrary version changes      |
-| Violations          | List explicitly with guidance       | - [ ] Document violations; list explicitly; forbid undocumented anti-patterns                 |
-| Vocabulary          | Explain @context mapping            | - [ ] Document vocabulary mapping; explain @context; forbid implicit semantic definitions     |
-| Workflows           | Document docs:update automation     | - [ ] Specify workflow automation; document scripts; forbid undocumented generation processes |
-
----
-
-## Core Directives
-
-### From Principles to Practice
-
-**Documentation captures semantic orchestration architecture**
-- Documenters explain component responsibilities without hardcoded examples
-- Documenters provide configuration schemas with intent-directive annotations
-- Documentation enables implementers to adapt pipeline to any domain
-- Documentation maintains separation between structure and semantics
-
----
-
-## Required Documentation Sections Directives
+Every canonical documentation artifact must contain the following sections. Sections are self-contained and addressable by heading anchor.
 
 ### Architecture Overview
 
-**Documenters define layer flow specifications**
-- Documenters specify component names and single responsibilities
-- Documenters document data structures flowing between layers
-- Documenters avoid coupling to specific datasets or project names
+**Writers define layer flow specifications.**
 
-**Layer Flow Pattern**: Detection → Schema Inference → Ingestion → Parsing → Orchestration → Rendering → Agentic RAG
+- Specify component names and single responsibilities (SVO format)
+- Document data structures flowing between layers
+- Avoid coupling to specific datasets, project names, or vendor-specific identifiers
+- Render multi-component architectures using Mermaid (`flowchart TB` or `sequenceDiagram`); forbid ASCII art for diagrams exceeding five nodes
+
+**Layer flow pattern** *(adapt to the system being documented)*:
+
+```
+[Source] → [Ingest] → [Transform] → [Store] → [Serve] → [Consumer]
+```
 
 ### Component Specifications
 
-**Documenters provide intent-directive patterns for each module**
-- Pattern: **From [input state] to [output state]**: Component → actions → outcome
-- Documenters list subject-verb-object directives
-- Documenters define input/output schemas
-- Documenters specify configuration parameters with key-value semantics (Default, Min, Max, Interval, impact description)
-- Documenters document algorithm patterns without domain assumptions
+**Writers provide intent-directive patterns for each module.**
+
+- **Pattern**: **From `[input state]` to `[output state]`**: Component → [actions] → [outcome]
+- List subject-verb-object (SVO) directives for every operation
+- Define input and output schemas with typed fields
+- Specify configuration parameters with key-value semantics: Default, Min, Max, Interval, impact description
+- Document algorithm patterns without domain assumptions
 
 ### Configuration Reference
 
-**Documenters document adaptive thresholds with impact explanations**
-- Documenters specify tuning sensitivity ranges
-- Documenters explain feedback loop triggers
-- Documenters provide default values derived from statistical principles, not project-specific tuning
-- Documenters enable reproducibility through parameter logging
+**Writers document adaptive parameters with impact explanations.**
+
+- Specify tuning sensitivity ranges
+- Explain feedback loop triggers
+- Provide default values derived from principled baselines, not project-specific tuning
+- Enable reproducibility through parameter logging
+- Forbid hardcoded thresholds with no stated rationale
 
 ### Validation Guidelines
 
-**Documenters provide structural validation checklists**
-- Documenters check required fields, referential integrity
-- Documenters explicitly state non-validated semantic aspects
-- Documenters include zero-hardcoding audit questions
-- Documenters document domain-agnostic validation patterns
+**Writers provide structural validation checklists.**
+
+- Check required fields and referential integrity
+- Explicitly state which semantic aspects are not validated by schema
+- Include zero-hardcoding audit questions
+- Document domain-agnostic validation patterns
 
 ---
 
-## Component Documentation Template Directives
+## Component Documentation Template
 
-**Documenters structure component documentation using transformation statements**
+**Writers structure component documentation using transformation statements.**
 
-**From [input state] to [output state]**: Component name → detects/extracts/computes/merges/infers [specific actions using statistical or NLP methods] → [transformation steps] → delivers [output artifacts with provenance] for [downstream use case].
+**From `[input state]` to `[output state]`**: `[Component]` → detects / extracts / computes / merges / infers `[specific actions]` → `[transformation steps]` → delivers `[output artifacts with provenance]` for `[downstream use case]`.
 
-**Documenters list atomic operations as subject-verb-object directives**
-- Documenters express operations (component verbs input_type, component computes metric_via_method, component validates constraint)
-- Documenters avoid compound actions
-- Documenters maintain single responsibility per directive
+### Atomic SVO Directives
 
-**Documenters define configuration schemas**
-- Pattern: Parameter name → From [low state] to [high state]: Component → [action based on parameter] → [controls aspect] → [affects downstream quality dimension]. Default: value; Min: value; Max: value; Interval: step; [Impact description in 15 words].
+List every operation as a subject-verb-object statement:
 
-**Documenters describe algorithm patterns**
-- Documenters describe computation using universal operations (clustering, similarity computation, path finding)
-- Documenters specify input features and output structures
-- Documenters avoid referencing specific entity types or domains
-- Documenters document complexity and scalability characteristics
+- `[Component]` **verbs** `[input type]` via `[method]`
+- `[Component]` **computes** `[metric]` using `[algorithm]`
+- `[Component]` **validates** `[constraint]` against `[schema]`
+
+Forbid compound actions. Maintain single responsibility per directive.
+
+### Configuration Schema Pattern
+
+```
+[Parameter name] → From [low state] to [high state]:
+  [Component] → [action based on parameter value] → controls [aspect] → affects [downstream quality dimension]
+  Default: [value] | Min: [value] | Max: [value] | Interval: [step]
+  Impact: [one-sentence description]
+```
+
+### Algorithm Description Pattern
+
+- Describe computation using universal operations: clustering, similarity computation, path finding, ranking, aggregation
+- Specify input features and output structures
+- Avoid referencing specific entity types or domain labels
+- Document time/space complexity and scalability characteristics
 
 ---
 
-## Provenance Documentation Standards Directives
+## Flow Patterns Documentation
+
+Documentation must cover all five canonical flow types defined in the PRD/TAD guidelines. For each flow, the documentation artifact must include the specified sub-sections.
+
+### User Journey Flow Documentation
+
+**Writers map persona paths from trigger to outcome.**
+
+- Document each journey stage: Trigger → Discover → Engage → Complete → Return
+- Capture emotion, friction, and opportunity at each stage
+- Anchor every feature story to a journey stage
+- Forbid feature documentation with no journey anchor
+
+**Template**:
+```markdown
+## Journey: [Persona] — [Goal]
+
+| Stage    | Action              | Touchpoint       | Pain Point   | Opportunity   |
+|----------|---------------------|------------------|--------------|---------------|
+| Trigger  | [What prompts user] | [Entry channel]  | [Friction]   | [Improvement] |
+| Discover | [User action]       | [UI/API/surface] | [Friction]   | [Improvement] |
+| Engage   | [Core task]         | [UI/API/surface] | [Friction]   | [Improvement] |
+| Complete | [Goal achieved]     | [Confirmation]   | [Drop-off]   | [Delight]     |
+| Return   | [Re-entry trigger]  | [Channel]        | [Churn risk] | [Retention]   |
+```
+
+### Workflow Flow Documentation
+
+**Writers document task sequences through actors, decisions, and system states.**
+
+Every workflow documentation block must include: trigger, happy path, at least one alternate path, at least one error path, and postconditions.
+
+**Template**:
+```markdown
+## Workflow: [Name]
+
+**Trigger**: [Event or condition]
+**Actors**: [Human roles and system components]
+
+**Happy Path**:
+1. [Actor] performs [action] → [system state changes]
+2. [System] processes [input] → [output artifact]
+3. [Actor] receives [output] → workflow complete
+
+**Alternate Paths**:
+- [Condition]: [divergent steps] → [resolution]
+
+**Error Paths**:
+- [Failure mode]: [error handling] → [recovery or escalation]
+
+**Postconditions**: [Observable system state after workflow completes]
+```
+
+### Data Flow Documentation
+
+**Writers trace data movement from source through transformation to consumption.**
+
+Every data flow documentation block must specify schema at every stage boundary, persistence layer, and error handling per stage.
+
+**Template**:
+```markdown
+## Data Flow: [Name]
+
+| Stage     | Component       | Input Format    | Output Format   | Persistence      | Error Handling    |
+|-----------|-----------------|-----------------|-----------------|------------------|-------------------|
+| Ingest    | [Component]     | [Schema/format] | [Schema/format] | [None/queue/db]  | [Retry/DLQ/skip]  |
+| Transform | [Component]     | [Schema/format] | [Schema/format] | [None/cache]     | [Retry/fail-fast] |
+| Store     | [Storage layer] | [Schema/format] | [Schema/format] | [DB/blob/index]  | [Rollback/alert]  |
+| Serve     | [API/stream]    | [Query params]  | [Response schema]| [Cache/CDN]     | [Fallback/503]    |
+```
+
+### Orchestration/Harness Flow Documentation
+
+**Writers document AI pipeline control paths: validation, routing, execution, observation, and cost.**
+
+Every Orchestration/Harness Flow documentation block must name dispatcher, executor, observer, and consumer roles; specify cost log fields; define fallback paths; and — for loops — state max-iteration bound and circuit-breaker condition.
+
+**Template**:
+```markdown
+## Orchestration/Harness Flow: [Pipeline Name]
+
+**Trigger**: [Event or condition]
+**Topology pattern**: [Sequential | Fan-out/Fan-in | Agentic loop]
+**Max iterations** *(loops only)*: [N] | **Circuit-breaker**: [exit condition]
+**Token budget**: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/call]
+
+| Role       | Component         | Input schema      | Output schema     | Cost log | Fallback                   |
+|------------|-------------------|-------------------|-------------------|----------|----------------------------|
+| Dispatcher | [Component]       | [Typed payload]   | [Routed payload]  | —        | [Reject with typed error]  |
+| Executor   | [Harness + model] | [Typed prompt]    | [Typed response]  | ✓        | [Degraded / retry]         |
+| Observer   | [Logger]          | [Cost log stream] | [Metric / alert]  | —        | [Silent fail; log gap]     |
+| Consumer   | [Downstream]      | [Typed response]  | [Artifact/state]  | —        | [Upstream error]           |
+```
+
+### Topology Documentation
+
+**Writers document the structural snapshot of all components at a stated point in time.**
+
+Every topology documentation block must name every connection type, state data residency for every storage node, and be version-stamped on every update.
+
+**Template**:
+```markdown
+## Topology: [System Name] v[version] — [Date or milestone]
+
+**Boundaries**: [Runtime environments, network zones, or trust domains]
+
+| Node        | Role                              | Type                    | Connects to | Connection type | Data residency |
+|-------------|-----------------------------------|-------------------------|-------------|-----------------|----------------|
+| [Component] | [Producer/Consumer/Router/Store]  | [Service/Function/DB]   | [Node(s)]   | [Sync/Async]    | [Region/Cloud] |
+
+**Runtime diagram**: Mermaid `flowchart TB` — nodes grouped by boundary using subgraphs
+**Version notes**: [What changed from prior topology version]
+```
+
+---
+
+## Provenance and Traceability
 
 ### Bidirectional Linking
 
-**Documenters specify node-to-source tracking mechanisms**
-- Documenters explain how nodes track source documents via metadata.documentPath
-- Documenters specify line range preservation (lineStart, lineEnd)
-- Documenters define structure_type annotation (Paragraph, List, CodeBlock, Section, Table)
-- Documenters clarify parsers extract semantics while metadata preserves formatting context
+**Writers specify node-to-source tracking mechanisms.**
+
+- Document how output nodes track source documents via metadata (e.g., `metadata.sourcePath`, `lineStart`, `lineEnd`)
+- Specify structure-type annotations (e.g., Paragraph, List, CodeBlock, Section, Table) at the schema level
+- Clarify that parsers extract semantics while metadata preserves formatting context; forbid conflating the two
+- Forbid undocumented node-to-source tracking mechanisms
 
 ### Confidence Propagation
 
-**Documenters document confidence score computation methods**
-- Documenters explain threshold tuning mechanisms
-- Documenters specify confidence decay for inferred relationships (transitive edges multiply parent confidences by 0.8)
-- Documenters track confidence through multi-hop reasoning
-- Methods include: syntactic path length, embedding coherence
+**Writers document confidence score computation methods.**
+
+- Explain threshold tuning mechanisms
+- Specify confidence decay rules for inferred or transitive relationships (e.g., transitive edges multiply parent confidence scores by a stated factor)
+- Document multi-hop confidence tracking through reasoning chains
+- Specify computation methods: syntactic path length, embedding coherence, or equivalent
+- Forbid static confidence scores with no stated decay or propagation rule
 
 ### Extraction Method Tracking
 
-**Documenters label nodes and edges with extraction methods**
-- Documenters tag with extraction_method (dependency_parsing, pattern_mining, user_curated)
-- Documentation enables quality analysis by method
-- Documentation supports selective re-extraction when algorithms improve
+**Writers label output nodes and edges with extraction provenance.**
+
+- Tag output artifacts with extraction method (e.g., pattern-based, statistical, user-curated)
+- Document how the tagging enables quality analysis by method
+- Specify how selective re-extraction is triggered when algorithms improve
+- Forbid unlabeled extraction outputs with no traceable origin
+
+### VCC Traceability
+
+**Writers derive Verifiable Completion Conditions (VCCs) from acceptance criteria.**
+
+Every acceptance criterion in a PRD maps to a VCC used at implementation time. Documentation must surface:
+- The end state (one measurable, observable outcome)
+- The stated check (how the outcome is demonstrated)
+- The scope constraint (what must not change while reaching the end state)
+- The iteration bound (optional cap for loop-based implementations)
+
+**Traceability pattern**:
+```
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition]
+```
+
+Forbid documentation that leaves acceptance criteria without a traceable VCC expression.
 
 ---
 
-## Quality Metrics Documentation Directives
+## Quality Metrics Documentation
 
 ### Extraction Metrics
 
-**Metric definers define extraction quality measures**
-- Definers specify precision (correct extractions / total extractions)
-- Definers specify recall (correct extractions / gold standard)
-- Definers specify entity coherence (1 - intra-cluster variance)
-- Definers specify mention consistency (successful coreferences / total pronouns)
-- Definers document computation methods
-- Definers document feedback loop triggers
+**Writers define extraction quality measures.**
+
+- Precision: correct extractions / total extractions
+- Recall: correct extractions / gold standard
+- Entity coherence: 1 − intra-cluster variance (or equivalent normalized measure)
+- Mention consistency: successful resolutions / total candidate references
+- Document computation methods and feedback loop triggers for each metric
 
 ### Unification Metrics
 
-**Metric definers define unification quality measures**
-- Definers specify merge precision, duplicate rate, conflict resolution rate, cross-document coverage
-- Definers explain aggregation across corpus
-- Definers specify quality thresholds for reprocessing triggers
+**Writers define unification quality measures.**
 
-### Query Metrics
+- Merge precision, duplicate detection rate, conflict resolution rate, cross-document coverage
+- Explain aggregation method across corpus
+- Specify quality thresholds that trigger reprocessing or review
 
-**Metric definers define query performance measures**
-- Definers specify answer relevance, citation coverage, traversal efficiency, follow-up relevance
-- Definers explain LLM-based evaluation where applicable
-- Definers document A/B testing frameworks for threshold optimization
+### Query and Pipeline Metrics
 
----
+**Writers define query performance measures.**
 
-## Anti-Pattern Documentation Directives
+- Answer relevance, citation coverage, traversal efficiency, follow-up relevance
+- Explain evaluation method (human review, automated scoring, or equivalent)
+- Document A/B testing or threshold optimization frameworks
+- Forbid unmeasured pipeline stages
 
-### Forbidden Patterns
+### Token Economics (AI Pipelines)
 
-**Documenters explicitly list violations**
-- Violations include: hardcoded project names, domain-specific entity types in code, static thresholds without configuration, validation of property semantics in schema
-- Documenters provide refactoring guidance
-- Documenters include before/after examples showing abstract feature replacement
+**Writers document token budget estimates for every AI-powered pipeline.**
 
-### Testing Requirements
-
-**Documenters document domain blindness tests**
-- Test question: Can component process medical, legal, financial content without code changes?
-- Documenters specify minimum corpus diversity for validation (3+ domains)
-- Documenters require configuration-only adaptation demonstration
+- Estimate prompt tokens + completion tokens + cache hit rate at target load
+- State cost-per-request budget and monthly projection
+- Track actuals against estimates each sprint; update projections when model pricing or traffic changes
+- Forbid AI pipeline documentation without token budget estimates
 
 ---
 
-## Schema and API Documentation Directives
+## Schema and API Documentation
 
-### JSON-LD Contract
+### Schema Contract Documentation
 
-**Schema documenters specify field requirements**
-- Documenters document required fields (@id, labels, source, target)
-- Documenters specify optional fields (properties, chunk_text, embedding, geo, metadata)
-- Documenters explain @context usage and vocabulary mapping
-- Documenters provide structural validation rules without semantic constraints
+**Writers specify field requirements for every data contract.**
 
-### Query Interface
+- Document required fields and optional fields with distinct sections
+- Explain `@context` or vocabulary mapping; forbid implicit semantic definitions
+- Provide structural validation rules; forbid semantic constraints embedded in structural schemas
+- Version schemas with semantic versioning rules; forbid arbitrary schema changes
 
-**API documenters explain query processing logic**
-- Documenters document intent classification mapping (FACTOID → single-node lookup, CAUSALITY → directed path search)
-- Documenters specify traversal strategy selection logic
-- Documenters explain adaptive depth adjustment algorithm
-- Documenters provide query result structure with provenance
+### Query Interface Documentation
 
-### Export Formats
+**Writers explain query processing logic.**
 
-**Format documenters specify transformation mappings**
-- Documenters document transformation from internal GraphData to JSON-LD, DuckDB, Neo4j Cypher, GraphML
-- Documenters specify field mappings
-- Documenters explain metadata preservation across formats
-- Documenters provide format selection criteria based on downstream tools
+- Document intent classification mapping (e.g., lookup → single-node retrieval, causal → directed path search)
+- Specify traversal strategy selection logic
+- Explain adaptive depth or pagination adjustment algorithms
+- Provide query result structure documentation with provenance fields
+- Forbid undocumented query patterns or implicit routing logic
+
+### Export Format Documentation
+
+**Writers specify transformation mappings between internal and external formats.**
+
+- Document field mappings from internal schema to each target format
+- Explain metadata preservation across format conversions
+- Provide format selection criteria based on downstream use cases
+- Forbid undocumented format transformations or implicit field mapping
 
 ---
 
-## Maintenance Documentation Directives
+## Maintenance Documentation
 
 ### Feedback Loop Monitoring
 
-**Maintainers document monitoring procedures**
-- Maintainers document metric collection intervals
-- Maintainers specify parameter adjustment magnitudes
-- Maintainers explain convergence detection
-- Maintainers provide rollback procedures for degraded performance
-- Maintainers log all tuning iterations for reproducibility
+**Writers document monitoring procedures.**
+
+- Document metric collection intervals
+- Specify parameter adjustment magnitudes and their effect on downstream quality
+- Explain convergence detection mechanisms
+- Provide rollback procedures for degraded performance states
+- Log all tuning iterations for reproducibility; forbid unlogged tuning decisions
 
 ### Schema Evolution
 
-**Schema stewards document versioning strategies**
-- Stewards apply semantic versioning for schemas
-- Stewards embed metadata.schema_version in graphs
-- Stewards specify backward compatibility requirements (optional field additions allowed, required field additions forbidden)
-- Stewards provide migration scripts for breaking changes
+**Writers document versioning strategies.**
+
+- Apply semantic versioning to all schemas
+- Embed schema version metadata in output artifacts
+- Specify backward compatibility requirements (e.g., optional field additions permitted; required field additions are breaking changes)
+- Provide migration scripts for every breaking change; forbid breaking changes without migration guidance
 
 ### Audit Trail Requirements
 
-**Audit engineers document logging requirements**
-- Engineers specify what to log (extraction parameters, confidence thresholds, entity merge decisions, conflict resolutions)
-- Engineers specify retention periods
-- Engineers explain privacy considerations for source document metadata
-- Engineers enable reproducible pipeline execution from logs
+**Writers document logging requirements.**
+
+- Specify what to log: extraction parameters, confidence thresholds, merge decisions, conflict resolutions
+- Specify retention periods for each log type
+- Address privacy considerations for source-document metadata
+- Enable reproducible pipeline execution from logs alone; forbid log gaps that prevent replay
+
+### Automation Contracts
+
+**Writers document documentation generation workflows.**
+
+- Describe scripts that regenerate documentation artifacts from source inputs using SVO directives
+- Specify input locations, output locations, and triggering conditions
+- Ensure automation remains configuration-driven (no hardcoded domains)
+- Record how automation integrates with quality gates (lint, typecheck, tests)
+- Forbid undocumented automation scripts or manually maintained generated artifacts
+
+**Writers define neutral status matrices for documentation coverage.**
+
+- Use multi-column tables to distinguish participation in: artifact generation, documentation linting/sanity checks, and QA pipelines
+- Express coverage using neutral indicators (`[x]` / `[ ]`); forbid domain-specific coverage symbols
+- Add a stewardship column that names roles, not individuals
+- Keep matrices configuration-driven; forbid special-case logic embedded in coverage tables
 
 ---
 
-## Automation Contracts for Documentation
+## CID Directive Matrix
 
-**Automation maintainers document docs:update-style workflows**
-- Maintainers describe scripts that regenerate documentation artifacts from source markdown (for example, EDA-to-ML pipelines) using SVO directives.
-- Maintainers specify input locations (docs/documents paths), output locations (preview artifact directories), and triggering commands (for example, dev/build hooks).
-- Maintainers ensure automation remains configuration-driven (no hardcoded domains) and aligns with documentation schemas.
-- Maintainers record how automation integrates with quality gates (lint, typecheck, tests) so documentation updates are validated alongside code.
+Each row is a universal, neutral, project-agnostic directive in `Context | Intent | Directive` grammar. Rows are sorted A→Z.
 
-**Automation maintainers define neutral status matrices for documentation coverage**
-- Maintainers use multi-column tables to distinguish participation in artifact generation (for example, docs:update), documentation linting/sanity checks (for example, doc:lint and doc:sanity), and tests/QA pipelines (for example, docs:qa or equivalent).
-- Maintainers express coverage using neutral indicators (for example, `[x]` / `[ ]`) without referencing domain-specific projects or datasets.
-- Maintainers add a stewardship column that names roles (for example, Technical Writer, Component Documenter, Schema Documenter, API Documenter) instead of individuals, aligning with Role—Action—Outcome patterns.
-- Maintainers keep matrices configuration-driven so new documentation sources can be added by updating tables and automation configuration rather than embedding special-case logic.
+| Context | Intent | Directive |
+|---------|--------|-----------|
+| Accountability | Secure via provenance tracing | - [ ] Trace provenance with confidence scores; secure accountability; forbid untracked origins |
+| Adaptability | Enable cross-domain deployment | - [ ] Drive schemas via configuration; enable adaptability; forbid hardcoded domain assumptions |
+| Adjustment | Document parameter tuning | - [ ] Specify adjustment magnitudes and effects; document tuning history; forbid undocumented parameter changes |
+| Aggregation | Explain corpus-wide metrics | - [ ] Document aggregation methods; explain metric computation; forbid opaque aggregation logic |
+| Algorithms | Describe universal operations | - [ ] Use universal algorithm patterns; describe abstractly; forbid domain-specific method names in documentation |
+| Alignment | Synchronize with CID annotations | - [ ] Align schemas with CID annotations; synchronize specifications; forbid unmarked or unannotated schemas |
+| Ambiguity | Ensure specification clarity | - [ ] Prevent ambiguity; ensure clarity at every boundary; forbid vague or implicit specifications |
+| Annotations | Mark with intent-directive patterns | - [ ] Annotate with CID; mark specifications; forbid unannotated schemas |
+| Anti-patterns | List forbidden violations | - [ ] Document prohibited patterns with corrections; forbid undocumented anti-patterns |
+| API | Specify integration contracts | - [ ] Document query interfaces; specify processing logic; forbid undocumented endpoints or implicit routing |
+| Architecture | Define layer flow specifications | - [ ] Capture architecture flows with Mermaid; define layers; forbid undocumented multi-component structures |
+| Artifacts | Specify output structures | - [ ] Document output artifact schemas; specify structures; forbid implicit output formats |
+| Atomic | Express single operations | - [ ] List operations as atomic SVO statements; forbid compound or multi-action directives |
+| Audit | Document logging requirements | - [ ] Specify audit trail content and retention; document logging; forbid unlogged decisions |
+| Automation | Define documentation generation workflows | - [ ] Document automation contracts; specify triggers and outputs; forbid undocumented generation scripts |
+| Backward | Maintain compatibility requirements | - [ ] Preserve backward compatibility across schema changes; forbid breaking changes without migration scripts |
+| Boundaries | Avoid dataset coupling | - [ ] Maintain layer boundaries; use placeholders; forbid dataset-specific or project-specific examples |
+| Capture | Document responsibilities clearly | - [ ] Capture component responsibilities in SVO format; forbid ambiguous or role-free documentation |
+| Clarity | Preserve structural understanding | - [ ] Layer flows with component specs; ensure clarity; forbid obscure or undocumented architectures |
+| Coherence | Maintain structure-semantic separation | - [ ] Separate structure from semantics in documentation; forbid coupled or conflated specifications |
+| Configuration | Document adaptive parameters | - [ ] Specify configuration schemas with impact; document all adaptive parameters; forbid hardcoded values |
+| Constraints | Provide structural validation rules | - [ ] Document constraints as structural rules; forbid semantic validation embedded in structural schemas |
+| Contracts | Specify data schema requirements | - [ ] Document schema contracts with required and optional fields; forbid implicit agreements |
+| Coverage | Define neutral status matrices | - [ ] Document coverage matrices with neutral indicators; forbid domain-specific coverage tracking |
+| Data States | Handle all fetch and processing states | - [ ] Document loading, stale, error, and empty states for every data-consuming component; forbid single-state documentation |
+| Decisions | Log for reproducibility | - [ ] Document merge and architectural decisions; log rationale; forbid unlogged choices |
+| Dependencies | Map component relationships | - [ ] Identify and document dependencies; forbid undeclared coupling or implicit relationships |
+| Documentation | Structure with transformation flows | - [ ] Layer flows with specs; structure clearly; forbid flat or unstructured documentation |
+| Domain | Test blindness systematically | - [ ] Document domain blindness tests; validate neutrality across ≥ 3 domains; forbid single-domain validation |
+| Error | Specify handling strategies | - [ ] Document error paths with recovery or escalation; forbid undefined error states |
+| Evolution | Document schema versioning | - [ ] Track schema evolution with semantic versioning; forbid unversioned or arbitrarily changed schemas |
+| Execution | Enable reproducible pipelines | - [ ] Log execution parameters; enable full reproducibility from logs; forbid unreproducible runs |
+| Export | Document format transformations | - [ ] Specify export field mappings; document transformations; forbid undocumented format conversions |
+| Extraction | Define quality measures | - [ ] Document precision, recall, and coherence metrics; forbid unmeasured extraction |
+| Feedback | Document monitoring procedures | - [ ] Explain feedback loops and triggers; document monitoring; forbid unmonitored quality signals |
+| Fields | Distinguish required from optional | - [ ] Document field requirements distinctly; forbid ambiguous mandatory-field specifications |
+| Flow | Define layer progression | - [ ] Specify layer flows for every pipeline; define progression; forbid undocumented data pipelines |
+| Forbidden | List hardcoding violations | - [ ] Document all forbidden patterns with examples; forbid undocumented restrictions |
+| Formatting | Preserve context via metadata | - [ ] Document metadata preservation methods; forbid context-stripped documentation |
+| Gates | Document quality thresholds | - [ ] Integrate documentation with quality gates; document thresholds; forbid unvalidated documentation |
+| Hardcoding | Forbid in documentation examples | - [ ] Eliminate hardcoded project or dataset names; use placeholders; forbid project-specific samples |
+| Harness | Document AI pipeline control contracts | - [ ] Document harness input/output schemas, cost log fields, and fallback paths; forbid raw prompt calls with no harness contract |
+| Impact | Explain parameter effects | - [ ] Document impact descriptions for every parameter; forbid unexplained configuration settings |
+| Integration | Document quality gate alignment | - [ ] Align documentation with quality gates; forbid isolated documentation not tied to validation |
+| Interoperability | Build cross-domain pipelines | - [ ] Enable interoperability; document universally; forbid domain-locked documentation |
+| Journeys | Map user workflows | - [ ] Chart user journeys for every user-facing feature; forbid journey-free feature documentation |
+| Logging | Specify retention requirements | - [ ] Document logging requirements and retention periods; forbid unclear audit lifecycles |
+| Maintenance | Document monitoring and rollback | - [ ] Specify maintenance procedures and rollback strategies; forbid undocumented operational procedures |
+| Mapping | Trace requirements to implementation | - [ ] Link specs to implementation via PRD ↔ TAD ↔ VCC chain; forbid orphaned requirements |
+| Metrics | Define computation methods | - [ ] Document quality metrics with computation methods; forbid unmeasured quality dimensions |
+| Migration | Provide breaking change scripts | - [ ] Provide migration scripts for every breaking change; forbid manual schema migrations |
+| Modularity | Design independent documentation units | - [ ] Each section is self-contained and liftable; forbid cross-section coupling |
+| Neutrality | Maintain domain independence | - [ ] Design documentation domain-neutral; forbid project names, vendor names, or dataset labels in rules |
+| Observability | Enable system transparency | - [ ] Document telemetry, cost log emission, and observability hooks; forbid black-box pipeline documentation |
+| Orchestration | Document AI pipeline topology | - [ ] Specify orchestration topology (sequential/fan-out/agentic); set max-iteration bounds; forbid unbounded loops |
+| Outcomes | Specify transformation deliverables | - [ ] Document outcomes and output artifacts; forbid unclear or implicit deliverables |
+| Parameters | Document with impact descriptions | - [ ] Specify every parameter with default, range, and impact; forbid unexplained configuration settings |
+| Patterns | Provide intent-directive templates | - [ ] Document patterns with templates; forbid ad-hoc documentation styles |
+| Performance | Specify response requirements | - [ ] Document latency and throughput targets; forbid unspecified or unmeasured performance criteria |
+| Provenance | Trace with source and method metadata | - [ ] Document provenance for every output artifact; forbid untracked data lineage |
+| Quality | Apply metrics-based standards | - [ ] Document quality standards with metrics; forbid unmeasured or subjective quality gates |
+| Reproducibility | Log parameters systematically | - [ ] Enable full reproducibility from logs; forbid unreproducible documentation or pipeline execution |
+| Resilience | Optimize feedback loops | - [ ] Document resilience mechanisms; forbid fragile or unmonitored feedback loops |
+| Responsibilities | Capture component duties | - [ ] Document component responsibilities in SVO format; forbid unclear or ambiguous component roles |
+| Rollback | Provide degradation procedures | - [ ] Document rollback procedures; forbid unclear failure or degradation responses |
+| Scalability | Document complexity characteristics | - [ ] Specify scalability and complexity; forbid unanalyzed performance characteristics |
+| Schema | Version with semantic rules | - [ ] Apply semantic versioning to all schemas; forbid arbitrary or undocumented schema changes |
+| Separation | Maintain structure-semantic divide | - [ ] Separate structural and semantic documentation; forbid conflated specifications |
+| Stewardship | Name roles not individuals | - [ ] Assign documentation ownership to roles; forbid individual-based stewardship assignments |
+| TCO | Make total cost explicit | - [ ] Document 12-month TCO for every dependency; forbid uncosted architectural decisions |
+| Thresholds | Document tuning mechanisms | - [ ] Specify thresholds with tuning guidance; forbid hardcoded quality gates with no rationale |
+| Token Economics | Treat token spend as a metric | - [ ] Estimate prompt + completion tokens per pipeline call; track actuals; forbid AI pipelines without token budgets |
+| Topology | Map structural component connections | - [ ] Document runtime topology for systems with ≥ 3 components; name every connection type; forbid implicit or unlabelled connections |
+| Traceability | Enable via comprehensive docs | - [ ] Document full PRD ↔ TAD ↔ VCC chain; forbid incomplete provenance documentation |
+| Transformation | Document using From-To patterns | - [ ] Express every transformation as From [input state] to [output state]; forbid unclear state transitions |
+| Transparency | Log parameters reproducibly | - [ ] Ensure parameter transparency; log reproducibly; forbid opaque configuration documentation |
+| Validation | Provide structural checklists | - [ ] Provide validation checklists for every document type; forbid subjective or unchecked documentation |
+| VCC | Derive from acceptance criteria | - [ ] Express every acceptance criterion as an evaluable VCC; forbid criteria that an agent cannot verify from its own output |
+| Versioning | Apply semantic rules | - [ ] Apply semantic versioning to documents and schemas; forbid unversioned or in-place overwrites |
+| Violations | List explicitly with guidance | - [ ] Document violations with corrections; forbid undocumented anti-patterns |
+| Workflows | Document process flows | - [ ] Document workflows with trigger, happy path, alternate paths, error paths, and postconditions; forbid workflow-free features |
+
+---
+
+## Anti-Pattern Guards
+
+**Documentation Content**:
+❌ Hardcoded project names, dataset labels, or vendor-specific identifiers in rules or examples
+→ ✅ Use placeholders (`[...]`); keep all examples domain-agnostic
+
+❌ Vague or non-observable acceptance criteria ("documentation is complete", "system is working")
+→ ✅ Every criterion expressible as a VCC: one measurable end state + a stated check + scope constraints
+
+❌ Flat documentation without layer flows or component specs
+→ ✅ Structure documentation with transformation flows; layer flows with component specs
+
+❌ Component documentation with no stated responsibility
+→ ✅ Every component documented with an SVO responsibility statement
+
+❌ Configuration parameters with no impact description or default value
+→ ✅ Every parameter documented with default, min, max, interval, and impact description
+
+**Schema and API**:
+❌ Schema contracts with implicit or undocumented fields
+→ ✅ All required and optional fields documented; vocabulary mappings explicit
+
+❌ Query interfaces with no traversal strategy or intent classification documentation
+→ ✅ Query logic documented with intent-to-strategy mappings
+
+❌ Export formats with undocumented field mappings
+→ ✅ All export field mappings specified; metadata preservation documented
+
+**AI Pipelines**:
+❌ AI pipelines documented only as data flows with no harness contract
+→ ✅ Every AI pipeline has an Orchestration/Harness Flow with dispatcher, executor, observer, and consumer roles named
+
+❌ Agentic loops with no max-iteration bound or circuit-breaker condition
+→ ✅ Every loop specifies max iterations and a circuit-breaker exit condition; token spend is bounded and observable
+
+❌ Token cost treated as invisible; no prompt/completion budget documented
+→ ✅ Token budget estimated and documented per pipeline; actuals tracked and compared to estimates
+
+**Provenance and Versioning**:
+❌ Output artifacts with no extraction method label or source tracking
+→ ✅ Every artifact tagged with extraction method and source provenance
+
+❌ Schema changes without version bump or migration script
+→ ✅ Semantic versioning applied; breaking changes accompanied by migration scripts
+
+❌ Confidence scores with no decay rule or propagation documentation
+→ ✅ Confidence propagation and decay rules stated explicitly
+
+**Maintenance and Automation**:
+❌ Documentation artifacts maintained manually when they can be generated
+→ ✅ Automation contracts documented; generated artifacts regenerated via scripted workflows
+
+❌ Status coverage matrices using domain-specific symbols or individual names
+→ ✅ Neutral indicators (`[x]` / `[ ]`); role-based stewardship columns
 
 ---
 
 ## Documentation Validation Checklist
 
-**Pre-Commit** (Required):
-- [ ] Documenters verify zero hardcoded project/dataset names
-- [ ] Documenters confirm all schemas include CID annotations
-- [ ] Documenters validate SVO structure in directives
-- [ ] Documenters check configuration parameters have impact descriptions
-- [ ] Documenters ensure algorithm descriptions use universal operations
+### Pre-Commit (Required)
 
-**Code Review** (Required):
-- [ ] Reviewers audit for domain-specific examples
-- [ ] Reviewers verify structure-semantic separation maintained
-- [ ] Reviewers check provenance mechanisms documented
-- [ ] Reviewers validate quality metrics defined with computation methods
-- [ ] Reviewers confirm anti-patterns explicitly listed
+- [ ] Zero hardcoded project, dataset, or vendor names in rules and examples
+- [ ] All schemas include CID annotations
+- [ ] SVO structure validated in all directives
+- [ ] Configuration parameters have impact descriptions and default values
+- [ ] Algorithm descriptions use universal, domain-agnostic operations
+- [ ] YAML frontmatter is valid and complete
 
-**Post-Documentation** (Required):
-- [ ] Maintainers verify domain blindness tests documented
-- [ ] Maintainers confirm minimum 3+ domain validation specified
-- [ ] Maintainers validate transformation patterns use From-To format
-- [ ] Maintainers check all parameters logged for reproducibility
+### Code Review (Required)
+
+- [ ] No domain-specific examples or coupled documentation
+- [ ] Structure-semantic separation maintained throughout
+- [ ] Provenance mechanisms documented (source tracking, extraction method, confidence)
+- [ ] Quality metrics defined with computation methods
+- [ ] Anti-patterns explicitly listed with corrections
+
+### Post-Documentation (Required)
+
+- [ ] Domain blindness tests documented; ≥ 3-domain validation specified
+- [ ] All transformation patterns use From-To format
+- [ ] All parameters logged for reproducibility
+- [ ] VCCs derived from every acceptance criterion
+- [ ] Topology documented for every system with ≥ 3 components
+- [ ] Token budgets documented for every AI-powered pipeline
+- [ ] Schema versioned and migration scripts provided for breaking changes
+- [ ] Automation contracts documented; no manually maintained generated artifacts
 
 ---
 
 ## Role—Action—Outcome
 
-**Role: Technical Writer**  
-→ Action: captures architecture flows, documents component specifications using SVO directives, creates configuration schemas, provides algorithm patterns without domain coupling  
+**Role: Technical Writer**
+→ Action: captures architecture flows; documents component specifications using SVO directives; creates configuration schemas; provides algorithm patterns without domain coupling
 → Outcome: produces domain-agnostic documentation enabling cross-domain pipeline adaptation
 
-**Role: Component Documenter**  
-→ Action: writes intent-directive patterns, lists atomic operations, defines input/output schemas, specifies configuration parameters with impact descriptions  
-→ Outcome: delivers focused component documentation maintaining single responsibility clarity
+**Role: Component Documenter**
+→ Action: writes intent-directive patterns; lists atomic SVO operations; defines typed input/output schemas; specifies configuration parameters with impact descriptions
+→ Outcome: delivers focused component documentation maintaining single-responsibility clarity
 
-**Role: Provenance Documenter**  
-→ Action: specifies bidirectional linking mechanisms, documents confidence propagation methods, labels extraction methods, explains metadata preservation  
+**Role: Provenance Documenter**
+→ Action: specifies bidirectional linking mechanisms; documents confidence propagation methods; labels extraction methods; explains metadata preservation
 → Outcome: enables traceability through comprehensive provenance documentation
 
-**Role: Metrics Definer**  
-→ Action: defines extraction/unification/query metrics, documents computation methods, specifies quality thresholds, explains feedback triggers  
+**Role: Metrics Definer**
+→ Action: defines extraction, unification, query, and pipeline metrics; documents computation methods; specifies quality thresholds; explains feedback triggers; documents token budgets
 → Outcome: establishes measurable quality standards enabling systematic improvement
 
-**Role: Anti-Pattern Guardian**  
-→ Action: lists forbidden patterns, provides refactoring guidance, documents domain blindness tests, requires corpus diversity validation  
+**Role: Anti-Pattern Guardian**
+→ Action: lists forbidden patterns with corrections; provides domain-blindness tests; requires corpus diversity validation; audits for hardcoding violations
 → Outcome: prevents hardcoding violations and ensures configuration-driven adaptability
 
-**Role: Schema Documenter**  
-→ Action: specifies JSON-LD contracts, documents required/optional fields, explains validation rules, provides structural constraints  
+**Role: Schema Documenter**
+→ Action: specifies data contracts; documents required and optional fields; explains vocabulary mapping; provides structural validation rules
 → Outcome: establishes clear data contracts enabling integration and validation
 
-**Role: API Documenter**  
-→ Action: explains query interfaces, documents intent classifications, specifies traversal strategies, provides result structures  
+**Role: API Documenter**
+→ Action: explains query interfaces; documents intent classifications; specifies traversal strategies; provides result structures with provenance fields
 → Outcome: enables effective system usage through comprehensive API documentation
 
-**Role: Format Documenter**  
-→ Action: documents export transformations, specifies field mappings, explains metadata preservation, provides format selection criteria  
+**Role: Format Documenter**
+→ Action: documents export transformations; specifies field mappings; explains metadata preservation across formats; provides format selection criteria
 → Outcome: facilitates downstream integration through multi-format export documentation
 
-**Role: Maintenance Documenter**  
-→ Action: documents feedback loops, explains monitoring procedures, specifies rollback strategies, logs tuning iterations  
+**Role: Maintenance Documenter**
+→ Action: documents feedback loops; explains monitoring procedures; specifies rollback strategies; logs tuning iterations
 → Outcome: enables reliable system operation and reproducible performance optimization
 
-**Role: Schema Steward**  
-→ Action: manages versioning, maintains backward compatibility, provides migration scripts, tracks schema evolution  
-→ Outcome: ensures stable schema transitions without breaking integrations
+**Role: Schema Steward**
+→ Action: manages semantic versioning; maintains backward compatibility rules; provides migration scripts; tracks schema evolution with version notes
+→ Outcome: ensures stable schema transitions without breaking downstream integrations
 
-**Role: Audit Engineer**  
-→ Action: specifies logging requirements, defines retention policies, addresses privacy concerns, enables reproducibility  
+**Role: Audit Engineer**
+→ Action: specifies logging requirements; defines retention policies; addresses privacy considerations; enables reproducibility from logs
 → Outcome: maintains comprehensive audit trails supporting compliance and debugging
 
 ---
@@ -738,7 +673,12 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 
 **"CID frames documentation standards, SRP isolates component concerns, RAO aligns documenter responsibilities, SVO clarifies specification semantics"**
 
-- **CID frames**: Establishes scope (semantic orchestration documentation), purpose (domain-agnostic clarity + traceability), rules (SVO directives + configuration schemas)
-- **SRP isolates**: Ensures each component documentation handles single transformation, each section addresses focused concern
-- **RAO aligns**: Maps technical writers, component documenters, metrics definers, schema stewards, audit engineers to their documentation deliverables
-- **SVO clarifies**: Expresses all operations (documenters specify schemas, systems track provenance, metrics measure quality) with grammatical precision enabling accountability and implementation clarity
+- **CID frames**: establishes scope (domain-agnostic documentation), purpose (clarity, neutrality, traceability), and rules (SVO directives, configuration schemas, VCC conditions)
+- **SRP isolates**: ensures each component documentation block handles a single transformation; each section addresses one focused concern
+- **RAO aligns**: maps Technical Writers, Component Documenters, Metrics Definers, Schema Stewards, and Audit Engineers to their specific documentation deliverables
+- **SVO clarifies**: expresses all operations (`[Component] verbs [artifact] via [mechanism]`) with grammatical precision enabling accountability and implementation clarity
+
+**Governing traceability chain** (extends PRD/TAD standard):
+```
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Doc-[Section]-[Component]
+```

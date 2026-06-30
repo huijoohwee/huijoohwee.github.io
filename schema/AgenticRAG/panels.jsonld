@@ -138,6 +138,26 @@
         "@language": "zh-cn"
       }
     ],
+    "storyboardRichMediaDropBrowserSmokeHarness": [
+      {
+        "@value": "Storyboard rich-media drag verification is a Dev-only runtime boundary owned by Knowgrph source: `StoryboardRichMediaDropSmokePage` plus `npm run test:smoke:storyboard-rich-media-drop:browser` should exercise the real `2D Renderer: Storyboard` drag path, create one image and one video `Rich Media Panel` near pointer release, emit one screenshot artifact, and prove existing storyboard cards and rich-media panels keep their authored world positions. Generic flow-editor drag/resize callback counters outside this path remain covered by focused component regressions.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Storyboard 富媒体拖拽验证是由 Knowgrph 源码拥有的 Dev-only 运行时边界：`StoryboardRichMediaDropSmokePage` 与 `npm run test:smoke:storyboard-rich-media-drop:browser` 应覆盖真实的 `2D Renderer: Storyboard` 拖拽路径，在指针释放点附近创建一个图片与一个视频 `Rich Media Panel`，产出单张截图工件，并证明现有 storyboard 卡片与富媒体面板保持其已编写的 world position 不变。此路径之外的通用 flow-editor drag/resize callback counter 仍由聚焦的组件级回归测试覆盖。",
+        "@language": "zh-cn"
+      }
+    ],
+    "visualAnnotationE2eRendererBoundary": [
+      {
+        "@value": "`2D Renderer: Flow Editor`, `2D Renderer: Media`, and `2D Renderer: Storyboard` are the renderer surfaces that may reuse the native visual annotation dataset runtime for load/split/merge/save artifacts, frame bounding boxes, and zone-count timelines. External CV projects are inspiration-only references; schema mirrors must not imply copied code, package dependency, or committed validation URLs/docs.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "`2D Renderer: Flow Editor`、`2D Renderer: Media` 与 `2D Renderer: Storyboard` 是可复用原生 visual annotation dataset runtime 的渲染表面，用于 load/split/merge/save 工件、frame bounding boxes 与 zone-count timelines。外部 CV 项目仅作为 inspiration-only reference；schema mirror 不得暗示复制代码、包依赖或提交验证 URL/文档。",
+        "@language": "zh-cn"
+      }
+    ],
     "toolbarEditorWorkspaceToggle": [
       {
         "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor workspace includes layout toggles (Explorer open/closed and Canvas pane open/closed); Canvas pane open state persists via `kg:ui:workspace:canvasPaneOpen` and Canvas pane width persists via `kg:ui:workspace:previewWidthPx`. Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",

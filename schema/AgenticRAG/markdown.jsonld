@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.37",
+  "schemaVersion": "1.0.38",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -46,6 +46,14 @@
     },
     {
       "@value": "带 frontmatter 预设的 Markdown 导入激活必须具备顺序安全：精确 UI 导入流程选中用于聚焦的文档，必须先成为 active raw-frontmatter 权威来源，然后才允许 composed source-file replay 运行。此前已选择的文档不得覆盖导入文档由 frontmatter 指定的 renderer 或 surface 落点。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Applied Markdown replay is also a source-authority reset when invoked explicitly through the runtime command, even if the active document path and markdown text are unchanged. Consumers that keep transient draft state must observe an incremented apply revision so same-text replays restore the source-backed baseline instead of preserving draft residue.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "当通过运行时命令显式触发时，Applied Markdown replay 即使在当前文档路径与 Markdown 文本都未变化的情况下，也属于 source-authority reset。保留瞬态 draft 状态的消费者必须观察递增的 apply revision，使 same-text replay 能恢复 source-backed baseline，而不是保留草稿残留。",
       "@language": "zh-cn"
     },
     {
@@ -386,11 +394,11 @@
   ],
   "storageSyncContracts": [
     {
-      "@value": "Canonical Markdown remains Git-owned source text; browser editing stays local-first through RxDB; optional Cloudflare Worker + D1 sync may pull remote document updates back into the visible Source Files workspace so Canvas recomposes through the existing runtime path rather than a second import flow.",
+      "@value": "Canonical Markdown remains Git-owned source text; generated chat/session Markdown writes GitHub first, D1 mirrors readable Markdown/manifests, and remote updates must re-enter the visible Source Files workspace through the existing runtime path rather than a second import flow.",
       "@language": "en-us"
     },
     {
-      "@value": "规范 Markdown 仍是 Git 管理的源文本；浏览器编辑通过 RxDB 保持 local-first；可选的 Cloudflare Worker + D1 同步可将远端文档更新拉回可见的 Source Files 工作区，使 Canvas 通过现有运行时路径重组，而不是走第二套导入流程。",
+      "@value": "规范 Markdown 仍是 Git 管理的源文本；生成的 chat/session Markdown 先写入 GitHub，D1 仅镜像可读 Markdown/manifest，且远端更新必须通过现有运行时路径重新进入可见 Source Files 工作区，而不是走第二套导入流程。",
       "@language": "zh-cn"
     },
     {

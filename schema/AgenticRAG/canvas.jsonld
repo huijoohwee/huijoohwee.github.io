@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.28",
+  "schemaVersion": "1.0.29",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -45,6 +45,16 @@
       },
       {
         "@value": "当工作区启动或精确 UI 导入激活带 frontmatter 预设的 Markdown 文档时，该被激活文档必须先成为 raw-frontmatter 权威来源，然后才允许 composed source-file replay 或 metadata/layout helper 运行。此前已激活的文档不得把过期的 renderer 或 surface 选择重新覆盖到新激活的预设文档上。",
+        "@language": "zh-cn"
+      }
+    ],
+    "appliedMarkdownReapplyEpoch": [
+      {
+        "@value": "Explicit applied-markdown replays are fresh source-authority epochs even when path and markdown text are unchanged. Flow Editor draft lifetime, transient overlays, and draft-only edges must invalidate from shared applied-document identity plus an incremented apply revision rather than relying only on path/text deltas.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "显式的 applied-markdown 重放即使在路径与 Markdown 文本完全相同的情况下，也属于新的 source-authority epoch。Flow Editor 的草稿生命周期、瞬态 overlay 与仅草稿边必须依据共享的 applied-document identity 加递增的 apply revision 进行失效，而不能只依赖路径/文本差异。",
         "@language": "zh-cn"
       }
     ],

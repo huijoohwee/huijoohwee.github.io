@@ -1428,38 +1428,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-flow-editor-pan-zoom-overlay-failsafe-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-flow-editor-pan-zoom-overlay-failsafe-document.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-flow-editor-widget-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-flow-editor-widget-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-flow-editor-widget-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-flow-editor-widget-document.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-flow-run-all-reference",
       "@type": "kg:Node",
       "labels": [
@@ -3075,6 +3043,38 @@
         "relPath": "docs/documents/knowgrph-storage-sync-document.md"
       },
       "documentPath": "docs/documents/knowgrph-storage-sync-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-storyboard-widget-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storyboard-widget-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storyboard-widget-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storyboard-widget-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-storyboard-widget-pan-zoom-overlay-failsafe-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storyboard-widget-pan-zoom-overlay-failsafe-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storyboard-widget-pan-zoom-overlay-failsafe-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storyboard-widget-pan-zoom-overlay-failsafe-document.md",
       "language": "en-us"
     },
     {

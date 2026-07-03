@@ -547,6 +547,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-os-follow-on-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-os-follow-on-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-os-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-os-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-os-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-os-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-agnes-ai-api-prd-tad",
       "@type": "kg:Node",
       "labels": [

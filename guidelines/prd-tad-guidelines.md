@@ -1,8 +1,8 @@
 ---
 title: "PRD & TAD Guidelines"
 doc_type: "Guidelines"
-version: "1.2.0"
-date: "2026-06-24"
+version: "1.4.0"
+date: "2026-07-03"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -21,10 +21,11 @@ frontmatter_contract: "required"
 - `scope--neutrality-contract` — universality, neutrality, agnosticism, modularity rules
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
 - `overview` — what PRD/TAD are and the governing standards
-- `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules
+- `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules, deployment-model TCO variants
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
 - `from-0-to-1-prd--tad-creation-process` — phase-gated authoring process
 - `flow-patterns` — user journey, workflow, data flow, orchestration/harness flow, and topology templates
+- `agent-platform-readiness` — Agentic OS-, AI Agent-, and MCP Gateway-ready definitions, tiers, and execution order
 - `time-to-value` — first-success latency gate, metric, and template (Phase 0 gate + PRD metric)
 - `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive
 - `cid-directive-matrix` — alphabetical, project-agnostic directive mantras
@@ -115,8 +116,25 @@ Features below ROI threshold (team-defined) are deferred to `Could / Won't` in M
 When selecting any dependency, library, or infrastructure component:
 1. **Identify FOSS alternatives** — document at least one in every ADR
 2. **Default to FOSS** unless the proprietary option provides >2× value at <0.5× TCO over 12 months
-3. **Prefer zero-egress** storage and CDN (e.g. R2, Cloudflare) over metered alternatives
+3. **Prefer zero-egress** storage and CDN over metered alternatives
 4. **Record the decision** in the ADR with explicit TCO comparison at projected scale
+5. **Compare deployment models within each candidate** — see Deployment-Model TCO Variants below; do not collapse a candidate's managed and self-managed variants into a single TCO figure
+
+### Deployment-Model TCO Variants
+
+A single infrastructure candidate (a vendor, a FOSS stack, or a hosting category) frequently offers more than one **deployment model**, and each model carries a distinct cost and operations profile. Collapsing these into one TCO figure hides material tradeoffs. Evaluate deployment models by function, never by brand:
+
+| Deployment Model | Definition | Cost Profile | Ops Profile |
+|---|---|---|---|
+| **Managed / Serverless** | Provider operates the runtime; caller pays per invocation, request, or consumed resource | Scales to zero; no idle cost; per-unit price may exceed provisioned equivalents at sustained high load | Near-zero ops burden; provider handles patching, scaling, failover |
+| **Provisioned / Self-Managed** | Team operates a fixed-capacity runtime (a VM, container host, or cluster) directly | Fixed cost regardless of utilization; cheaper per-unit at sustained high load; idle capacity is wasted spend | Full ops burden: patching, backup, failover, capacity planning are the team's responsibility |
+| **Hybrid / Consolidated** | Multiple workloads share one provisioned runtime to amortize its fixed cost | Fixed cost divided across workloads; total drops as more workloads consolidate | Ops burden of one Provisioned/Self-Managed runtime, not one per workload |
+
+**Directives**:
+- When an ADR or infrastructure comparison names a candidate that offers both a Managed/Serverless and a Provisioned/Self-Managed variant, present both as separate rows or columns; forbid a single blended TCO number that hides which variant it assumes
+- State the ops-burden delta explicitly (e.g. "near-zero" vs "manual patching, backup, and failover"), not only the cost delta; a cheaper provisioned variant with unaccounted ops burden is not a valid FOSS-first justification
+- When a Provisioned/Self-Managed total is computed by summing per-service costs independently, add a Hybrid/Consolidated estimate showing the realistic total once workloads share the same provisioned runtime; forbid presenting only the unconsolidated sum when consolidation is operationally realistic
+- Apply this comparison symmetrically: a zero-egress managed candidate must still be compared against the self-managed variant of every alternative under consideration, not only against that alternative's managed variant
 
 ---
 
@@ -197,8 +215,9 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 4. Stakeholders approve scope and success metrics; **confirm token budget, TCO, and TTV target are within acceptable envelope**
 5. Verify every AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
 6. Confirm Topology diagram is present and data residency is stated for every storage node
-7. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
-8. Resolve or formally track all open questions
+7. Confirm agent-platform readiness dimensions in scope are documented with tier (Must/Follow-on), execution order, and VCCs per dimension
+8. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
+9. Resolve or formally track all open questions
 
 **Gate**: both documents version-stamped and baselined before implementation begins.
 
@@ -416,6 +435,179 @@ Distinct from Orchestration/Harness Flow (execution sequence) and Data Flow (dat
 
 ---
 
+## Agent-Platform Readiness
+
+**Maps how a product documents and delivers three complementary readiness dimensions for AI-native systems: unified operator visibility (Agentic OS), external agent onboarding (AI Agent), and tool-surface federation (MCP Gateway).** This section is vendor-, protocol-, and repository-neutral. Placeholders (`[...]`) stand in for product-specific identifiers; concrete stacks appear only as non-binding reference patterns.
+
+### Readiness Dimensions
+
+| Dimension | Function (neutral name) | Primary consumer | Default token cost | Spend boundary |
+|---|---|---|---|---|
+| **Agentic OS-ready** | **OS Status Surface** — read-only aggregation over existing harness run state, capability catalogs, cost ledgers, approval-gate catalogs, and circuit-breaker bounds | Operator, maintainer | **$0** — zero model calls on every view | Read-only; must not issue, verify, or consume approval tokens |
+| **AI Agent-ready** | **Agent Discovery Surface** — machine-discoverable metadata, typed harness contracts, and callable tool surfaces segmented by trust boundary | External agent, MCP host, browser agent | **$0** on discovery; harness-dependent on execution | Discovery paths must not invoke paid models; execution routes through existing spend gates |
+| **MCP Gateway-ready** | **Gateway Federation Contract** — coordinated routing across multiple existing tool transports without a new monolithic proxy tier | External agent resolver | **$0** on federation/discovery | Orchestration/spend routes to the control-plane surface; read-only routes to discovery surfaces |
+
+**Directives**:
+- Name all three dimensions in PRD scope or explicit exclusions; forbid ambiguous “agent-ready” claims that do not state which dimension(s) are in scope
+- Derive readiness from document content and frontmatter only; forbid inferring readiness from directory layout, file names, or downstream mirrors
+- Each dimension must be expressible as VCCs before status is promoted to `runtime-ready`
+
+### Readiness Tiers
+
+| Tier | Definition | Typical PRD home | Promotion gate |
+|---|---|---|---|
+| **Must** | Smallest artifact that makes the dimension truthful at demo/load: visibility, discovery, or federation without new persistent stores or proxy tiers | Combined PRD/TAD or product PRD | VCC proof on clean environment; TTV recorded |
+| **Follow-on** | Closes spend-safety, live orchestration, or operator-UI gaps left open by Must-tier | Separate follow-on PRD/TAD linked from parent | VCC proof per track; no Must-tier regression |
+| **Won't (this increment)** | Explicit deferrals: monolithic proxy gateway, unbounded remote tool parity, auto-approval | Parent PRD Out of Scope | — |
+
+### Agentic OS-Ready
+
+The **OS Status Surface** exposes one or more read views (e.g. process list, capability union, cost summary, gate catalog, circuit breakers) over state that **already exists** in harness runtimes — computed at read time, not copied into a new OS-level database.
+
+**Agentic OS Template**:
+```markdown
+## Agentic OS: [Product / Feature Name]
+
+**Tool surface**: `[...]` (single combined tool with `view` argument **or** separate per-view tools — document choice in ADR)
+**Read views**: `[process_list | capabilities | cost_summary | gate_catalog | circuit_breakers | ...]`
+**Aggregation rule**: read-time only; zero new persistent datastore
+**Token budget**: 0 prompt + 0 completion = $0.00 / call (non-zero cost log = defect)
+**Partial failure**: `unavailableSources[]` / `unreachableCatalogs[]` / `validationFailures[]` — call succeeds; omitting a source is not a silent success
+
+### Acceptance (example)
+**Given** readable harness state exists **When** OS Status Surface is called **Then** normalized entries return and no harness state file is modified
+
+> **VCC**: `Verify [view] response shape matches schema and before/after snapshot diff of every read harness state source is empty`
+```
+
+**Directives**:
+- Prefer one combined OS Status tool with a typed `view` enum when wiring surface is the constraint; document the ergonomics tradeoff in an ADR
+- Gate Catalog views are read/describe-only unless a separate story explicitly adds token issuance
+- Map every OS read view to Orchestration/Harness Flow (zero-token sequential, max 1 iteration)
+
+### AI Agent-Ready
+
+**AI Agent-ready** means an external agent can **discover**, **select the correct surface**, and **invoke typed tools** without scraping HTML or learning each harness catalog independently.
+
+**Discovery chain** (reference pattern — adapt transport names to product):
+
+```
+Resolver → [Pre-HTTP discovery metadata] → [Service entry + link headers] → [Machine-readable tool card]
+         → [OS Status `capabilities` view **or** equivalent catalog union] → Surface selection by trust boundary
+```
+
+**Surface selection by trust boundary** (document in TAD topology):
+
+| Trust need | Route to | Typical scope |
+|---|---|---|
+| Read-only public content | Discovery / read transport | Search, fetch, metadata |
+| Approval-gated orchestration | Control-plane transport | Multi-stage harness runs, spend-bearing tools |
+| Richest local/dev surface | Local host transport | Full harness set not exposed remotely by design |
+| In-browser inspection | Embedded runtime transport | Page-local read tools |
+
+**Directives**:
+- Document surface separation explicitly; forbid claiming one transport exposes the full harness set when policy restricts remote parity
+- Every public discovery path must spend **zero LLM tokens** before optional chat/orchestration
+- Agent Discovery Surface metadata must stay aligned with the canonical tool contract owner; forbid duplicate schema registries
+
+### MCP Gateway-Ready
+
+**MCP Gateway-ready** does not require a fifth monolithic proxy. The **Gateway Federation Contract** coordinates **existing** transports under shared tool/cost/approval schemas.
+
+**Anti-pattern**: single unified proxy that re-implements dispatch already owned by local and control-plane servers — duplicates schema maintenance, adds latency, and splits token accounting.
+
+**Preferred pattern — discovery-first federation**:
+
+```mermaid
+flowchart LR
+  Agent["External agent"] --> Disc["Pre-HTTP discovery"]
+  Disc --> Card["Tool server card"]
+  Card --> Read["Read-only transport"]
+  Card --> Ctrl["Control-plane transport"]
+  Card --> Local["Local host transport"]
+  Card --> Embed["Embedded runtime transport"]
+  Union["OS Status capabilities union"] -.-> Card
+```
+
+**Gateway Federation Template**:
+```markdown
+## Gateway Federation: [System Name]
+
+**Surfaces in federation**: [N] (list role + transport type each)
+**Catalog union source**: [OS Status capabilities view | equivalent]
+**Routing rule**: [trust boundary → surface matrix]
+**Excluded**: monolithic proxy tier (ADR required if ever reconsidered)
+```
+
+**Directives**:
+- Enumerate every federated surface in Topology with connection type and data residency
+- Record gateway federation decision in ADR with TCO comparison vs unified-proxy alternative
+- Capabilities union must deduplicate by tool id and name contributing catalogs in `sourceCatalogs[]` (or equivalent)
+
+### Execution Order Guidelines
+
+Readiness work follows a **dependency-ordered sequence**. Must-tier dimensions ship before Follow-on tracks; tracks ship in an order that respects spend safety and proof-before-UI.
+
+**Canonical execution order**:
+
+```
+Phase 0 — Problem + ROI + TTV ceiling (all dimensions)
+    ↓
+Must-tier A — Agentic OS (OS Status Surface, read-only, $0)
+    ↓
+Must-tier B — AI Agent discovery (metadata + read transport + tool card)
+    ↓
+Must-tier C — MCP Gateway federation (surface matrix + capabilities union; no new proxy)
+    ↓
+Follow-on Track 1 — Spend safety (durable approval-token store on control plane; single-use; TTL)
+    ↓
+Follow-on Track 2 — Live orchestration proof (env-gated harnesses; one golden-path run; Cost_Log validation)
+    ↓
+Follow-on Track 3 — Operator UI projection (dashboard document → existing UI apply path; no second pipeline)
+```
+
+| Track | Depends on | Blocks | Min-viable exit (VCC pattern) |
+|---|---|---|---|
+| Must: Agentic OS | Harness state exists | Gateway capabilities union | OS views return typed JSON; $0 cost log; no state mutation |
+| Must: AI Agent discovery | Discovery metadata owners | External agent onboarding | Discovery checks exit 0; zero token spend on discovery |
+| Must: Gateway federation | Must A + B | Follow-on 2 routing clarity | Capabilities union deduplicates; unreachable catalogs listed, not fatal |
+| Follow-on 1: Spend safety | Must C + control plane | Follow-on 2 live spend | Token survives restart within TTL; reuse fails closed |
+| Follow-on 2: Live orchestration | Follow-on 1 | Demo-grade autonomy proof | One approved run persists run manifest; blocked run cost == 0 |
+| Follow-on 3: Operator UI | Must A (visibility) | — | Dashboard doc renders through existing UI bridge; no duplicate graph pipeline |
+
+**Directives**:
+- Document execution order in parent PRD/TAD and expand Follow-on tracks in a linked follow-on PRD/TAD; forbid parallel drift across surfaces before gateway contract is frozen
+- Follow-on Track 2 must not start until Follow-on Track 1 exit criteria pass or an ADR records explicit acceptance of in-memory-only tokens with stated risk
+- Prefer **proof over scaffolding**: each track ends in a VCC-demonstrable artifact (test exit code, persisted manifest, reachable URL) — not narrative “implemented” claims
+- Re-run Must-tier regression checks when any Follow-on track merges
+
+### Readiness Gap Matrix Template
+
+```markdown
+## Readiness Gap Matrix
+
+| Workstream | Current state | Gap | Priority | Exit criteria (VCC) |
+|---|---|---|---|---|
+| OS Status Surface (local) | [...] | [...] | P0/P1/P2 | [...] |
+| OS Status Surface (remote) | [...] | [...] | P1 | [...] |
+| Gateway discovery | [...] | [...] | P0 | [...] |
+| Control-plane orchestration | [...] | [...] | P1 | [...] |
+| Spend safety (tokens) | [...] | [...] | P1 | [...] |
+| Live harness proof | [...] | [...] | P1 | [...] |
+| Operator UI projection | [...] | [...] | P2 | [...] |
+```
+
+### Follow-On PRD/TAD Template (linked increment)
+
+When Must-tier readiness ships with open spend or UI gaps, add a **follow-on combined PRD/TAD** that:
+- References parent version in frontmatter (`parent`, `parent_version`)
+- Defines tracks using neutral names (Track 1/2/3 mapped to spend safety, live orchestration, operator UI)
+- States local-vs-deployed status separately; forbid blending them in one status field
+- Includes topology **version note** for delta only (do not overwrite parent topology in place)
+- Lists validation commands as VCC hosts (mechanism-agnostic)
+
+---
+
 ## Autonomous Implementation Verification
 
 A well-formed PRD acceptance criterion **is** a well-formed **Verifiable Completion Condition (VCC)**. A VCC is a tool-agnostic primitive: a single, evaluator-checkable end state plus the proof of how it is demonstrated. This section is intentionally vendor-neutral — it defines the VCC contract, then lists interchangeable reference implementations.
@@ -515,6 +707,8 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Alternatives    | Document rejected options            | - [ ] Record considered options; document alternatives; forbid undocumented decisions         |
 | Ambiguity       | Ensure specification clarity         | - [ ] Write precisely; ensure clarity; forbid vague requirements                              |
 | API             | Specify integration contracts        | - [ ] Define API contracts; specify interfaces; forbid implicit interfaces                    |
+| Agent readiness | Enable external agent onboarding   | - [ ] Document discovery chain, surface matrix by trust boundary, and zero-token discovery paths; forbid HTML-scrape-only onboarding |
+| Agentic OS      | Unify harness visibility read-only   | - [ ] Spec OS Status Surface views with $0 token budget, read-time aggregation, and partial-failure fields; forbid OS-level write paths or new persistent OS datastore |
 | Architecture    | Design component interactions        | - [ ] Map component relationships; design interactions; forbid undocumented dependencies      |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
@@ -537,6 +731,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as VCCs; define objectives; forbid vague aspirations |
+| Gateway         | Federate tool surfaces without proxy duplication | - [ ] Document discovery-first federation across existing transports; compare unified-proxy alternative in ADR; forbid undocumented fifth-proxy gateway |
 | Harness         | Wrap AI calls in typed, observable contracts | - [ ] Define harness input/output schemas; emit cost log per call; specify fallback path; forbid raw unstructured prompt calls in production pipelines |
 | Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
@@ -580,11 +775,11 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Scope           | Define boundaries explicitly         | - [ ] State what's included/excluded; define scope; forbid unbounded features                 |
 | Security        | Specify protection requirements      | - [ ] Define security needs; specify requirements; forbid security-as-afterthought            |
 | Separation      | Maintain concern boundaries          | - [ ] Keep PRD/TAD separate; maintain boundaries; forbid mixed responsibilities               |
-| Sequencing      | Order feature delivery               | - [ ] Plan release sequence; order delivery; forbid dependency-blind scheduling               |
+| Sequencing      | Order feature delivery               | - [ ] Plan release sequence using agent-platform execution order (Must OS → discovery → federation → spend safety → live proof → operator UI); forbid dependency-blind scheduling and parallel surface drift before gateway contract freeze |
 | Simplicity      | Prefer minimal solutions             | - [ ] Choose simple approaches; prefer minimalism; forbid over-engineering                    |
 | Stories         | Write user narratives                | - [ ] Use "As a…I want…So that"; write narratives; forbid technical task lists                |
 | Success         | Define completion criteria           | - [ ] Specify done conditions as observable, evaluator-verifiable states; define success; forbid ambiguous done states |
-| TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend); document in ADR; forbid uncosted architectural decisions |
+| TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend) across each deployment model it offers (managed/serverless, provisioned/self-managed, hybrid/consolidated); document in ADR; forbid uncosted architectural decisions and forbid blending deployment-model variants into one figure |
 | Testability     | Enable verification                  | - [ ] Design for testing; enable verification; forbid untestable requirements                 |
 | Timelines       | Define delivery schedules            | - [ ] Set release dates; define timelines; forbid open-ended commitments                      |
 | Time-to-Value   | Minimise first-success latency       | - [ ] Estimate TTV steps and elapsed time in Phase 0; include TTV as a named success metric in every user-facing PRD; validate on a clean environment before Phase 3 sign-off; forbid TTV reductions that compromise security or data integrity |
@@ -727,7 +922,7 @@ See ADR-[N] for each significant decision.
 | Security        | [Threat → protection requirement]             | [Architectural fix]       | [Test approach]         |
 | Observability   | [Signal → monitoring requirement]             | [Architectural fix]       | [Test approach]         |
 | Token Cost      | [Target load → max tokens/request budget]     | Harness + caching + prompt compression | Cost log sampling; alert on p95 overrun |
-| TCO             | [12-month projected spend vs zero-TCO target] | FOSS-first + zero-egress infra | Monthly cost audit; ADR review |
+| TCO             | [12-month projected spend per deployment model vs zero-TCO target] | FOSS-first + zero-egress infra; managed vs self-managed compared separately | Monthly cost audit; ADR review |
 
 ### Deployment Strategy
 [Blue-green / canary / rolling — with rollback plan]
@@ -761,12 +956,16 @@ See ADR-[N] for each significant decision.
 [Why this decision]
 
 ### TCO Impact
-| Dimension | Chosen Option | Best FOSS Alternative | Delta / 12 months |
-|---|---|---|---|
-| Infra cost | [$/mo] | [$/mo] | [+/- $] |
-| Egress cost | [$/mo] | [$/mo] | [+/- $] |
-| Token cost  | [$/mo] | [$/mo] | [+/- $] |
-| Vendor risk | [Low/Med/High] | [Low] | — |
+
+*If either the chosen option or the FOSS alternative offers more than one deployment model (Managed/Serverless, Provisioned/Self-Managed, Hybrid/Consolidated — see Deployment-Model TCO Variants), add one column per variant rather than blending them.*
+
+| Dimension | Chosen Option [variant] | Best FOSS Alternative [variant] | Best FOSS Alternative [other variant, if applicable] | Delta / 12 months |
+|---|---|---|---|---|
+| Infra cost | [$/mo] | [$/mo] | [$/mo] | [+/- $] |
+| Egress cost | [$/mo] | [$/mo] | [$/mo] | [+/- $] |
+| Token cost  | [$/mo] | [$/mo] | [$/mo] | [+/- $] |
+| Ops burden | [Low/Med/High] | [Low/Med/High] | [Low/Med/High] | — |
+| Vendor risk | [Low/Med/High] | [Low] | [Low] | — |
 
 ### Consequences
 - **Positive**: [Benefits]
@@ -851,6 +1050,9 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ Proprietary dependencies selected without a FOSS comparison; undocumented vendor lock-in; uncosted egress  
 → ✅ Every ADR lists a FOSS alternative with 12-month TCO comparison; zero-egress infrastructure preferred by default
 
+❌ A candidate's Managed/Serverless and Provisioned/Self-Managed deployment models blended into one TCO figure; ops burden omitted from the comparison; a Provisioned/Self-Managed total computed by naively summing independent per-service costs with no Hybrid/Consolidated estimate  
+→ ✅ Each deployment model a candidate offers gets its own TCO row or column with an explicit ops-burden rating; a Hybrid/Consolidated estimate is added whenever multiple workloads could realistically share one provisioned runtime
+
 ❌ Features sized without ROI scoring; Must-tier items with no user impact justification; scope bloat  
 → ✅ Every feature carries an explicit ROI score before entering MoSCoW; min-viable scope defined before implementation begins
 
@@ -865,6 +1067,12 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 ❌ Multi-component systems with no topology diagram; connection types left implicit; storage nodes with no data residency stated; topology overwritten in place with no version note  
 → ✅ Topology documented for every system with ≥3 components; every connection labelled (sync/async/stream); every storage node carries data residency; topology version-stamped on every change
+
+❌ Vague “agent-ready” claims without naming Agentic OS, AI Agent discovery, or Gateway federation dimensions; OS Status Surface that mutates harness state or performs model calls  
+→ ✅ Each readiness dimension scoped, tiered, and backed by VCCs; OS Status Surface read-only at $0 token cost; partial failures surfaced explicitly
+
+❌ Monolithic MCP/API proxy duplicating existing dispatch layers; discovery paths that invoke paid models; Follow-on live orchestration before spend-safety track exits  
+→ ✅ Discovery-first gateway federation over existing transports (ADR compares unified-proxy alternative); execution order enforced: Must visibility/discovery → federation → spend safety → live proof → operator UI
 
 ---
 
@@ -881,6 +1089,7 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] **Min-viable scope** explicitly stated for Must-tier features before implementation begins
 - [ ] **Token budget estimated** for every AI-powered pipeline: prompt tokens + completion tokens + cache hit rate at target load
 - [ ] **Monthly TCO estimated** for every dependency; FOSS-first decision recorded in ADR
+- [ ] **Deployment-model variants separated** in every TCO comparison where a candidate offers more than one (managed/serverless vs provisioned/self-managed vs hybrid/consolidated); ops burden stated alongside cost for each variant
 - [ ] **ROI score computed** for every Must/Should feature using `(impact × reach) / (build + TCO + token cost)`
 - [ ] **Time-to-value (TTV) estimated** in Phase 0 — steps and elapsed time recorded; TTV target stated as a named row in PRD success metrics for every user-facing feature
 - [ ] **Orchestration/Harness Flow documented** for every AI-powered pipeline: dispatcher, executor, observer, and consumer roles named; cost log fields specified; fallback paths defined
@@ -895,6 +1104,9 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] PRD-to-TAD traceability established via `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 - [ ] VCCs recorded in TAD component specs and traced to source criteria
 - [ ] No implementation detail in PRD; no business logic in TAD
+- [ ] **Agent-platform readiness** documented when in scope: Agentic OS (OS Status Surface), AI Agent (discovery + surface matrix), MCP Gateway (federation contract); ambiguous “agent-ready” claims forbidden
+- [ ] **Readiness tiers** stated (Must vs Follow-on vs Won't) with execution order and linked follow-on PRD/TAD when Follow-on tracks exist
+- [ ] **Gateway federation ADR** compares discovery-first pattern vs unified-proxy alternative when ≥2 tool transports exist
 
 **Post-Documentation Review**:
 - [ ] Stakeholders validate PRD addresses user problems
@@ -907,6 +1119,8 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] **Topology diagram reviewed**: all nodes map to TAD Component Specifications; no orphaned topology nodes; version note present
 - [ ] **Token budget actuals vs estimates reviewed** each sprint; projections updated on model pricing or traffic changes
 - [ ] **FOSS alternatives re-evaluated** if any dependency TCO crosses the 12-month justification threshold
+- [ ] **Agent-platform execution order reviewed**: Follow-on tracks not started before Must-tier VCCs pass; spend-safety track precedes live orchestration unless ADR accepts risk
+- [ ] **Readiness gap matrix** present when any dimension is not runtime-ready; local vs deployed status not blended
 
 ---
 
@@ -932,10 +1146,11 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
 - **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
+- **Agent-platform readiness sequences**: Agentic OS visibility → AI Agent discovery → Gateway federation (Must); then spend safety → live orchestration proof → operator UI (Follow-on); forbid proxy duplication and dependency-blind parallel surface work
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
 - **SVO clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
 - **VCC closes**: every acceptance criterion becomes an evaluable completion condition (mechanism-agnostic); the traceability chain extends from PRD through TAD to autonomous implementation verification

@@ -3,8 +3,12 @@ title: "Knowgrph — Tech Stack Document"
 id: "md:knowgrph-tech-stack-document"
 author: "airvio / joohwee"
 date: "2026-06-29"
-updated: "2026-06-29"
-version: "1.0.0"
+updated: "2026-07-03"
+version: "1.2.1"
+excluded_vendors:
+  - "Vercel (runtime tier removed — Agentic OS ADR-3; comparison-only mentions retained)"
+  - "Supabase (never in runtime stack; permanently excluded — Agentic OS ADR-3)"
+  - "AWS (runtime tier removed — Agentic OS ADR-3; retained only as a TCO comparison column)"
 status: "current"
 doc_type: "Combined PRD/TAD"
 lang: "en-US"
@@ -36,8 +40,8 @@ traceability:
 # Knowgrph — Tech Stack Document
 
 **Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/knowgrph`. Deployed at `airvio.co/knowgrph` via Cloudflare Pages + Workers.
-**Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud, and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
-**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default.
+**Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud (Serverless App Engine / SAS), Alibaba Cloud (ECS), and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
+**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `knowgrph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
 
 ---
 
@@ -54,6 +58,7 @@ traceability:
 9. [ADR Summary](#adr-summary)
 10. [Token Economics](#token-economics)
 11. [TCO Summary](#tco-summary)
+12. [Agentic OS Follow-On Tracks](#agentic-os-follow-on-tracks)
 
 ---
 
@@ -238,7 +243,7 @@ sequenceDiagram
 
 ## Topology
 
-**Version**: 1.0.0 — 2026-06-29
+**Version**: 1.1.0 — 2026-07-02 (v1.1.0 adds the Agentic OS Os_Status_Tool aggregation node and records the ADR-3 vendor exclusions — no Vercel, Supabase, or AWS node exists or is added; v1.0.0 of 2026-06-29 archived in git history)
 **Boundaries**: Dev (localhost), CF Edge (airvio.co), Concurrent Edit (PocketBase self-hosted), External APIs
 
 | Node | Role | Type | Connects to | Connection type | Data residency |
@@ -259,6 +264,7 @@ sequenceDiagram
 | External AI APIs | Executor backends | SaaS (Claude, Gemini, BytePlus, OpenAI, VideoDB, Exa) | FloatingPanel Chat harness | Sync HTTPS | Provider-controlled |
 | Transformers.js Worker | In-browser executor | Web Worker (WASM / WebGPU) | Canvas SPA | postMessage (transferable) | Browser (IndexedDB weights cache) |
 | SuperAgent harness | Orchestrator | Python subprocess | MCP tools, local filesystem | Subprocess / stdio | Local dev |
+| Os_Status_Tool (Agentic OS) | Read-only aggregator + gateway | Node.js module (`mcp/os-status-runtime.js`), dispatched from `mcp/server.js` | Showrunner/Video_Remix/SuperAgent state, Vdeoxpln + local + Cloudflare `McpAgent` catalogs, cost-log/approval contracts | In-process sync reads + optional async MCP Streamable HTTP (CF catalog) | Local dev process memory (no persistence — zero new datastore) |
 
 ```mermaid
 flowchart TB
@@ -372,6 +378,8 @@ flowchart TB
 | Research compiler | `researchThesisContract.ts` | Investment thesis / research scout | Internal | ✓ Internal |
 | Swarm prediction | `swarmPredictionEngine.ts` | Parallel ensemble scoring | Internal | ✓ Internal |
 | AI showrunner | `mcp/showrunner-runtime.js` | Creative pipeline orchestration (podcast / narrative / writers' room) | Internal + MCP tools | ✓ Internal |
+| Agentic OS (Os_Status_Tool) | `mcp/os-status-runtime.js` (`knowgrph.os.status`) | OS-level read-only unification | Internal ($0/call) | ✓ Implemented — see agentic-os PRD/TAD v0.4.1 |
+| Agentic OS follow-on | `mcp/video-remix/approval-token-issuer.js`, `live-clients.js`, agentic canvas plan | HITL + live stages + dashboard lanes | Provider-dependent when live | Follow-on PRD/TAD v1.0.0 — local modules implemented |
 | Vision annotation | Transformers.js + Florence-2-base (MIT) | In-browser image / video-frame annotation | Browser (WASM / WebGPU) | ✓ Zero-TCO |
 | HTML video renderer | `htmlVideoRenderJob.ts` + engine adapters | HTML-to-video local render | Headless-browser (Playwright) / Canvas-2D / Server-side | ✓ Zero-TCO for canvas-2d path |
 | Video intelligence | VideoDB Director MCP (`videodb-director-mcp`) | Upload / index / search / stream / AI gen | VideoDB API (pay-per-use) | FOSS MCP package; API pay-per-use |
@@ -397,59 +405,59 @@ flowchart TB
 
 ## Infrastructure Comparison
 
-> Side-by-side: Cloudflare (current) vs Alibaba Cloud vs AWS — for each major flow in the Knowgrph stack.
+> Side-by-side: Cloudflare (current) vs Alibaba Cloud (SAS — serverless/managed) vs Alibaba Cloud (ECS — self-managed VM) vs AWS — for each major flow in the Knowgrph stack. The Alibaba Cloud split isolates the "pay only for what runs" serverless path (Function Compute, Serverless App Engine, PolarDB Serverless) from the "pay for provisioned capacity" ECS + self-hosted path (Elastic Compute Service VMs running Docker/Nginx/Postgres/Redis directly), since these carry materially different TCO and ops-effort profiles.
 
 ### User Flow Infrastructure
 
-| Component | User Flow Role | Cloudflare | Alibaba Cloud | AWS | Comments |
-|---|---|---|---|---|---|
-| Static SPA hosting | Serve Canvas SPA to browser | **CF Pages** (free tier, global CDN, zero-egress) | OSS + CDN (pay-per-GB egress) | S3 + CloudFront (pay-per-GB egress) | CF Pages wins on TCO at typical indie traffic. Zero-egress is the decisive factor. |
-| Domain / DNS | Route traffic | **CF DNS** (free, Anycast, DDoS protection) | Alibaba DNS (basic free) | Route 53 ($0.50/zone/month + queries) | CF DNS free tier covers all knowgrph DNS needs. |
-| Auth / session | Operator login | **CF Pages** (JWT via Worker) / PocketBase | RAM + ACM | Cognito ($0.0055/MAU after 50 k) | PocketBase self-hosted is zero fixed cost; CF Worker JWT adds no per-user cost. |
+| Component | User Flow Role | Cloudflare | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | AWS | Comments |
+|---|---|---|---|---|---|---|
+| Static SPA hosting | Serve Canvas SPA to browser | **CF Pages** (free tier, global CDN, zero-egress) | OSS + CDN (pay-per-GB egress) | ECS + Nginx (fixed VM cost + egress) | S3 + CloudFront (pay-per-GB egress) | CF Pages wins on TCO at typical indie traffic. Zero-egress is the decisive factor; ECS adds VM uptime cost even at zero traffic. |
+| Domain / DNS | Route traffic | **CF DNS** (free, Anycast, DDoS protection) | Alibaba DNS (basic free) | Alibaba DNS (basic free) | Route 53 ($0.50/zone/month + queries) | CF DNS free tier covers all knowgrph DNS needs; identical DNS layer regardless of SAS/ECS choice. |
+| Auth / session | Operator login | **CF Pages** (JWT via Worker) / PocketBase | RAM + ACM (managed) | RAM + self-hosted PocketBase on ECS | Cognito ($0.0055/MAU after 50 k) | PocketBase self-hosted is zero fixed cost beyond VPS; CF Worker JWT adds no per-user cost. |
 
 ### Orchestration / Harness Flow Infrastructure
 
-| Component | Harness Role | Cloudflare | Alibaba Cloud | AWS | Comments |
-|---|---|---|---|---|---|
-| AI pipeline executor | LLM harness invocation | **CF Worker** (dispatcher + cost log; 128 MB, 10 ms CPU) | FC (Function Compute, 512 MB, 300 s timeout) | Lambda (512 MB, 15 min timeout) | CF Workers 10 ms CPU limit requires streaming/chunked harness calls. Lambda 15 min timeout handles long SuperAgent runs. FC is a viable mid-ground. |
-| Async job polling | `get_async_response` 36 × 10 s circuit-breaker | CF Worker + Durable Objects (persistent timer) | FC + Message Queue | Lambda + SQS + EventBridge | CF Durable Objects owns the timer state natively with zero infra setup. SQS + EventBridge is more operationally complex but battle-tested at scale. |
-| Token budget gate | Halt before over-budget agent turn | CF Worker (runtime check per turn) | FC (same) | Lambda (same) | Mechanically equivalent across all three; cost difference is negligible at solo-dev scale. |
-| Circuit-breaker state | Max-iteration tracking | **Durable Objects** (named room, consistent state) | Redis (Tair) | ElastiCache Redis | Durable Objects requires no additional infra. Redis options require cluster provisioning and are overkill for solo-dev. |
+| Component | Harness Role | Cloudflare | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | AWS | Comments |
+|---|---|---|---|---|---|---|
+| AI pipeline executor | LLM harness invocation | **CF Worker** (dispatcher + cost log; 128 MB, 10 ms CPU) | FC (Function Compute, 512 MB, 300 s timeout) | ECS VM + PM2/systemd process (no cold start, fixed cost) | Lambda (512 MB, 15 min timeout) | CF Workers 10 ms CPU limit requires streaming/chunked harness calls. Lambda 15 min timeout handles long SuperAgent runs. ECS avoids cold starts entirely but bills 24/7 regardless of call volume. |
+| Async job polling | `get_async_response` 36 × 10 s circuit-breaker | CF Worker + Durable Objects (persistent timer) | FC + Message Queue | ECS cron/systemd timer + local state file | Lambda + SQS + EventBridge | CF Durable Objects owns the timer state natively with zero infra setup. ECS cron is simplest to reason about but has no built-in HA; SQS + EventBridge is more operationally complex but battle-tested at scale. |
+| Token budget gate | Halt before over-budget agent turn | CF Worker (runtime check per turn) | FC (same) | ECS process (in-memory or local SQLite check) | Lambda (same) | Mechanically equivalent across all four; cost difference is negligible at solo-dev scale. |
+| Circuit-breaker state | Max-iteration tracking | **Durable Objects** (named room, consistent state) | Redis (Tair, managed) | Self-hosted Redis on ECS | ElastiCache Redis | Durable Objects requires no additional infra. Self-hosted Redis on ECS is cheapest at scale but adds patching/backup burden; managed Tair/ElastiCache remove that burden at a premium. |
 
 ### Workflow Infrastructure
 
-| Component | Workflow Role | Cloudflare | Alibaba Cloud | AWS | Comments |
-|---|---|---|---|---|---|
-| Database (sync store) | D1 — workspace / document / chunk rows | **CF D1** (SQLite, 10 GB free, zero-egress) | RDS MySQL / PolarDB (pay-per-GB) | RDS / Aurora (pay-per-GB, egress costs) | D1 wins decisively on TCO at dev/indie scale. RDS / PolarDB only justified when D1 read/write limits are exceeded. |
-| Object store (blobs) | R2 — binary artifact bytes | **CF R2** (zero-egress, S3-compatible, 10 GB free) | OSS (pay-per-GB egress) | S3 (pay-per-GB egress) | R2 zero-egress is the single biggest TCO win vs S3 for media-heavy workloads. |
-| Cache layer | KV — short-lived access URLs | **CF KV** (1 GB free, global reads) | Redis (Tair) | ElastiCache / DynamoDB TTL | CF KV is sufficient for URL cache use case at zero cost. Redis required only for sub-ms multi-key pipelines. |
-| CRDT relay | PocketBase realtime | Self-hosted PocketBase (zero cost on any VPS) | ECS / Elastic Container + OSS | ECS Fargate / EC2 + S3 | PocketBase is the only FOSS option with built-in realtime. Hosting on a $5/month VPS beats managed equivalents by 10×. |
-| GitHub SSOT bridge | Auto-commit Yjs snapshots | CF Worker route + GitHub Contents API | FC + GitHub API | Lambda + GitHub API | Mechanically equivalent. CF Worker already deployed; no additional infra. |
+| Component | Workflow Role | Cloudflare | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | AWS | Comments |
+|---|---|---|---|---|---|---|
+| Database (sync store) | D1 — workspace / document / chunk rows | **CF D1** (SQLite, 10 GB free, zero-egress) | PolarDB Serverless / RDS MySQL (pay-per-GB + per-RCU) | Self-hosted MySQL/Postgres on ECS (fixed VM cost) | RDS / Aurora (pay-per-GB, egress costs) | D1 wins decisively on TCO at dev/indie scale. Self-hosted Postgres on ECS is cheapest at sustained high write volume but requires manual backup/failover; PolarDB/RDS trade cost for managed ops. |
+| Object store (blobs) | R2 — binary artifact bytes | **CF R2** (zero-egress, S3-compatible, 10 GB free) | OSS (pay-per-GB egress) | ECS + local disk or mounted OSS (fixed VM cost + egress) | S3 (pay-per-GB egress) | R2 zero-egress is the single biggest TCO win vs S3/OSS for media-heavy workloads. Storing blobs directly on ECS disk is viable only at low volume and adds single-point-of-failure risk. |
+| Cache layer | KV — short-lived access URLs | **CF KV** (1 GB free, global reads) | Redis (Tair, managed) | Self-hosted Redis on ECS | ElastiCache / DynamoDB TTL | CF KV is sufficient for URL cache use case at zero cost. Self-hosted Redis on ECS undercuts Tair/ElastiCache cost at scale but shifts ops burden to the solo dev. |
+| CRDT relay | PocketBase realtime | Self-hosted PocketBase (zero cost on any VPS) | Serverless App Engine (SAE) container (pay-per-use) | **ECS VM + Docker** (fixed cost, matches current PocketBase deployment model) | ECS Fargate / EC2 + S3 | PocketBase is the only FOSS option with built-in realtime. Alibaba ECS is the closest architectural match to knowgrph's current "PocketBase on a VPS" pattern; SAE trades that fixed cost for pay-per-use at the cost of cold starts on a stateful WebSocket service (a poor fit). |
+| GitHub SSOT bridge | Auto-commit Yjs snapshots | CF Worker route + GitHub Contents API | FC + GitHub API | ECS process + GitHub API | Lambda + GitHub API | Mechanically equivalent. CF Worker already deployed; no additional infra. |
 
 ### Data Flow Infrastructure
 
-| Component | Data Flow Role | Cloudflare | Alibaba Cloud | AWS | Comments |
-|---|---|---|---|---|---|
-| Ingest / seed | `ensureSeed()` fetch from URL or D1 export | CF Worker (`GET /api/storage/export/:id`) | FC + OSS | Lambda + S3 | CF Worker handles this natively. No additional infra needed. |
-| Transform / push | `sourceFilesStorageSync.ts` push payload | CF D1 via Worker | RDS write via FC | RDS write via Lambda | Equivalent logic. CF D1 has no connection pool overhead (HTTP-native). |
-| Blob upload | R2 binary artifact | CF Worker blob route → R2 | FC → OSS | Lambda → S3 | R2 zero-egress saves ~$0.09/GB on every read compared to S3. At 10 GB/month media traffic, that is $10.80/month savings. |
-| Manifest store | D1 document row (sibling to R2 blob) | CF D1 | RDS / PolarDB | RDS / Aurora | D1 row-level writes at D1 free tier limits easily cover knowgrph solo-dev volume. |
-| Serve / export | `GET /api/storage/blob/:workspaceId/:path*` | CF R2 via Worker | OSS + CDN | S3 + CloudFront | CF R2 + Worker: zero-egress. S3 + CloudFront: ~$0.085/GB transfer. |
+| Component | Data Flow Role | Cloudflare | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | AWS | Comments |
+|---|---|---|---|---|---|---|
+| Ingest / seed | `ensureSeed()` fetch from URL or D1 export | CF Worker (`GET /api/storage/export/:id`) | FC + OSS | ECS process + local/OSS read | Lambda + S3 | CF Worker handles this natively. No additional infra needed; ECS adds a persistent process for a low-frequency operation. |
+| Transform / push | `sourceFilesStorageSync.ts` push payload | CF D1 via Worker | PolarDB write via FC | Self-hosted DB write via ECS process | RDS write via Lambda | Equivalent logic. CF D1 has no connection pool overhead (HTTP-native); ECS self-hosted DB avoids per-request connection setup but needs its own pool tuning. |
+| Blob upload | R2 binary artifact | CF Worker blob route → R2 | FC → OSS | ECS process → OSS (or local disk) | Lambda → S3 | R2 zero-egress saves ~$0.09/GB on every read compared to S3/OSS. At 10 GB/month media traffic, that is $10.80/month savings vs both AWS and Alibaba paths regardless of SAS/ECS split. |
+| Manifest store | D1 document row (sibling to R2 blob) | CF D1 | PolarDB / RDS | Self-hosted DB on ECS | RDS / Aurora | D1 row-level writes at D1 free tier limits easily cover knowgrph solo-dev volume; ECS self-hosted DB is cheapest at high sustained volume but adds backup/HA responsibility. |
+| Serve / export | `GET /api/storage/blob/:workspaceId/:path*` | CF R2 via Worker | OSS + CDN | ECS + Nginx serving from local/mounted OSS | S3 + CloudFront | CF R2 + Worker: zero-egress. ECS + Nginx: fixed VM cost regardless of traffic, plus OSS egress if not cached locally. S3 + CloudFront: ~$0.085/GB transfer. |
 
 ### Typical Lean Startup Tech Stack (Similar Projects)
 
-| Layer | Lean Startup Default | Knowgrph Actual | Delta |
-|---|---|---|---|
-| Frontend | React + Vite + Vercel | React + Vite + **CF Pages** | CF Pages is free-tier vs Vercel Pro $20/month; zero-egress vs Vercel bandwidth charges |
-| Database | PlanetScale / Supabase | **CF D1** + Drizzle ORM | D1 free 10 GB vs Supabase $25/month for >500 MB; no connection pooling overhead |
-| Object storage | AWS S3 | **CF R2** | R2 zero-egress vs S3 ~$0.09/GB egress; identical S3-compatible API |
-| AI harness | LangChain / LlamaIndex | Custom typed harness (in-house) | Zero dependency on opinionated frameworks; lower token overhead; harness-first compliant |
-| Memory layer | Redis + vector DB (Pinecone/Weaviate) | **Mem0 local-json** (Dev) → Mem0 Platform (Prod) | Local-json zero-TCO Dev path; Mem0 Platform ~$0.05/1k ops vs Pinecone $0.10/1k |
-| Realtime collab | Firebase / Supabase Realtime | **PocketBase + Yjs** | PocketBase self-hosted ~$5/month VPS; Firebase Blaze ~$25+/month at moderate collab volume |
-| Auth | Auth0 / Clerk | **JWT in CF Worker** (+ PocketBase for collab) | Zero per-MAU cost vs Auth0 $23/month for >7 500 MAU |
-| Payments | Stripe (server-side only) | **Stripe + x402 on-chain** (CF Worker) | x402 enables agent-to-agent micropayments on-chain; no additional infra |
-| Serverless compute | Vercel Functions / Netlify Functions | **CF Workers** (Hono) | CF Workers 100 k requests/day free vs Vercel 1 M/month free; CF Workers edge-native latency advantage |
-| In-browser ML | Not present in most lean stacks | **Transformers.js + Florence-2-base** | Zero-cost inference vs AWS Rekognition ~$0.001/image or Google Vision ~$0.0015/image |
+| Layer | Lean Startup Default | Knowgrph Actual | Alibaba Cloud (SAS) equiv. | Alibaba Cloud (ECS) equiv. | Delta vs Knowgrph Actual |
+|---|---|---|---|---|---|
+| Frontend | React + Vite + Vercel | React + Vite + **CF Pages** | OSS + CDN static hosting | ECS + Nginx static hosting | CF Pages is free-tier vs Vercel Pro $20/month and vs ECS fixed VM cost; zero-egress vs both Vercel bandwidth charges and OSS/ECS egress |
+| Database | PlanetScale / Supabase | **CF D1** + Drizzle ORM | PolarDB Serverless / RDS MySQL | Self-hosted MySQL/Postgres on ECS | D1 free 10 GB vs Supabase $25/month for >500 MB; no connection pooling overhead vs both Alibaba paths |
+| Object storage | AWS S3 | **CF R2** | OSS (Object Storage Service) | ECS local disk / mounted OSS | R2 zero-egress vs S3/OSS ~$0.08–0.09/GB egress; identical S3-compatible API |
+| AI harness | LangChain / LlamaIndex | Custom typed harness (in-house) | Same harness on FC | Same harness on ECS process | Zero dependency on opinionated frameworks; lower token overhead; harness-first compliant regardless of hosting substrate |
+| Memory layer | Redis + vector DB (Pinecone/Weaviate) | **Mem0 local-json** (Dev) → Mem0 Platform (Prod) | Tair (managed Redis) + PolarDB vector | Self-hosted Redis + pgvector on ECS | Local-json zero-TCO Dev path; Mem0 Platform ~$0.05/1k ops vs Pinecone $0.10/1k; self-hosted ECS cheapest at scale but highest ops burden |
+| Realtime collab | Firebase / Supabase Realtime | **PocketBase + Yjs** | Serverless App Engine (SAE) container | **ECS VM + Docker** (closest architectural match) | PocketBase self-hosted ~$5/month VPS; Firebase Blaze ~$25+/month; Alibaba ECS mirrors the same self-hosted pattern at similar cost |
+| Auth | Auth0 / Clerk | **JWT in CF Worker** (+ PocketBase for collab) | RAM + ACM (managed) | Self-hosted auth service on ECS | Zero per-MAU cost vs Auth0 $23/month for >7 500 MAU |
+| Payments | Stripe (server-side only) | **Stripe + x402 on-chain** (CF Worker) | Stripe + FC webhook handler | Stripe + ECS webhook handler | x402 enables agent-to-agent micropayments on-chain; no additional infra beyond the existing CF Worker |
+| Serverless compute | Vercel Functions / Netlify Functions | **CF Workers** (Hono) | FC (Function Compute) | ECS VM (always-on process) | CF Workers 100 k requests/day free vs Vercel 1 M/month free; ECS trades pay-per-use for fixed cost + no cold starts |
+| In-browser ML | Not present in most lean stacks | **Transformers.js + Florence-2-base** | Alibaba Vision Intelligence API | Self-hosted inference server on GPU ECS instance | Zero-cost browser inference vs AWS Rekognition ~$0.001/image, Google Vision ~$0.0015/image, or Alibaba Vision Intelligence ~similar per-image pricing; GPU ECS instance adds ~$100+/month fixed cost even at low volume |
 
 ---
 
@@ -463,16 +471,17 @@ flowchart TB
 
 **Rationale**: Zero-egress (R2, Pages), free-tier generous limits (D1 10 GB, Pages, Workers 100 k/day), edge-native latency, single-vendor deployment (`wrangler deploy`), no VPC or connection-pool management.
 
-**FOSS alternative**: AWS (S3 + Lambda + RDS + CloudFront) or Alibaba Cloud (OSS + FC + RDS).
+**FOSS alternative**: AWS (S3 + Lambda + RDS + CloudFront), Alibaba Cloud SAS (OSS + FC + PolarDB), or Alibaba Cloud ECS (self-hosted VM stack).
 
-| Dimension | Cloudflare | AWS equiv. | Alibaba Cloud equiv. |
-|---|---|---|---|
-| Infra fixed cost/month | $0 (free tier) | ~$15–30 | ~$10–25 |
-| Egress cost/GB | $0 (R2/Pages) | ~$0.09 | ~$0.08 |
-| Token cost/month | $0 (no LLM in infra) | $0 | $0 |
-| Vendor risk | Medium (CF proprietary D1/R2/DO) | Medium (AWS lock-in) | High (Alibaba lock-in, China-centric) |
+| Dimension | Cloudflare | AWS equiv. | Alibaba Cloud (SAS) equiv. | Alibaba Cloud (ECS) equiv. |
+|---|---|---|---|---|
+| Infra fixed cost/month | $0 (free tier) | ~$15–30 | ~$10–25 (pay-per-use, scales with traffic) | ~$25–50 (fixed VM cost regardless of traffic) |
+| Egress cost/GB | $0 (R2/Pages) | ~$0.09 | ~$0.08 | ~$0.08 (plus VM bandwidth cap) |
+| Token cost/month | $0 (no LLM in infra) | $0 | $0 | $0 |
+| Ops burden | None (fully managed) | Low (managed services) | Low (managed services) | High (patching, backups, HA all manual) |
+| Vendor risk | Medium (CF proprietary D1/R2/DO) | Medium (AWS lock-in) | High (Alibaba lock-in, China-centric) | Low (standard Linux/Docker; portable to any VPS) |
 
-**Consequences**: D1 row limits and CF Workers 10 ms CPU cap require careful query design; migration to PostgreSQL (e.g., Neon) when D1 limits exceeded.
+**Consequences**: D1 row limits and CF Workers 10 ms CPU cap require careful query design; migration to PostgreSQL (e.g., Neon) when D1 limits exceeded. The Alibaba ECS path has the lowest vendor lock-in of any alternative (plain VMs) but the highest ops burden for a solo dev — it is the correct fallback only if Alibaba data residency is a hard requirement.
 
 ---
 
@@ -539,6 +548,20 @@ flowchart TB
 
 ---
 
+### ADR-006: Native-in-Repo Consolidation — Vercel, Supabase, and AWS Excluded from Runtime
+
+**Status**: Accepted | **Date**: 2026-07-02
+
+**Decision**: All runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack. The Vercel product tier and the AWS Agent-API / AgentCore lanes formerly documented in `knowgrph-mcp-agentic-canvas-os-prd-tad.md` are removed from the runtime topology; Supabase is permanently excluded (it was never in the runtime stack — it appears in this document only as a rejected lean-startup comparison). AWS and Alibaba Cloud remain in this document strictly as TCO comparison columns.
+
+**Rationale and full TCO comparison**: see `knowgrph-agentic-os-prd-tad.md` ADR-3 (the normative SSOT for this decision). Summary: the removed tiers held no model keys, ran no orchestration, and stored no source-of-truth state; removing them eliminates two deploy pipelines, two secret-audit surfaces, and the documented spec-vs-runtime drift, at zero build cost and up to ~$300/year avoided exposure.
+
+**FOSS alternative**: self-hosted VPS shell (Provisioned/Self-Managed, ~$60–180/year + manual ops) — rejected; it re-adds a deploy pipeline and fixed cost to replace something being deleted, not relocated.
+
+**Consequences**: One vendor billing surface (Cloudflare) + pay-per-use model providers; the Cloudflare `McpAgent` is the sole remote MCP gateway; `aws/*` and `web/` reference implementations in-repo become archival, not deploy targets. Any future external tier requires a superseding ADR with a full deployment-model TCO comparison.
+
+---
+
 ## Token Economics
 
 ### Budget Per Pipeline (at current model pricing, Claude Sonnet 4.5 / Gemini 2.0 Flash estimates)
@@ -552,6 +575,7 @@ flowchart TB
 | Visual Annotation (Florence-2) | 0 | 0 | — | $0.000 | $0.00 |
 | VideoDB async op (via harness) | 200 (orchestration) | 100 | 0% | ~$0.001 | ~$1.00 |
 | Showrunner agent turn (est.) | 2 500 | 600 | 30% | ~$0.006 | ~$6.00 |
+| Agentic OS `knowgrph.os.status` (any view) | 0 | 0 | — | $0.000 | $0.00 |
 
 ### Circuit-Breaker Bounds
 
@@ -562,6 +586,7 @@ flowchart TB
 | Showrunner pipeline run | Per-role `max_retries` in brief | `token_budget` in brief exhausted | Operator-defined |
 | Visual annotation inference | 1 | Inference timeout 120 s | $0.00 |
 | Memory layer per-call | 1 | Structured error on failure | $0.00 (local-json) |
+| Agentic OS Os_Status_Tool | 1 (single-call, no loop) | Structured `{ ok:false, errorCode }` on registry failure | $0.00 (zero model calls) |
 
 ---
 
@@ -569,19 +594,21 @@ flowchart TB
 
 ### 12-Month TCO Projection (solo-dev, ~1 000 MAU, ~500 GB media/year)
 
-| Layer | Cloudflare (current) | AWS equivalent | Alibaba Cloud | Annual delta vs CF |
-|---|---|---|---|---|
-| Static hosting + CDN | $0 (CF Pages free) | ~$120 (CloudFront + S3 hosting) | ~$100 (OSS + CDN) | CF saves ~$100–120/year |
-| Object storage (500 GB) | $0 (R2 free 10 GB; ~$15/year at 500 GB) | ~$54 (S3) + ~$45 egress = ~$99/year | ~$60 + ~$40 egress = ~$100/year | CF saves ~$85/year |
-| Database | $0 (D1 free 10 GB) | ~$180/year (RDS t3.micro) | ~$150/year (RDS MySQL) | CF saves ~$150–180/year |
-| Serverless compute | $0 (Workers 100 k/day free) | ~$0 (Lambda free tier covers solo-dev) | ~$0 (FC free tier) | Equivalent |
-| Cache | $0 (KV free 1 GB) | ~$120/year (ElastiCache t3.micro) | ~$100/year (Tair) | CF saves ~$100–120/year |
-| Collaboration relay | ~$60/year (PocketBase on $5/month VPS) | ~$300/year (Firebase Blaze moderate use) | ~$240/year (MQTT + RDS) | CF path saves ~$180–240/year |
-| Auth | $0 (JWT in Worker) | ~$0 (Cognito free 50 k MAU) | ~$0 | Equivalent |
-| In-browser ML | $0 (Transformers.js) | ~$600/year (Rekognition 500 k images) | ~$500/year (Vision Intelligence) | CF path saves ~$500–600/year |
-| **Total** | **~$75/year** | **~$1 179/year** | **~$1 050/year** | **CF saves ~$975–1 100/year** |
+| Layer | Cloudflare (current) | AWS equivalent | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | Annual delta vs CF |
+|---|---|---|---|---|---|
+| Static hosting + CDN | $0 (CF Pages free) | ~$120 (CloudFront + S3 hosting) | ~$100 (OSS + CDN) | ~$180 (fixed VM, e.g. ecs.t6-c1m2.large ~$15/mo) | CF saves ~$100–180/year |
+| Object storage (500 GB) | $0 (R2 free 10 GB; ~$15/year at 500 GB) | ~$54 (S3) + ~$45 egress = ~$99/year | ~$60 + ~$40 egress = ~$100/year | ~$60 (OSS mounted) + ~$40 egress = ~$100/year (same OSS billing; ECS adds only compute) | CF saves ~$85/year |
+| Database | $0 (D1 free 10 GB) | ~$180/year (RDS t3.micro) | ~$150/year (PolarDB Serverless, pay-per-RCU) | ~$120/year (self-hosted Postgres on shared ECS VM; cheapest but manual backups) | CF saves ~$45–180/year |
+| Serverless compute | $0 (Workers 100 k/day free) | ~$0 (Lambda free tier covers solo-dev) | ~$0 (FC free tier) | ~$180/year (always-on ecs.t6-c1m1.small ~$15/mo, no free tier) | CF saves ~$0–180/year; ECS bills 24/7 regardless of call volume |
+| Cache | $0 (KV free 1 GB) | ~$120/year (ElastiCache t3.micro) | ~$100/year (Tair, managed) | ~$0 incremental (co-located Redis on the same compute ECS VM) | CF saves ~$0–120/year |
+| Collaboration relay | ~$60/year (PocketBase on $5/month VPS) | ~$300/year (Firebase Blaze moderate use) | ~$240/year (SAE container, moderate use) | ~$180/year (PocketBase on ECS VM — architecturally identical to current setup) | CF's own $5/mo VPS is cheapest; Alibaba ECS is the next-closest match at ~$120/year more |
+| Auth | $0 (JWT in Worker) | ~$0 (Cognito free 50 k MAU) | ~$0 (RAM/ACM free tier) | ~$0 incremental (co-located on same ECS VM) | Equivalent |
+| In-browser ML | $0 (Transformers.js) | ~$600/year (Rekognition 500 k images) | ~$500/year (Vision Intelligence API) | ~$1 200+/year (dedicated GPU ECS instance, e.g. ecs.gn6i, for self-hosted inference) | CF path saves ~$500–1 200/year |
+| **Total** | **~$75/year** | **~$1 179/year** | **~$1 090/year** | **~$1 920/year** (before consolidating compute onto a single VM) | **CF saves ~$1 000–1 850/year** |
 
-> Note: LLM API costs (Claude, Gemini, OpenAI, VideoDB, Exa) are pay-per-use and identical across all three infrastructure options. They are excluded from the infra TCO comparison. AI API costs are the dominant variable cost at any serious usage level.
+> Note: LLM API costs (Claude, Gemini, OpenAI, VideoDB, Exa) are pay-per-use and identical across all four infrastructure options. They are excluded from the infra TCO comparison. AI API costs are the dominant variable cost at any serious usage level.
+>
+> The ECS total above sums each row's ECS-instance cost independently; in practice a single consolidated ECS VM can host compute + cache + collab relay + database together, which would bring the realistic Alibaba ECS total down to roughly ~$400–600/year — still 5–8× CF's cost, but the gap narrows once workloads are consolidated onto shared VM capacity. This is the standard "self-managed VM" tradeoff: lower per-service marginal cost at the price of manual capacity planning, patching, and no per-service isolation.
 
 ### ROI Score (Knowgrph platform, current state)
 
@@ -600,4 +627,21 @@ ROI Score = (User Impact × Reach) / (Build Hours/month + Monthly TCO + Token Co
 
 ---
 
-*Document auto-generated from codebase state as of 2026-06-29. Adherent to [PRD & TAD Guidelines v1.2.0](../../guidelines/prd-tad-guidelines.md).*
+## Agentic OS Follow-On Tracks
+
+Must-tier Agentic OS + MCP Gateway federation is documented in
+[`knowgrph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md)
+(v0.4.1). Remaining work is spec-complete in
+[`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).
+
+| Track | Stack touchpoint | Local status | Deploy exit |
+|---|---|---|---|
+| **A — HITL durable store** | `knowgrph-mcp` Worker KV + `approval-token-issuer.js` | Issuance/verify/consume tests pass | Token survives Worker restart |
+| **B — Live stage harnesses** | `live-clients.js` + Cloudflare AI Gateway + Exa | Exa/storyboard env-gated; render/commerce async scaffold | One gated live Director golden path |
+| **C — Dashboard UI** | `knowgrph.agentic_canvas_os.plan` → Canvas Storyboard | Dry-run manifest implemented | Dashboard doc renders on Canvas |
+
+Validation (repo root): `npm run runtime:test` plus follow-on harness tests listed in the follow-on PRD/TAD.
+
+---
+
+*Document updated 2026-07-03. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).*

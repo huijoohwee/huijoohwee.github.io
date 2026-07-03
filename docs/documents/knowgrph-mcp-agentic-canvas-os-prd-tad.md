@@ -1,21 +1,19 @@
 ---
 title: "Knowgrph MCP Agentic Canvas OS"
 doc_type: "PRD + TAD"
-version: "0.3.1"
-status: "dev-implemented"
+version: "0.3.3"
+status: "superseded"
+superseded_by: "knowgrph/docs/documents/knowgrph-agentic-os-prd-tad.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
+superseded_date: "2026-07-03"
+superseded_note: "The Vercel product tier, AWS Agent-API fallback, and AWS AgentCore wrapper lane described below are REMOVED from the runtime topology. Video_Remix Director connector content is consolidated into the Agentic OS PRD/TAD as a native-in-repo harness. MCP Gateway is discovery-first federation over four existing surfaces (ADR-4) — not a fifth proxy tier. This file is retained for historical reference only; do not derive runtime, deployment, or stack decisions from it."
 date: "2026-06-10"
 lang: "en-US"
 owners:
   - "knowgrph mcp agentic canvas os"
 product: "agentic-canvas-os"
-# TOPOLOGY (UPDATED): `knowgrph` remains the control-plane + contract SSOT, while
-# `agentic-canvas-os` is now a REALIZED split product repo. The product runtime
-# path is Vercel frontend + Vercel serverless Agent-API as PRIMARY/DEFAULT, with
-# AWS Agent-API as FALLBACK and AgentCore as an additive wrapper lane. The stack
-# boundary (R11) is enforced by repo ownership, server-side secrets, and smoke
-# tests: `knowgrph` owns the control plane and canvas engine; `agentic-canvas-os`
-# owns the thin product shell that forwards to it.
-topology: "knowgrph = control-plane SSOT; agentic-canvas-os = realized split product repo; Vercel Agent-API primary/default, AWS Agent-API fallback"
+canonical_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md"
+agent_ready_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md"
+topology: "knowgrph = native-in-repo control plane + MCP Gateway federation; Vercel/AWS tiers removed (ADR-3)"
 repos:
   dev: "/Users/huijoohwee/Documents/GitHub/knowgrph"
   prod: "/Users/huijoohwee/Documents/GitHub/huijoohwee/content/knowgrph"
@@ -45,6 +43,26 @@ frontmatter_contract: "required"
 ---
 
 # Knowgrph MCP Agentic Canvas OS
+
+> **SUPERSEDED (2026-07-03)**: this document is consolidated into
+> [`knowgrph/docs/documents/knowgrph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md) **v0.4.0**
+> and [`knowgrph/docs/documents/knowgrph-agent-ready-document.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md) **v1.2.0**.
+> The Vercel and AWS tiers described below are removed from the runtime topology; Supabase is permanently excluded.
+> Retained for historical reference only.
+
+## Consolidation Map (what moved where)
+
+| Former content (this doc) | Current SSOT (native-in-repo) |
+|---|---|
+| Video_Remix Director + 5 stage harnesses | `knowgrph-agentic-os-prd-tad.md` → Component: Video_Remix Director; `mcp/video-remix-runtime.js` |
+| Vercel frontend + Agent-API primary | **Removed** (ADR-3) → CF Pages product frontend |
+| AWS Agent-API fallback + AgentCore | **Removed** (ADR-3) → Cloudflare `McpAgent` at `/knowgrph/control-plane/mcp` |
+| Agent discovery + HTTP MCP | `knowgrph-agent-ready-document.md` → Pages HTTP MCP `/knowgrph/mcp` |
+| MCP Gateway (unified agent onboarding) | `knowgrph-agentic-os-prd-tad.md` ADR-4 → four-surface federation + `knowgrph.os.status` |
+| Agentic OS cross-harness visibility | `knowgrph-agentic-os-prd-tad.md` → `knowgrph.os.status` (5 read views) |
+| Agentic OS follow-on (HITL / live / dashboard) | [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md): Tracks A/B/C |
+| HITL approval gates | Unchanged in-repo → `contracts/approval.schema.js`, `mcp/video-remix/approval-token-issuer.js` (local **implemented**) |
+| Cloudflare AI Gateway model routing | Unchanged → Cloudflare Workers + AI Gateway binding |
 
 ## Markdown YAML Frontmatter Contract
 

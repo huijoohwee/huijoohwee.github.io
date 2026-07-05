@@ -579,6 +579,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-os-video-agent-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-os-video-agent-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-os-video-agent-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-os-video-agent-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-agnes-ai-api-prd-tad",
       "@type": "kg:Node",
       "labels": [

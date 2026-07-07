@@ -2773,6 +2773,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-probe-tree-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-probe-tree-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-probe-tree-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-probe-tree-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-pwa",
       "@type": "kg:Node",
       "labels": [

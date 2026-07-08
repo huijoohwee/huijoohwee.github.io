@@ -98,6 +98,16 @@
         "@language": "zh-cn"
       }
     ],
+    "xrPanelSurfaces": [
+      {
+        "@value": "Toolbar Surface Mode `XR`, BottomPanel `XR`, and FloatingPanel `XR` must consume one shared semantic XR panel projection over native Knowgrph XR state. The panel may activate `canvas3dMode: \"xr\"` and expose shared physics controls/status plus WebGL/WebGPU/WebXR/glTF/PLY readiness and manifest import/render cache identity. Import URL and Import local files must materialize standalone PLY/SPZ captures as source-owned XR manifests instead of embedding or refetching payload bytes, source-only captures must not advertise legacy GLTF/GLB exports, and standalone spatial manifests must render through a source-only spatial stage instead of graph/model fallback. The runtime must not copy SuperSplat/PlayCanvas code, add viewer/runtime dependencies, commit validation asset paths, or fork renderer state per panel.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar Surface Mode `XR`、BottomPanel `XR` 与 FloatingPanel `XR` 必须共用同一个语义 XR 面板投影，并只读取 Knowgrph 原生 XR 状态。该面板可以激活 `canvas3dMode: \"xr\"` 并暴露共享 physics 控制、状态、WebGL/WebGPU/WebXR/glTF/PLY readiness 以及 manifest import/render cache identity。Import URL 与 Import local files 必须把独立 PLY/SPZ 捕获物化为源拥有的 XR manifest，不得嵌入或重复获取 payload bytes，source-only capture 不得暴露 legacy GLTF/GLB export，且 standalone spatial manifest 必须通过 source-only spatial stage 渲染而不是回退到 graph/model。运行时不得复制 SuperSplat/PlayCanvas 代码、增加 viewer/runtime 依赖、提交验证资产路径或按面板分叉 renderer 状态。",
+        "@language": "zh-cn"
+      }
+    ],
     "timelineVideoSequencePanelSplit": [
       {
         "@value": "Video-sequence surfaces split by responsibility: `kgCanvas2dRenderer: \"media\"` previews rich media and playable sequence sources only; BottomPanel `Timeline` owns transport, playhead, cut/splice, selected-clip nudge/trim/snap/split editing, scopes, audio mix, and Mermaid Gantt writeback; FloatingPanel `Timeline` owns parsed row/list inspection only. Playback state must flow through shared timeline transport/controller owners, not panel-local store reads.",

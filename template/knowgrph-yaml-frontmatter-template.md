@@ -2,15 +2,15 @@
 title: "Knowgrph YAML Frontmatter Template"
 graphId: "md:knowgrph-yaml-frontmatter-template"
 doc_type: "Template"
-date: "2026-05-03"
-lang: en-US
+date: "2026-07-08"
+lang: "en-US"
 
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
 kgCanvas2dRenderer: "flowEditor"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
+kgMultiDimTableModeEnabled: true
 kgDocumentStructureBaselineLock: false
 
 $schema: "kgc-pipeline/v1"
@@ -21,7 +21,7 @@ spec:
   parser: yaml-frontmatter
   execution: computing-flow
   topology: DAG
-  ssot_surfaces: [widget_bundle, pipeline, flow.nodes, flow.edges, mermaid, runner]
+  ssot_surfaces: [widget_bundle, pipeline, socket_types, flow.nodes, flow.edges, mermaid, runner]
 
 widget_bundle:
   kind: kg:flow:widgetBundle
@@ -35,7 +35,7 @@ widget_bundle:
     edges_ref: []
     display:
       direction: LR
-      edgeType: bezier
+      edgeType: smoothstep
     behavior:
       drag_pan_zoom_owner: flowEditor-frontmatter-only
       rich_media_overlay_handlers: flowEditor-frontmatter-only
@@ -65,24 +65,119 @@ pipeline: []
 
 mermaid: |
   flowchart LR
-    A["Replace with your canonical graph"]
+    source_input["Source input"] --> normalize_context["Normalize context"]
+    normalize_context --> compute_graph["Compute graph"]
+    compute_graph --> render_canvas["Render canvas"]
+    render_canvas --> validate_runtime["Validate runtime"]
 
+socket_types:
+  template_source_signal: {color: "#14b8a6", edgeWidthPx: 2, handleStrokeWidthPx: 2, accepts: [template_source_signal]}
+  template_context_signal: {color: "#38bdf8", edgeWidthPx: 2, handleStrokeWidthPx: 2, accepts: [template_context_signal]}
+  template_graph_signal: {color: "#f59e0b", edgeWidthPx: 3, handleStrokeWidthPx: 3, accepts: [template_graph_signal]}
+  template_proof_signal: {color: "#22c55e", edgeWidthPx: 3, handleStrokeWidthPx: 3, accepts: [template_proof_signal]}
 flow:
-  direction: {key: direction, type: string, value: LR}
-  edgeType: {key: edgeType, type: string, value: bezier}
-  snapToGrid: {key: snapToGrid, type: boolean, value: true}
+  direction: {key: direction, type: string, value: "LR"}
+  edgeType: {key: edgeType, type: string, value: "smoothstep"}
+  balancedViewportPreset: {key: balancedViewportPreset, type: string, value: "widgetFrontmatter"}
   computed: {key: computed, type: boolean, value: true}
-  nodes: []
-  edges: []
+  snapToGrid: {key: snapToGrid, type: boolean, value: true}
+  nodes:
+    - id: {key: id, type: string, value: "source_input"}
+      type: {key: type, type: string, value: "SourceInputWidget"}
+      label: {key: label, type: string, value: "Source input"}
+      lane: {key: lane, type: string, value: "Source"}
+      position: {key: position, type: object, value: {"x":0,"y":0}}
+      handles: {key: handles, type: object, value: {"source":["raw_frontmatter"]}}
+      "flow:portTypes": {key: "flow:portTypes", type: object, value: {"out":{"raw_frontmatter":"template_source_signal"}}}
+      "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:source_input"}
+      "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
+      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Author-owned YAML frontmatter is the first SSOT input."}
+    - id: {key: id, type: string, value: "normalize_context"}
+      type: {key: type, type: string, value: "ContextNormalizeWidget"}
+      label: {key: label, type: string, value: "Normalize context"}
+      lane: {key: lane, type: string, value: "Context"}
+      position: {key: position, type: object, value: {"x":320,"y":0}}
+      handles: {key: handles, type: object, value: {"target":["raw_frontmatter"],"source":["normalized_context"]}}
+      command: {key: command, type: string, value: "/context.resolve"}
+      semantics: {key: semantics, type: list, value: ["#frontmatter", "#no-hardcode"]}
+      bindings: {key: bindings, type: list, value: ["@source.frontmatter", "@source.body"]}
+      "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"raw_frontmatter":"template_source_signal"},"out":{"normalized_context":"template_context_signal"}}}
+      "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:normalize_context"}
+      "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
+      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Frontmatter and body context are normalized without downstream aliases."}
+    - id: {key: id, type: string, value: "compute_graph"}
+      type: {key: type, type: string, value: "ComputingFlowWidget"}
+      label: {key: label, type: string, value: "Compute graph"}
+      lane: {key: lane, type: string, value: "Compute"}
+      position: {key: position, type: object, value: {"x":640,"y":0}}
+      handles: {key: handles, type: object, value: {"target":["normalized_context"],"source":["computed_graph"]}}
+      command: {key: command, type: string, value: "/computing-flow"}
+      semantics: {key: semantics, type: list, value: ["#computing-flow", "#runtime-ready"]}
+      bindings: {key: bindings, type: list, value: ["@canvas", "@runtime-proof"]}
+      "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"normalized_context":"template_context_signal"},"out":{"computed_graph":"template_graph_signal"}}}
+      "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:compute_graph"}
+      "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
+      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "The computing-flow graph stays source-owned in KTV YAML."}
+    - id: {key: id, type: string, value: "render_canvas"}
+      type: {key: type, type: string, value: "CanvasRenderWidget"}
+      label: {key: label, type: string, value: "Render canvas"}
+      lane: {key: lane, type: string, value: "Render"}
+      position: {key: position, type: object, value: {"x":960,"y":0}}
+      handles: {key: handles, type: object, value: {"target":["computed_graph"],"source":["rendered_surface"]}}
+      command: {key: command, type: string, value: "/canvas.project"}
+      semantics: {key: semantics, type: list, value: ["#canvas", "#frontmatter"]}
+      bindings: {key: bindings, type: list, value: ["@canvas", "@source.frontmatter"]}
+      "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"computed_graph":"template_graph_signal"},"out":{"rendered_surface":"template_graph_signal"}}}
+      "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:render_canvas"}
+      "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
+      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Shared renderer owners project the source graph without proxy mutation."}
+    - id: {key: id, type: string, value: "validate_runtime"}
+      type: {key: type, type: string, value: "RuntimeValidationWidget"}
+      label: {key: label, type: string, value: "Validate runtime"}
+      lane: {key: lane, type: string, value: "Proof"}
+      position: {key: position, type: object, value: {"x":1280,"y":0}}
+      handles: {key: handles, type: object, value: {"target":["rendered_surface"]}}
+      command: {key: command, type: string, value: "/runtime-ready.check"}
+      semantics: {key: semantics, type: list, value: ["#runtime-ready", "#dev-only"]}
+      bindings: {key: bindings, type: list, value: ["@runtime-proof", "@dev-only"]}
+      "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"rendered_surface":"template_graph_signal"},"out":{"validation_proof":"template_proof_signal"}}}
+      "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:validate_runtime"}
+      "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
+      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Runtime readiness is proven locally before any publish or deploy step."}
+  edges:
+    - id: {key: id, type: string, value: "source_to_normalize"}
+      source: {key: source, type: string, value: "source_input"}
+      sourceHandle: {key: sourceHandle, type: string, value: "raw_frontmatter"}
+      target: {key: target, type: string, value: "normalize_context"}
+      targetHandle: {key: targetHandle, type: string, value: "raw_frontmatter"}
+      type: {key: type, type: string, value: "template_source_signal"}
+    - id: {key: id, type: string, value: "normalize_to_compute"}
+      source: {key: source, type: string, value: "normalize_context"}
+      sourceHandle: {key: sourceHandle, type: string, value: "normalized_context"}
+      target: {key: target, type: string, value: "compute_graph"}
+      targetHandle: {key: targetHandle, type: string, value: "normalized_context"}
+      type: {key: type, type: string, value: "template_context_signal"}
+    - id: {key: id, type: string, value: "compute_to_render"}
+      source: {key: source, type: string, value: "compute_graph"}
+      sourceHandle: {key: sourceHandle, type: string, value: "computed_graph"}
+      target: {key: target, type: string, value: "render_canvas"}
+      targetHandle: {key: targetHandle, type: string, value: "computed_graph"}
+      type: {key: type, type: string, value: "template_graph_signal"}
+    - id: {key: id, type: string, value: "render_to_validate"}
+      source: {key: source, type: string, value: "render_canvas"}
+      sourceHandle: {key: sourceHandle, type: string, value: "rendered_surface"}
+      target: {key: target, type: string, value: "validate_runtime"}
+      targetHandle: {key: targetHandle, type: string, value: "rendered_surface"}
+      type: {key: type, type: string, value: "template_graph_signal"}
 ---
 
 # Knowgrph YAML Frontmatter Template
 
 ## Architecture Overview
 
-**From markdown source to Canvas View landing**: Ingestion -> frontmatter parsing -> preset resolution -> graph hydration -> renderer, document mode, and surface mode application -> active Canvas View.
+**From markdown source to Canvas View landing**: Ingestion -> frontmatter parsing -> KTV computing-flow normalization -> preset resolution -> graph hydration -> renderer, document mode, and surface mode application -> active Canvas View.
 
-**From `*.md` seed file to directly runnable canvas seed**: Authors place the explicit Canvas View frontmatter block at the top of the markdown file -> runtime can ingest the file as-is -> Canvas View switching no longer depends on prior stored UI state.
+**From `*.md` seed file to directly runnable canvas seed**: Authors place the explicit Canvas View frontmatter block at the top of the markdown file -> runtime can ingest KTV `socket_types`, `flow.nodes`, and `flow.edges` as-is -> Canvas View switching no longer depends on prior stored UI state.
 
 ## CID
 
@@ -98,9 +193,11 @@ flow:
 
 **From default document state to D3 landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "d3"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on D3 plus Frontmatter Mode.
 
-**From default document state to Flow Editor landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Flow Editor plus Frontmatter Mode.
+**From default document state to Flow Editor landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, and computing-flow KTV fields -> runtime lands on Flow Editor plus Frontmatter Mode.
 
 **From default document state to Animatic landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "animatic"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Flow Editor and treating `timeline.beats.*` as additive timing metadata.
+
+**From empty graph to computing-flow KTV graph**: Author declares `socket_types`, `flow.direction`, `flow.edgeType`, `flow.balancedViewportPreset`, `flow.computed`, `flow.snapToGrid`, KTV node rows, and KTV edge rows -> runtime can render, inspect, and validate the graph without recalculating structure from prose.
 
 **From document preset to 3D landing**: Author sets `kgCanvasSurfaceMode: "3d"` and optionally `kgCanvas3dMode: "3d"` or `kgCanvas3dMode: "voxel"` -> runtime lands on 3D surface mode and disables Geospatial Mode.
 
@@ -114,6 +211,7 @@ flow:
 |---|---|
 | README-style document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "d3"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
 | Widget bundle document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
+| Computing-flow KTV document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "flowEditor"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: true` + `socket_types` + KTV `flow:` |
 | Animatic timeline document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "animatic"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + shared `flow:` graph + optional `timeline.beats.*` timing |
 | 3D document | `kgCanvasSurfaceMode: "3d"` + `kgCanvasRenderMode: "3d"` + optional `kgCanvas3dMode: "3d"` or `"voxel"` |
 | Geospatial document | `kgCanvasSurfaceMode: "geospatial"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
@@ -210,10 +308,19 @@ Canonical seed examples aligned to this vocabulary:
 | `kgFrontmatterModeEnabled` | Enables Frontmatter Mode | `true`, `false` |
 | `kgMultiDimTableModeEnabled` | Enables Multi-dimensional Table Mode | `true`, `false` |
 | `kgDocumentStructureBaselineLock` | Locks or unlocks the document structure baseline | `true`, `false` |
+| `socket_types` | Declares typed port/edge signals before graph materialization | Provider-neutral signal ids |
+| `flow.direction` | KTV graph direction | `{key: direction, type: string, value: "LR"}` |
+| `flow.edgeType` | KTV edge rendering mode | `{key: edgeType, type: string, value: "smoothstep"}` |
+| `flow.balancedViewportPreset` | KTV viewport fit owner | `{key: balancedViewportPreset, type: string, value: "widgetFrontmatter"}` |
+| `flow.nodes[*]` | KTV node rows with handles, port types, commands, semantics, and bindings | `{key, type, value}` rows |
+| `flow.edges[*]` | KTV edge rows that reference source, target, handles, and socket type | `{key, type, value}` rows |
 
 ## Validation Guidelines
 
 - [ ] Documenters set the full Canvas View key set in the opening frontmatter block.
+- [ ] Documenters use KTV objects for computing-flow graph settings, node fields, and edge fields.
+- [ ] Documenters declare `socket_types` before `flow:` and reference only declared socket ids from `flow:portTypes` and `flow.edges[*].type`.
+- [ ] Documenters include `flow.balancedViewportPreset: {key: balancedViewportPreset, type: string, value: "widgetFrontmatter"}` for frontmatter-owned computing-flow graphs.
 - [ ] Documenters treat switch-sensitive `*.md` files as directly runnable canonical seeds by adding the explicit Canvas View frontmatter block at the top of the file.
 - [ ] Documenters set `kgCanvasSurfaceMode` explicitly when switching between 2D, 3D, and Geospatial surfaces.
 - [ ] Documenters keep `kgFrontmatterModeEnabled: true` for switchable canvas-view documents.

@@ -2532,6 +2532,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mobile-first-enhancement-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mobile-first-enhancement-plan.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mobile-first-enhancement-plan.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mobile-first-enhancement-plan.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-modularity-prd-tad",
       "@type": "kg:Node",
       "labels": [

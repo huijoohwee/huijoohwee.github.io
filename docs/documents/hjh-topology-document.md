@@ -81,6 +81,10 @@ Knowgrph video-remix product split. For that product specifically:
 - The live canvas is consumed through the run-scoped Knowgrph `doc-view` iframe
   surface; MCP is the orchestration/control-plane transport, not the browser
   canvas-render transport.
+- For current remote MCP onboarding and the canonical public-discovery vs
+  control-plane endpoint boundary, start with
+  `docs/documents/knowgrph-mcp-onboarding-index.md` and
+  `docs/documents/knowgrph-mcp-install-contract.md`.
 
 ### Component Specifications
 

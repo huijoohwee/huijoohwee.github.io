@@ -3,8 +3,8 @@ title: "Knowgrph — Tech Stack Document"
 id: "md:knowgrph-tech-stack-document"
 author: "airvio / joohwee"
 date: "2026-06-29"
-updated: "2026-07-03"
-version: "1.2.1"
+updated: "2026-07-10"
+version: "1.2.3"
 excluded_vendors:
   - "Vercel (runtime tier removed — Agentic OS ADR-3; comparison-only mentions retained)"
   - "Supabase (never in runtime stack; permanently excluded — Agentic OS ADR-3)"
@@ -42,6 +42,7 @@ traceability:
 **Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/knowgrph`. Deployed at `airvio.co/knowgrph` via Cloudflare Pages + Workers.
 **Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud (Serverless App Engine / SAS), Alibaba Cloud (ECS), and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
 **Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `knowgrph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
+**MCP install note**: For remote MCP onboarding, treat `https://airvio.co/knowgrph/mcp` as the canonical public install/discovery URL and `https://airvio.co/knowgrph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. The operator-facing setup contract lives in `docs/documents/knowgrph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/knowgrph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`.
 
 ---
 
@@ -294,7 +295,7 @@ flowchart TB
     subgraph Collab["Concurrent Editing"]
         PB["PocketBase\nauth + realtime relay"]
         Bridge["GitHub Save Bridge\n/api/storage/collab/save"]
-        GH["GitHub docs/**\nSSO T"]
+        GH["GitHub docs/**\nSSOT"]
         PB --> Bridge --> GH
     end
 
@@ -353,12 +354,22 @@ flowchart TB
 | Date handling | dayjs | 1.11.19 | Timestamp formatting | ✓ MIT |
 | PWA | vite-plugin-pwa + Workbox | 0.21.1 | Service worker, offline support | ✓ MIT |
 
+### Runtime Selection Posture
+
+| Option | Current role in knowgrph | Decision | Why |
+|---|---|---|---|
+| TypeScript / modern JS | Primary app/runtime language across Canvas SPA, Cloudflare Workers, MCP handlers, and shared contracts | **Primary** | Native fit for Cloudflare Workers and browser runtimes; fastest ship/debug loop for a solo dev; shared types reduce spec drift across UI, Worker, and MCP surfaces |
+| WASM | Targeted acceleration layer inside the browser runtime | **Selective** | Use only where it removes paid API spend or unlocks bounded local inference, such as Transformers.js with WebGPU -> WASM fallback |
+| Go | Productized dependency runtime only | **Not primary** | Keep isolated to PocketBase where the product already ships in Go; do not expand Go into the core knowgrph runtime without a measured bottleneck that TypeScript cannot meet |
+| Other alts (Rust, Zig, C++) | Not in the current app/runtime path | **Deferred** | Additional toolchain and bridge cost does not beat the current TypeScript-first path for I/O-bound Cloudflare + MCP workloads |
+
 ### Backend — Cloudflare Workers
 
 | Layer | Technology | Version | Role | FOSS? |
 |---|---|---|---|---|
 | Worker framework | Hono | 4.12.23 | Routing, middleware, typed handlers | ✓ MIT |
-| ORM / schema | Drizzle ORM + Drizzle Kit | 0.45.2 / 0.31.10 | D1 schema ownership, typed queries | ✓ Apache 2.0 |
+| Runtime query layer | Drizzle ORM | 0.45.2 | Typed runtime queries against D1 | ✓ Apache 2.0 |
+| Schema migrations | Wrangler-managed D1 SQL migrations | — | Versioned SQL is the sole schema authority; no `drizzle-kit` ownership | Wrangler tooling |
 | Database | Cloudflare D1 (SQLite) | — | Remote shared store; read/export cache | Proprietary (zero fixed cost; zero-egress) |
 | Object store | Cloudflare R2 | — | Binary blob storage (zero-egress) | Proprietary (zero-egress; S3-compatible) |
 | Cache | Cloudflare KV | — | Short-lived access URL cache | Proprietary (minimal cost) |
@@ -562,6 +573,20 @@ flowchart TB
 
 ---
 
+### ADR-007: TypeScript-First Runtime; WASM Only as a Targeted Accelerator
+
+**Status**: Accepted | **Date**: 2026-07-10
+
+**Decision**: Keep knowgrph TypeScript-first across the main runtime surfaces: Canvas SPA, Cloudflare Workers, MCP handlers, and shared contracts. Use WASM only as a targeted acceleration path inside browser-native workloads, and keep Go limited to PocketBase as an already-productized dependency rather than a precedent for rewriting the core runtime.
+
+**FOSS alternative**: Go services, Rust/WASM, or other compiled runtimes for the primary app layer.
+
+**Rationale**: knowgrph is dominated by I/O-bound work: Markdown parsing, JSON contracts, MCP dispatch, GitHub fetches, D1 queries, Worker routes, and browser-hosted orchestration. Cloudflare Workers and the browser are already V8-native, so TypeScript gives the fastest path from spec to runtime with shared types and the lowest maintenance surface for a solo dev. WASM remains valuable where it directly removes paid API calls or heavy browser-side compute, but it is not the right default for request/response orchestration. Go remains a good implementation language for PocketBase, yet expanding it into the core app stack would split contracts and slow the edit-test-deploy loop without a measured ROI win.
+
+**Consequences**: No repo-wide rewrite to Go, Rust, or generic WASM. New runtime modules should default to TypeScript unless they prove a bounded hotspot with measurable cost or latency gains. Any future compiled-language expansion must show clear upside on TCO, token economics, and operator complexity before entering the main runtime path.
+
+---
+
 ## Token Economics
 
 ### Budget Per Pipeline (at current model pricing, Claude Sonnet 4.5 / Gemini 2.0 Flash estimates)
@@ -644,4 +669,4 @@ Validation (repo root): `npm run runtime:test` plus follow-on harness tests list
 
 ---
 
-*Document updated 2026-07-03. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).*
+*Document updated 2026-07-10. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).*

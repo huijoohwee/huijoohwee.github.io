@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.8",
+  "schemaVersion": "1.1.9",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -93,6 +93,14 @@
         "boundsRule": "Import must be bounded (max files, max tree lines, max log rows) and must continue on per-file failures while recording them.",
         "uiRule": "Emit progress via a persistent toast and record bounded progress rows into MainPanel History→Log; final state must emit success/warn/error.",
         "neutralityRule": "Do not hardcode any specific repo URLs or repo-specific output; all sitemap content must be derived from GitHub API responses and README markdown."
+      }
+    },
+    "commandGrammar": {
+      "headlessResolutionRule": "Command palette integrations must consume the Agentic Canvas OS SSOT via the `knowgrph.agentic_canvas_os.docs.invoke` MCP tool (powered by dynamic edge-cached GitHub fetches). Avoid mutating files, spending model tokens, or taking heavy client-side UI package dependencies (e.g. cmdk).",
+      "tokens": {
+        "slash": "`/` resolves canonical chat skills and commands.",
+        "at": "`@` resolves active Markdown variables or canonical media embeds from cached inventory.",
+        "hash": "`#` resolves registered memory, agent, model, or MCP directives without duplicating keywords."
       }
     }
   }

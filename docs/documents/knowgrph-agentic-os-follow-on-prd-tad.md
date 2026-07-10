@@ -15,6 +15,11 @@ parent: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrp
 > **Mirror notice**: canonical SSOT lives in
 > [`knowgrph/docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md).
 > Edit there first; this file tracks the same content for the `huijoohwee.github.io` doc index.
+>
+> For current remote MCP onboarding, start with
+> `docs/documents/knowgrph-mcp-onboarding-index.md`, then use
+> `docs/documents/knowgrph-mcp-install-contract.md` for the canonical
+> public-discovery vs control-plane endpoint boundary.
 
 Parent: [`knowgrph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md) v0.4.0.
 

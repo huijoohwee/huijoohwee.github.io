@@ -49,6 +49,11 @@ frontmatter_contract: "required"
 > and [`knowgrph/docs/documents/knowgrph-agent-ready-document.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md) **v1.2.0**.
 > The Vercel and AWS tiers described below are removed from the runtime topology; Supabase is permanently excluded.
 > Retained for historical reference only.
+>
+> For the current remote MCP onboarding path, start with
+> `docs/documents/knowgrph-mcp-onboarding-index.md`, then use
+> `docs/documents/knowgrph-mcp-install-contract.md` for the canonical
+> `/knowgrph/mcp` vs `/knowgrph/control-plane/mcp` boundary.
 
 ## Consolidation Map (what moved where)
 

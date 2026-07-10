@@ -1428,6 +1428,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-design-editor-baseline-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-design-editor-baseline-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-design-editor-baseline-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-design-editor-baseline-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-disjoint-force-frontmatter-document",
       "@type": "kg:Node",
       "labels": [
@@ -1908,6 +1924,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-mainpanel-readiness-rubric",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mainpanel-readiness-rubric.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mainpanel-readiness-rubric.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mainpanel-readiness-rubric.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-mainpanel-section-descriptions",
       "@type": "kg:Node",
       "labels": [
@@ -2113,6 +2145,54 @@
         "relPath": "docs/documents/knowgrph-markdown-ssot-ui-contract-document.md"
       },
       "documentPath": "docs/documents/knowgrph-markdown-ssot-ui-contract-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mcp-install-boundary-release-note-20260710",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mcp-install-boundary-release-note-20260710.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mcp-install-boundary-release-note-20260710.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mcp-install-boundary-release-note-20260710.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mcp-install-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mcp-install-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mcp-install-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mcp-install-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-mcp-onboarding-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-mcp-onboarding-index.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-mcp-onboarding-index.md"
+      },
+      "documentPath": "docs/documents/knowgrph-mcp-onboarding-index.md",
       "language": "en-us"
     },
     {
@@ -2532,6 +2612,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-next-step-priorities",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-next-step-priorities.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-next-step-priorities.md"
+      },
+      "documentPath": "docs/documents/knowgrph-next-step-priorities.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-ontology-document",
       "@type": "kg:Node",
       "labels": [
@@ -2545,22 +2641,6 @@
         "relPath": "docs/documents/knowgrph-ontology-document.md"
       },
       "documentPath": "docs/documents/knowgrph-ontology-document.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-open-pencil-inspired-prd-tad",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-open-pencil-inspired-prd-tad.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-open-pencil-inspired-prd-tad.md"
-      },
-      "documentPath": "docs/documents/knowgrph-open-pencil-inspired-prd-tad.md",
       "language": "en-us"
     },
     {
@@ -2722,22 +2802,6 @@
         "relPath": "docs/documents/knowgrph-pitchdeck.md"
       },
       "documentPath": "docs/documents/knowgrph-pitchdeck.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-pixverse-mcp-prd-tad",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-pixverse-mcp-prd-tad.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-pixverse-mcp-prd-tad.md"
-      },
-      "documentPath": "docs/documents/knowgrph-pixverse-mcp-prd-tad.md",
       "language": "en-us"
     },
     {

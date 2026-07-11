@@ -2132,6 +2132,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-markdown-agent-discovery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-markdown-agent-discovery.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-markdown-agent-discovery.md"
+      },
+      "documentPath": "docs/documents/knowgrph-markdown-agent-discovery.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-markdown-editor-mode-contract-document",
       "@type": "kg:Node",
       "labels": [

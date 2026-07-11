@@ -3,8 +3,8 @@ title: "Knowgrph MCP Onboarding Index"
 id: "md:knowgrph-mcp-onboarding-index"
 author: "airvio / joohwee"
 date: "2026-07-10"
-updated: "2026-07-10"
-version: "1.1.0"
+updated: "2026-07-11"
+version: "1.1.3"
 status: "current"
 doc_type: "Onboarding Index"
 lang: "en-US"
@@ -34,35 +34,68 @@ Use it when you need one short path to:
 
 - choose the correct Knowgrph MCP endpoint
 - understand the public discovery vs control-plane split
+- find the source-backed Markdown discovery contract behind the Live Canvas Hero
 - find the canonical install contract
 - scan the latest install-boundary release note
-
-## Fastest Path
-
-Use this order when you want the lowest-friction public onboarding route:
-
-1. install `https://airvio.co/knowgrph/mcp`
-2. add `https://airvio.co/knowgrph/control-plane/mcp` only if the host can preserve MCP session state and needs live `/`, `#`, `@` grammar lookup
-3. if you want the cheapest proof path before hosted setup, use the source-side offline deterministic route in `README.md` or `docs/documents/knowgrph-superagent-harness.md` in the `knowgrph` repository
+- jump straight to the latest evidence-backed release proof
 
 ## Quick Answer
+
+Map intent. Orchestrate agents. Prove outcomes.
+
+A source-backed canvas where `/` routes work, `#` sets meaning, and `@` binds context.
 
 - Install `https://airvio.co/knowgrph/mcp` for public discovery and read-only MCP usage
 - Use `https://airvio.co/knowgrph/control-plane/mcp` only for approval-gated orchestration and
   live `/`, `#`, `@` grammar invocation
+
+## Fastest Path
+
+1. Map intent: start with `https://airvio.co/knowgrph/mcp` for public discovery, retrieval, and
+   inspection.
+2. Orchestrate agents: add `https://airvio.co/knowgrph/control-plane/mcp` only if the host can
+   preserve MCP session state across calls and needs live grammar lookup.
+3. Prove outcomes: if you want the cheapest proof path before hosted setup, use the source-side
+   offline deterministic route in `README.md` or `docs/documents/knowgrph-superagent-harness.md`
+   in the `knowgrph` repository.
+
+## Fastest Grammar Path
+
+Use this path when you need live Agentic Canvas OS grammar, not just read-only discovery:
+
+1. Map intent: install `https://airvio.co/knowgrph/mcp` first for discovery, retrieval, prompts, resources, and inspection
+2. Orchestrate agents: add `https://airvio.co/knowgrph/control-plane/mcp` only when the host can preserve MCP session state
+3. Prove outcomes: resolve live grammar on the control plane through `knowgrph.agentic_canvas_os.docs.invoke`
+
+Concrete grammar examples:
+
+- `/mcp.capabilities`
+- `#mcp`
+- `@mcp-gateway`
 
 ## Recommended Reading Order
 
 1. `docs/documents/knowgrph-mcp-install-contract.md`
    - Canonical install rule, host recipes, and dual-surface boundary
 2. `docs/documents/knowgrph-mcp-install-boundary-release-note-20260710.md`
-   - Recent-change summary for the new install boundary
+   - Recent-change summary plus the latest evidence-backed release proof
 3. `docs/documents/knowgrph-agent-ready-document.md`
    - Broader agent-ready surface, trust boundary, and discovery context
-4. `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`
+4. `docs/documents/markdown-convertible-agent-discovery-document.md`
+   - Live Canvas Hero Markdown-discovery contract, publish route, and live proof
+5. `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`
    - Lowest-cost local evaluation path before hosted setup
-5. `docs/documents/knowgrph-mcp/knowgrph-mcp.md`
+6. `docs/documents/knowgrph-mcp/knowgrph-mcp.md`
    - Full MCP topology, readiness scope, and current implementation truth
+7. `docs/documents/knowgrph-mcp-service-prd-tad.md`
+   - Publish-side mirror entry for the implemented MCP baseline and shipped-vs-planned boundary
+8. `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md`
+   - Publish-side mirror entry for the Agentic Canvas OS dashboard and orchestration contract
+9. `docs/documents/knowgrph-mcp-service-prd-tad.companion.md` or
+   `docs/documents/knowgrph-mcp-agentic-os-prd-tad.companion.md`
+   - Publish-side mirror entries for file-owner detail, lane payloads, and companion guardrails
+10. `https://airvio.co/knowgrph/.well-known/mcp/apps/knowgrph-agent-ready.html`
+   - Browser-published MCP Apps card for template-only `#promotion.retry <path...>` recovery semantics
 
 ## Which Doc To Open
 
@@ -70,9 +103,15 @@ Use this order when you want the lowest-friction public onboarding route:
 |---|---|
 | I just need the right install URL | `docs/documents/knowgrph-mcp-install-contract.md` |
 | I want the shortest update summary | `docs/documents/knowgrph-mcp-install-boundary-release-note-20260710.md` |
+| I want the latest release proof with preview URL and docs-seed verification | `docs/documents/knowgrph-mcp-install-boundary-release-note-20260710.md` |
 | I want the larger discovery and readiness context | `docs/documents/knowgrph-agent-ready-document.md` |
+| I want the Live Canvas Hero Markdown route and discovery contract | `docs/documents/markdown-convertible-agent-discovery-document.md` |
 | I want the cheapest evaluation path before hosted setup | `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md` |
 | I want the MCP-specific architecture and scope | `docs/documents/knowgrph-mcp/knowgrph-mcp.md` |
+| I want the implemented MCP baseline in the publish docs tree | `docs/documents/knowgrph-mcp-service-prd-tad.md` |
+| I want the Agentic Canvas OS contract in the publish docs tree | `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md` |
+| I want the companion-level ownership or lane detail in the publish docs tree | `docs/documents/knowgrph-mcp-service-prd-tad.companion.md` or `docs/documents/knowgrph-mcp-agentic-os-prd-tad.companion.md` |
+| I want published promotion retry semantics without opening source docs | `https://airvio.co/knowgrph/.well-known/mcp/apps/knowgrph-agent-ready.html` |
 
 ## Canonical Endpoint Rule
 

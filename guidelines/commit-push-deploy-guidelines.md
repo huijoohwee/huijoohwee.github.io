@@ -3,7 +3,7 @@ title: "Commit / Push / Deploy Guidelines"
 author: "huijoohwee"
 tags: [Git, GitHub, Deploy, Cloudflare, Vercel, CI/CD, Release]
 date: 2026-06-10
-version: 1.1
+version: 1.2
 applies_to:
   - knowgrph        # /Users/huijoohwee/Documents/GitHub/knowgrph
   - huijoohwee      # /Users/huijoohwee/Documents/GitHub/huijoohwee (Prod mirror)
@@ -124,10 +124,38 @@ changes are intentional and bounded. Never use it as the default mode.
 | 1. Stash unrelated WIP | `git stash push -m "WIP: <topic>"` | Clean tree before build |
 | 2. Production build | `npm run pages:build` | Must exit 0 |
 | 3. Sync check | `npm run pages:check-sync` | Skip deploy if "up to date" **and** nothing changed |
-| 4. Sync if needed | `npm run pages:sync` | Only on drift |
-| 5. Deploy + D1 seed | `npm run pages:deploy-cloudflare` | Record the deployment URL/ID |
-| 6. Verify live surfaces | `npm run runtime:verify` | Three `/health`/reachability surfaces green before demoing |
-| 7. Restore stash | `git stash pop` | Don't leave stash dangling |
+| 4. Responsive parity gate | `npm --prefix canvas run test:smoke:mobile-keyboard:browser` + review `docs/documents/knowgrph-feature-map.md` | Required when mobile grammar reachability, heavy-runtime intent policy, or touch-first responsive behavior changes |
+| 5. Sync if needed | `npm run pages:sync` | Only on drift |
+| 6. Deploy + D1 seed | `npm run pages:deploy-cloudflare` | Block if sync proof, mobile keyboard proof, or route-and-action review is missing; record the deployment URL/ID |
+| 7. Verify live surfaces | `npm run runtime:verify` | Three `/health`/reachability surfaces green before demoing |
+| 8. Restore stash | `git stash pop` | Don't leave stash dangling |
+
+### 🟡 HIGH - release evidence to record
+
+After a real `knowgrph` release, record the bounded evidence that proves the
+ship actually happened instead of relying on terminal scrollback alone.
+
+| Evidence | Source | What to record |
+|---|---|---|
+| Pages build | `npm run pages:build` | success/failure plus total wall time |
+| Sync check | `npm run pages:check-sync` | whether deploy scope was already in sync or required publish drift correction |
+| Responsive parity gate | `npm --prefix canvas run test:smoke:mobile-keyboard:browser` + route-and-action review | pass/fail result plus the feature-map revision reviewed for the deploy |
+| Pages deploy | `npm run pages:deploy-cloudflare` | preview URL or deployment id returned by Wrangler |
+| Docs seed | `node ./scripts/seed-storage-docs-to-cloudflare.mjs` or deploy log | before-seed export time, per-document D1 progress, final `documents=<n>` verification |
+| Live verify | `npm run runtime:verify` | green/failed result for live `/knowgrph` and MCP health surfaces |
+
+For the canonical-docs D1 seed, the current observable proof shape is:
+
+- `source-files=<n>`
+- `chunked-source-files=<n>`
+- `export start/done: before-seed`
+- `d1 document upsert i/n: <canonicalPath>`
+- `export start/done: direct-d1-verification`
+- `export verification: documents=<n>`
+- `direct D1 seed complete`
+
+This keeps Dev -> Prod -> Cloudflare release notes short, evidence-backed, and
+easy to compare across runs.
 
 ### 🟡 HIGH
 

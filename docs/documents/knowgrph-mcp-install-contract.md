@@ -3,8 +3,8 @@ title: "Knowgrph MCP Install Contract"
 id: "md:knowgrph-mcp-install-contract"
 author: "airvio / joohwee"
 date: "2026-07-10"
-updated: "2026-07-10"
-version: "1.1.0"
+updated: "2026-07-11"
+version: "1.1.1"
 status: "current"
 doc_type: "Install Contract"
 lang: "en-US"
@@ -34,23 +34,30 @@ Knowgrph remotely.
 
 If you want the shortest guided reading path across the install contract, release note,
 agent-ready context, and MCP overview, start with `docs/documents/knowgrph-mcp-onboarding-index.md`.
+For the source-backed Live Canvas Hero Markdown discovery route behind the landing surface, use
+`docs/documents/markdown-convertible-agent-discovery-document.md`.
 
 The boundary is explicit:
 
 - Install `https://airvio.co/knowgrph/mcp` for public discovery, read-only retrieval, prompts, resources, and inspection.
 - Use `https://airvio.co/knowgrph/control-plane/mcp` only for approval-gated orchestration and live Agentic Canvas OS grammar invocation through `knowgrph.agentic_canvas_os.docs.invoke`.
 
+Map intent. Orchestrate agents. Prove outcomes.
+
+A source-backed canvas where `/` routes work, `#` sets meaning, and `@` binds context.
+
 ## Fastest Decision Path
 
 If you only need one quick setup answer, use this order:
 
-1. install `https://airvio.co/knowgrph/mcp`
-2. add `https://airvio.co/knowgrph/control-plane/mcp` only if the host can keep MCP session state across calls
+1. map intent: install `https://airvio.co/knowgrph/mcp`
+2. orchestrate agents: add `https://airvio.co/knowgrph/control-plane/mcp` only if the host can keep MCP session state across calls
 3. if the host cannot do sessioned control-plane MCP, keep public discovery on `/knowgrph/mcp` and route `/`, `#`, and `@` grammar through an app-owned forwarder
+4. inspect landing discovery: open `docs/documents/markdown-convertible-agent-discovery-document.md` for the public Markdown route, publish contract, and live proof
 
-For a local, offline, deterministic evaluation before any hosted MCP setup, start with the
-source-side `README.md` quick start or `docs/documents/knowgrph-superagent-harness.md` in the
-`knowgrph` repository.
+To prove outcomes with a local, offline, deterministic evaluation before any hosted MCP setup,
+start with the source-side `README.md` quick start or
+`docs/documents/knowgrph-superagent-harness.md` in the `knowgrph` repository.
 
 ## Host Decision Matrix
 

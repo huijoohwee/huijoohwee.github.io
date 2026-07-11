@@ -3,8 +3,8 @@ title: "Knowgrph — Tech Stack Document"
 id: "md:knowgrph-tech-stack-document"
 author: "airvio / joohwee"
 date: "2026-06-29"
-updated: "2026-07-10"
-version: "1.2.3"
+updated: "2026-07-11"
+version: "1.2.5"
 excluded_vendors:
   - "Vercel (runtime tier removed — Agentic OS ADR-3; comparison-only mentions retained)"
   - "Supabase (never in runtime stack; permanently excluded — Agentic OS ADR-3)"
@@ -42,7 +42,15 @@ traceability:
 **Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/knowgrph`. Deployed at `airvio.co/knowgrph` via Cloudflare Pages + Workers.
 **Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud (Serverless App Engine / SAS), Alibaba Cloud (ECS), and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
 **Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `knowgrph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
-**MCP install note**: For remote MCP onboarding, treat `https://airvio.co/knowgrph/mcp` as the canonical public install/discovery URL and `https://airvio.co/knowgrph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. The operator-facing setup contract lives in `docs/documents/knowgrph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/knowgrph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`.
+**MCP install note**: For remote MCP onboarding, treat `https://airvio.co/knowgrph/mcp` as the canonical public install/discovery URL and `https://airvio.co/knowgrph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. Live `/`, `#`, and `@` grammar executes through `knowgrph.agentic_canvas_os.docs.invoke` on the control plane; current examples are `/mcp.capabilities`, `#mcp`, and `@mcp-gateway`. The operator-facing setup contract lives in `docs/documents/knowgrph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/knowgrph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`.
+
+**Published MCP entry points**:
+- `docs/documents/knowgrph-mcp-onboarding-index.md`
+- `docs/documents/knowgrph-mcp-install-contract.md`
+- `docs/documents/knowgrph-mcp-service-prd-tad.md`
+- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md`
+- `docs/documents/knowgrph-mcp-service-prd-tad.companion.md`
+- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.companion.md`
 
 ---
 
@@ -377,6 +385,11 @@ flowchart TB
 | CDN / hosting | Cloudflare Pages | — | Static SPA hosting (zero-egress) | Proprietary (free tier) |
 | Payments (on-chain) | @x402/hono + @x402/core | 2.13.0 | x402 HTTP payment protocol | ✓ Apache 2.0 |
 | Auth tokens | jsonwebtoken | 9.0.2 | JWT verification in Worker | ✓ MIT |
+
+Responsive deploy note: when a release changes mobile grammar reachability, heavy-runtime intent
+policy, or touch-first behavior, Cloudflare Pages deploys stay blocked until the mobile keyboard
+browser smoke, `pages:check-sync`, and the route-and-action review in
+`docs/documents/knowgrph-feature-map.md` agree.
 
 ### AI / Agent Layer
 

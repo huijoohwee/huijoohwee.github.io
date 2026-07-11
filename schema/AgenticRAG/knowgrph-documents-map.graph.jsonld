@@ -627,6 +627,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-ai-gateway-enhancement-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ai-gateway-enhancement-plan.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ai-gateway-enhancement-plan.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ai-gateway-enhancement-plan.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-api-document",
       "@type": "kg:Node",
       "labels": [
@@ -1108,6 +1124,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-chat-ai-markdown-pipeline-document.promotion-retry",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-chat-ai-markdown-pipeline-document.promotion-retry.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.promotion-retry.md"
+      },
+      "documentPath": "docs/documents/knowgrph-chat-ai-markdown-pipeline-document.promotion-retry.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-chat-skill-release-note-20260615",
       "@type": "kg:Node",
       "labels": [
@@ -1460,6 +1492,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-embeddability-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-embeddability-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-embeddability-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-embeddability-contract.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-feature-map",
       "@type": "kg:Node",
       "labels": [
@@ -1777,6 +1825,22 @@
         "relPath": "docs/documents/knowgrph-integrations-ssot-sync-directives.md"
       },
       "documentPath": "docs/documents/knowgrph-integrations-ssot-sync-directives.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-live-canvas-hero",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-live-canvas-hero.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-live-canvas-hero.md"
+      },
+      "documentPath": "docs/documents/knowgrph-live-canvas-hero.md",
       "language": "en-us"
     },
     {
@@ -3539,6 +3603,22 @@
         "relPath": "docs/documents/knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:markdown-convertible-agent-discovery-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "markdown-convertible-agent-discovery-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/markdown-convertible-agent-discovery-document.md"
+      },
+      "documentPath": "docs/documents/markdown-convertible-agent-discovery-document.md",
       "language": "en-us"
     },
     {

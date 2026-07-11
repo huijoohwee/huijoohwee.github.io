@@ -4,6 +4,10 @@ doc_type: "PRD + TAD"
 version: "0.3.3"
 status: "superseded"
 superseded_by: "knowgrph/docs/documents/knowgrph-agentic-os-prd-tad.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
+superseded_publish_entry_points:
+  - "docs/documents/knowgrph-mcp-service-prd-tad.md"
+  - "docs/documents/knowgrph-mcp-agentic-os-prd-tad.md"
+  - "docs/documents/knowgrph-mcp-onboarding-index.md"
 superseded_date: "2026-07-03"
 superseded_note: "The Vercel product tier, AWS Agent-API fallback, and AWS AgentCore wrapper lane described below are REMOVED from the runtime topology. Video_Remix Director connector content is consolidated into the Agentic OS PRD/TAD as a native-in-repo harness. MCP Gateway is discovery-first federation over four existing surfaces (ADR-4) — not a fifth proxy tier. This file is retained for historical reference only; do not derive runtime, deployment, or stack decisions from it."
 date: "2026-06-10"
@@ -50,10 +54,19 @@ frontmatter_contract: "required"
 > The Vercel and AWS tiers described below are removed from the runtime topology; Supabase is permanently excluded.
 > Retained for historical reference only.
 >
+> For the current publish-side MCP contract pages, open
+> `docs/documents/knowgrph-mcp-service-prd-tad.md` for the implemented MCP
+> baseline and `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md` for the
+> Agentic Canvas OS orchestration contract.
+>
 > For the current remote MCP onboarding path, start with
 > `docs/documents/knowgrph-mcp-onboarding-index.md`, then use
 > `docs/documents/knowgrph-mcp-install-contract.md` for the canonical
 > `/knowgrph/mcp` vs `/knowgrph/control-plane/mcp` boundary.
+> Map intent on `https://airvio.co/knowgrph/mcp`, orchestrate agents on
+> `https://airvio.co/knowgrph/control-plane/mcp` only for session-capable
+> hosts, and prove outcomes first with the source-side `README.md` or
+> `docs/documents/knowgrph-superagent-harness.md` offline path.
 
 ## Consolidation Map (what moved where)
 
@@ -68,6 +81,15 @@ frontmatter_contract: "required"
 | Agentic OS follow-on (HITL / live / dashboard) | [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md): Tracks A/B/C |
 | HITL approval gates | Unchanged in-repo → `contracts/approval.schema.js`, `mcp/video-remix/approval-token-issuer.js` (local **implemented**) |
 | Cloudflare AI Gateway model routing | Unchanged → Cloudflare Workers + AI Gateway binding |
+
+## Current Publish Entry Points
+
+Use these publish-side docs instead of this historical record for current MCP/runtime understanding:
+
+- `docs/documents/knowgrph-mcp-onboarding-index.md`
+- `docs/documents/knowgrph-mcp-install-contract.md`
+- `docs/documents/knowgrph-mcp-service-prd-tad.md`
+- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md`
 
 ## Markdown YAML Frontmatter Contract
 

@@ -3157,6 +3157,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-sme-protection-gap-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-sme-protection-gap-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-sme-protection-gap-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-sme-protection-gap-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-source-files-import-document",
       "@type": "kg:Node",
       "labels": [

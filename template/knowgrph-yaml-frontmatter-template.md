@@ -7,7 +7,7 @@ lang: "en-US"
 
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: true
@@ -37,8 +37,6 @@ widget_bundle:
       direction: LR
       edgeType: smoothstep
     behavior:
-      drag_pan_zoom_owner: flowEditor-frontmatter-only
-      rich_media_overlay_handlers: flowEditor-frontmatter-only
       forbid_cross_renderer_proxy: true
 
 runner:
@@ -193,28 +191,28 @@ flow:
 
 **From default document state to D3 landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "d3"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on D3 plus Frontmatter Mode.
 
-**From default document state to Flow Editor landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, and computing-flow KTV fields -> runtime lands on Flow Editor plus Frontmatter Mode.
+**From default document state to Storyboard landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "storyboard"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, and computing-flow KTV fields -> runtime lands on Storyboard plus Frontmatter Mode.
 
-**From default document state to Animatic landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "animatic"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Flow Editor and treating `timeline.beats.*` as additive timing metadata.
+**From default document state to Animatic landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "animatic"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Storyboard and treating `timeline.beats.*` as additive timing metadata.
 
 **From empty graph to computing-flow KTV graph**: Author declares `socket_types`, `flow.direction`, `flow.edgeType`, `flow.balancedViewportPreset`, `flow.computed`, `flow.snapToGrid`, KTV node rows, and KTV edge rows -> runtime can render, inspect, and validate the graph without recalculating structure from prose.
 
 **From document preset to 3D landing**: Author sets `kgCanvasSurfaceMode: "3d"` and optionally `kgCanvas3dMode: "3d"` or `kgCanvas3dMode: "voxel"` -> runtime lands on 3D surface mode and disables Geospatial Mode.
 
-**From document preset to Geospatial landing**: Author sets `kgCanvasSurfaceMode: "geospatial"` and a compatible `kgCanvas2dRenderer` such as `flowEditor` -> runtime enables Geospatial Mode while preserving the requested 2D renderer for widget-panel overlays.
+**From document preset to Geospatial landing**: Author sets `kgCanvasSurfaceMode: "geospatial"` and a compatible `kgCanvas2dRenderer` such as `storyboard` -> runtime enables Geospatial Mode while preserving the requested 2D renderer for widget-panel overlays.
 
-**Documenters preserve widget visibility**: Authors keep `widget_bundle.graph.behavior.drag_pan_zoom_owner`, `widget_bundle.graph.behavior.rich_media_overlay_handlers`, and `widget_bundle.graph.behavior.forbid_cross_renderer_proxy` aligned with `flowEditor-frontmatter-only` -> widgets stay visible and renderer proxy interference stays disabled.
+**Documenters preserve widget visibility**: Authors keep `widget_bundle.graph.behavior` lean and source-owned, retain `forbid_cross_renderer_proxy: true` when overlays are present, and do not author stale renderer-owner aliases such as `flowEditor-frontmatter-only`.
 
 ## Canvas View Presets
 
 | Use case | Required frontmatter |
 |---|---|
 | README-style document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "d3"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
-| Widget bundle document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
-| Computing-flow KTV document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "flowEditor"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: true` + `socket_types` + KTV `flow:` |
+| Widget bundle document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "storyboard"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
+| Computing-flow KTV document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "storyboard"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: true` + `socket_types` + KTV `flow:` |
 | Animatic timeline document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "animatic"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + shared `flow:` graph + optional `timeline.beats.*` timing |
 | 3D document | `kgCanvasSurfaceMode: "3d"` + `kgCanvasRenderMode: "3d"` + optional `kgCanvas3dMode: "3d"` or `"voxel"` |
-| Geospatial document | `kgCanvasSurfaceMode: "geospatial"` + `kgCanvas2dRenderer: "flowEditor"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
+| Geospatial document | `kgCanvasSurfaceMode: "geospatial"` + `kgCanvas2dRenderer: "storyboard"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
 
 Canonical D3 preset:
 
@@ -228,12 +226,12 @@ kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
-Canonical Flow Editor preset:
+Canonical Storyboard preset:
 
 ```yaml
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
@@ -254,7 +252,7 @@ kgDocumentStructureBaselineLock: false
 
 Animatic authoring contract:
 
-- Reuse the same canonical `flow:` frontmatter graph contract as Flow Editor.
+- Reuse the same canonical `flow:` frontmatter graph contract as Storyboard.
 - Keep timeline timing additive under `timeline.beats.*`.
 - Do not introduce a parallel animatic-only markdown dialect.
 
@@ -274,7 +272,7 @@ Canonical Geospatial preset:
 
 ```yaml
 kgCanvasSurfaceMode: "geospatial"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
@@ -303,7 +301,7 @@ Canonical seed examples aligned to this vocabulary:
 | `kgCanvasSurfaceMode` | Selects the top-level surface mode | `"2d"`, `"3d"`, `"geospatial"` |
 | `kgCanvasRenderMode` | Selects 2D or 3D canvas landing | `"2d"`, `"3d"` |
 | `kgCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
-| `kgCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"animation"`, `"flowEditor"`, `"design"` |
+| `kgCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"animation"`, `"storyboard"`, `"design"` |
 | `kgDocumentSemanticMode` | Selects the document semantic mode | `"document"`, `"keyword"` |
 | `kgFrontmatterModeEnabled` | Enables Frontmatter Mode | `true`, `false` |
 | `kgMultiDimTableModeEnabled` | Enables Multi-dimensional Table Mode | `true`, `false` |
@@ -324,12 +322,12 @@ Canonical seed examples aligned to this vocabulary:
 - [ ] Documenters treat switch-sensitive `*.md` files as directly runnable canonical seeds by adding the explicit Canvas View frontmatter block at the top of the file.
 - [ ] Documenters set `kgCanvasSurfaceMode` explicitly when switching between 2D, 3D, and Geospatial surfaces.
 - [ ] Documenters keep `kgFrontmatterModeEnabled: true` for switchable canvas-view documents.
-- [ ] Documenters keep `kgMultiDimTableModeEnabled: false` for README-style and Flow Editor widget-bundle documents unless table mode is the explicit target.
-- [ ] Documenters use `flowEditor` for widget-bundle documents and avoid `Flow Canvas` or `Flowchart` labels in canonical examples.
+- [ ] Documenters keep `kgMultiDimTableModeEnabled: false` for README-style and Storyboard widget-bundle documents unless table mode is the explicit target.
+- [ ] Documenters use `storyboard` for widget-bundle documents and avoid `Flow Canvas` or `Flowchart` labels in canonical examples.
 - [ ] Documenters use `animation` only when the file reuses the shared `flow:` graph contract and keeps timing under `timeline.beats.*`.
 - [ ] Documenters use `kgCanvas3dMode` only when `kgCanvasSurfaceMode: "3d"` is the target.
 - [ ] Documenters use `kgCanvasSurfaceMode: "geospatial"` for map-first documents instead of relying on stored Geospatial Mode state.
-- [ ] Documenters keep widget-bundle behavior flags aligned with Flow Editor ownership when widgets or rich media panels are present.
+- [ ] Documenters keep widget-bundle behavior lean, retain `forbid_cross_renderer_proxy: true` when widgets or rich media panels are present, and do not author stale renderer-owner aliases.
 
 ## Body
 

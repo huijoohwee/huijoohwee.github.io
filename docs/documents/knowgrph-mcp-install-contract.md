@@ -1,28 +1,31 @@
 ---
-title: "Knowgrph MCP Install Contract"
-id: "md:knowgrph-mcp-install-contract"
-author: "airvio / joohwee"
-date: "2026-07-10"
-updated: "2026-07-11"
-version: "1.1.1"
-status: "current"
+schema: kgc-computing-flow/v1
+id: knowgrph-mcp-install-contract
+version: 1.1.3
+status: implemented
+created: 2026-07-10
+updated: 2026-07-12
+author: airvio / joohwee
+domain: knowgrph
 doc_type: "Install Contract"
-lang: "en-US"
-frontmatter_contract: "required"
-domain: "knowgrph"
-orientation:
-  - "solo-dev"
-  - "AI-native"
-  - "token-economical"
-  - "source-owned"
+frontmatter_contract: required
+canonical_service_url: "https://airvio.co/knowgrph/"
+public_read_mcp_url: "https://airvio.co/knowgrph/mcp"
+control_plane_mcp_url: "https://airvio.co/knowgrph/control-plane/mcp"
+tags: [mcp, install, discovery, control-plane, agentic-os, cmdk, public-remote, streamable-http]
 constraints:
-  - "public discovery stays read-only"
-  - "control-plane stays approval-gated"
-  - "fail-closed"
-traceability:
-  repo: "huijoohwee/knowgrph"
-  source_doc_path: "docs/documents/knowgrph-mcp-install-contract.md"
-  feature_surface: "Remote MCP Install"
+  - solo-dev
+  - token-efficient
+  - source-owned
+  - fail-closed
+related:
+  - README.md
+  - docs/documents/knowgrph-next-step-priorities.md
+  - docs/documents/knowgrph-agent-ready-document.md
+  - docs/documents/markdown-convertible-agent-discovery-document.md
+  - docs/documents/knowgrph-mcp/knowgrph-mcp.md
+  - docs/documents/knowgrph-superagent-harness.md
+  - docs/knowgrph-acos-deploy-runbook.md
 ---
 
 # Knowgrph MCP Install Contract
@@ -45,6 +48,10 @@ The boundary is explicit:
 Map intent. Orchestrate agents. Prove outcomes.
 
 A source-backed canvas where `/` routes work, `#` sets meaning, and `@` binds context.
+
+One canonical operator contract: install and discovery stay on the public endpoint, while live `/`, `#`, and `@` grammar stays on the approval-gated control plane or an app-owned forwarder until the host proves MCP session support.
+
+Canonicalize the contract first, not the transport. Keep the current runtime split underneath this contract until hosted proof supports a single runtime claim.
 
 ## Fastest Decision Path
 
@@ -77,6 +84,11 @@ start with the source-side `README.md` quick start or
 
 ## Operator Rule
 
+Keep one canonical operator-facing contract even when the runtime stays split underneath:
+
+- install and discovery stay on `https://airvio.co/knowgrph/mcp`
+- live `/`, `#`, and `@` grammar stays on `https://airvio.co/knowgrph/control-plane/mcp` or an app-owned forwarder
+
 If a host supports one simple public MCP install, give it `https://airvio.co/knowgrph/mcp`.
 
 If a host also supports a second Streamable HTTP MCP endpoint with `initialize` plus session-header
@@ -85,7 +97,7 @@ handling, add `https://airvio.co/knowgrph/control-plane/mcp` for live `/`, `#`, 
 If a host cannot manage that second sessioned MCP surface, keep discovery on the public endpoint and
 route grammar invocation through a thin app-owned forwarder such as `agentic-canvas-os /api/invoke`.
 
-This rule exists to optimize time-to-value first, then grammar power second.
+This rule exists to optimize time-to-value first, then grammar power second, without collapsing the intentional public-discovery vs control-plane boundary before hosted proof exists.
 
 ## Public Endpoint Contract
 
@@ -147,8 +159,9 @@ metadata.
 ### Vercel
 
 - Treat `https://airvio.co/knowgrph/mcp` as the default MCP server URL
-- If the Vercel-side MCP client supports a second sessioned Streamable HTTP server, register the control-plane endpoint separately for grammar invocation
-- If not, keep Knowgrph public discovery read-only and call a thin app-owned forwarder for `/`, `#`, and `@`
+- Use the public surface for discovery, retrieval, and inspection
+- Default live `/`, `#`, and `@` to a thin app-owned forwarder
+- Register the control-plane endpoint directly only if the Vercel-side MCP client supports a second sessioned Streamable HTTP server and can preserve `mcp-session-id`
 
 Evidence level: generic integration recipe. The repo ships the control-plane-forwarder pattern and
 does not claim a one-URL Vercel install for grammar invocation.
@@ -157,8 +170,8 @@ does not claim a one-URL Vercel install for grammar invocation.
 
 - Treat `https://airvio.co/knowgrph/mcp` as the default MCP server URL
 - Use the public surface for discovery, retrieval, and inspection
+- Default live `/`, `#`, and `@` to an app-owned forwarder
 - Add the control plane only if the host can perform `initialize`, preserve `mcp-session-id`, and call `knowgrph.agentic_canvas_os.docs.invoke`
-- Otherwise keep grammar resolution behind an app-owned forwarder
 
 Evidence level: generic integration recipe. Public discovery is ready; direct two-surface grammar
 support depends on host MCP session support.
@@ -170,6 +183,7 @@ Knowgrph is:
 - plug-and-play for public MCP discovery
 - coherent for remote install metadata
 - remotely live for `/`, `#`, and `@` on the control plane
+- forwarder-first for hosted live grammar when session support is unclear
 - not a single-endpoint grammar-install surface
 
 That distinction is intentional. It keeps public discovery low-friction and keeps spend-bearing or

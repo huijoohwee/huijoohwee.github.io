@@ -4,12 +4,12 @@
   "@type": "rag:Directive",
   "schemaVersion": "1.0.0",
   "rdfs:label": [
-    { "@value": "Flow Editor widget bundle contract", "@language": "en-us" },
+    { "@value": "Widget bundle contract", "@language": "en-us" },
     { "@value": "Flow Widget bundle 契约", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Contract for a project-agnostic JSON envelope that imports/exports Flow Editor widget registry mappings and optionally includes a GraphData payload for import→render round-trips.",
+      "@value": "Contract for a project-agnostic JSON envelope that imports/exports shared widget registry mappings and optionally includes a GraphData payload for import→render round-trips.",
       "@language": "en-us"
     },
     {
@@ -30,11 +30,11 @@
     ],
     "registryPayload": [
       {
-        "@value": "Bundles carry a 'registry' array whose items match the Flow Editor widget Registry entry shape (id/nodeTypeId/widgetTypeId/formId/fields/ports/updatedAt). Consumers must validate and normalize before persisting.",
+        "@value": "Bundles carry a 'registry' array whose items match the shared widget Registry entry shape (id/nodeTypeId/widgetTypeId/formId/fields/ports/updatedAt). Consumers must validate and normalize before persisting.",
         "@language": "en-us"
       },
       {
-        "@value": "Registry field/port items may include an optional boolean 'isHidden'. When true, UIs must hide that field/port in Flow Editor widget rendering and suppress Flow port handles derived from it.",
+        "@value": "Registry field/port items may include an optional boolean 'isHidden'. When true, UIs must hide that field/port in shared widget rendering and suppress Flow port handles derived from it.",
         "@language": "en-us"
       },
       {
@@ -42,11 +42,11 @@
         "@language": "en-us"
       },
       {
-        "@value": "Bundle 携带 'registry' 数组，其元素匹配 Flow Editor widget Registry entry 形状（id/nodeTypeId/widgetTypeId/formId/fields/ports/updatedAt）。消费方必须在持久化前做校验与归一化。",
+        "@value": "Bundle 携带 'registry' 数组，其元素匹配共享 widget Registry entry 形状（id/nodeTypeId/widgetTypeId/formId/fields/ports/updatedAt）。消费方必须在持久化前做校验与归一化。",
         "@language": "zh-cn"
       },
       {
-        "@value": "Registry 的 field/port 项可包含可选布尔字段 'isHidden'。当为 true 时，UI 必须在 Flow Editor widget 中隐藏该 field/port，并抑制由其派生的 Flow 端口句柄。",
+        "@value": "Registry 的 field/port 项可包含可选布尔字段 'isHidden'。当为 true 时，UI 必须在共享 widget 渲染中隐藏该 field/port，并抑制由其派生的 Flow 端口句柄。",
         "@language": "zh-cn"
       }
       ,
@@ -57,11 +57,11 @@
     ],
     "graphMetadataWiring": [
       {
-        "@value": "Import pipelines may write registry entries into GraphData.metadata['flow:widgetRegistry'] to enable immediate Flow Editor widget rendering after graph commit.",
+        "@value": "Import pipelines may write registry entries into GraphData.metadata['flow:widgetRegistry'] to enable immediate Storyboard/frontmatter-flow widget rendering after graph commit.",
         "@language": "en-us"
       },
       {
-        "@value": "导入流水线可将 registry entries 写入 GraphData.metadata['flow:widgetRegistry']，以便图数据 commit 后立即启用 Flow Editor widget 的渲染。",
+        "@value": "导入流水线可将 registry entries 写入 GraphData.metadata['flow:widgetRegistry']，以便图数据 commit 后立即启用 Storyboard/frontmatter-flow widget 的渲染。",
         "@language": "zh-cn"
       }
     ],
@@ -87,21 +87,21 @@
     ],
     "exportSurfaces": [
       {
-        "@value": "Export surfaces may include: exporting registry-only bundles (Flow Editor Manager), exporting workflow bundles (draft graph + registry), and exporting per-node bundles (node subgraph + matching registry). All must preserve kind/version.",
+        "@value": "Export surfaces may include: exporting registry-only bundles (Widget Manager), exporting workflow bundles (draft graph + registry), and exporting per-node bundles (node subgraph + matching registry). All must preserve kind/version.",
         "@language": "en-us"
       },
       {
-        "@value": "导出面可包括：仅导出 registry 的 bundle（Flow Editor Manager）、导出工作流 bundle（draft graph + registry）、导出单节点 bundle（节点子图 + 匹配 registry）。均必须保留 kind/version。",
+        "@value": "导出面可包括：仅导出 registry 的 bundle（Widget Manager）、导出工作流 bundle（draft graph + registry）、导出单节点 bundle（节点子图 + 匹配 registry）。均必须保留 kind/version。",
         "@language": "zh-cn"
       }
     ],
     "multiNodeEditorRendering": [
       {
-        "@value": "When multiple Flow Editor widgets are visible simultaneously, UIs must avoid DOM id collisions by scoping form control ids per node and applying a deterministic offset/stacking strategy to reduce panel overlap.",
+        "@value": "When multiple widget overlays are visible simultaneously, UIs must avoid DOM id collisions by scoping form control ids per node and applying a deterministic offset/stacking strategy to reduce panel overlap.",
         "@language": "en-us"
       },
       {
-        "@value": "当多个 Flow Editor widget 同时可见时，UI 必须通过按节点作用域化 form 控件 id 来避免 DOM id 冲突，并使用确定性偏移/堆叠策略减少面板重叠。",
+        "@value": "当多个 widget 覆层同时可见时，UI 必须通过按节点作用域化 form 控件 id 来避免 DOM id 冲突，并使用确定性偏移/堆叠策略减少面板重叠。",
         "@language": "zh-cn"
       }
     ]

@@ -29,11 +29,11 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Workspace Markdown imports with explicit canvas frontmatter must be activation-order-safe: the first imported document promoted for focus becomes the active authority before composed source-file replay, preserving frontmatter-selected D3, Flow Editor, or Geospatial landing without stale overrides from the previously selected document.",
+      "@value": "Workspace Markdown imports with explicit canvas frontmatter must be activation-order-safe: the first imported document promoted for focus becomes the active authority before composed source-file replay, preserving frontmatter-selected D3, Storyboard, or Geospatial landing without stale overrides from the previously selected document.",
       "@language": "en-us"
     },
     {
-      "@value": "带显式 canvas frontmatter 的工作区 Markdown 导入必须具备激活顺序安全：被提升为聚焦目标的首个导入文档，必须先成为 active authority，然后才允许 composed source-file replay 运行，从而保留 frontmatter 指定的 D3、Flow Editor 或 Geospatial 落点，禁止此前已选中文档产生过期覆盖。",
+      "@value": "带显式 canvas frontmatter 的工作区 Markdown 导入必须具备激活顺序安全：被提升为聚焦目标的首个导入文档，必须先成为 active authority，然后才允许 composed source-file replay 运行，从而保留 frontmatter 指定的 D3、Storyboard 或 Geospatial 落点，禁止此前已选中文档产生过期覆盖。",
       "@language": "zh-cn"
     }
   ],

@@ -89,9 +89,9 @@ traceability:
 | Stage | Action | Touchpoint | Pain Point | Opportunity |
 |---|---|---|---|---|
 | **Trigger** | Operator wants to visualise and extend a knowledge graph from docs | `airvio.co/knowgrph` SPA | Cold start with no workspace data | `ensureSeed()` auto-seeds from `workspace.import.defaultSourceUrl` |
-| **Discover** | Browse canvas nodes, run vdeoxpln skill discovery | Canvas Flow Editor + FloatingPanel Chat | Unknown which AI skills are available | Vdeoxpln registry surfaces all agent capabilities per session |
+| **Discover** | Browse canvas nodes, run vdeoxpln skill discovery | Canvas Storyboard Widget + FloatingPanel Chat | Unknown which AI skills are available | Vdeoxpln registry surfaces all agent capabilities per session |
 | **Configure** | Set MCP server (Exa, VideoDB, Stripe, GrabMaps, etc.) in MainPanel MCP | `SettingsView mode="mcp"` | Credentials easy to leak into browser storage | Non-secret config only; `${API_KEY}` placeholder pattern enforced |
-| **Engage** | Author markdown, run compute flows, invoke AI harnesses | Flow Editor nodes + FloatingPanel Chat | Token cost invisible; async jobs stall silently | Cost log per harness call; 36 × 10s circuit-breaker for async ops |
+| **Engage** | Author markdown, run compute flows, invoke AI harnesses | Storyboard Widget nodes + FloatingPanel Chat | Token cost invisible; async jobs stall silently | Cost log per harness call; 36 × 10s circuit-breaker for async ops |
 | **Complete** | Export artifact (image/video/annotation/script) to canvas | Rich Media Panel + Storage Worker | Persistence ambiguous (local vs Cloudflare) | R2 blob route + D1 manifest confirm dual-path persistence |
 | **Return** | Re-enter workspace; previous state and memory layer intact | PocketBase + Yjs collab room or D1 export seed | Cold restart loses context | Memory layer (Mem0 / local-json) + Storage Sync 120 s poll keep state warm |
 
@@ -101,7 +101,7 @@ traceability:
 |---|---|---|---|---|
 | **Trigger** | External agent calls `knowgrph.showrunner.start_run` | Local MCP server (`mcp/server.js`) | No durable run lifecycle | Pipeline_Run state machine: queued → running → awaiting_review → complete |
 | **Execute** | Agent posts creative state, queries memory, dispatches video/annotation | MCP tools: `knowgrph.memory.search`, `knowgrph.annotate.image`, `knowgrph.html_video.render` | Runaway token spend | Token budget gate halts before each turn that would exceed budget |
-| **Review** | Operator approves stage via `knowgrph.showrunner.approve_stage` | Approval-gate primitive | Manual approval blocks automation | Gate surfaced in Flow Editor; auto-skip option for trusted runs |
+| **Review** | Operator approves stage via `knowgrph.showrunner.approve_stage` | Approval-gate primitive | Manual approval blocks automation | Gate surfaced in Storyboard Widget; auto-skip option for trusted runs |
 | **Complete** | Final artifact package written to Source Files | Source Files storage publication helper | Artifact location unknown | Artifact_Package manifest at `showrunner/runs/<run_id>/manifest.md` |
 
 ---
@@ -246,7 +246,7 @@ sequenceDiagram
 | Ingest | `validateAnnotationSpec()` | `Annotation_Spec` JSON | Validated spec | None | `{ ok:false, errorCode:"invalid_spec" }` returned immediately |
 | Transform | `Annotation_Worker` (Transformers.js, Florence-2-base) | Validated spec + cached model weights | `Annotation_Result` JSON | IndexedDB (model weights only) | Timeout 120 s → `inference_failed`; partial task success returns `ok:true` with per-task errors |
 | Store | `writeRichMediaWidgetRunOutputArtifact` → Source Files | `Annotation_Result` JSON | Canvas node + optional Storage Worker manifest | Source Files (workspace) | `artifact_write_failed` on throw; degraded success on `outputPath:null` |
-| Serve | Canvas flow editor renderer | Annotation canvas node | `kind:"annotation"` rich-media widget | In-memory canvas graph | Upstream error propagation |
+| Serve | Canvas frontmatter-flow / Storyboard renderer | Annotation canvas node | `kind:"annotation"` rich-media widget | In-memory canvas graph | Upstream error propagation |
 
 ---
 

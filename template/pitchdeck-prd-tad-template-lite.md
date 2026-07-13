@@ -52,8 +52,6 @@ widget_bundle:
       direction: LR
       edgeType: bezier
     behavior:
-      drag_pan_zoom_owner: flowEditor-frontmatter-only
-      rich_media_overlay_handlers: flowEditor-frontmatter-only
       forbid_cross_renderer_proxy: true
 
 links:

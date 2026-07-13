@@ -7,7 +7,7 @@ lang: en-US
 
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
@@ -31,12 +31,13 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 - Parser repair or warning paths are safety nets, not authoring targets; malformed YAML frontmatter must be treated as invalid source that needs correction upstream.
 - Do not split metadata ownership across duplicate blocks, renderer-only aliases, or body-only mirror declarations when the same value belongs in frontmatter.
 - Keep one frontmatter block per Markdown document. Do not close frontmatter, place metadata in the body, and reopen or mirror schema-bearing YAML later in the file.
-- Flow Editor graph topology, node metadata, renderer presets, workflow sections, and KGC-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
+- Frontmatter-flow graph topology, node metadata, renderer presets, workflow sections, and KGC-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
 - Use node-owned fields such as `kgc:readingSummary` for concise machine-readable node summaries in normalized fixtures. Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` sections to mirror frontmatter.
+- Canonical docs must not commit localhost URLs, signed media tokens, upload-run ids, or generated provider artifact URLs in frontmatter or body prose. Keep generated fields blank until runtime evidence exists, or use an explicit source-owned workspace placeholder when a non-secret reference must be shown.
 - Runnable demo documents that need parser/routing portability should include `kgParserRoutingContract` in opening frontmatter. The contract names parser logic, routing keys, diagram kinds, render surfaces, edge policy, and fork policy in one source-owned block.
 - `kgParserRoutingContract.routingKeys` must point to existing canonical keys such as `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, and `kgStrybldrStoryboard`. Do not add duplicate aliases for the same runtime concept.
 - `kgParserRoutingContract.edgePolicy` and `kgParserRoutingContract.forkPolicy` must preserve authored topology. A document may declare edges through `flow.edges`, workflow edges, Mermaid diagrams, or Strybldr storyboard payloads, but it must not mirror those same edges in body prose as a second machine-readable graph.
-- Storyboard-facing documents must keep renderer identity canonical as `kgCanvas2dRenderer: "storyboard"` while relying on shared Flow Editor toolbar helpers and shared Workspace/Kanban data-view utility owners at runtime; do not encode renderer-local utility forks or alias renderers in frontmatter.
+- Storyboard-facing documents must keep renderer identity canonical as `kgCanvas2dRenderer: "storyboard"` while relying on shared Storyboard/frontmatter-flow toolbar helpers and shared Workspace/Kanban data-view utility owners at runtime; do not encode renderer-local utility forks or alias renderers in frontmatter.
 
 ## Context-Intent-Directive
 
@@ -45,12 +46,12 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 | Canvas View | Preserve deterministic landing | - [ ] Declare all Canvas View keys in frontmatter; preserve deterministic landing; forbid partial renderer-only presets |
 | Document Modes | Keep frontmatter as SSOT | - [ ] Set `kgDocumentSemanticMode` and `kgFrontmatterModeEnabled` together; keep frontmatter as SSOT; forbid implicit mode carryover |
 | Initialization Files | Support Source Files switching | - [ ] Use canonical presets on seed documents; support switching; forbid relying on stale runtime state |
-| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `kgMultiDimTableModeEnabled` explicitly; use `false` for simple D3/Flow Editor landings and `true` only when Workflow Manager / Multi-dimensional Table companion views are intentional; forbid ambiguous table-mode defaults |
+| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `kgMultiDimTableModeEnabled` explicitly; use `false` for simple D3/Storyboard landings and `true` only when Workflow Manager / Multi-dimensional Table companion views are intentional; forbid ambiguous table-mode defaults |
 | Surface Modes | Keep surface state frontmatter-driven | - [ ] Set `kgCanvasSurfaceMode` explicitly; keep surface state frontmatter-driven; forbid stored geospatial or 3D carryover |
-| Widget Bundles | Preserve overlay ownership | - [ ] Keep Flow Editor widget behavior flags explicit; preserve overlay ownership; forbid cross-renderer proxy interference |
+| Widget Bundles | Preserve overlay ownership | - [ ] Keep widget-bundle behavior lean and source-owned; preserve overlay ownership; forbid cross-renderer proxy interference and stale renderer-owner aliases |
 | SuperAgent Harness | Preserve harness metadata without renderer drift | - [ ] Keep `superagent_harness_template` / `superagent_harness_demo` as metadata unless nodes are explicitly authored under `flow:`; forbid second parser, renderer, provider, memory, or graph apply owners |
 | MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic KGC backfill or renderer-local graph patches |
-| Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for Flow Editor topology |
+| Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for frontmatter-flow topology |
 | Parser Routing | Keep diagram and workflow dispatch source-owned | - [ ] Declare parser routing keys, diagram kinds, surfaces, edges, and fork policy in `kgParserRoutingContract`; forbid renderer-local aliases, stale routing carryover, and body-side topology mirrors |
 | Storyboard / Workspace Reuse | Keep shared utility ownership neutral | - [ ] Keep Storyboard frontmatter on canonical `storyboard`; reuse shared toolbar and Workspace/Kanban utility owners at runtime; forbid alias renderers or frontmatter-local utility forks |
 
@@ -85,24 +86,24 @@ kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
-Video demo / Flow Editor / Frontmatter Mode:
+Video demo / Storyboard / Frontmatter Mode:
 
 ```yaml
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
-Computing-flow demo / Flow Editor / Workflow Manager companion:
+Computing-flow demo / Storyboard / Workflow Manager companion:
 
 ```yaml
 kgCanvasSurfaceMode: "2d"
 kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: true
@@ -144,7 +145,7 @@ kgDocumentStructureBaselineLock: false
 
 Animatic authoring contract:
 
-- Reuse the same canonical Markdown YAML syntax as Flow Editor: `flow:` remains the graph authoring surface.
+- Reuse the same canonical Markdown YAML syntax as Storyboard: `flow:` remains the graph authoring surface.
 - Optional timeline timing lives beside that shared graph contract under `timeline.beats.*`.
 - Do not introduce a parallel animatic-only body syntax or renderer-specific frontmatter alias block.
 
@@ -160,7 +161,7 @@ kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
-- Storyboard cards may project graph-backed fields differently, but toolbar/data-view affordances still reuse shared Flow Editor and Workspace/Kanban utility owners at runtime.
+- Storyboard cards may project graph-backed fields differently, but toolbar/data-view affordances still reuse shared Storyboard/frontmatter-flow and Workspace/Kanban utility owners at runtime.
 - Do not replace `storyboard` with `strybldr` or introduce alternate frontmatter aliases for the same surface.
 
 3D surface / Document Mode:
@@ -175,11 +176,11 @@ kgMultiDimTableModeEnabled: false
 kgDocumentStructureBaselineLock: false
 ```
 
-Geospatial surface / Flow Editor widgets:
+Geospatial surface / Storyboard widgets:
 
 ```yaml
 kgCanvasSurfaceMode: "geospatial"
-kgCanvas2dRenderer: "flowEditor"
+kgCanvas2dRenderer: "storyboard"
 kgDocumentSemanticMode: "document"
 kgFrontmatterModeEnabled: true
 kgMultiDimTableModeEnabled: false
@@ -228,7 +229,7 @@ Contract split:
 - Use plain YAML in canonical authored docs and guideline examples unless the fixture is specifically validating the normalized E2E graph payload.
 - Use `{key, type, value}` wrappers only in normalized validation fixtures that audit ingestion -> parsing -> rendering on Canvas.
 - Keep the typed-wrapper scope additive: wrappers validate payload fidelity but do not replace canonical YAML authoring syntax in normal docs.
-- In Flow Editor fixtures, the wrapper `key` is the semantic field/port key. Declaration containers such as `handles.source` and `handles.target` describe side membership only and must not replace row keys, edge handle keys, or connected-value schema paths.
+- In frontmatter-flow fixtures, the wrapper `key` is the semantic field/port key. Declaration containers such as `handles.source` and `handles.target` describe side membership only and must not replace row keys, edge handle keys, or connected-value schema paths.
 - If a normalized field row and a declared input/output port resolve to the same schema path, the renderer should expose one inline-editable KTV row with the port handle on that row, not a duplicate non-inline port row.
 - Do not hardcode machine-local absolute repo paths inside canonical docs or guideline references; use repo-relative paths or placeholders instead.
 
@@ -240,7 +241,7 @@ Contract split:
 
 **From ambiguous surface state to explicit surface ownership**: Authors set `kgCanvasSurfaceMode` to `2d`, `3d`, or `geospatial` -> runtime normalizes render-mode and geospatial switching through one shared preset path -> surface-state churn stays neutralized upstream.
 
-**From widget bundle definition to visible overlays**: Authors keep Flow Editor widget bundle behavior under `flowEditor-frontmatter-only` -> runtime keeps widget ownership scoped to Flow Editor -> Rich Media Panels stay visible.
+**From widget bundle definition to visible overlays**: Authors keep widget-bundle behavior lean, preserve `forbid_cross_renderer_proxy: true`, and do not author stale renderer-owner aliases -> runtime keeps widget ownership source-owned -> Rich Media Panels stay visible.
 
 Supported `kgCanvas2dRenderer` values:
 
@@ -249,8 +250,8 @@ Supported `kgCanvas2dRenderer` values:
 | `"d3"` | D3 document graph | Use for README-style document landing |
 | `"flowchart"` | Flowchart renderer | Use only when Flowchart rendering is the explicit target |
 | `"flow"` | Flow Canvas renderer | Avoid for widget-bundle canonical docs because it is frontmatter-only and can hide widget expectations |
-| `"animatic"` | Native animatic timeline renderer | Use for timeline playback/editing while reusing the same `flow:` and `timeline.beats.*` YAML contract as Flow Editor |
-| `"flowEditor"` | Flow Editor renderer | Use for widget-bundle and rich-media documents |
+| `"animatic"` | Native animatic timeline renderer | Use for timeline playback/editing while reusing the same `flow:` and `timeline.beats.*` YAML contract as Storyboard |
+| `"storyboard"` | Storyboard renderer | Use for widget-bundle and rich-media documents |
 | `"design"` | Design renderer | Use only when design layout is the explicit target |
 
 Alias guidance:
@@ -272,7 +273,7 @@ Surface guidance:
 
 ## Widget Bundle Contract
 
-Use this block when widgets or Rich Media Panels must remain visible in Flow Editor:
+Use this block when widgets or Rich Media Panels must remain visible in Storyboard:
 
 ```yaml
 widget_bundle:
@@ -289,8 +290,6 @@ widget_bundle:
       direction: LR
       edgeType: bezier
     behavior:
-      drag_pan_zoom_owner: flowEditor-frontmatter-only
-      rich_media_overlay_handlers: flowEditor-frontmatter-only
       forbid_cross_renderer_proxy: true
 ```
 
@@ -302,17 +301,17 @@ widget_bundle:
 - [ ] Reviewers confirm switch-sensitive `*.md` files are directly runnable canonical seeds with explicit Canvas View frontmatter.
 - [ ] Reviewers confirm `kgCanvasSurfaceMode` is explicit for switch-sensitive documents.
 - [ ] Reviewers confirm `README.md`-style files use `kgCanvas2dRenderer: "d3"`.
-- [ ] Reviewers confirm widget-bundle files use `kgCanvas2dRenderer: "flowEditor"`.
-- [ ] Reviewers confirm animatic timeline files use `kgCanvas2dRenderer: "animatic"` while reusing the same canonical `flow:` YAML syntax as Flow Editor.
+- [ ] Reviewers confirm widget-bundle files use `kgCanvas2dRenderer: "storyboard"`.
+- [ ] Reviewers confirm animatic timeline files use `kgCanvas2dRenderer: "animatic"` while reusing the same canonical `flow:` YAML syntax as Storyboard.
 - [ ] Reviewers confirm 3D examples pair `kgCanvasSurfaceMode: "3d"` with `kgCanvas3dMode`.
 - [ ] Reviewers confirm geospatial examples use `kgCanvasSurfaceMode: "geospatial"` instead of relying on stored geospatial state.
 - [ ] Reviewers confirm `kgMultiDimTableModeEnabled` is explicitly set for switch-sensitive documents.
-- [ ] Reviewers confirm `kgWorkflowManagerModeEnabled: true` appears only when workflow sections or table companion rendering are intentional, and that Flow Editor remains the renderer authority.
+- [ ] Reviewers confirm `kgWorkflowManagerModeEnabled: true` appears only when workflow sections or table companion rendering are intentional, and that Storyboard remains the renderer authority.
 - [ ] Reviewers confirm canonical docs use normalized values instead of aliases.
-- [ ] Reviewers confirm widget-bundle docs keep the Flow Editor behavior contract when overlays are present.
-- [ ] Reviewers confirm normalized Flow Editor fixtures map `{key,type,value}` rows by semantic key / schema path and do not render `handles.source` or `handles.target` as substitute port keys.
+- [ ] Reviewers confirm widget-bundle docs keep behavior lean, retain `forbid_cross_renderer_proxy: true` when overlays are present, and do not author stale renderer-owner aliases.
+- [ ] Reviewers confirm normalized frontmatter-flow fixtures map `{key,type,value}` rows by semantic key / schema path and do not render `handles.source` or `handles.target` as substitute port keys.
 - [ ] Reviewers confirm matching field/port rows are consolidated into one inline-editable KTV row with the functional handle attached.
-- [ ] Reviewers confirm Flow Editor documents do not contain `## KGC Reading Layer` or line-start `@node:` / `@edge:` body mirrors.
+- [ ] Reviewers confirm frontmatter-flow documents do not contain `## KGC Reading Layer` or line-start `@node:` / `@edge:` body mirrors.
 
 ## Anti-Patterns
 
@@ -322,17 +321,17 @@ widget_bundle:
 - Do not use `Flow Canvas` as the canonical renderer label for widget-bundle docs.
 - Do not leave `kgMultiDimTableModeEnabled` unspecified when the document must switch deterministically.
 - Do not rely on persisted Geospatial Mode when the document itself is map-first.
-- Do not mix Flow Editor widget bundles with cross-renderer proxy behavior.
+- Do not mix frontmatter-flow widget bundles with cross-renderer proxy behavior.
 - Do not treat renderer aliases as the canonical authoring format.
 - Do not leave invalid inline YAML scalars unquoted and expect parser repair to recover them silently.
-- Do not split one semantic Flow Editor driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.
+- Do not split one semantic frontmatter-flow driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.
 - Do not close frontmatter early and place `title`, renderer presets, `workflow_sections`, `socket_types`, or `flow:` in the Markdown body.
 - Do not keep parallel KGC reading sections in the body when the same node summaries can live on the frontmatter node records.
 
 
 ## Runnable Demo Compliance
 
-Every `*-demo.md` file that uses `kgCanvas2dRenderer: "flowEditor"` must be runnable without any configuration outside the document itself. The following keys are required in the frontmatter:
+Every `*-demo.md` file that uses `kgCanvas2dRenderer: "storyboard"` must be runnable without any configuration outside the document itself. The following keys are required in the frontmatter:
 
 ```yaml
 schema: "kgc-computing-flow/v1"

@@ -12,7 +12,7 @@
 
 - Orchestrators must accept durable objectives through one message gateway and write run state, trace, memory observations, and artifacts through one native owner.
 - Role-scoped agents may plan, research, code, create, verify, and synthesize, but they must share bounded budgets and explicit stop conditions.
-- Tools and skills must be registered by contract before execution. Provider-specific tool calls must remain upstream of parser, GraphData, Flow Editor, and Rich Media Panel ownership.
+- Tools and skills must be registered by contract before execution. Provider-specific tool calls must remain upstream of parser, GraphData, Storyboard Widget, and Rich Media Panel ownership.
 - MCP-structured AI responses must land through the shared FloatingPanel Chat submit validation and structured-content projection path. Do not retry a renderable literal MCP result for legacy KGC, synthesize KGC text, or patch Canvas graph state downstream.
 - DeerFlow may be referenced only for conceptual long-horizon patterns or optional local gateway use. Do not copy DeerFlow code, prompts, topology, skill packs, or memory/sandbox layout.
 - Harness metadata in Markdown is orchestration context; graph topology is authored only through `flow:` and rendered through the shared pipeline.

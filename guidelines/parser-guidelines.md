@@ -19,7 +19,7 @@ frontmatter_contract: "required"
 - Markdown parsers must treat the opening YAML frontmatter block as the canonical metadata owner when it is present.
 - The frontmatter block must be the first block in the file; parsers should not infer equivalent metadata from later prose or duplicate body declarations.
 - Canonical authored Markdown remains plain YAML; normalized `{key, type, value}` wrappers are additive validation-fixture syntax, not the default authored contract.
-- When normalized Flow Editor fixtures use `{key, type, value}` wrappers, parsers must preserve the wrapper `key` as the semantic field/port key and must not substitute declaration container names such as `handles.source` or `handles.target`.
+- When normalized Storyboard/frontmatter-flow fixtures use `{key, type, value}` wrappers, parsers must preserve the wrapper `key` as the semantic field/port key and must not substitute declaration container names such as `handles.source` or `handles.target`.
 - Parsers must preserve `superagent_harness_template`, `superagent_harness_demo`, and related harness metadata as frontmatter metadata. They must not convert those sections into graph nodes or edges unless the author declares them under `flow:`.
 - Parsers must surface explicit warnings when frontmatter YAML is malformed instead of silently treating invalid metadata as acceptable input.
 - Parser repair is a recovery path only; malformed YAML still represents invalid source that should be corrected upstream.
@@ -31,7 +31,7 @@ frontmatter_contract: "required"
 - Parser logic is source-owned: opening frontmatter, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, `kgStrybldrStoryboard`, and authored workflow payloads are the canonical inputs; renderers must not infer replacement graph keys from filenames, labels, body mirrors, or prior UI state.
 - Routing keys remain neutral and explicit: `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `kgMultiDimTableModeEnabled`, and `kgDocumentStructureBaselineLock`.
 - Supported diagram kinds are declared as data, not renderer code paths: `mermaid_flowchart`, `mermaid_gitgraph`, `mermaid_architecture`, `mermaid_eventmodeling`, `mermaid_gantt`, `frontmatter_flow`, and `strybldr_storyboard`.
-- Supported surfaces are projections over the same parsed graph authority: `2D Renderer: Flow Editor`, `2D Renderer: Storyboard`, and BottomPanel/FloatingPanel Mermaid panels.
+- Supported surfaces are projections over the same parsed graph authority: `2D Renderer: Storyboard`, `2D Renderer: Flow Canvas`, and BottomPanel/FloatingPanel Mermaid panels.
 - Edge policy: explicit `graphData.edges`, `flow.edges`, `workflow.edges`, and diagram edges are the SSOT. Renderers may filter visible connectors but must not synthesize conflicting topology, remap legacy edge labels, or hide fork/publish edges declared by source metadata.
 - Fork policy: fork, branch, candidate, approval, review, and publish metadata remain authored fields and must surface through parsed graph nodes/edges without downstream alias stacking.
 

@@ -583,7 +583,7 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 - Engineers implement incremental updates for window resizing instead of full re-layout to eliminate jank
 - Engineers memoize expensive text measurement and wrapping utilities to reduce layout overhead
 - Engineers refactor and remove redundant calculation logic to streamline the rendering pipeline
-- Engineers consolidate duplicate field/port surfaces by schema path; one semantic Flow Editor key maps to one editable KTV row when the field and port describe the same value
+- Engineers consolidate duplicate field/port surfaces by schema path; one semantic Storyboard Widget key maps to one editable KTV row when the field and port describe the same value
 
 **Engineers implement resilience patterns**
 - Engineers enable graceful degradation

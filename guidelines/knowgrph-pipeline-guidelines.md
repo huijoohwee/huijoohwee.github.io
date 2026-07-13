@@ -17,24 +17,25 @@ frontmatter_contract: "required"
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read pipeline metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 - Pipeline docs must keep one frontmatter block and one human-readable body. Do not place `title`, renderer presets, `workflow_sections`, `socket_types`, `flow:`, nodes, edges, or KGC-reading summaries in a second body-side YAML layer.
+- Runtime-ready pipeline docs must not embed localhost routes, signed media tokens, upload ids, or generated artifact URLs as canonical source text. Use blank runtime fields or explicit workspace placeholders until the operator-supplied or provider-returned artifact exists at runtime.
 
 ## Markdown Body Structure Contract
 
 - The Markdown body starts after the single closing `---` and is a projection for humans: purpose, architecture, validation, inspection steps, and evidence.
 - Body tables may reference frontmatter node ids, edge ids, field paths, and test names, but must not re-author the machine graph.
-- Flow Editor topology belongs to frontmatter `flow.nodes` and `flow.edges`; concise reusable node summaries belong on the owning frontmatter node, commonly as `kgc:readingSummary` in normalized fixtures.
+- Storyboard/frontmatter-flow topology belongs to frontmatter `flow.nodes` and `flow.edges`; concise reusable node summaries belong on the owning frontmatter node, commonly as `kgc:readingSummary` in normalized fixtures.
 - Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` blocks to mirror frontmatter.
 
-## Flow Editor Computing-Flow Contract
+## Storyboard Computing-Flow Contract
 
 - Runtime-ready computing-flow fixtures should describe graph execution with semantic port keys, normalized schema paths, and explicit frontmatter flow settings.
-- Flow Editor-ready Markdown must declare the renderer landing explicitly when it is intended to open as a runnable canvas document: `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "flowEditor"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, an explicit `kgMultiDimTableModeEnabled` value, and `kgDocumentStructureBaselineLock: false`.
-- Simple Flow Editor seeds should use `kgMultiDimTableModeEnabled: false` to avoid unintended table takeover. Computing-flow demos that intentionally expose Workflow Manager / Multi-dimensional Table companion views may set `kgMultiDimTableModeEnabled: true`, but must also set `kgWorkflowManagerModeEnabled: true` and validate that Flow Editor remains the renderer authority.
-- Runtime-ready Canvas demos should declare `kgParserRoutingContract` beside the renderer landing keys. This keeps parser logic, routing keys, diagram kinds, surfaces, edge policy, and fork policy in frontmatter so Source Files, Flow Editor, Storyboard, and Mermaid panels resolve the same source-owned graph.
+- Storyboard-ready Markdown must declare the renderer landing explicitly when it is intended to open as a runnable canvas document: `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "storyboard"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, an explicit `kgMultiDimTableModeEnabled` value, and `kgDocumentStructureBaselineLock: false`.
+- Simple Storyboard seeds should use `kgMultiDimTableModeEnabled: false` to avoid unintended table takeover. Computing-flow demos that intentionally expose Workflow Manager / Multi-dimensional Table companion views may set `kgMultiDimTableModeEnabled: true`, but must also set `kgWorkflowManagerModeEnabled: true` and validate that Storyboard remains the renderer authority.
+- Runtime-ready Canvas demos should declare `kgParserRoutingContract` beside the renderer landing keys. This keeps parser logic, routing keys, diagram kinds, surfaces, edge policy, and fork policy in frontmatter so Source Files, Storyboard, Mermaid panels, and shared Flow runtime helpers resolve the same source-owned graph.
 - `handles.source` and `handles.target` may declare which semantic keys appear on each side of a widget, but the keys themselves remain the authored `key` / `portKey` values used by edges and connected-value lookup.
 - Flow edges must bind through authored semantic keys (`sourceHandle`, `targetHandle`, `flow:sourcePortKey`, `flow:targetPortKey`, or implicit socket-derived keys). Do not remap ports to `handles.source`, `handles.target`, display labels, filenames, or demo-specific aliases.
 - Authoring templates should use plain YAML `flow:` nodes, edges, `handles`, and `"flow:portTypes"`. Normalized `{key, type, value}` envelopes are reserved for dedicated validation fixtures that intentionally audit ingest -> parse -> render fidelity.
-- Flow Editor KTV rows that share a normalized schema path with a functional port should render as one inline-editable row with the port handle attached. Documentation and tests should treat duplicate read-only port rows for the same semantic key as invalid.
+- Storyboard Widget KTV rows that share a normalized schema path with a functional port should render as one inline-editable row with the port handle attached. Documentation and tests should treat duplicate read-only port rows for the same semantic key as invalid.
 - Computing-flow execution must use shared graph/registry readers and bounded propagation. Renderers may display connected values, but they must not recompute graph state, rewrite topology, or depend on fixture filenames.
 - Run-all or phase execution writes results into existing nodes and payload fields only; it must preserve layout, panel frames, edge topology, and authored port keys.
 - Fork, branch, review, and publish edges are normal pipeline topology. They should be authored in `flow.edges`, workflow edges, Mermaid diagram edges, or Strybldr payload edges and carried into `graphData.edges`; downstream renderers may choose visibility but must not rewrite those edges into renderer-specific aliases.
@@ -43,26 +44,26 @@ frontmatter_contract: "required"
 - MCP-structured chat outputs remain normal flow data. Literal MCP `result.structuredContent`, `response.structuredContent`, or structured `result.content[]` records may declare widgets, panels, cards, media, safe `flow:compute`, and handle-bearing edges; submit validation accepts a renderable structured surface without KGC retry or synthetic KGC text.
 - Rich Media Panel outputs remain normal flow nodes. Text output uses `output`, image output uses `imageUrl`, audio uses `audioUrl`, video uses `videoUrl`, inline chart or HTML output uses `outputSrcDoc`, and `outputSrcDoc` is the render authority when helper text is also present.
 - FloatingPanel Media is the shared media catalog for uploaded and AI/LLM-generated image/audio/video. `@ Upload Media` in card fields must reuse the same upload helper and inventory owner, then insert a typography-preserving inline chip. R2 stores bytes, D1 stores metadata/provenance, KV stores short-lived access URL cache entries, and Durable Objects store room sync notifications.
-- Validation must cover the full ingestion -> parsing -> rendering pipeline: parser warnings are zero, Flow Editor mounts the frontmatter graph, semantic ports attach to the intended rows, connected values and inline compute propagate through shared helpers, and Widgets, Cards, Rich Media Panels, media previews, and edges resolve through shared owners.
+- Validation must cover the full ingestion -> parsing -> rendering pipeline: parser warnings are zero, Storyboard mounts the frontmatter graph, semantic ports attach to the intended rows, connected values and inline compute propagate through shared helpers, and Widgets, Cards, Rich Media Panels, media previews, and edges resolve through shared owners.
 
-### Flow Editor Computing-Flow Validation Minimum
+### Storyboard Computing-Flow Validation Minimum
 
 - Parse every runnable template or demo through the Markdown parser and fail on warnings before browser validation.
 - Assert graph counts from authored data, not from fixture filenames or hardcoded demo ids.
-- Assert mode ownership from frontmatter: Flow Editor remains `kgCanvas2dRenderer: "flowEditor"`, table mode is explicit, and Workflow Manager is enabled only when the document intentionally exposes workflow sections.
-- Include focused tests for `markdown.frontmatterFlowGraph.*`, `baseline.flowEditor.frontmatterFlow.*`, `flow.compute.inline.*`, and `flow.dataflow.connectedValues.*` when a change touches ports, computed values, or panel previews.
-- For publish-side docs, validate from the docs mirror path (`/docs/<file>.md`) so Source Files ingestion, parser application, and Flow Editor rendering share the same route used by local demos.
-- Browser smoke should use stable DOM contracts such as `data-kg-flow-editor-surface-root` and `data-kg-rich-media-panel`, plus one concrete panel-output signal (`iframe[srcdoc]`, `img[src^="data:image/"]`, or visible editable KTV row).
-- Publish-demo hygiene should reject body-side `## KGC Reading Layer`, line-start `@node:`, line-start `@edge:`, and body `flow:` mirrors for frontmatter-driven Flow Editor documents.
+- Assert mode ownership from frontmatter: Storyboard remains `kgCanvas2dRenderer: "storyboard"`, table mode is explicit, and Workflow Manager is enabled only when the document intentionally exposes workflow sections.
+- Include focused tests for `markdown.frontmatterFlowGraph.*`, `baseline.storyboardWidget.frontmatterFlow.*`, `flow.compute.inline.*`, and `flow.dataflow.connectedValues.*` when a change touches ports, computed values, or panel previews.
+- For publish-side docs, validate from the docs mirror path (`/docs/<file>.md`) so Source Files ingestion, parser application, and Storyboard rendering share the same route used by local demos.
+- Browser smoke should use stable DOM contracts such as `data-kg-storyboard-widget-surface-root` and `data-kg-rich-media-panel`, plus one concrete panel-output signal (`iframe[srcdoc]`, `img[src^="data:image/"]`, or visible editable KTV row).
+- Publish-demo hygiene should reject body-side `## KGC Reading Layer`, line-start `@node:`, line-start `@edge:`, and body `flow:` mirrors for frontmatter-driven Storyboard documents.
 
 ## Long-Horizon SuperAgent Harness Guidelines
 
-- SuperAgent harness metadata such as `superagent_harness_template` and `superagent_harness_demo` is run-planning context; it must not create a second markdown parser, GraphData builder, Flow Editor renderer, provider dispatcher, memory store, or graph apply path.
+- SuperAgent harness metadata such as `superagent_harness_template` and `superagent_harness_demo` is run-planning context; it must not create a second markdown parser, GraphData builder, Storyboard renderer, provider dispatcher, memory store, or graph apply path.
 - Long-horizon runs should name a message gateway, run memory, tools, skills, role-scoped subagents, sandbox/workspace outputs, budgets, trace files, and a review gate for minutes-to-hours work.
 - DeerFlow may be cited only as conceptual inspiration or an optional gateway provider. Do not copy DeerFlow code, prompts, topology, skill packs, memory layout, or architecture into Knowgrph docs or fixtures.
 - The `flow:` block remains the graph SSOT. A harness may add explicit nodes/edges only by authoring them under `flow:` with normal semantic ports and shared Rich Media Panel output keys.
 - Rich Media Panel outputs stay field-driven: text uses `output`, images use `imageUrl`, audio uses `audioUrl`, video uses `videoUrl`, and charts/inline HTML use `outputSrcDoc`.
-- Validation must prove parser warnings are zero, authored graph counts are stable, `kgCanvas2dRenderer: "flowEditor"` remains authoritative, and harness metadata does not change nodes, edges, or rendered surface ownership.
+- Validation must prove parser warnings are zero, authored graph counts are stable, `kgCanvas2dRenderer: "storyboard"` remains authoritative, and harness metadata does not change nodes, edges, or rendered surface ownership.
 
 ## Foundational Axioms
 

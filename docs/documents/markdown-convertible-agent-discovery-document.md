@@ -36,6 +36,7 @@ This keeps one source of truth for:
 - headline
 - lede
 - execution posture
+- default Home command-deck grammar and token defaults
 - public discovery route
 
 ## User Stories
@@ -56,6 +57,7 @@ This keeps one source of truth for:
 
 - The canonical hero copy lives in `docs/documents/knowgrph-live-canvas-hero.md`
 - The React Live Canvas Hero reads bundled Markdown sourced from that document
+- The React Live Canvas Hero and markdown discovery route expose the same default Home command deck semantics: `/video-agent` route selection, `@provider.*` provider tokens, `@text|@image|@audio|@video` output tokens, and `#spec.*` specification tokens
 - The public route `/knowgrph-live-canvas-hero.md` returns `text/markdown`
 - `/knowgrph/` includes an alternate markdown discovery link
 - `/knowgrph/llms.txt` advertises the discovery markdown route

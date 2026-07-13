@@ -59,8 +59,8 @@
         { "@value": "2D 平移/拖拽速度倍率", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to 2D panning (wheel pan + pointer/touch drag pan) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
-        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 平移（滚轮平移 + 指针/触控拖拽平移）。", "@language": "zh-cn" }
+        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to 2D panning (wheel pan + pointer/touch drag pan) across D3, Flow, Flow Editor, and Storyboard renderers.", "@language": "en-us" },
+        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow、Flow Editor 与 Storyboard 渲染器中统一影响 2D 平移（滚轮平移 + 指针/触控拖拽平移）。", "@language": "zh-cn" }
       ]
     },
     "canvasInteractionSpeedMultiplier": {
@@ -70,8 +70,8 @@
         { "@value": "统一 2D 交互速度倍率", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to both 2D zoom (wheel/pinch) and 2D pan (wheel/pointer/touch) across D3, Flow, and Flow Editor renderers.", "@language": "en-us" },
-        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow 与 Flow Editor 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
+        { "@value": "Workspace-level multiplier (clamped to a safe range) applied to both 2D zoom (wheel/pinch) and 2D pan (wheel/pointer/touch) across D3, Flow, Flow Editor, and Storyboard renderers.", "@language": "en-us" },
+        { "@value": "工作区级倍率（会被限制在安全区间内），用于在 D3、Flow、Flow Editor 与 Storyboard 渲染器中统一影响 2D 缩放（滚轮/捏合）与 2D 平移（滚轮/指针/触控）。", "@language": "zh-cn" }
       ]
     },
     "infiniteCanvasInteractionMode": {
@@ -132,15 +132,15 @@
         { "@value": "用于 Zoom-to-Selection 动作的动画时长（毫秒）。在 Interaction Viewport 区块中以只读方式展示，由 Canvas Zoom Modes 设置进行编辑。", "@language": "zh-cn" }
       ]
     },
-    "flowEditorOverlayWheelProxyEnabled": {
+    "storyboardWidgetOverlayWheelProxyEnabled": {
       "@type": "xsd:boolean",
       "rdfs:label": [
-        { "@value": "Flow Editor: fly-out wheel proxy", "@language": "en-us" },
-        { "@value": "Flow Editor：浮层滚轮代理", "@language": "zh-cn" }
+        { "@value": "Storyboard Widget: fly-out wheel proxy", "@language": "en-us" },
+        { "@value": "Storyboard Widget：浮层滚轮代理", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "When enabled, wheel pan/zoom gestures that originate over Flow Editor fly-out overlays (Flow Editor widget panels) are forwarded to the 2D canvas unless the overlay can scroll in that direction.", "@language": "en-us" },
-        { "@value": "启用后，当鼠标指针位于 Flow Editor 的浮层（Flow Editor widget 面板）上时，滚轮平移/缩放手势会被转发到 2D 画布；若浮层在该方向可滚动则不转发。", "@language": "zh-cn" }
+        { "@value": "When enabled, wheel pan/zoom gestures that originate over Storyboard Widget fly-out overlays are forwarded to the 2D canvas unless the overlay can scroll in that direction.", "@language": "en-us" },
+        { "@value": "启用后，当鼠标指针位于 Storyboard Widget 的浮层上时，滚轮平移/缩放手势会被转发到 2D 画布；若浮层在该方向可滚动则不转发。", "@language": "zh-cn" }
       ]
     },
     "markdownWordWrap": {
@@ -433,8 +433,8 @@
         { "@value": "Overlay 碰撞间距（像素）", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Gap in pixels used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
-        { "@value": "用于 Flow Editor overlay 面板碰撞解算的像素间距。", "@language": "zh-cn" }
+        { "@value": "Gap in pixels used when resolving Storyboard Widget overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Storyboard Widget overlay 面板碰撞解算的像素间距。", "@language": "zh-cn" }
       ]
     },
     "flowOverlayPanelCollisionStrength": {
@@ -444,8 +444,8 @@
         { "@value": "Overlay 碰撞强度", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Strength used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
-        { "@value": "用于 Flow Editor overlay 面板碰撞解算的强度。", "@language": "zh-cn" }
+        { "@value": "Strength used when resolving Storyboard Widget overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Storyboard Widget overlay 面板碰撞解算的强度。", "@language": "zh-cn" }
       ]
     },
     "flowOverlayPanelCollisionIterations": {
@@ -455,8 +455,8 @@
         { "@value": "Overlay 碰撞迭代次数", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Iterations used when resolving Flow Editor overlay panel collisions.", "@language": "en-us" },
-        { "@value": "用于 Flow Editor overlay 面板碰撞解算的迭代次数。", "@language": "zh-cn" }
+        { "@value": "Iterations used when resolving Storyboard Widget overlay panel collisions.", "@language": "en-us" },
+        { "@value": "用于 Storyboard Widget overlay 面板碰撞解算的迭代次数。", "@language": "zh-cn" }
       ]
     },
     "flowOverlayPanelCollisionTouchEpsilonPx": {
@@ -466,8 +466,8 @@
         { "@value": "Overlay 碰撞 touch epsilon（像素）", "@language": "zh-cn" }
       ],
       "rdfs:comment": [
-        { "@value": "Touch-epsilon in pixels used for Flow Editor overlay collisions to treat near-touch as overlap, avoid sticking, and enforce non-touching borders.", "@language": "en-us" },
-        { "@value": "Flow Editor overlay 碰撞使用的像素 touch-epsilon，用于将近似接触视为重叠、避免粘连，并确保边框不贴边接触。", "@language": "zh-cn" }
+        { "@value": "Touch-epsilon in pixels used for Storyboard Widget overlay collisions to treat near-touch as overlap, avoid sticking, and enforce non-touching borders.", "@language": "en-us" },
+        { "@value": "Storyboard Widget overlay 碰撞使用的像素 touch-epsilon，用于将近似接触视为重叠、避免粘连，并确保边框不贴边接触。", "@language": "zh-cn" }
       ]
     },
     "schema.layout.forces.circleCollide": {

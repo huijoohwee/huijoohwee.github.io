@@ -1073,7 +1073,7 @@
       },
       "documentPath": "docs/documents/knowgrph-canvas-default-initialization-document.md",
       "language": "en-us",
-      "chunk_text": "Initialization bootstrap contract: source text comes from huijoohwee/docs, materializes the 3-file workspace family (/README.md, /knowgrph-video-demo.md, /knowgrph-maps-grabmap-multim-demo.md), and treats frontmatter as the SSOT for D3, Flow Editor, and Geospatial landing without renderer seepage."
+      "chunk_text": "Initialization bootstrap contract: source text comes from huijoohwee/docs, materializes the 3-file workspace family (/README.md, /knowgrph-video-demo.md, /knowgrph-maps-grabmap-multim-demo.md), and treats frontmatter as the SSOT for D3, Storyboard, and Geospatial landing without renderer seepage."
     },
     {
       "@id": "node:knowgrph:doc:knowgrph-canvas-document",

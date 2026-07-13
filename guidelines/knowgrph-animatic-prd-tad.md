@@ -118,7 +118,7 @@ needed to start the renderer.
   > bootstrap path is called`
 
 - **Given** a document that uses `flow:` YAML authoring surface **When** the animatic renderer
-  reads it **Then** it reuses the same canonical Flow Editor frontmatter syntax with no
+  reads it **Then** it reuses the same canonical Storyboard frontmatter syntax with no
   parallel animatic-only markdown block.
 
   > **`/goal` translation**: `grep for animatic-only markdown block returns no match and

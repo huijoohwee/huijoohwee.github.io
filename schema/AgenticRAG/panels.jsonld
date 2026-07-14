@@ -158,6 +158,16 @@
         "@language": "zh-cn"
       }
     ],
+    "richMediaBrowserSmokeTimingSchema": [
+      {
+        "@value": "Every generated Rich Media catalog preview timing artifact must declare `schema: rich-media-catalog-preview-timing/v1` and pass the strict Draft 2020-12 contract at `canvas/schemas/rich-media-catalog-preview-timing.v1.schema.json` before the Dev-only browser smoke can pass. The validator must reject unknown legacy fields, missing fixture/image/video evidence, missing expected/preloaded/visible metadata, and invalid scalar constraints. This versioned schema stabilizes validation evidence format; it is not a production telemetry API.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "每个生成的 Rich Media catalog preview timing artifact 必须声明 `schema: rich-media-catalog-preview-timing/v1`，并在 Dev-only browser smoke 通过前符合 `canvas/schemas/rich-media-catalog-preview-timing.v1.schema.json` 中严格的 Draft 2020-12 契约。Validator 必须拒绝未知 legacy fields、缺失的 fixture/image/video evidence、缺失的 expected/preloaded/visible metadata 以及无效 scalar constraints。该版本化 schema 用于稳定验证证据格式，不是生产遥测 API。",
+        "@language": "zh-cn"
+      }
+    ],
     "storyboardRichMediaDropBrowserSmokeHarness": [
       {
         "@value": "Storyboard rich-media drag verification is a Dev-only runtime boundary owned by Knowgrph source: `StoryboardRichMediaDropSmokePage` plus `npm run test:smoke:storyboard-rich-media-drop:browser` should exercise the real `2D Renderer: Storyboard` drag path, create one image and one video `Rich Media Panel` near pointer release, emit one screenshot artifact, and prove existing storyboard cards and rich-media panels keep their authored world positions. Generic flow-editor drag/resize callback counters outside this path remain covered by focused component regressions.",

@@ -157,7 +157,7 @@
 ## Agentic GraphRAG/Knowledge Graph Pipeline Guidelines
 
 ## COMPLY
-`/GitHub/{huijoohwee.github.io/guidelines/{codebase-neutrality-guidelines.md,codebase-maintainability-guidelines.md},knowgrph/todo.md#L5-21}`
+`/GitHub/{huijoohwee.github.io/guidelines/{codebase-neutrality-guidelines.md,codebase-maintainability-guidelines.md},agentic-canvas-os/docs/{AGENTS.md,TODO.md}}`
 
 ### Title and title-like inline editing
 - Titles and title-like labels (Markdown headings, workspace property names) render truncated with ellipsis at rest, reuse the same typography in in-place html editors or rename inputs, reveal full text on focus via horizontal scroll, and forbid alternate WYSIWYG title stacks or layout/spacing drift on edit-open.

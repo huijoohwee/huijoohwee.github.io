@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.30",
+  "schemaVersion": "1.0.31",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -300,11 +300,11 @@
     ],
     "imageToThreeJsSharedSurfaceProjection": [
       {
-        "@value": "When a source-backed image skill result declares `mediaRenderMode: threejs` and a `knowgrph-image-to-threejs/v1` manifest, Card, Widget, Storyboard, 2D overlay, Three overlay, and Rich Media Panel projections must preserve that same render mode and source URL. Raster images render as sRGB textured planes and SVG images as bounded fill/stroke geometry through the existing shared Three.js runtime; asynchronous readiness invalidates the demand-driven frame loop and every texture, geometry, and material is disposed. Loader failure returns visibly to the original image surface without provider calls or generated-media backfill. The canonical runtime contract remains `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`.",
+        "@value": "When a source-backed image skill result declares `mediaRenderMode: threejs` and a `knowgrph-image-to-threejs/v1` manifest, Card, Widget, Storyboard, 2D overlay, Three overlay, and Rich Media Panel projections must preserve that same render mode and source URL. Raster images render as sRGB textured planes and SVG images as bounded fill/stroke geometry through the existing shared Three.js runtime; asynchronous readiness invalidates the demand-driven frame loop and every texture, geometry, and material is disposed on replacement or unmount. Source replacement is keyed to the canonical URL so late loader completion cannot overwrite the current projection. Loader failure returns visibly to the original image surface without provider calls or generated-media backfill. This contract is runtime-ready in Dev only; protected integration, Prod, and Cloudflare remain separately gated. The canonical runtime contract remains `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`.",
         "@language": "en-us"
       },
       {
-        "@value": "当源支持的图片 skill 结果声明 `mediaRenderMode: threejs` 与 `knowgrph-image-to-threejs/v1` manifest 时，Card、Widget、Storyboard、2D overlay、Three overlay 与 Rich Media Panel 投影必须保留同一 render mode 与源 URL。栅格图片通过现有共享 Three.js runtime 渲染为 sRGB textured plane，SVG 渲染为有界的 fill/stroke geometry；异步就绪后需使 demand-driven frame loop 失效重绘，并释放所有 texture、geometry 与 material。加载失败必须可见地回退到原始图片表面，不得调用 provider 或生成媒体补偿。规范运行时契约仍位于 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`。",
+        "@value": "当源支持的图片 skill 结果声明 `mediaRenderMode: threejs` 与 `knowgrph-image-to-threejs/v1` manifest 时，Card、Widget、Storyboard、2D overlay、Three overlay 与 Rich Media Panel 投影必须保留同一 render mode 与源 URL。栅格图片通过现有共享 Three.js runtime 渲染为 sRGB textured plane，SVG 渲染为有界的 fill/stroke geometry；异步就绪后需使 demand-driven frame loop 失效重绘，并在替换或卸载时释放所有 texture、geometry 与 material。源替换必须以规范 URL 为键，避免延迟完成的 loader 覆盖当前投影。加载失败必须可见地回退到原始图片表面，不得调用 provider 或生成媒体补偿。该契约仅在 Dev 中达到 runtime-ready；受保护集成、Prod 与 Cloudflare 仍需独立门禁。规范运行时契约仍位于 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`。",
         "@language": "zh-cn"
       }
     ],

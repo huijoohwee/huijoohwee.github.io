@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.24",
+  "schemaVersion": "1.0.25",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -165,6 +165,16 @@
       },
       {
         "@value": "每个生成的 Rich Media catalog preview timing artifact 必须声明 `schema: rich-media-catalog-preview-timing/v1`，并在 Dev-only browser smoke 通过前符合 `canvas/schemas/rich-media-catalog-preview-timing.v1.schema.json` 中严格的 Draft 2020-12 契约。Validator 必须拒绝未知 legacy fields、缺失的 fixture/image/video evidence、缺失的 expected/preloaded/visible metadata 以及无效 scalar constraints。该版本化 schema 用于稳定验证证据格式，不是生产遥测 API。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeAffectedCi": [
+      {
+        "@value": "Knowgrph must register the Rich Media preview timing schema, validator, fixture manifest, smoke page/runner/verifier, and browser-contract test in one affected-CI ownership scope. A change to any owner must automatically run both `test:smoke:rich-media:timing-schema` and the focused `richMedia.browserSmokeContract` gate; this remains Dev validation and does not authorize deployment.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Knowgrph 必须把 Rich Media preview timing schema、validator、fixture manifest、smoke page/runner/verifier 与 browser-contract test 注册到同一个 affected-CI ownership scope。任一 owner 发生变更时，必须自动运行 `test:smoke:rich-media:timing-schema` 与聚焦的 `richMedia.browserSmokeContract` gate；该规则仍属于 Dev 验证，不构成部署授权。",
         "@language": "zh-cn"
       }
     ],

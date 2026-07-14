@@ -3686,6 +3686,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:sme-care-agent-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "sme-care-agent-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/sme-care-agent-prd-tad.md"
+      },
+      "documentPath": "docs/documents/sme-care-agent-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "edge:doc:api->readme",
       "@type": "kg:Edge",
       "source": "node:knowgrph:doc:knowgrph-api-document",

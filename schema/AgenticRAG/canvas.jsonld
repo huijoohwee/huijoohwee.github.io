@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.29",
+  "schemaVersion": "1.0.30",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -295,6 +295,16 @@
       },
       {
         "@value": "富媒体节点（image/svg/video/iframe）必须通过共享且领域无关的 URL/元数据启发式进行检测，并在每个画布中通过有界的 DOM overlay 池进行渲染（适用于 2D D3/Flow/Design 以及 3D）。Overlay 必须通过共享的 RAF 合并调度器跟随节点运动，并在每个画布上复用单一 overlay 表面；Script/Imgs/Fid 的默认行为必须保持为 auto，由共享的富媒体 + iframe 启发式驱动，在 Markdown Viewer、Canvas、Design 与 Geospatial 模式间保持一致；每文档 frontmatter 覆盖仅作为可选逃生阀，不能成为正常富媒体渲染的前提条件。",
+        "@language": "zh-cn"
+      }
+    ],
+    "imageToThreeJsSharedSurfaceProjection": [
+      {
+        "@value": "When a source-backed image skill result declares `mediaRenderMode: threejs` and a `knowgrph-image-to-threejs/v1` manifest, Card, Widget, Storyboard, 2D overlay, Three overlay, and Rich Media Panel projections must preserve that same render mode and source URL. Raster images render as sRGB textured planes and SVG images as bounded fill/stroke geometry through the existing shared Three.js runtime; asynchronous readiness invalidates the demand-driven frame loop and every texture, geometry, and material is disposed. Loader failure returns visibly to the original image surface without provider calls or generated-media backfill. The canonical runtime contract remains `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当源支持的图片 skill 结果声明 `mediaRenderMode: threejs` 与 `knowgrph-image-to-threejs/v1` manifest 时，Card、Widget、Storyboard、2D overlay、Three overlay 与 Rich Media Panel 投影必须保留同一 render mode 与源 URL。栅格图片通过现有共享 Three.js runtime 渲染为 sRGB textured plane，SVG 渲染为有界的 fill/stroke geometry；异步就绪后需使 demand-driven frame loop 失效重绘，并释放所有 texture、geometry 与 material。加载失败必须可见地回退到原始图片表面，不得调用 provider 或生成媒体补偿。规范运行时契约仍位于 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`。",
         "@language": "zh-cn"
       }
     ],

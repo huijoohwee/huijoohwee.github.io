@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.22",
+  "schemaVersion": "1.0.23",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -140,11 +140,11 @@
     ],
     "richMediaBrowserSmokeHarness": [
       {
-        "@value": "Rich-media browser verification is a Dev-only runtime boundary owned by Knowgrph source: `RichMediaBrowserSmokePage` plus `npm run test:smoke:rich-media:browser` should validate shared `RichMediaPanel` surfaces for markdown preview/edit, iframe/srcDoc, snapshot iframe, click-to-open overlay, image zoom wheel, video HTML fallback, audio, and flow-editor chrome visibility while writing one screenshot artifact. Flow-editor drag/resize callback counters remain covered by focused component regressions until browser drag instrumentation becomes deterministic.",
+        "@value": "Rich-media browser verification is a Dev-only runtime boundary owned by Knowgrph source: `RichMediaBrowserSmokePage` plus `npm run test:smoke:rich-media:browser` should validate shared `RichMediaPanel` surfaces for markdown preview/edit, iframe/srcDoc, snapshot iframe, click-to-open overlay, image zoom wheel, video HTML fallback, audio, flow-editor chrome visibility, and non-fallback WebGL rendering for both a raster `image.to-threejs` textured plane and SVG shape geometry while writing one screenshot artifact. The image projection contract remains source-owned by `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`; schema mirrors must not claim Prod or Cloudflare proof. Flow-editor drag/resize callback counters remain covered by focused component regressions until browser drag instrumentation becomes deterministic.",
         "@language": "en-us"
       },
       {
-        "@value": "富媒体浏览器验证是由 Knowgrph 源码拥有的 Dev-only 运行时边界：`RichMediaBrowserSmokePage` 与 `npm run test:smoke:rich-media:browser` 应验证共享 `RichMediaPanel` 表面上的 markdown preview/edit、iframe/srcDoc、snapshot iframe、click-to-open overlay、image zoom wheel、video HTML fallback、audio 与 flow-editor chrome visibility，并产出单张截图工件。flow-editor drag/resize callback counter 在浏览器拖拽注入具备确定性之前，仍由聚焦的组件级回归测试覆盖。",
+        "@value": "富媒体浏览器验证是由 Knowgrph 源码拥有的 Dev-only 运行时边界：`RichMediaBrowserSmokePage` 与 `npm run test:smoke:rich-media:browser` 应验证共享 `RichMediaPanel` 表面上的 markdown preview/edit、iframe/srcDoc、snapshot iframe、click-to-open overlay、image zoom wheel、video HTML fallback、audio、flow-editor chrome visibility，以及栅格 `image.to-threejs` textured plane 与 SVG shape geometry 的非回退 WebGL 渲染，并产出单张截图工件。图片投影契约仍由 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md` 源拥有；schema mirror 不得声称 Prod 或 Cloudflare proof。flow-editor drag/resize callback counter 在浏览器拖拽注入具备确定性之前，仍由聚焦的组件级回归测试覆盖。",
         "@language": "zh-cn"
       }
     ],

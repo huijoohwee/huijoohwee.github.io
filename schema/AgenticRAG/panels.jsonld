@@ -148,6 +148,16 @@
         "@language": "zh-cn"
       }
     ],
+    "richMediaBrowserSmokeVideoReadiness": [
+      {
+        "@value": "The Dev-only Rich Media smoke uses the repository-owned 1,092-byte H.264 fixture at `/demo/media-preview-metadata-ready.mp4`. Before navigation, its adjacent video preload must reach `readyState >= HAVE_METADATA`; after navigation, the visible shared Rich Media Panel video must reach the same state within the 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` budget. `data/outputs/rich-media-catalog-preview-timing.json` must keep separate structured image and video criteria/results. This fixture timing is validation evidence, not production telemetry.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Dev-only Rich Media smoke 使用仓库自有的 1,092 字节 H.264 fixture `/demo/media-preview-metadata-ready.mp4`。导航前，相邻视频预载必须达到 `readyState >= HAVE_METADATA`；导航后，共享 Rich Media Panel 中可见的视频必须在同一个 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` 预算内达到该状态。`data/outputs/rich-media-catalog-preview-timing.json` 必须分别保存结构化的图片与视频判定条件和结果。该 fixture timing 仅为验证证据，不是生产遥测。",
+        "@language": "zh-cn"
+      }
+    ],
     "storyboardRichMediaDropBrowserSmokeHarness": [
       {
         "@value": "Storyboard rich-media drag verification is a Dev-only runtime boundary owned by Knowgrph source: `StoryboardRichMediaDropSmokePage` plus `npm run test:smoke:storyboard-rich-media-drop:browser` should exercise the real `2D Renderer: Storyboard` drag path, create one image and one video `Rich Media Panel` near pointer release, emit one screenshot artifact, and prove existing storyboard cards and rich-media panels keep their authored world positions. Generic flow-editor drag/resize callback counters outside this path remain covered by focused component regressions.",

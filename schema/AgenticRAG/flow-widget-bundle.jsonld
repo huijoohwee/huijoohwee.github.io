@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:FlowWidgetBundle",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "rdfs:label": [
     { "@value": "Widget bundle contract", "@language": "en-us" },
     { "@value": "Flow Widget bundle 契约", "@language": "zh-cn" }
@@ -87,11 +87,11 @@
     ],
     "imageToThreeJsSkillProjection": [
       {
-        "@value": "The source-owned `image.to-threejs` skill accepts one connected image source before a local property fallback and emits `knowgrph-image-to-threejs/v1`. Supported PNG/JPG/JPEG sources project as a Three.js textured plane; SVG projects as shape geometry. Success uses `mediaRenderMode: threejs` with zero model tokens and zero estimated cost. Missing or unsupported sources must return typed errors before render work. The canonical contract is `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`; schema consumers must not introduce a provider route, agent variant, alias parser, copied external implementation, or additional runtime dependency.",
+        "@value": "The source-owned `image.to-threejs` skill accepts one connected image source before a local property fallback and emits `knowgrph-image-to-threejs/v1`. Supported PNG/JPG/JPEG sources project as a Three.js textured plane; SVG projects as shape geometry. Success uses `mediaRenderMode: threejs` with zero model tokens and zero estimated cost. Missing or unsupported sources must return typed errors before render work. Focused conversion and lifecycle checks plus shared-surface browser proof promote this contract to runtime-ready in Dev; protected integration, Prod, and Cloudflare remain separately gated. The canonical contract is `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`; schema consumers must not introduce a provider route, agent variant, alias parser, copied external implementation, or additional runtime dependency.",
         "@language": "en-us"
       },
       {
-        "@value": "由源代码拥有的 `image.to-threejs` skill 先读取已连接的图片源，再回退到本地属性，并输出 `knowgrph-image-to-threejs/v1`。支持的 PNG/JPG/JPEG 以 Three.js textured plane 投影，SVG 以 shape geometry 投影。成功结果使用 `mediaRenderMode: threejs`，模型 token 与预估成本均为零。缺失或不支持的输入必须在渲染前返回类型化错误。规范契约位于 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`；schema 消费方不得新增 provider 路由、agent 变体、别名解析器、复制外部实现或额外运行时依赖。",
+        "@value": "由源代码拥有的 `image.to-threejs` skill 先读取已连接的图片源，再回退到本地属性，并输出 `knowgrph-image-to-threejs/v1`。支持的 PNG/JPG/JPEG 以 Three.js textured plane 投影，SVG 以 shape geometry 投影。成功结果使用 `mediaRenderMode: threejs`，模型 token 与预估成本均为零。缺失或不支持的输入必须在渲染前返回类型化错误。聚焦的转换与生命周期检查以及共享表面浏览器证明使该契约仅在 Dev 中达到 runtime-ready；受保护集成、Prod 与 Cloudflare 仍需独立门禁。规范契约位于 `knowgrph/docs/documents/knowgrph-image-to-threejs-api.md`；schema 消费方不得新增 provider 路由、agent 变体、别名解析器、复制外部实现或额外运行时依赖。",
         "@language": "zh-cn"
       }
     ],

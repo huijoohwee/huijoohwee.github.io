@@ -164,6 +164,21 @@
       }
     },
     {
+      "@id": "node:schema:agenticrag:flow-widget-bundle",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "flow-widget-bundle.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/flow-widget-bundle.jsonld",
+        "surface": "flow-widget-bundle"
+      }
+    },
+    {
       "@id": "node:schema:agenticrag:curation",
       "@type": "kg:Node",
       "labels": [
@@ -1777,6 +1792,22 @@
         "relPath": "docs/documents/knowgrph-html-canvas-export-document.md"
       },
       "documentPath": "docs/documents/knowgrph-html-canvas-export-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-image-to-threejs-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-image-to-threejs-api.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-image-to-threejs-api.md"
+      },
+      "documentPath": "docs/documents/knowgrph-image-to-threejs-api.md",
       "language": "en-us"
     },
     {
@@ -3713,6 +3744,27 @@
       "@type": "kg:Edge",
       "source": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
       "target": "node:schema:agenticrag:geospatial",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:image-to-threejs->canvas",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-image-to-threejs-api",
+      "target": "node:schema:agenticrag:canvas",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:image-to-threejs->flow-widget-bundle",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-image-to-threejs-api",
+      "target": "node:schema:agenticrag:flow-widget-bundle",
+      "label": "mapsTo"
+    },
+    {
+      "@id": "edge:doc:image-to-threejs->panels",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-image-to-threejs-api",
+      "target": "node:schema:agenticrag:panels",
       "label": "mapsTo"
     },
     {

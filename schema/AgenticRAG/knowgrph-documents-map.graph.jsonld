@@ -3740,6 +3740,13 @@
       "label": "mapsTo"
     },
     {
+      "@id": "edge:doc:artifact-media-storage->panels",
+      "@type": "kg:Edge",
+      "source": "node:knowgrph:doc:knowgrph-artifact-media-storage-architecture",
+      "target": "node:schema:agenticrag:panels",
+      "label": "mapsTo"
+    },
+    {
       "@id": "edge:doc:geospatial->geospatial",
       "@type": "kg:Edge",
       "source": "node:knowgrph:doc:knowgrph-geospatial-mode-document",

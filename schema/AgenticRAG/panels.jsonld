@@ -150,11 +150,11 @@
     ],
     "richMediaBrowserSmokeVideoReadiness": [
       {
-        "@value": "The Dev-only Rich Media smoke uses the repository-owned 1,092-byte H.264 fixture at `/demo/media-preview-metadata-ready.mp4`. Before navigation, its adjacent video preload must reach `readyState >= HAVE_METADATA`; after navigation, the visible shared Rich Media Panel video must reach the same state within the 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` budget. `data/outputs/rich-media-catalog-preview-timing.json` must keep separate structured image and video criteria/results. This fixture timing is validation evidence, not production telemetry.",
+        "@value": "The Dev-only Rich Media smoke uses the repository-owned 1,092-byte H.264 fixture at `/demo/media-preview-metadata-ready.mp4`. `richMediaBrowserSmokeFixtures.json` is the fixture identity SSOT for path, content type, byte size, SHA-256, 160×90 dimensions, 0.4-second duration, and duration tolerance; focused coverage must hash the binary against it. Before navigation, the adjacent video preload must reach `readyState >= HAVE_METADATA` and match that identity; after navigation, the visible shared Rich Media Panel video must match the same identity within the 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` budget. `data/outputs/rich-media-catalog-preview-timing.json` must record fixture identity plus expected, preload, and visible metadata alongside separate image/video timing. This evidence is Dev-only validation, not production telemetry.",
         "@language": "en-us"
       },
       {
-        "@value": "Dev-only Rich Media smoke 使用仓库自有的 1,092 字节 H.264 fixture `/demo/media-preview-metadata-ready.mp4`。导航前，相邻视频预载必须达到 `readyState >= HAVE_METADATA`；导航后，共享 Rich Media Panel 中可见的视频必须在同一个 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` 预算内达到该状态。`data/outputs/rich-media-catalog-preview-timing.json` 必须分别保存结构化的图片与视频判定条件和结果。该 fixture timing 仅为验证证据，不是生产遥测。",
+        "@value": "Dev-only Rich Media smoke 使用仓库自有的 1,092 字节 H.264 fixture `/demo/media-preview-metadata-ready.mp4`。`richMediaBrowserSmokeFixtures.json` 是 path、content type、byte size、SHA-256、160×90 尺寸、0.4 秒时长及容差的 fixture identity SSOT；聚焦测试必须以该清单校验二进制哈希。导航前，相邻视频预载必须达到 `readyState >= HAVE_METADATA` 并匹配该身份；导航后，共享 Rich Media Panel 中可见的视频必须在同一个 500 ms `KG_MEDIA_PREVIEW_READY_BUDGET_MS` 预算内匹配相同身份。`data/outputs/rich-media-catalog-preview-timing.json` 必须记录 fixture 身份、expected/preload/visible metadata 及独立图片/视频 timing。该证据仅用于 Dev-only 验证，不是生产遥测。",
         "@language": "zh-cn"
       }
     ],

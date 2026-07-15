@@ -2723,6 +2723,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-native-web-import-crawler-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-native-web-import-crawler-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-native-web-import-crawler-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-native-web-import-crawler-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-natural-language-commands-md",
       "@type": "kg:Node",
       "labels": [

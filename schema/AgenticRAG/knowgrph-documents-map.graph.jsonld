@@ -466,22 +466,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-agent-ready-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-agent-ready-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-agent-ready-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-agent-ready-document.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-agent-ready-prd-tad.companion",
       "@type": "kg:Node",
       "labels": [

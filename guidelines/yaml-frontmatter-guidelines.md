@@ -341,6 +341,8 @@ kgAutoSaveDebounceMs: 1500
 kgAutoSaveOn: ["nodeEdit", "runComplete", "approval", "assetReady"]
 ```
 
+When a runnable document also has a domain-specific demo identity, preserve it under `demo_schema`; the canonical `schema` key remains `kgc-computing-flow/v1` so parser and runtime routing do not split across competing graph-schema owners.
+
 ### Diagram kinds and rendering surfaces
 
 The parser (`deriveFlowDiagramsWidgets`) reads every `flow_diagrams` entry. The rendering path depends on the diagram kind and declared routing keys:

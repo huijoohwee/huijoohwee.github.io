@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.38",
+  "schemaVersion": "1.0.39",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -389,6 +389,14 @@
     },
     {
       "@value": "Editor、Viewer 与 Presentation 从单一的规范 Markdown 文本值渲染；模式切换不得生成彼此独立且可能陈旧的副本。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Explicit output topology is source-owned: generated Widget or Card text first persists in its Markdown graph as a standalone Rich Media Panel without an inferred edge. Only user-authored edge drags may fan out to Rich Media output panels or downstream Widget action cards; publication must not auto-merge targets or overwrite action cards.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "显式输出拓扑由源文档所有：Widget 或 Card 生成的文本先作为独立 Rich Media Panel 持久化到其 Markdown 图中，不推断连边。只有用户主动拖拽创建的边才能分流到 Rich Media 输出面板或下游 Widget 动作卡；发布不得自动合并目标，也不得覆盖动作卡。",
       "@language": "zh-cn"
     }
   ],

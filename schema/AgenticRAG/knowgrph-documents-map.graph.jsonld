@@ -3637,6 +3637,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-xr-gaussian-splat-editor-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-xr-gaussian-splat-editor-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-xr-gaussian-splat-editor-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-xr-gaussian-splat-editor-document.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-xr-mode-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -3650,6 +3666,22 @@
         "relPath": "docs/documents/knowgrph-xr-mode-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-xr-mode-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-xr-motion-reference-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-xr-motion-reference-document.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-xr-motion-reference-document.md"
+      },
+      "documentPath": "docs/documents/knowgrph-xr-motion-reference-document.md",
       "language": "en-us"
     },
     {

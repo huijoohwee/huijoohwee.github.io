@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.9",
+  "schemaVersion": "1.1.10",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -101,6 +101,51 @@
         "slash": "`/` resolves canonical chat skills and commands.",
         "at": "`@` resolves active Markdown variables or canonical media embeds from cached inventory.",
         "hash": "`#` resolves registered memory, agent, model, or MCP directives without duplicating keywords."
+      },
+      "xrObjectMovement": {
+        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRevision": "b0f26e62e1ef14a1ba991b656ac0e0c9c3ee7e3a",
+        "sourceDocument": "docs/documents/knowgrph-xr-motion-reference-document.md",
+        "runtimeTool": "knowgrph.control_local_animation",
+        "invocation": "/animation.control #action-path @selected-actor operation=move-object keys=w+d distance=0.25",
+        "tokenRoles": {
+          "slash": "/animation.control selects the canonical animation command.",
+          "hash": "#action-path selects spatial choreography semantics.",
+          "at": "@selected-actor resolves the active cast identity and selected cast mark."
+        },
+        "structuredInput": {
+          "operation": "move-object",
+          "keys": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true,
+            "accepted": ["w", "a", "s", "d", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
+          },
+          "distanceMeters": {
+            "exclusiveMinimum": 0,
+            "maximum": 10,
+            "default": 0.25
+          },
+          "fine": {
+            "defaultDistanceMeters": 0.05
+          },
+          "markId": "Optional typed cast-mark id; omission resolves the currently selected cast mark."
+        },
+        "browserInput": {
+          "tapMeters": 0.25,
+          "fineTapMeters": 0.05,
+          "heldMetersPerSecond": 2,
+          "fineHeldMetersPerSecond": 0.4,
+          "holdDelayMs": 160,
+          "maxFrameDeltaMs": 50
+        },
+        "sharedResolutionRules": [
+          "Normalize key case and diagonal direction before applying distance.",
+          "Cancel opposing keys and clamp the resulting X/Z position to the XR stage.",
+          "Persist browser and agent movement through the same graph-metadata owner.",
+          "Keep object movement independent from camera framing, SHOOT, OrbitControls, and camera marks."
+        ],
+        "ownershipRule": "This downstream schema mirrors the validated invocation and bounds only. Knowgrph remains the runtime source of truth; AgenticRAG must not reimplement movement math, add command aliases, or register a second MCP tool."
       }
     }
   }

@@ -1491,6 +1491,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-docs-sheets-slides-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-docs-sheets-slides-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-docs-sheets-slides-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-docs-sheets-slides-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-docs-sheets-slides-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-docs-sheets-slides-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-docs-sheets-slides-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/knowgrph-docs-sheets-slides-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-embeddability-contract",
       "@type": "kg:Node",
       "labels": [
@@ -3057,6 +3089,22 @@
         "relPath": "docs/documents/knowgrph-research-agent-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-research-agent-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-rich-media-deliverables-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-rich-media-deliverables-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-rich-media-deliverables-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-rich-media-deliverables-contract.md",
       "language": "en-us"
     },
     {

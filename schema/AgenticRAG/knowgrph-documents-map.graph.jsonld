@@ -2675,6 +2675,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-motion-control-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-motion-control-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-motion-control-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-motion-control-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd.tad.companion",
       "@type": "kg:Node",
       "labels": [

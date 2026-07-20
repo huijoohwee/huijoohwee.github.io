@@ -546,6 +546,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-entity-component-system-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-entity-component-system-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-entity-component-system-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-entity-component-system-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-agentic-os-follow-on-prd-tad",
       "@type": "kg:Node",
       "labels": [

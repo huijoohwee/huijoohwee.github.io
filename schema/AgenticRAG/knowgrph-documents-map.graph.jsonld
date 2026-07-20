@@ -770,22 +770,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-api-reference--api-reference-codebase-index_202604261230--knowgrph-manus-api-reference-codebase-index",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md"
-      },
-      "documentPath": "docs/documents/knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-api-reference--api-reference-codebase-index_202604261230--knowgrph-openai-images-api-reference-codebase-index",
       "@type": "kg:Node",
       "labels": [
@@ -1488,6 +1472,38 @@
         "relPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md"
       },
       "documentPath": "docs/documents/knowgrph-disjoint-force-frontmatter-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-docs-sheets-slides-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-docs-sheets-slides-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-docs-sheets-slides-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-docs-sheets-slides-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-docs-sheets-slides-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-docs-sheets-slides-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-docs-sheets-slides-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/knowgrph-docs-sheets-slides-runtime-readiness.md",
       "language": "en-us"
     },
     {
@@ -2659,6 +2675,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-motion-control-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-motion-control-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-motion-control-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-motion-control-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-multi-user-collaboration-prd.tad.companion",
       "@type": "kg:Node",
       "labels": [
@@ -3057,6 +3089,22 @@
         "relPath": "docs/documents/knowgrph-research-agent-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-research-agent-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-rich-media-deliverables-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-rich-media-deliverables-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-rich-media-deliverables-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-rich-media-deliverables-contract.md",
       "language": "en-us"
     },
     {

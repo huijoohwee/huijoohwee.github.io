@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.10",
+  "schemaVersion": "1.1.11",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -146,6 +146,80 @@
           "Keep object movement independent from camera framing, SHOOT, OrbitControls, and camera marks."
         ],
         "ownershipRule": "This downstream schema mirrors the validated invocation and bounds only. Knowgrph remains the runtime source of truth; AgenticRAG must not reimplement movement math, add command aliases, or register a second MCP tool."
+      },
+      "xrMotionControl": {
+        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRevision": "b80bb3dec3b5d49bc4342741c4515250c5d6c832",
+        "sourceDocument": "docs/documents/knowgrph-motion-control-prd-tad.md",
+        "runtimeTools": {
+          "inspect": "knowgrph.inspect_local_motion_control",
+          "control": "knowgrph.control_local_motion_control"
+        },
+        "invocations": {
+          "open": "/motion.control @canvas #pose operation=open",
+          "enableBoundingBox": "/motion.control @canvas #pose operation=open boundingBox=true",
+          "disableBoundingBox": "/motion.control @canvas #pose operation=open boundingBox=false",
+          "start": [
+            "/motion.control @canvas #pose operation=start backend=auto",
+            "/motion.control @canvas #pose operation=start backend=webgpu",
+            "/motion.control @canvas #pose operation=start backend=wasm"
+          ],
+          "stop": "/motion.control @canvas #pose operation=stop"
+        },
+        "tokenRoles": {
+          "slash": "/motion.control selects the canonical browser-local Motion Control command.",
+          "at": "@canvas resolves the active Knowgrph canvas and its XR surface.",
+          "hash": "#pose selects local human-pose control semantics."
+        },
+        "structuredInputArms": {
+          "open": {
+            "operation": "open",
+            "boundingBox": {
+              "type": "boolean",
+              "required": false,
+              "pageSessionDefault": false,
+              "omissionRule": "Omitting boundingBox preserves the current page-session preference."
+            }
+          },
+          "start": {
+            "operation": "start",
+            "backend": {
+              "accepted": ["auto", "webgpu", "wasm"],
+              "required": false,
+              "default": "auto"
+            }
+          },
+          "stop": {
+            "operation": "stop"
+          },
+          "rejectionRule": "Reject unknown fields, wrong types or casing, mixed native and structured input, boundingBox outside open, and backend outside start."
+        },
+        "inspectionProjection": {
+          "preview": {
+            "boundingBoxEnabled": "boolean",
+            "boundingBoxAvailable": "boolean"
+          },
+          "privacyRule": "Never expose frames, tensors, landmark arrays, bounding-box coordinates, or pose history."
+        },
+        "existingTargetOwners": {
+          "xr3d": {
+            "label": "3D for XR",
+            "runtimeTool": "knowgrph.control_local_xr_scene"
+          },
+          "animation": {
+            "label": "Animation",
+            "runtimeTool": "knowgrph.control_local_animation"
+          }
+        },
+        "sharedRuntimeRules": [
+          "Opening or changing the default-off bounding-box preference may activate XR but must not request camera access or start capture.",
+          "The optional bounding box projects the existing tracked pose ROI and must not add a detector, inference pass, dependency, persisted geometry, or parallel preview owner.",
+          "The page-session preference survives Stop, restart, and panel remount; transient geometry clears on tracking or runtime loss.",
+          "Explicit Start and Stop own browser-local camera and LiteRT resource acquisition and release.",
+          "3D for XR and Animation remain projections of their existing scene, animation, MCP, and invocation owners; BottomPanel Timeline remains the sole transport owner."
+        ],
+        "cleanRoomRule": "Do not copy or adapt an external reference project's code, assets, schemas, UI, tests, or build layout, and do not import, fetch, embed, clone, bridge, or call that project.",
+        "ownershipRule": "Knowgrph remains the sole runtime source of truth. AgenticRAG mirrors discovery, strict input arms, privacy, and surface ownership only; it must not add aliases, tools, tokens, pose math, model/runtime code, external dependencies, or validation-specific asset, document, share paths, or tokens."
       }
     }
   }

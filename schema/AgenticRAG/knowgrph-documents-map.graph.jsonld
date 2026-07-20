@@ -770,22 +770,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-api-reference--api-reference-codebase-index_202604261230--knowgrph-manus-api-reference-codebase-index",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md"
-      },
-      "documentPath": "docs/documents/knowgrph-api-reference/api-reference-codebase-index_202604261230/knowgrph-manus-api-reference-codebase-index.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-api-reference--api-reference-codebase-index_202604261230--knowgrph-openai-images-api-reference-codebase-index",
       "@type": "kg:Node",
       "labels": [

@@ -55,7 +55,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 def find_github_root(start: Path) -> Path:
     for candidate in [start] + list(start.parents):
-        if (candidate / "knowgrph").is_dir() and (candidate / "huijoohwee.github.io").is_dir():
+        knowgrph_checkout = candidate / "knowgrph"
+        schema_checkout = candidate / "huijoohwee.github.io"
+        if (
+            (knowgrph_checkout / ".git").exists()
+            and (schema_checkout / ".git").exists()
+        ):
             return candidate
     return start.parents[len(start.parents) - 1]
 

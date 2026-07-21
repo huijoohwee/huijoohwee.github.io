@@ -1619,6 +1619,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-game-fps-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-fps-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-fps-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-fps-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-game-fps-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-fps-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-fps-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-fps-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
       "@type": "kg:Node",
       "labels": [

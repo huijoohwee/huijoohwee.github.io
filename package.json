@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "check": "python3 schema/AgenticRAG/sync_map.py --mode check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

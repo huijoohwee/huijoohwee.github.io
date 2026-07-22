@@ -1843,6 +1843,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-image-to-glb-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-image-to-glb-api.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-image-to-glb-api.md"
+      },
+      "documentPath": "docs/documents/knowgrph-image-to-glb-api.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-image-to-threejs-api",
       "@type": "kg:Node",
       "labels": [
@@ -2784,6 +2800,22 @@
         "relPath": "docs/documents/knowgrph-native-overlap-resolution-document.md"
       },
       "documentPath": "docs/documents/knowgrph-native-overlap-resolution-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-native-physics-engines-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-native-physics-engines-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-native-physics-engines-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-native-physics-engines-prd-tad.md",
       "language": "en-us"
     },
     {

@@ -392,6 +392,14 @@
       "@language": "zh-cn"
     },
     {
+      "@value": "Workspace-seed authoring is source-owned by knowgrph/docs/workspace-seeds. The Agentic Canvas OS default-storage projection must remain byte-identical, publish repositories must not retain an editable copy, and duplicate, stale, fallback, renamed, legacy, or conflicting variants are rejected instead of aliased or hidden.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "工作区种子的创作源仅由 knowgrph/docs/workspace-seeds 管理。Agentic Canvas OS 的默认存储投影必须保持逐字节一致，发布仓库不得保留可编辑副本；重复、陈旧、回退、改名、旧版或冲突变体必须被拒绝，而不是通过别名或隐藏方式保留。",
+      "@language": "zh-cn"
+    },
+    {
       "@value": "Explicit output topology is source-owned: generated Widget or Card text first persists in its Markdown graph as a standalone Rich Media Panel without an inferred edge. Only user-authored edge drags may fan out to Rich Media output panels or downstream Widget action cards; publication must not auto-merge targets or overwrite action cards.",
       "@language": "en-us"
     },

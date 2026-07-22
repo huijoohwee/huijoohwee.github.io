@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Panel",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.28",
+  "schemaVersion": "1.0.29",
   "rdfs:comment": [
     {
       "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
@@ -105,6 +105,14 @@
       },
       {
         "@value": "Toolbar → Canvas View Mode → Surface Mode → `XR` 负责 XR 激活，并可打开现有 FloatingPanel `Motion Control`；不存在独立的 FloatingPanel `XR` 所有者。Motion Control 复用 FloatingPanel 外壳，并投影现有 Media `3D for XR` 与 FloatingPanel `Animation` 所有者；BottomPanel `Timeline` 仍是唯一 transport 所有者。Bounding box 是页面会话级偏好且默认关闭，只把已计算的 tracked pose ROI 投影到现有镜像预览；切换它不得启动 capture，其 geometry 必须保持瞬态与私有，并且不得新增 detector、inference pass、dependency、持久化 geometry 或平行 preview state。现有 XR physics/readiness 与 source-owned spatial manifest 规则仍由 Knowgrph 原生运行时负责，下游面板不得分叉 renderer、scene、animation、MCP 或 invocation 所有权。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Surface Mode → XR Mode preserves an already-open FloatingPanel Media or Skills & Commands owner. Camera may open only when neither operator panel is open; closed, unrelated, or Game Mode panels enter through Motion Control. Media sends each displayed XR invocation literally, while Media, Animation, and Camera remain disabled or reject mutation until Source Files authority is ready. Downstream panels must not create a fallback scene, token registry, invocation parser, or second mutation owner.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Surface Mode → XR Mode 必须保留已打开的 FloatingPanel Media 或 Skills & Commands 所有者。只有当两个操作面板都未打开时，Camera 才可打开；关闭、无关或 Game Mode 面板统一经 Motion Control 进入。Media 必须逐字发送所显示的 XR invocation；在 Source Files 权威未就绪时，Media、Animation 与 Camera 必须保持禁用或拒绝变更。下游面板不得创建回退场景、token registry、invocation parser 或第二个变更所有者。",
         "@language": "zh-cn"
       }
     ],

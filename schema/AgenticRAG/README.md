@@ -81,6 +81,7 @@ This folder stays in sync with Knowgrph documentation via a deterministic sync s
 - **Language compliance:** the sync enforces both `en-us` and `zh-cn` support (see Languages above). Document node `language` is inferred from filename (`*.zh-cn.*` → `zh-cn`), otherwise defaults to `en-us`.
 - **Config artifact root:** Knowgrph repo config artifacts resolve from `data/config/{graphrag,schema,orchestrator,llm-chat}`; schema docs must mirror that source-owned tree and must not preserve alternate root-level config folders.
 - Nested document families such as `docs/documents/knowgrph-api-reference/**`, `docs/documents/knowgrph-mcp/**`, and future sharded companion folders must be represented in the sync map by their relative document paths, not dropped because they are not top-level files.
+- XR invocation and native physics remain source-owned by `knowgrph/docs/documents/{knowgrph-xr-invocation-runtime-api,knowgrph-native-physics-engines-prd-tad}.md`. AgenticRAG mirrors workflow, panel, Canvas, and Source Files boundaries only; it must not register duplicate `/`, `@`, or `#` tokens, reimplement runtime behavior, or admit Rapier code, packages, schemas, fixtures, compatibility claims, services, or runtime dependencies.
 
 ### Git Rebase / Conflict Resolution (Cross‑Repo)
 

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Markdown",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.39",
+  "schemaVersion": "1.0.40",
   "rdfs:label": [
     { "@value": "Markdown", "@language": "en-us" },
     { "@value": "Markdown", "@language": "zh-cn" }
@@ -405,6 +405,14 @@
     },
     {
       "@value": "显式输出拓扑由源文档所有：Widget 或 Card 生成的文本先作为独立 Rich Media Panel 持久化到其 Markdown 图中，不推断连边。只有用户主动拖拽创建的边才能分流到 Rich Media 输出面板或下游 Widget 动作卡；发布不得自动合并目标，也不得覆盖动作卡。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "The active Source Files document remains the mutation authority for XR, Animation, and Camera. While bootstrap or an explicit document intent is resolving or failed, inspection reports not-ready and controls fail closed without changing graph metadata or runtime revision; AgenticRAG is a downstream contract mirror, not a mutation owner.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "当前 Source Files 文档继续作为 XR、Animation 与 Camera 的变更权威。当 bootstrap 或显式 document intent 正在解析或失败时，inspection 必须报告 not-ready，controls 必须在不改变 graph metadata 或 runtime revision 的情况下失败关闭；AgenticRAG 只是下游契约镜像，不是变更所有者。",
       "@language": "zh-cn"
     }
   ],

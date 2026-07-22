@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Canvas",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.31",
+  "schemaVersion": "1.0.32",
   "rdfs:label": [
     { "@value": "Canvas integration directives", "@language": "en-us" },
     { "@value": "画布集成指令", "@language": "zh-cn" }
@@ -25,6 +25,16 @@
       },
       {
         "@value": "任意时刻只允许一个渲染表面处于激活状态（2D：D3/Flow/Design/Flow Editor/Storyboard，3D，Geospatial）。可为降低切换延迟而 warm-mount 非激活表面，但必须通过 effect gating 禁止其运行 draw loop、消费共享请求、或写入共享缓存。切换渲染表面需通过稳定的 SSOT key 保持选择与视图状态，禁止重复计算。",
+        "@language": "zh-cn"
+      }
+    ],
+    "nativePhysicsEngines": [
+      {
+        "@value": "Knowgrph merge `fc65982ecd24cd1553a1fe28c8007045f39f25e4` owns independent browser-local planar 2D and spatial 3D physics engines with separate bodies/colliders, explicit deterministic fixed steps, collision filtering, sensors, ordered events, point/overlap/ray queries, and dimension-tagged versioned snapshots. XR adapts the 3D owner while retaining one authored scene and one Canvas; Game Mode geometry remains separate. Rapier informs domain-separation principles only: no source, prose, schema, algorithm, example, fixture, test, package, compatibility layer, service, or runtime dependency may be copied or introduced, and no API, format, numerical, or benchmark compatibility is claimed.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Knowgrph 合并版本 `fc65982ecd24cd1553a1fe28c8007045f39f25e4` 拥有独立的浏览器本地平面 2D 与空间 3D 物理引擎，具备分离的 body/collider、显式确定性 fixed step、碰撞过滤、sensor、有序事件、point/overlap/ray query，以及带维度标签和版本的 snapshot。XR 适配 3D 所有者，同时保留一个创作场景与一个 Canvas；Game Mode geometry 继续独立。Rapier 只提供领域分离原则：不得复制或引入其源代码、文案、模式、算法、示例、fixture、测试、package、兼容层、服务或运行时依赖，也不声明 API、格式、数值或基准兼容性。",
         "@language": "zh-cn"
       }
     ],

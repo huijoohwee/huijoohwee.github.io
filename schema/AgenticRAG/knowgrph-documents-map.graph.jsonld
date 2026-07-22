@@ -3781,6 +3781,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-xr-invocation-runtime-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-xr-invocation-runtime-api.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-xr-invocation-runtime-api.md"
+      },
+      "documentPath": "docs/documents/knowgrph-xr-invocation-runtime-api.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-xr-mode-prd-tad",
       "@type": "kg:Node",
       "labels": [

@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Workflow",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.1.11",
+  "schemaVersion": "1.1.12",
   "rdfs:label": [
     { "@value": "Workflow", "@language": "en-us" },
     { "@value": "工作流", "@language": "zh-cn" }
@@ -96,11 +96,24 @@
       }
     },
     "commandGrammar": {
-      "headlessResolutionRule": "Command palette integrations must consume the Agentic Canvas OS SSOT via the `knowgrph.agentic_canvas_os.docs.invoke` MCP tool (powered by dynamic edge-cached GitHub fetches). Avoid mutating files, spending model tokens, or taking heavy client-side UI package dependencies (e.g. cmdk).",
+      "headlessResolutionRule": "Command palette integrations must consume the exact-revision Agentic Canvas OS SSOT via the `knowgrph.agentic_canvas_os.docs.invoke` MCP tool through the app-owned same-origin MCP forwarder. `/`, `@`, and `#` reconcile as one epoch-fenced revision transaction; stale or mismatched results fail closed. Do not fetch GitHub dynamically, duplicate token registries, mutate files, spend model tokens, or add heavy command-palette dependencies.",
       "tokens": {
         "slash": "`/` resolves canonical chat skills and commands.",
         "at": "`@` resolves active Markdown variables or canonical media embeds from cached inventory.",
         "hash": "`#` resolves registered memory, agent, model, or MCP directives without duplicating keywords."
+      },
+      "xrInvocationRuntime": {
+        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRevision": "df312d72d3e163bbcc3e9f19ca299223f9a54431",
+        "sourceDocument": "docs/documents/knowgrph-xr-invocation-runtime-api.md",
+        "catalogTool": "knowgrph.agentic_canvas_os.docs.invoke",
+        "runtimeTool": "knowgrph.control_local_xr_scene",
+        "invocation": "/xr.place @vehicle-helicopter transition=linear",
+        "revisionRule": "Admit a catalog response only when its top-level sourceRevision equals the configured revision. Retry only sigils resolved by a losing epoch and terminate as fresh, stale, or blocked.",
+        "dispatchRule": "A visible Media invocation is sent byte-for-byte as the sole invocation field; the downstream schema must not parse, rewrite, alias, or complete it.",
+        "webMcpLifecycleRule": "Native host registration is bounded and detachable; a readable local fallback remains available until native context is installed and must not become a remote dependency or privileged bridge.",
+        "sourceAuthorityRule": "XR, Animation, and Camera inspection or mutation fails closed while Source Files bootstrap or document intent is resolving or failed.",
+        "ownershipRule": "Agentic Canvas OS dictionaries own token metadata and Knowgrph owns execution, persistence, lifecycle, and graph mutation. AgenticRAG mirrors the validated contract only."
       },
       "xrObjectMovement": {
         "sourceRepository": "huijoohwee/knowgrph",

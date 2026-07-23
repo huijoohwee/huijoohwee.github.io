@@ -1619,6 +1619,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-game-flight-sim-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-flight-sim-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-flight-sim-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-flight-sim-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-game-fps-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -1648,6 +1664,22 @@
         "relPath": "docs/documents/knowgrph-game-fps-runtime-readiness.md"
       },
       "documentPath": "docs/documents/knowgrph-game-fps-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-game-mmorpg-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-mmorpg-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-mmorpg-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-mmorpg-prd-tad.md",
       "language": "en-us"
     },
     {

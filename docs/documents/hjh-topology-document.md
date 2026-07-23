@@ -108,6 +108,12 @@ Knowgrph video-remix product split. For that product specifically:
 - The product runtime path is Vercel web + same-origin Vercel Agent-API as the
   **primary/default** browser path, with AWS Agent-API as the **fallback/proof**
   path.
+- For the current autonomous agentic runtime readiness status of
+  `agentic-canvas-os` (contract-ready and provider-capable, but not autonomous
+  by default), see
+  `docs/documents/agentic-canvas-os-autonomous-runtime-readiness.md`. That
+  record is docs-only and does not assert that autonomy is enabled on the
+  shipped default Worker.
 - The live canvas is consumed through the run-scoped Knowgrph `doc-view` iframe
   surface; MCP is the orchestration/control-plane transport, not the browser
   canvas-render transport.
@@ -206,5 +212,6 @@ If a repo still contains duplicated publish-side source, remove it from the publ
 - Shared directive log: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`
 - Knowgrph canonical companion: `knowgrph/docs/documents/knowgrph-cross-repo-publish-topology.md`
 - Markdown discovery companion: `huijoohwee.github.io/docs/documents/markdown-convertible-agent-discovery-document.md`
+- Autonomous runtime readiness: `huijoohwee.github.io/docs/documents/agentic-canvas-os-autonomous-runtime-readiness.md`
 - Singabldr canonical companion: `singabldr/docs/documents/singabldr-cross-repo-publish-topology.md`
 - Shared schema guidance: `huijoohwee.github.io/schema/AgenticRAG/{README.md,documentation.jsonld}`

@@ -12,6 +12,12 @@ frontmatter_contract: "required"
 
 # HJH Workspace Todo Log
 
+## 2026-07-23
+
+| Context | Intent | Directive | Module | Class/Object | Function/Method | Input | Output | Decision Logic | Next Step Recommendation | Updated Date |
+|--------|--------|-----------|--------|-----------------|-------|--------|----------------|--------------------------|--------------------------|--------------|
+| Agentic Canvas OS autonomous runtime readiness sync | Record the true autonomous-runtime state without editing runtime code | Author a docs-only readiness record stating that `agentic-canvas-os` is contract-ready and provider-capable but not autonomous by default, list the four wiring gaps and the operator-gated enablement path, and cross-reference it from the shared topology doc. | `huijoohwee.github.io/docs/documents/{agentic-canvas-os-autonomous-runtime-readiness.md,hjh-topology-document.md,hjh-workspace-todo-log.md}` | Runtime readiness status contract | source audit, readiness matrix authoring, cross-reference wiring | Source audit of `agentic-canvas-os` plus 452 passing offline tests | New readiness doc, topology runtime-note, and ledger row aligned to one fail-closed story | Readiness prose must reflect observed `configured:false` / `providerExecutionStatus:"unverified"` defaults and treat autonomy as operator-gated, never asserted from docs; runtime code stays untouched. | Re-check the readiness matrix whenever the default Worker wires an execution adapter, registers a default agent, or exposes an autonomous-run route. | 2026-07-23 |
+
 ## Planning Ledger Contract
 
 - The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this cross-repo planning ledger.

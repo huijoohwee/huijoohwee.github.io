@@ -3413,6 +3413,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-storage-git-file-sync-runtime-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storage-git-file-sync-runtime-api.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storage-git-file-sync-runtime-api.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storage-git-file-sync-runtime-api.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-storage-schemas-document",
       "@type": "kg:Node",
       "labels": [

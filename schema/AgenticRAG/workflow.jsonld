@@ -233,6 +233,43 @@
         ],
         "cleanRoomRule": "Do not copy or adapt an external reference project's code, assets, schemas, UI, tests, or build layout, and do not import, fetch, embed, clone, bridge, or call that project.",
         "ownershipRule": "Knowgrph remains the sole runtime source of truth. AgenticRAG mirrors discovery, strict input arms, privacy, and surface ownership only; it must not add aliases, tools, tokens, pose math, model/runtime code, external dependencies, or validation-specific asset, document, share paths, or tokens."
+      },
+      "storageSyncRuntime": {
+        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRevision": "619f75d7f3d2fb29902ca4e7a2643b1876777c90",
+        "sourceDocument": "docs/documents/knowgrph-storage-git-file-sync-runtime-api.md",
+        "catalogTool": "knowgrph.agentic_canvas_os.docs.invoke",
+        "runtimeTools": {
+          "gitInspect": "knowgrph.inspect_local_git_repository",
+          "gitControl": "knowgrph.control_local_git_repository",
+          "fileSyncInspect": "knowgrph.inspect_local_file_sync",
+          "fileSyncControl": "knowgrph.control_local_file_sync",
+          "stdioGitHandoff": "knowgrph.git.run",
+          "stdioFileSyncHandoff": "knowgrph.file.sync"
+        },
+        "invocations": {
+          "git": "/git.run @local-git-repository @git-remote #git-remote",
+          "fileSync": "/file.sync @persisted-cache @file-sync-provider #multi-provider-file-sync"
+        },
+        "tokenRoles": {
+          "gitSlash": "/git.run selects the canonical browser-local Git command.",
+          "gitAtLocal": "@local-git-repository resolves the persisted browser repository.",
+          "gitAtRemote": "@git-remote resolves a Worker-owned opaque remote identifier.",
+          "gitHash": "#git-remote selects bounded remote Git semantics.",
+          "fileSlash": "/file.sync selects the canonical browser-local file-sync command.",
+          "fileAtCache": "@persisted-cache resolves the IndexedDB working cache.",
+          "fileAtProvider": "@file-sync-provider resolves a Worker-owned opaque provider identifier.",
+          "fileHash": "#multi-provider-file-sync selects provider-neutral pull/push semantics."
+        },
+        "runtimeRules": [
+          "Browser mutations require active IndexedDB; degraded memory state remains inspectable but fails closed for mutation.",
+          "Local stdio validates the same grammar and returns BROWSER_RUNTIME_REQUIRED without filesystem, browser-cache, or network side effects.",
+          "Clone, fetch, commit, and push retain bounded durable operations; file pull/push reuses one provider-neutral cache, ledger, and outbox.",
+          "Worker relays resolve fixed GitHub, Google Drive, or OneDrive authority from opaque identifiers and never expose credentials or upstream URLs.",
+          "The collaboration Save Bridge has no delete operation, so Git document deletion remains retained and unacknowledged.",
+          "The runtime is local/Dev only and does not authorize a Production mirror, Cloudflare deployment, remote D1 mutation, or live provider credential use."
+        ],
+        "ownershipRule": "Agentic Canvas OS dictionaries own global token metadata and Knowgrph owns execution, persistence, authority, retry, conflict, and provider adapters. AgenticRAG mirrors this exact-revision discovery contract only and must not add aliases, duplicate tools, reimplement Git or file transfer, expose provider credentials, or claim live-provider proof."
       }
     }
   }

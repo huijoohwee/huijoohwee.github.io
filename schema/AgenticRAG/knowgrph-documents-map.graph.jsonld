@@ -2771,6 +2771,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-motion-capture-platform-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-motion-capture-platform-api.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-motion-capture-platform-api.md"
+      },
+      "documentPath": "docs/documents/knowgrph-motion-capture-platform-api.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-motion-control-prd-tad",
       "@type": "kg:Node",
       "labels": [

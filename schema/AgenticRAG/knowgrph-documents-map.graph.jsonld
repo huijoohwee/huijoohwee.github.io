@@ -1187,6 +1187,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-codebase-responsibility-flow-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-codebase-responsibility-flow-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-codebase-responsibility-flow-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-codebase-responsibility-flow-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-codebase-semantics-document",
       "@type": "kg:Node",
       "labels": [
@@ -1616,6 +1632,22 @@
         "relPath": "docs/documents/knowgrph-frontend-document.md"
       },
       "documentPath": "docs/documents/knowgrph-frontend-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-game-city-building-sim-rd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-city-building-sim-rd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-city-building-sim-rd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-city-building-sim-rd-tad.md",
       "language": "en-us"
     },
     {

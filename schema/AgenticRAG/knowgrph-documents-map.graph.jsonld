@@ -658,6 +658,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-ai-voice-studio-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ai-voice-studio-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ai-voice-studio-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ai-voice-studio-prd-tad.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-api-document",
       "@type": "kg:Node",
       "labels": [

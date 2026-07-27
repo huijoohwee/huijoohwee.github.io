@@ -2835,6 +2835,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-motion-control-live-camera-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-motion-control-live-camera-readiness.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-motion-control-live-camera-readiness.md"
+      },
+      "documentPath": "docs/documents/knowgrph-motion-control-live-camera-readiness.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-motion-control-prd-tad",
       "@type": "kg:Node",
       "labels": [

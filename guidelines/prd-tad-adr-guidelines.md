@@ -1,41 +1,85 @@
 ---
-title: "PRD & TAD Guidelines"
+title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "1.4.0"
-date: "2026-07-03"
+version: "1.7.0"
+date: "2026-07-28"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
 
-# PRD & TAD Guidelines
+# PRD, TAD & ADR Guidelines
 
 ## Scope & Neutrality Contract
 
 - **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
-- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent.
-- **Agnosticism**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
+- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent. Every brand, product, or vendor name must sit under a heading or block whose own text contains the words "reference implementation"; a brand named outside such a label is a `vendor-coupling` finding regardless of surrounding intent.
+- **Agnosticity**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
+- **Enforceable**: every rule in this set is written so a conformance check can record a typed finding against it (see Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 
 ## Module Index
 
-- `scope--neutrality-contract` — universality, neutrality, agnosticism, modularity rules
+- `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability rules
+- `rule-identity--classification` — stable rule addressing and the artifact-bearing vs advisory split
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
 - `overview` — what PRD/TAD are and the governing standards
 - `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules, deployment-model TCO variants
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
 - `from-0-to-1-prd--tad-creation-process` — phase-gated authoring process
 - `flow-patterns` — user journey, workflow, data flow, orchestration/harness flow, and topology templates
-- `agent-platform-readiness` — Agentic OS-, AI Agent-, and MCP Gateway-ready definitions, tiers, and execution order
 - `time-to-value` — first-success latency gate, metric, and template (Phase 0 gate + PRD metric)
-- `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive
+- `readiness-ladder` — the ordered status vocabulary and the evidence rule that governs each rung
+- `agent-platform-readiness` — Agentic OS-, AI Agent-, and MCP Gateway-ready definitions, tiers, and execution order
+- `lane-topology--deploy-boundary` — lane sequence, named boundaries, closed-by-default promotion rule
+- `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive and Evidence Reference
 - `cid-directive-matrix` — alphabetical, project-agnostic directive mantras
 - `core-templates` — PRD, TAD, and ADR templates
 - `architecture-diagram-standards` — diagram format rules
-- `prd--tad-integration` — separation of concerns and traceability
+- `prd--tad-integration` — separation of concerns, traceability, and closure rules
 - `anti-pattern-guards` — prohibited patterns and their corrections
-- `validation-checklist` — pre-implementation and post-documentation gates
+- `conformance-findings` — the typed finding vocabulary, severities, and recording contract
+- `validation-checklist` — pre-implementation, post-documentation, and alignment gates
 - `roleactionoutcome` — role-to-deliverable mapping
 - `mantra-application` — the framing mantra
+
+**Companion set**: this document is the authority for **authoring** — what a PRD, TAD, or ADR must contain and how conformance is named. Execution — task decomposition, agent roles and independence, tool blast radius, per-task budgets, and run state — is owned by the **Agentic SDLC Guidelines** companion set. Neither set restates the other; each names the other where a rule crosses the boundary. A claim about execution sourced from this document alone is incomplete.
+
+## Rule Identity & Classification
+
+**Makes every individual rule separately addressable and separately classifiable.** Section anchors address a *group* of rules; a conformance check needs to address *one*. Without per-rule identity, two different violations inside one section collapse into a single finding and the regression comparison in Conformance Findings silently stops working.
+
+### Rule Identifier
+
+Every rule carries a **Rule ID** that is stable across edits to unrelated rules:
+
+```
+Rule ID = [owning section anchor] + "#" + [ordinal of the rule within that section, in document order]
+```
+
+**Directives**:
+- Derive the Rule ID from the owning `##` section anchor and the rule's position within that section; forbid deriving it from a file name, a line number, or a directory
+- Treat the Rule ID as stable while the rule's own text and owning section are unchanged; inserting an unrelated rule earlier in the same section re-ordinals the rules after it, so record the rule text alongside the ID wherever a finding is stored
+- Where two rules in one section carry identical text, disambiguate by ascending document-order ordinal; forbid merging them into one addressable rule
+- Use the Rule ID, not the section anchor alone, as the `rule anchor` field of a finding and as a component of the deduplication key
+- Rules authored before this section existed inherit their ID by the same derivation; no retroactive hand-labelling is required, and none is permitted to override the derivation
+
+### Artifact-Bearing vs Advisory
+
+Every rule is exactly one of two classes, and the class decides whether an unmet rule is a defect or a preference:
+
+| Class | Definition | Unmet consequence |
+|---|---|---|
+| **Artifact-bearing** | The rule requires a named, locatable output: a document, a section, a template field, a schema, a diagram, a recorded status, a named check | `unimplemented-guideline` |
+| **Advisory** | The rule states a preference, a framing, or a judgement that produces no separately locatable output | No finding; counted as advisory coverage |
+
+**Directives**:
+- Classify a rule as artifact-bearing when its text names a produced output; classify it as advisory otherwise; forbid a third class and forbid leaving a rule unclassified
+- Derive the class from the rule text, so the classification is recomputable and cannot drift from the rule it describes
+- Report the coverage ratio as linked artifact-bearing rules over total artifact-bearing rules; forbid an alignment claim that omits that ratio
+- Forbid inflating the defect count by classifying advice as artifact-bearing; a high count achieved that way measures labelling, not conformance
+- Count advisory rules separately and report the count; an advisory rule with no artifact is expected, not a gap
+
+---
 
 ## Markdown YAML Frontmatter Enforcement
 
@@ -45,6 +89,20 @@ frontmatter_contract: "required"
 - Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read planning and architecture metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
+- **Baseline required keys** for any canonical PRD, TAD, or ADR doc: `title`, `doc_type`, `version` (semantic), `date`, `lang`. Extend with domain-specific keys as needed (e.g. `parent` / `parent_version` for a linked Follow-On PRD/TAD per the Agent-Platform Readiness template) without dropping the baseline set.
+- **Conformance keys** are required in addition to the baseline set, because the rules in this guideline set read them and the agnosticity rule forbids recovering them from a path or a directory:
+
+| Key | Value domain | Read by |
+|---|---|---|
+| `owner` | One named accountable function | `duplicate-owner` |
+| `local_rung` | One Readiness Ladder rung | Readiness Ladder, `status-conflict` |
+| `delivered_rung` | One Readiness Ladder rung | Readiness Ladder, `blended-status` |
+| `lane` | `authoring` \| `mirror` \| `delivery` | Lane Topology & Deploy Boundary |
+| `universal_scope` | `true` \| `false` | Scope & Neutrality Contract modularity rule |
+
+- Declare exactly one `owner` per document; two documents claiming ownership of one contract is a `duplicate-owner` finding, and a document with no `owner` cannot be assigned a rung
+- Keep `local_rung` and `delivered_rung` as two separate keys; a single blended `status` key is a `blended-status` finding
+- Treat every conformance key as derived where a derivation exists: `local_rung` and `delivered_rung` are computed from Evidence References and written back, never authored ahead of the evidence
 
 ## Overview
 
@@ -53,6 +111,8 @@ frontmatter_contract: "required"
 **Technical Architecture Documentation (TAD)**: designs component interactions, specifies integration contracts, documents decision rationale, establishes quality attributes, defines deployment strategies, and traces requirements to implementation.
 
 **Governing standards**: structure documents with user-centric narratives; design architectures with domain-agnostic patterns; specify measurable outcomes; maintain requirement-to-implementation traceability; apply iterative refinement; separate concerns systematically.
+
+**Enforceability**: these standards are written to be checked, not only read. Each rule is phrased so a violation is observable, each violation has a name and a severity (see Conformance Findings), each readiness claim is a value derived from recorded evidence (see Readiness Ladder), and each step toward a public surface passes a named gate that is closed by default (see Lane Topology & Deploy Boundary). A rule that cannot fail a check is guidance; this set labels the difference rather than blurring it.
 
 **Solo-dev AI-native orientation**: these guidelines are calibrated for a solo founder or small team operating an AI-native product stack. Every decision is evaluated through four compounding lenses — **min-viable-max-value** (ship the smallest artifact that delivers the largest user impact), **TCO-zero** (prefer FOSS and zero-egress infrastructure; make cost a first-class architectural constraint), **token economics** (treat LLM token consumption as a measurable engineering metric at every pipeline boundary), and **harness-first** (orchestrate AI capabilities through composable, observable harnesses rather than ad-hoc prompt calls). These lenses do not replace the core PRD/TAD standards — they sharpen prioritization, constrain architecture choices, and accelerate validation cycles.
 
@@ -68,6 +128,25 @@ frontmatter_contract: "required"
 | **TCO-Zero** | Total cost of ownership defaults to zero; every paid dependency requires explicit justification against a FOSS alternative | Phase 0 gate, ADR, Quality Attributes |
 | **Token Economics** | LLM token consumption (input + output + cache hit rate) is a measurable system metric, not an afterthought | Data flows, Component specs, Quality Attributes |
 | **Harness-First** | AI capabilities are accessed through structured, observable harnesses (typed inputs → typed outputs → logged decisions) rather than raw prompt calls | TAD components, Integration contracts, orchestration diagrams |
+
+### Guideline Load Budget
+
+Token economics applies to this guideline set itself, not only to the product pipelines it governs. A guideline set that must be loaded whole on every authoring turn taxes every turn.
+
+| Phase | Sections to load | Rationale |
+|---|---|---|
+| Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value` | ROI, TCO, TTV ceiling only |
+| Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value` | Authoring the PRD |
+| Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness` | Authoring the TAD |
+| Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification` | Running the alignment check |
+| Phase 4 | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
+| Any phase | `scope--neutrality-contract`, `module-index` | Always in scope; smallest sections in the set |
+
+**Directives**:
+- Load by section anchor for the current phase; forbid loading the whole set as a precondition for a single-phase task
+- Keep `scope--neutrality-contract` and `module-index` small enough to be always-loaded; a growing contract section raises the floor cost of every turn
+- Record the guideline load cost as a line item in the authoring loop's token budget; an unmeasured compliance cost is an `missing-economics-metric` against the process, not only against the product
+- Prefer adding a new `##` section over lengthening an existing one, so phase-scoped loading stays possible; this is the modularity rule expressed as a cost constraint
 
 ### AI-Native Harness Pattern
 
@@ -109,7 +188,7 @@ Monthly TCO : infrastructure + API cost at target load
 Token Cost  : estimated tokens/month × model price/1M tokens
 ```
 
-Features below ROI threshold (team-defined) are deferred to `Could / Won't` in MoSCoW. Document the calculation in the PRD success metrics section.
+Features below ROI threshold (solo-dev or team-defined) are deferred to `Could / Won't` in MoSCoW. Document the calculation in the PRD success metrics section.
 
 ### FOSS-First Decision Rule
 
@@ -195,7 +274,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 4. Specify integration contracts: protocol, payload schema, error handling
 5. Map user workflows to system sequence diagrams
 6. Map **Orchestration/Harness Flow** for every AI-powered pipeline: define dispatcher, executor, observer, and consumer roles; specify routing logic, max-iteration bound, and circuit-breaker condition
-7. Map **Topology**: enumerate all runtime components, their connection types (sync/async/stream), trust boundaries, and data residency for the deployed system
+7. Map **Topology**: enumerate all runtime components, their lane, their connection types (sync/async/stream), trust boundaries, and data residency; then map **Lane Topology & Deploy Boundary** for the movement between lanes
 8. Document architectural decisions with ADR format; **every ADR must include a TCO comparison and FOSS-first evaluation**
 9. Define quality attribute scenarios: performance, security, scalability, observability, **token cost, TCO**
 10. Design AI-powered components as **harnesses** (typed input schema → model call → typed output schema → cost log); specify the orchestration topology (sequential / fan-out / agentic loop) and **max-iteration bound** for every loop
@@ -217,9 +296,11 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 6. Confirm Topology diagram is present and data residency is stated for every storage node
 7. Confirm agent-platform readiness dimensions in scope are documented with tier (Must/Follow-on), execution order, and VCCs per dimension
 8. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
-9. Resolve or formally track all open questions
+9. Run the **alignment check**: verify closure in both directions per the Closure Rules, confirm every readiness rung is derived from an Evidence Reference, and record the resulting findings with their types and severities
+10. Confirm every lane and Deploy Boundary is documented and that every boundary reads `closed` absent a referenced operator instruction
+11. Resolve or formally track all open questions
 
-**Gate**: both documents version-stamped and baselined before implementation begins.
+**Gate**: both documents version-stamped and baselined, and the alignment check reporting zero `blocker` findings, before implementation begins.
 
 ### Phase 4 — Living Documents
 **Iterate documents as product and architecture evolve.**
@@ -229,6 +310,9 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Re-run relevant gate reviews for breaking changes
 - Archive superseded ADRs; do not delete
 - Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
+- **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
+- **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note
+- **Bound the iteration**: each Phase 4 revision cycle carries a max-iteration bound and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
 - **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
 - **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
 
@@ -320,36 +404,6 @@ Source → [Ingest] → [Transform] → [Store] → [Serve] → Consumer
 - Document persistence layer and retention policy for every Store stage
 - Map every TAD data flow to a PRD user journey stage; forbid orphaned data flows
 
-### Time-to-Value (TTV)
-**Measures the minimum number of steps and elapsed time for a target persona to move from zero state to first successful outcome.**
-
-TTV is not a flow diagram — it is a gate metric that governs all five flows. It is estimated in Phase 0, stated as a target in PRD success metrics, and validated by tracing the shortest possible path through the User Journey Flow, Work Flow, and Orchestration/Harness Flow end-to-end.
-
-```
-T₀ (zero state: prerequisites only, no config) → T₁ (install / configure) → T₂ (first input) → T✓ (first successful outcome)
-
-TTV = T✓ − T₀   (elapsed clock time for target persona)
-TTV steps = count of distinct manual actions between T₀ and T✓
-```
-
-**TTV Template** *(recorded in PRD success metrics)*:
-```markdown
-## Time-to-Value: [Feature / Product]
-
-| Dimension          | Estimate      | Target ceiling | Validation method          |
-|--------------------|---------------|----------------|----------------------------|
-| TTV steps          | [N steps]     | [≤ N steps]    | Walk-through on clean env  |
-| TTV elapsed time   | [N min]       | [≤ N min]      | Timed first-run test       |
-| First-value action | [Description] | —              | Observable output defined  |
-| Persona            | [ID]          | —              | Persona defined in PRD     |
-```
-
-**Directives**:
-- Estimate TTV steps and elapsed time in Phase 0 before writing any PRD story; flag if TTV exceeds the acceptable ceiling
-- Include TTV as a named row in PRD success metrics; forbid success metric tables without a TTV entry for any user-facing feature
-- Validate TTV on a clean environment before Phase 3 sign-off; forbid TTV estimates that have never been walked through
-- Reduce TTV by shortening the Orchestration/Harness Flow (fewer required inputs before first output) and the Topology (fewer required services before first run); forbid TTV reductions that compromise security or data integrity
-
 ### Orchestration/Harness Flow
 **Maps how an agent harness routes, dispatches, executes, and observes AI calls through a pipeline.**
 
@@ -417,9 +471,9 @@ Distinct from Orchestration/Harness Flow (execution sequence) and Data Flow (dat
 
 **Boundaries**: [Runtime environments, network zones, or trust domains in scope]
 
-| Node        | Role                                         | Type                         | Connects to   | Connection type     | Data residency     |
-|-------------|----------------------------------------------|------------------------------|---------------|---------------------|--------------------|
-| [Component] | [Producer / Consumer / Router / Store / Gateway] | [Service / Function / DB / Queue / CDN] | [Node(s)] | [Sync REST / Async queue / Stream / Batch] | [Local / Region / Cloud provider] |
+| Node        | Role                                         | Type                         | Lane                | Connects to   | Connection type     | Data residency     |
+|-------------|----------------------------------------------|------------------------------|---------------------|---------------|---------------------|--------------------|
+| [Component] | [Producer / Consumer / Router / Store / Gateway] | [Service / Function / DB / Queue / CDN] | [Authoring / Mirror / Delivery] | [Node(s)] | [Sync REST / Async queue / Stream / Batch] | [Local / Region / Cloud provider] |
 
 **Runtime diagram**: [Mermaid `flowchart TB` — nodes grouped by boundary using subgraphs]
 **Version notes**: [What changed from prior topology version]
@@ -432,6 +486,74 @@ Distinct from Orchestration/Harness Flow (execution sequence) and Data Flow (dat
 - Map every Topology node to a Component Specification in the TAD; forbid topology nodes without a corresponding TAD entry
 - Version-stamp every topology update; archive prior versions; forbid in-place overwrites without a version note
 - Render Topology with `flowchart TB` using subgraphs per boundary; forbid mixing topology with data flow or sequence diagrams
+
+---
+
+## Time-to-Value
+
+**Time-to-value (TTV)** measures the minimum number of steps and elapsed time for a target persona to move from zero state to first successful outcome.
+
+TTV is not a flow diagram — it is a gate metric that governs all five Flow Patterns. It is estimated in Phase 0, stated as a target in PRD success metrics, and validated by tracing the shortest possible path through the User Journey Flow, Workflow Flow, and Orchestration/Harness Flow end-to-end.
+
+```
+T₀ (zero state: prerequisites only, no config) → T₁ (install / configure) → T₂ (first input) → T✓ (first successful outcome)
+
+TTV = T✓ − T₀   (elapsed clock time for target persona)
+TTV steps = count of distinct manual actions between T₀ and T✓
+```
+
+**TTV Template** *(recorded in PRD success metrics)*:
+```markdown
+## Time-to-Value: [Feature / Product]
+
+| Dimension          | Estimate      | Target ceiling | Validation method          |
+|--------------------|---------------|----------------|----------------------------|
+| TTV steps          | [N steps]     | [≤ N steps]    | Walk-through on clean env  |
+| TTV elapsed time   | [N min]       | [≤ N min]      | Timed first-run test       |
+| First-value action | [Description] | —              | Observable output defined  |
+| Persona            | [ID]          | —              | Persona defined in PRD     |
+```
+
+**Directives**:
+- Estimate TTV steps and elapsed time in Phase 0 before writing any PRD story; flag if TTV exceeds the acceptable ceiling
+- Include TTV as a named row in PRD success metrics; forbid success metric tables without a TTV entry for any user-facing feature
+- Validate TTV on a clean environment before Phase 3 sign-off; forbid TTV estimates that have never been walked through
+- Reduce TTV by shortening the Orchestration/Harness Flow (fewer required inputs before first output) and the Topology (fewer required services before first run); forbid TTV reductions that compromise security or data integrity
+
+---
+
+## Readiness Ladder
+
+**Defines the single ordered status vocabulary used by every readiness claim in this guideline set, and binds each rung to the evidence that earns it.** Any section that states a status — Readiness Tiers, Readiness Gap Matrix, Component Inventory, Follow-On PRD/TAD — draws its value from this ladder and no other.
+
+A status is a **derived** value, never an authored opinion. It is computed from the Evidence References attached to a capability (see Autonomous Implementation Verification). Writing a rung by hand without the evidence that earns it is an `unproven-claim`.
+
+### The Ladder
+
+Strictly ordered, lowest to highest:
+
+```
+undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-verified
+```
+
+| Rung | Earned when | Evidence required |
+|---|---|---|
+| **`undocumented`** | The capability has no VCC and no Evidence Reference | — |
+| **`spec-complete`** | At least one VCC is stated; no Evidence Reference yet satisfies it | VCC present, unproven |
+| **`dev-proven`** | At least one VCC is satisfied by a reproducible local check with a recorded result | ≥1 local Evidence Reference |
+| **`runtime-ready`** | **Every** VCC attached to the capability carries a satisfying Evidence Reference | Complete local evidence set |
+| **`production-verified`** | The capability is `runtime-ready` **and** carries a recorded delivery-surface check result **and** a referenced explicit operator promotion instruction | Complete evidence + delivery proof + operator instruction |
+
+### Directives
+
+- Assign exactly one rung per capability; forbid ranges, hedges, and compound values such as "mostly runtime-ready"
+- Derive every rung from Evidence References only; forbid deriving a rung from a file name, a directory layout, a downstream mirror, or a narrative claim
+- Report **local readiness** and **delivered readiness** as two separate fields; forbid one status field that blends them (`blended-status`)
+- Treat the ladder as monotone under evidence: adding an Evidence Reference while retaining every existing one must never lower a rung; a drop under added evidence is a defect in the derivation, not a status change
+- Never skip a rung: `production-verified` requires the `runtime-ready` condition to hold first
+- A claim of `runtime-ready` with any unproven VCC is an `unproven-claim` at `blocker` severity; a claim of `production-verified` with no referenced operator promotion instruction is an `ungated-promotion`
+- Re-derive every rung whenever acceptance criteria or VCCs change (see Phase 4); a stale rung produces a false completion
+- Declare a status value outside this ladder only after extending this section; an unrecognised value is an `unknown-status`
 
 ---
 
@@ -450,15 +572,16 @@ Distinct from Orchestration/Harness Flow (execution sequence) and Data Flow (dat
 **Directives**:
 - Name all three dimensions in PRD scope or explicit exclusions; forbid ambiguous “agent-ready” claims that do not state which dimension(s) are in scope
 - Derive readiness from document content and frontmatter only; forbid inferring readiness from directory layout, file names, or downstream mirrors
-- Each dimension must be expressible as VCCs before status is promoted to `runtime-ready`
+- Each dimension must be expressible as VCCs, and each VCC must carry an Evidence Reference, before status is promoted to `runtime-ready` on the Readiness Ladder
+- State each dimension's rung using Readiness Ladder values only; forbid dimension-local status vocabularies
 
 ### Readiness Tiers
 
-| Tier | Definition | Typical PRD home | Promotion gate |
-|---|---|---|---|
-| **Must** | Smallest artifact that makes the dimension truthful at demo/load: visibility, discovery, or federation without new persistent stores or proxy tiers | Combined PRD/TAD or product PRD | VCC proof on clean environment; TTV recorded |
-| **Follow-on** | Closes spend-safety, live orchestration, or operator-UI gaps left open by Must-tier | Separate follow-on PRD/TAD linked from parent | VCC proof per track; no Must-tier regression |
-| **Won't (this increment)** | Explicit deferrals: monolithic proxy gateway, unbounded remote tool parity, auto-approval | Parent PRD Out of Scope | — |
+| Tier | Definition | Typical PRD home | Promotion gate | Minimum rung to exit |
+|---|---|---|---|---|
+| **Must** | Smallest artifact that makes the dimension truthful at demo/load: visibility, discovery, or federation without new persistent stores or proxy tiers | Combined PRD/TAD or product PRD | VCC proof on clean environment with a recorded Evidence Reference; TTV recorded | `runtime-ready` |
+| **Follow-on** | Closes spend-safety, live orchestration, or operator-UI gaps left open by Must-tier | Separate follow-on PRD/TAD linked from parent | VCC proof per track with a recorded Evidence Reference; no Must-tier rung regression | `runtime-ready` per track |
+| **Won't (this increment)** | Explicit deferrals: monolithic proxy gateway, unbounded remote tool parity, auto-approval | Parent PRD Out of Scope | — | `undocumented` (declared, not implied) |
 
 ### Agentic OS-Ready
 
@@ -548,6 +671,16 @@ flowchart LR
 
 Readiness work follows a **dependency-ordered sequence**. Must-tier dimensions ship before Follow-on tracks; tracks ship in an order that respects spend safety and proof-before-UI.
 
+**Relationship to the phase model**: the phase model (`from-0-to-1-prd--tad-creation-process`) and this execution order are **not** two competing sequences. Phases 0–3 produce the documents; this order sequences the *workstreams those documents describe*, and every workstream below sits inside Phase 3's exit and Phase 4's iteration. The canonical order used by `gate-order-drift` is the phase model; a documented workstream order that contradicts the table below is `gate-order-drift` scoped to this section, not to the phase model.
+
+| Phase | Produces | Governs which workstreams |
+|---|---|---|
+| Phase 0 | Validated problem, ROI, TCO, TTV ceiling | All, before any workstream starts |
+| Phase 1 | PRD with criteria and rungs targeted | All Must-tier scoping |
+| Phase 2 | TAD with VCCs, topology, lanes, registers | All, per workstream |
+| Phase 3 | Baselined pair, alignment check at zero blockers | Gate for Must-tier start |
+| Phase 4 | Bounded revision cycles | Follow-on tracks and rung re-derivation |
+
 **Canonical execution order**:
 
 ```
@@ -581,20 +714,53 @@ Follow-on Track 3 — Operator UI projection (dashboard document → existing UI
 - Prefer **proof over scaffolding**: each track ends in a VCC-demonstrable artifact (test exit code, persisted manifest, reachable URL) — not narrative “implemented” claims
 - Re-run Must-tier regression checks when any Follow-on track merges
 
+### Invocation Surface Contract
+
+**Defines what an invocation route is, where it is declared, and who owns it**, so that route and tool findings are raisable rather than nominal. Sigils are notation, not vendor syntax; substitute an equivalent notation and the rules hold unchanged.
+
+| Route kind | Notation | Resolves to | Declaration site |
+|---|---|---|---|
+| **Command route** | `/[name]` | One invocable operation with typed arguments | The owning document's Invocation Register |
+| **Semantic tag** | `#[name]` | One addressable context or artifact class | The owning document's Invocation Register |
+| **Binding** | `@[name]` | One named entity: a surface, a role, or a catalog | The owning document's Invocation Register |
+| **Tool identity** | `[namespace].[tool]` | One callable tool contract | The federation contract, and the capability catalog |
+
+**Invocation Register template** *(one per document that declares any route)*:
+```markdown
+## Invocation Register: [Document / Surface Name]
+
+| Route | Kind | Owner | Typed arguments | Trust boundary | Token cost |
+|---|---|---|---|---|---|
+| `/[name]` | Command | [owning function] | [typed schema] | [read / approval-gated / local] | [0 for discovery] |
+| `#[name]` | Tag | [owning function] | — | [read] | 0 |
+| `@[name]` | Binding | [owning function] | — | [read] | 0 |
+| `[ns].[tool]` | Tool identity | [owning function] | [typed schema] | [read / approval-gated] | [harness-dependent] |
+```
+
+**Directives**:
+- Declare every route in exactly one Invocation Register; a route declared nowhere is an `orphan-route`, and a route declared in two registers is an `ambiguous-route`
+- Match route identity on the full token including its sigil, with case preserved; forbid case-insensitive or prefix matching, which manufactures ambiguity that does not exist
+- Register every tool identity in **both** the federation contract and the capability catalog; absence from the federation contract is an `unfederated-tool` and absence from the capability catalog is an `uncatalogued-tool`
+- Derive the route set from declared document content only; forbid deriving a route from a file name, a directory, or a URL path
+- Keep every discovery and read route at zero token cost, consistent with the Readiness Dimensions spend boundaries; a non-zero cost on a read route is a `paid-read-path`
+- Name the trust boundary per route and route approval-gated and spend-bearing routes through the control-plane surface; forbid a read surface that exposes a spend-bearing route
+
 ### Readiness Gap Matrix Template
 
 ```markdown
 ## Readiness Gap Matrix
 
-| Workstream | Current state | Gap | Priority | Exit criteria (VCC) |
-|---|---|---|---|---|
-| OS Status Surface (local) | [...] | [...] | P0/P1/P2 | [...] |
-| OS Status Surface (remote) | [...] | [...] | P1 | [...] |
-| Gateway discovery | [...] | [...] | P0 | [...] |
-| Control-plane orchestration | [...] | [...] | P1 | [...] |
-| Spend safety (tokens) | [...] | [...] | P1 | [...] |
-| Live harness proof | [...] | [...] | P1 | [...] |
-| Operator UI projection | [...] | [...] | P2 | [...] |
+*Local rung and delivered rung are separate columns; both draw from the Readiness Ladder. Priority is the highest severity among the findings linked to that workstream, or `none`.*
+
+| Workstream | Local rung | Delivered rung | Gap | Priority | Exit criteria (VCC) |
+|---|---|---|---|---|---|
+| OS Status Surface (local) | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| OS Status Surface (remote) | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| Gateway discovery | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| Control-plane orchestration | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| Spend safety (tokens) | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| Live harness proof | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
+| Operator UI projection | [rung] | [rung] | [...] | blocker/major/minor/none | [...] |
 ```
 
 ### Follow-On PRD/TAD Template (linked increment)
@@ -602,9 +768,48 @@ Follow-on Track 3 — Operator UI projection (dashboard document → existing UI
 When Must-tier readiness ships with open spend or UI gaps, add a **follow-on combined PRD/TAD** that:
 - References parent version in frontmatter (`parent`, `parent_version`)
 - Defines tracks using neutral names (Track 1/2/3 mapped to spend safety, live orchestration, operator UI)
-- States local-vs-deployed status separately; forbid blending them in one status field
+- States local-vs-delivered status separately using Readiness Ladder rungs; forbid blending them in one status field
 - Includes topology **version note** for delta only (do not overwrite parent topology in place)
-- Lists validation commands as VCC hosts (mechanism-agnostic)
+- Lists validation commands as VCC hosts (mechanism-agnostic); each command named here is the Evidence Reference host for its rung
+
+---
+
+## Lane Topology & Deploy Boundary
+
+**Maps the ordered environment lanes a change traverses from authoring to public delivery, and the gate between each pair.** Distinct from Topology (structural component snapshot within one lane): this section governs *movement between* lanes. Lanes are named by function; forbid naming a lane after a vendor, a host, a repository, or a path.
+
+### Canonical Lane Sequence
+
+```
+[Authoring lane] ──boundary A──▶ [Mirror lane] ──boundary B──▶ [Delivery lane]
+```
+
+| Lane | Function | Mutation rights | Default readiness ceiling |
+|---|---|---|---|
+| **Authoring lane** | Where change is written and proven locally against reproducible checks | Full: source, tests, and local state | `runtime-ready` |
+| **Mirror lane** | A faithful non-public copy used to prove the delivered shape before exposure | Publish-only, from an approved authoring state | `runtime-ready` |
+| **Delivery lane** | The publicly reachable surface | Publish-only, from an approved mirror state | `production-verified` |
+
+### Deploy Boundary Contract
+
+Every boundary between adjacent lanes is a **named** gate carrying four required parts:
+
+| Part | Definition |
+|---|---|
+| **Name** | A stable identifier for the boundary, referenced by every promotion record |
+| **Evidence Reference** | The reproducible check plus recorded result that qualifies the source state for promotion |
+| **Operator instruction** | An explicit, referenced human authorisation; forbid implicit, scheduled, or inferred approval |
+| **Rollback statement** | The stated path back to the prior delivered state, with its own check |
+
+### Directives
+
+- **A Deploy Boundary is `closed` by default.** Absent a referenced operator instruction, no promotion occurs and `production-verified` is unreachable. Forbid a default-open boundary and forbid a boundary whose state is undocumented
+- Document all three lanes with their boundaries before the first promotion; a missing lane is a `missing-lane`, a boundary missing any of its four parts is an `incomplete-lane-transition`
+- Forbid any authoring-lane command that mutates a mirror or delivery surface; such a command is a `deploy-boundary-breach` at `blocker` severity regardless of how convenient the shortcut is
+- Promote only whole approved states; forbid promoting a partial state or promoting directly from the authoring lane to the delivery lane, skipping the mirror lane
+- State data residency per lane, not only per node; a component that changes residency across a boundary must say so in the topology version note
+- Record every promotion with its boundary name, its Evidence Reference, and its operator instruction reference; an unrecorded promotion is an `ungated-promotion`
+- Keep the rollback statement current: a rollback path that no longer resolves is `stale-evidence`
 
 ---
 
@@ -678,19 +883,51 @@ A VCC is mechanism-independent. Any of the following can host it; choose by what
 | Stop/exit hook | Previous iteration finishes | A deterministic script decides | CI gate, pre-merge hook, custom evaluator script |
 
 **Implementation-neutral requirements** (apply regardless of mechanism):
-- A **separate evaluator** decides completion, independent of the agent doing the work, so the verdict is not self-graded.
+- A **separate evaluator** decides completion, independent of the agent doing the work, so the verdict is not self-graded. **Independence is mechanical, not organisational**: the requirement is satisfied when the evaluator is a different *mechanism* from the implementer — a deterministic check, a hook, or a separate evaluating process — and it is not satisfied by a different job title running the same judgement. A solo operator therefore satisfies this rule by delegating the verdict to a check they do not adjudicate, and violates it by reading their own output and declaring it done. Role collapse in Role—Action—Outcome applies to authoring functions; it does not extend to the evaluator.
 - The evaluator judges only **surfaced output**; the agent must emit the proof (logs, exit codes, counts) into its own transcript.
 - Every loop carries an explicit **iteration bound** and circuit-breaker, consistent with the Orchestration Topology rules.
 
+### The Evidence Reference
+
+A VCC states what must be true. An **Evidence Reference** records that it *was* true, and is the only currency the Readiness Ladder accepts.
+
+| Part | Definition |
+|---|---|
+| **Named check** | The reproducible check that was run, named exactly as it is invocable |
+| **Recorded result** | The surfaced outcome of that run (exit code, count, test summary, response measurement) |
+| **Surface** | Which lane the check ran in: authoring, mirror, or delivery |
+
+**Directives**:
+- Attach every Evidence Reference to the VCC it satisfies; an Evidence Reference with no VCC proves nothing and an unsatisfied VCC caps the rung
+- Name the check as it is actually invocable; an Evidence Reference naming a check that no longer exists is `stale-evidence`
+- Record a result, not an assertion that a result exists; a named check with no recorded result cannot raise a rung
+- Keep the surface explicit, because it decides whether the evidence counts toward local or delivered readiness
+
 ### Traceability Extension
 
-Extend the traceability pattern to include the implementation condition:
+Extend the traceability pattern through to the evidence that closes it:
 
 ```
-PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition]
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Evidence Reference [check + result] → Readiness rung
 ```
 
-Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see Phase 4).
+Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see Phase 4). Record the Evidence Reference beside the VCC so the rung is recomputable from the document alone.
+
+### Closure Rules
+
+The chain is bidirectional, and a break in **either** direction is a defect rather than a gap to be tolerated:
+
+| Break | Finding | Meaning |
+|---|---|---|
+| A rule requiring an artifact has no artifact | `unimplemented-guideline` | The rule is decorative |
+| An artifact answers to no rule | `unguided-artifact` | The artifact is unowned |
+| A readiness claim has no satisfying evidence | `unproven-claim` | The status is asserted, not earned |
+| A reference names a target that does not resolve | `unresolvable-reference` | The chain is broken mid-link |
+
+**Directives**:
+- Distinguish artifact-bearing rules from advisory guidance explicitly; only artifact-bearing rules can produce an `unimplemented-guideline`, and mislabelling advice as a rule inflates the defect count without improving the product
+- Report coverage as a ratio of linked artifact-bearing rules to total artifact-bearing rules; forbid claiming alignment without stating that ratio
+- Resolve or formally track every break; forbid silently accepting a broken link because the surrounding document reads well
 
 ---
 
@@ -703,18 +940,19 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Acceptance      | Define verifiable criteria           | - [ ] Specify testable criteria expressible as VCCs; enable verification; forbid ambiguous requirements |
 | Accountability  | Assign clear ownership               | - [ ] Name responsible parties; assign ownership; forbid unassigned features                  |
 | Adaptability    | Enable configuration-driven design   | - [ ] Design configurably; enable adaptation; forbid hardcoded solutions                      |
+| Agent readiness | Enable external agent onboarding   | - [ ] Document discovery chain, surface matrix by trust boundary, and zero-token discovery paths; forbid HTML-scrape-only onboarding |
+| Agentic OS      | Unify harness visibility read-only   | - [ ] Spec OS Status Surface views with $0 token budget, read-time aggregation, and partial-failure fields; forbid OS-level write paths or new persistent OS datastore |
 | Alignment       | Synchronize team understanding       | - [ ] Review with stakeholders; synchronize understanding; forbid siloed development          |
 | Alternatives    | Document rejected options            | - [ ] Record considered options; document alternatives; forbid undocumented decisions         |
 | Ambiguity       | Ensure specification clarity         | - [ ] Write precisely; ensure clarity; forbid vague requirements                              |
 | API             | Specify integration contracts        | - [ ] Define API contracts; specify interfaces; forbid implicit interfaces                    |
-| Agent readiness | Enable external agent onboarding   | - [ ] Document discovery chain, surface matrix by trust boundary, and zero-token discovery paths; forbid HTML-scrape-only onboarding |
-| Agentic OS      | Unify harness visibility read-only   | - [ ] Spec OS Status Surface views with $0 token budget, read-time aggregation, and partial-failure fields; forbid OS-level write paths or new persistent OS datastore |
 | Architecture    | Design component interactions        | - [ ] Map component relationships; design interactions; forbid undocumented dependencies      |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
 | Capacity        | Specify performance limits           | - [ ] Define load requirements; specify capacity; forbid unspecified scalability              |
 | Changes         | Track requirement evolution          | - [ ] Version requirement changes; track evolution; forbid unversioned modifications          |
 | Components      | Specify modular units                | - [ ] Define component boundaries; specify modules; forbid monolithic designs                 |
+| Conformance     | Make every rule violation recordable | - [ ] Map every rule to a Finding Type with a severity; deduplicate on type, anchor, and artifact; order by severity then type; forbid `forbid` statements with no typed finding name |
 | Constraints     | Document limitations explicitly      | - [ ] State constraints clearly; document limitations; forbid implicit restrictions           |
 | Contracts       | Define interface agreements          | - [ ] Specify interface contracts; define agreements; forbid implicit assumptions             |
 | Data            | Specify flow and storage             | - [ ] Map data flows; specify storage; forbid undocumented persistence                        |
@@ -725,22 +963,24 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Design          | Justify architectural patterns       | - [ ] Document design patterns; justify architecture; forbid pattern-free implementations     |
 | Edge            | Specify boundary conditions          | - [ ] Define edge cases; specify boundaries; forbid untested limits                           |
 | Error           | Specify handling strategies          | - [ ] Define error responses; specify handling; forbid undefined error states                 |
+| Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
-| FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
-| Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as VCCs; define objectives; forbid vague aspirations |
+| FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Gateway         | Federate tool surfaces without proxy duplication | - [ ] Document discovery-first federation across existing transports; compare unified-proxy alternative in ADR; forbid undocumented fifth-proxy gateway |
+| Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as VCCs; define objectives; forbid vague aspirations |
 | Harness         | Wrap AI calls in typed, observable contracts | - [ ] Define harness input/output schemas; emit cost log per call; specify fallback path; forbid raw unstructured prompt calls in production pipelines |
 | Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
 | Integration     | Specify connection points            | - [ ] Define integration interfaces; specify connections; forbid undocumented interfaces      |
 | Interfaces      | Define contracts explicitly          | - [ ] Document API contracts; define interfaces; forbid implicit agreements                   |
 | Iteration       | Refine incrementally                 | - [ ] Update iteratively; refine continuously; forbid waterfall documentation                 |
-| Journeys        | Map user workflows                   | - [ ] Chart user paths; map journeys; forbid feature-centric views                            |
 | Jobs            | Define user tasks                    | - [ ] Specify jobs-to-be-done; define tasks; forbid solution-centric requirements             |
+| Journeys        | Map user workflows                   | - [ ] Chart user paths; map journeys; forbid feature-centric views                            |
 | Knowledge       | Capture domain insights              | - [ ] Document domain knowledge; capture insights; forbid undocumented context                |
+| Lanes           | Gate movement toward public surfaces | - [ ] Document authoring, mirror, and delivery lanes with a named Deploy Boundary carrying evidence, operator instruction, and rollback; keep boundaries `closed` by default; forbid authoring-lane commands that mutate a delivered surface |
 | Maintainability | Design for evolution                 | - [ ] Plan for change; design maintainably; forbid rigid architectures                        |
 | Mapping         | Trace requirements to implementation | - [ ] Link specs to code; trace mapping; forbid orphaned requirements                         |
 | Metrics         | Define success measures              | - [ ] Specify KPIs; define metrics; forbid unmeasured outcomes                                |
@@ -764,12 +1004,13 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Protocols       | Specify communication standards      | - [ ] Define message formats; specify protocols; forbid proprietary interfaces                |
 | Quality         | Define acceptance standards          | - [ ] Set quality thresholds; define standards; forbid subjective quality gates               |
 | Rationale       | Document decision reasoning          | - [ ] Explain why decisions; document reasoning; forbid unexplained choices                   |
+| Readiness       | Derive status from evidence          | - [ ] Assign exactly one Readiness Ladder rung per capability, derived from Evidence References; report local and delivered rungs separately; forbid hand-authored status and forbid values outside the ladder |
 | Recovery        | Specify failure handling             | - [ ] Define disaster recovery; specify handling; forbid undefined disaster responses         |
 | Requirements    | Structure hierarchically             | - [ ] Organize Epic→Story→Task; structure hierarchy; forbid flat requirement lists            |
 | Resilience      | Design for failure tolerance         | - [ ] Plan for failures; design resiliently; forbid fragile systems                           |
 | Reuse           | Leverage existing components         | - [ ] Identify reusable parts; leverage existing; forbid reinvention                          |
 | Risk            | Assess potential issues              | - [ ] Identify risks; assess impact; forbid risk-blind planning                               |
-| ROI             | Justify investment with return       | - [ ] Compute ROI score (impact × reach / build + TCO + token cost) before Phase 1 gate; rank features by ROI; forbid zero-ROI items in Must/Should tiers |
+| ROI             | Justify investment with return       | - [ ] Compute ROI score `(impact × reach) / (build + TCO + token cost)` before Phase 1 gate; rank features by ROI; forbid zero-ROI items in Must/Should tiers |
 | Scalability     | Specify growth requirements          | - [ ] Define scale targets; specify growth; forbid fixed-capacity designs                     |
 | Scenarios       | Provide usage examples               | - [ ] Write scenario walkthroughs; provide examples; forbid example-free specifications       |
 | Scope           | Define boundaries explicitly         | - [ ] State what's included/excluded; define scope; forbid unbounded features                 |
@@ -827,6 +1068,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Metric | Baseline | Target | Timeline |
 |--------|----------|--------|----------|
 | [User metric] | | | |
+| Readiness rung (local / delivered) | [rung] / [rung] | [rung] / [rung] | |
 | Time-to-value (TTV steps) | [est.] | [≤ N steps] | |
 | Time-to-value (TTV elapsed) | [est.] | [≤ N min] | |
 | Token cost / month | [est.] | [budget] | |
@@ -865,9 +1107,9 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 **Version**: [N] — [Date or milestone]
 **Boundaries**: [Runtime environments, zones, or trust domains]
 
-| Node | Role | Type | Connects to | Connection type | Data residency |
-|------|------|------|-------------|----------------|----------------|
-| [Component] | [Producer/Consumer/Router/Store/Gateway] | [Service/Function/DB/Queue] | [Node(s)] | [Sync/Async/Stream] | [Local/Region/Cloud] |
+| Node | Role | Type | Lane | Connects to | Connection type | Data residency |
+|------|------|------|------|-------------|----------------|----------------|
+| [Component] | [Producer/Consumer/Router/Store/Gateway] | [Service/Function/DB/Queue] | [Authoring/Mirror/Delivery] | [Node(s)] | [Sync/Async/Stream] | [Local/Region/Cloud] |
 
 ```mermaid
 flowchart TB
@@ -894,7 +1136,7 @@ flowchart TB
 
 ### Component Specifications
 **Component**: [Name]
-**Responsibility**: [Single responsibility — SVO format]
+**Responsibility**: [Single responsibility — Subject-Verb-Object (SVO) format, e.g. "Component validates input schema"]
 **Interfaces**: [API contracts]
 **Dependencies**: [Required components/services]
 **Configuration**: [Externalized parameters]
@@ -907,6 +1149,8 @@ flowchart TB
 **Token Budget** *(AI components only)*: [avg prompt tokens] + [avg completion tokens] @ [cache hit rate] = [est. cost/request]
 **Orchestration Topology** *(AI components only)*: [Sequential | Fan-out | Agentic loop — max N iterations, circuit-breaker: condition]
 **VCC Conditions**: [Derived from acceptance criteria — one evaluable condition per criterion]
+**Evidence References**: [Per VCC — named invocable check + recorded result + surface (authoring / mirror / delivery)]
+**Readiness rung**: [Local: rung] / [Delivered: rung] — derived from the Evidence References above, never authored directly
 
 ### Integration Contracts
 **Interface**: [Name] | **Protocol**: [HTTP/gRPC/etc] | **Format**: [JSON/Protobuf] | **Errors**: [Strategy]
@@ -922,7 +1166,9 @@ See ADR-[N] for each significant decision.
 | Security        | [Threat → protection requirement]             | [Architectural fix]       | [Test approach]         |
 | Observability   | [Signal → monitoring requirement]             | [Architectural fix]       | [Test approach]         |
 | Token Cost      | [Target load → max tokens/request budget]     | Harness + caching + prompt compression | Cost log sampling; alert on p95 overrun |
+| Offline Behaviour | [Connectivity loss → which capabilities remain available and which degrade] | Local-first state with deferred reconciliation; explicit degraded mode | Airplane-mode pass; reconciliation replay test |
 | TCO             | [12-month projected spend per deployment model vs zero-TCO target] | FOSS-first + zero-egress infra; managed vs self-managed compared separately | Monthly cost audit; ADR review |
+| Device Reach    | [Target device mix → mobile-first, browser-based, zero-infra runtime requirement] | Responsive/PWA-capable UI; no native-only APIs; static or edge-only delivery | Cross-device manual pass; mobile audit |
 
 ### Deployment Strategy
 [Blue-green / canary / rolling — with rollback plan]
@@ -931,8 +1177,17 @@ See ADR-[N] for each significant decision.
 [Mermaid flowchart TB / LR / sequenceDiagram per diagram standards]
 
 ### Component Inventory
-| Layer | Component | File / Module | Status |
-|-------|-----------|---------------|--------|
+*Status values are Readiness Ladder rungs only; local and delivered are separate columns.*
+
+| Layer | Component | File / Module | Local rung | Delivered rung |
+|-------|-----------|---------------|------------|----------------|
+
+### Deploy Boundary Register
+*One row per boundary. State reads `closed` unless an operator instruction is referenced.*
+
+| Boundary | From lane | To lane | Evidence Reference | Operator instruction | Rollback statement | State |
+|---|---|---|---|---|---|---|
+| [Name] | [Authoring / Mirror] | [Mirror / Delivery] | [named check + result] | [reference, or `none`] | [path + check] | [`closed` / `open`] |
 ```
 
 ### ADR Template
@@ -1007,18 +1262,27 @@ See ADR-[N] for each significant decision.
 
 ### Traceability Pattern
 ```
-PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
+PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID] ↔ VCC [condition] ↔ Evidence Reference [check + result]
 ```
 
+The chain is bidirectional and must close in both directions. A link that resolves one way only is a defect with a named Finding Type — see Closure Rules in Autonomous Implementation Verification.
+
 ### Iterative Refinement
-1. Product manager drafts PRD from user research
-2. Architect reviews PRD for feasibility → drafts TAD
-3. Product manager validates TAD preserves user value
-4. Teams iterate until both documents align
+
+**Max iterations**: 3 alignment cycles | **Circuit-breaker**: no reduction in open `blocker` findings between two consecutive cycles
+
+1. The authoring function drafts the PRD from user research
+2. The architecture function reviews the PRD for feasibility → drafts the TAD
+3. The authoring function validates the TAD preserves user value
+4. Run the alignment check; if `blocker` findings remain and the circuit-breaker has not tripped, repeat from step 2
+5. On reaching the max-iteration bound or tripping the circuit-breaker, stop and escalate the unresolved findings as an explicit scope or design decision; forbid continuing to iterate past the bound
 
 ---
 
 ## Anti-Pattern Guards
+
+❌ Missing or malformed YAML frontmatter in canonical PRD/TAD/ADR docs; unquoted scalars containing reserved punctuation; typed `{key, type, value}` wrappers used in authored docs instead of validation fixtures  
+→ ✅ Frontmatter present as the first block in every canonical doc; scalars with reserved punctuation quoted; typed wrappers reserved for ingest→parse→render or ingest→parse→validate fixtures only; malformed YAML fixed at source, not silently repaired downstream
 
 ❌ Solution-first PRDs, implementation detail in PRDs, vague acceptance criteria  
 → ✅ Problem-first approach, business-focused PRDs, testable Given-When-Then criteria
@@ -1074,11 +1338,129 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 ❌ Monolithic MCP/API proxy duplicating existing dispatch layers; discovery paths that invoke paid models; Follow-on live orchestration before spend-safety track exits  
 → ✅ Discovery-first gateway federation over existing transports (ADR compares unified-proxy alternative); execution order enforced: Must visibility/discovery → federation → spend safety → live proof → operator UI
 
+❌ A readiness status authored by hand with no satisfying evidence; a status value outside the Readiness Ladder; one status field blending local and delivered readiness  
+→ ✅ Every rung derived from Evidence References only; values drawn from the Readiness Ladder; local and delivered readiness reported as two separate fields
+
+❌ A rule that requires an artifact but names none; an artifact that answers to no rule; a reference to a target that does not resolve  
+→ ✅ Bidirectional closure enforced per the Closure Rules; coverage stated as a ratio; every break resolved or formally tracked
+
+❌ Promotion between lanes with no named boundary, no evidence, no operator instruction, or no rollback path; an authoring-lane command that mutates a mirror or delivery surface; a boundary that is open by default  
+→ ✅ Every boundary named and carrying all four parts; boundaries `closed` by default; authoring-lane commands structurally unable to reach a delivered surface
+
+❌ A `forbid` statement with no typed finding name, so a violation cannot be recorded, compared, or regression-tracked  
+→ ✅ Every rule maps to a Finding Type with a severity; findings deduplicated, ordered, and comparable across runs
+
+❌ Findings anchored to a section rather than a rule, collapsing distinct violations into one; rules left unclassified so the coverage ratio cannot be computed  
+→ ✅ Every finding anchored to a Rule ID; every rule classified artifact-bearing or advisory; coverage ratio and advisory count both reported
+
+❌ A Finding Type in the enumeration whose triggering concept the guideline set never defines, so the type can never be raised  
+→ ✅ Every type has a rule that can raise it; a type whose concept is undefined is either defined or removed
+
+❌ A conformance check that depends on wall clock, random source, or filesystem ordering, making the regression comparison unreliable  
+→ ✅ Deterministic, order-independent, additive, bounded, and comparable by construction; degraded inputs yield typed findings and a completed run
+
+❌ Rules that read an `owner`, a status, or a lane that the frontmatter contract never requires, forcing recovery from a path or a directory  
+→ ✅ Conformance keys required in frontmatter; every rule reads a declared field
+
+❌ The evaluator collapsed into the implementing role in a solo-dev context, producing self-graded verdicts  
+→ ✅ Evaluator independence enforced mechanically: a check the participant does not adjudicate; role collapse limited to authoring functions
+
+❌ A guideline set that must be loaded whole on every turn, with its own compliance cost unmeasured  
+→ ✅ Phase-scoped section loading; guideline load cost recorded as a line item in the authoring loop's token budget
+
+---
+
+## Conformance Findings
+
+**Defines the typed vocabulary a conformance check records against this guideline set.** The Anti-Pattern Guards section states *what* is prohibited in prose; this section makes each prohibition addressable, comparable, and regression-trackable. Without it, a violation can be discussed but not counted.
+
+### Recording Contract
+
+Every finding carries exactly six fields:
+
+| Field | Definition |
+|---|---|
+| **Finding Type** | One member of the enumeration below; forbid ad-hoc type strings |
+| **Severity** | Exactly one of `blocker`, `major`, `minor` |
+| **Rule anchor** | The **Rule ID** of the violated rule per Rule Identity & Classification, not the section anchor alone |
+| **Artifact reference** | The artifact involved, or an explicit not-applicable marker when none is |
+| **Evidence excerpt** | The offending text, quoted verbatim and bounded in length |
+| **Remediation** | Exactly one of a documentation change, a specification change, or a locally reproducible check |
+
+### Severity Assignment
+
+| Severity | Assigned when |
+|---|---|
+| **`blocker`** | The violation contradicts a `runtime-ready` or higher claim, breaches a Deploy Boundary, or leaves token spend unbounded |
+| **`major`** | An artifact-bearing rule has no resolvable artifact or no evidence |
+| **`minor`** | Every other violation |
+
+### Finding Enumeration
+
+| Rule family | Finding Type | Severity |
+|---|---|---|
+| Frontmatter | `missing-frontmatter-key` | `minor` |
+| Frontmatter | `malformed-document` | `major` |
+| Readiness Ladder | `unknown-status` | `minor` |
+| Readiness Ladder | `unproven-claim` | `blocker` |
+| Readiness Ladder | `blended-status` | `minor` |
+| Traceability closure | `unimplemented-guideline` | `major` |
+| Traceability closure | `unguided-artifact` | `minor` |
+| Traceability closure | `unresolvable-reference` | `major` |
+| Traceability closure | `stale-evidence` | `major` |
+| Traceability closure | `missing-companion` | `major` |
+| Ownership | `duplicate-owner` | `major` |
+| Ownership | `status-conflict` | `major` |
+| Phase gates | `gate-order-drift` | `major` |
+| Phase gates | `gate-sequence-violation` | `major` |
+| Scope & neutrality | `vendor-coupling` | `major` |
+| Scope & neutrality | `path-derived-claim` | `major` |
+| Scope & neutrality | `non-modular-section` | `minor` |
+| Economics | `missing-economics-metric` | `major` |
+| Economics | `blended-deployment-tco` | `major` |
+| Economics | `missing-foss-comparison` | `major` |
+| Economics | `unbounded-loop` | `blocker` |
+| Economics | `paid-read-path` | `major` |
+| Delivery reach | `incomplete-delivery-reach` | `major` |
+| Invocation surface | `orphan-route` | `major` |
+| Invocation surface | `ambiguous-route` | `major` |
+| Invocation surface | `unfederated-tool` | `major` |
+| Invocation surface | `uncatalogued-tool` | `major` |
+| Lane topology | `missing-lane` | `blocker` |
+| Lane topology | `incomplete-lane-transition` | `major` |
+| Lane topology | `deploy-boundary-breach` | `blocker` |
+| Lane topology | `ungated-promotion` | `blocker` |
+| Topology | `incomplete-topology-node` | `major` |
+
+### Directives
+
+- Treat this enumeration as the single source of truth for **authoring-domain** finding names; execution-domain findings (task, agent, and tool-permission violations) are owned by the Agentic SDLC Guidelines companion set, and the conformance vocabulary is the union of the two. Forbid either set redefining a type the other owns
+- A check that invents a type string cannot be compared against a prior run
+- Where a rule states a severity inline, that stated severity governs over the table default
+- Deduplicate on the triple `(Finding Type, Rule ID, artifact reference)`; one violation is one finding no matter how many passes observe it, and Rule ID granularity keeps two distinct violations in one section distinct
+- Order findings by severity, then Finding Type, then Rule ID, so any finding set yields exactly one review order
+- Report a zero count for every type with no finding; an omitted row is indistinguishable from an unchecked rule
+- Keep the finding count bounded by the number of rules plus the number of artifacts; an unbounded count means the check is multiplying rather than classifying
+- Extend the enumeration by adding a row here first, then the rule that raises it; forbid the reverse order
+- Forbid a Finding Type with no rule that can raise it. A type whose triggering concept is undefined in this set is unraisable, which makes the enumeration overstate what is being checked; either define the concept or remove the type
+
+### Check Determinism
+
+The regression comparison above is meaningless unless two runs over the same inputs are comparable by construction:
+
+- **Deterministic**: two runs over byte-identical inputs and equal configuration produce identical finding sets; forbid a check whose output depends on a wall clock, a random source, or a filesystem enumeration order
+- **Order-independent**: processing the audited documents in any order produces one identical finding set
+- **Additive**: adding a document preserves every finding already raised against the unchanged documents; a new document that silently clears an existing finding indicates the check is reading across document boundaries in an unstated way
+- **Bounded**: the finding count stays at or below the number of rules plus the number of artifacts
+- **Comparable**: finding-set equality is judged on Finding Type, severity, Rule ID, artifact reference, evidence excerpt, and remediation only; forbid comparing run timestamps, ordering, or elapsed time
+- **Complete on degraded input**: a malformed or unreadable document yields a typed finding and the run completes; forbid aborting a run because one input is defective
+
 ---
 
 ## Validation Checklist
 
 **Pre-Implementation**:
+- [ ] **Frontmatter present** as the first block in every canonical PRD/TAD/ADR doc; scalars with reserved punctuation quoted; no typed wrappers outside validation fixtures
 - [ ] User journey mapped before stories written; every story anchored to a journey stage
 - [ ] Workflows defined with trigger, happy path, alternate paths, error paths, and postconditions
 - [ ] Data flows typed at every stage boundary with persistence and error handling documented
@@ -1109,6 +1491,7 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] **Gateway federation ADR** compares discovery-first pattern vs unified-proxy alternative when ≥2 tool transports exist
 
 **Post-Documentation Review**:
+- [ ] **Frontmatter validated** against the SSOT contract (identity, status, versioning fields) before baseline sign-off
 - [ ] Stakeholders validate PRD addresses user problems
 - [ ] Development team confirms TAD provides sufficient guidance
 - [ ] QA confirms acceptance criteria are objectively testable
@@ -1120,7 +1503,34 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 - [ ] **Token budget actuals vs estimates reviewed** each sprint; projections updated on model pricing or traffic changes
 - [ ] **FOSS alternatives re-evaluated** if any dependency TCO crosses the 12-month justification threshold
 - [ ] **Agent-platform execution order reviewed**: Follow-on tracks not started before Must-tier VCCs pass; spend-safety track precedes live orchestration unless ADR accepts risk
-- [ ] **Readiness gap matrix** present when any dimension is not runtime-ready; local vs deployed status not blended
+- [ ] **Readiness gap matrix** present when any dimension is below `runtime-ready`; local and delivered rungs in separate columns
+
+**Alignment Gate** *(discharges the Phase 3 alignment check; every item maps to a Finding Type)*:
+- [ ] **Readiness rungs derived**, not authored: every rung traces to an Evidence Reference with a named check and a recorded result — else `unproven-claim`
+- [ ] **Status vocabulary closed**: every status value appears in the Readiness Ladder — else `unknown-status`
+- [ ] **Local and delivered readiness separated** into two fields everywhere a status appears — else `blended-status`
+- [ ] **Forward closure**: every artifact-bearing rule names at least one artifact — else `unimplemented-guideline`
+- [ ] **Reverse closure**: every artifact answers to at least one rule — else `unguided-artifact`
+- [ ] **Coverage ratio stated**: linked artifact-bearing rules over total artifact-bearing rules, reported as a number
+- [ ] **References resolve**: every named document, command, and companion resolves — else `unresolvable-reference` or `missing-companion`
+- [ ] **Evidence current**: every named check is still invocable — else `stale-evidence`
+- [ ] **Single owner per contract**: no contract claimed by two documents — else `duplicate-owner`; no capability carrying two different rungs — else `status-conflict`
+- [ ] **Phase order intact**: documented stage order matches this guideline set's phase order and no later gate passes while an earlier one fails — else `gate-order-drift` or `gate-sequence-violation`
+- [ ] **Neutrality held**: no brand outside a labelled reference-implementation block, no claim derived from a path, every `##` section liftable — else `vendor-coupling`, `path-derived-claim`, or `non-modular-section`
+- [ ] **Economics complete**: ROI, 12-month TCO per deployment model, token budget, and TTV present and quantified; every loop bounded; every read path zero-cost — else `missing-economics-metric`, `blended-deployment-tco`, `missing-foss-comparison`, `unbounded-loop`, or `paid-read-path`
+- [ ] **Delivery reach stated**: browser reach, mobile reach, and offline behaviour named per user-facing capability — else `incomplete-delivery-reach`
+- [ ] **Invocation routes resolve** to exactly one owner; every tool identity federated and catalogued — else `orphan-route`, `ambiguous-route`, `unfederated-tool`, or `uncatalogued-tool`
+- [ ] **Lanes and boundaries complete**: three lanes documented, each boundary carrying its four parts and reading `closed` absent a referenced operator instruction; no authoring-lane command mutating a delivered surface — else `missing-lane`, `incomplete-lane-transition`, `ungated-promotion`, or `deploy-boundary-breach`
+- [ ] **Rule IDs used** as the finding anchor and in the deduplication key; every rule classified artifact-bearing or advisory; advisory count reported separately
+- [ ] **Conformance frontmatter keys present**: `owner`, `local_rung`, `delivered_rung`, `lane`, `universal_scope` — no blended `status` key
+- [ ] **Invocation Register present** for every document declaring a route; every tool identity in both the federation contract and the capability catalog
+- [ ] **Every loop in this guideline set's own process bounded**, including the Phase 4 revision cycle and Iterative Refinement
+- [ ] **Check determinism satisfied**: deterministic, order-independent, additive, bounded, comparable, and complete on degraded input
+- [ ] **Evaluator is a distinct mechanism** from the implementer; role collapse does not extend to the Evaluator
+- [ ] **Guideline load budget respected**: sections loaded per phase; guideline load cost recorded in the authoring loop's token budget
+- [ ] **Execution-domain conformance discharged** against the Agentic SDLC Guidelines companion set; a runtime-readiness claim sourced from this document alone is incomplete
+- [ ] **Zero `blocker` findings** before baseline sign-off; `major` and `minor` findings resolved or formally tracked with an owner
+- [ ] **Finding set compared** against the prior run; any new `blocker` treated as a regression
 
 ---
 
@@ -1130,7 +1540,9 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 **System Architect** → designs component interactions, maps data flows, specifies interfaces, documents ADRs, defines quality attributes, plans deployment → establishes technical foundation enabling scalable implementation
 
-**Solo Founder / AI Orchestrator** *(collapses all roles in a solo-dev context)* → validates ROI before writing any doc, applies min-viable-max-value lens to MoSCoW, designs harness contracts for every AI component, sets token budgets, maintains FOSS-first ADRs, tracks TCO actuals each sprint → ships high-ROI features at near-zero infrastructure cost while keeping the codebase auditable and the AI pipelines observable
+**Solo Founder / AI Orchestrator** *(collapses all **authoring** roles in a solo-dev context; does not collapse the Evaluator)* → validates ROI before writing any doc, applies min-viable-max-value lens to MoSCoW, designs harness contracts for every AI component, sets token budgets, maintains FOSS-first ADRs, tracks TCO actuals each sprint → ships high-ROI features at near-zero infrastructure cost while keeping the codebase auditable and the AI pipelines observable
+
+**Evaluator** *(a mechanism, never a person; the one role that must not collapse into any other)* → judges each VCC against the surfaced output only, records the Evidence Reference, derives the readiness rung, and emits the finding set with types and severities → produces verdicts no participant can self-grade, which is what makes a rung and an alignment claim trustworthy. See the Agentic SDLC Guidelines companion set for how this role is instantiated and bounded during execution.
 
 **UX Designer** → creates personas, maps user journeys, validates usability requirements, provides design guidance → ensures user-centered design principles guide feature development
 
@@ -1146,11 +1558,14 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID]
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
 - **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
 - **Agent-platform readiness sequences**: Agentic OS visibility → AI Agent discovery → Gateway federation (Must); then spend safety → live orchestration proof → operator UI (Follow-on); forbid proxy duplication and dependency-blind parallel surface work
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
-- **SVO clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
+- **SVO (Subject-Verb-Object) clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
+- **Evidence earns**: a readiness rung is computed from named checks with recorded results, never asserted; the ladder is monotone under added evidence, so status can only be raised by proof
+- **Findings make checkable**: every prohibition carries a type and a severity, so alignment is a comparable measurement across runs rather than an impression that resets each review
+- **Boundaries stay closed**: promotion toward a public surface requires a named gate, its evidence, its rollback path, and a referenced operator instruction; the default state is closed, so nothing reaches the delivery lane by momentum
 - **VCC closes**: every acceptance criterion becomes an evaluable completion condition (mechanism-agnostic); the traceability chain extends from PRD through TAD to autonomous implementation verification

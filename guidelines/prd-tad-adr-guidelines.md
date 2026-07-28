@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "1.6.0"
+version: "1.7.0"
 date: "2026-07-28"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -12,7 +12,7 @@ frontmatter_contract: "required"
 ## Scope & Neutrality Contract
 
 - **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
-- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent.
+- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent. Every brand, product, or vendor name must sit under a heading or block whose own text contains the words "reference implementation"; a brand named outside such a label is a `vendor-coupling` finding regardless of surrounding intent.
 - **Agnosticity**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 - **Enforceable**: every rule in this set is written so a conformance check can record a typed finding against it (see Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
@@ -20,6 +20,7 @@ frontmatter_contract: "required"
 ## Module Index
 
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability rules
+- `rule-identity--classification` — stable rule addressing and the artifact-bearing vs advisory split
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
 - `overview` — what PRD/TAD are and the governing standards
 - `solo-dev-ai-native-orientation` — the four compounding lenses, harness, orchestration, ROI, FOSS rules, deployment-model TCO variants
@@ -41,6 +42,45 @@ frontmatter_contract: "required"
 - `roleactionoutcome` — role-to-deliverable mapping
 - `mantra-application` — the framing mantra
 
+**Companion set**: this document is the authority for **authoring** — what a PRD, TAD, or ADR must contain and how conformance is named. Execution — task decomposition, agent roles and independence, tool blast radius, per-task budgets, and run state — is owned by the **Agentic SDLC Guidelines** companion set. Neither set restates the other; each names the other where a rule crosses the boundary. A claim about execution sourced from this document alone is incomplete.
+
+## Rule Identity & Classification
+
+**Makes every individual rule separately addressable and separately classifiable.** Section anchors address a *group* of rules; a conformance check needs to address *one*. Without per-rule identity, two different violations inside one section collapse into a single finding and the regression comparison in Conformance Findings silently stops working.
+
+### Rule Identifier
+
+Every rule carries a **Rule ID** that is stable across edits to unrelated rules:
+
+```
+Rule ID = [owning section anchor] + "#" + [ordinal of the rule within that section, in document order]
+```
+
+**Directives**:
+- Derive the Rule ID from the owning `##` section anchor and the rule's position within that section; forbid deriving it from a file name, a line number, or a directory
+- Treat the Rule ID as stable while the rule's own text and owning section are unchanged; inserting an unrelated rule earlier in the same section re-ordinals the rules after it, so record the rule text alongside the ID wherever a finding is stored
+- Where two rules in one section carry identical text, disambiguate by ascending document-order ordinal; forbid merging them into one addressable rule
+- Use the Rule ID, not the section anchor alone, as the `rule anchor` field of a finding and as a component of the deduplication key
+- Rules authored before this section existed inherit their ID by the same derivation; no retroactive hand-labelling is required, and none is permitted to override the derivation
+
+### Artifact-Bearing vs Advisory
+
+Every rule is exactly one of two classes, and the class decides whether an unmet rule is a defect or a preference:
+
+| Class | Definition | Unmet consequence |
+|---|---|---|
+| **Artifact-bearing** | The rule requires a named, locatable output: a document, a section, a template field, a schema, a diagram, a recorded status, a named check | `unimplemented-guideline` |
+| **Advisory** | The rule states a preference, a framing, or a judgement that produces no separately locatable output | No finding; counted as advisory coverage |
+
+**Directives**:
+- Classify a rule as artifact-bearing when its text names a produced output; classify it as advisory otherwise; forbid a third class and forbid leaving a rule unclassified
+- Derive the class from the rule text, so the classification is recomputable and cannot drift from the rule it describes
+- Report the coverage ratio as linked artifact-bearing rules over total artifact-bearing rules; forbid an alignment claim that omits that ratio
+- Forbid inflating the defect count by classifying advice as artifact-bearing; a high count achieved that way measures labelling, not conformance
+- Count advisory rules separately and report the count; an advisory rule with no artifact is expected, not a gap
+
+---
+
 ## Markdown YAML Frontmatter Enforcement
 
 - Canonical PRD, TAD, and combined PRD/TAD Markdown docs must start with a valid YAML frontmatter block as the first block in the file.
@@ -50,6 +90,19 @@ frontmatter_contract: "required"
 - Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read planning and architecture metadata deterministically.
 - Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
 - **Baseline required keys** for any canonical PRD, TAD, or ADR doc: `title`, `doc_type`, `version` (semantic), `date`, `lang`. Extend with domain-specific keys as needed (e.g. `parent` / `parent_version` for a linked Follow-On PRD/TAD per the Agent-Platform Readiness template) without dropping the baseline set.
+- **Conformance keys** are required in addition to the baseline set, because the rules in this guideline set read them and the agnosticity rule forbids recovering them from a path or a directory:
+
+| Key | Value domain | Read by |
+|---|---|---|
+| `owner` | One named accountable function | `duplicate-owner` |
+| `local_rung` | One Readiness Ladder rung | Readiness Ladder, `status-conflict` |
+| `delivered_rung` | One Readiness Ladder rung | Readiness Ladder, `blended-status` |
+| `lane` | `authoring` \| `mirror` \| `delivery` | Lane Topology & Deploy Boundary |
+| `universal_scope` | `true` \| `false` | Scope & Neutrality Contract modularity rule |
+
+- Declare exactly one `owner` per document; two documents claiming ownership of one contract is a `duplicate-owner` finding, and a document with no `owner` cannot be assigned a rung
+- Keep `local_rung` and `delivered_rung` as two separate keys; a single blended `status` key is a `blended-status` finding
+- Treat every conformance key as derived where a derivation exists: `local_rung` and `delivered_rung` are computed from Evidence References and written back, never authored ahead of the evidence
 
 ## Overview
 
@@ -75,6 +128,25 @@ frontmatter_contract: "required"
 | **TCO-Zero** | Total cost of ownership defaults to zero; every paid dependency requires explicit justification against a FOSS alternative | Phase 0 gate, ADR, Quality Attributes |
 | **Token Economics** | LLM token consumption (input + output + cache hit rate) is a measurable system metric, not an afterthought | Data flows, Component specs, Quality Attributes |
 | **Harness-First** | AI capabilities are accessed through structured, observable harnesses (typed inputs → typed outputs → logged decisions) rather than raw prompt calls | TAD components, Integration contracts, orchestration diagrams |
+
+### Guideline Load Budget
+
+Token economics applies to this guideline set itself, not only to the product pipelines it governs. A guideline set that must be loaded whole on every authoring turn taxes every turn.
+
+| Phase | Sections to load | Rationale |
+|---|---|---|
+| Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value` | ROI, TCO, TTV ceiling only |
+| Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value` | Authoring the PRD |
+| Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness` | Authoring the TAD |
+| Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification` | Running the alignment check |
+| Phase 4 | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
+| Any phase | `scope--neutrality-contract`, `module-index` | Always in scope; smallest sections in the set |
+
+**Directives**:
+- Load by section anchor for the current phase; forbid loading the whole set as a precondition for a single-phase task
+- Keep `scope--neutrality-contract` and `module-index` small enough to be always-loaded; a growing contract section raises the floor cost of every turn
+- Record the guideline load cost as a line item in the authoring loop's token budget; an unmeasured compliance cost is an `missing-economics-metric` against the process, not only against the product
+- Prefer adding a new `##` section over lengthening an existing one, so phase-scoped loading stays possible; this is the modularity rule expressed as a cost constraint
 
 ### AI-Native Harness Pattern
 
@@ -240,6 +312,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
 - **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
 - **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note
+- **Bound the iteration**: each Phase 4 revision cycle carries a max-iteration bound and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
 - **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
 - **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
 
@@ -598,6 +671,16 @@ flowchart LR
 
 Readiness work follows a **dependency-ordered sequence**. Must-tier dimensions ship before Follow-on tracks; tracks ship in an order that respects spend safety and proof-before-UI.
 
+**Relationship to the phase model**: the phase model (`from-0-to-1-prd--tad-creation-process`) and this execution order are **not** two competing sequences. Phases 0–3 produce the documents; this order sequences the *workstreams those documents describe*, and every workstream below sits inside Phase 3's exit and Phase 4's iteration. The canonical order used by `gate-order-drift` is the phase model; a documented workstream order that contradicts the table below is `gate-order-drift` scoped to this section, not to the phase model.
+
+| Phase | Produces | Governs which workstreams |
+|---|---|---|
+| Phase 0 | Validated problem, ROI, TCO, TTV ceiling | All, before any workstream starts |
+| Phase 1 | PRD with criteria and rungs targeted | All Must-tier scoping |
+| Phase 2 | TAD with VCCs, topology, lanes, registers | All, per workstream |
+| Phase 3 | Baselined pair, alignment check at zero blockers | Gate for Must-tier start |
+| Phase 4 | Bounded revision cycles | Follow-on tracks and rung re-derivation |
+
 **Canonical execution order**:
 
 ```
@@ -630,6 +713,37 @@ Follow-on Track 3 — Operator UI projection (dashboard document → existing UI
 - Follow-on Track 2 must not start until Follow-on Track 1 exit criteria pass or an ADR records explicit acceptance of in-memory-only tokens with stated risk
 - Prefer **proof over scaffolding**: each track ends in a VCC-demonstrable artifact (test exit code, persisted manifest, reachable URL) — not narrative “implemented” claims
 - Re-run Must-tier regression checks when any Follow-on track merges
+
+### Invocation Surface Contract
+
+**Defines what an invocation route is, where it is declared, and who owns it**, so that route and tool findings are raisable rather than nominal. Sigils are notation, not vendor syntax; substitute an equivalent notation and the rules hold unchanged.
+
+| Route kind | Notation | Resolves to | Declaration site |
+|---|---|---|---|
+| **Command route** | `/[name]` | One invocable operation with typed arguments | The owning document's Invocation Register |
+| **Semantic tag** | `#[name]` | One addressable context or artifact class | The owning document's Invocation Register |
+| **Binding** | `@[name]` | One named entity: a surface, a role, or a catalog | The owning document's Invocation Register |
+| **Tool identity** | `[namespace].[tool]` | One callable tool contract | The federation contract, and the capability catalog |
+
+**Invocation Register template** *(one per document that declares any route)*:
+```markdown
+## Invocation Register: [Document / Surface Name]
+
+| Route | Kind | Owner | Typed arguments | Trust boundary | Token cost |
+|---|---|---|---|---|---|
+| `/[name]` | Command | [owning function] | [typed schema] | [read / approval-gated / local] | [0 for discovery] |
+| `#[name]` | Tag | [owning function] | — | [read] | 0 |
+| `@[name]` | Binding | [owning function] | — | [read] | 0 |
+| `[ns].[tool]` | Tool identity | [owning function] | [typed schema] | [read / approval-gated] | [harness-dependent] |
+```
+
+**Directives**:
+- Declare every route in exactly one Invocation Register; a route declared nowhere is an `orphan-route`, and a route declared in two registers is an `ambiguous-route`
+- Match route identity on the full token including its sigil, with case preserved; forbid case-insensitive or prefix matching, which manufactures ambiguity that does not exist
+- Register every tool identity in **both** the federation contract and the capability catalog; absence from the federation contract is an `unfederated-tool` and absence from the capability catalog is an `uncatalogued-tool`
+- Derive the route set from declared document content only; forbid deriving a route from a file name, a directory, or a URL path
+- Keep every discovery and read route at zero token cost, consistent with the Readiness Dimensions spend boundaries; a non-zero cost on a read route is a `paid-read-path`
+- Name the trust boundary per route and route approval-gated and spend-bearing routes through the control-plane surface; forbid a read surface that exposes a spend-bearing route
 
 ### Readiness Gap Matrix Template
 
@@ -769,7 +883,7 @@ A VCC is mechanism-independent. Any of the following can host it; choose by what
 | Stop/exit hook | Previous iteration finishes | A deterministic script decides | CI gate, pre-merge hook, custom evaluator script |
 
 **Implementation-neutral requirements** (apply regardless of mechanism):
-- A **separate evaluator** decides completion, independent of the agent doing the work, so the verdict is not self-graded.
+- A **separate evaluator** decides completion, independent of the agent doing the work, so the verdict is not self-graded. **Independence is mechanical, not organisational**: the requirement is satisfied when the evaluator is a different *mechanism* from the implementer — a deterministic check, a hook, or a separate evaluating process — and it is not satisfied by a different job title running the same judgement. A solo operator therefore satisfies this rule by delegating the verdict to a check they do not adjudicate, and violates it by reading their own output and declaring it done. Role collapse in Role—Action—Outcome applies to authoring functions; it does not extend to the evaluator.
 - The evaluator judges only **surfaced output**; the agent must emit the proof (logs, exit codes, counts) into its own transcript.
 - Every loop carries an explicit **iteration bound** and circuit-breaker, consistent with the Orchestration Topology rules.
 
@@ -1052,6 +1166,7 @@ See ADR-[N] for each significant decision.
 | Security        | [Threat → protection requirement]             | [Architectural fix]       | [Test approach]         |
 | Observability   | [Signal → monitoring requirement]             | [Architectural fix]       | [Test approach]         |
 | Token Cost      | [Target load → max tokens/request budget]     | Harness + caching + prompt compression | Cost log sampling; alert on p95 overrun |
+| Offline Behaviour | [Connectivity loss → which capabilities remain available and which degrade] | Local-first state with deferred reconciliation; explicit degraded mode | Airplane-mode pass; reconciliation replay test |
 | TCO             | [12-month projected spend per deployment model vs zero-TCO target] | FOSS-first + zero-egress infra; managed vs self-managed compared separately | Monthly cost audit; ADR review |
 | Device Reach    | [Target device mix → mobile-first, browser-based, zero-infra runtime requirement] | Responsive/PWA-capable UI; no native-only APIs; static or edge-only delivery | Cross-device manual pass; mobile audit |
 
@@ -1153,10 +1268,14 @@ PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID] ↔ VCC [conditio
 The chain is bidirectional and must close in both directions. A link that resolves one way only is a defect with a named Finding Type — see Closure Rules in Autonomous Implementation Verification.
 
 ### Iterative Refinement
-1. Product manager drafts PRD from user research
-2. Architect reviews PRD for feasibility → drafts TAD
-3. Product manager validates TAD preserves user value
-4. Teams iterate until both documents align
+
+**Max iterations**: 3 alignment cycles | **Circuit-breaker**: no reduction in open `blocker` findings between two consecutive cycles
+
+1. The authoring function drafts the PRD from user research
+2. The architecture function reviews the PRD for feasibility → drafts the TAD
+3. The authoring function validates the TAD preserves user value
+4. Run the alignment check; if `blocker` findings remain and the circuit-breaker has not tripped, repeat from step 2
+5. On reaching the max-iteration bound or tripping the circuit-breaker, stop and escalate the unresolved findings as an explicit scope or design decision; forbid continuing to iterate past the bound
 
 ---
 
@@ -1231,6 +1350,24 @@ The chain is bidirectional and must close in both directions. A link that resolv
 ❌ A `forbid` statement with no typed finding name, so a violation cannot be recorded, compared, or regression-tracked  
 → ✅ Every rule maps to a Finding Type with a severity; findings deduplicated, ordered, and comparable across runs
 
+❌ Findings anchored to a section rather than a rule, collapsing distinct violations into one; rules left unclassified so the coverage ratio cannot be computed  
+→ ✅ Every finding anchored to a Rule ID; every rule classified artifact-bearing or advisory; coverage ratio and advisory count both reported
+
+❌ A Finding Type in the enumeration whose triggering concept the guideline set never defines, so the type can never be raised  
+→ ✅ Every type has a rule that can raise it; a type whose concept is undefined is either defined or removed
+
+❌ A conformance check that depends on wall clock, random source, or filesystem ordering, making the regression comparison unreliable  
+→ ✅ Deterministic, order-independent, additive, bounded, and comparable by construction; degraded inputs yield typed findings and a completed run
+
+❌ Rules that read an `owner`, a status, or a lane that the frontmatter contract never requires, forcing recovery from a path or a directory  
+→ ✅ Conformance keys required in frontmatter; every rule reads a declared field
+
+❌ The evaluator collapsed into the implementing role in a solo-dev context, producing self-graded verdicts  
+→ ✅ Evaluator independence enforced mechanically: a check the participant does not adjudicate; role collapse limited to authoring functions
+
+❌ A guideline set that must be loaded whole on every turn, with its own compliance cost unmeasured  
+→ ✅ Phase-scoped section loading; guideline load cost recorded as a line item in the authoring loop's token budget
+
 ---
 
 ## Conformance Findings
@@ -1245,7 +1382,7 @@ Every finding carries exactly six fields:
 |---|---|
 | **Finding Type** | One member of the enumeration below; forbid ad-hoc type strings |
 | **Severity** | Exactly one of `blocker`, `major`, `minor` |
-| **Rule anchor** | The heading anchor of the rule that was violated |
+| **Rule anchor** | The **Rule ID** of the violated rule per Rule Identity & Classification, not the section anchor alone |
 | **Artifact reference** | The artifact involved, or an explicit not-applicable marker when none is |
 | **Evidence excerpt** | The offending text, quoted verbatim and bounded in length |
 | **Remediation** | Exactly one of a documentation change, a specification change, or a locally reproducible check |
@@ -1297,13 +1434,26 @@ Every finding carries exactly six fields:
 
 ### Directives
 
-- Treat this enumeration as the single source of truth for finding names; a check that invents a type string cannot be compared against a prior run
+- Treat this enumeration as the single source of truth for **authoring-domain** finding names; execution-domain findings (task, agent, and tool-permission violations) are owned by the Agentic SDLC Guidelines companion set, and the conformance vocabulary is the union of the two. Forbid either set redefining a type the other owns
+- A check that invents a type string cannot be compared against a prior run
 - Where a rule states a severity inline, that stated severity governs over the table default
-- Deduplicate on the triple `(Finding Type, rule anchor, artifact reference)`; one violation is one finding no matter how many passes observe it
-- Order findings by severity, then Finding Type, then rule anchor, so any finding set yields exactly one review order
+- Deduplicate on the triple `(Finding Type, Rule ID, artifact reference)`; one violation is one finding no matter how many passes observe it, and Rule ID granularity keeps two distinct violations in one section distinct
+- Order findings by severity, then Finding Type, then Rule ID, so any finding set yields exactly one review order
 - Report a zero count for every type with no finding; an omitted row is indistinguishable from an unchecked rule
 - Keep the finding count bounded by the number of rules plus the number of artifacts; an unbounded count means the check is multiplying rather than classifying
 - Extend the enumeration by adding a row here first, then the rule that raises it; forbid the reverse order
+- Forbid a Finding Type with no rule that can raise it. A type whose triggering concept is undefined in this set is unraisable, which makes the enumeration overstate what is being checked; either define the concept or remove the type
+
+### Check Determinism
+
+The regression comparison above is meaningless unless two runs over the same inputs are comparable by construction:
+
+- **Deterministic**: two runs over byte-identical inputs and equal configuration produce identical finding sets; forbid a check whose output depends on a wall clock, a random source, or a filesystem enumeration order
+- **Order-independent**: processing the audited documents in any order produces one identical finding set
+- **Additive**: adding a document preserves every finding already raised against the unchanged documents; a new document that silently clears an existing finding indicates the check is reading across document boundaries in an unstated way
+- **Bounded**: the finding count stays at or below the number of rules plus the number of artifacts
+- **Comparable**: finding-set equality is judged on Finding Type, severity, Rule ID, artifact reference, evidence excerpt, and remediation only; forbid comparing run timestamps, ordering, or elapsed time
+- **Complete on degraded input**: a malformed or unreadable document yields a typed finding and the run completes; forbid aborting a run because one input is defective
 
 ---
 
@@ -1371,6 +1521,14 @@ Every finding carries exactly six fields:
 - [ ] **Delivery reach stated**: browser reach, mobile reach, and offline behaviour named per user-facing capability — else `incomplete-delivery-reach`
 - [ ] **Invocation routes resolve** to exactly one owner; every tool identity federated and catalogued — else `orphan-route`, `ambiguous-route`, `unfederated-tool`, or `uncatalogued-tool`
 - [ ] **Lanes and boundaries complete**: three lanes documented, each boundary carrying its four parts and reading `closed` absent a referenced operator instruction; no authoring-lane command mutating a delivered surface — else `missing-lane`, `incomplete-lane-transition`, `ungated-promotion`, or `deploy-boundary-breach`
+- [ ] **Rule IDs used** as the finding anchor and in the deduplication key; every rule classified artifact-bearing or advisory; advisory count reported separately
+- [ ] **Conformance frontmatter keys present**: `owner`, `local_rung`, `delivered_rung`, `lane`, `universal_scope` — no blended `status` key
+- [ ] **Invocation Register present** for every document declaring a route; every tool identity in both the federation contract and the capability catalog
+- [ ] **Every loop in this guideline set's own process bounded**, including the Phase 4 revision cycle and Iterative Refinement
+- [ ] **Check determinism satisfied**: deterministic, order-independent, additive, bounded, comparable, and complete on degraded input
+- [ ] **Evaluator is a distinct mechanism** from the implementer; role collapse does not extend to the Evaluator
+- [ ] **Guideline load budget respected**: sections loaded per phase; guideline load cost recorded in the authoring loop's token budget
+- [ ] **Execution-domain conformance discharged** against the Agentic SDLC Guidelines companion set; a runtime-readiness claim sourced from this document alone is incomplete
 - [ ] **Zero `blocker` findings** before baseline sign-off; `major` and `minor` findings resolved or formally tracked with an owner
 - [ ] **Finding set compared** against the prior run; any new `blocker` treated as a regression
 
@@ -1382,7 +1540,9 @@ Every finding carries exactly six fields:
 
 **System Architect** → designs component interactions, maps data flows, specifies interfaces, documents ADRs, defines quality attributes, plans deployment → establishes technical foundation enabling scalable implementation
 
-**Solo Founder / AI Orchestrator** *(collapses all roles in a solo-dev context)* → validates ROI before writing any doc, applies min-viable-max-value lens to MoSCoW, designs harness contracts for every AI component, sets token budgets, maintains FOSS-first ADRs, tracks TCO actuals each sprint → ships high-ROI features at near-zero infrastructure cost while keeping the codebase auditable and the AI pipelines observable
+**Solo Founder / AI Orchestrator** *(collapses all **authoring** roles in a solo-dev context; does not collapse the Evaluator)* → validates ROI before writing any doc, applies min-viable-max-value lens to MoSCoW, designs harness contracts for every AI component, sets token budgets, maintains FOSS-first ADRs, tracks TCO actuals each sprint → ships high-ROI features at near-zero infrastructure cost while keeping the codebase auditable and the AI pipelines observable
+
+**Evaluator** *(a mechanism, never a person; the one role that must not collapse into any other)* → judges each VCC against the surfaced output only, records the Evidence Reference, derives the readiness rung, and emits the finding set with types and severities → produces verdicts no participant can self-grade, which is what makes a rung and an alignment claim trustworthy. See the Agentic SDLC Guidelines companion set for how this role is instantiated and bounded during execution.
 
 **UX Designer** → creates personas, maps user journeys, validates usability requirements, provides design guidance → ensures user-centered design principles guide feature development
 

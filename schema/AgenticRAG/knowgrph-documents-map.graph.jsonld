@@ -962,6 +962,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-straitsx-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-api-reference/knowgrph-straitsx-api-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-api-reference/knowgrph-straitsx-api-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-straitsx-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-straitsx-authentication-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-api-reference/knowgrph-straitsx-authentication-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-api-reference/knowgrph-straitsx-authentication-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-straitsx-authentication-reference.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-stripe-api-reference",
       "@type": "kg:Node",
       "labels": [
@@ -975,6 +1007,22 @@
         "relPath": "docs/documents/knowgrph-api-reference/knowgrph-stripe-api-reference.md"
       },
       "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-stripe-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-stripe-mcp-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-api-reference/knowgrph-stripe-mcp-reference.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-api-reference/knowgrph-stripe-mcp-reference.md"
+      },
+      "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-stripe-mcp-reference.md",
       "language": "en-us"
     },
     {
@@ -3040,6 +3088,22 @@
         "relPath": "docs/documents/knowgrph-parser-schema-config-document.md"
       },
       "documentPath": "docs/documents/knowgrph-parser-schema-config-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-payments-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-payments-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-payments-prd-tad.md"
+      },
+      "documentPath": "docs/documents/knowgrph-payments-prd-tad.md",
       "language": "en-us"
     },
     {

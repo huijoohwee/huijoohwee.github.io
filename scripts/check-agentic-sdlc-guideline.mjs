@@ -2,14 +2,20 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
+const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
+const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const lines = source.split("\n");
+const integrationOrderLines = integrationOrder.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.2\.0"\n/);
+assert.match(source, /\nversion: "1\.3\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.match(integrationOrder, /\nversion: "1\.0\.0"\n/);
+assert.match(integrationOrder, /\nuniversal_scope: "true"\n/);
+assert.ok(integrationOrderLines.length - 1 < 600, "integration-order module must remain below 600 lines");
 
 const requiredSections = [
   "## Scope & Neutrality Contract",
@@ -17,6 +23,7 @@ const requiredSections = [
   "## Task Model",
   "### Collaboration Identity",
   "## Human-in-the-Loop Gates",
+  "## Dependency-Ordered Integration",
   "## End-to-End Release Lifecycle Protocol",
   "### Receipt Chain",
   "### Collaboration and Controller Concurrency",
@@ -58,6 +65,23 @@ for (const term of [
   );
 }
 
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "origin/main",
+  "localhost",
+]) {
+  assert.doesNotMatch(
+    integrationOrder,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `integration-order module must not contain adapter term ${term}`,
+  );
+}
+
 for (const identity of [
   "Actor ID",
   "Device ID",
@@ -90,8 +114,26 @@ for (const finding of [
   "`duplicate-release-controller`",
   "`production-authorization-drift`",
   "`post-authorization-rebuild`",
+  "`integration-order-cycle`",
+  "`integration-before-dependency`",
+  "`canonical-frontier-unverified`",
+  "`duplicate-change-reintegrated`",
+  "`stale-candidate-frontier`",
 ]) {
   assert.match(source, new RegExp(finding), `finding vocabulary must include ${finding}`);
 }
 
-console.log(`agentic SDLC guideline contract ok (${lines.length - 1} lines)`);
+for (const phrase of [
+  "Integration Frontier",
+  "already-integrated",
+  "superseded",
+  "exact-canonical checks",
+  "runtime-convergence evidence",
+  "Seal the Release Frontier",
+]) {
+  assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
+}
+
+console.log(
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines)`,
+);

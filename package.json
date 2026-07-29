@@ -8,6 +8,7 @@
   },
   "scripts": {
     "check": "python3 schema/AgenticRAG/sync_map.py --mode check",
+    "guideline:check": "node scripts/check-agentic-sdlc-guideline.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

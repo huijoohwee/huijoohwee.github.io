@@ -3,20 +3,28 @@ import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
+const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
+const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const lines = source.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
+const upstreamAdmissionLines = upstreamAdmission.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.6\.0"\n/);
+assert.match(source, /\nversion: "1\.7\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
 assert.match(integrationOrder, /\nversion: "1\.0\.0"\n/);
 assert.match(integrationOrder, /\nuniversal_scope: "true"\n/);
 assert.ok(integrationOrderLines.length - 1 < 600, "integration-order module must remain below 600 lines");
+assert.ok(upstreamAdmissionLines.length - 1 < 600, "upstream-admission module must remain below 600 lines");
+assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
+assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
+assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
 
 const requiredSections = [
   "## Scope & Neutrality Contract",
@@ -71,6 +79,40 @@ for (const term of [
     neutralReleaseProtocol,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
     `normative release protocol must not contain adapter term ${term}`,
+  );
+}
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "origin/main",
+  "localhost",
+]) {
+  assert.doesNotMatch(
+    upstreamAdmission,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `upstream-admission module must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "Prevent upstream dependencies from stopping an entire plan",
+  "never permission to adopt, rewrite, mirror, project, or integrate unprotected",
+  "Compute the exact transitive consumer closure",
+  "Continue ready units outside those closures",
+  "finite deadline and valid fallback",
+  "Generate a downstream projection only from the exact protected source revision",
+  "deterministic evaluator with typed input and output",
+  "`upstream-source-unadmitted`",
+  "`upstream-plan-overblocked`",
+]) {
+  assert.match(
+    upstreamAdmission,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `upstream-admission module must include ${requirement}`,
   );
 }
 

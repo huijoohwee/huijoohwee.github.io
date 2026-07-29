@@ -38,6 +38,7 @@ lifecycle_status: "proposed"
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
+- `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `end-to-end-release-lifecycle-protocol` — neutral receipts, human authorization, drift invalidation, and live closure
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
@@ -341,6 +342,29 @@ Some decisions an agent must not make alone, regardless of confidence.
 
 ---
 
+## Dependency-Ordered Integration
+
+The separately loadable [Dependency-Ordered Integration Module](./agentic-sdlc-integration-order.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
+
+```
+Integration Unit = immutable change identity + write scope + dependency set + named checks + runtime impact
+Integration Frontier = exact canonical revisions + exact transitive dependency closure
+```
+
+**Directives**:
+- Snapshot one immutable Integration Frontier before planning; a mutable branch, label, local checkout, or running process is not frontier identity
+- Classify each unit as `pending`, `already-integrated`, `superseded`, `integrated`, or `blocked`; forbid reintegrating an equivalent change or replacing newer canonical behavior with an older unit
+- Build a directed acyclic graph from declared unit dependencies; a cycle is an `integration-order-cycle`, and integrating a unit before a dependency is `integration-before-dependency`
+- Dispatch ready units in deterministic waves only when their write scopes are disjoint; serialize overlapping source owners even when their dependency sets differ
+- Integrate shared control, contract, and source owners before consumers, generated projections, mirrors, or release candidates; source ownership, not repository or list position, determines order
+- Rebase or merge the current canonical frontier into the owned mutation lane, resolve conflicts at the source owner, run named checks, and enter through protected integration without bypass
+- Require the protected merge revision and its exact-canonical checks before advancing the frontier; a green task head alone is `canonical-frontier-unverified`
+- Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
+- Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
+- Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
+
+---
+
 ## End-to-End Release Lifecycle Protocol
 
 This protocol is neutral across source-control, review, build, approval, deployment, and hosting implementations. Protected integration proves integration only. Candidate preparation may begin automatically after verified integration, but forward deployment remains closed until a human explicitly authorizes the exact immutable candidate.
@@ -432,6 +456,11 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Release lifecycle | `duplicate-release-controller` | `blocker` |
 | Release lifecycle | `production-authorization-drift` | `blocker` |
 | Release lifecycle | `post-authorization-rebuild` | `blocker` |
+| Integration order | `integration-order-cycle` | `blocker` |
+| Integration order | `integration-before-dependency` | `blocker` |
+| Integration order | `canonical-frontier-unverified` | `blocker` |
+| Integration order | `duplicate-change-reintegrated` | `major` |
+| Integration order | `stale-candidate-frontier` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -452,7 +481,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery` |
 | Escalation | `human-in-the-loop-gates` |
-| Release handoff | `end-to-end-release-lifecycle-protocol`, `human-in-the-loop-gates` |
+| Release handoff | `dependency-ordered-integration`, `end-to-end-release-lifecycle-protocol`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
 **Directives**:
@@ -493,6 +522,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
+- [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
+- [ ] **Runtime and release frontiers agree**: every runtime-impacting unit converged before candidate sealing, and the candidate binds the final dependency closure
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Human Authorization, Live Verification, and Publication receipts join by exact digest where each stage applies
 - [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree

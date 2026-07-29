@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-07-29"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -38,7 +38,7 @@ lifecycle_status: "proposed"
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
-- `proposed-production-lifecycle` — exact-candidate localhost review, human authorization, and drift invalidation
+- `end-to-end-release-lifecycle-protocol` — neutral receipts, human authorization, drift invalidation, and live closure
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
 - `validation-checklist` — pre-execution, per-task, and post-run gates
@@ -62,12 +62,15 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Tool permissions and blast radius | **This set** | Owns |
 | Per-task budgets and circuit-breakers | **This set** | Owns |
 | Checkpointing and recovery | **This set** | Owns |
+| Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
+| Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
 
 **Directives**:
 - Treat a baselined document pair with zero open `blocker` findings as the entry precondition for execution; forbid starting execution against an unbaselined or blocker-carrying specification
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
 - Forbid either set redefining a Finding Type the other owns; the conformance vocabulary is the union of the two enumerations
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
+- Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
 
 ---
 
@@ -129,6 +132,20 @@ Task ID = [hierarchical ordinal within the task list, maximum two levels]
 - Limit hierarchy to two levels: a task and its sub-tasks; forbid a third level, which trades comprehensibility for the illusion of precision
 - Record the Task ID on every state transition, every Evidence Reference, and every finding raised during that task
 
+### Collaboration Identity
+
+Every writer is identified by the tuple:
+
+```
+Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
+```
+
+- Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
+- Permit concurrent work only when declared write scopes are disjoint and each writer owns a separately fenced mutation lane
+- Serialize writers that share a scope, branch, worktree, or artifact; a later lease epoch supersedes an earlier one only after the earlier writer has stopped
+- Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
+- Treat the protected canonical source ref as cross-device authority; local checkouts and running processes are caches or review surfaces, never source authority
+
 ### Granularity
 
 A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.
@@ -150,6 +167,7 @@ A well-sized task is one an Implementer can complete, verify, and surface within
 - Express dependencies as a directed acyclic graph over Task IDs; a cycle is a `task-cycle` finding at `blocker` severity
 - Derive readiness from the graph: a task is ready when every dependency is in a terminal success state
 - Group ready tasks into waves for concurrent dispatch; forbid two tasks in one wave writing the same artifact, which is a `concurrent-write-conflict`
+- Revalidate declared write scopes and fence revisions before dispatch, handoff, integration, and cleanup; post-baseline authored state remains owned by its originating lane
 - State the graph explicitly; forbid inferring order from list position alone, which silently couples ordering to formatting
 
 ### State Vocabulary
@@ -193,6 +211,7 @@ What an Implementer receives, and what it must return.
 | Permitted capabilities | The capability classes granted for this task (see Tool Permission & Blast Radius) |
 | Budgets | Token, iteration, wall-clock, and context bounds for this task |
 | Lane | Always `authoring`; forbid dispatching a task in any other lane |
+| Collaboration identity | Actor, device, session, worktree, branch, scope, lease epoch, and fence revision |
 | Prior findings | Findings already open against the artifacts this task touches |
 
 ### Return Obligations
@@ -309,7 +328,7 @@ Some decisions an agent must not make alone, regardless of confidence.
 |---|---|---|
 | **Scope change** | A task requires behaviour absent from the specification | Return `blocked`; return the gap to the authoring loop |
 | **Irreversible operation** | Any Irreversible capability class operation | Return `blocked` with the exact operation stated |
-| **Boundary promotion** | Any movement toward a mirror or delivery surface | Refuse; promotion is never a task |
+| **Boundary promotion** | Any movement toward a mirror or delivery surface | Refuse inside execution; emit or consume the explicit lifecycle receipt at the release seam |
 | **Specification defect** | A VCC is unsatisfiable, contradictory, or self-contradictory | Return `blocked` with the contradiction quoted |
 | **Budget re-authorisation** | A bound is exhausted and the work is genuinely larger than estimated | Return `failed` with consumption; re-decomposition or re-authorisation is an Operator decision |
 | **Repeated failure** | The same approach failed twice | Diagnose, state the root cause, and switch approach; escalate on the third distinct failure rather than continuing to vary details |
@@ -322,33 +341,55 @@ Some decisions an agent must not make alone, regardless of confidence.
 
 ---
 
-## Proposed Production Lifecycle
+## End-to-End Release Lifecycle Protocol
 
-This lifecycle separates protected integration, localhost review, human authorization, and production deployment. A protected merge proves Dev integration only. It is never standing, inferred, or reusable authorization for Production.
+This protocol is neutral across source-control, review, build, approval, deployment, and hosting implementations. Protected integration proves integration only. Candidate preparation may begin automatically after verified integration, but forward deployment remains closed until a human explicitly authorizes the exact immutable candidate.
+
+### Receipt Chain
+
+| Receipt | Minimum identity | Authority created |
+|---|---|---|
+| **Integration Receipt** | Canonical protected source revision, dependency-closure digest, checks, evaluator, and collaboration fence | Authoring closed; review may begin |
+| **Runtime Review Receipt** | Integration Receipt digest, controlled review-surface identity, runtime dependency closure, probes, reviewer, and expiry | Candidate preparation may begin |
+| **Candidate Manifest** | Runtime Review Receipt digest, source and dependency identities, policy and target digests, build artifact digest, manifest digest, and candidate digest | One immutable candidate exists |
+| **Human Authorization Receipt** | Candidate digest, authenticated human decision reference, authority-adapter identity, issued time, expiry, and consumption state | One forward deployment attempt may begin |
+| **Live Verification Receipt** | Authorization digest, deployed artifact identity, target identity, probes, observed runtime identity, and rollback target | The authorized candidate is live and verified |
+| **Publication Receipt** | Live Verification Receipt digest and exact mirror or publication identities | Downstream publication is closed |
+
+Every receipt is immutable, typed, content-addressed, and joined to its predecessor by digest. Unknown or missing identity fields fail closed. Review and authorization are separate decisions: reviewing source or runtime behavior is not authorization to deploy built bytes.
+
+### Collaboration and Controller Concurrency
+
+- Carry the complete collaboration identity tuple from task dispatch through the Integration Receipt; a release must be traceable to the actor, device, session, worktree, branch, scope, lease epoch, and fence revision that produced it
+- Allow parallel users, devices, sessions, and worktrees only for disjoint declared write scopes; serialize overlapping scopes and reject stale fences
+- Transfer work only at an immutable revision and receipt boundary; local filesystem state, process state, and branch labels cannot be handoff identity
+- Key release control by target plus candidate digest. Acquire one target-scoped concurrency fence, coalesce idempotent duplicate dispatches, and reject competing candidates
+- Treat every authorization as single-candidate, target-specific, time-bounded, non-transferable, and consumed by at most one forward deployment
+
+### Lifecycle Stages
 
 | Stage | Required transition | Fail-closed invariant |
 |---|---|---|
-| **Protected integration** | A reviewed pull request passes required checks and merges remotely into canonical `main` | Direct or bypass merge cannot create a release candidate |
-| **Canonical convergence** | At `turn:end`, fetch the remote and fast-forward the clean canonical localhost `main` to the exact `origin/main` commit | Dirty, ahead, divergent, non-fast-forward, or unverifiable state blocks; no reset, rebase, stash, or blind pull repairs it |
-| **Localhost review** | Start the repository-owned runtime only from that exact canonical commit and its exact pinned runtime dependencies | A task branch, stale process, mismatched dependency, failed protected check, or failed probe cannot be reviewed |
-| **Candidate binding** | Record one immutable candidate containing source commit and tree, runtime-system commit and tree, local-review digest, build-artifact digest, and immutable-manifest digest | A mutable branch, tag, environment label, timestamp, or “latest” selector is not candidate identity |
-| **Human authorization** | An authenticated Operator explicitly authorizes the exact candidate digest at the protected Production environment | Approval is absent by default, single-candidate, non-transferable, and cannot be supplied by an agent, merge event, schedule, or prior release |
-| **Production deployment** | Deploy the already-built authorized artifact and verify its live identity | Never rebuild, re-resolve dependencies, or select current `main` after authorization |
-| **Rollback** | Repository-owned automation may restore the recorded last-known-good immutable deployment when forward verification fails | Rollback authority never implies forward-deploy authority |
+| **Protected integration** | Reviewed changes pass required checks and converge into the canonical protected source ref | A bypass, mutable task lane, or unverified merge cannot emit an Integration Receipt |
+| **Controlled runtime review** | An operator-controlled review surface runs the exact integrated revision and full pinned dependency closure | A task lane, stale process, mismatched dependency, failed check, or failed probe cannot emit a Runtime Review Receipt |
+| **Candidate preparation** | Build once and bind the complete source/dependency closure, review, policy, target, artifact, and manifest identities | A mutable ref, label, timestamp, “latest” selector, or unresolved dependency is not candidate identity |
+| **Human authorization** | An authenticated human explicitly authorizes the exact candidate digest through the configured authority adapter | An agent, merge, schedule, prior approval, review result, or candidate-build event cannot authorize deployment |
+| **Authorized deployment** | Revalidate zero drift, then deploy the already-built authorized bytes under one target-scoped fence | Never rebuild, re-resolve, retarget, or select current source after authorization |
+| **Live verification and publication** | Verify runtime identity and critical probes, then publish only the exact verified mirror or downstream representation | Failed or ambiguous live proof leaves publication closed and triggers recovery |
+| **Rollback and closure** | Restore the recorded immutable last-known-good deployment when forward verification fails; emit final evidence | Rollback authority never implies forward-deploy authority |
 
-**Drift invalidation**:
-- Immediately invalidate authorization if fetched `origin/main`, canonical localhost `main`, reviewed source commit or tree, runtime-system commit or tree, catalog revision, artifact digest, immutable-manifest digest, or candidate digest differs from the authorized record
-- Require a new canonical convergence, localhost review, candidate binding, and human authorization after any invalidation or any new `main` commit
-- Compare exact object identities at every boundary; forbid branch-name, environment-name, deployment-time, or “equivalent contents” substitution
-- Build once before authorization and deploy those exact bytes after authorization; a rebuild, even from the same source commit, is a new candidate
-- Keep forward deployment stopped while authorization is absent, expired, consumed, malformed, or drifted
+### Drift and Replay Invalidation
 
-**Directives**:
-- Treat `turn:end` as a canonical convergence and localhost review boundary, never as Production authorization or deployment
-- Require the protected Production environment to record the authenticated human reviewer and exact candidate digest
-- Expose typed evidence for every transition and reject missing or unknown identity fields
-- Forbid an automatic Production forward deploy triggered solely by a push or merge to `main`
-- Permit automated rollback only to an already-recorded immutable last-known-good deployment
+- Invalidate review, candidate, and authorization evidence if the canonical source revision, any transitive dependency, policy, target configuration, review digest, artifact, manifest, or candidate digest changes
+- Require new review, candidate preparation, and human authorization after invalidation; a rebuild from unchanged source is still a new candidate
+- Revalidate the complete dependency closure and canonical source immediately before deployment; compare exact identities, not names or equivalent contents
+- Reject expired, malformed, unjoined, previously consumed, machine-generated, or target-mismatched authorization
+- Keep forward deployment stopped on duplicate controller ownership, source advancement while waiting, or any evidence replay whose idempotency key does not resolve to the same candidate and terminal result
+- Publish mirrors and downstream representations only after the Live Verification Receipt exists; failed forward verification leaves the last-known-good publication unchanged
+
+### Reference Implementation Boundary
+
+Concrete branch names, terminal-turn commands, local review hosts, approval products, CI/CD services, and deployment providers are adapter mappings, not protocol vocabulary. A conforming implementation documents those mappings separately and proves that each adapter preserves the receipt fields, human boundary, concurrency fence, drift checks, and fail-closed semantics above.
 
 ---
 
@@ -364,6 +405,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Specification bridge | `unexecuted-condition` | `major` |
 | Task model | `task-cycle` | `blocker` |
 | Task model | `concurrent-write-conflict` | `major` |
+| Task model | `parallel-scope-collision` | `blocker` |
+| Task model | `stale-collaboration-fence` | `blocker` |
 | Task model | `state-without-reason` | `minor` |
 | Task model | `oversized-task` | `minor` |
 | Execution contract | `unsurfaced-result` | `major` |
@@ -379,9 +422,12 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `evidence-without-run` | `blocker` |
 | Recovery | `unresumable-run` | `major` |
 | Human gates | `assumed-operator-decision` | `blocker` |
-| Production lifecycle | `unreviewed-release-candidate` | `blocker` |
-| Production lifecycle | `production-authorization-drift` | `blocker` |
-| Production lifecycle | `post-authorization-rebuild` | `blocker` |
+| Release lifecycle | `unreviewed-release-candidate` | `blocker` |
+| Release lifecycle | `dependency-closure-drift` | `blocker` |
+| Release lifecycle | `authorization-evidence-unjoined` | `blocker` |
+| Release lifecycle | `duplicate-release-controller` | `blocker` |
+| Release lifecycle | `production-authorization-drift` | `blocker` |
+| Release lifecycle | `post-authorization-rebuild` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -402,6 +448,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery` |
 | Escalation | `human-in-the-loop-gates` |
+| Release handoff | `end-to-end-release-lifecycle-protocol`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
 **Directives**:
@@ -418,6 +465,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Evaluator mechanism named** and demonstrably distinct from the Implementer
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
+- [ ] **Collaboration identity complete**; concurrent writers have disjoint scopes, distinct lanes, current leases, and exact fence revisions
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition
 - [ ] **Capability grants stated** per task at the narrowest sufficient class; write scope declared
 - [ ] **Named check stated** per task before dispatch
@@ -441,9 +489,11 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
-- [ ] **Production candidate exact**: source and runtime commits and trees, local-review digest, artifact digest, immutable-manifest digest, and candidate digest agree
-- [ ] **Human authorization exact**: the protected Production environment records one authenticated Operator decision for that candidate digest
-- [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and Production remains blocked
+- [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Human Authorization, Live Verification, and Publication receipts join by exact digest where each stage applies
+- [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
+- [ ] **Human authorization exact**: the configured authority adapter records one authenticated human decision for that candidate and target
+- [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed
+- [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and forward deployment remains blocked
 
 ---
 
@@ -476,11 +526,17 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 ❌ Operator decisions inferred, defaulted, or simulated because the run would otherwise stall
 → ✅ Absent decisions produce `blocked`; a stalled run is cheaper than an unauthorised one
 
-❌ A green merge automatically deploying current `main`, or a release rebuilding after human approval
-→ ✅ `turn:end` converges and serves the exact canonical revision for review; one immutable built candidate is human-authorized and deployed without rebuild
+❌ A green merge automatically deploying the current protected ref, or a release rebuilding after human approval
+→ ✅ Protected integration emits no deployment authority; one reviewed immutable candidate is human-authorized and deployed without rebuild
 
-❌ Reusing approval after source, dependency, tree, artifact, or manifest drift because the branch name still says `main`
+❌ Reusing approval after source, dependency, policy, target, artifact, or manifest drift because a mutable ref still has the same name
 → ✅ Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization
+
+❌ Two devices dispatching the same target concurrently, or handing off mutable local state between users
+→ ✅ One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts
+
+❌ Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics
+→ ✅ A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters
 
 ❌ The same approach retried with cosmetic variations until the budget is gone
 → ✅ Two failures trigger root-cause diagnosis and a different approach; the third distinct failure escalates

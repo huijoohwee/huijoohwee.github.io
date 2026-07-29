@@ -9,8 +9,9 @@ const lines = source.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.5\.0"\n/);
+assert.match(source, /\nversion: "1\.6\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
+assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
 assert.match(integrationOrder, /\nversion: "1\.0\.0"\n/);
@@ -30,6 +31,7 @@ const requiredSections = [
   "### Lifecycle Stages",
   "### Drift and Replay Invalidation",
   "### Reference Implementation Boundary",
+  "## Runtime Readiness Enforcement",
   "## Execution Conformance Findings",
   "## Validation Checklist",
 ];
@@ -46,6 +48,13 @@ const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
 const referenceStart = source.indexOf("### Reference Implementation Boundary");
 assert.ok(releaseStart >= 0 && referenceStart > releaseStart, "reference adapters must follow the neutral protocol");
 const neutralReleaseProtocol = source.slice(releaseStart, referenceStart);
+const runtimeReadinessStart = source.indexOf("## Runtime Readiness Enforcement");
+const findingsStart = source.indexOf("## Execution Conformance Findings");
+assert.ok(
+  runtimeReadinessStart >= 0 && findingsStart > runtimeReadinessStart,
+  "runtime-readiness enforcement must precede its finding vocabulary",
+);
+const runtimeReadinessPolicy = source.slice(runtimeReadinessStart, findingsStart);
 
 for (const term of [
   "GitHub",
@@ -62,6 +71,40 @@ for (const term of [
     neutralReleaseProtocol,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
     `normative release protocol must not contain adapter term ${term}`,
+  );
+}
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "origin/main",
+  "localhost",
+]) {
+  assert.doesNotMatch(
+    runtimeReadinessPolicy,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `runtime-readiness policy must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "typed inputs and outputs",
+  "bounded orchestration",
+  "independent evaluation",
+  "one immutable source revision",
+  "complete dependency closure",
+  "source validation, canonical runtime, protected integration, and deployed proof as separate claims",
+  "deterministic evaluator command that exits zero only when every required proof joins",
+  "`runtime-readiness-unproven` at `blocker` severity",
+]) {
+  assert.match(
+    runtimeReadinessPolicy,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `runtime-readiness policy must include ${requirement}`,
   );
 }
 
@@ -134,6 +177,7 @@ for (const finding of [
   "`canonical-frontier-unverified`",
   "`duplicate-change-reintegrated`",
   "`stale-candidate-frontier`",
+  "`runtime-readiness-unproven`",
 ]) {
   assert.match(source, new RegExp(finding), `finding vocabulary must include ${finding}`);
 }

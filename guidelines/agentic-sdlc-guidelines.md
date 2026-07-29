@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.5.0"
-date: "2026-07-29"
+version: "1.6.0"
+date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -10,6 +10,7 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
+runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
@@ -40,6 +41,7 @@ lifecycle_status: "proposed"
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `end-to-end-release-lifecycle-protocol` — neutral interaction and authority adapters, human authorization, drift invalidation, and live closure
+- `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
 - `validation-checklist` — pre-execution, per-task, and post-run gates
@@ -415,6 +417,16 @@ Reply exactly:
 
 The reference adapter must derive `localhost` from the current controlled runtime receipt and emit this template only while the exact source, dependency closure, protected checks, probes, review receipt, candidate, and release run remain runtime-ready. The locator is review evidence, never deployment authority; any drift blocks prompting and requires a fresh runtime review and authorization.
 
+## Runtime Readiness Enforcement
+
+Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state.
+
+- Require typed inputs and outputs, bounded orchestration, independent evaluation, named checks with recorded results, cost and fallback evidence, and closed mutation and deployment gates before deriving `runtime-ready`
+- Bind one immutable source revision and its complete dependency closure; drift invalidates the claim and returns the affected unit to `blocked`
+- Keep source validation, canonical runtime, protected integration, and deployed proof as separate claims; forbid one green layer from promoting another
+- Emit `runtime-readiness-unproven` at `blocker` severity when a required receipt, join, budget, check, evaluator, dependency, or boundary proof is absent or stale
+- Expose a deterministic evaluator command that exits zero only when every required proof joins; prose, screenshots, task-local checks, and Implementer assertions are not runtime evidence
+
 ## Execution Conformance Findings
 
 The **execution-domain** half of the conformance vocabulary. The recording contract, severity assignment, deduplication key, ordering, and determinism requirements are the authoring set's and are reused unchanged; only the type enumeration is extended here.
@@ -456,6 +468,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Integration order | `canonical-frontier-unverified` | `blocker` |
 | Integration order | `duplicate-change-reintegrated` | `major` |
 | Integration order | `stale-candidate-frontier` | `blocker` |
+| Runtime readiness | `runtime-readiness-unproven` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -505,6 +518,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] State transition recorded with the role that made it and a reason where terminal
 
 **Post-Run**:
+- [ ] **Runtime readiness derived** by the deterministic evaluator from one immutable input and joined, layer-specific proof; every missing or stale obligation fails closed
 - [ ] **Every task in a terminal state**; no task left `in-progress`
 - [ ] **Every `failed`, `blocked`, and `abandoned` task carries a reason**
 - [ ] **Rungs re-derived** from the emitted Evidence References; no rung authored by hand

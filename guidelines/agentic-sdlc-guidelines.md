@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.2.0"
+version: "1.3.0"
 date: "2026-07-29"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -349,6 +349,7 @@ This protocol is neutral across source-control, review, build, approval, deploym
 
 | Receipt | Minimum identity | Authority created |
 |---|---|---|
+| **Overlap Preservation & Disposition Receipts** | Convergence base and protected-tip digests; every pre-existing non-canonical work item's collaboration identity, declared-write-set digest, state digest, recovery handle, overlap class, preservation mode, and exact retained-or-restored disposition | Convergence safety may be evaluated; no review, integration, authorization, or deployment authority |
 | **Integration Receipt** | Canonical protected source revision, dependency-closure digest, checks, evaluator, and collaboration fence | Authoring closed; review may begin |
 | **Runtime Review Receipt** | Integration Receipt digest, controlled review-surface identity, runtime dependency closure, probes, reviewer, and expiry | Candidate preparation may begin |
 | **Candidate Manifest** | Runtime Review Receipt digest, source and dependency identities, policy and target digests, build artifact digest, manifest digest, and candidate digest | One immutable candidate exists |
@@ -356,12 +357,14 @@ This protocol is neutral across source-control, review, build, approval, deploym
 | **Live Verification Receipt** | Authorization digest, deployed artifact identity, target identity, probes, observed runtime identity, and rollback target | The authorized candidate is live and verified |
 | **Publication Receipt** | Live Verification Receipt digest and exact mirror or publication identities | Downstream publication is closed |
 
-Every receipt is immutable, typed, content-addressed, and joined to its predecessor by digest. Unknown or missing identity fields fail closed. Review and authorization are separate decisions: reviewing source or runtime behavior is not authorization to deploy built bytes.
+Every receipt is immutable, typed, content-addressed, and joined to its predecessor by digest. The Integration Receipt must join the exact preservation disposition that accounted for all work observed before convergence. Unknown or missing identity fields fail closed. Preservation is not review, integration, or authorization; reviewing source or runtime behavior is not authorization to deploy built bytes.
 
 ### Collaboration and Controller Concurrency
 
 - Carry the complete collaboration identity tuple from task dispatch through the Integration Receipt; a release must be traceable to the actor, device, session, worktree, branch, scope, lease epoch, and fence revision that produced it
 - Allow parallel users, devices, sessions, and worktrees only for disjoint declared write scopes; serialize overlapping scopes and reject stale fences
+- Before any canonical convergence or release transition, inventory every pre-existing non-canonical work item and bind its current bytes, declared write set, owner, fence, overlap class, preservation mode, and opaque recovery handle into the preservation receipt; forbid cleanup, overwrite, adoption, or silent loss to manufacture a clean state
+- Keep overlapping work retained in its owning lane or an immutable recovery object until its owner reconciles it; restore disjoint work only when its state and recovery identity still match exactly, and retain it with the surfaced recovery handle on any ambiguity or drift
 - Transfer work only at an immutable revision and receipt boundary; local filesystem state, process state, and branch labels cannot be handoff identity
 - Key release control by target plus candidate digest. Acquire one target-scoped concurrency fence, coalesce idempotent duplicate dispatches, and reject competing candidates
 - Treat every authorization as single-candidate, target-specific, time-bounded, non-transferable, and consumed by at most one forward deployment
@@ -370,6 +373,7 @@ Every receipt is immutable, typed, content-addressed, and joined to its predeces
 
 | Stage | Required transition | Fail-closed invariant |
 |---|---|---|
+| **Overlap preservation** | Capture all pre-existing non-canonical work before convergence and account for each item as exactly retained or safely restored | Missing ownership, bytes, write-set, fence, recovery identity, or disposition blocks convergence; overlapping work cannot be auto-restored |
 | **Protected integration** | Reviewed changes pass required checks and converge into the canonical protected source ref | A bypass, mutable task lane, or unverified merge cannot emit an Integration Receipt |
 | **Controlled runtime review** | An operator-controlled review surface runs the exact integrated revision and full pinned dependency closure | A task lane, stale process, mismatched dependency, failed check, or failed probe cannot emit a Runtime Review Receipt |
 | **Candidate preparation** | Build once and bind the complete source/dependency closure, review, policy, target, artifact, and manifest identities | A mutable ref, label, timestamp, “latest” selector, or unresolved dependency is not candidate identity |
@@ -380,7 +384,7 @@ Every receipt is immutable, typed, content-addressed, and joined to its predeces
 
 ### Drift and Replay Invalidation
 
-- Invalidate review, candidate, and authorization evidence if the canonical source revision, any transitive dependency, policy, target configuration, review digest, artifact, manifest, or candidate digest changes
+- Invalidate integration, review, candidate, and authorization evidence if preserved work state or disposition, the canonical source revision, any transitive dependency, policy, target configuration, review digest, artifact, manifest, or candidate digest changes
 - Require new review, candidate preparation, and human authorization after invalidation; a rebuild from unchanged source is still a new candidate
 - Revalidate the complete dependency closure and canonical source immediately before deployment; compare exact identities, not names or equivalent contents
 - Reject expired, malformed, unjoined, previously consumed, machine-generated, or target-mismatched authorization
@@ -490,6 +494,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Human Authorization, Live Verification, and Publication receipts join by exact digest where each stage applies
+- [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
 - [ ] **Human authorization exact**: the configured authority adapter records one authenticated human decision for that candidate and target
 - [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed

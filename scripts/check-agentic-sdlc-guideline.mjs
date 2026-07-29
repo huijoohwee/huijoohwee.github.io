@@ -6,7 +6,7 @@ const source = fs.readFileSync(guidelineUrl, "utf8");
 const lines = source.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.2\.0"\n/);
+assert.match(source, /\nversion: "1\.3\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
@@ -72,6 +72,7 @@ for (const identity of [
 }
 
 for (const receipt of [
+  "Overlap Preservation & Disposition Receipts",
   "Integration Receipt",
   "Runtime Review Receipt",
   "Candidate Manifest",
@@ -81,6 +82,10 @@ for (const receipt of [
 ]) {
   assert.match(neutralReleaseProtocol, new RegExp(receipt), `receipt chain must include ${receipt}`);
 }
+
+assert.match(neutralReleaseProtocol, /overlapping work retained in its owning lane or an immutable recovery object/);
+assert.match(neutralReleaseProtocol, /restore disjoint work only when its state and recovery identity still match exactly/);
+assert.match(neutralReleaseProtocol, /Preservation is not review, integration, or authorization/);
 
 for (const finding of [
   "`parallel-scope-collision`",

@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.6.0"
+version: "1.7.0"
 date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,6 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
 runtime_readiness_policy: "fail-closed"
+upstream_blocking_policy: "prevent-not-bypass"
 lifecycle_status: "proposed"
 ---
 
@@ -42,6 +43,7 @@ lifecycle_status: "proposed"
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `end-to-end-release-lifecycle-protocol` — neutral interaction and authority adapters, human authorization, drift invalidation, and live closure
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence
+- `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
 - `validation-checklist` — pre-execution, per-task, and post-run gates

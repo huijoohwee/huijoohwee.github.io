@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-07-28"
+version: "1.1.0"
+date: "2026-07-29"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -10,6 +10,7 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
+lifecycle_status: "proposed"
 ---
 
 # Agentic SDLC Guidelines
@@ -37,6 +38,7 @@ universal_scope: "true"
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
+- `proposed-production-lifecycle` — exact-candidate localhost review, human authorization, and drift invalidation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
 - `validation-checklist` — pre-execution, per-task, and post-run gates
@@ -320,6 +322,36 @@ Some decisions an agent must not make alone, regardless of confidence.
 
 ---
 
+## Proposed Production Lifecycle
+
+This lifecycle separates protected integration, localhost review, human authorization, and production deployment. A protected merge proves Dev integration only. It is never standing, inferred, or reusable authorization for Production.
+
+| Stage | Required transition | Fail-closed invariant |
+|---|---|---|
+| **Protected integration** | A reviewed pull request passes required checks and merges remotely into canonical `main` | Direct or bypass merge cannot create a release candidate |
+| **Canonical convergence** | At `turn:end`, fetch the remote and fast-forward the clean canonical localhost `main` to the exact `origin/main` commit | Dirty, ahead, divergent, non-fast-forward, or unverifiable state blocks; no reset, rebase, stash, or blind pull repairs it |
+| **Localhost review** | Start the repository-owned runtime only from that exact canonical commit and its exact pinned runtime dependencies | A task branch, stale process, mismatched dependency, failed protected check, or failed probe cannot be reviewed |
+| **Candidate binding** | Record one immutable candidate containing source commit and tree, runtime-system commit and tree, local-review digest, build-artifact digest, and immutable-manifest digest | A mutable branch, tag, environment label, timestamp, or “latest” selector is not candidate identity |
+| **Human authorization** | An authenticated Operator explicitly authorizes the exact candidate digest at the protected Production environment | Approval is absent by default, single-candidate, non-transferable, and cannot be supplied by an agent, merge event, schedule, or prior release |
+| **Production deployment** | Deploy the already-built authorized artifact and verify its live identity | Never rebuild, re-resolve dependencies, or select current `main` after authorization |
+| **Rollback** | Repository-owned automation may restore the recorded last-known-good immutable deployment when forward verification fails | Rollback authority never implies forward-deploy authority |
+
+**Drift invalidation**:
+- Immediately invalidate authorization if fetched `origin/main`, canonical localhost `main`, reviewed source commit or tree, runtime-system commit or tree, catalog revision, artifact digest, immutable-manifest digest, or candidate digest differs from the authorized record
+- Require a new canonical convergence, localhost review, candidate binding, and human authorization after any invalidation or any new `main` commit
+- Compare exact object identities at every boundary; forbid branch-name, environment-name, deployment-time, or “equivalent contents” substitution
+- Build once before authorization and deploy those exact bytes after authorization; a rebuild, even from the same source commit, is a new candidate
+- Keep forward deployment stopped while authorization is absent, expired, consumed, malformed, or drifted
+
+**Directives**:
+- Treat `turn:end` as a canonical convergence and localhost review boundary, never as Production authorization or deployment
+- Require the protected Production environment to record the authenticated human reviewer and exact candidate digest
+- Expose typed evidence for every transition and reject missing or unknown identity fields
+- Forbid an automatic Production forward deploy triggered solely by a push or merge to `main`
+- Permit automated rollback only to an already-recorded immutable last-known-good deployment
+
+---
+
 ## Execution Conformance Findings
 
 The **execution-domain** half of the conformance vocabulary. The recording contract, severity assignment, deduplication key, ordering, and determinism requirements are the authoring set's and are reused unchanged; only the type enumeration is extended here.
@@ -347,6 +379,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `evidence-without-run` | `blocker` |
 | Recovery | `unresumable-run` | `major` |
 | Human gates | `assumed-operator-decision` | `blocker` |
+| Production lifecycle | `unreviewed-release-candidate` | `blocker` |
+| Production lifecycle | `production-authorization-drift` | `blocker` |
+| Production lifecycle | `post-authorization-rebuild` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -406,6 +441,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
+- [ ] **Production candidate exact**: source and runtime commits and trees, local-review digest, artifact digest, immutable-manifest digest, and candidate digest agree
+- [ ] **Human authorization exact**: the protected Production environment records one authenticated Operator decision for that candidate digest
+- [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and Production remains blocked
 
 ---
 
@@ -437,6 +475,12 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 ❌ Operator decisions inferred, defaulted, or simulated because the run would otherwise stall
 → ✅ Absent decisions produce `blocked`; a stalled run is cheaper than an unauthorised one
+
+❌ A green merge automatically deploying current `main`, or a release rebuilding after human approval
+→ ✅ `turn:end` converges and serves the exact canonical revision for review; one immutable built candidate is human-authorized and deployed without rebuild
+
+❌ Reusing approval after source, dependency, tree, artifact, or manifest drift because the branch name still says `main`
+→ ✅ Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization
 
 ❌ The same approach retried with cosmetic variations until the budget is gone
 → ✅ Two failures trigger root-cause diagnosis and a different approach; the third distinct failure escalates

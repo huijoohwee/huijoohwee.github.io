@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.4.0"
+version: "1.5.0"
 date: "2026-07-29"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -73,8 +73,6 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
 - Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
 
----
-
 ## Agent Roles & Independence
 
 Four execution roles. Roles are **functions**, not people and not necessarily separate processes — except where the independence rule says otherwise.
@@ -101,8 +99,6 @@ Four execution roles. Roles are **functions**, not people and not necessarily se
 - Route every completion verdict through the Evaluator; forbid a task transitioning to a terminal success state on the Implementer's assertion alone
 - Record which role produced every state transition, so a self-graded verdict is detectable after the fact rather than only in the moment
 
----
-
 ## Specification to Task Bridge
 
 The authoring set ends at a baselined pair with derived VCCs. Execution begins at a task list. The bridge is a **derivation**, not a fresh authoring act.
@@ -118,8 +114,6 @@ Acceptance criterion → VCC → Task (or task group) → Evidence Reference →
 - Report bridge coverage as covered VCCs over total VCCs; forbid claiming a task list is complete without that ratio
 - Forbid introducing a requirement at task-authoring time: a task that needs behaviour absent from the specification is a specification defect, so return it to the authoring loop rather than inventing scope inside the task list
 - Re-derive the task list whenever a VCC changes; a task list outrunning its specification produces work no rung will ever credit
-
----
 
 ## Task Model
 
@@ -196,8 +190,6 @@ not-started → queued → ready → in-progress → {verified | failed | blocke
 - Forbid transitioning out of a terminal state except by an explicit re-derivation that resets the task to `not-started` and records why
 - Never infer a state from an artifact's existence; a file appearing on disk is not a verdict
 
----
-
 ## Execution Contract
 
 What an Implementer receives, and what it must return.
@@ -231,8 +223,6 @@ An Implementer must surface, in its own output, everything the Evaluator needs:
 - Enumerate artifacts changed even when the change is incidental; an unenumerated change is invisible to the concurrent-write and blast-radius rules
 - Surface the constraint violations the task caused, not only the ones it found; self-reporting is cheaper than detection and is the only path that scales
 
----
-
 ## Tool Permission & Blast Radius
 
 Capability is granted per task, not per session, and scales to reversibility.
@@ -254,8 +244,6 @@ Capability is granted per task, not per session, and scales to reversibility.
 - Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission
 - State the declared write scope before dispatch; a write outside it is an `out-of-scope-write` finding
 
----
-
 ## Per-Task Budgets
 
 Every task carries four bounds and a circuit-breaker. An unbounded task is the execution-domain equivalent of an unbounded loop.
@@ -275,8 +263,6 @@ Every task carries four bounds and a circuit-breaker. An unbounded task is the e
 - Record consumption against every bound in the return, whether or not the bound was approached; unmeasured consumption cannot be budgeted next time
 - Aggregate per-task consumption into a per-run total and compare it to the estimate in the specification's token budget; a run exceeding its specification's budget is an economics finding, not a surprise
 - Keep retries idempotent: a retried task must not double-apply its own prior partial work
-
----
 
 ## Verification Strategy
 
@@ -305,8 +291,6 @@ Example-based tests confirm the cases an author imagined. Properties confirm the
 - Forbid emitting an Evidence Reference for a check that was not run in this task
 - Forbid an Evidence Reference whose recorded result is an assertion that a result exists
 
----
-
 ## Checkpoint & Recovery
 
 Long runs outlive working context. A run that cannot resume is a run that must restart, and restarting re-spends every token already spent.
@@ -319,8 +303,6 @@ Long runs outlive working context. A run that cannot resume is a run that must r
 - Forbid a recovery path that re-dispatches a `verified` task; re-verification is a re-derivation and resets the task explicitly
 - Record enough in each transition that a reader who followed none of the run can reconstruct what happened and why
 
----
-
 ## Human-in-the-Loop Gates
 
 Some decisions an agent must not make alone, regardless of confidence.
@@ -330,7 +312,7 @@ Some decisions an agent must not make alone, regardless of confidence.
 | **Scope change** | A task requires behaviour absent from the specification | Return `blocked`; return the gap to the authoring loop |
 | **Irreversible operation** | Any Irreversible capability class operation | Return `blocked` with the exact operation stated |
 | **Boundary promotion** | Any movement toward a mirror or delivery surface | Refuse inside execution; emit or consume the explicit lifecycle receipt at the release seam |
-| **Production authorization** | One immutable candidate is ready for forward deployment | Require an authenticated human to answer the exact candidate-and-target challenge through the policy-selected interaction adapter |
+| **Production authorization** | One immutable candidate and its controlled review surface still prove runtime readiness | Revalidate the exact source, dependency closure, probes, candidate, release-run reference, and review-surface locator before requiring an authenticated human to answer the exact candidate-and-target challenge |
 | **Specification defect** | A VCC is unsatisfiable, contradictory, or self-contradictory | Return `blocked` with the contradiction quoted |
 | **Budget re-authorisation** | A bound is exhausted and the work is genuinely larger than estimated | Return `failed` with consumption; re-decomposition or re-authorisation is an Operator decision |
 | **Repeated failure** | The same approach failed twice | Diagnose, state the root cause, and switch approach; escalate on the third distinct failure rather than continuing to vary details |
@@ -340,8 +322,6 @@ Some decisions an agent must not make alone, regardless of confidence.
 - Present a gate with the decision, the options, and the consequence of each; forbid escalating with a question the Operator cannot answer from what was surfaced
 - Forbid bundling an unrelated change into a gated task while waiting; a blocked task stays blocked
 - Record the Operator decision reference on the transition it authorises, so the authorisation is auditable later
-
----
 
 ## Dependency-Ordered Integration
 
@@ -363,8 +343,6 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
 - Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
-
----
 
 ## End-to-End Release Lifecycle Protocol
 
@@ -404,7 +382,7 @@ Every receipt is immutable, typed, content-addressed, and joined to its predeces
 | **Protected integration** | Reviewed changes pass required checks and converge into the canonical protected source ref | A bypass, mutable task lane, or unverified merge cannot emit an Integration Receipt |
 | **Controlled runtime review** | An operator-controlled review surface runs the exact integrated revision and full pinned dependency closure | A task lane, stale process, mismatched dependency, failed check, or failed probe cannot emit a Runtime Review Receipt |
 | **Candidate preparation** | Build once and bind the complete source/dependency closure, review, policy, target, artifact, and manifest identities | A mutable ref, label, timestamp, “latest” selector, or unresolved dependency is not candidate identity |
-| **Human authorization** | A replaceable interaction adapter presents the exact candidate-and-target challenge; the authority adapter joins the authenticated human decision to that Interaction Receipt | An agent, transport event, merge, schedule, prior approval, review result, or candidate-build event cannot authorize deployment |
+| **Human authorization** | A runtime-readiness gate revalidates the current review receipt and candidate, then a replaceable interaction adapter presents the candidate, source, run, review-surface locator, and exact candidate-and-target challenge; the authority adapter joins the authenticated human decision to that Interaction Receipt | A stale or failed review surface cannot emit the prompt; an agent, transport event, merge, schedule, prior approval, review result, or candidate-build event cannot authorize deployment |
 | **Authorized deployment** | Revalidate zero drift, then deploy the already-built authorized bytes under one target-scoped fence | Never rebuild, re-resolve, retarget, or select current source after authorization |
 | **Live verification and publication** | Verify runtime identity and critical probes, then publish only the exact verified mirror or downstream representation | Failed or ambiguous live proof leaves publication closed and triggers recovery |
 | **Rollback and closure** | Restore the recorded immutable last-known-good deployment when forward verification fails; emit final evidence | Rollback authority never implies forward-deploy authority |
@@ -420,9 +398,22 @@ Every receipt is immutable, typed, content-addressed, and joined to its predeces
 
 ### Reference Implementation Boundary
 
-Concrete branch names, terminal-turn commands, local review hosts, approval products, CI/CD services, and deployment providers are adapter mappings, not protocol vocabulary. A conforming implementation documents those mappings separately and proves that each adapter preserves the receipt fields, human boundary, concurrency fence, drift checks, and fail-closed semantics above. The recommended production profile is terminal-first and browser-independent: an interactive TTY command downloads the exact candidate, requires the human to return its exact digest, records the interaction evidence, and calls the configured authority API directly without launching or requiring a browser; non-interactive confirmation flags and inferred approval are forbidden.
+Concrete branch names, terminal-turn commands, local review hosts, approval products, CI/CD services, and deployment providers are adapter mappings, not protocol vocabulary. A conforming implementation documents those mappings separately and proves that each adapter preserves the receipt fields, human boundary, concurrency fence, drift checks, and fail-closed semantics above. The recommended production profile is terminal-first and browser-independent: an interactive TTY command downloads the exact candidate, requires the human to return its exact digest, records the interaction evidence, and calls the configured authority API directly without launching or requiring a browser; non-interactive confirmation flags and inferred approval are forbidden. Its runtime-ready reference implementation template is:
 
----
+```text
+The release is verified and awaiting fresh human authorization.
+
+Candidate: `{{candidate_digest}}`
+Source: `{{source_revision}}`
+Run: `{{release_run_reference}}`
+localhost: `{{localhost_review_url}}`
+
+Reply exactly:
+
+`authorize {{candidate_digest}}`
+```
+
+The reference adapter must derive `localhost` from the current controlled runtime receipt and emit this template only while the exact source, dependency closure, protected checks, probes, review receipt, candidate, and release run remain runtime-ready. The locator is review evidence, never deployment authority; any drift blocks prompting and requires a fresh runtime review and authorization.
 
 ## Execution Conformance Findings
 
@@ -472,8 +463,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - Report a zero count for every type with no finding; an omitted row is indistinguishable from an unchecked rule
 - Forbid a type in this enumeration with no rule in this set that can raise it
 
----
-
 ## Execution Load Budget
 
 | Stage | Sections to load |
@@ -491,8 +480,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 **Directives**:
 - Load by section anchor for the current stage; forbid loading the whole set as a precondition for a single-stage action
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
-
----
 
 ## Validation Checklist
 
@@ -528,14 +515,13 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
 - [ ] **Runtime and release frontiers agree**: every runtime-impacting unit converged before candidate sealing, and the candidate binds the final dependency closure
+- [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review-surface locator are revalidated from the current Runtime Review Receipt before the prompt is emitted
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Authorization Interaction, Human Authorization, Live Verification, and Publication receipts join by exact digest where each stage applies
 - [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
 - [ ] **Human authorization exact**: the interaction receipt proves the configured transport, browser dependency, exact challenge response, and authenticated actor; the authority adapter records the same human decision for that candidate and target
 - [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed
 - [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and forward deployment remains blocked
-
----
 
 ## Anti-Pattern Guards
 
@@ -583,8 +569,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 ❌ A task list with cycles, or a wave whose tasks write the same artifact concurrently
 → ✅ Acyclic dependency graph; wave membership checked for write disjointness before dispatch
-
----
 
 ## Mantra Application
 

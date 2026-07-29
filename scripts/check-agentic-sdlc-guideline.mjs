@@ -9,7 +9,7 @@ const lines = source.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.3\.0"\n/);
+assert.match(source, /\nversion: "1\.4\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
@@ -100,6 +100,7 @@ for (const receipt of [
   "Integration Receipt",
   "Runtime Review Receipt",
   "Candidate Manifest",
+  "Authorization Interaction Receipt",
   "Human Authorization Receipt",
   "Live Verification Receipt",
   "Publication Receipt",
@@ -110,12 +111,16 @@ for (const receipt of [
 assert.match(neutralReleaseProtocol, /overlapping work retained in its owning lane or an immutable recovery object/);
 assert.match(neutralReleaseProtocol, /restore disjoint work only when its state and recovery identity still match exactly/);
 assert.match(neutralReleaseProtocol, /Preservation is not review, integration, or authorization/);
+assert.match(neutralReleaseProtocol, /interaction and authority adapters are independent modules/);
+assert.match(source.slice(referenceStart), /terminal-first and browser-independent/);
+assert.match(source.slice(referenceStart), /without launching or requiring a browser/);
 
 for (const finding of [
   "`parallel-scope-collision`",
   "`stale-collaboration-fence`",
   "`dependency-closure-drift`",
   "`authorization-evidence-unjoined`",
+  "`authorization-interaction-unjoined`",
   "`duplicate-release-controller`",
   "`production-authorization-drift`",
   "`post-authorization-rebuild`",

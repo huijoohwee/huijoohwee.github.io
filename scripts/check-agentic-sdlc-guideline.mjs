@@ -9,7 +9,7 @@ const lines = source.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.4\.0"\n/);
+assert.match(source, /\nversion: "1\.5\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
@@ -114,6 +114,11 @@ assert.match(neutralReleaseProtocol, /Preservation is not review, integration, o
 assert.match(neutralReleaseProtocol, /interaction and authority adapters are independent modules/);
 assert.match(source.slice(referenceStart), /terminal-first and browser-independent/);
 assert.match(source.slice(referenceStart), /without launching or requiring a browser/);
+assert.match(source.slice(referenceStart), /The release is verified and awaiting fresh human authorization\./);
+assert.match(source.slice(referenceStart), /localhost: `\{\{localhost_review_url\}\}`/);
+assert.match(source.slice(referenceStart), /`authorize \{\{candidate_digest\}\}`/);
+assert.match(neutralReleaseProtocol, /runtime-readiness gate revalidates the current review receipt and candidate/);
+assert.match(source.slice(referenceStart), /emit this template only while the exact source, dependency closure, protected checks, probes, review receipt, candidate, and release run remain runtime-ready/);
 
 for (const finding of [
   "`parallel-scope-collision`",

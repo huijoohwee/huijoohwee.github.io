@@ -1555,6 +1555,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-deterministic-knowledge-graph-runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-deterministic-knowledge-graph-runtime.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-deterministic-knowledge-graph-runtime.md"
+      },
+      "documentPath": "docs/documents/knowgrph-deterministic-knowledge-graph-runtime.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-disjoint-force-frontmatter-document",
       "@type": "kg:Node",
       "labels": [

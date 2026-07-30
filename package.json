@@ -9,8 +9,9 @@
   "scripts": {
     "check": "python3 schema/AgenticRAG/sync_map.py --mode check",
     "agentic-sdlc:policy:check": "node scripts/check-agentic-sdlc-guideline.mjs",
+    "agenticrag:guidelines-map:check": "node scripts/check-agenticrag-guidelines-map.mjs",
     "guideline:check": "npm run agentic-sdlc:policy:check",
-    "test": "npm run agentic-sdlc:policy:check"
+    "test": "npm run agentic-sdlc:policy:check && npm run agenticrag:guidelines-map:check"
   },
   "repository": {
     "type": "git",

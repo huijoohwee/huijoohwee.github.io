@@ -238,17 +238,10 @@ for (const requirement of [
 
 function assertOrderedPhrases(text, phrases, label) {
   let priorIndex = -1;
-  for (const phrase of phrases) {
-    const currentIndex = text.indexOf(phrase);
-    assert.ok(currentIndex > priorIndex, `${label} must order ${phrase} after its predecessor`);
-    priorIndex = currentIndex;
-  }
+  for (const phrase of phrases) { const currentIndex = text.indexOf(phrase); assert.ok(currentIndex > priorIndex, `${label} must order ${phrase} after its predecessor`); priorIndex = currentIndex; }
 }
 function contractSlice(text, start, end, label) {
-  const startIndex = text.indexOf(start);
-  const endIndex = text.indexOf(end);
-  assert.ok(startIndex >= 0 && endIndex > startIndex, `${label} boundaries must be present`);
-  return text.slice(startIndex, endIndex);
+  const startIndex = text.indexOf(start); const endIndex = text.indexOf(end); assert.ok(startIndex >= 0 && endIndex > startIndex, `${label} boundaries must be present`); return text.slice(startIndex, endIndex);
 }
 
 for (const term of [
@@ -267,10 +260,11 @@ const scopedAdmissionRequirements = [
   "`schema`, `operationId`", "`actorId`, `deviceId`, `sessionId`", "`claimId`, `leaseEpoch`, `fenceRevision`, `ledgerRevision`",
   "`evaluationTime`, `expiresAt`", "`collaborationReceiptDigest`", "`beforeLaneStateDigest`, `afterLaneStateDigest`",
   "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`", "`mutationSetDigest`", "`adapterRevision`, `evaluatorRevision`", "`operationTime`", "`receiptDigest`",
-  "malformed, stale, mismatched, expired-at-operation, or unjoined peer receipt emits `admission-snapshot-stale`",
-  "proves historical ledger inclusion", "`evaluationTime <= operationTime < expiresAt`",
-  "joins a valid successor chain to the latest current disjoint claim", "not require its current fence to equal the historical operation fence",
-  "claim expired at operation time remains invalid after renewal", "valid operation remains attributable after a subsequent renewal", "restricted mutation capability", "not reported as `collateral-lane-mutation`",
+  "malformed, stale, mismatched, expired-at-operation, transition-raced, or unjoined peer receipt emits `admission-snapshot-stale`",
+  "proves historical ledger inclusion", "`evaluationTime <= operationTime < expiresAt`", "`operationTime` must be strictly earlier than the first later transition",
+  "renewal accepted before or at `operationTime` invalidates the older fence", "renewal accepted after `operationTime` may preserve attribution",
+  "joins a valid successor chain to the latest current disjoint claim", "without requiring the current fence to equal a valid historical operation fence",
+  "claim expired at operation time remains invalid after renewal", "A report cannot require evidence from a later phase", "later-phase evidence explicitly absent", "`mode: check`", "`mode: admit`", "restricted mutation capability", "not reported as `collateral-lane-mutation`",
   "unknown or conflicting causality raises `admission-snapshot-stale`", "remoteClaimInventoryDigest", "localLaneInventoryDigest", "`existingLaneInventoryDigest`", "candidatePlanDigest", "sharedCoordinationStateDigest",
   "operation-derived typed snapshot before and after provisioning", "`sharedConfigDigest`, `hooksDigest`", "`dependencyStateDigest`", "`refInventoryDigest`",
   "`registrationInventoryDigest`", "`leaseInventoryDigest`", "`recoveryInventoryDigest`",
@@ -299,7 +293,7 @@ assertOrderedPhrases(scopedProtocol, [
   "then observe the target and snapshot", "Submit one cloud claim transition",
   "chain, target observation, local lanes, and shared coordination state", "atomically create and register only the candidate lane",
   "final protected-ledger refresh after local provisioning", "Emit the Preservation Receipt only after",
-  "Derive `authoringAdmission: admitted` only after", "Immediately before the admitted receipt is consumed for first source authoring",
+  "derive `authoringAdmission: admitted` only after", "Immediately before the admitted receipt is consumed for first source authoring",
 ], "scoped admission protocol");
 
 const peerReceiptContract = contractSlice(normalizedScopedLaneAdmission, "### Independent Peer Operation Receipt", "## Report and Decision Contract", "peer receipt");
@@ -309,6 +303,13 @@ assertOrderedPhrases(peerReceiptContract, [
   "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`", "`mutationSetDigest`",
   "`adapterRevision`, `evaluatorRevision`", "`operationTime`", "`receiptDigest`",
 ], "peer receipt fields");
+for (const phrase of ["`operationTime` must be strictly earlier than the first later transition", "bind, heartbeat or renewal, review-ready, park, handoff, release, revoke, or an accepted successor claim", "renewal accepted before or at `operationTime` invalidates the older fence", "renewal accepted after `operationTime` may preserve attribution", "claim expired at operation time remains invalid after renewal"]) assert.ok(peerReceiptContract.includes(phrase), `peer receipt timing must include ${phrase}`);
+
+const reportContract = contractSlice(normalizedScopedLaneAdmission, "## Report and Decision Contract", "## Deterministic Admission Protocol", "report contract");
+assertOrderedPhrases(reportContract, ["A report cannot require evidence from a later phase", "| `plan` |", "| `check` |", "| `admit` |"], "report phases");
+assert.doesNotMatch(reportContract.slice(0, reportContract.indexOf("A report cannot require evidence from a later phase")), /accepted canonical cloud claim record|final protected-ledger observation/);
+const planMode = contractSlice(reportContract, "| `plan` |", "| `check` |", "plan mode"); const checkMode = contractSlice(reportContract, "| `check` |", "| `admit` |", "check mode"); const admitMode = contractSlice(reportContract, "| `admit` |", "Each absent value", "admit mode");
+for (const [mode, text, phrases] of [["plan", planMode, ["accepted cloud claim, Admission Receipt, final ledger observation, candidate result, local lease, and Preservation Receipt are explicit absent"]], ["check", checkMode, ["requires the accepted canonical cloud claim record", "final post-provisioning ledger observation, candidate result, local lease, and Preservation Receipt remain explicit absent"]], ["admit", admitMode, ["accepted claim, atomic candidate result, candidate local lease, final protected-ledger observation and digest, and joined Admission and Preservation Receipts", "decision digest derived from that joined receipt chain"]]]) for (const phrase of phrases) assert.ok(text.includes(phrase), `${mode} report evidence must include ${phrase}`);
 
 const preservationContract = contractSlice(normalizedScopedLaneAdmission, "The Preservation Receipt binds:", "## Retry, Rollback, and Recovery", "Preservation Receipt contract");
 for (const proof of [

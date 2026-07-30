@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.7.0"
+version: "1.8.0"
 date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -421,13 +421,13 @@ The reference adapter must derive `localhost` from the current controlled runtim
 
 ## Runtime Readiness Enforcement
 
-Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state.
+Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./agentic-sdlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract.
 
 - Require typed inputs and outputs, bounded orchestration, independent evaluation, named checks with recorded results, cost and fallback evidence, and closed mutation and deployment gates before deriving `runtime-ready`
 - Bind one immutable source revision and its complete dependency closure; drift invalidates the claim and returns the affected unit to `blocked`
 - Keep source validation, canonical runtime, protected integration, and deployed proof as separate claims; forbid one green layer from promoting another
 - Emit `runtime-readiness-unproven` at `blocker` severity when a required receipt, join, budget, check, evaluator, dependency, or boundary proof is absent or stale
-- Expose a deterministic evaluator command that exits zero only when every required proof joins; prose, screenshots, task-local checks, and Implementer assertions are not runtime evidence
+- Require repository-owned stage gates to consume operation-derived evidence and emit digest-bound receipts for admission, review, integration, runtime, candidate, authorization, deployment, and publication; expose a deterministic evaluator command that exits zero only when every required proof joins, and forbid `npx`, `latest`, or dynamic resolution from creating policy identity, gate authority, or runtime-readiness proof
 
 ## Execution Conformance Findings
 

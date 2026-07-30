@@ -930,22 +930,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-grabmaps-api-reference",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-api-reference/knowgrph-grabmaps-api-reference.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-api-reference/knowgrph-grabmaps-api-reference.md"
-      },
-      "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-grabmaps-api-reference.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-api-reference--knowgrph-miromind-api-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -1039,6 +1023,22 @@
         "relPath": "docs/documents/knowgrph-api-reference/knowgrph-videodb-api-reference.md"
       },
       "documentPath": "docs/documents/knowgrph-api-reference/knowgrph-videodb-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-architecture-decisions",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-architecture-decisions.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-architecture-decisions.md"
+      },
+      "documentPath": "docs/documents/knowgrph-architecture-decisions.md",
       "language": "en-us"
     },
     {
@@ -2499,22 +2499,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-mcp",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-mcp.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-mcp.md"
-      },
-      "documentPath": "docs/documents/knowgrph-mcp.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-mcp--knowgrph-exa-mcp-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -2528,22 +2512,6 @@
         "relPath": "docs/documents/knowgrph-mcp/knowgrph-exa-mcp-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-mcp/knowgrph-exa-mcp-prd-tad.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mcp--knowgrph-feishu-base-mcp-phase1-tasks",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-mcp/knowgrph-feishu-base-mcp-phase1-tasks.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-mcp/knowgrph-feishu-base-mcp-phase1-tasks.md"
-      },
-      "documentPath": "docs/documents/knowgrph-mcp/knowgrph-feishu-base-mcp-phase1-tasks.md",
       "language": "en-us"
     },
     {
@@ -2576,22 +2544,6 @@
         "relPath": "docs/documents/knowgrph-mcp/knowgrph-feishu-base-mcp-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-mcp/knowgrph-feishu-base-mcp-prd-tad.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-mcp--knowgrph-lark-app-mcp-phase2-tasks",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-mcp/knowgrph-lark-app-mcp-phase2-tasks.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-mcp/knowgrph-lark-app-mcp-phase2-tasks.md"
-      },
-      "documentPath": "docs/documents/knowgrph-mcp/knowgrph-lark-app-mcp-phase2-tasks.md",
       "language": "en-us"
     },
     {
@@ -3011,22 +2963,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-next-step-priorities",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-next-step-priorities.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-next-step-priorities.md"
-      },
-      "documentPath": "docs/documents/knowgrph-next-step-priorities.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-ontology-document",
       "@type": "kg:Node",
       "labels": [
@@ -3233,6 +3169,22 @@
         "relPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md"
       },
       "documentPath": "docs/documents/knowgrph-port-handles-and-subgraph-layout-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-prd-tad-adr-conformance-report",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-prd-tad-adr-conformance-report.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-prd-tad-adr-conformance-report.md"
+      },
+      "documentPath": "docs/documents/knowgrph-prd-tad-adr-conformance-report.md",
       "language": "en-us"
     },
     {
@@ -3746,22 +3698,6 @@
         "relPath": "docs/documents/knowgrph-swarm-prediction-engine-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-swarm-prediction-engine-prd-tad.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:knowgrph:doc:knowgrph-system-design-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-system-design-document.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-system-design-document.md"
-      },
-      "documentPath": "docs/documents/knowgrph-system-design-document.md",
       "language": "en-us"
     },
     {

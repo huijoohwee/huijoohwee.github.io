@@ -5,17 +5,21 @@ const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.
 const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-runtime.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
+const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
 const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
+const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const lines = source.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
+const cloudCollaborationLines = cloudCollaboration.split("\n");
+const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.8\.0"\n/);
+assert.match(source, /\nversion: "1\.9\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -41,6 +45,15 @@ assert.ok(upstreamAdmissionLines.length - 1 < 600, "upstream-admission module mu
 assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(cloudCollaboration.startsWith("---\n"), "cloud-collaboration frontmatter must be present");
+assert.match(cloudCollaboration, /\nversion: "1\.0\.0"\n/);
+assert.match(cloudCollaboration, /\nuniversal_scope: "true"\n/);
+assert.match(cloudCollaboration, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(
+  cloudCollaborationLines.length - 1 < 600,
+  "cloud-collaboration module must remain below 600 lines",
+);
+assert.match(source, /\.\/agentic-sdlc-cloud-collaboration\.md/);
 
 const requiredSections = [
   "## Scope & Neutrality Contract",
@@ -100,6 +113,66 @@ for (const term of [
     neutralReleaseProtocol,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
     `normative release protocol must not contain adapter term ${term}`,
+  );
+}
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "origin/main",
+  "turn:end",
+  "localhost",
+]) {
+  assert.doesNotMatch(
+    cloudCollaboration,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `cloud-collaboration module must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "protected remote ledger",
+  "review requests and local execution locations are replaceable projections",
+  "Actor ID, Device ID, Session ID, Worktree ID, Branch ID, Scope ID, Lease Epoch, and Fence Revision",
+  "`repositoryId`",
+  "`workItemId`",
+  "`canonicalBaseRevision`",
+  "`declaredWriteScope`",
+  "`writeSetDigest`",
+  "`claimId`",
+  "`fenceRevision`",
+  "`ledgerRevision`",
+  "`expiresAt`",
+  "`evaluationTime`",
+  "`idempotencyKey`",
+  "remotely addressable append-only hash chain",
+  "complete active-writer inventory",
+  "compare-and-swap",
+  "at most one transition can be accepted",
+  "Require an accepted `active` claim before any shared lane mutation",
+  "Disjoint normalized write sets may proceed concurrently",
+  "A review request is a projection of one ledger claim, not a lock",
+  "They must not claim shared ownership",
+  "Scheduling and queue concurrency create no lock authority",
+  "Required protected checks independently verify the current ledger",
+  "operation-derived digest-bound Collaboration Receipt joins admission evidence",
+  "model-free commands for claim, renew, park, review-ready, handoff, release, inspect, and verify",
+  "Byte-identical inputs and evaluation time produce identical findings",
+  "Collaboration readiness is partial proof",
+  "Forbid polling loops, per-device infrastructure, remote databases",
+  "`parallel-scope-collision`",
+  "`stale-collaboration-fence`",
+  "`evidence-without-run`",
+  "`runtime-readiness-unproven`",
+]) {
+  assert.match(
+    normalizedCloudCollaboration,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `cloud-collaboration module must include ${requirement}`,
   );
 }
 
@@ -303,5 +376,5 @@ for (const phrase of [
 }
 
 console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines)`,
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines)`,
 );

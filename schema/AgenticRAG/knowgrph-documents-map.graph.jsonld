@@ -1779,22 +1779,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-geospatial-maplibre-tad-adr",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-geospatial-maplibre-tad-adr.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-geospatial-maplibre-tad-adr.md"
-      },
-      "documentPath": "docs/documents/knowgrph-geospatial-maplibre-tad-adr.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-geospatial-mode-document",
       "@type": "kg:Node",
       "labels": [

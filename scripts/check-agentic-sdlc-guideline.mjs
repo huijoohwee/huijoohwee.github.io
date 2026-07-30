@@ -2,27 +2,34 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
+const productionReleaseLifecycleUrl = new URL(
+  "../guidelines/agentic-sdlc-production-release-lifecycle.md",
+  import.meta.url,
+);
 const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-runtime.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
 const repositoryRuntimeReadinessUrl = new URL("../guidelines/agentic-sdlc-repository-runtime-readiness.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
+const productionReleaseLifecycle = fs.readFileSync(productionReleaseLifecycleUrl, "utf8");
 const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
 const lines = source.split("\n");
+const productionReleaseLifecycleLines = productionReleaseLifecycle.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
 const cloudCollaborationLines = cloudCollaboration.split("\n");
 const repositoryRuntimeReadinessLines = repositoryRuntimeReadiness.split("\n");
 const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
+const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.10\.0"\n/);
+assert.match(source, /\nversion: "1\.11\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -30,6 +37,18 @@ assert.match(source, /\nlocal_rung: "spec-complete"\n/);
 assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.ok(
+  productionReleaseLifecycle.startsWith("---\n"),
+  "production-release lifecycle frontmatter must be present",
+);
+assert.match(productionReleaseLifecycle, /\nversion: "1\.0\.0"\n/);
+assert.match(productionReleaseLifecycle, /\nuniversal_scope: "true"\n/);
+assert.match(productionReleaseLifecycle, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(
+  productionReleaseLifecycleLines.length - 1 < 600,
+  "production-release lifecycle module must remain below 600 lines",
+);
+assert.match(source, /\.\/agentic-sdlc-production-release-lifecycle\.md/);
 assert.ok(conformanceRuntime.startsWith("---\n"), "conformance-runtime frontmatter must be present");
 assert.match(conformanceRuntime, /\nversion: "1\.0\.0"\n/);
 assert.match(conformanceRuntime, /\nlocal_rung: "spec-complete"\n/);
@@ -117,11 +136,6 @@ const requiredSections = [
   "## Human-in-the-Loop Gates",
   "## Dependency-Ordered Integration",
   "## End-to-End Release Lifecycle Protocol",
-  "### Receipt Chain",
-  "### Collaboration and Controller Concurrency",
-  "### Lifecycle Stages",
-  "### Drift and Replay Invalidation",
-  "### Reference Implementation Boundary",
   "## Runtime Readiness Enforcement",
   "## Execution Conformance Findings",
   "## Validation Checklist",
@@ -136,10 +150,13 @@ for (const heading of requiredSections) {
 }
 
 const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
-const referenceStart = source.indexOf("### Reference Implementation Boundary");
-assert.ok(releaseStart >= 0 && referenceStart > releaseStart, "reference adapters must follow the neutral protocol");
-const neutralReleaseProtocol = source.slice(releaseStart, referenceStart);
 const runtimeReadinessStart = source.indexOf("## Runtime Readiness Enforcement");
+assert.ok(
+  releaseStart >= 0 && runtimeReadinessStart > releaseStart,
+  "the release seam must precede runtime-readiness enforcement",
+);
+const releaseSeam = source.slice(releaseStart, runtimeReadinessStart);
+const neutralReleaseProtocol = productionReleaseLifecycle;
 const findingsStart = source.indexOf("## Execution Conformance Findings");
 assert.ok(
   runtimeReadinessStart >= 0 && findingsStart > runtimeReadinessStart,
@@ -167,6 +184,43 @@ for (const term of [
     neutralReleaseProtocol,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
     `normative release protocol must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "Release Frontier",
+  "Adapter port",
+  "Source authority",
+  "State reconciler",
+  "Deployment Receipt",
+  "State Reconciliation Receipt",
+  "immutable deployment origin",
+  "authoritative state readback",
+  "returning-client cache or service-worker convergence",
+  "readiness markers or equivalent identity evidence to be byte-identical",
+  "cancel or retire the stale unapproved run",
+  "Remove only clean, integrated, completion-proven task lanes",
+  "No transport substitutes for another",
+  "Byte-identical inputs and evaluation time produce byte-identical findings and receipt digests",
+]) {
+  assert.match(
+    normalizedProductionReleaseLifecycle,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `production-release lifecycle module must include ${requirement}`,
+  );
+}
+
+for (const requirement of [
+  "protected integration as Integration Receipt authority only",
+  "exact final Release Frontier",
+  "State Reconciliation",
+  "transport",
+  "clean, integrated, completion-proven task lanes",
+]) {
+  assert.match(
+    releaseSeam,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `release seam must include ${requirement}`,
   );
 }
 
@@ -375,29 +429,26 @@ for (const identity of [
 }
 
 for (const receipt of [
-  "Overlap Preservation & Disposition Receipts",
+  "Overlap Preservation Receipt",
+  "Overlap Disposition Receipt",
   "Integration Receipt",
   "Runtime Review Receipt",
   "Candidate Manifest",
   "Authorization Interaction Receipt",
   "Human Authorization Receipt",
+  "Deployment Receipt",
+  "State Reconciliation Receipt",
   "Live Verification Receipt",
   "Publication Receipt",
+  "Rollback Receipt",
 ]) {
   assert.match(neutralReleaseProtocol, new RegExp(receipt), `receipt chain must include ${receipt}`);
 }
 
-assert.match(neutralReleaseProtocol, /overlapping work retained in its owning lane or an immutable recovery object/);
-assert.match(neutralReleaseProtocol, /restore disjoint work only when its state and recovery identity still match exactly/);
-assert.match(neutralReleaseProtocol, /Preservation is not review, integration, or authorization/);
-assert.match(neutralReleaseProtocol, /interaction and authority adapters are independent modules/);
-assert.match(source.slice(referenceStart), /terminal-first and browser-independent/);
-assert.match(source.slice(referenceStart), /without launching or requiring a browser/);
-assert.match(source.slice(referenceStart), /The release is verified and awaiting fresh human authorization\./);
-assert.match(source.slice(referenceStart), /localhost: `\{\{localhost_review_url\}\}`/);
-assert.match(source.slice(referenceStart), /`authorize \{\{candidate_digest\}\}`/);
-assert.match(neutralReleaseProtocol, /runtime-readiness gate revalidates the current review receipt and candidate/);
-assert.match(source.slice(referenceStart), /emit this template only while the exact source, dependency closure, protected checks, probes, review receipt, candidate, and release run remain runtime-ready/);
+assert.match(normalizedProductionReleaseLifecycle, /Preserve unrelated or overlapping work in its owning lane/);
+assert.match(normalizedProductionReleaseLifecycle, /Review is not authorization/);
+assert.match(normalizedProductionReleaseLifecycle, /Bind the interaction transport and any browser dependency as evidence/);
+assert.match(normalizedProductionReleaseLifecycle, /Re-fetch all protected authorities and revalidate the current Runtime Review Receipt/);
 
 for (const finding of [
   "`parallel-scope-collision`",
@@ -408,6 +459,12 @@ for (const finding of [
   "`duplicate-release-controller`",
   "`production-authorization-drift`",
   "`post-authorization-rebuild`",
+  "`state-reconciliation-unverified`",
+  "`immutable-origin-unverified`",
+  "`public-route-unverified`",
+  "`client-cache-convergence-unverified`",
+  "`publication-before-live-verification`",
+  "`cleanup-ownership-unproven`",
   "`integration-order-cycle`",
   "`integration-before-dependency`",
   "`canonical-frontier-unverified`",
@@ -430,5 +487,5 @@ for (const phrase of [
 }
 
 console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines)`,
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines)`,
 );

@@ -2,28 +2,38 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
+const productionReleaseLifecycleUrl = new URL(
+  "../guidelines/agentic-sdlc-production-release-lifecycle.md",
+  import.meta.url,
+);
 const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-runtime.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
 const scopedLaneAdmissionUrl = new URL("../guidelines/agentic-sdlc-scoped-lane-admission.md", import.meta.url);
+const repositoryRuntimeReadinessUrl = new URL("../guidelines/agentic-sdlc-repository-runtime-readiness.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
+const productionReleaseLifecycle = fs.readFileSync(productionReleaseLifecycleUrl, "utf8");
 const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const scopedLaneAdmission = fs.readFileSync(scopedLaneAdmissionUrl, "utf8");
+const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
 const lines = source.split("\n");
+const productionReleaseLifecycleLines = productionReleaseLifecycle.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
 const cloudCollaborationLines = cloudCollaboration.split("\n");
 const scopedLaneAdmissionLines = scopedLaneAdmission.split("\n");
-const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedScopedLaneAdmission = scopedLaneAdmission.replace(/\s+/g, " ");
+const repositoryRuntimeReadinessLines = repositoryRuntimeReadiness.split("\n");
+const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
+const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.10\.0"\n/);
+assert.match(source, /\nversion: "1\.12\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -31,6 +41,18 @@ assert.match(source, /\nlocal_rung: "spec-complete"\n/);
 assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.ok(
+  productionReleaseLifecycle.startsWith("---\n"),
+  "production-release lifecycle frontmatter must be present",
+);
+assert.match(productionReleaseLifecycle, /\nversion: "1\.0\.0"\n/);
+assert.match(productionReleaseLifecycle, /\nuniversal_scope: "true"\n/);
+assert.match(productionReleaseLifecycle, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(
+  productionReleaseLifecycleLines.length - 1 < 600,
+  "production-release lifecycle module must remain below 600 lines",
+);
+assert.match(source, /\.\/agentic-sdlc-production-release-lifecycle\.md/);
 assert.ok(conformanceRuntime.startsWith("---\n"), "conformance-runtime frontmatter must be present");
 assert.match(conformanceRuntime, /\nversion: "1\.0\.0"\n/);
 assert.match(conformanceRuntime, /\nlocal_rung: "spec-complete"\n/);
@@ -63,12 +85,60 @@ assert.match(scopedLaneAdmission, /\nschema: "agentic-scoped-lane-admission\/v1"
 assert.match(scopedLaneAdmission, /\ncollaboration_schema: "agentic-cloud-collaboration\/v1"\n/);
 assert.match(scopedLaneAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(scopedLaneAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
-assert.ok(
-  scopedLaneAdmissionLines.length - 1 < 600,
-  "scoped-lane-admission module must remain below 600 lines",
-);
+assert.ok(scopedLaneAdmissionLines.length - 1 < 600, "scoped-lane-admission module must remain below 600 lines");
 assert.match(source, /\.\/agentic-sdlc-cloud-collaboration\.md/);
 assert.match(source, /\.\/agentic-sdlc-scoped-lane-admission\.md/);
+assert.match(source, /\.\/agentic-sdlc-repository-runtime-readiness\.md/);
+assert.ok(repositoryRuntimeReadiness.startsWith("---\n"), "repository runtime-readiness frontmatter must be present");
+assert.match(repositoryRuntimeReadiness, /\nversion: "1\.0\.0"\n/);
+assert.match(repositoryRuntimeReadiness, /\nuniversal_scope: "true"\n/);
+assert.match(repositoryRuntimeReadiness, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(
+  repositoryRuntimeReadinessLines.length - 1 < 600,
+  "repository runtime-readiness module must remain below 600 lines",
+);
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "Builders Hub",
+  "Avalanche",
+  "Vercel",
+]) {
+  assert.doesNotMatch(
+    repositoryRuntimeReadiness,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `repository runtime-readiness module must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "/runtime-ready.check #runtime-ready #harness #vcc #foss #ttv @repository-root @local-harness @runtime-proof",
+  "Removing network access and the external repository",
+  "Source admitted",
+  "Local harness ready",
+  "Browser ready",
+  "Integration ready",
+  "Deployed verified",
+  "one package manager",
+  "Content-address every generated or downloaded input",
+  "actual offline or degraded-network transition",
+  "prompt, cached, completion, and total tokens",
+  "package-manager-drift",
+  "deployment-proof-unjoined",
+  "The command exits zero only for the requested layer",
+  "performs no mutation, network, model, paid, integration, release, or deployment action",
+]) {
+  assert.match(
+    repositoryRuntimeReadiness,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `repository runtime-readiness module must include ${requirement}`,
+  );
+}
 
 const requiredSections = [
   "## Scope & Neutrality Contract",
@@ -78,11 +148,6 @@ const requiredSections = [
   "## Human-in-the-Loop Gates",
   "## Dependency-Ordered Integration",
   "## End-to-End Release Lifecycle Protocol",
-  "### Receipt Chain",
-  "### Collaboration and Controller Concurrency",
-  "### Lifecycle Stages",
-  "### Drift and Replay Invalidation",
-  "### Reference Implementation Boundary",
   "## Runtime Readiness Enforcement",
   "## Execution Conformance Findings",
   "## Validation Checklist",
@@ -97,10 +162,13 @@ for (const heading of requiredSections) {
 }
 
 const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
-const referenceStart = source.indexOf("### Reference Implementation Boundary");
-assert.ok(releaseStart >= 0 && referenceStart > releaseStart, "reference adapters must follow the neutral protocol");
-const neutralReleaseProtocol = source.slice(releaseStart, referenceStart);
 const runtimeReadinessStart = source.indexOf("## Runtime Readiness Enforcement");
+assert.ok(
+  releaseStart >= 0 && runtimeReadinessStart > releaseStart,
+  "the release seam must precede runtime-readiness enforcement",
+);
+const releaseSeam = source.slice(releaseStart, runtimeReadinessStart);
+const neutralReleaseProtocol = productionReleaseLifecycle;
 const findingsStart = source.indexOf("## Execution Conformance Findings");
 assert.ok(
   runtimeReadinessStart >= 0 && findingsStart > runtimeReadinessStart,
@@ -131,140 +199,43 @@ for (const term of [
   );
 }
 
-for (const term of [
-  "GitHub",
-  "Cloudflare",
-  "Knowgrph",
-  "Agentic Canvas OS",
-  "huijoohwee",
-  "airvio.co",
-  "origin/main",
-  "turn:end",
-  "localhost",
+for (const requirement of [
+  "Release Frontier",
+  "Adapter port",
+  "Source authority",
+  "State reconciler",
+  "Deployment Receipt",
+  "State Reconciliation Receipt",
+  "immutable deployment origin",
+  "authoritative state readback",
+  "returning-client cache or service-worker convergence",
+  "readiness markers or equivalent identity evidence to be byte-identical",
+  "cancel or retire the stale unapproved run",
+  "Remove only clean, integrated, completion-proven task lanes",
+  "No transport substitutes for another",
+  "Byte-identical inputs and evaluation time produce byte-identical findings and receipt digests",
 ]) {
-  assert.doesNotMatch(
-    scopedLaneAdmission,
-    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
-    `scoped-lane-admission module must not contain adapter term ${term}`,
+  assert.match(
+    normalizedProductionReleaseLifecycle,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `production-release lifecycle module must include ${requirement}`,
   );
 }
 
 for (const requirement of [
-  "candidate operation leaves every pre-existing lane untouched",
-  "`agentic-lane-admission-report/v1`",
-  "`canonical`",
-  "`overlapping`",
-  "`disjoint-attributed`",
-  "`ambiguous`",
-  "`declaredWriteSet`",
-  "`writeSetDigest`",
-  "`writeScopeAuthority`",
-  "`laneStateDigest`",
-  "`agentic-cloud-collaboration/v1`",
-  "does not define a second remote-claim schema",
-  "`declaredWriteScope`",
-  "`claimId`",
-  "`leaseEpoch`",
-  "`expiresAt`",
-  "`idempotencyKey`",
-  "`ledgerRevision`",
-  "caller-supplied or local clock cannot",
-  "local execution locations are projections rather than cloud identity",
-  "do not classify it as conflicting with itself",
-  "Every other current claim remains in the peer-claim overlap evaluation",
-  "Admission never requires global inactivity",
-  "`independently-advanced-disjoint`",
-  "`agentic-independent-peer-operation-receipt/v1`",
-  "`schema`, `operationId`", "`actorId`, `deviceId`, `sessionId`",
-  "`claimId`, `leaseEpoch`, `fenceRevision`, `ledgerRevision`", "`evaluationTime`, `expiresAt`",
-  "`collaborationReceiptDigest`",
-  "`beforeLaneStateDigest`, `afterLaneStateDigest`",
-  "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`",
-  "`mutationSetDigest`", "`adapterRevision`, `evaluatorRevision`",
-  "`operationTime`", "`receiptDigest`",
-  "malformed, stale, mismatched, expired-at-operation, or unjoined peer receipt emits `admission-snapshot-stale`",
-  "proves historical ledger inclusion", "`evaluationTime <= operationTime < expiresAt`",
-  "joins a valid successor chain to the latest current disjoint claim", "not require its current fence to equal the historical operation fence",
-  "claim expired at operation time remains invalid after renewal", "valid operation remains attributable after a subsequent renewal",
-  "restricted mutation capability",
-  "not reported as `collateral-lane-mutation`",
-  "unknown or conflicting causality raises `admission-snapshot-stale`",
-  "remoteClaimInventoryDigest",
-  "localLaneInventoryDigest",
-  "`existingLaneInventoryDigest`",
-  "candidatePlanDigest",
-  "sharedCoordinationStateDigest",
-  "operation-derived typed snapshot before and after provisioning",
-  "`sharedConfigDigest`, `hooksDigest`",
-  "`dependencyStateDigest`",
-  "`refInventoryDigest`",
-  "`registrationInventoryDigest`",
-  "`leaseInventoryDigest`",
-  "`recoveryInventoryDigest`",
-  "excludes only the exact candidate registration, ref, and local lease delta",
-  "Operation-Derived Target Observation",
-  "`targetObservationDigest`",
-  "exclusive local coordination guard",
-  "atomically creates the candidate ref and registration or creates neither",
-  "`candidateCreateRegisterResult`",
-  "Observed changed paths, current diff boundaries",
-  "not substitutes for an active writer's authoritative declared future write scope",
-  "Immutable, review-ready, parked, or delivery evidence may be content-bound read-only",
-  "Disjoint continuation is permitted only from attributed authority",
-  "compare-and-swap",
-  "Local leases prove exclusion only within one local coordination domain",
-  "Admission Receipt",
-  "Preservation Receipt",
-  "`authoringAdmission`",
-  "`runtimeReadiness`",
-  "`lifecycleReadiness`",
-  "`admissionRuntimeConformance`",
-  "Each non-`unevaluated` result must be copied from a current typed receipt",
-  "A missing optional receipt produces `unevaluated`",
-  "Lane observations cannot promote either result",
-  "Treat the exact accepted transition as the expected successor, not drift",
-  "independently authorized disjoint peer progress may continue",
-  "`provisioningPlanDigest`",
-  "final protected-ledger refresh after local provisioning",
-  "operation-derived remote `evaluationTime`",
-  "current, `active`, non-expired",
-  "final protected-ledger observation and digest",
-  "current `observedLedgerHeadRevision`",
-  "candidate claim `ledgerRevision`",
-  "latest peer-overlap classifications",
-  "Immediately before the admitted receipt is consumed for first source authoring", "revalidate the candidate claim and local lease",
-  "Repeat immediately before every later mutation batch and claim or local-lease renewal boundary",
-  "authority preserves all local state and returns `blocked`",
-  "changed renewal fence requires a joined successor receipt",
-  "never standing authority for a subsequent mutation batch",
-  "head, branch, registration, index, working bytes, untracked bytes, lease, fence, and recovery identity",
-  "remove only the candidate lane",
-  "same-parent race with exactly one winner",
-  "`canonical-base-drift`",
-  "`scope-admission-collision`",
-  "`unattributed-lane-ambiguity`",
-  "`admission-snapshot-stale`",
-  "`unsafe-candidate-target`",
-  "`local-only-cross-device-lease`",
-  "`collateral-lane-mutation`",
-  "`admission-runtime-conflation`",
-  "`candidate-lane-orphaned`",
-  "explicit absent-lane state",
+  "protected integration as Integration Receipt authority only",
+  "exact final Release Frontier",
+  "State Reconciliation",
+  "transport",
+  "clean, integrated, completion-proven task lanes",
 ]) {
   assert.match(
-    normalizedScopedLaneAdmission,
-    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-    `scoped-lane-admission module must include ${requirement}`,
+    releaseSeam,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `release seam must include ${requirement}`,
   );
 }
 
-const scopedProtocolStart = normalizedScopedLaneAdmission.indexOf("## Deterministic Admission Protocol");
-const scopedProtocolEnd = normalizedScopedLaneAdmission.indexOf("## Allowed Mutation Envelope");
-assert.ok(
-  scopedProtocolStart >= 0 && scopedProtocolEnd > scopedProtocolStart,
-  "scoped admission protocol boundaries must be present",
-);
-const scopedProtocol = normalizedScopedLaneAdmission.slice(scopedProtocolStart, scopedProtocolEnd);
 function assertOrderedPhrases(text, phrases, label) {
   let priorIndex = -1;
   for (const phrase of phrases) {
@@ -273,6 +244,57 @@ function assertOrderedPhrases(text, phrases, label) {
     priorIndex = currentIndex;
   }
 }
+function contractSlice(text, start, end, label) {
+  const startIndex = text.indexOf(start);
+  const endIndex = text.indexOf(end);
+  assert.ok(startIndex >= 0 && endIndex > startIndex, `${label} boundaries must be present`);
+  return text.slice(startIndex, endIndex);
+}
+
+for (const term of [
+  "GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "origin/main", "turn:end", "localhost",
+]) {
+  assert.doesNotMatch(scopedLaneAdmission, new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
+}
+
+const scopedAdmissionRequirements = [
+  "candidate operation leaves every pre-existing lane untouched", "`agentic-lane-admission-report/v1`", "`canonical`", "`overlapping`",
+  "`disjoint-attributed`", "`ambiguous`", "`declaredWriteSet`", "`writeSetDigest`", "`writeScopeAuthority`", "`laneStateDigest`",
+  "`agentic-cloud-collaboration/v1`", "does not define a second remote-claim schema", "`declaredWriteScope`", "`claimId`", "`leaseEpoch`", "`expiresAt`", "`idempotencyKey`", "`ledgerRevision`",
+  "caller-supplied or local clock cannot", "local execution locations are projections rather than cloud identity",
+  "do not classify it as conflicting with itself", "Every other current claim remains in the peer-claim overlap evaluation",
+  "Admission never requires global inactivity", "`independently-advanced-disjoint`", "`agentic-independent-peer-operation-receipt/v1`",
+  "`schema`, `operationId`", "`actorId`, `deviceId`, `sessionId`", "`claimId`, `leaseEpoch`, `fenceRevision`, `ledgerRevision`",
+  "`evaluationTime`, `expiresAt`", "`collaborationReceiptDigest`", "`beforeLaneStateDigest`, `afterLaneStateDigest`",
+  "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`", "`mutationSetDigest`", "`adapterRevision`, `evaluatorRevision`", "`operationTime`", "`receiptDigest`",
+  "malformed, stale, mismatched, expired-at-operation, or unjoined peer receipt emits `admission-snapshot-stale`",
+  "proves historical ledger inclusion", "`evaluationTime <= operationTime < expiresAt`",
+  "joins a valid successor chain to the latest current disjoint claim", "not require its current fence to equal the historical operation fence",
+  "claim expired at operation time remains invalid after renewal", "valid operation remains attributable after a subsequent renewal", "restricted mutation capability", "not reported as `collateral-lane-mutation`",
+  "unknown or conflicting causality raises `admission-snapshot-stale`", "remoteClaimInventoryDigest", "localLaneInventoryDigest", "`existingLaneInventoryDigest`", "candidatePlanDigest", "sharedCoordinationStateDigest",
+  "operation-derived typed snapshot before and after provisioning", "`sharedConfigDigest`, `hooksDigest`", "`dependencyStateDigest`", "`refInventoryDigest`",
+  "`registrationInventoryDigest`", "`leaseInventoryDigest`", "`recoveryInventoryDigest`",
+  "excludes only the exact candidate registration, ref, and local lease delta", "Operation-Derived Target Observation",
+  "`targetObservationDigest`", "exclusive local coordination guard", "atomically creates the candidate ref and registration or creates neither",
+  "`candidateCreateRegisterResult`", "Observed changed paths, current diff boundaries", "not substitutes for an active writer's authoritative declared future write scope",
+  "Immutable, review-ready, parked, or delivery evidence may be content-bound read-only", "Disjoint continuation is permitted only from attributed authority", "compare-and-swap",
+  "Local leases prove exclusion only within one local coordination domain", "Admission Receipt", "Preservation Receipt", "`authoringAdmission`", "`runtimeReadiness`", "`lifecycleReadiness`", "`admissionRuntimeConformance`",
+  "Each non-`unevaluated` result must be copied from a current typed receipt", "A missing optional receipt produces `unevaluated`", "Lane observations cannot promote either result",
+  "Treat the exact accepted transition as the expected successor, not drift", "independently authorized disjoint peer progress may continue", "`provisioningPlanDigest`", "final protected-ledger refresh after local provisioning",
+  "operation-derived remote `evaluationTime`", "current, `active`, non-expired", "final protected-ledger observation and digest", "current `observedLedgerHeadRevision`",
+  "candidate claim `ledgerRevision`", "latest peer-overlap classifications",
+  "Immediately before the admitted receipt is consumed for first source authoring", "revalidate the candidate claim and local lease",
+  "Repeat immediately before every later mutation batch and claim or local-lease renewal boundary", "authority preserves all local state and returns `blocked`",
+  "changed renewal fence requires a joined successor receipt", "never standing authority for a subsequent mutation batch",
+  "head, branch, registration, index, working bytes, untracked bytes, lease, fence, and recovery identity",
+  "remove only the candidate lane", "same-parent race with exactly one winner", "`canonical-base-drift`", "`scope-admission-collision`", "`unattributed-lane-ambiguity`",
+  "`admission-snapshot-stale`", "`unsafe-candidate-target`", "`local-only-cross-device-lease`", "`collateral-lane-mutation`", "`admission-runtime-conflation`", "`candidate-lane-orphaned`", "explicit absent-lane state",
+];
+for (const requirement of scopedAdmissionRequirements) {
+  assert.ok(normalizedScopedLaneAdmission.includes(requirement), `scoped-lane-admission module must include ${requirement}`);
+}
+
+const scopedProtocol = contractSlice(normalizedScopedLaneAdmission, "## Deterministic Admission Protocol", "## Allowed Mutation Envelope", "scoped admission protocol");
 assertOrderedPhrases(scopedProtocol, [
   "then observe the target and snapshot", "Submit one cloud claim transition",
   "chain, target observation, local lanes, and shared coordination state", "atomically create and register only the candidate lane",
@@ -280,38 +302,22 @@ assertOrderedPhrases(scopedProtocol, [
   "Derive `authoringAdmission: admitted` only after", "Immediately before the admitted receipt is consumed for first source authoring",
 ], "scoped admission protocol");
 
-const peerReceiptStart = normalizedScopedLaneAdmission.indexOf("### Independent Peer Operation Receipt");
-const peerReceiptEnd = normalizedScopedLaneAdmission.indexOf("## Report and Decision Contract");
-assert.ok(peerReceiptStart >= 0 && peerReceiptEnd > peerReceiptStart, "peer receipt boundaries must be present");
-const peerReceiptContract = normalizedScopedLaneAdmission.slice(peerReceiptStart, peerReceiptEnd);
+const peerReceiptContract = contractSlice(normalizedScopedLaneAdmission, "### Independent Peer Operation Receipt", "## Report and Decision Contract", "peer receipt");
 assertOrderedPhrases(peerReceiptContract, [
-  "`schema`, `operationId`", "`actorId`, `deviceId`, `sessionId`",
-  "`claimId`, `leaseEpoch`, `fenceRevision`, `ledgerRevision`",
-  "`evaluationTime`, `expiresAt`", "`collaborationReceiptDigest`",
-  "`beforeLaneStateDigest`, `afterLaneStateDigest`",
-  "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`",
-  "`mutationSetDigest`", "`adapterRevision`, `evaluatorRevision`",
-  "`operationTime`", "`receiptDigest`",
+  "`schema`, `operationId`", "`actorId`, `deviceId`, `sessionId`", "`claimId`, `leaseEpoch`, `fenceRevision`, `ledgerRevision`",
+  "`evaluationTime`, `expiresAt`", "`collaborationReceiptDigest`", "`beforeLaneStateDigest`, `afterLaneStateDigest`",
+  "`beforeSharedCoordinationStateDigest`, `afterSharedCoordinationStateDigest`", "`mutationSetDigest`",
+  "`adapterRevision`, `evaluatorRevision`", "`operationTime`", "`receiptDigest`",
 ], "peer receipt fields");
 
-const preservationStart = normalizedScopedLaneAdmission.indexOf("The Preservation Receipt binds:");
-const preservationEnd = normalizedScopedLaneAdmission.indexOf("## Retry, Rollback, and Recovery");
-assert.ok(
-  preservationStart >= 0 && preservationEnd > preservationStart,
-  "Preservation Receipt contract boundaries must be present",
-);
-const preservationContract = normalizedScopedLaneAdmission.slice(preservationStart, preservationEnd);
+const preservationContract = contractSlice(normalizedScopedLaneAdmission, "The Preservation Receipt binds:", "## Retry, Rollback, and Recovery", "Preservation Receipt contract");
 for (const proof of [
   "`candidateCreateRegisterResult`", "before and after shared coordination-state records and digests",
   "only the exact candidate registration/ref/lease delta excluded", "restricted capability",
-  "final protected-ledger observation and digest", "current `observedLedgerHeadRevision`",
-  "active non-expired candidate claim", "latest peer-overlap classifications", "historical Collaboration Receipt", "latest valid successor-chain join",
+  "final protected-ledger observation and digest", "current `observedLedgerHeadRevision`", "active non-expired candidate claim",
+  "latest peer-overlap classifications", "historical Collaboration Receipt", "latest valid successor-chain join",
 ]) {
-  assert.match(
-    preservationContract,
-    new RegExp(proof.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-    `Preservation Receipt must bind ${proof}`,
-  );
+  assert.ok(preservationContract.includes(proof), `Preservation Receipt must bind ${proof}`);
 }
 
 for (const phrase of [
@@ -320,9 +326,7 @@ for (const phrase of [
   "joined Admission and Preservation Receipts", "`authoringAdmission: admitted`",
   "When scoped lane admission applies, admission preservation closed", "candidate leaves every existing lane untouched",
   "separately proven current disjoint authority and a joined typed peer-operation receipt",
-]) {
-  assert.ok(source.includes(phrase), `main guideline must include ${phrase}`);
-}
+]) assert.ok(source.includes(phrase), `main guideline must include ${phrase}`);
 
 for (const term of [
   "GitHub",
@@ -529,48 +533,45 @@ for (const identity of [
 }
 
 for (const receipt of [
-  "Overlap Preservation & Disposition Receipts",
+  "Overlap Preservation Receipt",
+  "Overlap Disposition Receipt",
   "Integration Receipt",
   "Runtime Review Receipt",
   "Candidate Manifest",
   "Authorization Interaction Receipt",
   "Human Authorization Receipt",
+  "Deployment Receipt",
+  "State Reconciliation Receipt",
   "Live Verification Receipt",
   "Publication Receipt",
+  "Rollback Receipt",
 ]) {
   assert.match(neutralReleaseProtocol, new RegExp(receipt), `receipt chain must include ${receipt}`);
 }
 
-assert.match(neutralReleaseProtocol, /overlapping work retained in its owning lane or an immutable recovery object/);
-assert.match(neutralReleaseProtocol, /restore disjoint work only when its state and recovery identity still match exactly/);
-assert.match(neutralReleaseProtocol, /Preservation is not review, integration, or authorization/);
-assert.match(neutralReleaseProtocol, /interaction and authority adapters are independent modules/);
-assert.match(source.slice(referenceStart), /terminal-first and browser-independent/);
-assert.match(source.slice(referenceStart), /without launching or requiring a browser/);
-assert.match(source.slice(referenceStart), /The release is verified and awaiting fresh human authorization\./);
-assert.match(source.slice(referenceStart), /localhost: `\{\{localhost_review_url\}\}`/);
-assert.match(source.slice(referenceStart), /`authorize \{\{candidate_digest\}\}`/);
-assert.match(neutralReleaseProtocol, /runtime-readiness gate revalidates the current review receipt and candidate/);
-assert.match(source.slice(referenceStart), /emit this template only while the exact source, dependency closure, protected checks, probes, review receipt, candidate, and release run remain runtime-ready/);
+assert.match(normalizedProductionReleaseLifecycle, /Preserve unrelated or overlapping work in its owning lane/);
+assert.match(normalizedProductionReleaseLifecycle, /Review is not authorization/);
+assert.match(normalizedProductionReleaseLifecycle, /Bind the interaction transport and any browser dependency as evidence/);
+assert.match(normalizedProductionReleaseLifecycle, /Re-fetch all protected authorities and revalidate the current Runtime Review Receipt/);
 
 for (const finding of [
   "`parallel-scope-collision`",
   "`stale-collaboration-fence`",
-  "`canonical-base-drift`",
-  "`scope-admission-collision`",
-  "`unattributed-lane-ambiguity`",
-  "`admission-snapshot-stale`",
-  "`unsafe-candidate-target`",
-  "`local-only-cross-device-lease`",
-  "`collateral-lane-mutation`",
-  "`admission-runtime-conflation`",
-  "`candidate-lane-orphaned`",
+  "`canonical-base-drift`", "`scope-admission-collision`", "`unattributed-lane-ambiguity`",
+  "`admission-snapshot-stale`", "`unsafe-candidate-target`", "`local-only-cross-device-lease`",
+  "`collateral-lane-mutation`", "`admission-runtime-conflation`", "`candidate-lane-orphaned`",
   "`dependency-closure-drift`",
   "`authorization-evidence-unjoined`",
   "`authorization-interaction-unjoined`",
   "`duplicate-release-controller`",
   "`production-authorization-drift`",
   "`post-authorization-rebuild`",
+  "`state-reconciliation-unverified`",
+  "`immutable-origin-unverified`",
+  "`public-route-unverified`",
+  "`client-cache-convergence-unverified`",
+  "`publication-before-live-verification`",
+  "`cleanup-ownership-unproven`",
   "`integration-order-cycle`",
   "`integration-before-dependency`",
   "`canonical-frontier-unverified`",
@@ -593,5 +594,5 @@ for (const phrase of [
 }
 
 console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`,
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`,
 );

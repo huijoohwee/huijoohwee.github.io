@@ -2,22 +2,38 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
+const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-runtime.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
+const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const lines = source.split("\n");
+const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.7\.0"\n/);
+assert.match(source, /\nversion: "1\.8\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
+assert.match(source, /\nlocal_rung: "spec-complete"\n/);
+assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.ok(conformanceRuntime.startsWith("---\n"), "conformance-runtime frontmatter must be present");
+assert.match(conformanceRuntime, /\nversion: "1\.0\.0"\n/);
+assert.match(conformanceRuntime, /\nlocal_rung: "spec-complete"\n/);
+assert.match(conformanceRuntime, /\ndelivered_rung: "undocumented"\n/);
+assert.match(conformanceRuntime, /\nuniversal_scope: "true"\n/);
+assert.match(conformanceRuntime, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.match(conformanceRuntime, /\nlifecycle_status: "proposed"\n/);
+assert.ok(
+  conformanceRuntimeLines.length - 1 < 600,
+  "conformance-runtime module must remain below 600 lines",
+);
 assert.match(integrationOrder, /\nversion: "1\.0\.0"\n/);
 assert.match(integrationOrder, /\nuniversal_scope: "true"\n/);
 assert.ok(integrationOrderLines.length - 1 < 600, "integration-order module must remain below 600 lines");
@@ -63,6 +79,11 @@ assert.ok(
   "runtime-readiness enforcement must precede its finding vocabulary",
 );
 const runtimeReadinessPolicy = source.slice(runtimeReadinessStart, findingsStart);
+assert.match(
+  runtimeReadinessPolicy,
+  /\.\/agentic-sdlc-conformance-runtime\.md/,
+  "runtime-readiness policy must name its behavioral conformance companion",
+);
 
 for (const term of [
   "GitHub",
@@ -140,6 +161,10 @@ for (const requirement of [
   "one immutable source revision",
   "complete dependency closure",
   "source validation, canonical runtime, protected integration, and deployed proof as separate claims",
+  "repository-owned stage gates",
+  "operation-derived evidence",
+  "digest-bound receipts for admission, review, integration, runtime, candidate, authorization, deployment, and publication",
+  "`npx`, `latest`, or dynamic resolution",
   "deterministic evaluator command that exits zero only when every required proof joins",
   "`runtime-readiness-unproven` at `blocker` severity",
 ]) {
@@ -147,6 +172,48 @@ for (const requirement of [
     runtimeReadinessPolicy,
     new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
     `runtime-readiness policy must include ${requirement}`,
+  );
+}
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "origin/main",
+  "localhost",
+]) {
+  assert.doesNotMatch(
+    conformanceRuntime,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `conformance-runtime module must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "operation-derived evidence",
+  "Policy Identity",
+  "`policyRevision`",
+  "`policyDigest`",
+  "admission -> review -> integration -> runtime -> candidate -> authorization -> deployment -> publication",
+  "Digest-Bound Stage Receipt",
+  "`predecessorReceiptDigest`",
+  "Every join compares run, policy, evaluator, source, dependency closure, stage order, evidence digest, and predecessor receipt digest",
+  "Full-Stage Fail-Closed Invariants",
+  "Byte-identical inputs produce identical findings, verdicts, and receipt digests",
+  "Partial-Scope Claim Boundary",
+  "`enforcedStages`",
+  "`unevaluatedStages`",
+  "cannot claim end-to-end conformance",
+  "`npx`, a mutable `latest` selector",
+  "none may establish policy identity",
+]) {
+  assert.match(
+    conformanceRuntime,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `conformance-runtime module must include ${requirement}`,
   );
 }
 
@@ -236,5 +303,5 @@ for (const phrase of [
 }
 
 console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines)`,
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines)`,
 );

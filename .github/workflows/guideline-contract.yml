@@ -2,29 +2,35 @@ name: Guideline Contract
 
 on:
   pull_request:
-    paths:
-      - "guidelines/agentic-sdlc-guidelines.md"
-      - "scripts/check-agentic-sdlc-guideline.mjs"
-      - "package.json"
-      - ".github/workflows/guideline-contract.yml"
+  merge_group:
+    types: [checks_requested]
   push:
     branches: ["main"]
-    paths:
-      - "guidelines/agentic-sdlc-guidelines.md"
-      - "scripts/check-agentic-sdlc-guideline.mjs"
-      - "package.json"
-      - ".github/workflows/guideline-contract.yml"
 
 permissions:
   contents: read
 
 jobs:
-  guideline-contract:
+  guideline-contract-check:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
-      - run: npm run guideline:check
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  agentic-sdlc-policy-contract:
+    if: ${{ always() }}
+    needs: [guideline-contract-check]
+    name: agentic-sdlc-policy-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require the focused contract check
+        env:
+          CONTRACT_RESULT: ${{ needs.guideline-contract-check.result }}
+        run: test "$CONTRACT_RESULT" = "success"

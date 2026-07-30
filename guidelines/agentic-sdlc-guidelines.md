@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.9.0"
+version: "1.10.0"
 date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -42,7 +42,7 @@ lifecycle_status: "proposed"
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `end-to-end-release-lifecycle-protocol` — neutral interaction and authority adapters, human authorization, drift invalidation, and live closure
-- `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence
+- `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
@@ -421,7 +421,7 @@ The reference adapter must derive `localhost` from the current controlled runtim
 
 ## Runtime Readiness Enforcement
 
-Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./agentic-sdlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract.
+Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./agentic-sdlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract; the [Repository Runtime Readiness Module](./agentic-sdlc-repository-runtime-readiness.md) owns the bounded local-first repository audit profile.
 
 - Require typed inputs and outputs, bounded orchestration, independent evaluation, named checks with recorded results, cost and fallback evidence, and closed mutation and deployment gates before deriving `runtime-ready`
 - Bind one immutable source revision and its complete dependency closure; drift invalidates the claim and returns the affected unit to `blocked`

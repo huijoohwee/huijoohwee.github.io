@@ -6,20 +6,23 @@ const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-ru
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
+const repositoryRuntimeReadinessUrl = new URL("../guidelines/agentic-sdlc-repository-runtime-readiness.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
 const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
+const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
 const lines = source.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
 const cloudCollaborationLines = cloudCollaboration.split("\n");
+const repositoryRuntimeReadinessLines = repositoryRuntimeReadiness.split("\n");
 const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.9\.0"\n/);
+assert.match(source, /\nversion: "1\.10\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -54,6 +57,57 @@ assert.ok(
   "cloud-collaboration module must remain below 600 lines",
 );
 assert.match(source, /\.\/agentic-sdlc-cloud-collaboration\.md/);
+assert.match(source, /\.\/agentic-sdlc-repository-runtime-readiness\.md/);
+assert.ok(repositoryRuntimeReadiness.startsWith("---\n"), "repository runtime-readiness frontmatter must be present");
+assert.match(repositoryRuntimeReadiness, /\nversion: "1\.0\.0"\n/);
+assert.match(repositoryRuntimeReadiness, /\nuniversal_scope: "true"\n/);
+assert.match(repositoryRuntimeReadiness, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(
+  repositoryRuntimeReadinessLines.length - 1 < 600,
+  "repository runtime-readiness module must remain below 600 lines",
+);
+
+for (const term of [
+  "GitHub",
+  "Cloudflare",
+  "Knowgrph",
+  "Agentic Canvas OS",
+  "huijoohwee",
+  "airvio.co",
+  "Builders Hub",
+  "Avalanche",
+  "Vercel",
+]) {
+  assert.doesNotMatch(
+    repositoryRuntimeReadiness,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `repository runtime-readiness module must not contain adapter term ${term}`,
+  );
+}
+
+for (const requirement of [
+  "/runtime-ready.check #runtime-ready #harness #vcc #foss #ttv @repository-root @local-harness @runtime-proof",
+  "Removing network access and the external repository",
+  "Source admitted",
+  "Local harness ready",
+  "Browser ready",
+  "Integration ready",
+  "Deployed verified",
+  "one package manager",
+  "Content-address every generated or downloaded input",
+  "actual offline or degraded-network transition",
+  "prompt, cached, completion, and total tokens",
+  "package-manager-drift",
+  "deployment-proof-unjoined",
+  "The command exits zero only for the requested layer",
+  "performs no mutation, network, model, paid, integration, release, or deployment action",
+]) {
+  assert.match(
+    repositoryRuntimeReadiness,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `repository runtime-readiness module must include ${requirement}`,
+  );
+}
 
 const requiredSections = [
   "## Scope & Neutrality Contract",
@@ -376,5 +430,5 @@ for (const phrase of [
 }
 
 console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines)`,
+  `agentic SDLC guideline contract ok (${lines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines)`,
 );

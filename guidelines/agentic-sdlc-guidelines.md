@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.8.0"
+version: "1.9.0"
 date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -49,6 +49,7 @@ lifecycle_status: "proposed"
 - `validation-checklist` — pre-execution, per-task, and post-run gates
 - `anti-pattern-guards` — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
+- [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
 
 ## Boundary with the Authoring Set
 
@@ -133,8 +134,7 @@ Task ID = [hierarchical ordinal within the task list, maximum two levels]
 
 ### Collaboration Identity
 
-Every writer is identified by the tuple:
-
+Every writer is identified by the tuple; the [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) companion adds protected remote claim authority for multi-device work:
 ```
 Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
 ```

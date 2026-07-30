@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Iterable, Literal, TypedDict
@@ -63,6 +64,35 @@ def find_github_root(start: Path) -> Path:
         ):
             return candidate
     return start.parents[len(start.parents) - 1]
+
+
+def resolve_default_docs_dir(github_root: Path) -> Path:
+    knowgrph_checkout = github_root / "knowgrph"
+    result = subprocess.run(
+        ["git", "-C", str(knowgrph_checkout), "worktree", "list", "--porcelain"],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    if result.returncode != 0:
+        return knowgrph_checkout / "docs" / "documents"
+
+    main_worktrees: list[Path] = []
+    for block in result.stdout.strip().split("\n\n"):
+        fields = block.splitlines()
+        path_line = next((line for line in fields if line.startswith("worktree ")), "")
+        branch_line = next((line for line in fields if line.startswith("branch ")), "")
+        if path_line and branch_line == "branch refs/heads/main":
+            main_worktrees.append(Path(path_line.removeprefix("worktree ")))
+
+    if len(main_worktrees) > 1:
+        raise RuntimeError("multiple registered Knowgrph main worktrees")
+    if len(main_worktrees) == 1:
+        return main_worktrees[0] / "docs" / "documents"
+
+    # Detached CI clones have no checked-out main branch, so keep the sibling
+    # checkout fallback when there is no registered canonical main worktree.
+    return knowgrph_checkout / "docs" / "documents"
 
 
 def detect_language_from_path(path_fragment: str) -> Literal["en-us", "zh-cn"]:
@@ -302,7 +332,7 @@ def main(argv: list[str]) -> int:
     agenticrag_dir = script_path.parent
     github_root = find_github_root(agenticrag_dir)
 
-    docs_dir = Path(args.docs_dir) if args.docs_dir else (github_root / "knowgrph" / "docs" / "documents")
+    docs_dir = Path(args.docs_dir) if args.docs_dir else resolve_default_docs_dir(github_root)
     map_file = Path(args.map_file) if args.map_file else (agenticrag_dir / "knowgrph-documents-map.graph.jsonld")
 
     original_text = map_file.read_text(encoding="utf-8")

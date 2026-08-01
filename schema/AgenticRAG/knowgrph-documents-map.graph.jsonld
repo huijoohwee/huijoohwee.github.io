@@ -1763,22 +1763,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-game-city-building-sim-vcc-delivery",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "knowgrph-game-city-building-sim-vcc-delivery.md"
-      ],
-      "properties": {
-        "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-game-city-building-sim-vcc-delivery.md"
-      },
-      "documentPath": "docs/documents/knowgrph-game-city-building-sim-vcc-delivery.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:knowgrph:doc:knowgrph-game-flight-sim-prd-tad",
       "@type": "kg:Node",
       "labels": [

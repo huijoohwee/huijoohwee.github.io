@@ -450,6 +450,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-adm0-singapore-prd-tad-ard.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-adm0-singapore-prd-tad-ard.companion.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-adm0-singapore-prd-tad-ard.companion.md"
+      },
+      "documentPath": "docs/documents/knowgrph-adm0-singapore-prd-tad-ard.companion.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-agent-ready-cloudflare-isitagentready",
       "@type": "kg:Node",
       "labels": [
@@ -1715,19 +1731,35 @@
       "language": "en-us"
     },
     {
-      "@id": "node:knowgrph:doc:knowgrph-game-city-building-sim-rd-tad",
+      "@id": "node:knowgrph:doc:knowgrph-game-city-building-sim-prd-tad-ard",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "knowgrph-game-city-building-sim-rd-tad.md"
+        "knowgrph-game-city-building-sim-prd-tad-ard.md"
       ],
       "properties": {
         "repo": "knowgrph",
-        "relPath": "docs/documents/knowgrph-game-city-building-sim-rd-tad.md"
+        "relPath": "docs/documents/knowgrph-game-city-building-sim-prd-tad-ard.md"
       },
-      "documentPath": "docs/documents/knowgrph-game-city-building-sim-rd-tad.md",
+      "documentPath": "docs/documents/knowgrph-game-city-building-sim-prd-tad-ard.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-game-city-building-sim-vcc-delivery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-game-city-building-sim-vcc-delivery.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-game-city-building-sim-vcc-delivery.md"
+      },
+      "documentPath": "docs/documents/knowgrph-game-city-building-sim-vcc-delivery.md",
       "language": "en-us"
     },
     {
@@ -1808,6 +1840,22 @@
         "relPath": "docs/documents/knowgrph-game-mmorpg-prd-tad.md"
       },
       "documentPath": "docs/documents/knowgrph-game-mmorpg-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-geo-xr-mode-prd-tad-ard",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-geo-xr-mode-prd-tad-ard.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-geo-xr-mode-prd-tad-ard.md"
+      },
+      "documentPath": "docs/documents/knowgrph-geo-xr-mode-prd-tad-ard.md",
       "language": "en-us"
     },
     {

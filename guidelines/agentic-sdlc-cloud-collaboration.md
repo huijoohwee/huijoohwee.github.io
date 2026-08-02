@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Cloud-Authoritative Collaboration"
 doc_type: "Guideline Module"
-version: "1.0.1"
+version: "1.0.0"
 date: "2026-08-02"
 lang: "en-US"
 schema: "agentic-cloud-collaboration/v1"

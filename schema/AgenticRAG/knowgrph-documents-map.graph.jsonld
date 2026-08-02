@@ -4021,6 +4021,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-xr-spatial-capture-fallback-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-xr-spatial-capture-fallback-readiness.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-xr-spatial-capture-fallback-readiness.md"
+      },
+      "documentPath": "docs/documents/knowgrph-xr-spatial-capture-fallback-readiness.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-yaml-mermaid-gitgraph-frontmatter-prd-tad",
       "@type": "kg:Node",
       "labels": [

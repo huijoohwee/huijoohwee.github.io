@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.11.0"
+version: "1.12.0"
 date: "2026-07-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -34,6 +34,7 @@ lifecycle_status: "proposed"
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
 - `task-model` — task identity, granularity, dependency graph, and state vocabulary
+- [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
 - `tool-permission--blast-radius` — capability classes, escalation, and irreversibility rules
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
@@ -132,18 +133,20 @@ Task ID = [hierarchical ordinal within the task list, maximum two levels]
 - Limit hierarchy to two levels: a task and its sub-tasks; forbid a third level, which trades comprehensibility for the illusion of precision
 - Record the Task ID on every state transition, every Evidence Reference, and every finding raised during that task
 
-### Collaboration Identity
+### Collaboration Identity & Scoped Lane Admission
 
-Every writer is identified by the tuple; the [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) companion adds protected remote claim authority for multi-device work:
+Every writer is identified by the tuple; [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) owns protected remote claims, while [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) owns the decision to add one isolated lane without touching existing lanes:
 ```
 Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
-- Permit concurrent work only when declared write scopes are disjoint and each writer owns a separately fenced mutation lane
-- Serialize writers that share a scope, branch, worktree, or artifact; a later lease epoch supersedes an earlier one only after the earlier writer has stopped
+- Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
+- Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate
+- Require the candidate operation to leave every pre-existing lane's head, branch, registration, index, working and untracked bytes, lease, fence, and recovery identity untouched; a peer may advance only through separately proven current disjoint authority and a typed operation receipt
+- Keep `authoringAdmission`, receipt-backed `runtimeReadiness`, receipt-backed `lifecycleReadiness`, and admission-runtime conformance independent; attributed disjoint work may coexist with lifecycle attention, while a local-only lease never proves cross-device authority
 - Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
-- Treat the protected canonical source ref as cross-device authority; local checkouts and running processes are caches or review surfaces, never source authority
+- Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
 
 ### Granularity
 
@@ -369,6 +372,7 @@ Runtime readiness is a derived claim over one immutable execution input and its 
 - Require typed inputs and outputs, bounded orchestration, independent evaluation, named checks with recorded results, cost and fallback evidence, and closed mutation and deployment gates before deriving `runtime-ready`
 - Bind one immutable source revision and its complete dependency closure; drift invalidates the claim and returns the affected unit to `blocked`
 - Keep source validation, canonical runtime, protected integration, and deployed proof as separate claims; forbid one green layer from promoting another
+- Keep scoped authoring admission, runtime readiness, and lifecycle readiness as independent results; never turn preserved disjoint work or an occupied runtime into a false global verdict
 - Emit `runtime-readiness-unproven` at `blocker` severity when a required receipt, join, budget, check, evaluator, dependency, or boundary proof is absent or stale
 - Require repository-owned stage gates to consume operation-derived evidence and emit digest-bound receipts for admission, review, integration, runtime, candidate, authorization, deployment, and publication; expose a deterministic evaluator command that exits zero only when every required proof joins, and forbid `npx`, `latest`, or dynamic resolution from creating policy identity, gate authority, or runtime-readiness proof
 
@@ -386,6 +390,15 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Task model | `concurrent-write-conflict` | `major` |
 | Task model | `parallel-scope-collision` | `blocker` |
 | Task model | `stale-collaboration-fence` | `blocker` |
+| Scoped lane admission | `canonical-base-drift` | `blocker` |
+| Scoped lane admission | `scope-admission-collision` | `blocker` |
+| Scoped lane admission | `unattributed-lane-ambiguity` | `blocker` |
+| Scoped lane admission | `admission-snapshot-stale` | `blocker` |
+| Scoped lane admission | `unsafe-candidate-target` | `blocker` |
+| Scoped lane admission | `local-only-cross-device-lease` | `blocker` |
+| Scoped lane admission | `collateral-lane-mutation` | `blocker` |
+| Scoped lane admission | `admission-runtime-conflation` | `major` |
+| Scoped lane admission | `candidate-lane-orphaned` | `major` |
 | Task model | `state-without-reason` | `minor` |
 | Task model | `oversized-task` | `minor` |
 | Execution contract | `unsurfaced-result` | `major` |
@@ -433,6 +446,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 |---|---|
 | Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-to-task-bridge` |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
+| Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
 | Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets` |
 | Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius` |
 | Verification | `verification-strategy`, `execution-conformance-findings` |
@@ -453,7 +467,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Evaluator mechanism named** and demonstrably distinct from the Implementer
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
-- [ ] **Collaboration identity complete**; concurrent writers have disjoint scopes, distinct lanes, current leases, and exact fence revisions
+- [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
+- [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition
 - [ ] **Capability grants stated** per task at the narrowest sufficient class; write scope declared
 - [ ] **Named check stated** per task before dispatch
@@ -483,6 +498,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review-surface locator are revalidated from the current Runtime Review Receipt before the prompt is emitted; the prompt identifies its canonical portable formatter as `agentic-canvas-os/scripts/production-release-authorization-contract.mjs` and, directly after its loopback locator, prints the runtime-resolved local formatter source path
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Authorization Interaction, Human Authorization, Deployment, State Reconciliation, Live Verification, Publication, and Rollback receipts join by exact digest where each stage applies
 - [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
+- [ ] **When scoped lane admission applies, admission preservation closed**: the candidate leaves every existing lane untouched; each peer is unchanged or advances only through separately proven current disjoint authority and a joined typed peer-operation receipt
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
 - [ ] **Human authorization exact**: the interaction receipt proves the configured transport, browser dependency, exact challenge response, and authenticated actor; the authority adapter records the same human decision for that candidate and target
 - [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed

@@ -1042,6 +1042,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-ar-vr-xr-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-ar-vr-xr-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-ar-vr-xr-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/knowgrph-ar-vr-xr-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-architecture-decisions",
       "@type": "kg:Node",
       "labels": [

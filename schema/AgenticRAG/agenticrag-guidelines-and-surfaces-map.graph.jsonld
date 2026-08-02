@@ -38,6 +38,8 @@
           "guidelines/agentic-sdlc-conformance-runtime.md",
           "guidelines/agentic-sdlc-guidelines.md",
           "guidelines/agentic-sdlc-integration-order.md",
+          "guidelines/agentic-sdlc-production-release-lifecycle.md",
+          "guidelines/agentic-sdlc-repository-runtime-readiness.md",
           "guidelines/agentic-sdlc-upstream-dependency-admission.md",
           "guidelines/api-reference-update-guidelines.md",
           "guidelines/cid-guidelines.md",

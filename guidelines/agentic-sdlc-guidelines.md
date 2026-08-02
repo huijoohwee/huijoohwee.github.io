@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.0"
-date: "2026-07-30"
+version: "1.12.1"
+date: "2026-08-02"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -141,12 +141,14 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
+- Use one canonical synchronization lane plus zero or more isolated task lanes per repository; each lane has exactly one active writer, one current fence, and one declared write scope, while projections such as local leases, review requests, and running processes remain evidence rather than shared authority
 - Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
 - Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate
 - Require the candidate operation to leave every pre-existing lane's head, branch, registration, index, working and untracked bytes, lease, fence, and recovery identity untouched; a peer may advance only through separately proven current disjoint authority and a typed operation receipt
 - Keep `authoringAdmission`, receipt-backed `runtimeReadiness`, receipt-backed `lifecycleReadiness`, and admission-runtime conformance independent; attributed disjoint work may coexist with lifecycle attention, while a local-only lease never proves cross-device authority
 - Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
 - Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
+- If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
 
 ### Granularity
 

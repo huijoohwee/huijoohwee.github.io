@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC End-to-End Production Release Lifecycle"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-07-30"
+version: "1.0.1"
+date: "2026-08-02"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Lifecycle controller function"
@@ -157,6 +157,10 @@ Verification is not publication.
   universal protocol requirements.
 - If any identity changes while waiting, cancel or retire the stale unapproved
   run and require a fresh review, candidate, interaction, and authorization.
+- If the protected canonical source advances while authorization waits, mark the
+  waiting run `superseded`, refresh the canonical review owner to the new exact
+  protected revision, and reseal a new candidate from that revision. Never
+  retarget, reopen, or authorize the stale run.
 
 ### 6. Authorized Deployment
 
@@ -229,6 +233,8 @@ authorization, controller, transport, or predecessor receipt changes.
 
 - Rebuild means new candidate, review, interaction, and authorization.
 - Source advancement while waiting means stale run, not implicit retargeting.
+- A superseded waiting run is retired, not resumed; the next attempt begins from
+  a freshly refreshed canonical source owner and emits a new candidate digest.
 - Duplicate dispatch with the same idempotency key coalesces onto one durable
   result; a competing key fails closed.
 - Expired, malformed, unjoined, consumed, actor-mismatched, interaction-mismatched,

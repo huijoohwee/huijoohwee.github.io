@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Cloud-Authoritative Collaboration"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-08-02"
+version: "1.0.1"
+date: "2026-08-03"
 lang: "en-US"
 schema: "agentic-cloud-collaboration/v1"
 status: "spec-complete"
@@ -79,6 +79,29 @@ declared write scope proven disjoint from every other current claim. Local
 leases, review projections, browser tabs, background processes, and mutable
 checkouts remain projections of that authority rather than the authority
 itself.
+
+## Source-Owned Policy Boundary
+
+Multi-device concurrent cloud collaboration semantics are owned by this source
+policy, not by a device workflow, repository-local wrapper, downstream mirror,
+provider adapter, or review surface. Browsers, mobile devices, local shells,
+cloud agents, and provider-specific APIs may project or enforce these rules,
+but they do not get to rename or relax the underlying authority model.
+
+- Evaluate ownership, overlap, fencing, and handoff only from the current
+  protected remote ledger plus this canonical policy; forbid deriving those
+  semantics from local process state, provider-specific defaults, or downstream
+  patches
+- Allow an adapter to translate the policy into local commands, hosted APIs, or
+  user-interface actions; forbid an adapter from changing claim identity,
+  authority order, write-scope comparison, fence meaning, or terminal-state
+  semantics
+- Require any semantic change to collaboration authority, claim fields, overlap
+  detection, or handoff rules to land in the source policy first and flow
+  downstream by explicit version adoption; forbid consumer-only hotfixes that
+  create cross-device meaning drift
+- Keep receipts, findings, and readiness meanings invariant across devices and
+  providers; transport may differ, but verdict semantics must remain identical
 
 ## Ledger Contract
 

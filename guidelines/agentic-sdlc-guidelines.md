@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.1"
+version: "1.12.2"
 date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -141,6 +141,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
+- Treat multi-device concurrent cloud collaboration semantics as a root, source-owned rule set defined by the canonical collaboration modules; device-specific tooling, repository-local wrappers, and downstream mirrors may project or enforce that rule set but must not redefine claim identity, authority order, scope comparison, fence meaning, or handoff semantics
 - Use one canonical synchronization lane plus zero or more isolated task lanes per repository; each lane has exactly one active writer, one current fence, and one declared write scope, while projections such as local leases, review requests, and running processes remain evidence rather than shared authority
 - Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
 - Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate

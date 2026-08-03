@@ -33,7 +33,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.12\.1"\n/);
+assert.match(source, /\nversion: "1\.12\.2"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -72,7 +72,7 @@ assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(cloudCollaboration.startsWith("---\n"), "cloud-collaboration frontmatter must be present");
-assert.match(cloudCollaboration, /\nversion: "1\.0\.0"\n/);
+assert.match(cloudCollaboration, /\nversion: "1\.0\.1"\n/);
 assert.match(cloudCollaboration, /\nuniversal_scope: "true"\n/);
 assert.match(cloudCollaboration, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(

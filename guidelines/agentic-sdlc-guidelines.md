@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.2"
+version: "1.13.0"
 date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -370,6 +370,7 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 - Seal one immutable candidate from the exact final Release Frontier, including source, transitive dependencies, policy, schema, catalog, generated projections, state contract, target, review, artifact, manifest, and rollback identities
 - Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale recorded
 - Preserve every `keep` item untouched, require every `port` item to reach protected integration before the candidate can claim frontier closure, and allow `drop` only after exact no-remaining-value proof plus the cleanup authority that removes it
+- End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
 - Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment
 - Fence one canonical release-owner checkout per repository from candidate sealing until the authorization interaction terminates or the run is retired; it must stay attached to the exact protected revision used for review, and branch switching, repurposing, or local-ref drift in that owner invalidates prompt readiness until the owner is reattached, refetched, and revalidated
 - Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
@@ -525,6 +526,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **State reconciled**: state changes are bounded and idempotent, direct readback matches expected counts and content, and code and state rollback dispositions remain separate
 - [ ] **Transports proven separately**: immutable origin, required public routes, authoritative state readback, browser behavior, client-cache convergence, and publication each carry their own evidence where applicable
 - [ ] **Cleanup ownership proven**: only clean, integrated, completion-proven lanes were removed; active, parked, dirty, divergent, and unrelated work remains preserved
+- [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
 
 ## Anti-Pattern Guards
 

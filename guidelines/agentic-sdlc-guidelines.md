@@ -148,6 +148,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Keep `authoringAdmission`, receipt-backed `runtimeReadiness`, receipt-backed `lifecycleReadiness`, and admission-runtime conformance independent; attributed disjoint work may coexist with lifecycle attention, while a local-only lease never proves cross-device authority
 - Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
 - Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
+- Keep authoring ownership, review readiness, and delivery authorization as separate capabilities: `review-ready` closes source mutation, while a later explicit `delivery-authorized` compare-and-swap transition may authorize protected integration of only the unchanged reviewed revision and write scope; it must bind the current claim, lease epoch, fence, ledger revision, review and check evidence, emit an idempotent receipt, never reactivate authoring or grant deployment authority, and isolate provider-specific review and integration behavior behind replaceable adapters
 - If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
 
 ### Granularity
@@ -398,6 +399,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Task model | `concurrent-write-conflict` | `major` |
 | Task model | `parallel-scope-collision` | `blocker` |
 | Task model | `stale-collaboration-fence` | `blocker` |
+| Task model | `delivery-authority-unjoined` | `blocker` |
 | Scoped lane admission | `canonical-base-drift` | `blocker` |
 | Scoped lane admission | `scope-admission-collision` | `blocker` |
 | Scoped lane admission | `unattributed-lane-ambiguity` | `blocker` |
@@ -477,6 +479,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
+- [ ] **Reviewed delivery authority is exact when protected integration applies**; one current `delivery-authorized` receipt binds the unchanged reviewed revision, scope, claim, lease epoch, fence, ledger revision, and review/check evidence without reopening authoring or granting deployment authority
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition
 - [ ] **Capability grants stated** per task at the narrowest sufficient class; write scope declared
 - [ ] **Named check stated** per task before dispatch

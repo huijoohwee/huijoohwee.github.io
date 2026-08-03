@@ -88,11 +88,14 @@ digest, transition, claim identity, normalized payload digest, evaluator
 identity, evaluation time, and resulting entry digest. Entries are sorted and
 encoded canonically before digesting.
 
-Accepted states are `active`, `review-ready`, `parked`, `released`, `expired`,
-and `revoked`. `released`, `expired`, and `revoked` are terminal for one lease
-epoch. A later epoch is a new claim and must reference the current remote head.
-History is never edited, compacted without a digest-preserving checkpoint, or
-rewritten to hide a conflict.
+Accepted states are `active`, `review-ready`, `delivery-authorized`, `parked`,
+`released`, `expired`, and `revoked`. `delivery-authorized` grants only protected
+integration of the unchanged reviewed lane revision; it does not reopen
+authoring or grant release, publication, or deployment authority. `released`,
+`expired`, and `revoked` are terminal for one lease epoch. A later epoch is a
+new claim and must reference the current remote head. History is never edited,
+compacted without a digest-preserving checkpoint, or rewritten to hide a
+conflict.
 
 ## Atomic Transition Protocol
 
@@ -124,6 +127,14 @@ different payloads using one key are rejected.
   cannot extend authority
 - Move to `review-ready` only after pushing the immutable `laneRevision` and
   joining focused check evidence
+- Move from `review-ready` to `delivery-authorized` only through an explicit
+  compare-and-swap transition binding the unchanged claim, write-set digest,
+  lane revision, lease epoch, fence and ledger revisions, protected-review
+  identity, exact-head check evidence, operator decision, and stable idempotency
+  key; a replay returns the same receipt and any drift returns `blocked`
+- Treat `delivery-authorized` as a non-authoring state: it permits only the
+  configured protected-integration adapter to submit the reviewed bytes, while
+  any source edit requires a separate handoff or fresh active lease epoch
 - Move to `parked` when yielding without requesting integration; retain the
   immutable recovery revision and exact write set
 - Release only after integration, explicit abandonment, or an accepted handoff;
@@ -169,22 +180,29 @@ A provider adapter may project an accepted claim into a review request and
 surface ledger commands through a browser or mobile action. The projection must
 carry the work item, write-set digest, canonical base revision, lane revision,
 lease epoch, fence revision, ledger revision, entry digest, and focused-check
-receipt. Scheduling and queue concurrency create no lock authority.
+receipt. Scheduling and queue concurrency create no lock authority. Review
+resolution, protected-check verification, protected-integration request, and
+integration observation are replaceable adapter ports; provider-specific
+branches, labels, commands, merge products, and hosting services are never
+universal lifecycle semantics.
 
 Required protected checks independently verify the current ledger, projection
 parity, exact reviewed lane revision, scope ownership, and predecessor chain.
 Closing, relabelling, or merging a projection cannot edit or release the ledger.
-Protected integration emits a separate Integration Receipt and then permits one
-ledger transition to `released`. An operation-derived digest-bound Collaboration
-Receipt joins admission evidence; prose, labels, or reconstructed local state
-cannot substitute for that receipt.
+Protected integration requires the current `delivery-authorized` receipt, emits
+a separate Integration Receipt, and then permits one ledger transition to
+`released`. An operation-derived digest-bound Collaboration Receipt joins
+admission evidence; prose, labels, or reconstructed local state cannot
+substitute for that receipt.
 
 ## Runtime Readiness Enforcement
 
 A conforming runtime exposes model-free commands for claim, renew, park,
-review-ready, handoff, release, inspect, and verify. Commands accept typed input,
-emit typed output, use bounded remote calls, and never need an interactive local
-process to keep authority alive.
+review-ready, delivery-authorize, handoff, release, inspect, and verify. Commands
+accept typed input, emit typed output, use bounded remote calls, and never need
+an interactive local process to keep authority alive. Concurrent devices may
+submit the same delivery intent, but compare-and-swap plus the idempotency key
+accepts at most one transition and makes exact replays converge on one receipt.
 
 The independent verifier exits zero only when:
 
@@ -220,6 +238,7 @@ scope, ledger, or projection state fails closed.
 |---|---|
 | `parallel-scope-collision` | `blocker` |
 | `stale-collaboration-fence` | `blocker` |
+| `delivery-authority-unjoined` | `blocker` |
 | `evidence-without-run` | `major` |
 | `runtime-readiness-unproven` | `blocker` |
 
@@ -232,5 +251,5 @@ remediation state. Emit zero counts for checked finding types with no occurrence
 | Field | Requirement |
 |---|---|
 | Variables | Identity, ledger chain, protected source, normalized write sets, lane revisions, projections, evaluation time, and focused evidence. |
-| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, and no authority promotion. |
-| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent replay, offline admission, handoff join, projection parity, deterministic replay, and cost bounds. |
+| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, and capability-specific authority without implicit promotion. |
+| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, and cost bounds. |

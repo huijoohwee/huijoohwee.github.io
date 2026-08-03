@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.1"
+version: "1.12.3"
 date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -33,6 +33,8 @@ lifecycle_status: "proposed"
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
+- `canonical-source-inventory` — complete, revision-bound source inventories across interchangeable readers
+- `github-native-collaboration-contract--agentic-orchestration-layer` — upstream collaboration baseline and additive orchestration boundary
 - `task-model` — task identity, granularity, dependency graph, and state vocabulary
 - [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
@@ -120,6 +122,25 @@ Acceptance criterion → VCC → Task (or task group) → Evidence Reference →
 - Report bridge coverage as covered VCCs over total VCCs; forbid claiming a task list is complete without that ratio
 - Forbid introducing a requirement at task-authoring time: a task that needs behaviour absent from the specification is a specification defect, so return it to the authoring loop rather than inventing scope inside the task list
 - Re-derive the task list whenever a VCC changes; a task list outrunning its specification produces work no rung will ever credit
+
+## Canonical Source Inventory
+
+A **Canonical Source Inventory** is the complete normalized source-owned set for one revision: item identities, per-item digests, and one digest over the sorted whole.
+Any reader may project it through protected remote reads, bundles, caches, or local filesystems, but no reader may choose another authority, treat a partial response as complete, or define fallback independently.
+**Directives**:
+- Bind one source authority and one source-owned resolver policy to each inventory; consumers and transports may not override them
+- Accept only a complete digest-verified set for its declared revision; otherwise emit `source-inventory-unavailable`
+- Preserve the last verified inventory until a newer complete verified inventory atomically replaces it; first load must fail closed rather than project partial state
+- Bind inventory revision and digest to claims, handoffs, integration receipts, and runtime-readiness; invalidate derived state only when either value changes, and test every supported reader against the same manifest without reader-specific downstream masks
+## GitHub-Native Collaboration Contract & Agentic Orchestration Layer
+
+Multi-device concurrent cloud collaboration starts from the upstream host-VCS contract: protected canonical ref, remotely addressable mutation branches, pull-request review, required checks, and immutable merge results.
+Agentic orchestration is additive only: it may add admission, leases, parking, cleanup, or runtime proof, but it never overrides protected-remote authority.
+**Directives**:
+- Encode the baseline in repository-owned upstream docs; do not rely on downstream patches, IDE warnings, local aliases, or tool-private memory as the primary contract
+- Treat the protected remote branch, branch protection rules, pull-request state, required checks, review result, and merge revision as authoritative shared state; local branches, worktrees, leases, and agent metadata are evidence only
+- Require shared mutation to map to a remotely addressable branch and review object before claiming cross-device authority; local-only work is private recovery state
+- Permit orchestration only when it remains universal, neutral, agnostic, and modular, never bypasses protected-branch policy, and fails closed in favor of the authoritative protected remote state while remaining understandable through native branch, pull-request, and status-check semantics
 
 ## Task Model
 

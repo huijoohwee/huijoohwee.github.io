@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.0"
-date: "2026-08-02"
+version: "1.12.1"
+date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -348,6 +348,7 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Dispatch ready units in deterministic waves only when their write scopes are disjoint; serialize overlapping source owners even when their dependency sets differ
 - Integrate shared control, contract, and source owners before consumers, generated projections, mirrors, or release candidates; source ownership, not repository or list position, determines order
 - Rebase or merge the current canonical frontier into the owned mutation lane, resolve conflicts at the source owner, run named checks, and enter through protected integration without bypass
+- Require every review-request or equivalent protected-integration record to be rendered from the repository-owned template, to bind the current canonical base revision at creation or update time, and to declare a scope token exactly equal to the admitted semantic scope; when a branch-segment projection exists, that scope token must equal the projected branch-scope segment as well
 - Require the protected merge revision and its exact-canonical checks before advancing the frontier; a green task head alone is `canonical-frontier-unverified`
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
@@ -500,6 +501,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
+- [ ] **Protected review metadata exact**: the repository-owned review-request template is instantiated, the current canonical base revision is recorded, and the declared scope token equals the admitted semantic scope and any projected branch-scope segment
 - [ ] **Runtime and release frontiers agree**: every runtime-impacting unit converged before candidate sealing, and the candidate binds the final dependency closure
 - [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review-surface locator are revalidated from the current Runtime Review Receipt before the prompt is emitted; the prompt identifies its canonical portable formatter as `agentic-canvas-os/scripts/production-release-authorization-contract.mjs` and, directly after its loopback locator, prints the runtime-resolved local formatter source path
 - [ ] **Canonical release owner stable**: from candidate sealing through authorization interaction, one canonical release-owner checkout stays on the exact protected revision used for review; any branch flip or local-ref drift retires or blocks the run until the owner is restored and the receipt chain is refreshed

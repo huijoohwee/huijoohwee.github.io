@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.12.1"
+version: "1.12.2"
 date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -141,6 +141,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
+- Treat multi-device concurrent cloud collaboration semantics as a root, source-owned rule set defined by the canonical collaboration modules; device-specific tooling, repository-local wrappers, and downstream mirrors may project or enforce that rule set but must not redefine claim identity, authority order, scope comparison, fence meaning, or handoff semantics
 - Use one canonical synchronization lane plus zero or more isolated task lanes per repository; each lane has exactly one active writer, one current fence, and one declared write scope, while projections such as local leases, review requests, and running processes remain evidence rather than shared authority
 - Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
 - Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate
@@ -354,6 +355,7 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Integrate shared control, contract, and source owners before consumers, generated projections, mirrors, or release candidates; source ownership, not repository or list position, determines order
 - Rebase or merge the current canonical frontier into the owned mutation lane, resolve conflicts at the source owner, run named checks, and enter through protected integration without bypass
 - Require every review-request or equivalent protected-integration record to be rendered from the repository-owned template, to bind the current canonical base revision at creation or update time, and to declare a scope token exactly equal to the admitted semantic scope; when a branch-segment projection exists, that scope token must equal the projected branch-scope segment as well
+- When a commit push succeeds but the review-ready boundary fails closed because a cloud verifier momentarily resolves a different protected-review head, solve that drift only in the authority-owning source module by revalidating the unchanged claim, review-request, and intended reviewed head, then rerunning the same bounded verifier-and-transition path; downstream fence rewrites, projection patches, synthetic rebases, or alternate transition selection are forbidden
 - Require the protected merge revision and its exact-canonical checks before advancing the frontier; a green task head alone is `canonical-frontier-unverified`
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts

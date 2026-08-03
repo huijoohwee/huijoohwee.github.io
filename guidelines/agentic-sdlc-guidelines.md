@@ -2,7 +2,7 @@
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
 version: "1.13.0"
-date: "2026-08-02"
+date: "2026-08-03"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -141,12 +141,19 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
+- Treat multi-device concurrent cloud collaboration semantics as a root, source-owned rule set defined by the canonical collaboration modules; device-specific tooling, repository-local wrappers, and downstream mirrors may project or enforce that rule set but must not redefine claim identity, authority order, scope comparison, fence meaning, or handoff semantics
+- Use one canonical synchronization lane plus zero or more isolated task lanes per repository; each lane has exactly one active writer, one current fence, and one declared write scope, while projections such as local leases, review requests, and running processes remain evidence rather than shared authority
 - Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
 - Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate
+- Forbid admitting, renewing, resuming, reviewing, parking for handoff, or integrating a lane while any live protected remote claim overlaps its declared future write scope; resolve overlap only through an accepted upstream release, handoff, or reclaim on the protected remote ledger, and never infer release from review state, wait state, mergeability, local expiry, or canonical-source advancement
+- Forbid a publication or integration boundary that would allow multiple independent writers to publish different revisions for the same path; one path may have only one current upstream publish authority, and semantic-scope labels never override path overlap
+- Treat protected-branch policy as remote publication and integration authority, not as a blanket prohibition on normal local commits in an admitted non-canonical lane; a local commit records private progress only, and shared authority begins only when one remotely addressable branch, review surface, and required-check path represent that lane
 - Require the candidate operation to leave every pre-existing lane's head, branch, registration, index, working and untracked bytes, lease, fence, and recovery identity untouched; a peer may advance only through separately proven current disjoint authority and a typed operation receipt
 - Keep `authoringAdmission`, receipt-backed `runtimeReadiness`, receipt-backed `lifecycleReadiness`, and admission-runtime conformance independent; attributed disjoint work may coexist with lifecycle attention, while a local-only lease never proves cross-device authority
 - Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
+- If source authoring begins on canonical protected `main`, preserve the exact bytes and move them into one isolated task lane before the next normal commit or publication step; do not solve protected-branch friction by teaching local commit-time tooling to treat every commit as an attempted protected push
 - Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
+- If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
 
 ### Granularity
 
@@ -344,8 +351,11 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Classify each unit as `pending`, `already-integrated`, `superseded`, `integrated`, or `blocked`; forbid reintegrating an equivalent change or replacing newer canonical behavior with an older unit
 - Build a directed acyclic graph from declared unit dependencies; a cycle is an `integration-order-cycle`, and integrating a unit before a dependency is `integration-before-dependency`
 - Dispatch ready units in deterministic waves only when their write scopes are disjoint; serialize overlapping source owners even when their dependency sets differ
+- Require the publication and protected-integration boundary to preserve one current revision authority per path; if two independent units can publish different bytes for the same path, the boundary is invalid until ownership is serialized or one unit is retired
 - Integrate shared control, contract, and source owners before consumers, generated projections, mirrors, or release candidates; source ownership, not repository or list position, determines order
 - Rebase or merge the current canonical frontier into the owned mutation lane, resolve conflicts at the source owner, run named checks, and enter through protected integration without bypass
+- Require every review-request or equivalent protected-integration record to be rendered from the repository-owned template, to bind the current canonical base revision at creation or update time, and to declare a scope token exactly equal to the admitted semantic scope; when a branch-segment projection exists, that scope token must equal the projected branch-scope segment as well
+- When a commit push succeeds but the review-ready boundary fails closed because a cloud verifier momentarily resolves a different protected-review head, solve that drift only in the authority-owning source module by revalidating the unchanged claim, review-request, and intended reviewed head, then rerunning the same bounded verifier-and-transition path; downstream fence rewrites, projection patches, synthetic rebases, or alternate transition selection are forbidden
 - Require the protected merge revision and its exact-canonical checks before advancing the frontier; a green task head alone is `canonical-frontier-unverified`
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
@@ -362,6 +372,8 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 - Preserve every `keep` item untouched, require every `port` item to reach protected integration before the candidate can claim frontier closure, and allow `drop` only after exact no-remaining-value proof plus the cleanup authority that removes it
 - End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
 - Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment
+- Fence one canonical release-owner checkout per repository from candidate sealing until the authorization interaction terminates or the run is retired; it must stay attached to the exact protected revision used for review, and branch switching, repurposing, or local-ref drift in that owner invalidates prompt readiness until the owner is reattached, refetched, and revalidated
+- Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
 - Keep interaction, authority, deployment, state reconciliation, verification, publication, rollback, and cleanup as replaceable adapter ports with typed inputs and receipts
 - Invalidate the affected receipt chain on any identity movement; cancel or retire stale unapproved runs rather than retargeting, rebuilding, or reusing authorization
 - Verify immutable deployment identity, authoritative state readback, public transports, browser behavior, and client-cache convergence as separate claims where the target profile requires them
@@ -471,6 +483,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
+- [ ] **No live overlapping remote claim exists for the declared scope**; any overlap is resolved upstream through an accepted release, handoff, or reclaim before local mutation, and review state, lease expiry, mergeability, or canonical advancement do not count as release authority
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition
 - [ ] **Capability grants stated** per task at the narrowest sufficient class; write scope declared
@@ -497,14 +510,17 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
+- [ ] **Protected review metadata exact**: the repository-owned review-request template is instantiated, the current canonical base revision is recorded, and the declared scope token equals the admitted semantic scope and any projected branch-scope segment
 - [ ] **Runtime and release frontiers agree**: every runtime-impacting unit converged before candidate sealing, and the candidate binds the final dependency closure
 - [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review-surface locator are revalidated from the current Runtime Review Receipt before the prompt is emitted; the prompt identifies its canonical portable formatter as `agentic-canvas-os/scripts/production-release-authorization-contract.mjs` and, directly after its loopback locator, prints the runtime-resolved local formatter source path
+- [ ] **Canonical release owner stable**: from candidate sealing through authorization interaction, one canonical release-owner checkout stays on the exact protected revision used for review; any branch flip or local-ref drift retires or blocks the run until the owner is restored and the receipt chain is refreshed
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Authorization Interaction, Human Authorization, Deployment, State Reconciliation, Live Verification, Publication, and Rollback receipts join by exact digest where each stage applies
 - [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
 - [ ] **Keep / port / drop inventory closed**: every pre-existing non-canonical lane or worktree is classified by exact identity; `keep` items remain preserved, `port` items integrate before candidate sealing, and `drop` items are removed only with value-closure proof plus cleanup authority
 - [ ] **When scoped lane admission applies, admission preservation closed**: the candidate leaves every existing lane untouched; each peer is unchanged or advances only through separately proven current disjoint authority and a joined typed peer-operation receipt
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
 - [ ] **Human authorization exact**: the interaction receipt proves the configured transport, browser dependency, exact challenge response, and authenticated actor; the authority adapter records the same human decision for that candidate and target
+- [ ] **Terminal prompt handshake exact**: terminal automation captures the printed exact reply, waits for the live prompt, and only then submits that reply; missing challenge capture, missing prompt readiness, or out-of-order input blocks authorization
 - [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed
 - [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and forward deployment remains blocked
 - [ ] **State reconciled**: state changes are bounded and idempotent, direct readback matches expected counts and content, and code and state rollback dispositions remain separate

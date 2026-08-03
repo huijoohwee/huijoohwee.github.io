@@ -72,7 +72,7 @@ assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(cloudCollaboration.startsWith("---\n"), "cloud-collaboration frontmatter must be present");
-assert.match(cloudCollaboration, /\nversion: "1\.0\.0"\n/);
+assert.match(cloudCollaboration, /\nversion: "1\.0\.1"\n/);
 assert.match(cloudCollaboration, /\nuniversal_scope: "true"\n/);
 assert.match(cloudCollaboration, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(
@@ -327,6 +327,7 @@ for (const phrase of [
   "joined Admission and Preservation Receipts", "`authoringAdmission: admitted`",
   "When scoped lane admission applies, admission preservation closed", "candidate leaves every existing lane untouched",
   "separately proven current disjoint authority and a joined typed peer-operation receipt",
+  "repository-owned template", "current canonical base revision", "projected branch-scope segment",
 ]) assert.ok(source.includes(phrase), `main guideline must include ${phrase}`);
 
 for (const term of [

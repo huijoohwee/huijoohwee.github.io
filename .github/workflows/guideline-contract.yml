@@ -16,12 +16,21 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout Agentic Canvas OS registrations
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: huijoohwee/agentic-canvas-os
+          ref: d6433142be25d06d25e5961470101eed4c1eed18
+          path: agentic-canvas-os
+          persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
       - run: npm ci
       - run: npm test
+        env:
+          AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os
 
   agentic-sdlc-policy-contract:
     if: ${{ always() }}

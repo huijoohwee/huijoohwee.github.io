@@ -33,7 +33,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.13\.0"\n/);
+assert.match(source, /\nversion: "1\.14\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -99,15 +99,7 @@ assert.ok(
 );
 
 for (const term of [
-  "GitHub",
-  "Cloudflare",
-  "Knowgrph",
-  "Agentic Canvas OS",
-  "huijoohwee",
-  "airvio.co",
-  "Builders Hub",
-  "Avalanche",
-  "Vercel",
+  "GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "Builders Hub", "Avalanche", "Vercel",
 ]) {
   assert.doesNotMatch(
     repositoryRuntimeReadiness,
@@ -329,6 +321,17 @@ for (const phrase of [
   "separately proven current disjoint authority and a joined typed peer-operation receipt",
   "repository-owned template", "current canonical base revision", "projected branch-scope segment",
 ]) assert.ok(source.includes(phrase), `main guideline must include ${phrase}`);
+
+const coordinationSource = contractSlice(source, "### Collaboration Identity & Scoped Lane Admission", "### Canonical Branch-State Glossary", "root collaboration source");
+for (const phrase of [
+  "exactly four provider-neutral root operations", "`claim(scope)`, `continue(claim)`, `integrate(candidate)`, and `retire(claim)`", "typed digest-bound receipt",
+  "cross-repository coordination task as a dependency-ordered group of immutable per-repository work units", "repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence",
+  "shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff", "unlimited concurrent current authorities for disjoint normalized write sets", "exactly one current write authority per overlapping declared write set",
+  "overlapping newcomer is a non-writing waiting successor", "monotonic compare-and-swap", "recovery from `dormant-preserved` is independent of the expired local lease", "local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections",
+  "expiry, merge state, detached state, names, or canonical advancement only yield `dormant-preserved`", "authority-bearing aliases or compatibility operations", "conceptual inspiration only", "Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming", "forbid dependencies, imports, network/runtime reliance, and external conformance authority",
+]) assert.ok(coordinationSource.includes(phrase), `root collaboration source must include ${phrase}`);
+assert.match(coordinationSource, /#### Reference implementation inspiration[^\n]*\n- \[yjs\/yjs\]\(https:\/\/github\.com\/yjs\/yjs\)/u);
+assert.doesNotMatch(coordinationSource, /maximum (?:of )?8 concurrent|at most 8 concurrent/iu);
 
 for (const term of [
   "GitHub",
@@ -585,16 +588,9 @@ for (const finding of [
 }
 
 for (const phrase of [
-  "Integration Frontier",
-  "already-integrated",
-  "superseded",
-  "exact-canonical checks",
-  "runtime-convergence evidence",
-  "Seal the Release Frontier",
+  "Integration Frontier", "already-integrated", "superseded", "exact-canonical checks", "runtime-convergence evidence", "Seal the Release Frontier",
 ]) {
   assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
 }
 
-console.log(
-  `agentic SDLC guideline contract ok (${lines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`,
-);
+console.log(`agentic SDLC guideline contract ok (${lines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);

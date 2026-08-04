@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.13.0"
-date: "2026-08-03"
+version: "1.14.0"
+date: "2026-08-04"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -141,19 +141,19 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 ```
 
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
-- Treat multi-device concurrent cloud collaboration semantics as a root, source-owned rule set defined by the canonical collaboration modules; device-specific tooling, repository-local wrappers, and downstream mirrors may project or enforce that rule set but must not redefine claim identity, authority order, scope comparison, fence meaning, or handoff semantics
-- Use one canonical synchronization lane plus zero or more isolated task lanes per repository; each lane has exactly one active writer, one current fence, and one declared write scope, while projections such as local leases, review requests, and running processes remain evidence rather than shared authority
-- Classify every lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous` from content-bound state and authoritative declared future write scope; observed current paths never prove an active writer's future scope, and missing authority is ambiguous
-- Permit a new lane only from an exact clean canonical base when every non-canonical lane is attributed and disjoint, the candidate target is safe, and a protected remote compare-and-swap claim plus local lease fences the candidate
-- Forbid admitting, renewing, resuming, reviewing, parking for handoff, or integrating a lane while any live protected remote claim overlaps its declared future write scope; resolve overlap only through an accepted upstream release, handoff, or reclaim on the protected remote ledger, and never infer release from review state, wait state, mergeability, local expiry, or canonical-source advancement
-- Forbid a publication or integration boundary that would allow multiple independent writers to publish different revisions for the same path; one path may have only one current upstream publish authority, and semantic-scope labels never override path overlap
-- Treat protected-branch policy as remote publication and integration authority, not as a blanket prohibition on normal local commits in an admitted non-canonical lane; a local commit records private progress only, and shared authority begins only when one remotely addressable branch, review surface, and required-check path represent that lane
-- Require the candidate operation to leave every pre-existing lane's head, branch, registration, index, working and untracked bytes, lease, fence, and recovery identity untouched; a peer may advance only through separately proven current disjoint authority and a typed operation receipt
-- Keep `authoringAdmission`, receipt-backed `runtimeReadiness`, receipt-backed `lifecycleReadiness`, and admission-runtime conformance independent; attributed disjoint work may coexist with lifecycle attention, while a local-only lease never proves cross-device authority
-- Hand off only an immutable, remotely addressable revision plus its evidence; forbid copying mutable working state between users or devices as coordination
-- If source authoring begins on canonical protected `main`, preserve the exact bytes and move them into one isolated task lane before the next normal commit or publication step; do not solve protected-branch friction by teaching local commit-time tooling to treat every commit as an attempted protected push
-- Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
-- If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
+- Expose exactly four provider-neutral root operations: `claim(scope)`, `continue(claim)`, `integrate(candidate)`, and `retire(claim)`; each emits a typed digest-bound receipt, and adapters must not add authority-bearing aliases or compatibility operations
+- Define a cross-repository coordination task as a dependency-ordered group of immutable per-repository work units; every unit retains its own repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence
+- Treat dependency edges as the group's only ordering authority; a shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff
+- Permit unlimited concurrent current authorities for disjoint normalized write sets, but exactly one current write authority per overlapping declared write set; authenticate each authority, while local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections
+- Classify each lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous`; an overlapping newcomer is a non-writing waiting successor, and undeclared or unparseable future scope is `ambiguous` and cannot create authority
+- `claim(scope)` admits only an exact clean canonical base, normalized declared scope, authenticated actor, no competing overlap, and a monotonic compare-and-swap transition; failure leaves every existing lane and the requester unchanged
+- `continue(claim)` revalidates the immutable claim, revision, PR/review identity, epoch, fence, scope, and authenticated authority; recovery from `dormant-preserved` is independent of the expired local lease and never adopts another lane's mutable bytes
+- `integrate(candidate)` consumes one immutable reviewed candidate, dependency closure, named checks, handoff evidence, and current claim through a monotonic compare-and-swap; source owners precede consumers, projections, and mirrors
+- `retire(claim)` is the only authenticated transition that ends current authority and must preserve the exact revision, review identity, bytes, and handoff evidence; expiry, merge state, detached state, names, or canonical advancement only yield `dormant-preserved`, never inferred release
+- Require admission and every later mutation batch to preserve pre-existing lanes and join current cloud and local authority with joined Admission and Preservation Receipts plus operation receipts; these receipts grant no cleanup, runtime, release, deployment, or authority outside their exact work unit
+#### Reference implementation inspiration — independent no-copy boundary
+- [yjs/yjs](https://github.com/yjs/yjs) is conceptual inspiration only for observing concurrent state and deterministic convergence; these rules are independently authored and provider-neutral
+- Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming; forbid dependencies, imports, network/runtime reliance, and external conformance authority
 
 ### Canonical Branch-State Glossary
 - `origin/main` is the authoritative published canonical frontier and remote SSOT

@@ -1,14 +1,20 @@
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
-const guidelinesDirectory = path.join(repositoryRoot, "../joohwee/guidelines-archive");
 const mapPath = path.join(
   repositoryRoot,
   "schema/AgenticRAG/agenticrag-guidelines-and-surfaces-map.graph.jsonld",
 );
+const guidelinesDirectoryCandidates = [
+  process.env.AGENTICRAG_GUIDELINES_ARCHIVE_DIR,
+  path.join(repositoryRoot, "joohwee/guidelines-archive"),
+  path.join(repositoryRoot, "../joohwee/guidelines-archive"),
+].filter(Boolean);
+
+const guidelinesDirectory = await resolveGuidelinesDirectory(guidelinesDirectoryCandidates);
 
 const expectedFiles = (await readdir(guidelinesDirectory, { withFileTypes: true }))
   .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
@@ -27,3 +33,16 @@ assert.deepEqual(
 );
 
 console.log(`AgenticRAG guideline map parity ok (${expectedFiles.length} files)`);
+
+async function resolveGuidelinesDirectory(candidates) {
+  for (const candidate of candidates) {
+    try {
+      await access(candidate);
+      return candidate;
+    } catch {}
+  }
+
+  throw new Error(
+    `Could not locate joohwee/guidelines-archive. Tried: ${candidates.join(", ")}`,
+  );
+}

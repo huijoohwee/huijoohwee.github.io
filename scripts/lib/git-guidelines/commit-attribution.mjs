@@ -1,4 +1,5 @@
 import { finding } from "./content.mjs";
+import { resolveRuleId } from "./rule-registry.mjs";
 
 const SUBJECT_PATTERN = /^(feat|fix|docs|test|refactor|chore)\(([a-z0-9][a-z0-9._/-]*)\): (\S.*)$/u;
 const REQUIRED_TRAILERS = Object.freeze([
@@ -8,16 +9,16 @@ const REQUIRED_TRAILERS = Object.freeze([
   "Agentic-Mechanism",
 ]);
 
-export function checkCommitAttribution(document, gitFacts) {
+export function checkCommitAttribution(document, gitFacts, ruleIndex) {
   if (!requiresAgenticAttribution(gitFacts)) return [];
   const problems = validateCommitAttribution(gitFacts.commitMessage, { branch: gitFacts.branch });
-  if (problems.length === 0) return [];
-  return [finding({
-    ruleId: "commit--attribution#2",
+  const grouped = Map.groupBy(problems, problem => attributionRuleId(problem, ruleIndex));
+  return [...grouped.entries()].map(([ruleId, ruleProblems]) => finding({
+    ruleId,
     type: "unattributed-agentic-commit",
     path: document.sourcePath,
-    message: `Commit ${gitFacts.head || "HEAD"} has invalid agentic attribution: ${problems.join(" ")}`,
-  })];
+    message: `Commit ${gitFacts.head || "HEAD"} has invalid agentic attribution: ${ruleProblems.join(" ")}`,
+  }));
 }
 
 export function validateCommitAttribution(message, { branch = null } = {}) {
@@ -64,6 +65,12 @@ export function validateCommitAttribution(message, { branch = null } = {}) {
 
 function requiresAgenticAttribution(gitFacts) {
   return Boolean(gitFacts?.branch?.startsWith("agent/") || /Agentic-(?:Task|Scope|Lease-Epoch|Mechanism):/u.test(String(gitFacts?.commitMessage || "")));
+}
+
+function attributionRuleId(problem, ruleIndex) {
+  return /^(?:Subject|Agentic-Scope must equal the task-lane branch scope)/u.test(problem)
+    ? resolveRuleId(ruleIndex, "commit--attribution", /Use `<type>\(<scope>\): <summary>`/u, "commit--attribution#11")
+    : resolveRuleId(ruleIndex, "commit--attribution", /Record each trailer exactly once/u, "commit--attribution#12");
 }
 
 function finalTrailerBlock(lines) {

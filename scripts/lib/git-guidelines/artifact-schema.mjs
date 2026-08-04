@@ -1,10 +1,26 @@
 import { createHash } from "node:crypto";
-import { finding } from "./content.mjs";
+import path from "node:path";
+import { TextDecoder } from "node:util";
+import { declaredWriteScopesOverlap, finding } from "./content.mjs";
+import { resolveRuleId } from "./rule-registry.mjs";
+import { checkRuntimeConformance } from "./runtime-conformance.mjs";
 
 const MAX_ARTIFACT_BYTES = 64 * 1024;
 const DIGEST_PATTERN = /^[0-9a-f]{64}$/u;
 const SHA_PATTERN = /^[0-9a-f]{40}$/u;
+const SEMANTIC_SCOPE_PATTERN = /^[a-z0-9-]{3,64}$/u;
+const TASK_BRANCH_PATTERN = /^agent\/[a-z0-9-]{1,64}\/[a-z0-9-]{1,64}$/u;
+const UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
+const REPOSITORY_OWNED_REQUEST_PATH = ".coordination/dev-source-resolver-cloud-request.json";
+const REPOSITORY_OWNED_CLAIM_PATH = ".coordination/dev-source-resolver-cloud-claim.json";
 const ROOT_OPERATIONS = Object.freeze(["claim", "continue", "integrate", "retire"]);
+const ACCEPTED_CLAIM_ACTIONS = Object.freeze(["claim", "renew", "park", "review-ready", "handoff", "release"]);
+const ACCEPTED_CLAIM_STATES = Object.freeze(["active", "review-ready", "parked", "released", "expired", "revoked"]);
+const ACCEPTED_CLAIM_FIELDS = Object.freeze([
+  "claimId", "state", "actorId", "repositoryId", "workItemId", "canonicalBaseRevision", "laneRevision",
+  "declaredWriteScope", "writeSetDigest", "leaseEpoch", "transitionCounter", "heartbeatCounter", "reviewRequestId",
+  "expiresAt", "fenceRevision", "transitionDigest",
+]);
 const RECEIPT_SPECS = Object.freeze({
   "agentic-collaboration-claim-receipt/v1": Object.freeze({ operation: "claim", statuses: Object.freeze(["current", "waiting-successor"]) }),
   "agentic-collaboration-continuation-receipt/v1": Object.freeze({ operation: "continue", statuses: Object.freeze(["current", "reviewed", "integrated-preserved", "dormant-preserved"]) }),
@@ -26,28 +42,42 @@ const INTEGRATION_FIELDS = Object.freeze([
   "namedChecksDigest", "handoffEvidenceDigest", "operatorDecisionDigest", "integrationIntentDigest", "integratedAt",
 ]);
 
-export function checkArtifacts(document, artifacts) {
+export function checkArtifacts(document, artifacts, ruleIndex, runtimeContext) {
   const findings = [];
+  const records = [];
+  const markerPaths = new Set(artifacts
+    .filter(artifact => path.basename(String(artifact.relativePath || artifact.path || "")) === ".complete")
+    .map(artifact => normalizeArtifactPath(artifact.path || artifact.relativePath)));
   for (const artifact of artifacts) {
     if (!artifact.relativePath.endsWith(".json")) continue;
-    if (artifact.bytes.length > MAX_ARTIFACT_BYTES) { findings.push(issue(document, artifact.relativePath, "Artifact exceeds 64 KiB.")); continue; }
+    if (!artifact.bytes) { findings.push(issue(document, ruleIndex, artifact.relativePath, "artifact-schema-invalid", "Artifact bytes are unreadable.")); continue; }
+    if (artifactByteLength(artifact.bytes) > MAX_ARTIFACT_BYTES) { findings.push(issue(document, ruleIndex, artifact.relativePath, "artifact-schema-invalid", "Artifact exceeds 64 KiB.")); continue; }
     let value;
-    try { value = JSON.parse(artifact.bytes.toString("utf8")); }
-    catch (error) { findings.push(issue(document, artifact.relativePath, `Artifact JSON is unparseable: ${error.message}`)); continue; }
-    for (const problem of validateArtifact(value, artifact.relativePath)) findings.push(issue(document, artifact.relativePath, problem));
+    try { value = JSON.parse(decodeArtifactBytes(artifact.bytes)); }
+    catch (error) { findings.push(issue(document, ruleIndex, artifact.relativePath, "artifact-schema-invalid", `Artifact is not strict UTF-8 JSON: ${error.message}`)); continue; }
+    records.push(Object.freeze({ artifact, value }));
+    for (const problem of validateArtifact(value, artifact.relativePath)) {
+      findings.push(issue(document, ruleIndex, artifact.relativePath, diagnosticCode(problem), problem));
+    }
   }
-  return findings;
+  findings.push(...checkArtifactRelationships(document, records, markerPaths, ruleIndex));
+  const runtime = checkRuntimeConformance(document, runtimeContext, ruleIndex);
+  findings.push(...runtime.findings);
+  return Object.freeze({
+    findings: Object.freeze(findings),
+    blockedOutcomes: runtime.blockedOutcomes,
+  });
 }
 
 export function validateArtifact(value, relativePath = "artifact.json") {
   if (!value || typeof value !== "object" || Array.isArray(value)) return ["Artifact root must be an object."];
   const schema = value.schema;
   if (schema === "agentic-declared-write-scope/v1") return validateWriteScope(value, relativePath);
-  if (schema === "agentic-change-manifest/v1") return validateManifest(value);
-  if (schema === "agentic-cloud-collaboration-request/v1") return requireFields(value, ["targetRepository", "workItem", "canonicalBaseRevision", "laneRevision", "declaredWriteScope", "leaseEpoch", "expiresAt", "deviceId", "sessionId", "actorId"]);
+  if (schema === "agentic-change-manifest/v1") return validateManifest(value, relativePath);
+  if (schema === "agentic-cloud-collaboration-request/v1") return validateCloudRequest(value, relativePath);
   if (Object.hasOwn(RECEIPT_SPECS, schema)) return validateOperationReceipt(value);
-  if (schema === "agentic-cloud-collaboration-result/v1") return validateCloudResult(value);
-  if (schema === "agentic-legacy-dirty-lane-recovery/v1") return validateLegacyRecovery(value);
+  if (schema === "agentic-cloud-collaboration-result/v1") return validateCloudResult(value, relativePath);
+  if (schema === "agentic-legacy-dirty-lane-recovery/v1") return validateLegacyRecovery(value, relativePath);
   return [`Unknown or missing artifact schema in ${relativePath}.`];
 }
 
@@ -55,25 +85,63 @@ export function digestBytes(bytes) { return createHash("sha256").update(bytes).d
 export function digestValue(value) { return digestBytes(Buffer.from(canonicalJson(value), "utf8")); }
 
 export function normalizedWriteSetsOverlap(left, right) {
-  if (!Array.isArray(left) || !Array.isArray(right) || left.length === 0 || right.length === 0) return true;
-  const leftValues = left.map(normalizeScopeEntry); const rightValues = right.map(normalizeScopeEntry);
-  if ([...leftValues, ...rightValues].some(value => value === null)) return true;
-  return leftValues.some(leftValue => rightValues.some(rightValue => entriesOverlap(leftValue, rightValue)));
+  return declaredWriteScopesOverlap(left, right);
 }
 
 function validateWriteScope(value, relativePath) {
-  const problems = requireFields(value, ["semanticScope", "paths"]);
-  if (!/^[a-z0-9-]{3,64}$/u.test(String(value.semanticScope || ""))) problems.push("semanticScope is invalid.");
-  if (!Array.isArray(value.paths) || value.paths.length < 1 || value.paths.length > 4096 || value.paths.some(item => typeof item !== "string" || item.length > 512)) problems.push("paths must be 1–4096 bounded strings.");
+  const fields = ["schema", "semanticScope", "paths"];
+  const problems = [...exactRecordProblems(value, fields), ...requireFields(value, fields)];
+  if (!SEMANTIC_SCOPE_PATTERN.test(String(value.semanticScope || ""))) problems.push("semanticScope is invalid.");
+  if (!Array.isArray(value.paths) || value.paths.length < 1 || value.paths.length > 4096 || value.paths.some(item => typeof item !== "string" || item.length > 512 || !isCanonicalRepositoryPath(item))) problems.push("paths must be 1–4096 canonical repository-relative strings of at most 512 characters.");
   else if (JSON.stringify(value.paths) !== JSON.stringify([...new Set(value.paths)].sort(byteCompare))) problems.push("paths must be unique and ascending by bytes.");
   const expected = `${value.semanticScope}-write-scope.json`;
-  if (relativePath.split("/").at(-1) !== expected) problems.push(`Filename must be ${expected}.`);
+  if (checksArtifactName(relativePath) && path.posix.basename(normalizeArtifactPath(relativePath)) !== expected) problems.push(`Filename must be ${expected}.`);
   return problems;
 }
-function validateManifest(value) {
-  const problems = requireFields(value, ["branch", "baseSha", "paths"]);
-  if (!/^[0-9a-f]{40}$/u.test(String(value.baseSha || ""))) problems.push("baseSha must be a 40-character revision.");
-  if (Array.isArray(value.paths) && JSON.stringify(value.paths) !== JSON.stringify([...new Set(value.paths)].sort(byteCompare))) problems.push("Manifest paths must be unique and byte-sorted.");
+function validateManifest(value, relativePath) {
+  const fields = ["schema", "branch", "baseSha", "paths"];
+  const problems = [...exactRecordProblems(value, fields), ...requireFields(value, fields)];
+  if (!TASK_BRANCH_PATTERN.test(String(value.branch || "")) || String(value.branch || "").length > 200) problems.push("branch must be agent/<device-id>/<semantic-scope> within the stated segment and total bounds.");
+  if (!SHA_PATTERN.test(String(value.baseSha || ""))) problems.push("baseSha must be a 40-character revision.");
+  if (!Array.isArray(value.paths) || value.paths.some(item => !isCanonicalRepositoryPath(item))) problems.push("Manifest paths must be canonical repository-relative strings.");
+  else if (JSON.stringify(value.paths) !== JSON.stringify([...new Set(value.paths)].sort(byteCompare))) problems.push("Manifest paths must be unique and byte-sorted.");
+  const semanticScope = branchSemanticScope(value.branch);
+  if (semanticScope && checksArtifactName(relativePath) && path.posix.basename(normalizeArtifactPath(relativePath)) !== `${semanticScope}.json`) problems.push(`Filename must be ${semanticScope}.json.`);
+  return problems;
+}
+function validateCloudRequest(value, relativePath) {
+  const fields = [
+    "schema", "targetRepository", "workItemId", "canonicalBaseRevision", "laneRevision", "declaredWriteScope",
+    "leaseEpoch", "expiresAt", "deviceId", "sessionId", "actorId", "actorLogin",
+  ];
+  const required = fields.filter(field => field !== "actorLogin");
+  const problems = [...exactRecordProblems(value, fields, required), ...requireFields(value, required)];
+  for (const field of ["targetRepository", "workItemId", "deviceId", "sessionId", "actorId"]) {
+    if (!nonEmpty(value[field])) problems.push(`${field} must be a non-empty string.`);
+  }
+  if (Object.hasOwn(value, "actorLogin") && !nonEmpty(value.actorLogin)) problems.push("actorLogin must be a non-empty string when present.");
+  for (const field of ["canonicalBaseRevision", "laneRevision"]) {
+    if (!SHA_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a 40-character Git revision.`);
+  }
+  if (!Array.isArray(value.declaredWriteScope) || value.declaredWriteScope.length === 0
+    || value.declaredWriteScope.some(item => !nonEmpty(item) || !/^(?:path:.+|semantic:.+)$/u.test(item))) {
+    problems.push("declaredWriteScope must be a non-empty array of path: or semantic: entries.");
+  } else {
+    if (JSON.stringify(value.declaredWriteScope) !== JSON.stringify([...new Set(value.declaredWriteScope)].sort(byteCompare))) problems.push("declaredWriteScope must be unique and ascending by bytes.");
+    const semanticScopes = semanticScopesFromDeclaredScope(value.declaredWriteScope);
+    if (semanticScopes.length !== 1 || !SEMANTIC_SCOPE_PATTERN.test(semanticScopes[0] || "")) problems.push("declaredWriteScope must contain exactly one valid semantic: entry.");
+    for (const entry of value.declaredWriteScope.filter(item => item.startsWith("path:"))) {
+      if (!isCanonicalRepositoryPath(entry.slice("path:".length))) problems.push(`Declared path scope is not canonical and repository-relative: ${entry}.`);
+    }
+    if (semanticScopes.length === 1 && checksArtifactName(relativePath)) {
+      const expected = `${semanticScopes[0]}-request.json`;
+      const normalizedPath = normalizeArtifactPath(relativePath);
+      const repositoryOwnedRequest = normalizedPath === REPOSITORY_OWNED_REQUEST_PATH && semanticScopes[0] === "dev-source-resolver";
+      if (path.posix.basename(normalizedPath) !== expected && !repositoryOwnedRequest) problems.push(`Filename must be ${expected}.`);
+    }
+  }
+  if (!Number.isSafeInteger(value.leaseEpoch) || value.leaseEpoch < 0) problems.push("leaseEpoch must be a non-negative integer.");
+  if (!validUtcInstant(value.expiresAt)) problems.push("expiresAt must be an absolute UTC instant.");
   return problems;
 }
 function validateOperationReceipt(value) {
@@ -91,12 +159,58 @@ function validateOperationReceipt(value) {
   if (problems.length === 0 && digestWithout(value, "receiptDigest") !== value.receiptDigest) problems.push("receiptDigest does not bind the receipt bytes.");
   return problems;
 }
-function validateCloudResult(value) {
-  if (value.status === "error") return validateErrorResult(value);
-  if (ROOT_OPERATIONS.includes(value.action)) return validateMutationResult(value);
-  if (value.action === "status") return value.status === "empty" ? validateEmptyResult(value) : validateStatusResult(value);
-  if (value.action === "verify") return validateVerificationResult(value);
-  return ["Cloud result action must be claim, continue, integrate, retire, status, or verify."];
+function validateCloudResult(value, relativePath) {
+  return [...validateAcceptedClaimResult(value), ...validateCloudResultName(value, relativePath)];
+}
+function validateAcceptedClaimResult(value) {
+  const fields = ["schema", "ok", "action", "status", "replayed", "attempts", "ledgerRevision", "claim", "claimDigest", "receipt"];
+  const problems = [...exactRecordProblems(value, fields), ...requireFields(value, fields)];
+  if (typeof value.ok !== "boolean" || typeof value.replayed !== "boolean") problems.push("Accepted claim result booleans are invalid.");
+  if (!ACCEPTED_CLAIM_ACTIONS.includes(value.action)) problems.push("Accepted claim action is outside the owner vocabulary.");
+  if (!ACCEPTED_CLAIM_STATES.includes(value.status)) problems.push("Accepted claim status is outside the owner vocabulary.");
+  if (!Number.isSafeInteger(value.attempts) || value.attempts < 1) problems.push("attempts must be a positive integer.");
+  if (!SHA_PATTERN.test(String(value.ledgerRevision || ""))) problems.push("ledgerRevision must be a 40-character Git revision.");
+  if (!DIGEST_PATTERN.test(String(value.claimDigest || ""))) problems.push("claimDigest must be a lowercase SHA-256 digest.");
+  const claimProblems = validateAcceptedClaim(value.claim);
+  const receiptProblems = validateAcceptedClaimReceipt(value.receipt);
+  problems.push(...prefixProblems("claim", claimProblems), ...prefixProblems("receipt", receiptProblems));
+  if (claimProblems.length === 0) {
+    if (value.claim.state !== value.status) problems.push("claim.state must equal result status.");
+    if (value.claim.fenceRevision !== value.claimDigest) problems.push("claim.fenceRevision must equal result claimDigest.");
+  }
+  if (receiptProblems.length === 0) {
+    if (value.receipt.action !== value.action || value.receipt.ledgerRevision !== value.ledgerRevision) problems.push("Receipt action and ledger revision must equal the result identity.");
+    if (value.receipt.claimDigest !== value.claimDigest || value.receipt.claimId !== value.claim?.claimId) problems.push("Receipt claim identity must equal the result claim identity.");
+    if (value.receipt.ledgerDigest !== value.claim?.transitionDigest) problems.push("Receipt ledgerDigest must equal claim.transitionDigest.");
+  }
+  return problems;
+}
+function validateAcceptedClaim(value) {
+  if (!isRecord(value)) return ["Accepted claim must be an object."];
+  const problems = [...exactRecordProblems(value, ACCEPTED_CLAIM_FIELDS), ...requireFields(value, ACCEPTED_CLAIM_FIELDS.filter(field => field !== "reviewRequestId"))];
+  if (!ACCEPTED_CLAIM_STATES.includes(value.state)) problems.push("claim.state is outside the owner vocabulary.");
+  for (const field of ["actorId", "repositoryId", "workItemId"]) if (!nonEmpty(value[field])) problems.push(`${field} must be a non-empty identifier.`);
+  for (const field of ["canonicalBaseRevision", "laneRevision"]) if (!SHA_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a 40-character Git revision.`);
+  for (const field of ["claimId", "writeSetDigest", "fenceRevision", "transitionDigest"]) if (!DIGEST_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a lowercase SHA-256 digest.`);
+  if (!validDeclaredWriteScope(value.declaredWriteScope)) problems.push("declaredWriteScope must be a unique byte-sorted path:/semantic: array with exactly one semantic scope.");
+  else if (digestValue(value.declaredWriteScope) !== value.writeSetDigest) problems.push("writeSetDigest must bind the canonical declaredWriteScope.");
+  if (!Number.isSafeInteger(value.leaseEpoch) || value.leaseEpoch < 0 || !Number.isSafeInteger(value.transitionCounter) || value.transitionCounter < 1 || !Number.isSafeInteger(value.heartbeatCounter) || value.heartbeatCounter < 0) problems.push("Claim counters are invalid.");
+  if (value.reviewRequestId !== null && !nonEmpty(value.reviewRequestId)) problems.push("reviewRequestId must be text or null.");
+  if (!validUtcInstant(value.expiresAt)) problems.push("expiresAt must be an absolute UTC instant.");
+  return problems;
+}
+function validateAcceptedClaimReceipt(value) {
+  const fields = ["schema", "action", "ledgerRevision", "ledgerDigest", "claimId", "claimDigest", "contractReceiptDigest", "sequence", "evaluationTime", "receiptDigest"];
+  if (!isRecord(value)) return ["Accepted claim receipt must be an object."];
+  const problems = [...exactRecordProblems(value, fields), ...requireFields(value, fields)];
+  if (value.schema !== "agentic-cloud-collaboration-github-receipt/v1") problems.push("Accepted claim receipt schema is invalid.");
+  if (!ACCEPTED_CLAIM_ACTIONS.includes(value.action)) problems.push("Accepted claim receipt action is outside the owner vocabulary.");
+  if (!SHA_PATTERN.test(String(value.ledgerRevision || ""))) problems.push("Accepted claim receipt ledgerRevision must be a Git revision.");
+  for (const field of ["ledgerDigest", "claimId", "claimDigest", "contractReceiptDigest", "receiptDigest"]) if (!DIGEST_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a lowercase SHA-256 digest.`);
+  if (!Number.isSafeInteger(value.sequence) || value.sequence < 1) problems.push("Accepted claim receipt sequence must be positive.");
+  if (!validInstant(value.evaluationTime)) problems.push("Accepted claim receipt evaluationTime is invalid.");
+  if (problems.length === 0 && digestWithout(value, "receiptDigest") !== value.receiptDigest) problems.push("Accepted claim receiptDigest does not bind the receipt bytes.");
+  return problems;
 }
 function validateMutationResult(value) {
   const fields = ["schema", "ok", "action", "status", "replayed", "attempts", "ledgerRevision", "claim", "claimDigest", "operationReceipt", "receipt"];
@@ -236,32 +350,166 @@ function validateGitHubVerificationReceipt(value) {
   if (problems.length === 0 && digestWithout(value, "receiptDigest") !== value.receiptDigest) problems.push("Provider verification receiptDigest does not bind the receipt bytes.");
   return problems;
 }
-function validateLegacyRecovery(value) {
+function validateLegacyRecovery(value, relativePath) {
   const fields = ["schema", "captureProfile", "sourceWorktree", "sourceBranch", "sourceHeadSha", "protectedTipSha", "operatorSessionId", "capturedAt", "stateDigest", "writeSetDigest", "trackedPatchDigest", "tracked", "untracked", "packageDigest"];
   const problems = [...exactRecordProblems(value, fields), ...requireFields(value, fields)];
   for (const field of ["sourceHeadSha", "protectedTipSha"]) if (!SHA_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a 40-character Git revision.`);
   for (const field of ["stateDigest", "writeSetDigest", "trackedPatchDigest", "packageDigest"]) if (!DIGEST_PATTERN.test(String(value[field] || ""))) problems.push(`${field} must be a lowercase SHA-256 digest.`);
   if (!validInstant(value.capturedAt) || !Array.isArray(value.tracked) || !Array.isArray(value.untracked)) problems.push("Recovery capture evidence is invalid.");
+  if (Array.isArray(value.tracked)) problems.push(...validateRecoveryEntries(value.tracked, "tracked"));
+  if (Array.isArray(value.untracked)) problems.push(...validateRecoveryEntries(value.untracked, "untracked"));
+  if (Array.isArray(value.tracked) && Array.isArray(value.untracked)) {
+    const allPaths = [...value.tracked, ...value.untracked].map(entry => entry?.path);
+    if (new Set(allPaths).size !== allPaths.length) problems.push("Recovery entry paths must be unique across tracked and untracked sets.");
+  }
+  if (checksArtifactName(relativePath) && path.posix.basename(normalizeArtifactPath(relativePath)) !== "manifest.json") problems.push("Recovery artifact filename must be manifest.json.");
   if (problems.length === 0 && digestWithout(value, "packageDigest") !== value.packageDigest) problems.push("packageDigest does not bind the recovery manifest.");
   return problems;
 }
-function normalizeScopeEntry(value) {
-  if (typeof value !== "string" || !value.trim()) return null;
-  if (value === "*" || value.startsWith("wildcard:")) return "*";
-  if (value.startsWith("semantic:")) return value;
-  const normalized = value.replace(/\\/gu, "/").replace(/\/+$/gu, "");
-  const parts = [];
-  for (const segment of normalized.split("/")) {
-    if (!segment || segment === ".") continue;
-    if (segment === "..") { if (parts.length === 0) return null; parts.pop(); }
-    else parts.push(segment);
+function checkArtifactRelationships(document, records, markerPaths, ruleIndex) {
+  const findings = [];
+  const bySemanticScope = new Map();
+  for (const record of records) {
+    const semanticScope = semanticScopeForRecord(record);
+    if (semanticScope) {
+      const group = bySemanticScope.get(semanticScope) || { scopes: [], requests: [], claims: [] };
+      if (record.value.schema === "agentic-declared-write-scope/v1") group.scopes.push(record);
+      if (record.value.schema === "agentic-cloud-collaboration-request/v1") group.requests.push(record);
+      if (record.value.schema === "agentic-cloud-collaboration-result/v1" && isClaimResult(record.value)) group.claims.push(record);
+      bySemanticScope.set(semanticScope, group);
+    }
+    if (record.value.schema === "agentic-legacy-dirty-lane-recovery/v1") {
+      const manifestPath = normalizeArtifactPath(record.artifact.path || record.artifact.relativePath);
+      const markerPath = normalizeArtifactPath(path.join(path.dirname(manifestPath), ".complete"));
+      if (!markerPaths.has(markerPath)) {
+        findings.push(issue(document, ruleIndex, record.artifact.relativePath, "capture-incomplete", "Recovery capture lacks the completion marker written last."));
+      }
+    }
   }
-  return parts.length > 0 ? parts.join("/") : null;
+  for (const [semanticScope, group] of bySemanticScope) {
+    findings.push(...duplicateRoleFindings(document, semanticScope, group, ruleIndex));
+    const scope = group.scopes[0]?.value;
+    for (const requestRecord of group.requests) {
+      const request = requestRecord.value;
+      if (!scope) {
+        findings.push(issue(document, ruleIndex, requestRecord.artifact.relativePath, "artifact-schema-invalid", `Claim request ${semanticScope} has no matching declared write-scope artifact.`));
+      } else {
+        const expected = [...scope.paths.map(value => `path:${value}`), `semantic:${scope.semanticScope}`].sort(byteCompare);
+        if (!equalStringArrays(request.declaredWriteScope, expected)) {
+          findings.push(issue(document, ruleIndex, requestRecord.artifact.relativePath, "artifact-schema-invalid", `Claim request declaredWriteScope does not equal ${semanticScope}-write-scope.json.`));
+        }
+      }
+    }
+    for (const claimRecord of group.claims) {
+      const claim = claimRecord.value.claim;
+      const requestRecord = selectAnsweredRequest(group.requests, claim);
+      if (!requestRecord) {
+        findings.push(issue(document, ruleIndex, claimRecord.artifact.relativePath, "artifact-schema-invalid", `Accepted claim ${semanticScope} has no matching request artifact.`));
+        continue;
+      }
+      const request = requestRecord.value;
+      if (request.leaseEpoch !== claim.leaseEpoch) {
+        findings.push(issue(document, ruleIndex, claimRecord.artifact.relativePath, "artifact-schema-invalid", `Accepted claim leaseEpoch ${claim.leaseEpoch} does not equal request leaseEpoch ${request.leaseEpoch}.`));
+      }
+      if (!equalStringArrays(request.declaredWriteScope, claim.declaredWriteScope)) {
+        findings.push(issue(document, ruleIndex, claimRecord.artifact.relativePath, "artifact-schema-invalid", "Accepted claim declaredWriteScope does not equal the answered request."));
+      }
+      const issuedAt = issuanceInstant(claimRecord.value);
+      if (issuedAt !== null) {
+        const expiry = Date.parse(request.expiresAt);
+        if (!Number.isFinite(expiry) || expiry <= issuedAt || expiry - issuedAt > 24 * 60 * 60 * 1000) {
+          findings.push(issue(document, ruleIndex, requestRecord.artifact.relativePath, "artifact-schema-invalid", "Request expiry must be after issuance and no more than 24 hours later."));
+        }
+      }
+    }
+  }
+  return findings;
 }
-function entriesOverlap(left, right) {
-  if (left === "*" || right === "*") return true;
-  if (left.startsWith("semantic:") || right.startsWith("semantic:")) return left === right;
-  return left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
+function duplicateRoleFindings(document, semanticScope, group, ruleIndex) {
+  const findings = [];
+  for (const [role, values] of [["write-scope", group.scopes], ["request", group.requests], ["claim", group.claims]]) {
+    if (values.length > 1) findings.push(issue(document, ruleIndex, values[1].artifact.relativePath, "artifact-name-mismatch", `Semantic scope ${semanticScope} has ${values.length} ${role} artifacts; expected at most one.`));
+  }
+  return findings;
+}
+function selectAnsweredRequest(requests, claim) {
+  return requests.find(record => record.value.canonicalBaseRevision === claim.canonicalBaseRevision
+    && record.value.laneRevision === claim.laneRevision
+    && equalStringArrays(record.value.declaredWriteScope, claim.declaredWriteScope)) || requests[0] || null;
+}
+function semanticScopeForRecord(record) {
+  if (record.value.schema === "agentic-declared-write-scope/v1") return record.value.semanticScope;
+  if (record.value.schema === "agentic-cloud-collaboration-request/v1") return semanticScopesFromDeclaredScope(record.value.declaredWriteScope)[0] || null;
+  if (record.value.schema === "agentic-cloud-collaboration-result/v1" && isClaimResult(record.value)) return semanticScopesFromDeclaredScope(record.value.claim.declaredWriteScope)[0] || null;
+  return null;
+}
+function validateCloudResultName(value, relativePath) {
+  if (!checksArtifactName(relativePath) || !isClaimResult(value)) return [];
+  const semanticScopes = semanticScopesFromDeclaredScope(value.claim.declaredWriteScope);
+  if (semanticScopes.length !== 1 || !SEMANTIC_SCOPE_PATTERN.test(semanticScopes[0] || "")) return ["Claim declaredWriteScope must carry exactly one valid semantic: entry."];
+  const expected = `${semanticScopes[0]}-claim.json`;
+  const normalizedPath = normalizeArtifactPath(relativePath);
+  const repositoryOwnedClaim = normalizedPath === REPOSITORY_OWNED_CLAIM_PATH && semanticScopes[0] === "dev-source-resolver";
+  return path.posix.basename(normalizedPath) === expected || repositoryOwnedClaim ? [] : [`Filename must be ${expected}.`];
+}
+function validateRecoveryEntries(entries, ownership) {
+  const problems = [];
+  const fields = ["path", "ownership", "kind", "mode", "digest"];
+  for (const [index, entry] of entries.entries()) {
+    const prefix = `${ownership}[${index}]`;
+    if (!isRecord(entry)) { problems.push(`${prefix} must be an object.`); continue; }
+    problems.push(...exactRecordProblems(entry, fields).map(problem => `${prefix}: ${problem}`));
+    if (!isCanonicalRepositoryPath(entry.path)) problems.push(`${prefix}.path must be canonical and repository-relative.`);
+    if (entry.ownership !== ownership) problems.push(`${prefix}.ownership must be ${ownership}.`);
+    if (!new Set(["file", "symlink"]).has(entry.kind)) problems.push(`${prefix}.kind must be file or symlink.`);
+    if (!Number.isSafeInteger(entry.mode) || entry.mode < 0 || entry.mode > 0o7777) problems.push(`${prefix}.mode must be a bounded POSIX mode integer.`);
+    if (!DIGEST_PATTERN.test(String(entry.digest || ""))) problems.push(`${prefix}.digest must be a lowercase SHA-256 digest.`);
+  }
+  return problems;
+}
+function isCanonicalRepositoryPath(value) {
+  if (typeof value !== "string" || value.length === 0 || value.includes("\\") || value.startsWith("/") || /^[A-Za-z]:\//u.test(value) || value.endsWith("/")) return false;
+  const segments = value.split("/");
+  return segments.every(segment => segment.length > 0 && segment !== "." && segment !== "..");
+}
+function branchSemanticScope(value) {
+  const match = String(value || "").match(TASK_BRANCH_PATTERN);
+  return match ? match[0].split("/")[2] : null;
+}
+function semanticScopesFromDeclaredScope(value) {
+  if (!Array.isArray(value)) return [];
+  return value.filter(entry => typeof entry === "string" && entry.startsWith("semantic:")).map(entry => entry.slice("semantic:".length));
+}
+function validDeclaredWriteScope(value) {
+  if (!Array.isArray(value) || value.length === 0 || JSON.stringify(value) !== JSON.stringify([...new Set(value)].sort(byteCompare))) return false;
+  if (semanticScopesFromDeclaredScope(value).length !== 1) return false;
+  return value.every(entry => typeof entry === "string" && (
+    (entry.startsWith("path:") && isCanonicalRepositoryPath(entry.slice("path:".length)))
+    || (entry.startsWith("semantic:") && SEMANTIC_SCOPE_PATTERN.test(entry.slice("semantic:".length)))
+  ));
+}
+function isClaimResult(value) { return isRecord(value?.claim) && Array.isArray(value.claim.declaredWriteScope); }
+function equalStringArrays(left, right) { return Array.isArray(left) && Array.isArray(right) && JSON.stringify(left) === JSON.stringify(right); }
+function issuanceInstant(value) {
+  for (const candidate of [value.operationReceipt?.evaluationTime, value.receipt?.evaluationTime]) {
+    const milliseconds = Date.parse(candidate);
+    if (Number.isFinite(milliseconds)) return milliseconds;
+  }
+  return null;
+}
+function checksArtifactName(relativePath) { return relativePath !== "artifact.json" && String(relativePath || "").length > 0; }
+function normalizeArtifactPath(value) { return String(value || "").replaceAll("\\", "/"); }
+function artifactByteLength(value) { return typeof value === "string" ? Buffer.byteLength(value, "utf8") : value.byteLength; }
+function decodeArtifactBytes(value) {
+  if (typeof value !== "string") return UTF8_DECODER.decode(value);
+  const roundTrip = UTF8_DECODER.decode(Buffer.from(value, "utf8"));
+  if (roundTrip !== value) throw new TypeError("Artifact string contains a non-round-trippable Unicode scalar.");
+  return value;
+}
+function diagnosticCode(problem) {
+  if (/Filename|filename/u.test(problem)) return "artifact-name-mismatch";
+  if (/Manifest paths must be unique and byte-sorted/u.test(problem)) return "manifest-order-invalid";
+  return "artifact-schema-invalid";
 }
 function exactRecordProblems(value, allowedFields, requiredFields = allowedFields) {
   if (!isRecord(value)) return ["Value must be an object."];
@@ -285,6 +533,30 @@ function validInstant(value) {
   const milliseconds = Date.parse(value);
   return Number.isFinite(milliseconds) && new Date(milliseconds).toISOString() === value;
 }
+function validUtcInstant(value) {
+  return typeof value === "string" && value.endsWith("Z") && Number.isFinite(Date.parse(value));
+}
 function requireFields(value, fields) { return fields.filter(field => value[field] === undefined || value[field] === null || value[field] === "").map(field => `Required field is absent: ${field}.`); }
 function byteCompare(left, right) { return Buffer.from(String(left)).compare(Buffer.from(String(right))); }
-function issue(document, artifact, message) { return finding({ ruleId: "coordination-artifacts#5", type: "evidence-without-run", path: document.sourcePath, message: `${artifact}: ${message}` }); }
+function issue(document, ruleIndex, artifact, code, message) {
+  const ruleId = artifactRuleId(ruleIndex, code);
+  return finding({
+    ruleId,
+    type: "unimplemented-guideline",
+    path: document.sourcePath,
+    message: `${code}: ${artifact}: ${message}`,
+  });
+}
+
+function artifactRuleId(ruleIndex, code) {
+  if (code === "artifact-name-mismatch") {
+    return resolveRuleId(ruleIndex, "coordination-artifacts", /Match each filename's semantic scope and role/u, "coordination-artifacts#16");
+  }
+  if (code === "manifest-order-invalid") {
+    return resolveRuleId(ruleIndex, "authoring--write-scope", /Make manifest `paths` equal the sorted set/u, "authoring--write-scope#7");
+  }
+  if (code === "capture-incomplete") {
+    return resolveRuleId(ruleIndex, "preservation-recovery--cleanup", /Write `.complete` last/u, "preservation-recovery--cleanup#15");
+  }
+  return resolveRuleId(ruleIndex, "coordination-artifacts", /Require every declared-scope, request, and accepted-result schema/u, "coordination-artifacts#15");
+}

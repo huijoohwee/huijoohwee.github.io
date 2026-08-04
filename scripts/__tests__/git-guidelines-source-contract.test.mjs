@@ -21,7 +21,7 @@ test("source projects the four root operations and simplified concurrency model"
   assert.deepEqual(checkLineBudget(document, frontmatter.parsed), []);
   assert.deepEqual(checkContentContract(document, rules), []);
   assert.equal(document.sections.length, 16);
-  assert.ok(document.lines.length - 1 <= 400);
+  assert.ok(document.lines.length <= 400);
 });
 
 test("source and package enforce the independent yjs no-copy boundary", () => {

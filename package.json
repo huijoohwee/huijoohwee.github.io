@@ -11,7 +11,7 @@
     "agentic-sdlc:policy:check": "node scripts/check-agentic-sdlc-guideline.mjs",
     "agenticrag:guidelines-map:check": "node scripts/check-agenticrag-guidelines-map.mjs",
     "git-guidelines:check": "node scripts/check-git-guidelines.mjs",
-    "git-guidelines:test": "node --test scripts/__tests__/git-guidelines-*.test.mjs scripts/__pbt__/git-guidelines-*.pbt.test.mjs",
+    "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
     "guideline:check": "npm run agentic-sdlc:policy:check",
     "test": "npm run agentic-sdlc:policy:check && npm run agenticrag:guidelines-map:check && npm run git-guidelines:check && npm run git-guidelines:test"
   },

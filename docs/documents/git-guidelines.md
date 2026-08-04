@@ -15,7 +15,6 @@ semantic_filters: ["#git-collaboration"]
 bindings: ["@git-guidelines"]
 frontmatter_contract: "required"
 ---
-
 # Git Guidelines
 
 This git-layer companion projects the execution set into byte-preserving, provider-neutral operations; it creates no second authority.
@@ -43,255 +42,324 @@ This git-layer companion projects the execution set into byte-preserving, provid
 
 ## Module Index
 
-- [`boundary--ownership`](#boundary--ownership) — owner boundary; every stage loads it.
-- [`glossary`](#glossary) — shared terms and blocked outcome; every stage loads it.
-- [`load-budget`](#load-budget) — stage-to-section budget; session start loads it.
-- [`lane-topology--admission`](#lane-topology--admission) — lanes and root operations; lane admission loads it.
-- [`coordination-artifacts`](#coordination-artifacts) — typed filesystem projections; admission through cleanup loads it.
-- [`authoring--write-scope`](#authoring--write-scope) — scope-safe mutation; authoring and commit load it.
-- [`preservation-recovery--cleanup`](#preservation-recovery--cleanup) — recoverable bytes; authoring, recovery, cleanup load it.
-- [`commit--attribution`](#commit--attribution) — commit identity; commit loads it.
-- [`verification-gates`](#verification-gates) — independent exact-revision evidence; push and review load it.
-- [`conflict--integration-order`](#conflict--integration-order) — source resolution and DAG order; review and integration load it.
-- [`promotion-chain`](#promotion-chain) — closed release boundaries; promotion loads it.
-- [`findings--rule-identity`](#findings--rule-identity) — finding vocabulary and Rule_IDs; integration onward loads it.
-- [`validation-checklist`](#validation-checklist) — five deterministic gates; commit, push, promotion load it.
-- [`anti-patterns`](#anti-patterns) — prohibited/corrective pairs; review loads it.
-- [`mantra`](#mantra) — one clause per owned family; review loads it.
+- [advisory] [`boundary--ownership`](#boundary--ownership) — ownership family; all stages.
+- [advisory] [`glossary`](#glossary) — shared-term family; all stages.
+- [advisory] [`load-budget`](#load-budget) — load-routing family; session start.
+- [advisory] [`lane-topology--admission`](#lane-topology--admission) — lane family; lane admission.
+- [advisory] [`coordination-artifacts`](#coordination-artifacts) — O2; admission, authoring, push, integration, cleanup.
+- [advisory] [`authoring--write-scope`](#authoring--write-scope) — write-scope family; authoring, commit.
+- [advisory] [`preservation-recovery--cleanup`](#preservation-recovery--cleanup) — O4; authoring, recovery, cleanup.
+- [advisory] [`commit--attribution`](#commit--attribution) — attribution family; commit.
+- [advisory] [`verification-gates`](#verification-gates) — verification family; push, review.
+- [advisory] [`conflict--integration-order`](#conflict--integration-order) — conflict family; review, integration.
+- [advisory] [`promotion-chain`](#promotion-chain) — promotion family; promotion.
+- [advisory] [`findings--rule-identity`](#findings--rule-identity) — R12; integration, promotion, recovery.
+- [advisory] [`validation-checklist`](#validation-checklist) — validation family; commit, push, promotion.
+- [advisory] [`anti-patterns`](#anti-patterns) — anti-pattern family; review.
+- [advisory] [`mantra`](#mantra) — owned-family summary; review.
 
 ## Glossary
 
-| Term | Meaning |
-|---|---|
-| Canonical_Lane | The one clean, non-authoring checkout at the exact protected canonical revision. |
-| Task_Lane | One isolated branch and worktree for one declared semantic scope, claim, epoch, and fence. |
-| Current_Authority | Authenticated remote authority accepted by monotonic compare-and-swap for one write set. |
-| Waiting_Successor | A non-writing overlapping request ordered behind the current authority. |
-| Dormant_Preserved | Expired non-writing authority whose revision, review identity, evidence, and bytes remain preserved. |
-| Coordination_Task | A dependency-ordered group of immutable per-repository work units with no shared lane authority. |
-| Recovery_Handle | A completed recovery-capture directory name or a verified immutable bundle filename. |
-| Reference_Implementation_Block | A heading or block whose own text contains the words “reference implementation”. |
-| Blocked_Outcome | Typed output naming the condition and artifact, proving head/index/tracked/untracked digests unchanged. |
+| Term | Meaning | Class |
+|---|---|---|
+| Canonical_Lane | The one clean, non-authoring checkout at the exact protected canonical revision. | advisory |
+| Task_Lane | One isolated branch and worktree for one declared semantic scope, claim, epoch, and fence. | advisory |
+| Current_Authority | Authenticated remote authority accepted by monotonic compare-and-swap for one write set. | advisory |
+| Waiting_Successor | A non-writing overlapping request ordered behind the current authority. | advisory |
+| Dormant_Preserved | Expired non-writing authority whose revision, review identity, evidence, and bytes remain preserved. | advisory |
+| Coordination_Task | A dependency-ordered group of immutable per-repository work units with no shared lane authority. | advisory |
+| Recovery_Handle | A completed recovery-capture directory name or a verified immutable bundle filename. | advisory |
+| Reference_Implementation_Block | A heading or block whose own text contains the words “reference implementation”. | advisory |
+| Blocked_Outcome | Own output names a closed condition and path, claim, or revision; pre/post head, index, tracked, and untracked digests match. | advisory |
 
 ## Load Budget
 
-| Stage | Sections |
-|---|---|
-| session start | `module-index`, `boundary--ownership`, `glossary`, `load-budget` |
-| lane admission | `lane-topology--admission`, `coordination-artifacts` |
-| authoring | `authoring--write-scope`, `coordination-artifacts`, `preservation-recovery--cleanup` |
-| commit | `commit--attribution`, `authoring--write-scope`, `validation-checklist` |
-| push | `verification-gates`, `coordination-artifacts`, `validation-checklist` |
-| review | `verification-gates`, `conflict--integration-order`, `anti-patterns`, `mantra` |
-| integration | `conflict--integration-order`, `coordination-artifacts`, `findings--rule-identity` |
-| promotion | `promotion-chain`, `validation-checklist`, `findings--rule-identity` |
-| recovery | `preservation-recovery--cleanup`, `findings--rule-identity` |
-| cleanup | `preservation-recovery--cleanup`, `coordination-artifacts` |
+| Stage | Sections | Class |
+|---|---|---|
+| session start | `module-index`, `boundary--ownership`, `glossary`, `load-budget` | advisory |
+| lane admission | `lane-topology--admission`, `coordination-artifacts` | advisory |
+| authoring | `authoring--write-scope`, `coordination-artifacts`, `preservation-recovery--cleanup` | advisory |
+| commit | `commit--attribution`, `authoring--write-scope`, `validation-checklist` | advisory |
+| push | `verification-gates`, `coordination-artifacts`, `validation-checklist` | advisory |
+| review | `verification-gates`, `conflict--integration-order`, `anti-patterns`, `mantra` | advisory |
+| integration | `conflict--integration-order`, `coordination-artifacts`, `findings--rule-identity` | advisory |
+| promotion | `promotion-chain`, `validation-checklist`, `findings--rule-identity` | advisory |
+| recovery | `preservation-recovery--cleanup`, `findings--rule-identity` | advisory |
+| cleanup | `preservation-recovery--cleanup`, `coordination-artifacts` | advisory |
 
 ## Lane Topology & Admission
 
-| Identity field | Projection |
-|---|---|
-| Actor ID | Authenticated claim actor |
-| Device ID | Claim device plus branch device segment |
-| Session ID | Claim session |
-| Worktree ID | Registered worktree and common-directory identity |
-| Branch ID | Remotely addressable task ref |
-| Scope ID | Declared write-scope semantic scope |
-| Lease Epoch | Monotonic claim epoch |
-| Fence Revision | Current claim fence digest |
+| Identity field | Projection | Class |
+|---|---|---|
+| Actor ID | Authenticated claim actor | advisory |
+| Device ID | Accepted claim device plus branch device segment | advisory |
+| Session ID | Accepted claim session | advisory |
+| Worktree ID | Registered worktree path and git common-directory identity | advisory |
+| Branch ID | Remotely addressable task ref | advisory |
+| Scope ID | Declared write-scope semantic scope | advisory |
+| Lease Epoch | Accepted claim's monotonic epoch | advisory |
+| Fence Revision | Accepted claim's current fence digest | advisory |
 
-| Lane class | Observable derivation |
-|---|---|
-| `canonical` | One clean registration at the exact protected revision with no authoring. |
-| `overlapping` | A declared current write set overlaps the candidate set. |
-| `disjoint-attributed` | Resolvable identity and declared scope prove disjointness. |
-| `ambiguous` | Missing, duplicated, stale, or unparseable identity or scope; treat as overlapping. |
+| Lane class | Observable derivation | Class |
+|---|---|---|
+| `canonical` | Registered canonical branch, exact protected head, no scope artifact, and no accepted authoring claim. | advisory |
+| `overlapping` | Registered branch and head whose declared scope artifact overlaps a live accepted claim result. | advisory |
+| `disjoint-attributed` | Registered branch and head whose parseable scope artifact is disjoint and joined to an accepted claim. | advisory |
+| `ambiguous` | Branch registration, head, scope artifact, or accepted claim is absent, duplicate, stale, or unparseable. | advisory |
 
-- [advisory] Keep exactly one Canonical_Lane per repository and zero or more isolated Task_Lanes.
-- [advisory] Name a Task_Lane `agent/<device-id>/<semantic-scope>`; each segment is 1–64 lowercase letters, digits, or hyphens.
-- [artifact-bearing] `claim(scope)` requires a clean exact base, normalized scope, authenticated actor, no overlap, and monotonic CAS; failure changes no bytes.
-- [artifact-bearing] `continue(claim)` revalidates immutable claim, revision, review identity, scope, epoch, and fence before one mutation batch.
-- [artifact-bearing] `integrate(candidate)` consumes one reviewed immutable candidate, dependency closure, checks, and current claim through monotonic CAS.
-- [artifact-bearing] `retire(claim)` alone ends current authority and preserves revision, review identity, bytes, checks, and handoff evidence in its receipt.
-- [artifact-bearing] Permit unlimited current disjoint authorities, exactly one current authority per overlap, and only non-writing waiting successors for overlap.
-- [artifact-bearing] Expiry yields `dormant-preserved`; recovery is independent of the expired local lease and never adopts mutable bytes from another lane.
-- [artifact-bearing] Admission snapshots every existing lane before and after, permits only candidate deltas, and joins Admission and Preservation Receipts.
-- [advisory] Browser, mobile, local worktree, lease, PR, process, and provider metadata are replaceable projections, never independent authority.
-- [advisory] Orchestrator, Implementer, Evaluator, and Operator remain the exact execution roles; the Evaluator stays mechanically independent.
-
-### Reference implementation inspiration — no-copy boundary
-
-- [advisory] [yjs/yjs](https://github.com/yjs/yjs) inspires only neutral observation and convergence principles; this contract is independently authored.
-- [artifact-bearing] Forbid copied code, prose, schema, tests, examples, algorithms, names, dependencies, imports, runtime reliance, or external authority.
+- [artifact-bearing] Keep exactly one Canonical_Lane and zero or more Task_Lanes; one Actor ID, Device ID, and Session ID triple is the sole live writer per lane.
+- [artifact-bearing] Name a Task_Lane `agent/<device-id>/<semantic-scope>` at most 200 chars; each segment is 1–64 lowercase letters, digits, or hyphens.
+- [artifact-bearing] Keep the Canonical_Lane at the exact protected revision with zero staged, unstaged tracked, or untracked bytes and no source authoring.
+- [artifact-bearing] Undeclared or unparseable future scope is `ambiguous`, overlaps every peer, and blocks admission without changing bytes.
+- [artifact-bearing] `claim(scope)` uses clean exact base, normalized scope, authenticated actor, no overlap, and monotonic CAS; first write requires its covering claim and ≤24-hour lease.
+- [artifact-bearing] Snapshot pre/post head/branch/index/tracked/untracked bytes, registration/lease/fence/recovery/shared state; only candidate deltas and joined Admission/Preservation Receipts vary.
+- [artifact-bearing] Overlap names each live claim and Device ID, retains a non-writing waiting successor, and blocks until authenticated retirement, handoff, or reclaim.
+- [artifact-bearing] Authoring begun on protected canonical preserves exact tracked and untracked bytes in an owned Task_Lane and restores canonical parity before commit.
+- [artifact-bearing] A dirty canonical base needs a recorded Recovery_Handle (complete capture or verified bundle), byte-equal transfer, exact base revision, and every other admission condition.
+- [artifact-bearing] Browser or mobile projects only an accepted claim digest and lease epoch; absent proof blocks and creates no independent authority.
+- [artifact-bearing] An unprojectable Collaboration_Identity field is named in a Blocked_Outcome while all committed and uncommitted bytes stay unchanged.
+- [artifact-bearing] Expired or regressed local lease authority blocks writes until a fresh accepted claim and lease, retaining all lane bytes unchanged.
+- [artifact-bearing] Any failed admission condition names the failure and preserves the pre-request state: no branch, ref, working, or untracked byte changes.
+- [artifact-bearing] Protected upstream permits unlimited pairwise-disjoint current authorities; each overlap has one writer and non-writing waiting successors.
+- [artifact-bearing] `continue(claim)` revalidates immutable claim/revision/review/scope/epoch/fence/authenticated authority; dormant recovery ignores expired lease and adopts no peer mutable bytes.
+- [artifact-bearing] `integrate(candidate)` joins one reviewed immutable candidate, dependency closure, named checks, handoff evidence, and current claim through monotonic CAS.
+- [artifact-bearing] Each root operation emits a typed digest-bound receipt; authenticated `retire(claim)` alone ends authority, preserving revision, review, bytes, checks, and handoff evidence.
 
 ## Coordination Artifacts
 
-| Artifact | Required shape |
-|---|---|
-| Declared scope | `agentic-declared-write-scope/v1`: one 3–64 character semantic scope and 1–4096 sorted unique relative paths. |
-| Claim request | `agentic-cloud-collaboration-request/v1`: repository, work item, base, lane, scope, actor, device, session, epoch, expiry. |
-| Claim receipt | `agentic-collaboration-claim-receipt/v1`: `claim`, current-or-waiting status, repository/claim identity, claim/fence/ledger digests, sequence, idempotency/request digests, evaluation instant, receipt digest. |
-| Continuation receipt | `agentic-collaboration-continuation-receipt/v1`: `continue`, projected status, and the same complete digest-bound operation evidence. |
-| Integration receipt | `agentic-collaboration-integration-receipt/v1`: `integrate`, `integrated-preserved`, and the same complete digest-bound operation evidence. |
-| Retirement receipt | `agentic-collaboration-retirement-receipt/v1`: `retire`, `retired`, and the same complete digest-bound operation evidence. |
-| Change manifest | `agentic-change-manifest/v1`: branch, base SHA, and exact byte-sorted changed paths. |
-| Recovery manifest | `agentic-legacy-dirty-lane-recovery/v1`: capture identity, paths, modes, digests, and completion marker. |
+| Artifact or field | Required shape | Class |
+|---|---|---|
+| Location | Target repository root `.coordination/` only. | advisory |
+| Encoding | One UTF-8 JSON file at most 64 KiB. | advisory |
+| Declared scope | `agentic-declared-write-scope/v1`. | advisory |
+| `semanticScope` | One lowercase-letter, digit, or hyphen value of 3–64 characters. | advisory |
+| `paths` | 1–4096 unique repository-relative paths, each at most 512 chars, ascending by bytes. | advisory |
+| Claim request | `agentic-cloud-collaboration-request/v1`. | advisory |
+| Request identity | Non-empty repository, work item, base, lane, scope, actor, device, and session. | advisory |
+| Request lease | Monotonic non-negative epoch and absolute UTC expiry no later than 24 hours after issue. | advisory |
+| Accepted claim | `agentic-cloud-collaboration-result/v1`; action is claim, renew, park, review-ready, handoff, or release. | advisory |
+| `claim.state` | Exactly `active`, `review-ready`, `parked`, `released`, `expired`, or `revoked`. | advisory |
+| `admissionDecision` | Derived as `accepted`, `blocked`, `expired`, or `released`; never stored. | advisory |
+| Claim identity | Non-empty claim, write-set, fence, ledger, and receipt digests plus lease epoch. | advisory |
+| Claim join | Lease epoch and declared write scope equal the answered request. | advisory |
+| Filename | `<semantic-scope>-<artifact-role>.json`; role is write-scope, request, claim, or receipt. | advisory |
 
-- [advisory] Store Coordination_Artifacts only as UTF-8 JSON files of at most 64 KiB under `.coordination/` in the target repository.
-- [artifact-bearing] Require every artifact schema and field above; scope/request/receipt values, epochs, write sets, and digests must join exactly.
-- [artifact-bearing] Normalize relative paths, count equality, ancestry, shared semantic artifacts, wildcards, and undecidable comparison as overlap; local lease proves no remote authority.
-- [artifact-bearing] Cap each local lease at 24 hours; offline work requires an unexpired current claim, and reconnect revalidates base, lane, epoch, fence, and ledger.
-- [artifact-bearing] Absent, unreadable, unparseable, expired, stale, duplicate, or fence-divergent artifacts resolve as a Blocked_Outcome before mutation.
-- [advisory] Git remotes and the filesystem are the only required coordination substrate; forbid daemons, databases, paid services, and polling locks.
+- [artifact-bearing] Require every declared-scope, request, and accepted-result schema and field above with no duplicate or unknown field.
+- [artifact-bearing] Match each filename's semantic scope and role to its content before treating the artifact as authority.
+- [artifact-bearing] Join scope, request, claim, lease epoch, declared write set, and all recorded digests exactly.
+- [artifact-bearing] Normalize `.` and `..` and trailing separators; equality, ancestry, shared semantics, wildcards, and undecidable scope all overlap.
+- [artifact-bearing] A local-only lease proves no cross-device authority; block until the protected remote exposes the same scope and epoch.
+- [advisory] Require only git remotes and local filesystem access; forbid daemons, databases, paid dependencies, services, or polling locks.
+- [artifact-bearing] Define online as a configured-remote probe succeeding within 10 seconds; failure or timeout is offline.
+- [artifact-bearing] Offline permits local commits only in an owned Task_Lane whose accepted claim has not expired.
+
+- [artifact-bearing] Offline without a covering claim blocks branch authoring, claim acquisition, review dispatch, handoff, and integration.
+- [artifact-bearing] Online authoring requires a covering unexpired accepted claim whose fence equals the current accepted fence.
+- [artifact-bearing] Reconnect fetches protected heads and proves the recorded canonical base and lane revisions still resolve identically.
+- [artifact-bearing] Before reconnect publication, require `claim.state: active`, future expiry, and a fence equal to the current accepted fence.
+- [artifact-bearing] Cap every local lease at 24 hours from issuance; a local clock cannot extend authority.
+- [artifact-bearing] Absent, unreadable, unparseable, expired, stale, duplicate, or fence-divergent artifacts block before mutation.
+- [artifact-bearing] Every such block surfaces its condition and causing artifact or claim as a Blocked_Outcome while all four byte states match.
 
 ## Authoring & Write Scope
 
 - [artifact-bearing] Before every mutation batch, join the exact current claim, normalized declared scope, local lease, fence, and exact Change_Manifest path set.
-- [artifact-bearing] If authoring starts on the Canonical_Lane, preserve exact tracked and untracked bytes in an owned Task_Lane and restore canonical parity before commit.
-- [advisory] Stage only explicit paths or interactive hunks, enumerate incidental changes, and treat scope labels as descriptions rather than path authority.
-- [advisory] A private local commit records progress only; shared authority begins at a remotely addressable branch, review identity, and required-check path.
+- [artifact-bearing] Record one logical unit per commit: exactly one task and semantic scope, independently revertable from every peer commit.
+- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.
+- [advisory] Forbid directory-wide and repository-wide wildcard staging even when every observed path appears in scope.
+- [artifact-bearing] Require every changed path to equal or descend from one path in the admitted declared write scope.
+- [artifact-bearing] Update the active lane's Change_Manifest before each commit is recorded.
+- [artifact-bearing] Make manifest `paths` equal the sorted set changed since `baseSha`, including every incidental path and no unmodified path.
+- [artifact-bearing] Attach `out-of-scope-write` to the commit and name every path outside the declared scope.
+- [artifact-bearing] Keep that commit recoverable and block shared push until scope is re-admitted or the offending paths are removed.
+- [advisory] Permit amend only for an unpushed commit authored in the current Task_Lane.
+- [advisory] Forbid amend after push or when another lane authored the commit.
+- [advisory] Record any correction to a pushed or other-lane commit as a new independently revertable commit.
+
+- [artifact-bearing] If canonical carries dirt, record a Recovery_Handle (complete capture or verified bundle) before Task_Lane admission.
+- [artifact-bearing] Move the exact tracked and untracked bytes into the requesting owned Task_Lane with the exact base revision recorded.
+- [artifact-bearing] Prove every moved byte equal to capture and restore canonical to zero staged, unstaged tracked, and untracked bytes before commit.
+- [advisory] A private local commit records progress only; shared authority also needs a remote branch, review identity, and required-check path.
 
 ## Preservation, Recovery & Cleanup
 
-| Location | Purpose |
-|---|---|
-| `.backups/` | Immutable bundles retained until an exact Operator removal decision. |
-| `.agentic-manifests/` | Active lane Change_Manifest records. |
-| `.recovery/` | Capture manifest, tracked patch, retained files, then completion marker. |
+| Artifact or location | Contract | Class |
+|---|---|---|
+| `.backups/` | Immutable Bundle_Backups retained to an exact Operator removal decision. | advisory |
+| `.agentic-manifests/` | Active lane `agentic-change-manifest/v1` records. | advisory |
+| `.recovery/` | Recovery_Capture directory `<semantic-scope>-<yyyymmdd>T<hhmm>Z` in UTC. | advisory |
+| Capture contents | Manifest, tracked patch, retained untracked files, then `.complete`. | advisory |
+| Recovery_Handle | Exact complete capture directory or verified Bundle_Backup filename. | advisory |
 
-- [advisory] Name a bundle `<repository>-<scope>-<short-revision>-<yyyymmdd>.bundle` without overwriting an existing file.
-- [artifact-bearing] Before any destructive rewrite, create and verify a unique bundle or completed capture; restore exact bytes, modes, links, and every manifest path.
-- [artifact-bearing] Require one Operator decision per destructive occurrence and record `keep`, `port`, or `drop` with exact identity, evidence, and rationale.
-- [artifact-bearing] Park or hand off only after the immutable revision, current Change_Manifest, Recovery_Handle, checks, and review identity are remotely addressable.
-- [artifact-bearing] A missing bundle, manifest, decision, retained file, or completion marker resolves as a Blocked_Outcome and preserves both byte sets.
-- [advisory] Cleanup only after protected integration, canonical parity, terminal receipts, value closure, and exact removal authority are all proven.
+- [artifact-bearing] Never modify a written Bundle_Backup; retain it until an Operator decision names that exact file for removal.
+- [artifact-bearing] Name it `<repository>-<semantic-scope>-<short-revision>-<yyyymmdd>.bundle`; use a distinct name and never overwrite or truncate.
+- [artifact-bearing] Before hard reset, discarding switch, rebase, merge, stash apply/drop, or untracked clean, stash dirt as `WIP: <semantic-scope>`.
+- [artifact-bearing] Also create a unique Bundle_Backup proven readable and containing the captured revision before that working-tree rewrite.
+- [artifact-bearing] Record Change_Manifest schema `agentic-change-manifest/v1` with branch, `baseSha`, and path-text lexicographic `paths`.
+- [artifact-bearing] Name each Recovery_Capture `<semantic-scope>-<yyyymmdd>T<hhmm>Z` with its timestamp at UTC minute precision.
+- [artifact-bearing] Write the Recovery_Capture manifest first.
+- [artifact-bearing] Write its tracked patch second.
+- [artifact-bearing] Write every retained untracked file third.
+- [artifact-bearing] Write `.complete` last; without it the capture is incomplete and satisfies no Recovery_Handle obligation.
+- [artifact-bearing] Park for handoff only after pushing the lane revision with a current Change_Manifest and recorded Recovery_Handle.
+- [artifact-bearing] Permit a still-active lane to create and record a Recovery_Handle before parking.
+- [artifact-bearing] Before history rewrite, multi-artifact deletion, or untracked discard, record one Operator decision naming operation, lane, and paths.
+- [artifact-bearing] One per-occurrence decision authorizes no other occurrence.
+- [artifact-bearing] Before removal, record `keep`, `port`, or `drop` with exact identity, evidence, and rationale.
+- [artifact-bearing] Restore only from a completed capture and prove byte equality for every manifest path, including modes and links.
+- [artifact-bearing] A Recovery_Handle is exactly one complete capture directory or one readable bundle proven to contain the captured revision.
+- [artifact-bearing] Missing bundle, manifest, decision, retained file, or `.complete` blocks, names the artifact, and leaves tracked and untracked bytes unchanged.
+- [artifact-bearing] Any restore mismatch blocks, retains the capture and pre-restore bytes, and names every differing path.
 
 ## Commit & Attribution
 
-| Type | Selection condition |
-|---|---|
-| `feat` | Adds externally observable behavior. |
-| `fix` | Corrects defective behavior. |
-| `docs` | Changes documentation only. |
-| `test` | Changes verification only. |
-| `refactor` | Changes structure without behavior. |
-| `chore` | Changes maintenance metadata or tooling. |
+| Type | Selection condition | Class |
+|---|---|---|
+| `feat` | Adds externally observable behavior. | advisory |
+| `fix` | Corrects defective behavior. | advisory |
+| `docs` | Changes documentation only. | advisory |
+| `test` | Changes verification only. | advisory |
+| `refactor` | Changes structure without behavior. | advisory |
+| `chore` | Changes maintenance metadata or tooling. | advisory |
 
-| Trailer | Required value |
-|---|---|
-| `Agentic-Task` | Exact task identifier |
-| `Agentic-Scope` | Admitted semantic scope |
-| `Agentic-Lease-Epoch` | Current claim epoch |
-| `Agentic-Mechanism` | Acting agent mechanism |
-
-- [artifact-bearing] Use `<type>(<scope>): <summary>` at at most 72 characters; the closed type set and admitted scope determine the first two fields.
-- [artifact-bearing] Record each trailer exactly once with real line breaks in the final block and give both what changed and why; missing, duplicate, or literal escaped `\n` separators block push.
-- [artifact-bearing] Commit one revertable task-and-scope unit, stage explicit paths, match the Change_Manifest, and amend only an unpushed commit from this lane.
+| Trailer | Required value | Class |
+|---|---|---|
+| `Agentic-Task` | Exact task identifier | advisory |
+| `Agentic-Scope` | Admitted semantic scope | advisory |
+| `Agentic-Lease-Epoch` | Current claim epoch | advisory |
+| `Agentic-Mechanism` | Acting agent mechanism | advisory |
+- [artifact-bearing] Use `<type>(<scope>): <summary>` on one line at most 72 chars; type is from the closed table, scope is admitted, and summary is 1–60 chars.
+- [artifact-bearing] Record each trailer exactly once on a 1–200 char line in the final block, with scope and epoch equal to the accepted claim.
+- [artifact-bearing] State what changed and why in the body; forbid a body whose only content restates the subject.
+- [artifact-bearing] Missing, duplicate, empty, or literal escaped `\n` trailers raise `unattributed-agentic-commit`; retain bytes and re-record before push.
+- [artifact-bearing] A malformed or over-72-character subject resolves as a Blocked_Outcome naming the violated constraint until corrected.
 - [advisory] Consume commit, push, and deploy sequences only from the Delivery Guidelines owner named in the boundary table.
 
 ## Verification Gates
 
-| Result field | Required value |
-|---|---|
-| check | Registered check name |
-| revision | Exact revision checked |
-| status | Terminal exit status |
-| summary | Pass/fail counts or test summary |
-| completed | Completion instant |
+| Result field | Required value | Class |
+|---|---|---|
+| check | Registered check name | advisory |
+| revision | Exact revision checked | advisory |
+| status | Terminal exit status | advisory |
+| summary | Pass/fail counts or test summary | advisory |
+| completed | Completion instant | advisory |
 
-- [artifact-bearing] Before shared push, run a named check on the exact revision to terminal status within its stated maximum and surface the full recorded result.
-- [artifact-bearing] A verdict mechanism and Session ID pair must differ from every authoring pair and record its outcome, revision, and relied-upon results.
-- [artifact-bearing] Run every pre-admission repository check; a bug fix also binds one pre-fix failure and one post-fix pass for its added check.
-- [artifact-bearing] Hooks require terminal results or one exact Operator bypass; review binds current base, lane revision, scope, and non-stale recorded evidence.
-- [advisory] A shared branch is any remotely present branch plus the protected canonical branch; failing or non-terminal evidence blocks but preserves commits.
+- [artifact-bearing] Before remote or protected-canonical push, run `git-guidelines-conformance(<exact-revision>)` to terminal status within 60 seconds.
+- [artifact-bearing] Record check name, exact revision, terminal status, summary, and completion time in the pushing mechanism's own output.
+- [artifact-bearing] Evaluator mechanism and Session ID must differ from every Implementer pair and record outcome, pair, lane revision, and relied results.
+- [artifact-bearing] Run every verification command registered before lane admission, plus the lane's new check, to a terminal recorded result.
+- [artifact-bearing] A bug fix binds one failing pre-fix and one passing post-fix terminal result for its added check before shared landing.
+- [artifact-bearing] Run pre-commit and pre-push hooks on the exact revision, or record one Operator bypass naming the hook and revision.
+- [artifact-bearing] Review binds current protected base, exact lane revision, and admitted scope token; any absent or differing binding blocks.
+- [artifact-bearing] Assertion without a recorded run or evidence for another revision raises `evidence-without-run` and blocks push or review.
+- [artifact-bearing] A verdict from an authoring mechanism and Session ID pair raises `self-graded-verdict` and blocks pending independence.
+- [artifact-bearing] Failure to record a finding classification weakens no other gate and blocks after all gate evaluations complete.
+- [artifact-bearing] Every other named check states its own maximum duration in seconds; exceeding any stated maximum is non-terminating.
+- [artifact-bearing] Failed, absent, or non-terminal required checks block push and review while committed bytes remain recoverable.
+- [artifact-bearing] Hook bypass without its per-occurrence Operator decision blocks commit or push while committed bytes remain recoverable.
 
 ## Conflict & Integration Order
 
-- [advisory] A Coordination_Task is a dependency-ordered group of immutable per-repository work units, not one cross-repository lane.
-- [artifact-bearing] Each work unit retains repository, branch, worktree, scope, claim, epoch, fence, PR/review identity, checks, and handoff evidence; edges order units.
-- [artifact-bearing] Re-read exact protected canonical state in the operation and resolve each conflict only in the claim-owning source lane.
-- [artifact-bearing] Serialize overlapping authorities and integrate control/contract sources, implementation, consumers, generated projections, then mirrors.
-- [artifact-bearing] Protected-source drift retires and reseals the waiting run; after two equal failures record root cause and name a different approach.
-- [artifact-bearing] Fence drift or two possible publishers blocks; content mergeability never proves ownership safety.
-- [artifact-bearing] Misplaced resolution raises `misplaced-conflict-resolution`; unresolved markers raise `unresolved-conflict-publish`; preserve all bytes.
+| Dependency class | Integration position | Class |
+|---|---|---|
+| control / contract source | 1 | advisory |
+| implementation source | 2 | advisory |
+| consumer | 3 | advisory |
+| generated projection | 4 | advisory |
+| mirror | 5 | advisory |
+
+- [artifact-bearing] Re-read exact protected canonical in the same operation, rebase or merge it, and record that revision in the integration request.
+- [artifact-bearing] Resolve each conflict only in the lane whose accepted claim covers its source path, never in a consumer, projection, or mirror.
+- [artifact-bearing] Serialize overlapping scopes: one accepted claim holds the paths; every peer blocks until release, handoff, or retirement.
+- [artifact-bearing] Content mergeability proves no ownership safety.
+- [artifact-bearing] A Coordination_Task orders immutable repository units; block later classes while an earlier owner claim has not integrated.
+- [artifact-bearing] Canonical drift at rebase, review, or candidate time preserves bytes, retires the waiting run, and reseals from current protected state.
+- [artifact-bearing] After the same operation on the same lane and paths fails twice, record root cause and a different approach before retry.
+- [artifact-bearing] Fence mismatch against the current accepted claim raises `stale-collaboration-fence` and blocks.
+- [artifact-bearing] After authenticated retirement serializes ownership, the survivor may proceed only on the current accepted claim fence.
+- [artifact-bearing] If two lanes could publish one path by equality, ancestry, shared semantics, or wildcard, serialize ownership or retire one.
+- [artifact-bearing] Non-owner resolution raises `misplaced-conflict-resolution`, blocks, and retains the resolving lane as recoverable bytes.
+- [artifact-bearing] Publishing tracked unresolved conflict content raises `unresolved-conflict-publish`, blocks, and leaves lane bytes unchanged.
+- [artifact-bearing] Order pending overlaps by dependency class, then lowest lease epoch, then byte-lexicographic Scope ID; ties are reproducible.
 
 ## Promotion Chain
 
-| Stage | Lane | Boundary |
+| Stage | Lane | Boundary | Class |
+|---|---|---|---|
+| Dev_Repository | integrated protected revision | integration boundary | advisory |
+| Prod_Mirror | publication lane | publication boundary | advisory |
+| Delivery_Surface | immutable candidate deployment lane | deployment boundary | advisory |
+
+| Stage | Rollback trigger → target → terminal outcome → dispositions | Class |
 |---|---|---|
-| development source | integrated protected revision | integration boundary |
-| production mirror | publication lane | publication boundary |
-| delivery surface | immutable candidate | deployment boundary |
+| Dev_Repository | identity drift → current protected revision → candidate resealed → code retain/revert; state retain | advisory |
+| Prod_Mirror | publication failure → last verified mirror → readback matches → code revert; state reconcile or name irreversible mutation | advisory |
+| Delivery_Surface | failed live claim → rollback point → delivery reads rollback → code revert; state restore or name irreversible migration | advisory |
 
-- [advisory] Promotion moves development source → delivery surface verification → production mirror publication; no stage implies the next.
-- [artifact-bearing] Every boundary stays closed without an authenticated Operator instruction naming boundary, candidate, target, identity, and issue time; integration never deploys.
-- [artifact-bearing] Seal one immutable candidate from source, dependency closure, target, review, artifact, and rollback point; one decision authorizes one attempt.
-- [artifact-bearing] Publish the mirror only after separate passing runs prove deployed revision, public reachability, and authoritative state readback.
-- [artifact-bearing] Record rollback trigger, target, terminal outcome, and separate code/state dispositions; drift invalidates the decision and requires resealing.
-- [artifact-bearing] Authoring never mutates mirror or delivery; absent or failing publication proof blocks and enters rollback with both dispositions.
+- [advisory] Promotion_Chain moves Dev_Repository → Prod_Mirror → Delivery_Surface; live verification precedes mirror publication and no stage implies the next.
+- [artifact-bearing] Every boundary is closed absent a parseable matching instruction naming Operator, boundary, candidate, target stage, and issue time.
+- [artifact-bearing] Protected integration grants integration only; authoring mutation of Prod_Mirror or Delivery_Surface raises `deploy-boundary-breach`.
+- [artifact-bearing] Seal one candidate from six identities: source, dependency closure, target, review, artifact, rollback point; reseal supersedes it.
+- [artifact-bearing] A decision names Operator, one candidate, and one target for one attempt; missing, mismatched, automated-only, or consumed authority breaches and blocks.
+- [artifact-bearing] Publish only after separate runs record passing deployed-revision, public-route, and authoritative-state-readback claims; never aggregate them.
+- [artifact-bearing] Any non-drift receipt error may invalidate authorization and retire on drift terms; failed, absent, or unrecordable claims block publication and enter table rollback.
+- [artifact-bearing] Identity drift invalidates authorization and forbids retarget/rebuild; unaffected work may continue in `authoring`, but redeploy needs fresh candidate, review, authorization.
+### Reference implementation and inspiration-only profile
 
-### Reference implementation profile — concrete promotion names
-
-- [advisory] The development source is `knowgrph`, the production mirror is `huijoohwee/content/knowgrph`, and delivery routes are `airvio.co` and `airvio.co/knowgrph`.
+- [advisory] Profile: `knowgrph` → `airvio.co`/`airvio.co/knowgrph` → `huijoohwee/content/knowgrph`; verify with `npm run git-guidelines:check`.
+- [advisory] [yjs/yjs](https://github.com/yjs/yjs) inspires neutral observation and convergence only; this contract is independently authored.
+- [artifact-bearing] Forbid copied code, prose, schema, tests, examples, algorithms, names, dependencies, imports, runtime reliance, or external authority.
 
 ## Findings & Rule Identity
 
-| Family | Rule_IDs | Finding type | Severity | Ownership |
-|---|---|---|---|---|
-| scope | `authoring--write-scope#1-2`, `commit--attribution#3` | `out-of-scope-write` | blocker | inherited: Execution Companion |
-| evidence | `lane-topology--admission#3`, `lane-topology--admission#5`, `verification-gates#1-4` | `evidence-without-run` | blocker | inherited: Execution Companion |
-| independence | `verification-gates#2` | `self-graded-verdict` | blocker | inherited: Execution Companion |
-| fence | `lane-topology--admission#4`, `lane-topology--admission#8`, `conflict--integration-order#6` | `stale-collaboration-fence` | blocker | inherited: Collaboration Module |
-| promotion | `promotion-chain#2-6` | `deploy-boundary-breach` | blocker | inherited: Authoring Authority |
-| admission | `lane-topology--admission#6`, `lane-topology--admission#9`, `preservation-recovery--cleanup#2-5` | `admission-snapshot-stale` | blocker | inherited: Lane Admission Module |
-| concurrency | `lane-topology--admission#7`, `coordination-artifacts#3`, `conflict--integration-order#3-5` | `concurrent-write-conflict` | blocker | inherited: Execution Companion |
-| neutrality | `lane-topology--admission#13` | `vendor-coupling` | major | inherited: Authoring Authority |
-| conformance | `coordination-artifacts#2-5`, `findings--rule-identity#2` | `unimplemented-guideline` | major | inherited: Authoring Authority |
-| attribution | `commit--attribution#1-2` | `unattributed-agentic-commit` | blocker | document-local |
-| conflict | `conflict--integration-order#2`, `conflict--integration-order#7` | `misplaced-conflict-resolution` | blocker | document-local |
-| conflict | `conflict--integration-order#7` | `unresolved-conflict-publish` | blocker | document-local |
-
-- [advisory] Derive each Rule_ID as section anchor plus `#` plus the 1-based directive or boundary-row ordinal in document order.
+- [advisory] Derive each Rule_ID from its section anchor plus `#` and the 1-based directive bullet or classified table-row ordinal in document order.
 - [artifact-bearing] Classify every rule once, list every raisable finding and raising Rule_ID, cover every artifact rule by a gate, and emit explicit zero type counts.
-- [advisory] Reuse inherited names and severities unchanged; only marked document-local names extend the vocabulary.
+- [advisory] Reuse every inherited name and current owner severity unchanged; only an explicit document-local marker extends the vocabulary.
+- [advisory] List every raisable finding type exactly once and every raising Rule_ID in at least one row, in both coverage directions.
+- [advisory] Give each row its rule family, raising Rule_IDs, type, severity, and inherited owner or document-local marker.
+- [advisory] The only document-local types are `unattributed-agentic-commit`, `misplaced-conflict-resolution`, and `unresolved-conflict-publish`.
+- [advisory] Draw severity only from `minor`, `major`, and `blocker`; define no alternative severity.
+- [advisory] Emit a `typeCounts` key for every registry type, including explicit zero values.
+- [advisory] Missing or multiple classifications name the offending rule and make conformance fail.
+- [advisory] Duplicate Rule_IDs or ordinals differing from counted document position name the offending identity and fail.
+- [advisory] Any consumed finding name or severity differing from its named current owner is owner divergence and fails closed.
+
+| Family | Rule_IDs | Finding type | Severity | Ownership | Class |
+|---|---|---|---|---|---|
+| scope | `authoring--write-scope#1-3`, `authoring--write-scope#5-9`, `authoring--write-scope#13-15` | `out-of-scope-write` | major | inherited: Execution Companion | advisory |
+| evidence | `verification-gates#6-13`, `verification-gates#15-18`, `preservation-recovery--cleanup#6-24` | `evidence-without-run` | blocker | inherited: Execution Companion | advisory |
+| independence | `verification-gates#8`, `verification-gates#14` | `self-graded-verdict` | blocker | inherited: Execution Companion | advisory |
+| fence | `coordination-artifacts#15-19`, `coordination-artifacts#21-29`, `conflict--integration-order#13-14` | `stale-collaboration-fence` | blocker | inherited: Collaboration Module | advisory |
+| promotion | `promotion-chain#8-14` | `deploy-boundary-breach` | blocker | inherited: Authoring Authority | advisory |
+| admission | `lane-topology--admission#15`, `lane-topology--admission#18-25`, `lane-topology--admission#27-29` | `admission-snapshot-stale` | blocker | inherited: Lane Admission Module | advisory |
+| concurrency | `lane-topology--admission#13-29`, `conflict--integration-order#6-18` | `concurrent-write-conflict` | major | inherited: Execution Companion | advisory |
+| neutrality | `promotion-chain#17` | `vendor-coupling` | major | inherited: Authoring Authority | advisory |
+| conformance | `findings--rule-identity#2` | `unimplemented-guideline` | major | inherited: Authoring Authority | advisory |
+| attribution | `commit--attribution#11-15` | `unattributed-agentic-commit` | blocker | document-local | advisory |
+| conflict | `conflict--integration-order#7`, `conflict--integration-order#16-17` | `misplaced-conflict-resolution`, `unresolved-conflict-publish` | blocker | document-local | advisory |
 
 ## Validation Checklist
 
 ### Pre-lane
-
-- Check `lane-topology--admission#3` from clean-base, scope, actor, overlap, and CAS evidence.
-- Check `lane-topology--admission#7` and `coordination-artifacts#3` from the current normalized claim inventory.
-- Check `lane-topology--admission#8`, `lane-topology--admission#9`, and `coordination-artifacts#2` from joined preservation records.
-- Check `coordination-artifacts#4`, `coordination-artifacts#5`, and `lane-topology--admission#13` from schema and dependency scans.
-
+- [advisory] Check `lane-topology--admission#13-29` from clean base, branch, identity, scope, claim, snapshots, operations, and receipts.
+- [advisory] Check `coordination-artifacts#15-19`, `coordination-artifacts#21-29`, `promotion-chain#17` from bounded schemas, probe, fence, and dependency scans.
 ### Per-commit
-
-- Check `lane-topology--admission#4`, `authoring--write-scope#1`, and `commit--attribution#1` from current authority and commit metadata.
-- Check `authoring--write-scope#2`, `commit--attribution#2`, and `commit--attribution#3` from byte snapshots, trailers, and manifest diff.
-- Check `preservation-recovery--cleanup#2` and `preservation-recovery--cleanup#3` from verified captures and Operator decisions.
-
+- [advisory] Check `authoring--write-scope#1-3`, `authoring--write-scope#5-9`, `authoring--write-scope#13-15`, `commit--attribution#11-15` from claim, diff, manifest, and message.
 ### Pre-push
-
-- Check `verification-gates#1`, `verification-gates#2`, `verification-gates#3`, and `verification-gates#4` from terminal exact-revision results.
-- Check `preservation-recovery--cleanup#4` and `preservation-recovery--cleanup#5` from immutable handoff and recovery evidence.
-
+- [advisory] Check `preservation-recovery--cleanup#6-24`, `verification-gates#6-18` from captures, decisions, hooks, and exact-revision results.
 ### Pre-promotion
-
-- Check `lane-topology--admission#5`, `conflict--integration-order#2`, and `conflict--integration-order#3` from candidate and dependency receipts.
-- Check `conflict--integration-order#4`, `conflict--integration-order#5`, `conflict--integration-order#6`, and `conflict--integration-order#7` from frontier and conflict evidence.
-- Check `promotion-chain#2`, `promotion-chain#3`, and `promotion-chain#4` from the exact candidate and single-use decision.
-- Check `promotion-chain#5` and `promotion-chain#6` from separate live claims and rollback dispositions.
-
+- [advisory] Check `conflict--integration-order#6-18` from protected frontier, claims, ownership, conflicts, and comparator evidence.
+- [advisory] Check `promotion-chain#8-14` from boundary instruction, candidate, single-use decision, three live claims, and rollback dispositions.
 ### Post-run
-
-- Check `lane-topology--admission#6` from the retirement receipt and preserved handoff identity.
-- Check `findings--rule-identity#2` from full finding, gate, severity, and explicit-zero coverage.
+- [advisory] Check `findings--rule-identity#2` from bidirectional findings, gate, owner severity, Rule_ID, and explicit-zero coverage.
 
 ### Reference implementation checker invocation
 
-- Run `npm run git-guidelines:check`; it reads this document, five owners, four registrations, present coordination artifacts, and git facts.
-- Exit zero means conformant, one means findings, two means degraded local input, and three means remote or verdict timeout.
+- [advisory] Run `npm run git-guidelines:check`; its entry point is `huijoohwee.github.io/scripts/check-git-guidelines.mjs`.
+- [advisory] It reads this document, five owners, four registrations, present coordination artifacts, and git facts.
+- [advisory] Exit zero means conformant; one means findings; two means degraded local input; three means remote or verdict timeout.
+
 
 ## Anti-Patterns
 
@@ -313,6 +381,7 @@ This git-layer companion projects the execution set into byte-preserving, provid
 - [advisory] Correct — preserve `dormant-preserved` under O4 and recover without the expired lease.
 
 ## Mantra
+
 
 - [advisory] O1 — one clean canonical lane, isolated task lanes, and exact branch identity.
 - [advisory] O2 — files project authority; authenticated monotonic receipts own it.

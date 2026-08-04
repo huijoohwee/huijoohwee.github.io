@@ -15,7 +15,10 @@ test("Property 13: binary recovery digest round-trips exactly", () => {
 });
 
 test("Property 14: manifest ordering is deterministic and duplicate-free", () => {
-  fc.assert(fc.property(fc.uniqueArray(fc.stringMatching(/^[a-z][a-z0-9/-]{0,20}$/u), { maxLength: 50 }), paths => {
+  const repositoryPath = fc
+    .array(fc.stringMatching(/^[a-z][a-z0-9-]{0,20}$/u), { minLength: 1, maxLength: 6 })
+    .map(segments => segments.join("/"));
+  fc.assert(fc.property(fc.uniqueArray(repositoryPath, { maxLength: 500 }), paths => {
     const sorted = [...paths].sort((left, right) => Buffer.from(left).compare(Buffer.from(right)));
     const value = { schema: "agentic-change-manifest/v1", branch: "agent/device/scope", baseSha: "a".repeat(40), paths: sorted };
     assert.deepEqual(validateArtifact(value), []);

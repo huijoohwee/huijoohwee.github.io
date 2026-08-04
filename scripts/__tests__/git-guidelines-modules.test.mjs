@@ -111,6 +111,20 @@ test("commit attribution rejects literal newline escapes and accepts a real trai
   assert.ok(validateCommitAttribution(malformed, { branch: "agent/test/git-guidelines-companion" }).some(problem => /Literal escaped newline/u.test(problem)));
 });
 
+test("protected squash attribution accepts one integration block and rejects aggregated authored blocks", () => {
+  const canonical = "fix(git-guidelines-companion): preserve squash attribution (#102)\n\nBind the protected integration commit to one accepted claim.\n\nAgentic-Task: git-guidelines-companion\nAgentic-Scope: git-guidelines-companion\nAgentic-Lease-Epoch: 1\nAgentic-Mechanism: Codex protected integration\n";
+  assert.deepEqual(validateCommitAttribution(canonical, { branch: "main" }), []);
+
+  const aggregate = canonical.replace(
+    "\n\nAgentic-Task:",
+    "\n\nAgentic-Task: prior-task\nAgentic-Scope: prior-scope\nAgentic-Lease-Epoch: 1\nAgentic-Mechanism: prior agent\n\nAgentic-Task:",
+  );
+  const problems = validateCommitAttribution(aggregate, { branch: "main" });
+  for (const trailer of ["Agentic-Task", "Agentic-Scope", "Agentic-Lease-Epoch", "Agentic-Mechanism"]) {
+    assert.ok(problems.includes(`${trailer} must occur exactly once in the commit message.`));
+  }
+});
+
 function operationReceipt(overrides = {}) {
   const draft = {
     schema: "agentic-collaboration-claim-receipt/v1", operation: "claim", status: "current",

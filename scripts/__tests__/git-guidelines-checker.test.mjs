@@ -54,6 +54,14 @@ test("checker rejects literal-newline Agentic trailers", () => {
   assert.ok(report.findings.some(finding => finding.type === "unattributed-agentic-commit" && /Literal escaped newline/u.test(finding.message)));
 });
 
+test("checker rejects a default squash body that aggregates authored trailer blocks", () => {
+  const aggregate = `${validCommitMessage()}\n${validCommitMessage()}`;
+  const result = spawnSync(process.execPath, [checker, `--repository=${createRepositoryFixture(aggregate)}`, `--acos-root=${createAcosFixture()}`, "--skip-remote-probe"], { encoding: "utf8" });
+  const report = JSON.parse(result.stdout);
+  assert.equal(result.status, 1);
+  assert.ok(report.findings.some(finding => finding.type === "unattributed-agentic-commit" && /must occur exactly once/u.test(finding.message)));
+});
+
 function createRepositoryFixture(commitMessage) {
   const workspaceRoot = mkdtempSync(path.join(os.tmpdir(), "git-guidelines-workspace-"));
   const root = path.join(workspaceRoot, "repository");

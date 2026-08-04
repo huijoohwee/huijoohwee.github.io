@@ -1,0 +1,41 @@
+{
+  "ledgerRepository": "huijoohwee/agentic-canvas-os",
+  "targetRepository": "huijoohwee/huijoohwee.github.io",
+  "deviceId": "huis-macbook-pro-3.local",
+  "sessionId": "codex-git-guidelines-protected-squash-repair-20260805",
+  "result": {
+    "schema": "agentic-cloud-collaboration-result/v1",
+    "ok": true,
+    "action": "claim",
+    "status": "current",
+    "ledgerRevision": "d61999580075346b2e14eb983a8ae5a6fcd51b1f",
+    "ledgerDigest": "6e6e2253e5ab3aada9d8119d5c7e5876cf75b478046e6d93157d9bee6a078905",
+    "claimDigest": "de3fa17329ca75c4b57eed3f4baa4f544d01af67f9b9f11b30296bc56ffcbbf1",
+    "claim": {
+      "claimId": "b82c990be26fd7d657a9ba2e2d16e4d7be6295cd55658cd79a4ce90afba79640",
+      "state": "active",
+      "canonicalBaseRevision": "9907e55bf6ef259fad1645956e7dc456a6b63c10",
+      "laneRevision": "9907e55bf6ef259fad1645956e7dc456a6b63c10",
+      "declaredWriteScope": [
+        "path:.github/workflows/guideline-contract.yml",
+        "path:docs/documents/git-guidelines.md",
+        "path:scripts/__tests__",
+        "path:scripts/lib/git-guidelines/content-contracts.mjs",
+        "semantic:git-guidelines-protected-squash-repair"
+      ],
+      "writeSetDigest": "20f3fa9f606f757c785afa60f24408541d23ac0fb16948e959d783d0c4a67b91",
+      "leaseEpoch": 1,
+      "transitionCounter": 1,
+      "reviewRequestId": null,
+      "expiresAt": "2026-08-05T22:50:58.000Z",
+      "fenceRevision": "de3fa17329ca75c4b57eed3f4baa4f544d01af67f9b9f11b30296bc56ffcbbf1",
+      "transitionDigest": "6e6e2253e5ab3aada9d8119d5c7e5876cf75b478046e6d93157d9bee6a078905",
+      "operationReceiptDigest": "698f8a0a9a233a997c3c95096baa1a749452f89d34b6abd5edb9251dc2ec8374"
+    },
+    "receipt": {
+      "sequence": 655,
+      "contractReceiptDigest": "698f8a0a9a233a997c3c95096baa1a749452f89d34b6abd5edb9251dc2ec8374",
+      "providerReceiptDigest": "e8367baa74fc0186f00f560c155a0530f8375440a217055931fae980a32e9288"
+    }
+  }
+}

@@ -16,6 +16,9 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       - name: Checkout Agentic Canvas OS registrations
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -34,8 +37,8 @@ jobs:
           mkdir -p "${GITHUB_WORKSPACE}/../.coordination"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-cloud-request.json "${GITHUB_WORKSPACE}/../.coordination/"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
-          cp scripts/__tests__/fixtures/coordination/git-guidelines-companion-ci-authority-cloud-authority.json "${GITHUB_WORKSPACE}/../.coordination/"
-          cp scripts/__tests__/fixtures/coordination/git-guidelines-companion-ci-authority-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
+          cp scripts/__tests__/fixtures/coordination/git-guidelines-protected-squash-repair-cloud-authority.json "${GITHUB_WORKSPACE}/../.coordination/"
+          cp scripts/__tests__/fixtures/coordination/git-guidelines-protected-squash-repair-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
       - run: npm test
         env:
           AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os

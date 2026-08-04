@@ -99,7 +99,7 @@ export const RULE_CONTRACTS = Object.freeze([
   contract("preservation-recovery--cleanup#24", "artifact-bearing", "restore-mismatch-blocks", /restore mismatch blocks/iu, /retains the capture and pre-restore bytes/iu, /every differing path/iu),
 
   contract("commit--attribution#11", "artifact-bearing", "commit-subject", /<type>\(<scope>\): <summary>/u, /at most 72 chars/iu, /type is from the closed table/iu, /scope is admitted/iu, /summary is 1–60 chars/iu),
-  contract("commit--attribution#12", "artifact-bearing", "commit-trailers", /each trailer exactly once/iu, /1–200 char line/iu, /scope and epoch equal to the accepted claim/iu),
+  contract("commit--attribution#12", "artifact-bearing", "commit-trailers", /trailers exactly once/iu, /1–200-char final-block lines/iu, /scope and epoch equal the claim/iu, /protected squash has one integration block/iu, /never concatenate authored blocks/iu),
   contract("commit--attribution#13", "artifact-bearing", "commit-body", /what changed and why/iu, /forbid a body whose only content restates the subject/iu),
   contract("commit--attribution#14", "artifact-bearing", "invalid-attribution", /Missing, duplicate, empty, or literal escaped `\\n` trailers/iu, /`unattributed-agentic-commit`/u, /retain bytes and re-record before push/iu),
   contract("commit--attribution#15", "artifact-bearing", "invalid-subject-block", /malformed or over-72-character subject/iu, /Blocked_Outcome/iu, /until corrected/iu),

@@ -1,0 +1,10 @@
+{
+  "schema": "agentic-declared-write-scope/v1",
+  "semanticScope": "git-guidelines-protected-squash-repair",
+  "paths": [
+    ".github/workflows/guideline-contract.yml",
+    "docs/documents/git-guidelines.md",
+    "scripts/__tests__",
+    "scripts/lib/git-guidelines/content-contracts.mjs"
+  ]
+}

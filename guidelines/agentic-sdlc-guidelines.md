@@ -155,6 +155,18 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Before first or later source authoring in a newly admitted lane, consume joined Admission and Preservation Receipts only after immediate claim-and-local-lease revalidation; they grant no cleanup, runtime, integration, release, or deployment authority
 - If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
 
+### Canonical Branch-State Glossary
+
+- `origin/main` is the authoritative published canonical frontier and remote SSOT
+- local `main` is the local mirror of that frontier; it may be ahead, behind, or diverged during rescue or sync, but the target state is exact parity with `origin/main`
+- a temporary task branch such as `agent/...` or `task/...` is the normal non-canonical authoring lane for private progress, verification, and review preparation
+- publication or integration updates `origin/main` through the repository's protected path; a private local commit does not publish shared authority
+- pulling or syncing refreshes local canonical state from `origin/main`
+- Treat `origin/main` as the only shared canonical branch state; forbid treating a private branch or unpushed local `main` commit as published source of truth
+- Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
+- If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
+- Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
+
 ### Granularity
 
 A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.

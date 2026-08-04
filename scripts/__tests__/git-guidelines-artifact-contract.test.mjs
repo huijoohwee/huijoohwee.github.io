@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { checkArtifacts, digestValue, validateArtifact } from "../lib/git-guidelines/artifact-schema.mjs";
@@ -6,6 +7,7 @@ import { validateBlockedOutcome } from "../lib/git-guidelines/content.mjs";
 import { buildReport } from "../lib/git-guidelines/report.mjs";
 
 const DOCUMENT = Object.freeze({ sourcePath: "docs/documents/git-guidelines.md" });
+const COORDINATION_FIXTURE_ROOT = new URL("./fixtures/coordination/", import.meta.url);
 
 test("all five live artifact schemas join without findings", () => {
   const result = checkArtifacts(DOCUMENT, validArtifactSet());
@@ -49,6 +51,23 @@ test("the repaired repository-owned cloud request path is accepted exactly", () 
   };
   assert.deepEqual(validateArtifact(request, ".coordination/dev-source-resolver-cloud-request.json"), []);
   assert.ok(validateArtifact(request, ".coordination/another-scope-cloud-request.json").some(problem => problem.includes("Filename must be dev-source-resolver-request.json")));
+});
+
+test("CI materializes the exact repaired Task 19 input pair", () => {
+  const scopePath = new URL("dev-source-resolver-write-scope.json", COORDINATION_FIXTURE_ROOT);
+  const requestPath = new URL("dev-source-resolver-cloud-request.json", COORDINATION_FIXTURE_ROOT);
+  const scope = JSON.parse(readFileSync(scopePath, "utf8"));
+  const request = JSON.parse(readFileSync(requestPath, "utf8"));
+  const sortedPaths = [...scope.paths].sort((left, right) => Buffer.from(left).compare(Buffer.from(right)));
+  const expectedDeclaredScope = [
+    ...scope.paths.map(relativePath => `path:${relativePath}`),
+    `semantic:${scope.semanticScope}`,
+  ].sort((left, right) => Buffer.from(left).compare(Buffer.from(right)));
+
+  assert.deepEqual(validateArtifact(scope, ".coordination/dev-source-resolver-write-scope.json"), []);
+  assert.deepEqual(validateArtifact(request, ".coordination/dev-source-resolver-cloud-request.json"), []);
+  assert.deepEqual(scope.paths, sortedPaths);
+  assert.deepEqual(request.declaredWriteScope, expectedDeclaredScope);
 });
 
 test("the existing repository-owned accepted claim path remains exact", () => {

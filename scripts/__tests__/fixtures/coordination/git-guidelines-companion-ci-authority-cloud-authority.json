@@ -1,0 +1,47 @@
+{
+  "ledgerRepository": "huijoohwee/agentic-canvas-os",
+  "targetRepository": "huijoohwee/huijoohwee.github.io",
+  "deviceId": "huis-macbook-pro-3.local",
+  "sessionId": "codex-git-guidelines-companion-ci-authority-20260805",
+  "result": {
+    "schema": "agentic-cloud-collaboration-result/v1",
+    "ok": true,
+    "action": "claim",
+    "status": "current",
+    "ledgerRevision": "76a53545eb1d424b946e3cae52e8f048bf7bedcf",
+    "ledgerDigest": "3434d7830dafc3a0f1c28e908ae4a8087c8679101a067974a8ff9c265b3dd4cc",
+    "claimDigest": "c8ae9b03774329799d30e51e1cf512495f0f75496bebc08904dd271fe8c753f6",
+    "claim": {
+      "claimId": "f51e7f9d9e66ebe29d9ab813432eb1b8fb6bd651e069569ce3e8949c2076aa0b",
+      "state": "active",
+      "canonicalBaseRevision": "6f701417f476c797e700cd63a92f5e0d984c18b9",
+      "laneRevision": "6f701417f476c797e700cd63a92f5e0d984c18b9",
+      "declaredWriteScope": [
+        "path:.github/workflows/guideline-contract.yml",
+        "path:docs/documents/git-guidelines.md",
+        "path:guidelines/agentic-sdlc-guidelines.md",
+        "path:package-lock.json",
+        "path:package.json",
+        "path:scripts/__pbt__",
+        "path:scripts/__tests__",
+        "path:scripts/check-agentic-sdlc-guideline.mjs",
+        "path:scripts/check-git-guidelines.mjs",
+        "path:scripts/lib/git-guidelines",
+        "semantic:git-guidelines-companion-ci-authority"
+      ],
+      "writeSetDigest": "13146e15df2d970dc0967da68d7a0367b78907769735b8c9ce72c9b3e5af4b5b",
+      "leaseEpoch": 1,
+      "transitionCounter": 1,
+      "reviewRequestId": null,
+      "expiresAt": "2026-08-05T20:26:04.000Z",
+      "fenceRevision": "c8ae9b03774329799d30e51e1cf512495f0f75496bebc08904dd271fe8c753f6",
+      "transitionDigest": "3434d7830dafc3a0f1c28e908ae4a8087c8679101a067974a8ff9c265b3dd4cc",
+      "operationReceiptDigest": "3f70bdcff10ec2c93e58a60efa7dae41c9737aa85626a4cee21ff83cd4c96eeb"
+    },
+    "receipt": {
+      "sequence": 644,
+      "contractReceiptDigest": "3f70bdcff10ec2c93e58a60efa7dae41c9737aa85626a4cee21ff83cd4c96eeb",
+      "providerReceiptDigest": "663131ac95ee85de2f60b828a93bd87cd8168d20b28bf3e12bf78755a5eaf77a"
+    }
+  }
+}

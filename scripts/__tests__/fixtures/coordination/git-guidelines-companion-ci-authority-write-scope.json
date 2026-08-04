@@ -1,0 +1,16 @@
+{
+  "schema": "agentic-declared-write-scope/v1",
+  "semanticScope": "git-guidelines-companion-ci-authority",
+  "paths": [
+    ".github/workflows/guideline-contract.yml",
+    "docs/documents/git-guidelines.md",
+    "guidelines/agentic-sdlc-guidelines.md",
+    "package-lock.json",
+    "package.json",
+    "scripts/__pbt__",
+    "scripts/__tests__",
+    "scripts/check-agentic-sdlc-guideline.mjs",
+    "scripts/check-git-guidelines.mjs",
+    "scripts/lib/git-guidelines"
+  ]
+}

@@ -28,6 +28,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Materialize required Task 19 workspace inputs
+        run: |
+          mkdir -p "${GITHUB_WORKSPACE}/../.coordination"
+          cp scripts/__tests__/fixtures/coordination/dev-source-resolver-cloud-request.json "${GITHUB_WORKSPACE}/../.coordination/"
+          cp scripts/__tests__/fixtures/coordination/dev-source-resolver-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
       - run: npm test
         env:
           AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os

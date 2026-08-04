@@ -156,7 +156,6 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - If the protected canonical source advances after review or candidate preparation, treat the waiting run as stale, retire it, refresh the canonical lane to the new exact protected revision, and reseal a fresh candidate from that revision; reuse of stale review, candidate, or authorization evidence is forbidden
 
 ### Canonical Branch-State Glossary
-
 - `origin/main` is the authoritative published canonical frontier and remote SSOT
 - local `main` is the local mirror of that frontier; it may be ahead, behind, or diverged during rescue or sync, but the target state is exact parity with `origin/main`
 - a temporary task branch such as `agent/...` or `task/...` is the normal non-canonical authoring lane for private progress, verification, and review preparation

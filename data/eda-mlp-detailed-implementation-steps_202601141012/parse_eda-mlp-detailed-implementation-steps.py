@@ -4,7 +4,7 @@ import sys
 from knowgrph_parser import markdown_cmd
 
 def main() -> int:
-    markdown_path = os.path.abspath('/Users/huijoohwee/Documents/GitHub/huijoohwee.github.io/guidelines/eda-mlp-detailed-implementation-steps.md')
+    markdown_path = os.path.abspath('/Users/huijoohwee/Documents/GitHub/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md')
     argv = ['--input', markdown_path] + sys.argv[1:]
     return markdown_cmd.main(argv)
 

@@ -3,7 +3,7 @@
 ## Source
 
 - Graph ID: `md:eda-mlp-detailed-implementation-steps`
-- Markdown: `/Users/huijoohwee/Documents/GitHub/huijoohwee.github.io/guidelines/eda-mlp-detailed-implementation-steps.md`
+- Markdown: `/Users/huijoohwee/Documents/GitHub/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md`
 
 ## Outputs
 

@@ -42,4 +42,4 @@ agentic_rag:
         - pip should also be in venv
         - "Should show: /path/to/project_name/venv/bin/pip"
         - Core data processing
-      context: Summarize the markdown document at guidelines/eda-mlp-detailed-implementation-steps.md into a navigable graph structure.
+      context: Summarize the markdown document at /Users/huijoohwee/Documents/GitHub/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md into a navigable graph structure.

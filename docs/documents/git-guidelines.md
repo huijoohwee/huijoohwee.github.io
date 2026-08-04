@@ -229,7 +229,7 @@ This git-layer companion projects the execution set into byte-preserving, provid
 | `Agentic-Lease-Epoch` | Current claim epoch | advisory |
 | `Agentic-Mechanism` | Acting agent mechanism | advisory |
 - [artifact-bearing] Use `<type>(<scope>): <summary>` on one line at most 72 chars; type is from the closed table, scope is admitted, and summary is 1–60 chars.
-- [artifact-bearing] Record each trailer exactly once on a 1–200 char line in the final block, with scope and epoch equal to the accepted claim.
+- [artifact-bearing] Record trailers exactly once on 1–200-char final-block lines; scope and epoch equal the claim. A protected squash has one integration block; never concatenate authored blocks.
 - [artifact-bearing] State what changed and why in the body; forbid a body whose only content restates the subject.
 - [artifact-bearing] Missing, duplicate, empty, or literal escaped `\n` trailers raise `unattributed-agentic-commit`; retain bytes and re-record before push.
 - [artifact-bearing] A malformed or over-72-character subject resolves as a Blocked_Outcome naming the violated constraint until corrected.

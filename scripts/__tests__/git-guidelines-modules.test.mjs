@@ -16,17 +16,21 @@ test("normalization is exhaustive and leaves excluded changes sensitive", () => 
   assert.equal(NORMALIZATION_CLASSES.length, 6);
   assert.equal(NORMALIZATION_EXCLUSIONS.length, 7);
   const left = normalizeValue("/tmp/work/a  \r\n2026-08-04T01:02:03Z", { absolutePrefixes: ["/tmp/work"] });
-  const right = normalizeValue("<ROOT>/a\n2027-01-01T00:00:00Z");
+  const right = normalizeValue("a\n2027-01-01T00:00:00Z");
   assert.equal(left, right);
   assert.notEqual(normalizeValue("Mixed Case"), normalizeValue("mixed case"));
 });
 
 test("finding ordering and dedup choose maximum severity deterministically", () => {
   const base = { ruleId: "lane#2", type: "evidence-without-run", location: { path: "a", line: 2, column: 1 }, message: "x" };
-  const output = collapseFindings([{ ...base, severity: "minor" }, { ...base, severity: "blocker" }]);
-  assert.equal(output.length, 1);
+  const sameLocation = { ...base, type: "vendor-coupling", severity: "blocker" };
+  const laterType = { ...base, location: { path: "a", line: 3, column: 1 }, type: "vendor-coupling", severity: "major" };
+  const output = collapseFindings([{ ...base, severity: "minor" }, laterType, sameLocation]);
+  assert.equal(output.length, 2);
   assert.equal(output[0].severity, "blocker");
   assert.equal(output[0].repeatCount, 2);
+  assert.equal(output[0].type, "evidence-without-run");
+  assert.equal(output[1].type, "vendor-coupling");
 });
 
 test("artifact validation and overlap algebra fail closed", () => {
@@ -34,6 +38,30 @@ test("artifact validation and overlap algebra fail closed", () => {
   assert.equal(normalizedWriteSetsOverlap(["src/a"], ["docs/b"]), false);
   assert.equal(normalizedWriteSetsOverlap([], ["docs/b"]), true);
   assert.deepEqual(validateArtifact({ schema: "agentic-change-manifest/v1", branch: "agent/a/b", baseSha: "a".repeat(40), paths: ["a", "b"] }), []);
+});
+
+test("cloud request validation matches the repository coordination contract", () => {
+  const request = {
+    schema: "agentic-cloud-collaboration-request/v1",
+    targetRepository: "huijoohwee/knowgrph",
+    workItemId: "work-item:dev-source-resolver-20260803",
+    canonicalBaseRevision: "a".repeat(40),
+    laneRevision: "b".repeat(40),
+    declaredWriteScope: ["path:scripts/worktree-policy.mjs", "semantic:dev-source-resolver"],
+    leaseEpoch: 0,
+    expiresAt: "2026-08-03T06:04:07Z",
+    deviceId: "huis-macbook-pro-3",
+    sessionId: "codex-dev-source-resolver-20260803",
+    actorId: "github-user:8945812",
+    actorLogin: "huijoohwee",
+  };
+  assert.deepEqual(validateArtifact(request), []);
+  for (const field of Object.keys(request).filter(field => field !== "actorLogin")) {
+    const degraded = { ...request }; delete degraded[field];
+    assert.ok(validateArtifact(degraded).length > 0, `cloud request accepted missing ${field}`);
+  }
+  assert.ok(validateArtifact({ ...request, workItem: request.workItemId }).length > 0);
+  assert.ok(validateArtifact({ ...request, declaredWriteScope: ["scripts/worktree-policy.mjs"] }).length > 0);
 });
 
 test("typed operation receipts require every field and bind their digest", () => {
@@ -53,7 +81,7 @@ test("typed operation receipts require every field and bind their digest", () =>
   }
 });
 
-test("cloud mutation results require complete joined typed and provider receipts", () => {
+test("accepted claim results use the Collaboration owner state vocabulary", () => {
   const operation = operationReceipt();
   const providerDraft = {
     schema: "agentic-cloud-collaboration-github-receipt/v1", action: "claim", ledgerRevision: "a".repeat(40),
@@ -62,19 +90,18 @@ test("cloud mutation results require complete joined typed and provider receipts
   };
   const provider = { ...providerDraft, receiptDigest: digestValue(providerDraft) };
   const result = {
-    schema: "agentic-cloud-collaboration-result/v1", ok: true, action: "claim", status: "current", replayed: false,
-    attempts: 1, ledgerRevision: provider.ledgerRevision, claim: publicClaim(operation), claimDigest: operation.claimDigest,
-    operationReceipt: operation, receipt: provider,
+    schema: "agentic-cloud-collaboration-result/v1", ok: true, action: "claim", status: "active", replayed: false,
+    attempts: 1, ledgerRevision: provider.ledgerRevision, claim: acceptedClaim(provider), claimDigest: operation.claimDigest,
+    receipt: provider,
   };
   assert.deepEqual(validateArtifact(result), []);
   for (const field of Object.keys(result)) {
     const degraded = { ...result }; delete degraded[field];
     assert.ok(validateArtifact(degraded).length > 0, `cloud result accepted missing ${field}`);
   }
-  assert.ok(validateArtifact({ ...result, claim: { ...result.claim, integration: {} } }).length > 0);
-  assert.ok(validateArtifact({ ...result, claim: { ...result.claim, writeAuthority: false } }).length > 0);
-  assert.ok(validateArtifact({ ...result, claim: { ...result.claim, operationReceiptDigest: "9".repeat(64) } }).length > 0);
-  assert.ok(validateArtifact({ schema: result.schema, ok: false, action: "claim", status: "blocked", ledgerRevision: null, claims: [] }).length > 0);
+  assert.ok(validateArtifact({ ...result, admissionDecision: "accepted" }).length > 0);
+  assert.ok(validateArtifact({ ...result, status: "current", claim: { ...result.claim, state: "current" } }).length > 0);
+  assert.ok(validateArtifact({ ...result, claim: { ...result.claim, declaredWriteScope: ["semantic:other"] } }).length > 0);
 });
 
 test("commit attribution rejects literal newline escapes and accepts a real trailer block", () => {
@@ -95,14 +122,13 @@ function operationReceipt(overrides = {}) {
   return { ...draft, receiptDigest: digestValue(draft) };
 }
 
-function publicClaim(receipt) {
+function acceptedClaim(receipt) {
+  const declaredWriteScope = ["semantic:git-guidelines-companion"];
   return {
-    claimId: receipt.claimId, entrySchema: "agentic-cloud-collaboration-entry/v2", state: receipt.status,
-    writeAuthority: true, scopeReserved: true, actorId: "github-user:1", repositoryId: receipt.repositoryId,
+    claimId: receipt.claimId, state: "active", actorId: "github-user:1", repositoryId: "github-repository:test",
     workItemId: "work-item:test", canonicalBaseRevision: "6".repeat(40), laneRevision: "7".repeat(40),
-    declaredWriteScope: ["semantic:git-guidelines-companion"], writeSetDigest: "8".repeat(64), leaseEpoch: 1,
-    transitionCounter: 1, heartbeatCounter: 0, reviewRequestId: null, predecessorClaimId: null,
-    expiresAt: "2026-08-05T00:00:00.000Z", fenceRevision: receipt.claimDigest, transitionDigest: receipt.ledgerRevision,
-    operationReceiptDigest: receipt.receiptDigest, integrationReceiptDigest: null, integration: null,
+    declaredWriteScope, writeSetDigest: digestValue(declaredWriteScope), leaseEpoch: 1,
+    transitionCounter: 1, heartbeatCounter: 0, reviewRequestId: null,
+    expiresAt: "2026-08-05T00:00:00.000Z", fenceRevision: receipt.claimDigest, transitionDigest: receipt.ledgerDigest,
   };
 }

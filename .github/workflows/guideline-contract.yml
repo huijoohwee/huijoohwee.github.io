@@ -30,6 +30,7 @@ jobs:
       - run: npm ci
       - name: Materialize required Task 19 workspace inputs
         run: |
+          printf '%s\n' 'node_modules/' >> .git/info/exclude
           mkdir -p "${GITHUB_WORKSPACE}/../.coordination"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-cloud-request.json "${GITHUB_WORKSPACE}/../.coordination/"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"

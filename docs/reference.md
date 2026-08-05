@@ -83,6 +83,14 @@ frontmatter_contract: "required"
 
 ---
 
+## Knowledge Storage Contracts
+
+| [Knowledge-Base SSOT Storage Projection](./documents/knowledge-base-ssot-storage-projection.md) | Shared projection of the source-owned decision: Git-backed Markdown/frontmatter is canonical, Lark is the collaboration control plane, Cloudflare stores are generated serving/query projections, and CSV/JSON is interchange only |
+| [Knowledge-Base SSOT Storage Guidelines](../guidelines/knowledge-base-ssot-storage-guidelines.md) | Provider-neutral authority, security, local-first synchronization, idempotency, conflict, TCO, and token-performance directives |
+| [Lark Web App API Overview](https://open.larksuite.com/document/client-docs/gadget/-web-app-api/api-overview) | Official in-client web-app capability boundary; durable Open Platform operations remain host-mediated |
+
+---
+
 ## Knowgrph MCP
 
 | [Knowgrph MCP Onboarding Index](./documents/knowgrph-mcp-onboarding-index.md) | Fastest public entry point for install, orchestration boundary, and proof path |

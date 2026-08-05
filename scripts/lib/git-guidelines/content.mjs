@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import { FINDING_VOCABULARY, RULE_CONTRACTS, STAGE_SECTIONS } from "./content-contracts.mjs";
+import { PROTECTED_REVIEW_VERIFICATION_MODE } from "./review-authority.mjs";
 
 export const BLOCKING_CONDITIONS = Object.freeze([
   "canonical-base-unclean",
@@ -505,7 +506,14 @@ function orderAuthorities(authorities, comparisonArtifacts) {
 function publicationAuthorityProblems(authority, evaluationTime) {
   if (!isRecord(authority)) return ["claim-absent"];
   const problems = [];
-  if (authority.state !== "active") problems.push("claim-not-active");
+  const protectedReview = authority.authorityPhase === PROTECTED_REVIEW_VERIFICATION_MODE;
+  if (protectedReview) {
+    if (authority.state !== "reviewed" || authority.writeAuthority !== false
+      || authority.scopeReserved !== true
+      || !DIGEST_PATTERN.test(String(authority.verificationReceiptDigest || ""))) {
+      problems.push("protected-review-verification-invalid");
+    }
+  } else if (authority.state !== "active") problems.push("claim-not-active");
   const expiry = Date.parse(authority.expiresAt);
   if (!Number.isFinite(expiry) || !Number.isFinite(evaluationTime) || expiry <= evaluationTime) problems.push("lease-expired");
   if (!DIGEST_PATTERN.test(String(authority.fenceRevision || ""))

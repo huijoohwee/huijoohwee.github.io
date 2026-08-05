@@ -177,6 +177,46 @@ test("one runtime composition reuses scope overlap for admission, commit, and pu
   assert.equal(Object.isFrozen(evaluation), true);
 });
 
+test("protected review verification is narrow and never widens ordinary authoring authority", () => {
+  const base = authority("reviewed", "reviewed.json", [
+    "path:src/runtime",
+    "semantic:runtime-owner",
+  ]);
+  const protectedReview = Object.freeze({
+    ...base,
+    state: "reviewed",
+    authorityPhase: "protected-review",
+    writeAuthority: false,
+    scopeReserved: true,
+    verificationReceiptDigest: "a".repeat(64),
+  });
+  const verified = evaluateRuntimeComposition({
+    currentAuthority: protectedReview,
+    changedPaths: ["src/runtime/index.mjs"],
+    evaluationTime: 0,
+  });
+  assert.equal(verified.publication.authorized, true);
+  assert.deepEqual(verified.publication.authorityProblems, []);
+
+  const ordinaryReviewed = evaluateRuntimeComposition({
+    currentAuthority: Object.freeze({ ...base, state: "reviewed" }),
+    changedPaths: ["src/runtime/index.mjs"],
+    evaluationTime: 0,
+  });
+  assert.equal(ordinaryReviewed.publication.authorized, false);
+  assert.deepEqual(ordinaryReviewed.publication.authorityProblems, ["claim-not-active"]);
+
+  const mutationEnabled = evaluateRuntimeComposition({
+    currentAuthority: Object.freeze({ ...protectedReview, writeAuthority: true }),
+    changedPaths: ["src/runtime/index.mjs"],
+    evaluationTime: 0,
+  });
+  assert.equal(mutationEnabled.publication.authorized, false);
+  assert.deepEqual(mutationEnabled.publication.authorityProblems, [
+    "protected-review-verification-invalid",
+  ]);
+});
+
 test("Blocked_Outcome uses the exact closed conditions and enforces four unchanged digests", () => {
   assert.equal(BLOCKING_CONDITIONS.length, 27);
   assert.deepEqual(BLOCKING_CONDITIONS, EXPECTED_BLOCKING_CONDITIONS);

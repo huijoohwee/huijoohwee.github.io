@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import test from "node:test";
 
 import { checkArtifacts, digestValue, validateArtifact } from "../lib/git-guidelines/artifact-schema.mjs";
@@ -70,25 +70,11 @@ test("CI materializes the exact repaired Task 19 input pair", () => {
   assert.deepEqual(request.declaredWriteScope, expectedDeclaredScope);
 });
 
-test("CI materializes its exact admitted current-authority pair", () => {
-  const scopePath = new URL("git-guidelines-companion-ci-authority-write-scope.json", COORDINATION_FIXTURE_ROOT);
-  const authorityPath = new URL("git-guidelines-companion-ci-authority-cloud-authority.json", COORDINATION_FIXTURE_ROOT);
-  const scope = JSON.parse(readFileSync(scopePath, "utf8"));
-  const authority = JSON.parse(readFileSync(authorityPath, "utf8"));
-  const { result } = authority;
-  const expectedDeclaredScope = [
-    ...scope.paths.map(relativePath => `path:${relativePath}`),
-    `semantic:${scope.semanticScope}`,
-  ].sort((left, right) => Buffer.from(left).compare(Buffer.from(right)));
-
-  assert.deepEqual(validateArtifact(scope, ".coordination/git-guidelines-companion-ci-authority-write-scope.json"), []);
-  assert.equal(authority.targetRepository, "huijoohwee/huijoohwee.github.io");
-  assert.equal(result.schema, "agentic-cloud-collaboration-result/v1");
-  assert.equal(result.ok, true);
-  assert.equal(result.action, "claim");
-  assert.equal(result.claim.state, "active");
-  assert.equal(result.claimDigest, result.claim.fenceRevision);
-  assert.deepEqual(result.claim.declaredWriteScope, expectedDeclaredScope);
+test("CI retains only provider-neutral reference fixtures", () => {
+  assert.deepEqual(readdirSync(COORDINATION_FIXTURE_ROOT).sort(), [
+    "dev-source-resolver-cloud-request.json",
+    "dev-source-resolver-write-scope.json",
+  ]);
 });
 
 test("the existing repository-owned accepted claim path remains exact", () => {

@@ -6,6 +6,10 @@ import { validateArtifact } from "./artifact-schema.mjs";
 import { INPUT_BOUNDS } from "./input-constants.mjs";
 import { git } from "./input-runtime.mjs";
 import { byteCompare, isRecord, readRequired, recordProblem } from "./input-resolver-utils.mjs";
+import {
+  PROTECTED_REVIEW_VERIFICATION_MODE,
+  validateProtectedReviewAuthority,
+} from "./review-authority.mjs";
 
 const REPOSITORY_ARTIFACT_ROOTS = Object.freeze([
   ".coordination", ".agentic-manifests", ".recovery", ".backups",
@@ -13,7 +17,7 @@ const REPOSITORY_ARTIFACT_ROOTS = Object.freeze([
 const WORKSPACE_REFERENCE_ARTIFACTS = Object.freeze([
   "dev-source-resolver-cloud-request.json", "dev-source-resolver-write-scope.json",
 ]);
-const LIVE_AUTHORITY_STATES = new Set(["active", "review-ready", "parked"]);
+const LIVE_AUTHORITY_STATES = new Set(["active", "reviewed", "review-ready", "parked"]);
 const DEPENDENCY_CLASSES = new Set([
   "control-contract", "implementation", "consumer", "generated-projection", "mirror",
 ]);
@@ -61,10 +65,10 @@ export function resolveArtifactInputs({
   enforceRequiredWorkspaceReferences({
     workspaceRoot, workspaceReferenceArtifacts, problems, statuses,
   });
-  if (explicitWorkspace) {
+  if (explicitWorkspace || currentWorkspaceArtifacts.length > 0) {
     enforceCurrentWorkspacePair({
       currentScope, workspaceRoot, workspaceArtifacts, currentWorkspaceArtifacts,
-      protectedBaseRevision, acceptedFenceRevision, head, repo, runtime, problems, statuses,
+      protectedBaseRevision, acceptedFenceRevision, head, branch, repo, runtime, problems, statuses,
     });
   }
   validateRepositoryArtifactFreshness({
@@ -185,7 +189,7 @@ function readRetainedArtifact(runtime, { file, root, problems, statuses }) {
 
 function enforceCurrentWorkspacePair({
   currentScope, workspaceRoot, workspaceArtifacts, currentWorkspaceArtifacts,
-  protectedBaseRevision, acceptedFenceRevision, head, repo, runtime, problems, statuses,
+  protectedBaseRevision, acceptedFenceRevision, head, branch, repo, runtime, problems, statuses,
 }) {
   if (!currentScope) return;
   const expectedNames = [`${currentScope}-write-scope.json`, `${currentScope}-cloud-authority.json`];
@@ -235,7 +239,14 @@ function enforceCurrentWorkspacePair({
   if (acceptedFenceRevision && claim.fenceRevision !== acceptedFenceRevision) staleReasons.push(`claim fence ${claim.fenceRevision} differs from accepted fence ${acceptedFenceRevision}`);
   if (Date.parse(claim.expiresAt) <= runtime.now()) staleReasons.push(`claim authority expired at ${claim.expiresAt}`);
   if (JSON.stringify(recordedScope) !== JSON.stringify(expectedScope)) staleReasons.push("claim write scope differs from the current declared write scope");
-  if (!gitRevisionIsAncestor(runtime, repo, claim.laneRevision, head)) staleReasons.push("claim lane revision is not an ancestor of the revision under check");
+  if (result.action === "verify") {
+    if (result.subject?.branch !== branch) staleReasons.push("verified branch differs from the branch under check");
+    if (result.subject?.canonicalBaseSha !== protectedBaseRevision) staleReasons.push("verified subject base differs from the protected base");
+    if (result.subject?.headSha !== head || claim.laneRevision !== head) staleReasons.push("verified subject head differs from the revision under check");
+    if (authorityArtifact.value.scopeId !== currentScope) staleReasons.push("verified scope differs from the current branch scope");
+  } else if (!gitRevisionIsAncestor(runtime, repo, claim.laneRevision, head)) {
+    staleReasons.push("claim lane revision is not an ancestor of the revision under check");
+  }
   if (staleReasons.length > 0) {
     recordProblem(problems, statuses, {
       code: "input-stale", condition: "stale", inputId: `artifact:${authorityArtifact.relativePath}`,
@@ -272,15 +283,18 @@ function buildRuntimeContext({
   const currentCandidates = [
     ...currentWorkspaceArtifacts,
     ...repositoryArtifacts.filter(artifact => semanticScopeFromArtifact(artifact) === currentScope),
-  ];
+  ].filter(artifact => artifact.condition === "ok");
   const currentAuthority = currentCandidates.map(artifact => authorityFromArtifact(artifact, acceptedFenceRevision)).find(Boolean) || null;
-  const repositoryAuthorities = repositoryArtifacts.map(artifact => authorityFromArtifact(artifact)).filter(Boolean)
+  const repositoryAuthorities = repositoryArtifacts.filter(artifact => artifact.condition === "ok")
+    .map(artifact => authorityFromArtifact(artifact)).filter(Boolean)
     .map(authority => Object.freeze({ ...authority, repositoryLocal: true }));
-  const workspaceAuthorities = workspaceArtifacts.map(artifact => authorityFromArtifact(artifact)).filter(Boolean);
+  const workspaceAuthorities = workspaceArtifacts.filter(artifact => artifact.condition === "ok")
+    .map(artifact => authorityFromArtifact(artifact)).filter(Boolean);
   const peerAuthorities = [...repositoryAuthorities, ...workspaceAuthorities]
     .filter(authority => !sameAuthority(authority, currentAuthority))
     .filter(authority => sameRepository(authority, currentAuthority))
     .filter(authority => LIVE_AUTHORITY_STATES.has(authority.state) && Date.parse(authority.expiresAt) > evaluationTime)
+    .filter(authority => authority.state !== "reviewed" || authority.scopeReserved === true)
     .sort((left, right) => byteCompare(left.authorityId, right.authorityId));
   const integrationRequests = collectIntegrationRequests([...repositoryArtifacts, ...workspaceArtifacts]);
   const selectedIntegrationRequest = selectCurrentIntegrationRequest(integrationRequests, currentAuthority);
@@ -300,6 +314,8 @@ function authorityFromArtifact(artifact, acceptedFenceRevision) {
   const result = root?.schema === "agentic-cloud-collaboration-result/v1" ? root : root?.result;
   const claim = result?.claim;
   if (!isRecord(claim) || !Array.isArray(claim.declaredWriteScope)) return null;
+  const protectedReview = root?.verificationMode === PROTECTED_REVIEW_VERIFICATION_MODE
+    && result.action === "verify";
   const scopeId = claim.declaredWriteScope.find(entry => String(entry).startsWith("semantic:"))?.slice("semantic:".length) || null;
   return Object.freeze({
     authorityId: String(claim.claimId || artifact.relativePath),
@@ -310,9 +326,13 @@ function authorityFromArtifact(artifact, acceptedFenceRevision) {
     declaredWriteScope: Object.freeze([...claim.declaredWriteScope]),
     leaseEpoch: claim.leaseEpoch,
     state: claim.state,
+    authorityPhase: protectedReview ? PROTECTED_REVIEW_VERIFICATION_MODE : "authoring",
+    writeAuthority: claim.writeAuthority,
+    scopeReserved: claim.scopeReserved,
     expiresAt: claim.expiresAt,
     fenceRevision: claim.fenceRevision,
     acceptedFenceRevision: acceptedFenceRevision || result.claimDigest,
+    verificationReceiptDigest: protectedReview ? result.receipt?.receiptDigest || null : null,
   });
 }
 
@@ -355,6 +375,9 @@ function resolveChangedPaths(runtime, repo, protectedBaseRevision, head) {
 }
 
 function validateAuthorityWrapper(value) {
+  if (value?.result?.action === "verify") {
+    return validateProtectedReviewAuthority(value);
+  }
   const problems = [];
   if (!isRecord(value) || !isRecord(value.result)) return ["Authority wrapper must contain a result object."];
   const { result } = value;

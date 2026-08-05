@@ -2,6 +2,7 @@ name: Guideline Contract
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   merge_group:
     types: [checks_requested]
   push:
@@ -9,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   guideline-contract-check:
@@ -40,18 +42,59 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - name: Materialize required Task 19 workspace inputs
+      - name: Materialize required Task 19 workspace references
         run: |
           printf '%s\n' 'node_modules/' 'agentic-canvas-os/' >> .git/info/exclude
           mkdir -p "${GITHUB_WORKSPACE}/../.coordination"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-cloud-request.json "${GITHUB_WORKSPACE}/../.coordination/"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
-          cp scripts/__tests__/fixtures/coordination/git-guidelines-protected-squash-repair-v3-cloud-authority.json "${GITHUB_WORKSPACE}/../.coordination/"
-          cp scripts/__tests__/fixtures/coordination/git-guidelines-protected-squash-repair-v3-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
+      - name: Verify current pull-request review authority
+        if: github.event_name == 'pull_request'
+        env:
+          AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
+            --event-path="$GITHUB_EVENT_PATH" \
+            --json > "$RUNNER_TEMP/git-guidelines-review-authority.json"
+      - name: Materialize current pull-request review authority
+        if: github.event_name == 'pull_request'
+        run: |
+          node scripts/materialize-git-guidelines-review-authority.mjs \
+            --event-path="$GITHUB_EVENT_PATH" \
+            --verification-path="$RUNNER_TEMP/git-guidelines-review-authority.json" \
+            --ledger-repository="huijoohwee/agentic-canvas-os" \
+            --output-directory="${GITHUB_WORKSPACE}/../.coordination"
+      - name: Block merge-group checks without exact member claims
+        if: github.event_name == 'merge_group'
+        run: |
+          echo "Merge-group review authority is unavailable until every member claim can be joined." >&2
+          exit 1
+      - run: npm ci
       - run: npm test
         env:
           AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os
+      - name: Reverify terminal pull-request review authority
+        if: github.event_name == 'pull_request'
+        env:
+          AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
+          AUTHORITY_SOURCE_SHA: d6433142be25d06d25e5961470101eed4c1eed18
+          GH_TOKEN: ${{ github.token }}
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+          test "$(git -C agentic-canvas-os rev-parse HEAD)" = "$AUTHORITY_SOURCE_SHA"
+          test -z "$(git -C agentic-canvas-os status --porcelain=v1 --untracked-files=all)"
+          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
+            --event-path="$GITHUB_EVENT_PATH" \
+            --json > "$RUNNER_TEMP/git-guidelines-terminal-review-authority.json"
+          node scripts/materialize-git-guidelines-review-authority.mjs \
+            --event-path="$GITHUB_EVENT_PATH" \
+            --verification-path="$RUNNER_TEMP/git-guidelines-terminal-review-authority.json" \
+            --ledger-repository="huijoohwee/agentic-canvas-os" \
+            --output-directory="${GITHUB_WORKSPACE}/../.coordination" \
+            --assert-existing
 
   agentic-sdlc-policy-contract:
     if: ${{ always() }}

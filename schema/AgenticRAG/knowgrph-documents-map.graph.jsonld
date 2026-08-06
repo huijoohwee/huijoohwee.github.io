@@ -3669,6 +3669,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-storage-sync-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-storage-sync-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-storage-sync-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/knowgrph-storage-sync-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-storyboard-widget-document",
       "@type": "kg:Node",
       "labels": [

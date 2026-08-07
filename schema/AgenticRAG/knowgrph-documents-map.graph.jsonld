@@ -1042,6 +1042,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-apple-spatial-input-shared-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-apple-spatial-input-shared-contract.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-apple-spatial-input-shared-contract.md"
+      },
+      "documentPath": "docs/documents/knowgrph-apple-spatial-input-shared-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-apple-spatial-input-ssot-distribution",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-apple-spatial-input-ssot-distribution.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-apple-spatial-input-ssot-distribution.md"
+      },
+      "documentPath": "docs/documents/knowgrph-apple-spatial-input-ssot-distribution.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-ar-vr-xr-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [

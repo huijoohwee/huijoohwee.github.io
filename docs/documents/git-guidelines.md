@@ -137,8 +137,8 @@ This git-layer companion projects the execution set into byte-preserving, provid
 | Claim request | `agentic-cloud-collaboration-request/v1`. | advisory |
 | Request identity | Non-empty repository, work item, base, lane, scope, actor, device, and session. | advisory |
 | Request lease | Monotonic non-negative epoch and absolute UTC expiry no later than 24 hours after issue. | advisory |
-| Accepted claim | `agentic-cloud-collaboration-result/v1`; action is claim, renew, park, review-ready, handoff, or release. | advisory |
-| `claim.state` | Exactly `active`, `review-ready`, `parked`, `released`, `expired`, or `revoked`. | advisory |
+| Accepted claim | `agentic-cloud-collaboration-result/v1`; action is claim, renew, park, review-ready, delivery-authorize, handoff, or release. | advisory |
+| `claim.state` | Exactly `active`, `review-ready`, `delivery-authorized`, `parked`, `released`, `expired`, or `revoked`. | advisory |
 | `admissionDecision` | Derived as `accepted`, `blocked`, `expired`, or `released`; never stored. | advisory |
 | Claim identity | Non-empty claim, write-set, fence, ledger, and receipt digests plus lease epoch. | advisory |
 | Claim join | Lease epoch and declared write scope equal the answered request. | advisory |

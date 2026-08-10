@@ -14,9 +14,7 @@ runtime_readiness_policy: "fail-closed"
 upstream_blocking_policy: "prevent-not-bypass"
 lifecycle_status: "proposed"
 ---
-
 # Agentic SDLC Guidelines
-
 ## Scope & Neutrality Contract
 
 - **Universal**: these guidelines apply to any product, domain, language, or runtime, and to any agent implementation; nothing here assumes a specific company, repository, file path, model, framework, or vendor.
@@ -25,7 +23,6 @@ lifecycle_status: "proposed"
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
-
 ## Module Index
 
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
@@ -151,6 +148,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - `integrate(candidate)` consumes one immutable reviewed candidate, dependency closure, named checks, handoff evidence, and current claim through a monotonic compare-and-swap; source owners precede consumers, projections, and mirrors
 - `retire(claim)` is the only authenticated transition that ends current authority and must preserve the exact revision, review identity, bytes, and handoff evidence; expiry, merge state, detached state, names, or canonical advancement only yield `dormant-preserved`, never inferred release
 - Require admission and every later mutation batch to preserve pre-existing lanes and join current cloud and local authority with joined Admission and Preservation Receipts plus operation receipts; these receipts grant no cleanup, runtime, release, deployment, or authority outside their exact work unit
+- Keep authoring ownership, review readiness, and delivery authorization as separate capabilities: `review-ready` closes source mutation, while a later explicit `delivery-authorized` compare-and-swap transition may authorize protected integration of only the unchanged reviewed revision and write scope; it must bind the current claim, lease epoch, fence, ledger revision, review and check evidence, emit an idempotent receipt, never reactivate authoring or grant deployment authority, and isolate provider-specific review and integration behavior behind replaceable adapters
 #### Reference implementation inspiration — independent no-copy boundary
 - [yjs/yjs](https://github.com/yjs/yjs) is conceptual inspiration only for observing concurrent state and deterministic convergence; these rules are independently authored and provider-neutral
 - Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming; forbid dependencies, imports, network/runtime reliance, and external conformance authority
@@ -416,6 +414,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Task model | `concurrent-write-conflict` | `major` |
 | Task model | `parallel-scope-collision` | `blocker` |
 | Task model | `stale-collaboration-fence` | `blocker` |
+| Task model | `delivery-authority-unjoined` | `blocker` |
 | Scoped lane admission | `canonical-base-drift` | `blocker` |
 | Scoped lane admission | `scope-admission-collision` | `blocker` |
 | Scoped lane admission | `unattributed-lane-ambiguity` | `blocker` |
@@ -496,6 +495,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
 - [ ] **No live overlapping remote claim exists for the declared scope**; any overlap is resolved upstream through an accepted release, handoff, or reclaim before local mutation, and review state, lease expiry, mergeability, or canonical advancement do not count as release authority
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
+- [ ] **Reviewed delivery authority is exact when protected integration applies**; one current `delivery-authorized` receipt binds the unchanged reviewed revision, scope, claim, lease epoch, fence, ledger revision, and review/check evidence without reopening authoring or granting deployment authority
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition
 - [ ] **Capability grants stated** per task at the narrowest sufficient class; write scope declared
 - [ ] **Named check stated** per task before dispatch

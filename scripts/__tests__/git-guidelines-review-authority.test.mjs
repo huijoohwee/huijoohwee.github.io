@@ -50,6 +50,30 @@ test("exact reviewed pull-request verification projects the current-lane pair", 
   }), []);
 });
 
+test("legacy reviewed pull-request verification accepts path-only claim scope", () => {
+  const event = validEvent();
+  const verification = validVerification({
+    declaredWriteScope: [
+      "path:docs/guide.md",
+      "path:scripts/review.mjs",
+    ],
+  });
+  const projection = projectProtectedReviewAuthority({
+    event,
+    verification,
+    evaluationTime: Date.parse("2026-08-05T16:00:31.000Z"),
+  });
+
+  assert.deepEqual(projection.writeScope, {
+    schema: "agentic-declared-write-scope/v1",
+    semanticScope: "review-authority-scope",
+    paths: ["docs/guide.md", "scripts/review.mjs"],
+  });
+  assert.deepEqual(validateProtectedReviewAuthority(projection.authority, {
+    evaluationTime: Date.parse("2026-08-05T16:00:31.000Z"),
+  }), []);
+});
+
 test("automatic workspace discovery selects only a valid protected-review authority", t => {
   const workspaceRoot = mkdtempSync(path.join(os.tmpdir(), "git-guidelines-review-input-"));
   t.after(() => rmSync(workspaceRoot, { recursive: true, force: true }));
@@ -316,12 +340,12 @@ function validVerification({
   branch = "agent/device/review-authority-scope",
   headSha = "b".repeat(40),
   baseSha = "a".repeat(40),
-} = {}) {
-  const declaredWriteScope = [
+  declaredWriteScope = [
     "path:docs/guide.md",
     "path:scripts/review.mjs",
     "semantic:review-authority-scope",
-  ];
+  ],
+} = {}) {
   const claimDigest = "7".repeat(64);
   const claimId = "6".repeat(64);
   const ledgerRevision = "c".repeat(40);

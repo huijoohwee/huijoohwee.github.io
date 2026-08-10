@@ -245,8 +245,8 @@ function eventSubject(event) {
 }
 
 function validateDeclaredWriteScope(value, expectedScope) {
-  if (!Array.isArray(value) || value.length < 2) {
-    return ["claim.declaredWriteScope must contain paths and one semantic scope."];
+  if (!Array.isArray(value) || value.length < 1) {
+    return ["claim.declaredWriteScope must contain repository paths."];
   }
   if (value.some(entry => typeof entry !== "string")
     || new Set(value).size !== value.length
@@ -255,10 +255,17 @@ function validateDeclaredWriteScope(value, expectedScope) {
   }
   const semanticEntries = value.filter(entry => entry.startsWith("semantic:"));
   const pathEntries = value.filter(entry => entry.startsWith("path:"));
-  if (semanticEntries.length !== 1
-    || semanticEntries[0] !== `semantic:${expectedScope}`
-    || pathEntries.length + semanticEntries.length !== value.length) {
-    return ["claim.declaredWriteScope must contain paths and exactly the projected semantic scope."];
+  if (semanticEntries.length > 1) {
+    return ["claim.declaredWriteScope must not contain more than one semantic scope."];
+  }
+  if (pathEntries.length === 0 || pathEntries.length + semanticEntries.length !== value.length) {
+    return ["claim.declaredWriteScope must contain only repository paths and an optional projected semantic scope."];
+  }
+  if (
+    semanticEntries.length === 1
+    && semanticEntries[0] !== `semantic:${expectedScope}`
+  ) {
+    return ["claim.declaredWriteScope semantic scope differs from the projected branch scope."];
   }
   const invalidPath = pathEntries.find(entry => !isCanonicalRepositoryPath(
     entry.slice("path:".length),

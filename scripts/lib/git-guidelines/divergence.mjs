@@ -5,8 +5,8 @@ import { buildRuleIndex } from "./rule-registry.mjs";
 
 const EXACT_TERMS = Object.freeze(["`canonical`", "`overlapping`", "`disjoint-attributed`", "`ambiguous`", "Orchestrator", "Implementer", "Evaluator", "Operator"]);
 const ROOT_OPERATIONS = Object.freeze(["claim(scope)", "continue(claim)", "integrate(candidate)", "retire(claim)"]);
-const CLAIM_STATES = Object.freeze(["active", "review-ready", "parked", "released", "expired", "revoked"]);
-const CLAIM_ACTIONS = Object.freeze(["claim", "renew", "park", "review-ready", "handoff", "release"]);
+const CLAIM_STATES = Object.freeze(["active", "review-ready", "delivery-authorized", "parked", "released", "expired", "revoked"]);
+const CLAIM_ACTIONS = Object.freeze(["claim", "renew", "park", "review-ready", "delivery-authorize", "handoff", "release"]);
 const LANE_CLASSES = Object.freeze(["canonical", "overlapping", "disjoint-attributed", "ambiguous"]);
 const IDENTITY_FIELDS = Object.freeze(["Actor ID", "Device ID", "Session ID", "Worktree ID", "Branch ID", "Scope ID", "Lease Epoch", "Fence Revision"]);
 const TERMINOLOGY_ALIASES = Object.freeze({
@@ -34,7 +34,7 @@ const CONSUMED_FAMILIES = Object.freeze([
     projection("domain", "coordination-artifacts#12", [/claim, write-set, fence, ledger, and receipt digests/iu, /lease epoch/iu], [/`claimId`/u, /`writeSetDigest`/u, /`fenceRevision`/u, /`ledgerRevision`/u, /`leaseEpoch`/u]),
   ]),
   family("C2", "authority order", "Collaboration Module", [
-    projection("ordering", "coordination-artifacts#9", [/action is claim, renew, park, review-ready, handoff, or release/iu], [/commands for claim, renew, park,\s+review-ready, handoff, release/iu]),
+    projection("ordering", "coordination-artifacts#9", [/action is claim, renew, park, review-ready, delivery-authorize, handoff, or release/iu], [/commands for claim, renew, park,\s+review-ready, delivery-authorize, handoff, release/iu]),
     projection("outcome", "lane-topology--admission#17", [/monotonic CAS/iu], [/compare-and-swap update/iu, /never force, overwrite, or silently retry as success/iu]),
     projection("outcome", "lane-topology--admission#26", [/unlimited pairwise-disjoint current authorities/iu, /each overlap has one writer/iu], [/Disjoint normalized write sets may proceed concurrently/iu, /overlap and must serialize/iu]),
   ]),
@@ -278,7 +278,7 @@ function claimActionDomain(ruleIndex) {
   return splitList(text.match(/action is (.+?)(?:\.|$)/iu)?.[1]);
 }
 function ownerClaimActionDomain(text = "") {
-  const list = text.match(/commands for (.+?)\. Commands accept/isu)?.[1] || "";
+  const list = text.match(/commands for (.+?)\.(?:\s+Commands\s+accept|$)/isu)?.[1] || "";
   return splitList(list).filter(value => CLAIM_ACTIONS.includes(value));
 }
 function laneClassDomain(ruleIndex) {

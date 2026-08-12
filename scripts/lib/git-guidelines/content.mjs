@@ -508,7 +508,7 @@ function publicationAuthorityProblems(authority, evaluationTime) {
   const problems = [];
   const protectedReview = authority.authorityPhase === PROTECTED_REVIEW_VERIFICATION_MODE;
   if (protectedReview) {
-    if (authority.state !== "reviewed" || authority.writeAuthority !== false
+    if (!["reviewed", "integrated-preserved"].includes(authority.state) || authority.writeAuthority !== false
       || authority.scopeReserved !== true
       || !DIGEST_PATTERN.test(String(authority.verificationReceiptDigest || ""))) {
       problems.push("protected-review-verification-invalid");

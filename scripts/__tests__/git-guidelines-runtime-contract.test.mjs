@@ -198,6 +198,14 @@ test("protected review verification is narrow and never widens ordinary authorin
   assert.equal(verified.publication.authorized, true);
   assert.deepEqual(verified.publication.authorityProblems, []);
 
+  const integratedProtectedReview = evaluateRuntimeComposition({
+    currentAuthority: Object.freeze({ ...protectedReview, state: "integrated-preserved" }),
+    changedPaths: ["src/runtime/index.mjs"],
+    evaluationTime: 0,
+  });
+  assert.equal(integratedProtectedReview.publication.authorized, true);
+  assert.deepEqual(integratedProtectedReview.publication.authorityProblems, []);
+
   const ordinaryReviewed = evaluateRuntimeComposition({
     currentAuthority: Object.freeze({ ...base, state: "reviewed" }),
     changedPaths: ["src/runtime/index.mjs"],

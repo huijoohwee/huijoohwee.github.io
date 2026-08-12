@@ -122,8 +122,18 @@ export function validateProtectedReviewAuthority(value, {
   if (!DIGEST_PATTERN.test(String(claim.claimId || ""))) {
     problems.push("claim.claimId must be a lowercase SHA-256 digest.");
   }
-  if (claim.state !== "reviewed" || claim.writeAuthority !== false || claim.scopeReserved !== true) {
+  const integratedRefresh = claim.state === "integrated-preserved";
+  if (!["reviewed", "integrated-preserved"].includes(claim.state)
+    || claim.writeAuthority !== false || claim.scopeReserved !== true) {
     problems.push("Verified claim must be reviewed with write authority disabled and scope reservation retained.");
+  }
+  if (integratedRefresh && (
+    !DIGEST_PATTERN.test(String(claim.integrationReceiptDigest || ""))
+    || !isRecord(claim.integration)
+    || claim.integration.candidateRevision !== claim.laneRevision
+    || claim.integration.reviewRequestId !== claim.reviewRequestId
+  )) {
+    problems.push("Integrated refresh claim must retain its exact reviewed candidate and integration receipt.");
   }
   for (const field of ["canonicalBaseRevision", "laneRevision"]) {
     if (!SHA_PATTERN.test(String(claim[field] || ""))) {
@@ -160,8 +170,8 @@ export function validateProtectedReviewAuthority(value, {
     || semanticScopeFromBranch(subject.branch, false) !== value.scopeId) {
     problems.push("Verification subject branch differs from scopeId.");
   }
-  if (subject.canonicalBaseSha !== claim.canonicalBaseRevision
-    || subject.headSha !== claim.laneRevision) {
+  if (!integratedRefresh && (subject.canonicalBaseSha !== claim.canonicalBaseRevision
+    || subject.headSha !== claim.laneRevision)) {
     problems.push("Verification subject base or head differs from the verified claim.");
   }
   for (const field of ["canonicalBaseSha", "headSha"]) {

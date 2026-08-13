@@ -1,9 +1,9 @@
 ---
 title: "HJH Topology Document"
 doc_type: "PRD + TAD"
-version: "1.1.0"
+version: "1.2.0"
 status: "active"
-date: "2026-07-11"
+date: "2026-08-13"
 lang: "en-US"
 owners:
   - "cross-repo topology docs"
@@ -73,6 +73,14 @@ Knowgrph and Singabldr need one deploy topology that preserves separate Dev SSOT
 ### Architecture Overview
 
 **From app-owned source to public routes**: `knowgrph` or `singabldr` → app build and validation → sync generated surfaces into `huijoohwee` → Cloudflare Pages serves isolated routes under `airvio.co`.
+
+### Canonical local Dev boundary
+
+The canonical Knowgrph Dev working directory is `$GITHUB_ROOT/knowgrph` (normally `GitHub/knowgrph`). It is canonical only while that primary checkout uniquely owns a clean `main` whose `HEAD` equals fetched `origin/main`. Run `npm run dev` or `npm run dev:apex` there; run `npm run dev:latest` there only for the repository-owned clean fast-forward flow.
+
+A registered `agent/<device>/<semantic-scope>` worktree may run `npm run dev` or `npm run dev:apex` as an isolated task preview. The guard selects task mode automatically, and that result is neither canonical Dev nor release proof. A separate clean linked `main` worktree may remain a bounded release or integration checkout, but it is not a substitute for the canonical Dev path.
+
+If `$GITHUB_ROOT/knowgrph` is occupied by a task branch, or if `main` is registered elsewhere, report `blocked-canonical-path`, preserve every occupied lane, and reconcile ownership through the repository lifecycle workflow before claiming canonical Dev. The executable owner is `knowgrph/scripts/dev-source-consistency.mjs`; the upstream operating contract remains `agentic-canvas-os/docs/START-WORKFLOW.md` and the local user entry points remain `knowgrph/{AGENTS.md,README.md}`.
 
 ### Knowgrph root-launch E2E flow
 

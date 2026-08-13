@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.14.0"
-date: "2026-08-04"
+version: "1.15.0"
+date: "2026-08-13"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -23,6 +23,7 @@ lifecycle_status: "proposed"
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
+- **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
 ## Module Index
 
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
@@ -48,6 +49,8 @@ lifecycle_status: "proposed"
 - `anti-pattern-guards` — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
 - [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
+- [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation
+- `specification-chain-phases` — the mandatory execution seam over that chain
 
 ## Boundary with the Authoring Set
 
@@ -101,6 +104,19 @@ Four execution roles. Roles are **functions**, not people and not necessarily se
 - Name the mechanism that discharges the Evaluator role before execution starts; forbid execution with an unnamed evaluator
 - Route every completion verdict through the Evaluator; forbid a task transitioning to a terminal success state on the Implementer's assertion alone
 - Record which role produced every state transition, so a self-graded verdict is detectable after the fact rather than only in the moment
+
+## Specification Chain Phases
+
+The separately loadable [Specification Chain Module](./agentic-sdlc-specification-chain.md) owns the complete reusable protocol for the three artifact roles — requirements, design, task list — the two coverage seams between them, the re-derivation cascade, phase-advance authority, and seam-preserving adaptation. This section owns its mandatory execution seam.
+
+A specification reaches this set as a chain, not as a single document. Execution consumes the task list, but a task list is only trustworthy to the degree its upstream seams are closed.
+
+**Directives**:
+- Verify both chain seams are closed before dispatching any task derived from them; an uncovered criterion is an `undesigned-criterion` and an ungrounded design element is an `ungrounded-design-element`
+- Reject a task list whose upstream artifact revision no longer matches the artifact it was derived from; a stale downstream artifact is a `stale-downstream-artifact` and re-derivation precedes dispatch
+- Forbid an execution task deciding structure or introducing behaviour absent upstream; either is a `requirement-introduced-downstream` at `blocker` severity and returns to the owning phase
+- Require a recorded Operator decision for each seam crossing before execution starts; an unapproved crossing is a `phase-advanced-without-approval` and an absent decision is a `blocked` state
+- Permit a collapsed or reordered chain only where both seams still carry joins; a missing coverage obligation is a `seam-elided` at `blocker` severity, however small the change
 
 ## Specification to Task Bridge
 
@@ -458,6 +474,12 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Integration order | `duplicate-change-reintegrated` | `major` |
 | Integration order | `stale-candidate-frontier` | `blocker` |
 | Runtime readiness | `runtime-readiness-unproven` | `blocker` |
+| Specification chain | `undesigned-criterion` | `major` |
+| Specification chain | `ungrounded-design-element` | `minor` |
+| Specification chain | `requirement-introduced-downstream` | `blocker` |
+| Specification chain | `stale-downstream-artifact` | `major` |
+| Specification chain | `phase-advanced-without-approval` | `blocker` |
+| Specification chain | `seam-elided` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -469,7 +491,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 | Stage | Sections to load |
 |---|---|
-| Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-to-task-bridge` |
+| Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-chain-phases`, `specification-to-task-bridge` |
+| Chain seam check | `specification-chain-phases`, [Specification Chain](./agentic-sdlc-specification-chain.md) |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
 | Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
 | Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets` |

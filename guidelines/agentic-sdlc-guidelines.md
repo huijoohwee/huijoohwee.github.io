@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.14.0"
-date: "2026-08-04"
+version: "1.15.0"
+date: "2026-08-13"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -16,15 +16,14 @@ lifecycle_status: "proposed"
 ---
 # Agentic SDLC Guidelines
 ## Scope & Neutrality Contract
-
 - **Universal**: these guidelines apply to any product, domain, language, or runtime, and to any agent implementation; nothing here assumes a specific company, repository, file path, model, framework, or vendor.
 - **Neutral**: name agents, roles, and mechanisms by their function, never by a brand. Where a concrete tool is shown, it appears only under a heading or block whose own text contains the words "reference implementation", and may be swapped for any equivalent.
 - **Agnosticity**: every rule is evaluated from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
+- **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
 ## Module Index
-
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
 - `module-index` — this index
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
@@ -48,11 +47,10 @@ lifecycle_status: "proposed"
 - `anti-pattern-guards` — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
 - [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
-
+- [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation
+- `specification-chain-phases` — the mandatory execution seam over that chain
 ## Boundary with the Authoring Set
-
 The two sets meet at a single seam: **a baselined document pair with derived VCCs on one side, an executable task list with recorded Evidence References on the other.**
-
 | Concern | Owner | This set's relationship |
 |---|---|---|
 | Document contents, templates, phase gates | Authoring set | Consumes as precondition |
@@ -68,48 +66,45 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Checkpointing and recovery | **This set** | Owns |
 | Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
 | Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
-
 **Directives**:
 - Treat a baselined document pair with zero open `blocker` findings as the entry precondition for execution; forbid starting execution against an unbaselined or blocker-carrying specification
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
 - Forbid either set redefining a Finding Type the other owns; the conformance vocabulary is the union of the two enumerations
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
 - Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
-
 ## Agent Roles & Independence
-
 Four execution roles. Roles are **functions**, not people and not necessarily separate processes — except where the independence rule says otherwise.
-
 | Role | Owns | Must not |
 |---|---|---|
 | **Orchestrator** | Reads the task list, dispatches ready tasks, records state transitions, enforces budgets and concurrency | Write product code, run product tests, or judge task completion |
 | **Implementer** | Performs one task: writes code, writes tests, runs them, surfaces output | Mark its own task complete, alter the task list, or widen its own permissions |
 | **Evaluator** | Judges each VCC against surfaced output only, records the Evidence Reference, emits findings | Modify the artifact it judges, or accept a verdict it derived from unsurfaced state |
 | **Operator** | Supplies scope decisions, approves promotion, resolves escalations | Be inferred, defaulted, scheduled, or simulated |
-
 ### The Independence Rule
-
 **The Evaluator must be a different mechanism from the Implementer.** This is the one role separation that survives every collapse.
-
 - Independence is **mechanical**, not organisational: a deterministic check, a hook, or a separate evaluating process satisfies it; a different job title applying the same judgement does not
 - A solo operator satisfies the rule by delegating the verdict to a check they do not adjudicate, and violates it by reading their own output and declaring it done
 - The Implementer may collapse into the Orchestrator only where the Orchestrator performs no judgement; forbid an Orchestrator that both implements and marks complete
 - The Operator never collapses into any other role, because an inferred approval is not an approval
 - A verdict produced by the Implementer about its own task is a `self-graded-verdict` finding at `blocker` severity, regardless of how convincing the output reads
-
 **Directives**:
 - Name the mechanism that discharges the Evaluator role before execution starts; forbid execution with an unnamed evaluator
 - Route every completion verdict through the Evaluator; forbid a task transitioning to a terminal success state on the Implementer's assertion alone
 - Record which role produced every state transition, so a self-graded verdict is detectable after the fact rather than only in the moment
-
+## Specification Chain Phases
+The separately loadable [Specification Chain Module](./agentic-sdlc-specification-chain.md) owns the complete reusable protocol for the three artifact roles — requirements, design, task list — the two coverage seams between them, the re-derivation cascade, phase-advance authority, and seam-preserving adaptation. This section owns its mandatory execution seam.
+A specification reaches this set as a chain, not as a single document. Execution consumes the task list, but a task list is only trustworthy to the degree its upstream seams are closed.
+**Directives**:
+- Verify both chain seams are closed before dispatching any task derived from them; an uncovered criterion is an `undesigned-criterion` and an ungrounded design element is an `ungrounded-design-element`
+- Reject a task list whose upstream artifact revision no longer matches the artifact it was derived from; a stale downstream artifact is a `stale-downstream-artifact` and re-derivation precedes dispatch
+- Forbid an execution task deciding structure or introducing behaviour absent upstream; either is a `requirement-introduced-downstream` at `blocker` severity and returns to the owning phase
+- Require a recorded Operator decision for each seam crossing before execution starts; an unapproved crossing is a `phase-advanced-without-approval` and an absent decision is a `blocked` state
+- Permit a collapsed or reordered chain only where both seams still carry joins; a missing coverage obligation is a `seam-elided` at `blocker` severity, however small the change
 ## Specification to Task Bridge
-
 The authoring set ends at a baselined pair with derived VCCs. Execution begins at a task list. The bridge is a **derivation**, not a fresh authoring act.
-
 ```
 Acceptance criterion → VCC → Task (or task group) → Evidence Reference → Readiness rung
 ```
-
 **Directives**:
 - Derive every task from at least one VCC; a task tracing to no VCC is an `ungrounded-task`
 - Ensure every VCC is covered by at least one task; a VCC with no task is an `unexecuted-condition`
@@ -117,21 +112,15 @@ Acceptance criterion → VCC → Task (or task group) → Evidence Reference →
 - Report bridge coverage as covered VCCs over total VCCs; forbid claiming a task list is complete without that ratio
 - Forbid introducing a requirement at task-authoring time: a task that needs behaviour absent from the specification is a specification defect, so return it to the authoring loop rather than inventing scope inside the task list
 - Re-derive the task list whenever a VCC changes; a task list outrunning its specification produces work no rung will ever credit
-
 ## Task Model
-
 ### Task Identity
-
 ```
 Task ID = [hierarchical ordinal within the task list, maximum two levels]
 ```
-
 - Assign each task exactly one Task ID, stable while the task's own text is unchanged
 - Limit hierarchy to two levels: a task and its sub-tasks; forbid a third level, which trades comprehensibility for the illusion of precision
 - Record the Task ID on every state transition, every Evidence Reference, and every finding raised during that task
-
 ### Collaboration Identity & Scoped Lane Admission
-
 Every writer is identified by the tuple; [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) owns protected remote claims, while [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) owns the decision to add one isolated lane without touching existing lanes:
 ```
 Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
@@ -152,7 +141,6 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 #### Reference implementation inspiration — independent no-copy boundary
 - [yjs/yjs](https://github.com/yjs/yjs) is conceptual inspiration only for observing concurrent state and deterministic convergence; these rules are independently authored and provider-neutral
 - Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming; forbid dependencies, imports, network/runtime reliance, and external conformance authority
-
 ### Canonical Branch-State Glossary
 - `origin/main` is the authoritative published canonical frontier and remote SSOT
 - local `main` is the local mirror of that frontier; it may be ahead, behind, or diverged during rescue or sync, but the target state is exact parity with `origin/main`
@@ -163,23 +151,18 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
 - Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
-
 ### Granularity
-
 A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.
-
 | Signal | Too small | Right-sized | Too large |
 |---|---|---|---|
 | VCC coverage | Fraction of one VCC | One VCC, or a coherent group | Spans unrelated VCCs |
 | Verification | Nothing new to verify | One verifiable outcome | Multiple independent outcomes |
 | Budget | Far under bound | Fits within bound | Exceeds bound or is unestimable |
 | Artifacts touched | None | A coherent set | Unbounded or unknown set |
-
 **Directives**:
 - Size every task so its completion is verifiable by a check named in advance; forbid a task whose completion is judged by inspection
 - Split a task that exceeds its budget rather than raising the budget; a persistent overrun is a decomposition defect, and raising the bound hides it
 - Forbid a task with no verifiable outcome; documentation-only tasks state the artifact and the check that confirms it exists and conforms
-
 ### Dependency Graph
 
 - Express dependencies as a directed acyclic graph over Task IDs; a cycle is a `task-cycle` finding at `blocker` severity
@@ -187,15 +170,11 @@ A well-sized task is one an Implementer can complete, verify, and surface within
 - Group ready tasks into waves for concurrent dispatch; forbid two tasks in one wave writing the same artifact, which is a `concurrent-write-conflict`
 - Revalidate declared write scopes and fence revisions before dispatch, handoff, integration, and cleanup; post-baseline authored state remains owned by its originating lane
 - State the graph explicitly; forbid inferring order from list position alone, which silently couples ordering to formatting
-
 ### State Vocabulary
-
 Strictly ordered, with exactly one terminal success state:
-
 ```
 not-started → queued → ready → in-progress → {verified | failed | blocked | abandoned}
 ```
-
 | State | Meaning | Who may set it |
 |---|---|---|
 | `not-started` | Derived, not yet scheduled | Orchestrator |
@@ -206,17 +185,13 @@ not-started → queued → ready → in-progress → {verified | failed | blocke
 | `failed` | Evaluator rejected, budget exhausted, or the check did not pass | Evaluator or Orchestrator |
 | `blocked` | Awaiting an Operator decision or an external precondition | Orchestrator |
 | `abandoned` | Withdrawn by Operator decision, with a recorded reason | Operator |
-
 **Directives**:
 - Forbid any state named `done`, `complete`, or equivalent that an Implementer may set; `verified` is the only success state and only the Evaluator sets it
 - Record a reason on every transition to `failed`, `blocked`, or `abandoned`; an unexplained terminal state is a `state-without-reason` finding
 - Forbid transitioning out of a terminal state except by an explicit re-derivation that resets the task to `not-started` and records why
 - Never infer a state from an artifact's existence; a file appearing on disk is not a verdict
-
 ## Execution Contract
-
 What an Implementer receives, and what it must return.
-
 ### Dispatch Payload
 
 | Field | Content |
@@ -229,27 +204,20 @@ What an Implementer receives, and what it must return.
 | Lane | Always `authoring`; forbid dispatching a task in any other lane |
 | Collaboration identity | Actor, device, session, worktree, branch, scope, lease epoch, and fence revision |
 | Prior findings | Findings already open against the artifacts this task touches |
-
 ### Return Obligations
-
 An Implementer must surface, in its own output, everything the Evaluator needs:
-
 - The **named check** it ran, exactly as invocable
 - The **recorded result** of that check: exit code, counts, test summary, measurement
 - The **artifacts changed**, enumerated
 - The **budget consumed**: tokens, iterations, elapsed time
 - Any **constraint violation** it observed, including ones it caused
-
 **Directives**:
 - Forbid a return that asserts success without a named check and a recorded result; the Evaluator judges surfaced output only, so an unsurfaced pass is indistinguishable from no pass
 - Forbid an Implementer reading state the Evaluator cannot see and relying on it in a verdict request
 - Enumerate artifacts changed even when the change is incidental; an unenumerated change is invisible to the concurrent-write and blast-radius rules
 - Surface the constraint violations the task caused, not only the ones it found; self-reporting is cheaper than detection and is the only path that scales
-
 ## Tool Permission & Blast Radius
-
 Capability is granted per task, not per session, and scales to reversibility.
-
 | Class | Examples (function, not brand) | Grant | Reversibility |
 |---|---|---|---|
 | **Read** | Read a file, search content, list a directory | Default granted | Fully reversible |
@@ -258,7 +226,6 @@ Capability is granted per task, not per session, and scales to reversibility.
 | **Environment mutate** | Install a dependency, change configuration, alter shared local state | Granted per task with the change stated in advance | Recoverable with effort |
 | **Irreversible** | Delete beyond a single declared artifact, rewrite history, mass-modify, drop persistent state | **Requires an Operator decision per occurrence** | Not reversible |
 | **Boundary-crossing** | Anything that mutates a mirror or delivery surface, or transmits project content outward | **Forbidden during execution** | Out of scope |
-
 **Directives**:
 - Grant the narrowest class that completes the task; forbid granting a class the task does not name a use for
 - Forbid self-escalation: an Implementer that needs a wider class returns `blocked` with the reason, and the Orchestrator re-dispatches with a new grant. Widening a grant mid-task is a `self-escalated-capability` finding at `blocker` severity
@@ -458,6 +425,12 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Integration order | `duplicate-change-reintegrated` | `major` |
 | Integration order | `stale-candidate-frontier` | `blocker` |
 | Runtime readiness | `runtime-readiness-unproven` | `blocker` |
+| Specification chain | `undesigned-criterion` | `major` |
+| Specification chain | `ungrounded-design-element` | `minor` |
+| Specification chain | `requirement-introduced-downstream` | `blocker` |
+| Specification chain | `stale-downstream-artifact` | `major` |
+| Specification chain | `phase-advanced-without-approval` | `blocker` |
+| Specification chain | `seam-elided` | `blocker` |
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
@@ -469,7 +442,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 | Stage | Sections to load |
 |---|---|
-| Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-to-task-bridge` |
+| Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-chain-phases`, `specification-to-task-bridge` |
+| Chain seam check | `specification-chain-phases`, [Specification Chain](./agentic-sdlc-specification-chain.md) |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
 | Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
 | Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets` |

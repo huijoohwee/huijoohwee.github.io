@@ -74,6 +74,40 @@ test("legacy reviewed pull-request verification accepts path-only claim scope", 
   }), []);
 });
 
+test("integrated-preserved verification projects one exact protected refresh event", () => {
+  const verification = validVerification();
+  verification.claim.state = "integrated-preserved";
+  verification.claim.integrationReceiptDigest = "2".repeat(64);
+  verification.claim.integration = {
+    candidateRevision: verification.claim.laneRevision,
+    reviewRequestId: verification.claim.reviewRequestId,
+  };
+  verification.subject.headSha = "d".repeat(40);
+  verification.subject.canonicalBaseSha = "e".repeat(40);
+  const event = validEvent({
+    headSha: verification.subject.headSha,
+    baseSha: verification.subject.canonicalBaseSha,
+  });
+
+  const projection = projectProtectedReviewAuthority({ event, verification });
+  assert.deepEqual(validateProtectedReviewAuthority(projection.authority), []);
+});
+
+test("integrated-preserved verification rejects missing or drifted integration evidence", () => {
+  const verification = validVerification();
+  verification.claim.state = "integrated-preserved";
+  verification.subject.headSha = "d".repeat(40);
+  verification.subject.canonicalBaseSha = "e".repeat(40);
+  const event = validEvent({
+    headSha: verification.subject.headSha,
+    baseSha: verification.subject.canonicalBaseSha,
+  });
+  assert.throws(
+    () => projectProtectedReviewAuthority({ event, verification }),
+    /integration receipt/u,
+  );
+});
+
 test("automatic workspace discovery selects only a valid protected-review authority", t => {
   const workspaceRoot = mkdtempSync(path.join(os.tmpdir(), "git-guidelines-review-input-"));
   t.after(() => rmSync(workspaceRoot, { recursive: true, force: true }));

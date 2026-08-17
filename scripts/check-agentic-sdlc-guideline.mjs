@@ -36,7 +36,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.15\.0"\n/);
+assert.match(source, /\nversion: "1\.16\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -146,6 +146,7 @@ const requiredSections = [
   "### Collaboration Identity & Scoped Lane Admission",
   "## Human-in-the-Loop Gates",
   "## Dependency-Ordered Integration",
+  "## Canonical Integration & Recoverable Cleanup",
   "## End-to-End Release Lifecycle Protocol",
   "## Runtime Readiness Enforcement",
   "## Execution Conformance Findings",
@@ -161,6 +162,26 @@ for (const heading of requiredSections) {
 }
 
 const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
+const cleanupStart = source.indexOf("## Canonical Integration & Recoverable Cleanup");
+assert.ok(
+  cleanupStart >= 0 && releaseStart > cleanupStart,
+  "recoverable canonical cleanup must precede the release seam",
+);
+const cleanupPolicy = source.slice(cleanupStart, releaseStart);
+for (const requirement of [
+  "zero file diff alone does not prove that unique history is disposable",
+  "protected review and integration adapter",
+  "Forbid unrecoverable discard",
+  "without force",
+  "prune only stale worktree-registration and remote-tracking metadata",
+  "canonical local ref equals the canonical remote ref",
+]) {
+  assert.match(
+    cleanupPolicy,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `canonical cleanup policy must include ${requirement}`,
+  );
+}
 const runtimeReadinessStart = source.indexOf("## Runtime Readiness Enforcement");
 assert.ok(
   releaseStart >= 0 && runtimeReadinessStart > releaseStart,

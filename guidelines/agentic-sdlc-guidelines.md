@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.15.0"
-date: "2026-08-13"
+version: "1.16.0"
+date: "2026-08-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -38,6 +38,7 @@ lifecycle_status: "proposed"
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
+- `canonical-integration--recoverable-cleanup` — protected canonical convergence, zero-delta proof, recoverable stale-ref retirement, and metadata pruning
 - [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
@@ -336,6 +337,27 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
 - Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
+
+## Canonical Integration & Recoverable Cleanup
+
+This module closes an integration lane without coupling the contract to a source-control vendor, branch name, review product, checkout layout, or cleanup command. A repository profile maps the functional identities `canonical remote ref`, `canonical local ref`, `candidate ref`, `review request`, and `worktree registry` to concrete adapters. A common profile may map the first two identities to `origin/main` and local `main`, but that mapping carries no authority outside the profile.
+
+```
+Canonical Closure = protected integration receipt + exact remote/local parity + zero file delta
+Recoverable Retirement = canonical inclusion or verified recovery object + clean target + bounded cleanup receipt
+```
+
+**Directives**:
+- Snapshot the candidate revision, tree, commits not reachable from the canonical remote ref, worktree registration, local and remote refs, review identity, and repository status before integration or cleanup; forbid deriving retirement authority from a branch name, age, merge label, or an empty-looking directory
+- Classify the candidate as `delta`, `already-integrated`, `superseded-with-value`, or `blocked`: compute file delta against the current canonical tree and separately prove commit reachability or semantic supersession, because zero file diff alone does not prove that unique history is disposable
+- Route every `delta` candidate through the repository's protected review and integration adapter; forbid direct canonical mutation, protection bypass, history rewrite, or substituting a local merge result for the protected integration receipt
+- After protected integration, refetch the canonical remote ref, attach or fast-forward the canonical local ref to that exact revision, and require a clean status plus zero file diff between their trees; a stale remote-tracking projection, merely green candidate check, or matching commit message is not canonical closure
+- Before removing a worktree or deleting a ref, prove either that its complete value is reachable from the canonical remote ref or that an immutable recovery object contains its exact revision, tree, local-only commits, index state, and ordinary untracked bytes and has passed an independent restore or integrity check
+- Forbid unrecoverable discard: do not force-remove a dirty worktree, delete an unpreserved unique ref, drop a stash, erase an untracked artifact, reset away authored state, expire a recovery object, or prune unreachable objects when the preservation proof is absent, stale, ambiguous, or unverifiable
+- Remove an eligible non-canonical worktree through the worktree adapter without force, then prune only stale worktree-registration and remote-tracking metadata; object pruning, reflog expiry, remote branch deletion, and recovery-object retirement are separate irreversible operations and require their own exact authority
+- Delete a stale local candidate ref only after canonical inclusion is proven or after its verified recovery locator and digest are recorded in the cleanup receipt; keep every unrelated, active, ambiguous, open-review, or value-bearing ref unchanged
+- Make cleanup adaptive to the observed inventory: a no-worktree lane closes as a ref-only operation, an already-integrated zero-delta lane closes without a synthetic merge, and a value-bearing lane remains preserved until its own protected integration or explicit recoverable retirement completes
+- Emit one terminal receipt that binds the canonical remote and local revisions, zero file delta, clean status, removed worktree identities, deleted local refs, pruned metadata, retained recovery locators, and untouched out-of-scope inventory; forbid reporting closure unless the canonical local ref equals the canonical remote ref and every requested effect is evidenced
 
 ## End-to-End Release Lifecycle Protocol
 

@@ -369,6 +369,8 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 - Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale recorded
 - Preserve every `keep` item untouched, require every `port` item to reach protected integration before the candidate can claim frontier closure, and allow `drop` only after exact no-remaining-value proof plus the cleanup authority that removes it
 - End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
+- Run production through one canonical, profile-owned release controller sequence: capture the rollback identity, generate the runtime-review candidate receipt, generate release-frontier evidence that binds the rollback identity, dispatch the protected production release, then collect protected terminal authorization at the production gate. Product profiles may rename schemas or adapters, but must preserve those functional steps and joins.
+- Forbid duplicate or conflicting release paths for the same target. Local deploy commands, alternate CI jobs, mirror-push scripts, or emergency recovery commands may exist only as adapters invoked by, or reconciled back into, the canonical controller with the same candidate digest, rollback identity, receipts, protected review, and publication rules.
 - Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment
 - Fence one canonical release-owner checkout per repository from candidate sealing until the authorization interaction terminates or the run is retired; it must stay attached to the exact protected revision used for review, and branch switching, repurposing, or local-ref drift in that owner invalidates prompt readiness until the owner is reattached, refetched, and revalidated
 - Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
@@ -433,6 +435,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Release lifecycle | `authorization-evidence-unjoined` | `blocker` |
 | Release lifecycle | `authorization-interaction-unjoined` | `blocker` |
 | Release lifecycle | `duplicate-release-controller` | `blocker` |
+| Release lifecycle | `conflicting-release-path` | `blocker` |
 | Release lifecycle | `production-authorization-drift` | `blocker` |
 | Release lifecycle | `post-authorization-rebuild` | `blocker` |
 | Release lifecycle | `state-reconciliation-unverified` | `blocker` |
@@ -572,6 +575,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 ❌ Two devices dispatching the same target concurrently, or handing off mutable local state between users
 → ✅ One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts
+
+❌ Adding a second deploy workflow, local publish command, or mirror patch path because the canonical release controller is blocked
+→ ✅ Repair or reconcile the canonical controller path, or run a documented recovery adapter that binds the same rollback identity, candidate digest, protected authorization, verification receipts, and publication rules
 
 ❌ Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics
 → ✅ A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters

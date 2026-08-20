@@ -546,6 +546,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-commerce-platform-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-commerce-platform-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-commerce-platform-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-commerce-platform-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-agentic-commerce-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -623,6 +639,22 @@
         "relPath": "docs/documents/knowgrph-agentic-os-video-agent-prd-tad.companion.md"
       },
       "documentPath": "docs/documents/knowgrph-agentic-os-video-agent-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:knowgrph:doc:knowgrph-agentic-travel-agencies-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-agentic-travel-agencies-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-agentic-travel-agencies-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/knowgrph-agentic-travel-agencies-prd-tad-adr.md",
       "language": "en-us"
     },
     {

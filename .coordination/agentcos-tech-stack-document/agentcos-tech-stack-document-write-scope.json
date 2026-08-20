@@ -1,0 +1,8 @@
+{
+  "schema": "agentic-declared-write-scope/v1",
+  "semanticScope": "agentcos-tech-stack-document",
+  "paths": [
+    "docs/documents/agentcos-tech-stack-document.md",
+    "todo-log.md"
+  ]
+}

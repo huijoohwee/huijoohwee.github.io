@@ -175,24 +175,24 @@ A sequential, phase-gated process for keeping API reference index files synchron
 
 ```mermaid
 flowchart TB
-  subgraph Repository
-    SSOTSource([SSOT Source\nProducer · Typed module])
-    IndexFile([Index .md File\nArtifact · Generated])
+  subgraph repository["Repository · repository residency"]
+    SSOTSource["SSOT Source<br/>Producer · Typed module"]
+    IndexFile["Index .md File<br/>Artifact · Generated"]
   end
-  subgraph Pipeline
-    GenScript([Generation Script\nTransformer · CLI])
-    FileWriter([File Writer\nStore · FS utility])
-    DriftChecker([Drift Checker\nValidator · CLI])
+  subgraph pipeline["Pipeline · transient residency"]
+    GenScript["Generation Script<br/>Transformer · CLI"]
+    FileWriter["File Writer<br/>Store · FS utility"]
+    DriftChecker["Drift Checker<br/>Validator · CLI"]
   end
-  subgraph CI
-    CIPipeline([CI Pipeline\nObserver · Automated runner])
+  subgraph ci["CI · CI system residency"]
+    CIPipeline["CI Pipeline<br/>Observer · Automated runner"]
   end
-  SSOTSource -- sync import --> GenScript
-  GenScript -- sync write --> FileWriter
-  FileWriter -- sync write --> IndexFile
-  IndexFile -- sync compare --> DriftChecker
-  SSOTSource -- sync compare --> DriftChecker
-  CIPipeline -- sync trigger --> DriftChecker
+  SSOTSource -->|"sync import"| GenScript
+  GenScript -->|"sync write"| FileWriter
+  FileWriter -->|"sync write"| IndexFile
+  IndexFile -->|"sync compare"| DriftChecker
+  SSOTSource -->|"sync compare"| DriftChecker
+  CIPipeline -->|"sync trigger"| DriftChecker
 ```
 
 ---

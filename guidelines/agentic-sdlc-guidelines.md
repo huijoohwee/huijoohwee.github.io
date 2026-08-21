@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.16.0"
-date: "2026-08-17"
+version: "1.17.0"
+date: "2026-08-19"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -34,7 +34,9 @@ lifecycle_status: "proposed"
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
 - `tool-permission--blast-radius` — capability classes, escalation, and irreversibility rules
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
-- `verification-strategy` — test obligations, property-based testing, and evidence emission
+- `verification-strategy` — test obligations, property-based testing, coverage-ratio reporting, guard-path evidence limits, and evidence emission
+- `aggregate-check-integrity` — clean-baseline ordering for shared aggregate entry points, exclusion recording, and inherited-failure attribution
+- `scoped-check-disclosure` — recorded scope, omitted-population visibility, and the coverage-defect boundary for narrowed checks
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
@@ -171,6 +173,10 @@ A well-sized task is one an Implementer can complete, verify, and surface within
 - Group ready tasks into waves for concurrent dispatch; forbid two tasks in one wave writing the same artifact, which is a `concurrent-write-conflict`
 - Revalidate declared write scopes and fence revisions before dispatch, handoff, integration, and cleanup; post-baseline authored state remains owned by its originating lane
 - State the graph explicitly; forbid inferring order from list position alone, which silently couples ordering to formatting
+- Derive wave composition from declared data dependencies and declared side effects only; forbid deriving order from module naming, layer vocabulary, or the order the specification happened to author its elements
+- Where the design isolates side effects into one owning component, treat the remaining components as independently testable and reflect that in wave composition; forbid making a side-effect-free component wait on the side-effect-owning component unless a real data dependency is declared between them
+- Record the declared dependency behind every serialisation a wave imposes; a serialisation with no declared data dependency and no same-artifact write is an `unjustified-serialisation` finding, because caution recorded as order is indistinguishable from a constraint
+- Keep the same-artifact-write rule as the binding constraint on wave membership; isolation permits parallelism, it never overrides write disjointness
 ### State Vocabulary
 Strictly ordered, with exactly one terminal success state:
 ```
@@ -276,11 +282,81 @@ Example-based tests confirm the cases an author imagined. Properties confirm the
 - State each property's class explicitly — round trip, invariant, metamorphic, idempotence, confluence, error condition — so coverage gaps are visible by class rather than by count
 - Set a minimum iteration count per property and keep shrinking enabled; a property run once is an example test wearing a costume
 
+### Coverage Ratio Reporting
+
+A suite that passes every test it contains says nothing about the tests it lacks. A passing partial suite is therefore the most common source of false confidence, and the ratio is the only thing that separates the two readings.
+
+```
+Property coverage ratio = implemented executable properties / declared correctness properties
+```
+
+- Report the property coverage ratio explicitly wherever verification status is reported, per task and per run; an absent ratio is an `unreported-coverage-ratio` finding
+- Enumerate the unimplemented declared properties by identifier alongside the ratio; a bare numerator and denominator hides which obligations remain open
+- Forbid describing verification as complete, sufficient, or closed while the ratio is below one; a ratio below one caps the achievable rung regardless of how many tests pass
+- Forbid raising the ratio by removing a declared property from the specification during execution; withdrawing a stated property is an authoring act owned by the **PRD, TAD & ADR Guidelines** companion set and returns to the authoring loop
+- Re-derive the ratio whenever the declared property set or the implemented property set changes; a ratio quoted from an earlier revision is a stale claim
+
 ### Evidence Emission
 
 - Emit one Evidence Reference per satisfied VCC, carrying the named check, the recorded result, and the surface (always `authoring` during execution)
 - Forbid emitting an Evidence Reference for a check that was not run in this task
 - Forbid an Evidence Reference whose recorded result is an assertion that a result exists
+
+### Fail-Closed Is Not Success
+
+A component whose only observed execution paths are its guard paths has evidence for the guard, not for the capability. Fail-closed behaviour is a required property in its own right, and it is also the easiest result to mistake for a working feature, because both read as green.
+
+| Observed path | What it evidences | What it does not evidence |
+|---|---|---|
+| Guard rejects an invalid or unavailable input with the declared typed failure | The guard's own condition | Any behaviour the guard protects |
+| Guard rejects because a precondition was never provisioned | The guard's own condition | That the capability would work once provisioned |
+| Success path executes and produces the declared output | The capability's condition | Conditions belonging to other VCCs |
+
+- Treat correct typed failure behaviour as a satisfied condition for the guard's own condition only; forbid extending a guard result to any condition the guard protects
+- Forbid a capability whose success path has never executed from reaching `verified`; absent an executed success path the task is `blocked` on the missing precondition or `failed`, and the reason names the unexecuted path
+- Forbid an Evidence Reference that records a guard result as evidence for the guarded behaviour; that substitution is a `guard-result-as-capability-evidence` finding at `blocker` severity
+- State, for every capability-bearing VCC, which observed path satisfies it, so a guard-only run is visible in the record rather than inferable from it
+- Read this as distinct from the failing-first witness obligation above: that rule requires a check that fails before a fix, this rule forbids a failure result from standing in for a success result after one
+
+## Aggregate Check Integrity
+
+A shared aggregate verification entry point is the baseline every later task measures itself against. Once it is red for reasons unrelated to the current work, no task can distinguish its own regressions from inherited ones, and every subsequent Evaluator verdict degrades to a judgement call.
+
+```
+Aggregate Entry Point = the shared verification invocation every task in the run is obliged to run
+Clean Baseline = that aggregate passing on the current canonical state before the task's own change
+Enabling Order = the graph order that keeps the aggregate green across every terminal transition
+```
+
+**Directives**:
+- Before a new check joins a shared aggregate, either fix the defects that check will surface or scope the check to exclude them and record the exclusion per Scoped Check Disclosure; forbid wiring a check in with its surfaced defects neither fixed nor excluded
+- Express the enabling order as dependency edges in the task graph; ordering here is a declared constraint, not a matter of Implementer discipline, and an aggregate left failing by an unexpressed enabling order is recorded against the wiring task as `shared-aggregate-left-failing`
+- Sequence the enabling work so the aggregate passes at every terminal task state; a task that transitions to a terminal state knowingly leaving the shared aggregate red is a `shared-aggregate-left-failing` finding at `blocker` severity
+- Run the aggregate on a clean baseline as the closing step of the task that wires the check in; forbid deferring that run to a later task, because a deferred baseline run transfers the defect to whoever runs next
+- Verify the aggregate is passing before the first dispatch of a run; when it is already failing at run start, record an `inherited-aggregate-failure` finding with the observed result and route it to the owning phase, and forbid absorbing it into the current work
+- Forbid a task removing, muting, or weakening an existing aggregate member to restore green; suppression is a scope change, so return `blocked` through the Scope change gate and hand the decision to the **PRD, TAD & ADR Guidelines** companion set
+- Record the aggregate's recorded result in the Evidence Reference of every task that changes its membership, so a membership change is auditable against the baseline it left behind
+
+## Scoped Check Disclosure
+
+A check that cannot pass over its natural domain may legitimately be narrowed. Concealing the narrowing is what turns a partial result into a false claim, because a narrowed pass and a domain-wide pass are reported identically unless the scope is stated.
+
+```
+Scope Disclosure = examined subject set + count or proportion of subjects omitted + reason + owner of the omission
+```
+
+| Narrowing kind | Omitted subjects belong to | Classification |
+|---|---|---|
+| Excludes a pre-existing backlog owned by another task, lane, or phase | Somewhere else | Disclosure obligation; the backlog stays visible |
+| Excludes subjects the current work itself introduced or changed | This task | Coverage defect; not curable by disclosure |
+
+**Directives**:
+- Record the scope, the count or proportion of subjects omitted, and the reason wherever a check is scoped narrower than its natural domain; an unrecorded narrowing is an `undisclosed-check-scope` finding
+- Permit a narrowed check to claim only what it examined; forbid presenting a narrowed pass as domain-wide coverage, in a report, a check name, an Evidence Reference, or any rung the **PRD, TAD & ADR Guidelines** companion set's Readiness Ladder derives from it
+- Keep the omitted population enumerable from the disclosure, so the backlog it represents is inherited as open work rather than silently as done
+- Re-derive the disclosure whenever the scope changes in either direction; a disclosure describing a previous scope overstates or understates coverage and is treated as undisclosed
+- Treat a narrowing that excludes the current work's own subjects as a `scope-excludes-own-subjects` finding at `blocker` severity; it is a coverage defect, so disclosing it does not discharge it and the task cannot reach `verified` on that check alone
+- Attribute every omission to an owner and, where one exists, to the task that will close it; an omission with no owner is a backlog nobody has accepted
 
 ## Checkpoint & Recovery
 
@@ -369,6 +445,8 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 - Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale recorded
 - Preserve every `keep` item untouched, require every `port` item to reach protected integration before the candidate can claim frontier closure, and allow `drop` only after exact no-remaining-value proof plus the cleanup authority that removes it
 - End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
+- Run production through one canonical, profile-owned release controller sequence: capture the rollback identity, generate the runtime-review candidate receipt, generate release-frontier evidence that binds the rollback identity, dispatch the protected production release, then collect protected terminal authorization at the production gate. Product profiles may rename schemas or adapters, but must preserve those functional steps and joins.
+- Forbid duplicate or conflicting release paths for the same target. Local deploy commands, alternate CI jobs, mirror-push scripts, or emergency recovery commands may exist only as adapters invoked by, or reconciled back into, the canonical controller with the same candidate digest, rollback identity, receipts, protected review, and publication rules.
 - Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment
 - Fence one canonical release-owner checkout per repository from candidate sealing until the authorization interaction terminates or the run is retired; it must stay attached to the exact protected revision used for review, and branch switching, repurposing, or local-ref drift in that owner invalidates prompt readiness until the owner is reattached, refetched, and revalidated
 - Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
@@ -401,6 +479,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Specification bridge | `unexecuted-condition` | `major` |
 | Task model | `task-cycle` | `blocker` |
 | Task model | `concurrent-write-conflict` | `major` |
+| Task model | `unjustified-serialisation` | `minor` |
 | Task model | `parallel-scope-collision` | `blocker` |
 | Task model | `stale-collaboration-fence` | `blocker` |
 | Task model | `delivery-authority-unjoined` | `blocker` |
@@ -426,6 +505,12 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `fix-without-witness` | `major` |
 | Verification | `unproven-property` | `major` |
 | Verification | `evidence-without-run` | `blocker` |
+| Verification | `unreported-coverage-ratio` | `minor` |
+| Verification | `guard-result-as-capability-evidence` | `blocker` |
+| Aggregate integrity | `shared-aggregate-left-failing` | `blocker` |
+| Aggregate integrity | `inherited-aggregate-failure` | `major` |
+| Check disclosure | `undisclosed-check-scope` | `major` |
+| Check disclosure | `scope-excludes-own-subjects` | `blocker` |
 | Recovery | `unresumable-run` | `major` |
 | Human gates | `assumed-operator-decision` | `blocker` |
 | Release lifecycle | `unreviewed-release-candidate` | `blocker` |
@@ -433,6 +518,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Release lifecycle | `authorization-evidence-unjoined` | `blocker` |
 | Release lifecycle | `authorization-interaction-unjoined` | `blocker` |
 | Release lifecycle | `duplicate-release-controller` | `blocker` |
+| Release lifecycle | `conflicting-release-path` | `blocker` |
 | Release lifecycle | `production-authorization-drift` | `blocker` |
 | Release lifecycle | `post-authorization-rebuild` | `blocker` |
 | Release lifecycle | `state-reconciliation-unverified` | `blocker` |
@@ -470,7 +556,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
 | Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets` |
 | Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius` |
-| Verification | `verification-strategy`, `execution-conformance-findings` |
+| Verification | `verification-strategy`, `aggregate-check-integrity`, `scoped-check-disclosure`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery` |
 | Escalation | `human-in-the-loop-gates` |
 | Release handoff | `dependency-ordered-integration`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `human-in-the-loop-gates` |
@@ -488,6 +574,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Evaluator mechanism named** and demonstrably distinct from the Implementer
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
+- [ ] **Wave composition derived from declared data and side-effect dependencies**; every serialisation names the dependency or same-artifact write that binds it, and no side-effect-free component waits on the side-effect owner without one
+- [ ] **Shared aggregate passing at run start**; a failing aggregate is recorded as an `inherited-aggregate-failure` and routed to its owning phase rather than absorbed into this run
+- [ ] **Enabling order expressed as graph edges** for every task that adds a check to a shared aggregate, with the defects that check surfaces either scheduled for fix or scoped out with the exclusion recorded
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
 - [ ] **No live overlapping remote claim exists for the declared scope**; any overlap is resolved upstream through an accepted release, handoff, or reclaim before local mutation, and review state, lease expiry, mergeability, or canonical advancement do not count as release authority
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
@@ -500,6 +589,10 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 **Per-Task**:
 - [ ] Named check run and its recorded result surfaced
 - [ ] Existing verification lane run, not only the task's own check
+- [ ] Shared aggregate passing on a clean baseline as the closing step of any task that changes aggregate membership
+- [ ] Narrowed check scope recorded with omitted count or proportion, reason, and owner; no narrowing excludes the task's own subjects
+- [ ] Property coverage ratio reported with the unimplemented declared properties named
+- [ ] Observed path stated per capability-bearing VCC; no guard result recorded as evidence for the guarded behaviour
 - [ ] Artifacts changed enumerated, including incidental changes
 - [ ] Budget consumption recorded against all four bounds
 - [ ] Verdict issued by the Evaluator, never the Implementer
@@ -511,6 +604,10 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Every task in a terminal state**; no task left `in-progress`
 - [ ] **Every `failed`, `blocked`, and `abandoned` task carries a reason**
 - [ ] **Rungs re-derived** from the emitted Evidence References; no rung authored by hand
+- [ ] **Shared aggregate green at run close** on a clean baseline, with every membership change bound to a recorded result
+- [ ] **Property coverage ratio reported and equal to one** before verification is described as complete; a ratio below one is stated with the open declared properties named
+- [ ] **Every narrowed check disclosed**: scope, omitted population, reason, and owner recorded, and no narrowed pass presented as domain-wide coverage
+- [ ] **No capability verified from guard paths alone**: every `verified` capability-bearing VCC names an executed success path
 - [ ] **Finding set emitted** across both domains, deduplicated, ordered, with zero counts reported
 - [ ] **Finding set compared** to the prior run; any new `blocker` treated as a regression
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
@@ -573,6 +670,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 ❌ Two devices dispatching the same target concurrently, or handing off mutable local state between users
 → ✅ One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts
 
+❌ Adding a second deploy workflow, local publish command, or mirror patch path because the canonical release controller is blocked
+→ ✅ Repair or reconcile the canonical controller path, or run a documented recovery adapter that binds the same rollback identity, candidate digest, protected authorization, verification receipts, and publication rules
+
 ❌ Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics
 → ✅ A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters
 
@@ -582,14 +682,36 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 ❌ A task list with cycles, or a wave whose tasks write the same artifact concurrently
 → ✅ Acyclic dependency graph; wave membership checked for write disjointness before dispatch
 
+❌ A new check wired into a shared aggregate while the defects it surfaces stay unfixed, leaving every later task measuring itself against a red baseline
+→ ✅ Fix or record an exclusion before the check joins; express the enabling order as graph edges; close the wiring task by running the aggregate on a clean baseline
+
+❌ An aggregate already failing at run start absorbed into the current work as if the current work had caused it
+→ ✅ An `inherited-aggregate-failure` recorded as a precondition finding with its observed result and routed to the owning phase
+
+❌ Side-effect-free components serialised behind the side-effect owner because parallelism felt risky, or wave order inferred from module naming and authoring order
+→ ✅ Wave composition derived from declared data and side-effect dependencies, with same-artifact writes as the only binding constraint and every serialisation naming its dependency
+
+❌ A check quietly narrowed until it passes, then reported as if it had examined its whole domain
+→ ✅ Scope, omitted count or proportion, reason, and owner recorded; the narrowed check claims only what it examined and the omitted population stays visible as open work
+
+❌ A narrowing that excludes the current work's own subjects, disclosed and treated as settled
+→ ✅ A coverage defect that disclosure cannot cure; the task does not reach `verified` on that check alone
+
+❌ A passing partial suite described as complete verification, with no ratio of implemented to declared properties in sight
+→ ✅ The coverage ratio reported per task and per run with the open declared properties named; verification is never called complete below a ratio of one
+
+❌ A component observed only on its guard paths reported as working because its typed failure was correct
+→ ✅ Guard results evidence the guard's own condition only; a capability whose success path never executed stays out of `verified`, and its Evidence Reference never carries a guard result
+
 ## Mantra Application
 
-**"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Persistence makes every run resumable · Gates keep every irreversible choice human"**
+**"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Baselines keep every regression attributable · Persistence makes every run resumable · Gates keep every irreversible choice human"**
 
 - **Specification grounds**: a task with no VCC behind it is work no rung will credit, so the bridge is a derivation and never a fresh authoring act
 - **Bounds make finite**: four bounds and a circuit-breaker per task, because an unbounded task is an unbounded loop wearing a checkbox
 - **Independence makes trustworthy**: the Evaluator is a mechanism the Implementer does not adjudicate; every other role may collapse, this one may not
 - **Grants make deliberate**: capability is scoped per task to the narrowest sufficient class, and irreversibility is gated per occurrence rather than per session
-- **Evidence earns**: execution's output is not code, it is the Evidence References that let the Readiness Ladder move; unsurfaced work raises nothing
+- **Evidence earns**: execution's output is not code, it is the Evidence References that let the Readiness Ladder move; unsurfaced work raises nothing, a guard result earns only the guard, and a coverage ratio below one earns less than it appears to
+- **Baselines keep attributable**: a shared aggregate stays green across every terminal transition and a narrowed check states what it omitted, because a red or quietly narrowed baseline makes the next task's regression indistinguishable from the last task's debt
 - **Persistence makes resumable**: state lives outside working context, so a long run survives compaction instead of re-spending its way back to where it was
 - **Gates keep human**: scope, irreversibility, promotion, and re-authorisation are Operator decisions, and an absent decision is a blocked task rather than an assumed yes

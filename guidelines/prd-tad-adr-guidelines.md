@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "1.7.0"
-date: "2026-07-28"
+version: "1.8.0"
+date: "2026-08-19"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -31,7 +31,11 @@ frontmatter_contract: "required"
 - `readiness-ladder` — the ordered status vocabulary and the evidence rule that governs each rung
 - `agent-platform-readiness` — Agentic OS-, AI Agent-, and MCP Gateway-ready definitions, tiers, and execution order
 - `lane-topology--deploy-boundary` — lane sequence, named boundaries, closed-by-default promotion rule
-- `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive and Evidence Reference
+- `autonomous-implementation-verification` — the Verifiable Completion Condition (VCC) primitive, Evidence Reference, criterion completeness, and closure rules
+- `as-is--to-be-baseline-contract` — observed / assumed / intended grades, baseline identifiers, and the rung-derivation restriction
+- `recorded-tensions` — naming conflicting constraints, the resolving criterion, and resolution annotations
+- `deferred-decision-register` — deliberate deferral with a deciding phase, candidates, and the criterion it becomes
+- `derived-vocabulary-contract` — derive-don't-duplicate for authored values, and declaring derivation limits
 - `cid-directive-matrix` — alphabetical, project-agnostic directive mantras
 - `core-templates` — PRD, TAD, and ADR templates
 - `architecture-diagram-standards` — diagram format rules
@@ -136,10 +140,10 @@ Token economics applies to this guideline set itself, not only to the product pi
 | Phase | Sections to load | Rationale |
 |---|---|---|
 | Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value` | ROI, TCO, TTV ceiling only |
-| Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value` | Authoring the PRD |
-| Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness` | Authoring the TAD |
-| Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification` | Running the alignment check |
-| Phase 4 | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
+| Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value`, `as-is--to-be-baseline-contract`, `recorded-tensions`, `deferred-decision-register` | Authoring the PRD |
+| Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness`, `derived-vocabulary-contract`, `deferred-decision-register` | Authoring the TAD |
+| Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification`, `recorded-tensions`, `deferred-decision-register` | Running the alignment check |
+| Phase 4 | `conformance-findings`, `readiness-ladder`, `as-is--to-be-baseline-contract` | Re-derivation and regression comparison |
 | Any phase | `scope--neutrality-contract`, `module-index` | Always in scope; smallest sections in the set |
 
 **Directives**:
@@ -872,6 +876,24 @@ Verify: the migration runs without errors and row counts in [table A] and [table
 ❌ Verify: performance is improved       → no measurable threshold
 ```
 
+### Criterion Completeness
+
+A criterion can be perfectly well-formed on its own and still be uncheckable because the vocabulary it draws on is incomplete, because two sections state its scope differently, or because its guard was widened until it stopped excluding anything. These are completeness defects, not phrasing defects, and they are observable without running the check.
+
+| Completeness obligation | Satisfied when | Unmet consequence |
+|---|---|---|
+| **Closed vocabulary** | Every value a criterion references appears in the closed enumeration that governs that value's domain | `unenumerated-value` |
+| **Agreeing scope** | Every statement of the same scope list or coverage map agrees with every other statement of it | `scope-list-disagreement` |
+| **Honest guard** | A conditional guard narrows the subject set for a stated reason, and guard-failing subjects are exempt by the criterion's own terms | `manufactured-coverage`, `redundant-exception` |
+
+**Directives**:
+- Enumerate every value a criterion references in the closed enumeration that governs it; a referenced-but-unenumerated value is an `unenumerated-value`, because the criterion cannot be evaluated against a domain that does not contain the value it names
+- Extend the governing enumeration first, then reference the new value from a criterion; forbid the reverse order, which is the same ordering rule the finding enumeration already carries
+- State a scope list or coverage map in one owning location and derive every other statement of it (see Derived Vocabulary Contract); where the same scope is stated in more than one section, disagreement between two statements of it is a `scope-list-disagreement` regardless of which one is correct
+- Treat a conditionally guarded criterion (a `WHERE`-style guard) as **satisfied by its own terms** for every subject that fails the guard: the exemption is the criterion working as written, not a gap to be patched. Forbid authoring a separate exception clause for subjects the guard already exempts; a duplicate exemption for the same subject set is a `redundant-exception`
+- Forbid widening a guard so that more subjects pass it and coverage appears higher; a guard edited to raise a coverage figure rather than to correct the subject set is `manufactured-coverage`. Where the widened guard supports a `runtime-ready` or higher claim, the severity is `blocker`
+- State the guard's subject set and its exempt set explicitly, so the coverage ratio in Rule Identity & Classification is computed over the intended denominator rather than over whatever the guard currently admits
+
 ### Reference Implementations
 
 A VCC is mechanism-independent. Any of the following can host it; choose by what triggers the next iteration and how completion is judged. Each is a non-binding example — swap freely.
@@ -931,6 +953,133 @@ The chain is bidirectional, and a break in **either** direction is a defect rath
 
 ---
 
+## As-Is / To-Be Baseline Contract
+
+**Defines how a document that describes both current reality and intended reality keeps the two separable at the level of the individual assertion.** Distinct from the Readiness Ladder, which grades a *capability*: this section grades an *assertion*. Nearly every overclaim in a specification enters the same way — a sentence about what the system will do sits beside a sentence about what it does, in one undifferentiated block, and a later reader cannot tell which is which.
+
+A preamble stating "this document describes the current and target states" does not discharge this contract. Separation is required at block granularity, because a reader lands on a block, not on a preamble, and a conformance check reads a block, not an intent.
+
+### Assertion Grades
+
+Every assertion about system behaviour carries exactly one of three grades:
+
+| Grade | Definition | Evidence expectation | Contributes to a rung |
+|---|---|---|---|
+| **`observed`** | States current behaviour and carries an Evidence Reference (named check + recorded result + surface) | Required | Yes |
+| **`assumed`** | States current behaviour, is not verified, and is labelled as an assumption | None; the label is mandatory | No |
+| **`intended`** | States target behaviour the document is arguing for | None expected | No |
+
+### Baseline Identifier
+
+An `observed` assertion is only re-verifiable if the reader knows *what it was observed against*. The **baseline identifier** names that state by its own version or milestone — the same identifier the Evidence Reference's surface was captured in — so staleness is detectable by comparison rather than by memory.
+
+**Directives**:
+- Distinguish `observed` from `intended` at block granularity — per section, per table row, per list item, per criterion; a block that asserts both without separating them is a `blended-baseline-assertion`, and where the blended block supports a `runtime-ready` or higher claim the severity is `blocker`
+- Attach an Evidence Reference to every as-is assertion, or downgrade the assertion to `assumed` and label it; an as-is assertion presented as fact with no Evidence Reference and no assumption label is an `unlabelled-assumption`
+- Label an assumption where it is asserted, not only in a collected assumptions list; a list entry does not make the in-body sentence readable as an assumption
+- Name the baseline identifier the as-is half was observed against; an as-is claim with no baseline identifier cannot be re-verified and is an `unbaselined-as-is-claim`
+- Derive every readiness rung from `observed` assertions and their Evidence References only; a rung that draws on an `intended` or `assumed` assertion is an `unproven-claim`, because a target is not a result
+- Forbid promoting an `assumed` assertion to `observed` by verifying something adjacent to it; the Evidence Reference must satisfy the assertion as written
+- Re-derive the affected rung and re-check every dependent document whenever an as-is assertion's baseline identifier changes; an as-is assertion still pointing at a superseded baseline is `stale-evidence`
+- Keep the grade explicit rather than inferable from tense or mood; a reader distinguishing "does" from "will" by grammar is guidance-level reliability, not an observable contract
+- This section governs how a grade is **authored** and separated; how a check is run and its result captured is owned by the **Agentic SDLC Guidelines** companion set. An `observed` grade sourced from this document alone states that evidence is attached, not that the run was well-formed
+
+---
+
+## Recorded Tensions
+
+**Defines how a document records two constraints that genuinely conflict, and how that conflict is resolved without erasing the fact that a choice was made.** A specification of any size contains constraints that pull against each other — cost against latency, coverage against determinism, derivation against expressiveness. The failure mode is not the conflict; it is resolving the conflict silently, in the author's head, and presenting the result as the only possibility. A later reader then cannot tell that a decision exists, cannot find its rationale, and re-opens it by accident.
+
+### Tension Record
+
+| Part | Definition |
+|---|---|
+| **Name** | A stable identifier for the tension, referenced wherever either constraint is stated |
+| **Constraint A** | The first constraint, stated in full, with its owning rule or criterion |
+| **Constraint B** | The second constraint, stated in full, with its owning rule or criterion |
+| **Resolving criterion** | The criterion, decision record, or Deferred Decision Register entry that settles which constraint governs, and under what condition |
+| **Resolution annotation** | Added when the tension is resolved: the resolving criterion, and what the losing constraint gives up |
+
+**Recorded Tensions template** *(one per document that contains any tension)*:
+```markdown
+## Recorded Tensions: [Document / Surface Name]
+
+| Tension | Constraint A | Constraint B | Resolving criterion | State |
+|---|---|---|---|---|
+| [name] | [constraint + owning rule] | [constraint + owning rule] | [criterion reference, or register entry] | [`open` / `resolved`] |
+
+**Resolution notes** *(resolved tensions only)*:
+- `[name]` — resolved by [criterion]; [losing constraint] yields [what it gives up] under [condition]
+```
+
+**Directives**:
+- Name every tension and state both conflicting constraints in full; a document that contains conflicting constraints with no named tension is an `unresolved-tension`
+- Point every tension at the criterion or decision that resolves it; a tension carrying no resolving criterion at baseline time is an `unresolved-tension`, because the document is baselining a decision it has not recorded
+- Annotate a resolved tension rather than deleting it: keep the record, add the resolving criterion, and state what the losing constraint gives up; deleting the record on resolution is a `concealed-tension`, since the reasoning is what a later reader needs and the outcome is already visible in the criterion
+- Forbid presenting a contested design choice as though it were forced. A choice with a real alternative is stated with its alternative and its resolving criterion; asserting "the only option" over an unstated alternative is a `concealed-tension`
+- Where a tension is resolved by choosing between named options with a cost comparison, record it as an architectural decision as well; the tension record names the conflict, the decision record carries the rationale
+- Route a tension that cannot be resolved in the current phase to the Deferred Decision Register with its deciding phase; forbid leaving it `open` with no register entry, which is an `unresolved-tension` at baseline
+
+---
+
+## Deferred Decision Register
+
+**Defines how a document defers a decision to a later phase on purpose.** Deferral is a legitimate authoring act and the only alternative to two worse ones: guessing early, which manufactures a constraint nobody validated, or leaving the decision implicit, which lets whichever phase notices first decide it silently. A deferral is only legitimate when it is *registered* — when the document names who decides, when, among what, and what the decision will become.
+
+### Register Entry
+
+| Part | Definition |
+|---|---|
+| **Decision** | The open question, stated as a decision rather than as a topic |
+| **Deciding phase** | The phase that owns the decision, named from the phase model |
+| **Candidates** | The options known at authoring time, or an explicit "unknown" |
+| **Target criterion** | The criterion, enumeration value, or quality-attribute scenario the decision will become once made |
+| **Consuming phase** | The phase that cannot be baselined until the decision is resolved |
+
+**Deferred Decision Register template** *(one per document that defers any decision)*:
+```markdown
+## Deferred Decision Register: [Document / Surface Name]
+
+| Decision | Deciding phase | Candidates | Target criterion | Consuming phase |
+|---|---|---|---|---|
+| [decision] | [phase] | [option / option / `unknown`] | [criterion it becomes] | [phase] |
+```
+
+**Directives**:
+- State every deferred decision with its deciding phase, its candidates or an explicit "unknown", and the target criterion it will become; an entry missing any of those parts is an `incomplete-deferral`, because a deferral with no target criterion is indistinguishable from an open question nobody owns
+- Resolve every deferred decision into its target criterion before the consuming phase is baselined; a decision still open when its consuming phase baselines is an `unresolved-deferred-decision`
+- Remove the register entry once the decision has become a criterion; a register entry retained beside the criterion it produced is a second copy of an authored value and is a `duplicated-vocabulary` (see Derived Vocabulary Contract)
+- Forbid a downstream phase deciding an item the register assigned to an earlier phase. A later phase that quietly picks a candidate is a `misplaced-decision`, and the register entry is the evidence that the ownership was stated before the drift happened
+- Forbid carrying a deferred decision past the phase that needs it by restating it as an open question, an assumption, or a to-be assertion; each of those relabellings hides the same `unresolved-deferred-decision`
+- Assign no readiness rung above `spec-complete` to a capability whose behaviour depends on an unresolved register entry; the VCC cannot be written until the decision exists
+- Keep the register distinct from the open-questions list: an open question needs research, a deferred decision needs a deciding phase and a target criterion. Recording a deferral only as an open question is an `incomplete-deferral`
+- This section governs the **authored** register: its entries, their completeness, and the phase that owns each decision. Scheduling and assigning the work that resolves an entry is owned by the **Agentic SDLC Guidelines** companion set
+
+---
+
+## Derived Vocabulary Contract
+
+**Defines the derive-don't-duplicate rule for any authored value, ordered list, or enumeration.** A value authored in one location and copied into a second is not two records of one fact; it is two facts that happen to agree today. Every copy is a drift surface, and drift in an authored vocabulary is the failure that makes a conformance check disagree with the document it is checking.
+
+### Ownership and Derivation
+
+| Role | Obligation |
+|---|---|
+| **Owning location** | Exactly one location authors the value, the ordering, or the enumeration; it is named, and it is what every consumer resolves against |
+| **Consumer** | Derives the value at read time from the owning location; holds no literal copy, not even as a default or a fallback |
+| **Derivation limit** | Where derivation yields a structurally weaker result than a literal would, the limitation is stated beside the rule that requires the derivation |
+
+**Directives**:
+- Author every value, ordered list, and enumeration in exactly one owning location and name it; a second copy anywhere is a `duplicated-vocabulary`, whether the copy is a literal, a comment, an example, or a restated default
+- Derive at read time in every consumer; forbid a copy justified as a cache, a convenience, or a fallback, since a stale fallback is indistinguishable from a correct value at the moment it is read
+- Treat a further copy of an already-mirrored value as a compounding defect: where a value is already stated in more than one place, adding another is a `duplicated-vocabulary` recorded against the added copy, and the pre-existing mirrors remain separately recordable
+- **Record the limitation rather than concealing it** when derivation forces a structurally weaker result than duplication would allow; the undeclared weakness is an `undeclared-derivation-limit`. A derived mapping that pairs one ordered list to another **by position** rather than by meaning is acceptable only when its shift behaviour is stated: what every downstream pairing becomes when an entry in the owning list is inserted, removed, or reordered
+- State the derivation limit beside the rule that requires the derivation, not in a separate caveats section; a reader applying the rule must see the limit at the same moment
+- Forbid resolving the tension between derivation and expressiveness by reintroducing the literal. That tension is real and is recorded per Recorded Tensions with the derivation as the resolving criterion; reintroducing the copy is a `duplicated-vocabulary` and additionally erases the tension record, which is a `concealed-tension`
+- Extend or reorder a vocabulary in its owning location only, then re-derive every consumer and re-check every criterion that references it; an edit applied to a consumer instead of the owner is a `duplicated-vocabulary` even when the resulting values agree
+
+---
+
 ## CID Directive Matrix
 
 Each row is a universal, neutral, project-agnostic mantra in `Context | Intent | Directive` grammar (see Directive Grammar (CID)). Rows are sorted A→Z and contain no project, vendor, or file references.
@@ -948,6 +1097,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | API             | Specify integration contracts        | - [ ] Define API contracts; specify interfaces; forbid implicit interfaces                    |
 | Architecture    | Design component interactions        | - [ ] Map component relationships; design interactions; forbid undocumented dependencies      |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
+| Baseline        | Separate observed from intended state | - [ ] Grade every behavioural assertion `observed` (Evidence Reference attached), `assumed` (labelled, unverified), or `intended` (target) at block granularity; name the baseline identifier every as-is claim was observed against; forbid blending as-is and to-be in one block and forbid deriving a rung from a target |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
 | Capacity        | Specify performance limits           | - [ ] Define load requirements; specify capacity; forbid unspecified scalability              |
 | Changes         | Track requirement evolution          | - [ ] Version requirement changes; track evolution; forbid unversioned modifications          |
@@ -958,10 +1108,13 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Data            | Specify flow and storage             | - [ ] Map data flows; specify storage; forbid undocumented persistence                        |
 | Decisions       | Document rationale                   | - [ ] Record decision reasoning; document rationale; forbid unexplained choices               |
 | Decomposition   | Break complex features               | - [ ] Decompose into stories; break complexity; forbid monolithic requirements                |
+| Deferral        | Defer decisions on purpose           | - [ ] Register every deferred decision with its deciding phase, candidates, target criterion, and consuming phase; resolve it into a criterion before the consuming phase baselines and remove the entry; forbid carrying a deferral past the phase that needs it and forbid a later phase deciding an item the register assigned earlier |
 | Dependencies    | Map component relationships          | - [ ] Identify dependencies; map relationships; forbid undeclared coupling                    |
 | Deployment      | Specify release strategies           | - [ ] Plan deployment approach; specify strategies; forbid ad-hoc deployments                 |
+| Derivation      | Derive authored values, never copy them | - [ ] Author every value, ordered list, and enumeration in exactly one owning location and derive it at read time in every consumer; state the derivation limit beside the rule when derivation is structurally weaker than a literal; forbid a second copy and forbid reintroducing the literal to regain expressiveness |
 | Design          | Justify architectural patterns       | - [ ] Document design patterns; justify architecture; forbid pattern-free implementations     |
 | Edge            | Specify boundary conditions          | - [ ] Define edge cases; specify boundaries; forbid untested limits                           |
+| Enumeration     | Close the vocabulary a criterion reads | - [ ] Enumerate every value a criterion references in the enumeration that governs it; keep every restatement of one scope list in agreement; treat guard-failing subjects as satisfied by the criterion's own terms; forbid referencing an unenumerated value, forbid a duplicate exception for guard-exempt subjects, and forbid widening a guard to raise coverage |
 | Error           | Specify handling strategies          | - [ ] Define error responses; specify handling; forbid undefined error states                 |
 | Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
@@ -1021,6 +1174,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Stories         | Write user narratives                | - [ ] Use "As a…I want…So that"; write narratives; forbid technical task lists                |
 | Success         | Define completion criteria           | - [ ] Specify done conditions as observable, evaluator-verifiable states; define success; forbid ambiguous done states |
 | TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend) across each deployment model it offers (managed/serverless, provisioned/self-managed, hybrid/consolidated); document in ADR; forbid uncosted architectural decisions and forbid blending deployment-model variants into one figure |
+| Tensions        | Record conflicts instead of resolving them silently | - [ ] Name every tension with both conflicting constraints and the criterion that resolves it; annotate a resolved tension rather than deleting it; forbid an unresolved tension at baseline and forbid presenting a contested design choice as forced |
 | Testability     | Enable verification                  | - [ ] Design for testing; enable verification; forbid untestable requirements                 |
 | Timelines       | Define delivery schedules            | - [ ] Set release dates; define timelines; forbid open-ended commitments                      |
 | Time-to-Value   | Minimise first-success latency       | - [ ] Estimate TTV steps and elapsed time in Phase 0; include TTV as a named success metric in every user-facing PRD; validate on a clean environment before Phase 3 sign-off; forbid TTV reductions that compromise security or data integrity |
@@ -1341,6 +1495,21 @@ The chain is bidirectional and must close in both directions. A link that resolv
 ❌ A readiness status authored by hand with no satisfying evidence; a status value outside the Readiness Ladder; one status field blending local and delivered readiness  
 → ✅ Every rung derived from Evidence References only; values drawn from the Readiness Ladder; local and delivered readiness reported as two separate fields
 
+❌ Current behaviour and target behaviour blended inside one block, separated only by a preamble; an as-is claim with no baseline identifier, so it can never be re-verified; an unverified as-is claim asserted as fact with no assumption label; a rung derived from a to-be assertion  
+→ ✅ Every behavioural assertion graded `observed`, `assumed`, or `intended` at block granularity; every `observed` assertion carrying an Evidence Reference and a baseline identifier; every unverified as-is claim labelled where it is asserted; rung derivation reading `observed` evidence only
+
+❌ Conflicting constraints resolved silently in the author's head; a contested design choice presented as the only option; a tension record deleted once the tension is resolved, taking the reasoning with it; a tension left `open` at baseline with no resolving criterion and no register entry  
+→ ✅ Every tension named with both constraints in full and the criterion that resolves it; resolved tensions annotated rather than deleted, stating what the losing constraint gives up; unresolvable-in-phase tensions routed to the Deferred Decision Register
+
+❌ A decision guessed early to avoid an empty field, or left implicit so whichever phase notices first decides it; a deferral carried past the phase that consumes it, relabelled as an open question or an assumption; a downstream phase quietly picking a candidate the register assigned to an earlier phase  
+→ ✅ Every deferral registered with its deciding phase, candidates, target criterion, and consuming phase; resolved into a criterion before the consuming phase baselines and then removed from the register; ownership of the decision readable from the register before any drift occurs
+
+❌ An authored value, ordered list, or enumeration copied into a second location as a literal, a default, or a fallback; a further copy added where the value is already mirrored; a derivation's structural weakness left unstated so a positional mapping reads as a semantic one; the derivation-vs-expressiveness tension resolved by reintroducing the literal  
+→ ✅ Exactly one named owning location per authored value, with every consumer deriving at read time; the derivation limit stated beside the rule that requires it, including shift behaviour for any positional mapping; the tension recorded with the derivation as its resolving criterion
+
+❌ A criterion referencing a value that the enumeration governing it never lists; one scope list or coverage map stated differently in two sections; a separate exception clause invented for subjects a conditional guard already exempts; a guard widened until coverage looks higher  
+→ ✅ Every referenced value present in its governing enumeration, extended before it is referenced; one owning location per scope list with every restatement derived from it; guard-failing subjects treated as satisfied by the criterion's own terms; guard subject and exempt sets stated explicitly so coverage is computed over the intended denominator
+
 ❌ A rule that requires an artifact but names none; an artifact that answers to no rule; a reference to a target that does not resolve  
 → ✅ Bidirectional closure enforced per the Closure Rules; coverage stated as a ratio; every break resolved or formally tracked
 
@@ -1404,6 +1573,20 @@ Every finding carries exactly six fields:
 | Readiness Ladder | `unknown-status` | `minor` |
 | Readiness Ladder | `unproven-claim` | `blocker` |
 | Readiness Ladder | `blended-status` | `minor` |
+| Baseline contract | `blended-baseline-assertion` | `major` |
+| Baseline contract | `unbaselined-as-is-claim` | `major` |
+| Baseline contract | `unlabelled-assumption` | `major` |
+| Recorded tensions | `unresolved-tension` | `major` |
+| Recorded tensions | `concealed-tension` | `major` |
+| Deferred decisions | `incomplete-deferral` | `major` |
+| Deferred decisions | `unresolved-deferred-decision` | `major` |
+| Deferred decisions | `misplaced-decision` | `major` |
+| Derived vocabulary | `duplicated-vocabulary` | `major` |
+| Derived vocabulary | `undeclared-derivation-limit` | `major` |
+| Criterion completeness | `unenumerated-value` | `major` |
+| Criterion completeness | `scope-list-disagreement` | `major` |
+| Criterion completeness | `manufactured-coverage` | `major` |
+| Criterion completeness | `redundant-exception` | `minor` |
 | Traceability closure | `unimplemented-guideline` | `major` |
 | Traceability closure | `unguided-artifact` | `minor` |
 | Traceability closure | `unresolvable-reference` | `major` |
@@ -1467,6 +1650,15 @@ The regression comparison above is meaningless unless two runs over the same inp
 - [ ] User stories follow "As a… I want… So that" format
 - [ ] Acceptance criteria use Given-When-Then with observable outcomes
 - [ ] Every acceptance criterion translatable to a VCC: one measurable end state + a stated check + scope constraints
+- [ ] **Every value a criterion references present in the enumeration that governs it**; the enumeration extended before the value is referenced
+- [ ] **Scope lists and coverage maps agree** wherever the same scope is stated in more than one section; one owning location named for each
+- [ ] **Conditional guards stated with their subject set and their exempt set**; no separate exception clause for subjects the guard already exempts; no guard widened to raise a coverage figure
+- [ ] **As-is and to-be separated at block granularity**; every behavioural assertion graded `observed`, `assumed`, or `intended`; a preamble alone does not discharge this
+- [ ] **Baseline identifier named** for every as-is assertion; every `observed` assertion carrying an Evidence Reference; every unverified as-is claim labelled as an assumption where it is asserted
+- [ ] **Recorded Tensions present** for every conflicting constraint pair: both constraints in full plus the resolving criterion; no tension left `open` at baseline without a Deferred Decision Register entry
+- [ ] **Deferred Decision Register present** with deciding phase, candidates or explicit "unknown", target criterion, and consuming phase per entry
+- [ ] **One owning location per authored value, ordered list, and enumeration**; every consumer derives at read time; no literal, default, or fallback copy
+- [ ] **Derivation limits stated** beside the rule that requires the derivation, including shift behaviour for any mapping that pairs ordered lists by position rather than by meaning
 - [ ] Features prioritized via MoSCoW **with ROI score and rationale per feature**
 - [ ] **Min-viable scope** explicitly stated for Must-tier features before implementation begins
 - [ ] **Token budget estimated** for every AI-powered pipeline: prompt tokens + completion tokens + cache hit rate at target load
@@ -1498,6 +1690,11 @@ The regression comparison above is meaningless unless two runs over the same inp
 - [ ] Success metrics defined with baseline, target, and timeline
 - [ ] Quality attributes specified with measurable scenarios; **token cost and TCO attributes present for AI-powered components**
 - [ ] Open questions resolved or formally tracked
+- [ ] **Every tension resolved or annotated**: resolved entries name the resolving criterion and what the losing constraint gives up; no tension record deleted on resolution
+- [ ] **Deferred Decision Register clear for every consumed phase**: each entry resolved into its target criterion and the entry removed; no entry restated as an open question, an assumption, or a to-be assertion
+- [ ] **No capability above `spec-complete`** whose behaviour depends on an unresolved register entry
+- [ ] **Baseline identifiers current**: every as-is assertion re-checked against its named baseline; affected rungs and dependent documents re-derived where a baseline changed
+- [ ] **Vocabulary edits applied at the owning location only**, then re-derived in every consumer and re-checked against every criterion that references them
 - [ ] **TTV validated** on a clean environment (prerequisites only, no pre-configuration); actual steps and elapsed time recorded and compared to Phase 0 estimate
 - [ ] **Topology diagram reviewed**: all nodes map to TAD Component Specifications; no orphaned topology nodes; version note present
 - [ ] **Token budget actuals vs estimates reviewed** each sprint; projections updated on model pricing or traffic changes
@@ -1509,6 +1706,11 @@ The regression comparison above is meaningless unless two runs over the same inp
 - [ ] **Readiness rungs derived**, not authored: every rung traces to an Evidence Reference with a named check and a recorded result — else `unproven-claim`
 - [ ] **Status vocabulary closed**: every status value appears in the Readiness Ladder — else `unknown-status`
 - [ ] **Local and delivered readiness separated** into two fields everywhere a status appears — else `blended-status`
+- [ ] **As-is and to-be separated** at block granularity, every as-is assertion carrying a baseline identifier, and every unverified as-is claim labelled — else `blended-baseline-assertion`, `unbaselined-as-is-claim`, or `unlabelled-assumption`
+- [ ] **Tensions recorded and resolved**: both constraints stated, a resolving criterion named at baseline, no record deleted on resolution and no contested choice presented as forced — else `unresolved-tension` or `concealed-tension`
+- [ ] **Deferrals registered and discharged**: every entry complete, resolved before its consuming phase baselines, and decided by the phase the register names — else `incomplete-deferral`, `unresolved-deferred-decision`, or `misplaced-decision`
+- [ ] **Authored vocabularies derived, not copied**, with every derivation limit stated beside the rule requiring it — else `duplicated-vocabulary` or `undeclared-derivation-limit`
+- [ ] **Criterion vocabulary closed and scopes in agreement**, with honest guards and no duplicate exemptions — else `unenumerated-value`, `scope-list-disagreement`, `manufactured-coverage`, or `redundant-exception`
 - [ ] **Forward closure**: every artifact-bearing rule names at least one artifact — else `unimplemented-guideline`
 - [ ] **Reverse closure**: every artifact answers to at least one rule — else `unguided-artifact`
 - [ ] **Coverage ratio stated**: linked artifact-bearing rules over total artifact-bearing rules, reported as a number

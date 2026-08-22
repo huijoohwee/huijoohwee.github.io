@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.16.0"
+version: "1.17.0"
 date: "2026-08-17"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -59,6 +59,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Rule ID scheme and artifact-bearing classification | Authoring set | Reuses unchanged for execution rules |
 | Finding recording contract, severities, determinism | Authoring set | Reuses unchanged; extends the type enumeration only |
 | VCC primitive and Evidence Reference shape | Authoring set | Produces Evidence References during execution |
+| Diagram identity, class, notation, and canvas projection rules | Authoring set's diagram companion modules | Obeys; emits the projection check result as an Evidence Reference |
 | Lane topology and Deploy Boundary | Authoring set | Obeys; never promotes across a boundary |
 | Task decomposition, state, and ordering | **This set** | Owns |
 | Agent roles and evaluator independence mechanics | **This set** | Owns |
@@ -281,6 +282,7 @@ Example-based tests confirm the cases an author imagined. Properties confirm the
 - Emit one Evidence Reference per satisfied VCC, carrying the named check, the recorded result, and the surface (always `authoring` during execution)
 - Forbid emitting an Evidence Reference for a check that was not run in this task
 - Forbid an Evidence Reference whose recorded result is an assertion that a result exists
+- For a task that adds or changes a diagram, run the projection check named by the authoring set's canvas-render contract and surface its node, edge, and cluster counts plus zero cost fields; a visual confirmation is not a recorded result, and a non-projecting class records zero rather than omitting the counts
 
 ## Checkpoint & Recovery
 
@@ -504,6 +506,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] Budget consumption recorded against all four bounds
 - [ ] Verdict issued by the Evaluator, never the Implementer
 - [ ] Evidence Reference emitted per satisfied VCC, with surface recorded
+- [ ] For diagram-bearing tasks, projection check run and its node, edge, cluster, and zero-cost counts surfaced
 - [ ] State transition recorded with the role that made it and a reason where terminal
 
 **Post-Run**:

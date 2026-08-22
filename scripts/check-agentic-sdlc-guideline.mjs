@@ -36,7 +36,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.16\.0"\n/);
+assert.match(source, /\nversion: "1\.17\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -44,6 +44,16 @@ assert.match(source, /\nlocal_rung: "spec-complete"\n/);
 assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
 assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.match(
+  source,
+  /projection check named by the authoring set's canvas-render contract/,
+  "diagram-bearing tasks must emit a projection check as an Evidence Reference",
+);
+assert.match(
+  source,
+  /\| Diagram identity, class, notation, and canvas projection rules \|/,
+  "the boundary table must name the diagram companion modules as the owner of diagram rules",
+);
 assert.ok(
   productionReleaseLifecycle.startsWith("---\n"),
   "production-release lifecycle frontmatter must be present",

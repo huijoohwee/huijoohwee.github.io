@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const guidelineUrl = new URL("../guidelines/agentic-sdlc-guidelines.md", import.meta.url);
+const authoringGuidelineUrl = new URL("../guidelines/prd-tad-adr-guidelines.md", import.meta.url);
 const productionReleaseLifecycleUrl = new URL(
   "../guidelines/agentic-sdlc-production-release-lifecycle.md",
   import.meta.url,
@@ -9,24 +10,29 @@ const productionReleaseLifecycleUrl = new URL(
 const conformanceRuntimeUrl = new URL("../guidelines/agentic-sdlc-conformance-runtime.md", import.meta.url);
 const integrationOrderUrl = new URL("../guidelines/agentic-sdlc-integration-order.md", import.meta.url);
 const specificationChainUrl = new URL("../guidelines/agentic-sdlc-specification-chain.md", import.meta.url);
+const artifactContinuityUrl = new URL("../guidelines/agentic-sdlc-artifact-continuity.md", import.meta.url);
 const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-dependency-admission.md", import.meta.url);
 const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
 const scopedLaneAdmissionUrl = new URL("../guidelines/agentic-sdlc-scoped-lane-admission.md", import.meta.url);
 const repositoryRuntimeReadinessUrl = new URL("../guidelines/agentic-sdlc-repository-runtime-readiness.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
+const authoringGuideline = fs.readFileSync(authoringGuidelineUrl, "utf8");
 const productionReleaseLifecycle = fs.readFileSync(productionReleaseLifecycleUrl, "utf8");
 const conformanceRuntime = fs.readFileSync(conformanceRuntimeUrl, "utf8");
 const integrationOrder = fs.readFileSync(integrationOrderUrl, "utf8");
 const specificationChain = fs.readFileSync(specificationChainUrl, "utf8");
+const artifactContinuity = fs.readFileSync(artifactContinuityUrl, "utf8");
 const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const scopedLaneAdmission = fs.readFileSync(scopedLaneAdmissionUrl, "utf8");
 const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
 const lines = source.split("\n");
+const authoringGuidelineLines = authoringGuideline.split("\n");
 const productionReleaseLifecycleLines = productionReleaseLifecycle.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
 const integrationOrderLines = integrationOrder.split("\n");
 const specificationChainLines = specificationChain.split("\n");
+const artifactContinuityLines = artifactContinuity.split("\n");
 const upstreamAdmissionLines = upstreamAdmission.split("\n");
 const cloudCollaborationLines = cloudCollaboration.split("\n");
 const scopedLaneAdmissionLines = scopedLaneAdmission.split("\n");
@@ -36,7 +42,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.17\.0"\n/);
+assert.match(source, /\nversion: "1\.18\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -53,6 +59,14 @@ assert.match(
   source,
   /\| Diagram identity, class, notation, and canvas projection rules \|/,
   "the boundary table must name the diagram companion modules as the owner of diagram rules",
+);
+assert.ok(authoringGuideline.startsWith("---\n"), "authoring guideline frontmatter must be present");
+assert.match(authoringGuideline, /\nversion: "1\.10\.0"\n/);
+assert.match(authoringGuideline, /\.\/agentic-sdlc-artifact-continuity\.md/);
+assert.equal(
+  authoringGuideline.split("## Artifact Continuity Authoring Seam").length - 1,
+  1,
+  "authoring guideline must define the artifact continuity seam exactly once",
 );
 assert.ok(
   productionReleaseLifecycle.startsWith("---\n"),
@@ -84,6 +98,77 @@ assert.ok(specificationChain.startsWith("---\n"), "specification-chain frontmatt
 assert.match(specificationChain, /\nversion: "1\.0\.0"\n/);
 assert.match(specificationChain, /\nuniversal_scope: "true"\n/);
 assert.ok(specificationChainLines.length - 1 < 600, "specification-chain module must remain below 600 lines");
+assert.ok(artifactContinuity.startsWith("---\n"), "artifact-continuity frontmatter must be present");
+assert.match(artifactContinuity, /\nversion: "1\.0\.0"\n/);
+assert.match(artifactContinuity, /\nschema: "agentic-artifact-continuity\/v1"\n/);
+assert.match(artifactContinuity, /\nuniversal_scope: "true"\n/);
+assert.match(artifactContinuity, /\nruntime_readiness_policy: "fail-closed"\n/);
+assert.ok(artifactContinuityLines.length - 1 < 600, "artifact-continuity module must remain below 600 lines");
+assert.match(source, /\.\/agentic-sdlc-artifact-continuity\.md/);
+
+for (const heading of [
+  "## Semantic Separation",
+  "## Continuity Graph",
+  "## Continuity Identity and Revision Contract",
+  "## CID-to-RAO Coverage Seam",
+  "## Role-Action-Outcome Contract",
+  "## Artifact Companion Contract",
+  "## Evidence and Demonstration",
+  "## Re-derivation and Successor Feedback",
+  "## CID Directive Matrix",
+  "## Conformance Findings",
+  "## Validation Checklist",
+]) {
+  assert.equal(
+    artifactContinuity.split(heading).length - 1,
+    1,
+    `${heading} must occur exactly once in artifact continuity`,
+  );
+}
+
+for (const requirement of [
+  "CID is the policy plane",
+  "Every executable Directive is implemented by at least one RAO Step",
+  "one Role, one atomic Action, and one measurable Outcome",
+  "demonstration as evidence presentation rather than evidence creation",
+  "successor Context",
+  "unjoined-directive",
+  "ungrounded-rao-step",
+  "non-atomic-action",
+  "unevidenced-outcome",
+  "stale-continuity-join",
+  "history-rewritten",
+  "requirements.md",
+  "design.md",
+  "tasks.md",
+  "demo.md",
+  "$GITHUB_ROOT/agentic-canvas-os/todo/YYYY-MM/<context>.md",
+]) {
+  assert.match(
+    artifactContinuity,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `artifact continuity must include ${requirement}`,
+  );
+}
+
+for (const requirement of [
+  "PRD owns the product Context",
+  "TAD consumes",
+  "ADR records one grounded decision",
+  "bounded RAO Steps",
+  "PRD-to-TAD coverage",
+  "Directive-to-RAO coverage",
+  "artifact continuity before baseline sign-off",
+]) {
+  assert.match(
+    authoringGuideline,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `authoring guideline must include ${requirement}`,
+  );
+}
+
+assert.match(source, /CID-to-RAO artifact continuity/);
+assert.match(source, /unjoined or stale CID-to-RAO lineage/);
 assert.ok(upstreamAdmissionLines.length - 1 < 600, "upstream-admission module must remain below 600 lines");
 assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
@@ -634,4 +719,4 @@ for (const phrase of [
   assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
 }
 
-console.log(`agentic SDLC guideline contract ok (${lines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);
+console.log(`agentic SDLC guideline contract ok (${lines.length - 1} lines; authoring ${authoringGuidelineLines.length - 1} lines; artifact-continuity ${artifactContinuityLines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "1.9.0"
-date: "2026-08-20"
+version: "1.10.0"
+date: "2026-08-22"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -32,6 +32,7 @@ universal_scope: "true"
 - `overview` — what PRD/TAD are and the governing standards
 - `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
+- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, RAO grounding, revision joins, and execution handoff
 - `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
 - `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
 - `time-to-value` — binding TTV metric obligation -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
@@ -55,6 +56,8 @@ universal_scope: "true"
 **Modular set**: this document is the always-loaded index and binding layer. Each `##` section below keeps its anchor and states only what binds a PRD, TAD, or ADR directly; the full protocol for a section lives in the module its entry names. Every file in this set stays under 600 lines and carries one responsibility, so a single-phase task loads one module rather than the whole set.
 
 **Companion sets**: this document is the authority for **authoring** — what a PRD, TAD, or ADR must contain and how conformance is named. Execution — task decomposition, agent roles and independence, tool blast radius, per-task budgets, and run state — is owned by the **Agentic SDLC Guidelines** companion set. The **diagram domain** — diagram identity, class selection, notation, labelling, canvas projection, and templates — is owned by the three diagram companion modules named in the Module Index. No set restates another; each names the others where a rule crosses the boundary, and the conformance vocabulary is the union of their enumerations. A claim about execution, or about a diagram's canvas-renderability, sourced from this document alone is incomplete.
+
+**Continuity companion**: the [Artifact Continuity Module](./agentic-sdlc-artifact-continuity.md) owns the universal CID-to-RAO seam, companion-artifact joins, outcome evidence, revision freshness, and successor feedback. This authoring set supplies its PRD, TAD, and ADR inputs; it does not redefine the continuity vocabulary.
 
 ---
 
@@ -158,6 +161,21 @@ Every directive in this guideline set is expressed with a uniform, project-agnos
 
 ### Sorting
 Each entry is organized alphabetically (A→Z) for clarity and neutrality.
+
+---
+
+## Artifact Continuity Authoring Seam
+
+The [Artifact Continuity Module](./agentic-sdlc-artifact-continuity.md) owns the reusable seam and its complete validation contract. PRD owns the product Context, Intent, Directives, normative criteria, and VCCs. TAD consumes that exact PRD revision and owns the structural response. ADR records one grounded decision and its consequences. The execution companion consumes their joined projection as bounded RAO Steps; evidence, demonstration, and successor planning remain downstream companions rather than authoring phases.
+
+**Directives**:
+- Declare stable continuity IDs and exact revisions across PRD, TAD, and ADR; forbid prose, filename, or co-location joins
+- Close PRD-to-TAD coverage, TAD grounding, and applicable ADR joins before deriving RAO Steps
+- Re-run Directive-to-RAO coverage and affected re-derivation after any upstream revision
+- Require joined independent evidence before satisfaction or readiness advances; forbid narrative or self-graded completion
+- Reuse the Artifact Continuity Module's findings and reference projections; forbid a parallel continuity vocabulary
+
+**Authoring-to-execution gate**: advance only when PRD-to-TAD coverage, TAD grounding, Directive-to-RAO coverage, RAO grounding, revision freshness, and evaluator independence are complete. An absent or failing join yields a typed finding and a blocked transition, never an inferred approval.
 
 ---
 
@@ -386,6 +404,7 @@ The separately loadable [Conformance Findings module](./prd-tad-adr-verification
 The separately loadable [Validation Checklist module](./prd-tad-adr-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists, each item mapped to a Finding Type. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
+- Require current artifact continuity before baseline sign-off: CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module
 - Discharge the alignment gate before baseline sign-off; zero `blocker` findings is the exit condition, and `major` and `minor` findings are resolved or formally tracked with an owner
 - Compare the finding set against the prior run on every baselined change; a new `blocker` is a regression, not a note
 

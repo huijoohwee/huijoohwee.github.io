@@ -54,13 +54,9 @@ jobs:
           AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
           GH_TOKEN: ${{ github.token }}
         run: |
-          if ! node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
+          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
             --event-path="$GITHUB_EVENT_PATH" \
-            --json > "$RUNNER_TEMP/git-guidelines-review-authority.json"; then
-            node -e 'const fs = require("node:fs"); const result = JSON.parse(fs.readFileSync(process.argv[1], "utf8")); console.error(result.error?.message || "Review authority verification failed.");' \
-              "$RUNNER_TEMP/git-guidelines-review-authority.json"
-            exit 1
-          fi
+            --json > "$RUNNER_TEMP/git-guidelines-review-authority.json"
       - name: Materialize current pull-request review authority
         if: github.event_name == 'pull_request'
         run: |
@@ -90,13 +86,9 @@ jobs:
           test -z "$(git status --porcelain=v1 --untracked-files=all)"
           test "$(git -C agentic-canvas-os rev-parse HEAD)" = "$AUTHORITY_SOURCE_SHA"
           test -z "$(git -C agentic-canvas-os status --porcelain=v1 --untracked-files=all)"
-          if ! node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
+          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
             --event-path="$GITHUB_EVENT_PATH" \
-            --json > "$RUNNER_TEMP/git-guidelines-terminal-review-authority.json"; then
-            node -e 'const fs = require("node:fs"); const result = JSON.parse(fs.readFileSync(process.argv[1], "utf8")); console.error(result.error?.message || "Terminal review authority verification failed.");' \
-              "$RUNNER_TEMP/git-guidelines-terminal-review-authority.json"
-            exit 1
-          fi
+            --json > "$RUNNER_TEMP/git-guidelines-terminal-review-authority.json"
           node scripts/materialize-git-guidelines-review-authority.mjs \
             --event-path="$GITHUB_EVENT_PATH" \
             --verification-path="$RUNNER_TEMP/git-guidelines-terminal-review-authority.json" \

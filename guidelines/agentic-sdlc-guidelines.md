@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.17.0"
-date: "2026-08-17"
+version: "1.18.0"
+date: "2026-08-22"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -25,7 +25,6 @@ lifecycle_status: "proposed"
 - **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
 ## Module Index
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
-- `module-index` — this index
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
@@ -48,7 +47,7 @@ lifecycle_status: "proposed"
 - `anti-pattern-guards` — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
 - [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
-- [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation
+- [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./agentic-sdlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback
 - `specification-chain-phases` — the mandatory execution seam over that chain
 ## Boundary with the Authoring Set
 The two sets meet at a single seam: **a baselined document pair with derived VCCs on one side, an executable task list with recorded Evidence References on the other.**
@@ -61,6 +60,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | VCC primitive and Evidence Reference shape | Authoring set | Produces Evidence References during execution |
 | Diagram identity, class, notation, and canvas projection rules | Authoring set's diagram companion modules | Obeys; emits the projection check result as an Evidence Reference |
 | Lane topology and Deploy Boundary | Authoring set | Obeys; never promotes across a boundary |
+| CID-to-RAO artifact continuity | Shared continuity module | Verifies joined planning, authoring, execution, demonstration, and successor references |
 | Task decomposition, state, and ordering | **This set** | Owns |
 | Agent roles and evaluator independence mechanics | **This set** | Owns |
 | Tool permissions and blast radius | **This set** | Owns |
@@ -73,6 +73,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
 - Forbid either set redefining a Finding Type the other owns; the conformance vocabulary is the union of the two enumerations
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
+- Apply the Artifact Continuity companion to every authoring-to-execution handoff; forbid dispatch from an unjoined or stale CID-to-RAO lineage
 - Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
 ## Agent Roles & Independence
 Four execution roles. Roles are **functions**, not people and not necessarily separate processes — except where the independence rule says otherwise.

@@ -241,7 +241,7 @@ const requiredSections = [
   "### Collaboration Identity & Scoped Lane Admission",
   "## Human-in-the-Loop Gates",
   "## Dependency-Ordered Integration",
-  "## Canonical Integration & Recoverable Cleanup",
+  "## Atomic Lane Convergence",
   "## End-to-End Release Lifecycle Protocol",
   "## Runtime Readiness Enforcement",
   "## Execution Conformance Findings",
@@ -257,13 +257,34 @@ for (const heading of requiredSections) {
 }
 
 const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
-const cleanupStart = source.indexOf("## Canonical Integration & Recoverable Cleanup");
+const convergenceStart = source.indexOf("## Atomic Lane Convergence");
 assert.ok(
-  cleanupStart >= 0 && releaseStart > cleanupStart,
-  "recoverable canonical cleanup must precede the release seam",
+  convergenceStart >= 0 && releaseStart > convergenceStart,
+  "atomic lane convergence must precede the release seam",
 );
-const cleanupPolicy = source.slice(cleanupStart, releaseStart);
+const convergencePolicy = source.slice(convergenceStart, releaseStart);
+for (const term of ["GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "origin/main"]) {
+  assert.doesNotMatch(
+    convergencePolicy,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `atomic lane convergence must not contain adapter term ${term}`,
+  );
+}
 for (const requirement of [
+  "one atomic top-level convergence controller",
+  "replaceable internal phase adapters",
+  "Stable Plan Identity",
+  "observational noise excluded",
+  "one exact Operator authorization",
+  "require new authorization only when",
+  "Retain or renew current authority",
+  "successor creation plus task-bound authority continuation in one atomic transition",
+  "coordination-only content revisions",
+  "projection-only blocker",
+  "minimal active set",
+  "at most one mutation-capable projection",
+  "`unresumable-run`",
+  "`duplicate-release-controller`",
   "zero file diff alone does not prove that unique history is disposable",
   "protected review and integration adapter",
   "Forbid unrecoverable discard",
@@ -272,9 +293,9 @@ for (const requirement of [
   "canonical local ref equals the canonical remote ref",
 ]) {
   assert.match(
-    cleanupPolicy,
+    convergencePolicy,
     new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
-    `canonical cleanup policy must include ${requirement}`,
+    `atomic lane convergence must include ${requirement}`,
   );
 }
 const runtimeReadinessStart = source.indexOf("## Runtime Readiness Enforcement");

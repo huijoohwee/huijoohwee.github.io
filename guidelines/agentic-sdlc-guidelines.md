@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.16.0"
-date: "2026-08-17"
+version: "1.18.0"
+date: "2026-08-23"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -37,8 +37,10 @@ lifecycle_status: "proposed"
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
+- `global-release-control-rule` — universal control boundary for every enrolled repository and deployment target
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `canonical-integration--recoverable-cleanup` — protected canonical convergence, zero-delta proof, recoverable stale-ref retirement, and metadata pruning
+- `minimal-active-lane-convergence` — smallest justified active set, projection neutrality, terminal convergence, and coordination-churn control
 - [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
@@ -152,6 +154,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
 - Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
+
 ### Granularity
 A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.
 | Signal | Too small | Right-sized | Too large |
@@ -314,6 +317,22 @@ Some decisions an agent must not make alone, regardless of confidence.
 - Forbid bundling an unrelated change into a gated task while waiting; a blocked task stays blocked
 - Record the Operator decision reference on the transition it authorises, so the authorisation is auditable later
 
+## Global Release-Control Rule
+
+Every repository and deployment target governed by this set is subject to one global release-control rule: **only a target-scoped, policy-selected protected integration controller may advance a canonical release frontier or initiate delivery from it.** This is a functional rule, not a Git-, branch-, CI-, cloud-, or vendor-specific mechanism.
+
+**Directives**:
+
+- Apply the rule to every enrolled repository, mirror, package, generated projection, and deployment target; a profile may exclude a target only through an explicit, versioned, auditable policy record that names its alternate control boundary and evaluator
+- Map the functional identities `canonical remote frontier`, `canonical local mirror`, `candidate`, `protected integration controller`, and `delivery controller` through replaceable repository adapters; names such as `main`, `origin/main`, pull request, or a particular provider are examples only, never global authority
+- Forbid direct canonical writes, force updates, history rewrites, raw refspec publication, and deployment triggered solely by a merge, label, branch name, or local checkout state; each is a `canonical-control-bypass` finding at `blocker` severity
+- Require protected integration to consume one immutable candidate, current policy, independent required checks, admitted ownership, and a digest-bound integration receipt; deployment additionally requires the lifecycle's exact target-scoped authorization and joined release receipts
+- Permit canonical local synchronization only when the local mirror is clean, exclusively owned, and proven to reach the fetched canonical remote frontier by fast-forward or exact tree-equivalence under a repository adapter; divergence, unexplained files, or an unverified remote projection blocks synchronization
+- Treat a canonical remote advance as invalidating every unconsumed candidate and authorization bound to an earlier frontier; retire or reseal the affected run rather than retargeting it
+- Require a deterministic global evaluator to report enrolled-target coverage, control adapter identity, policy revision, and a zero/non-zero result; missing enrollment, an unresolved exception, or a nonconforming target blocks release for that target without granting authority over unrelated targets
+
+This rule is adaptive only in its adapter and evidence scale. It does not require a shared repository host, branch convention, deployment provider, or release cadence, and it never lets a smaller change bypass the control boundary.
+
 ## Dependency-Ordered Integration
 
 The separately loadable [Dependency-Ordered Integration Module](./agentic-sdlc-integration-order.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
@@ -358,6 +377,30 @@ Recoverable Retirement = canonical inclusion or verified recovery object + clean
 - Delete a stale local candidate ref only after canonical inclusion is proven or after its verified recovery locator and digest are recorded in the cleanup receipt; keep every unrelated, active, ambiguous, open-review, or value-bearing ref unchanged
 - Make cleanup adaptive to the observed inventory: a no-worktree lane closes as a ref-only operation, an already-integrated zero-delta lane closes without a synthetic merge, and a value-bearing lane remains preserved until its own protected integration or explicit recoverable retirement completes
 - Emit one terminal receipt that binds the canonical remote and local revisions, zero file delta, clean status, removed worktree identities, deleted local refs, pruned metadata, retained recovery locators, and untouched out-of-scope inventory; forbid reporting closure unless the canonical local ref equals the canonical remote ref and every requested effect is evidenced
+
+## Minimal Active-Lane Convergence
+
+Isolation is a safety boundary, not a retention policy. Keep a logical work unit active only while it has a present mutation, decision, integration, or preservation purpose; converge every terminal or superseded unit out of the active inventory as soon as recoverable retirement is proven.
+
+This module uses functional identities rather than source-control products:
+
+```
+Logical work unit = authoritative claim + semantic scope + value identity
+Projection = replaceable materialization of that unit for mutation, review, coordination, or recovery
+Minimal active set = every keep item with a current evidenced purpose, and no other item
+```
+
+A repository profile may materialize a projection as a workspace, source ref, review record, lease, process, or another mechanism. A profile without one of those mechanisms records it as `not-applicable`; it must not synthesize a branch, worktree, review request, or lease merely to resemble another implementation.
+
+**Directives**:
+- Classify every non-canonical logical work unit and each of its projections as `keep`, `port`, `drop`, or `ambiguous`: `keep` has current mutation authority, an undecided immutable candidate, or uniquely preserved incomplete value; `port` has value that must reach its declared owner before retirement; `drop` has proven canonical inclusion or verified recoverable retirement and no current authority or dependency; `ambiguous` blocks cleanup until independently resolved
+- Minimize from evidence, never from a preset count: retain every disjoint current authority and every value-bearing parked unit, while forbidding a redundant active projection whose only rationale is age, naming, prior activity, or precaution unsupported by unique value or current authority; report `redundant-active-projection` at `major` severity
+- Permit at most one mutation-capable workspace projection for one current authority boundary; additional read-only, review, recovery, or controller projections require a named adapter purpose and must not acquire parallel mutation authority
+- Re-evaluate the complete active inventory after integration, review closure, abandonment, supersession, authority expiry, or recovery creation; a terminal `drop` item left active beyond the profile's bounded closeout window is `terminal-lane-residual` at `major` severity
+- Derive retirement only through `retire(claim)` and Canonical Integration & Recoverable Cleanup proof; a merge label, closed review, detached workspace, expired lease, zero file delta, or canonical advancement is an observation, never sufficient retirement authority
+- Keep coordination state in its authoritative metadata or ledger projection; forbid creating a content revision solely to renew a lease, refresh a status, or trigger orchestration when an equivalent metadata operation exists. Where a constrained adapter requires a trigger revision, mark it explicitly non-value-bearing and ensure integration does not preserve it as distinct product value; otherwise report `coordination-revision-churn` at `minor` severity
+- Remove eligible mutable projections through their bounded adapters while allowing immutable audit identities or recovery locators to remain archived and explicitly non-authoritative; archival retention must not keep an item in the active set
+- Require a deterministic evaluator to emit the exact inventory, classification, purpose, unique-value result, authority result, dependency result, adapter disposition, and cleanup receipt for every item; it exits nonzero for any `ambiguous`, redundant, or overdue terminal item without blocking unrelated disjoint work
 
 ## End-to-End Release Lifecycle Protocol
 
@@ -413,6 +456,10 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Scoped lane admission | `collateral-lane-mutation` | `blocker` |
 | Scoped lane admission | `admission-runtime-conflation` | `major` |
 | Scoped lane admission | `candidate-lane-orphaned` | `major` |
+| Global release control | `canonical-control-bypass` | `blocker` |
+| Lane convergence | `redundant-active-projection` | `major` |
+| Lane convergence | `terminal-lane-residual` | `major` |
+| Lane convergence | `coordination-revision-churn` | `minor` |
 | Task model | `state-without-reason` | `minor` |
 | Task model | `oversized-task` | `minor` |
 | Execution contract | `unsurfaced-result` | `major` |
@@ -473,6 +520,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery` |
 | Escalation | `human-in-the-loop-gates` |
+| Lane closeout | `minimal-active-lane-convergence`, `canonical-integration--recoverable-cleanup` |
 | Release handoff | `dependency-ordered-integration`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
@@ -533,6 +581,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **State reconciled**: state changes are bounded and idempotent, direct readback matches expected counts and content, and code and state rollback dispositions remain separate
 - [ ] **Transports proven separately**: immutable origin, required public routes, authoritative state readback, browser behavior, client-cache convergence, and publication each carry their own evidence where applicable
 - [ ] **Cleanup ownership proven**: only clean, integrated, completion-proven lanes were removed; active, parked, dirty, divergent, and unrelated work remains preserved
+- [ ] **Minimal active set converged**: every non-canonical work unit and projection is classified as `keep`, `port`, `drop`, or `ambiguous`; each retained item has current evidenced purpose, every eligible terminal item has bounded cleanup evidence, and coordination-only state creates no avoidable content revision
 - [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
 
 ## Anti-Pattern Guards
@@ -575,6 +624,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 ❌ Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics
 → ✅ A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters
+
+❌ Keeping every historical lane, workspace, ref, review, lease, or coordination-only revision active because isolation was once required, or forcing consolidation to an arbitrary count while unique value remains
+→ ✅ The smallest evidence-justified active set: current authorities and uniquely value-bearing items stay isolated; terminal, superseded, and redundant projections converge through recoverable retirement
 
 ❌ The same approach retried with cosmetic variations until the budget is gone
 → ✅ Two failures trigger root-cause diagnosis and a different approach; the third distinct failure escalates

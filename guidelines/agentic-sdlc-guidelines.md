@@ -155,7 +155,6 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
 - Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
-
 ### Granularity
 A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.
 | Signal | Too small | Right-sized | Too large |
@@ -238,7 +237,6 @@ Capability is granted per task, not per session, and scales to reversibility.
 - Forbid boundary-crossing capability in any task; promotion is the Deploy Boundary's job, and a task that reaches a delivered surface is a `deploy-boundary-breach` under the authoring set's enumeration
 - Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission
 - State the declared write scope before dispatch; a write outside it is an `out-of-scope-write` finding
-
 ## Per-Task Budgets
 
 Every task carries four bounds and a circuit-breaker. An unbounded task is the execution-domain equivalent of an unbounded loop.
@@ -258,18 +256,15 @@ Every task carries four bounds and a circuit-breaker. An unbounded task is the e
 - Record consumption against every bound in the return, whether or not the bound was approached; unmeasured consumption cannot be budgeted next time
 - Aggregate per-task consumption into a per-run total and compare it to the estimate in the specification's token budget; a run exceeding its specification's budget is an economics finding, not a surprise
 - Keep retries idempotent: a retried task must not double-apply its own prior partial work
-
 ## Verification Strategy
 
 Execution produces the Evidence References the Readiness Ladder consumes. Weak verification therefore caps the achievable rung no matter how much code is written.
-
 ### Obligations Per Task
 
 - Every task states its **named check** before dispatch, phrased as it is invocable
 - Every code-bearing task adds or extends automated tests covering the behaviour it introduces
 - Every bug-fixing task first adds a check that fails on the unfixed state; a fix with no failing-first check is a `fix-without-witness` finding
 - Every task runs the project's existing verification lane, not only its own new check; a task that passes its own check while breaking a neighbour's is a regression the Evaluator must see
-
 ### Property-Based Obligations
 
 Example-based tests confirm the cases an author imagined. Properties confirm the ones they did not.
@@ -279,14 +274,12 @@ Example-based tests confirm the cases an author imagined. Properties confirm the
 - Pair every ordering, dedup, or aggregation rule with an invariant or metamorphic property
 - State each property's class explicitly — round trip, invariant, metamorphic, idempotence, confluence, error condition — so coverage gaps are visible by class rather than by count
 - Set a minimum iteration count per property and keep shrinking enabled; a property run once is an example test wearing a costume
-
 ### Evidence Emission
 
 - Emit one Evidence Reference per satisfied VCC, carrying the named check, the recorded result, and the surface (always `authoring` during execution)
 - Forbid emitting an Evidence Reference for a check that was not run in this task
 - Forbid an Evidence Reference whose recorded result is an assertion that a result exists
 - For a task that adds or changes a diagram, run the projection check named by the authoring set's canvas-render contract and surface its node, edge, and cluster counts plus zero cost fields; a visual confirmation is not a recorded result, and a non-projecting class records zero rather than omitting the counts
-
 ## Checkpoint & Recovery
 
 Long runs outlive working context. A run that cannot resume is a run that must restart, and restarting re-spends every token already spent.
@@ -298,7 +291,6 @@ Long runs outlive working context. A run that cannot resume is a run that must r
 - Treat a partially applied task as `failed` with recorded partial state, not as `in-progress`, so recovery decides explicitly whether to resume or re-derive
 - Forbid a recovery path that re-dispatches a `verified` task; re-verification is a re-derivation and resets the task explicitly
 - Record enough in each transition that a reader who followed none of the run can reconstruct what happened and why
-
 ## Human-in-the-Loop Gates
 
 Some decisions an agent must not make alone, regardless of confidence.
@@ -318,7 +310,6 @@ Some decisions an agent must not make alone, regardless of confidence.
 - Present a gate with the decision, the options, and the consequence of each; forbid escalating with a question the Operator cannot answer from what was surfaced
 - Forbid bundling an unrelated change into a gated task while waiting; a blocked task stays blocked
 - Record the Operator decision reference on the transition it authorises, so the authorisation is auditable later
-
 ## Global Release-Control Rule
 
 Every repository and deployment target governed by this set is subject to one global release-control rule: **only a target-scoped, policy-selected protected integration controller may advance a canonical release frontier or initiate delivery from it.** This is a functional rule, not a Git-, branch-, CI-, cloud-, or vendor-specific mechanism.
@@ -334,7 +325,6 @@ Every repository and deployment target governed by this set is subject to one gl
 - Require a deterministic global evaluator to report enrolled-target coverage, control adapter identity, policy revision, and a zero/non-zero result; missing enrollment, an unresolved exception, or a nonconforming target blocks release for that target without granting authority over unrelated targets
 
 This rule is adaptive only in its adapter and evidence scale. It does not require a shared repository host, branch convention, deployment provider, or release cadence, and it never lets a smaller change bypass the control boundary.
-
 ## Dependency-Ordered Integration
 
 The separately loadable [Dependency-Ordered Integration Module](./agentic-sdlc-integration-order.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
@@ -358,7 +348,6 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Materialize the declared locked dependency closure inside each isolated lane; retry only the same fenced operation after an environment-only bootstrap
 - Require runtime convergence when a unit declares runtime impact; keep source, exact-canonical, runtime, and delivery evidence as separate receipts
 - Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
-
 ## Atomic Lane Convergence
 
 One atomic top-level convergence controller owns a logical work unit from observed inventory to terminal closure. Its externally stable contract is provider-, repository-, branch-, workspace-, and deployment-agnostic; repository profiles supply replaceable internal phase adapters for admission, preservation, review, integration, authority continuation, recovery, retirement, cleanup, and verification without exposing those phases as a chain of separately authorized top-level controllers.
@@ -374,13 +363,10 @@ Stable Plan Identity = intended effect class + exact subject set + immutable val
 - Consume one exact Operator authorization for its sealed bounded effect envelope and every idempotent same-effect continuation inside that run; require new authorization only when the effect class, subject set, destructive reach, or externally visible consequence expands
 - Retain or renew current authority throughout an authorized run, and perform successor creation plus task-bound authority continuation in one atomic transition and receipt; a recovery that leaves a valid successor but stale task binding is incomplete
 - Classify file delta and unique history separately because zero file diff alone does not prove that unique history is disposable; route value-bearing change through the protected review and integration adapter, and preserve all other value in a verified immutable recovery object before retirement
-- Keep coordination in authoritative metadata when an equivalent metadata operation exists; forbid coordination-only content revisions, synthetic rebases, or empty commits whose sole purpose is renewing, waking, fencing, or reprojecting a controller
 - Make adapters adaptive to observed inventory: absent projections are `not-applicable`, an integrated zero-delta unit closes without a synthetic merge, and disjoint work continues independently without blocking unrelated disjoint work; functional identities, typed ports, and receipts remain universal while mechanisms vary
-- Derive retirement only through `retire(claim)` after protected canonical inclusion or verified immutable recovery: retain immutable audit identities or recovery locators only as archived and explicitly non-authoritative, and keep coordination state in its authoritative metadata or ledger projection
-- Forbid unrecoverable discard; remove an eligible projection through its adapter without force, prune only stale worktree-registration and remote-tracking metadata, and give object pruning, remote deletion, and recovery retirement separate irreversible authority
-- If any recovery produces another projection-only blocker for the same intended effect, stop the run, preserve value, and report `unresumable-run`; introducing another top-level recovery controller reports `duplicate-release-controller` rather than authorizing an indefinite chain
+- Derive retirement only through `retire(claim)` after protected canonical inclusion or verified immutable recovery: retain immutable audit identities or recovery locators only as archived and explicitly non-authoritative; keep coordination state in its authoritative metadata or ledger projection, forbid coordination-only content revisions, synthetic rebases, or empty commits, and give object pruning, remote deletion, and recovery retirement separate irreversible authority
+- Forbid unrecoverable discard; remove an eligible projection through its adapter without force and prune only stale worktree-registration and remote-tracking metadata; if recovery produces another projection-only blocker for the same intended effect, stop, preserve value, and report `unresumable-run`, while another top-level recovery controller reports `duplicate-release-controller`
 - Emit one terminal receipt binding plan and authorization identities, canonical remote/local revisions, zero file delta, final minimal inventory, removed and retained projections, recovery locators, untouched out-of-scope work, and every adapter effect; closure requires the canonical local ref equals the canonical remote ref and no requested effect remains pending
-
 ## End-to-End Release Lifecycle Protocol
 
 The separately loadable [End-to-End Production Release Lifecycle Module](./agentic-sdlc-production-release-lifecycle.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
@@ -388,18 +374,13 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 **Directives**:
 - Treat protected integration as Integration Receipt authority only; it never creates forward-deployment authority
 - Seal one immutable candidate from the exact final Release Frontier, including source, transitive dependencies, policy, schema, catalog, generated projections, state contract, target, review, artifact, manifest, and rollback identities
-- Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale recorded
-- Preserve every `keep` item untouched, require every `port` item to reach protected integration before the candidate can claim frontier closure, and allow `drop` only after exact no-remaining-value proof plus the cleanup authority that removes it
+- Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale; preserve `keep`, integrate `port` before frontier closure, and allow `drop` only after exact no-remaining-value proof plus cleanup authority
 - End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
-- Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment
-- Fence one canonical release-owner checkout per repository from candidate sealing until the authorization interaction terminates or the run is retired; it must stay attached to the exact protected revision used for review, and branch switching, repurposing, or local-ref drift in that owner invalidates prompt readiness until the owner is reattached, refetched, and revalidated
+- Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment; fence one canonical release-owner checkout per repository to the exact protected review revision until the interaction terminates or the run is retired, and treat branch, purpose, or local-ref drift as invalidating prompt readiness until reattachment, refetch, and revalidation
 - Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
-- Keep interaction, authority, deployment, state reconciliation, verification, publication, rollback, and cleanup as replaceable adapter ports with typed inputs and receipts
-- Invalidate the affected receipt chain on any identity movement; cancel or retire stale unapproved runs rather than retargeting, rebuilding, or reusing authorization
+- Keep interaction, authority, deployment, state reconciliation, verification, publication, rollback, and cleanup as replaceable typed adapter ports; invalidate the affected receipt chain on identity movement, and cancel or retire stale unapproved runs rather than retargeting, rebuilding, or reusing authorization
 - Verify immutable deployment identity, authoritative state readback, public transports, browser behavior, and client-cache convergence as separate claims where the target profile requires them
-- Publish mirrors only after the Live Verification Receipt exists; remove only clean, integrated, completion-proven task lanes and preserve all unrelated work
-- Require the repository-owned deterministic evaluator to exit zero only when the receipt chain for the claimed stage is joined and terminal
-
+- Publish mirrors only after the Live Verification Receipt exists; remove only clean, integrated, completion-proven task lanes, preserve unrelated work, and require the repository-owned deterministic evaluator to exit zero only for a joined terminal receipt chain
 ## Runtime Readiness Enforcement
 
 Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./agentic-sdlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract; the [Repository Runtime Readiness Module](./agentic-sdlc-repository-runtime-readiness.md) owns the bounded local-first repository audit profile.
@@ -410,7 +391,6 @@ Runtime readiness is a derived claim over one immutable execution input and its 
 - Keep scoped authoring admission, runtime readiness, and lifecycle readiness as independent results; never turn preserved disjoint work or an occupied runtime into a false global verdict
 - Emit `runtime-readiness-unproven` at `blocker` severity when a required receipt, join, budget, check, evaluator, dependency, or boundary proof is absent or stale
 - Require repository-owned stage gates to consume operation-derived evidence and emit digest-bound receipts for admission, review, integration, runtime, candidate, authorization, deployment, and publication; expose a deterministic evaluator command that exits zero only when every required proof joins, and forbid `npx`, `latest`, or dynamic resolution from creating policy identity, gate authority, or runtime-readiness proof
-
 ## Execution Conformance Findings
 
 The **execution-domain** half of the conformance vocabulary. The recording contract, severity assignment, deduplication key, ordering, and determinism requirements are the authoring set's and are reused unchanged; only the type enumeration is extended here.
@@ -485,7 +465,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - Anchor every finding to the Rule ID of the violated rule in this set, per the authoring set's Rule Identity & Classification
 - Report a zero count for every type with no finding; an omitted row is indistinguishable from an unchecked rule
 - Forbid a type in this enumeration with no rule in this set that can raise it
-
 ## Execution Load Budget
 
 | Stage | Sections to load |
@@ -505,7 +484,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 **Directives**:
 - Load by section anchor for the current stage; forbid loading the whole set as a precondition for a single-stage action
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
-
 ## Validation Checklist
 
 **Pre-Execution**:
@@ -562,7 +540,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Cleanup ownership proven**: only clean, integrated, completion-proven lanes were removed; active, parked, dirty, divergent, and unrelated work remains preserved
 - [ ] **Minimal active set converged**: every non-canonical work unit and projection is classified as `keep`, `port`, `drop`, or `ambiguous`; each retained item has current evidenced purpose, every eligible terminal item has bounded cleanup evidence, and coordination-only state creates no avoidable content revision
 - [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
-
 ## Anti-Pattern Guards
 
 ❌ An Implementer marking its own task complete; a `done` state any role may set; a verdict derived from state the Evaluator cannot see
@@ -609,7 +586,6 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 ❌ A task list with cycles, or a wave whose tasks write the same artifact concurrently
 → ✅ Acyclic dependency graph; wave membership checked for write disjointness before dispatch
-
 ## Mantra Application
 
 **"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Persistence makes every run resumable · Gates keep every irreversible choice human"**

@@ -49,7 +49,7 @@ assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
 assert.match(source, /\nlocal_rung: "spec-complete"\n/);
 assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
-assert.ok(lines.length - 1 < 600, "guideline must remain below 600 lines");
+assert.ok(lines.length - 1 < 700, "guideline must remain below 700 lines");
 assert.match(
   source,
   /projection check named by the authoring set's canvas-render contract/,
@@ -240,6 +240,7 @@ const requiredSections = [
   "## Task Model",
   "### Collaboration Identity & Scoped Lane Admission",
   "## Human-in-the-Loop Gates",
+  "## Global Release-Control Rule",
   "## Dependency-Ordered Integration",
   "## Atomic Lane Convergence",
   "## End-to-End Release Lifecycle Protocol",
@@ -291,6 +292,23 @@ for (const requirement of [
   "without force",
   "prune only stale worktree-registration and remote-tracking metadata",
   "canonical local ref equals the canonical remote ref",
+]) {
+  assert.match(
+    convergencePolicy,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `atomic lane convergence must include ${requirement}`,
+  );
+}
+for (const requirement of [
+  "Isolation is a safety boundary, not a retention policy",
+  "Minimal active set",
+  "not-applicable",
+  "never from a preset count",
+  "at most one mutation-capable workspace projection",
+  "retire(claim)",
+  "coordination state in its authoritative metadata or ledger projection",
+  "archived and explicitly non-authoritative",
+  "without blocking unrelated disjoint work",
 ]) {
   assert.match(
     convergencePolicy,
@@ -712,6 +730,7 @@ for (const finding of [
   "`canonical-base-drift`", "`scope-admission-collision`", "`unattributed-lane-ambiguity`",
   "`admission-snapshot-stale`", "`unsafe-candidate-target`", "`local-only-cross-device-lease`",
   "`collateral-lane-mutation`", "`admission-runtime-conflation`", "`candidate-lane-orphaned`",
+  "`canonical-control-bypass`", "`redundant-active-projection`", "`terminal-lane-residual`", "`coordination-revision-churn`",
   "`dependency-closure-drift`",
   "`authorization-evidence-unjoined`",
   "`authorization-interaction-unjoined`",

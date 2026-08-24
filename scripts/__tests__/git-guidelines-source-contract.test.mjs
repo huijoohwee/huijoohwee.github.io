@@ -30,7 +30,7 @@ test("source and package enforce the independent yjs no-copy boundary", () => {
   assert.equal(packageJson.dependencies, undefined);
   assert.equal(Object.hasOwn(packageJson.devDependencies || {}, "yjs"), false);
   assert.equal(packageJson.devDependencies["fast-check"], "3.23.2");
-  assert.equal(packageJson.devDependencies["js-yaml"], "4.1.1");
+  assert.equal(packageJson.devDependencies["js-yaml"], "4.3.1");
 });
 
 test("Task 19 coordination artifacts are not created by this implementation", () => {

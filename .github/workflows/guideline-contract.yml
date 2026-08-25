@@ -35,6 +35,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: huijoohwee/agentic-canvas-os
+          # Pin the protected controller revision used by this contract.
           ref: afe785e88ca88659d8763a3dc9b5007990c7f159
           path: agentic-canvas-os
           persist-credentials: false

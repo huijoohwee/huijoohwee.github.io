@@ -42,7 +42,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.18\.0"\n/);
+assert.match(source, /\nversion: "1\.19\.0"\n/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
@@ -286,7 +286,7 @@ for (const requirement of [
   "at most one mutation-capable projection",
   "`unresumable-run`",
   "`duplicate-release-controller`",
-  "zero file diff alone does not prove that unique history is disposable",
+  "zero file diff alone does not prove that unique value-bearing history is disposable",
   "protected review and integration adapter",
   "Forbid unrecoverable discard",
   "without force",
@@ -488,7 +488,7 @@ const coordinationSource = contractSlice(source, "### Collaboration Identity & S
 for (const phrase of [
   "exactly four provider-neutral root operations", "`claim(scope)`, `continue(claim)`, `integrate(candidate)`, and `retire(claim)`", "typed digest-bound receipt",
   "cross-repository coordination task as a dependency-ordered group of immutable per-repository work units", "repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence",
-  "shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff", "unlimited concurrent current authorities for disjoint normalized write sets", "exactly one current write authority per overlapping declared write set",
+  "shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff", "policy-unbounded but operationally bounded concurrent current authorities for disjoint normalized write sets", "each repository adapter declares and enforces its current resource, evaluator, and coordination capacity", "exactly one current write authority remains permitted per overlapping declared write set",
   "overlapping newcomer is a non-writing waiting successor", "monotonic compare-and-swap", "recovery from `dormant-preserved` is independent of the expired local lease", "local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections",
   "expiry, merge state, detached state, names, or canonical advancement only yield `dormant-preserved`", "authority-bearing aliases or compatibility operations", "conceptual inspiration only", "Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming", "forbid dependencies, imports, network/runtime reliance, and external conformance authority",
 ]) assert.ok(coordinationSource.includes(phrase), `root collaboration source must include ${phrase}`);

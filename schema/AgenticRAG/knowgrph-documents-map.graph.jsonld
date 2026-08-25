@@ -3043,6 +3043,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:knowgrph:doc:knowgrph-native-marketplace-settlement-runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "knowgrph-native-marketplace-settlement-runtime.md"
+      ],
+      "properties": {
+        "repo": "knowgrph",
+        "relPath": "docs/documents/knowgrph-native-marketplace-settlement-runtime.md"
+      },
+      "documentPath": "docs/documents/knowgrph-native-marketplace-settlement-runtime.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:knowgrph:doc:knowgrph-native-overlap-resolution-document",
       "@type": "kg:Node",
       "labels": [

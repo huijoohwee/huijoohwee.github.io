@@ -79,6 +79,7 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
+          # Reverify against the same protected controller revision.
           AUTHORITY_SOURCE_SHA: afe785e88ca88659d8763a3dc9b5007990c7f159
           GH_TOKEN: ${{ github.token }}
           REVIEW_SHA: ${{ github.event.pull_request.head.sha }}

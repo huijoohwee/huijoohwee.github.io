@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "1.10.0"
-date: "2026-08-22"
+version: "1.12.0"
+date: "2026-08-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -42,6 +42,12 @@ universal_scope: "true"
 - `autonomous-implementation-verification` — binding VCC and Evidence obligations -> [Verification & Conformance](./prd-tad-adr-verification.md)
 - `cid-directive-matrix` — lookup surface -> [CID Directive Matrix](./prd-tad-adr-cid-matrix.md)
 - `core-templates` — binding template-field obligations -> [Core Templates](./prd-tad-adr-templates.md)
+- `platform-specific-selection-criteria-topsis` — binding weighted, auditable multi-criteria ranking obligation for any platform/vendor/provider choice -> [Selection Criteria](./prd-tad-adr-selection-criteria.md)
+- `pain-point-to-feature-mapping` — binding pain-point-to-feature traceability obligation -> [Pain-Point Mapping](./prd-tad-adr-pain-point-mapping.md)
+- `demo-skeleton` — binding time-boxed demonstration obligation -> [Demo Skeleton](./prd-tad-adr-demo-skeleton.md)
+- `domain-object-rubric-assessment` — binding breakthrough-level self-assessment obligation -> [Domain-Object Rubric](./prd-tad-adr-domain-object-rubric.md)
+- `roadmap` — binding phased reuse/delta sequencing obligation -> [Roadmap](./prd-tad-adr-roadmap.md)
+- `monetization` — binding real-payer validation obligation -> [Monetization](./prd-tad-adr-monetization.md)
 - `architecture-diagram-standards` — diagram format obligations, and the seam to the diagram companion set
 - [Diagram Guidelines](./prd-tad-adr-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
 - [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
@@ -50,6 +56,7 @@ universal_scope: "true"
 - `anti-pattern-guards` — prohibited patterns -> [CID Directive Matrix](./prd-tad-adr-cid-matrix.md)
 - `conformance-findings` — binding recording contract -> [Verification & Conformance](./prd-tad-adr-verification.md)
 - `validation-checklist` — binding alignment gate -> [Verification & Conformance](./prd-tad-adr-verification.md)
+- `division-of-work` — binding capability-ownership obligation -> [Division of Work](./prd-tad-adr-division-of-work.md)
 - `roleactionoutcome` — role-to-deliverable mapping
 - `mantra-application` — the framing mantra
 
@@ -288,6 +295,84 @@ The separately loadable [Core Templates module](./prd-tad-adr-templates.md) owns
 
 ---
 
+## Platform-Specific Selection Criteria (TOPSIS)
+
+The separately loadable [Selection Criteria module](./prd-tad-adr-selection-criteria.md) owns the full scoring worksheet, normalization procedure, and worked examples. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+
+**Directives**:
+- Score any platform-, vendor-, or provider-level candidate against a project-stated, explicitly weighted criteria set using TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) or an equivalent auditable multi-criteria ranking method; a candidate selected without a stated criteria set and weights is a `vendor-preference-unscored` finding at `major` severity
+- Derive the criteria set from the product's own governing constraints — its economics, deployment model, deployment platform, offline/edge posture, and AI-native compute/token/embedding needs — never from a candidate's own marketing or feature list; a criteria set that happens to match exactly one vendor's differentiators is a `vendor-coupling` finding under Scope & Neutrality
+- State each criterion's weight, and every candidate's normalized score, distance to the ideal and negative-ideal solution (or the equivalent intermediate step in a substituted method), and closeness coefficient; a ranking presented without these intermediate values is unauditable and is a `selection-criteria-unweighted` finding at `minor` severity
+- Rule a candidate out on a single named disqualifying criterion — for example, a license that fails a stated hard-gate — without requiring it to be scored on the remaining criteria; name the disqualifying criterion explicitly rather than reporting an aggregate low score
+- Label the outcome by its criteria derivation, never by preference: a write-up that names a winning candidate without showing the criteria, weights, and scores that produced it is a `vendor-preference-unscored` finding regardless of whether the ranking itself was sound
+- Present illustrative criteria and candidates only under a heading or block whose own text contains the words "reference implementation," per the Scope & Neutrality Contract; a criteria checklist or candidate list naming real vendors outside such a label is a `vendor-coupling` finding
+
+**Reference implementation** — an illustrative criteria checklist for an AI-native, edge-native, solo-dev product (any project instantiates its own set; this one is not universal): AI-native fit (embedding/vector and agentic-workload support), total cost of ownership, zero-infra posture, primary-deployment-platform fit, browser-based delivery, mobile-first delivery, on-device/edge execution, local-first data ownership, offline-first operation, token performance and economics, FOSS license compliance, min-viable-max-value, time-to-value, and ROI. A project's "primary-platform fit" criterion names whichever platform that project has already adopted as primary (for example, a specific cloud/edge provider) as a reference implementation of the general criterion — the criterion itself, not the named platform, is what every future ADR in that project's set re-applies.
+
+---
+
+## Pain-Point-to-Feature Mapping
+
+The separately loadable [Pain-Point Mapping module](./prd-tad-adr-pain-point-mapping.md) owns the fixed six-field card form and its authoring procedure. This section owns only the obligations that bind a PRD directly.
+
+**Directives**:
+- Trace every `Must`-priority feature to exactly one named pain point stated as: pain point, hook, break, fix, close, and a min-time-resource-max-value note; a feature with no traceable pain point is unscoped, not merely under-documented
+- State the min-time-resource-max-value note as an explicit reuse-or-build split against components named in Division of Work; forbid presenting a fix as net-new when an existing capability already covers it
+- Label a pain point `unvalidated` until it carries a named evidence reference (a user quote, a ticket, a measured drop-off), and label it `demand-proven` only when that evidence is a real paying customer — a signed pilot, an active subscription, a completed transaction — rather than expressed interest; an `unvalidated` pain point still backing a `Must` feature at baseline sign-off is a `pain-point-not-validated` finding at `major` severity
+- Rank competing fixes for the same pain point by proximity to what is already built — zero-code-change configuration first, minimal-code-change extension of an existing component second, net-new build last — before weighing any other feasibility factor; a fix ranked above a lower-cost equivalent with no stated reason is a `roadmap-order-unexplained` finding
+- Forbid a hook or close that implies a capability the fix does not have; both restate the pain point, they do not extend the claim beyond it
+
+---
+
+## Demo Skeleton
+
+The separately loadable [Demo Skeleton module](./prd-tad-adr-demo-skeleton.md) owns the beat catalog and timing conventions. This section owns only the obligations that bind a PRD directly.
+
+**Directives**:
+- Require a fixed, time-boxed beat table — Hook, Probe, Reveal, `[domain action]`, Close — for every feature claiming `Must` priority or a Domain-Object Rubric rung of L3 or above; a beat with no stated time bound is a `missing-demo-beat` finding
+- Bound total demonstration time to the budget stated in the feature entry; forbid beats whose stated durations sum past that budget
+- Anchor the Reveal beat to the feature's own VCC — the instant the demo shows the acceptance condition holding, not a narrated claim of it
+- Name the `[domain action]` beat by the product's own interaction (approve, swipe, confirm, sign); forbid a skeleton hardcoded to one input device or channel
+
+---
+
+## Domain-Object Rubric Assessment
+
+The separately loadable [Domain-Object Rubric module](./prd-tad-adr-domain-object-rubric.md) owns the leveled rubric catalog and scoring procedure. This section owns only the obligations that bind a PRD or TAD directly.
+
+**Directives**:
+- Identify the product's actual domain object before applying any external leveled capability rubric; forbid scoring against a rubric's supplied example object when the product's own domain object is structurally different
+- Report the rubric level as the lowest level not yet cleared, not the highest level partially attempted; a self-assessment reporting an aspirational level while a lower level's named prerequisite is absent is an `overclaimed-rubric-level` finding at `major` severity
+- Name the specific blocking component for every unclaimed rung between the current and target level; an unclaimed rung with no stated blocker is an `unresolved-rubric-gap` finding
+- Permit closing a rubric gap by reusing an existing capability from another artifact in this set; require an explicit cross-artifact reference per Division of Work rather than a silent re-implementation
+
+---
+
+## Roadmap
+
+The separately loadable [Roadmap module](./prd-tad-adr-roadmap.md) owns the phase-table template and sequencing procedure. This section owns only the obligations that bind a PRD or TAD directly.
+
+**Directives**:
+- State, for every roadmap phase: the feature, what it reuses (naming the specific existing component or artifact), what is genuinely new, and a priority rationale; a phase with an empty reuse statement and no stated justification is a `roadmap-reuse-unstated` finding
+- Order phases by reuse-adjusted build cost, not solely by an external rubric's nominal difficulty order; state any divergence from that nominal order explicitly, or record it as a `roadmap-order-unexplained` finding
+- Gate a later phase on an earlier phase's named prerequisite component wherever one exists; the gate must be stated, not merely honored by coincidence
+- Mark a deliberately deferred, real idea `Won't (this increment)` rather than omitting it; an omitted-but-known idea is a `roadmap-scope-silently-dropped` finding
+
+---
+
+## Monetization
+
+The separately loadable [Monetization module](./prd-tad-adr-monetization.md) owns the stream-labelling procedure and validation-action catalog. This section owns only the obligations that bind a PRD directly.
+
+**Directives**:
+- Label every monetization stream exactly one of `mechanism-proven` (the pricing/settlement logic works against test data) or `demand-validated` (a named customer segment has indicated willingness to pay, or has paid); presenting `mechanism-proven` as `demand-validated` is a `monetization-demand-unvalidated` finding at `major` severity
+- Select the nearest-term stream by which customer segment already exists in the current phase, not by which stream is technically simplest; a stream requiring a segment gated behind a later phase is `Should`/`Could` at best until that segment exists, never `Must`
+- Order every viable stream by its distance to a real first dollar — the fewest unvalidated assumptions and the least unbuilt infrastructure between today and one paying transaction — and state that ordering explicitly; a monetization section that proposes multiple streams without ranking them by time-to-first-dollar is a `monetization-demand-unvalidated` finding
+- Require a stated validation action — a customer conversation, a priced pilot, real signups — before using the `demand-validated` label
+- Forbid deferring a monetization decision without stating the deferral explicitly; an undocumented default-to-free stance forecloses the test of whether a real payer exists
+
+---
+
 ## Architecture Diagram Standards
 
 **A declarative, text-authored diagram notation is the mandatory diagram format.** Diagrams are source, not images: the notation block is what agents load, reviewers diff, and checks parse.
@@ -396,6 +481,19 @@ The separately loadable [Conformance Findings module](./prd-tad-adr-verification
 | Lane topology | `deploy-boundary-breach` | `blocker` |
 | Lane topology | `ungated-promotion` | `blocker` |
 | Topology | `incomplete-topology-node` | `major` |
+| Product-Market Fit | `pain-point-not-validated` | `major` |
+| Demonstration | `missing-demo-beat` | `minor` |
+| Domain-Object Rubric | `overclaimed-rubric-level` | `major` |
+| Domain-Object Rubric | `unresolved-rubric-gap` | `minor` |
+| Roadmap | `roadmap-reuse-unstated` | `major` |
+| Roadmap | `roadmap-order-unexplained` | `minor` |
+| Roadmap | `roadmap-scope-silently-dropped` | `minor` |
+| Platform Selection | `vendor-preference-unscored` | `major` |
+| Platform Selection | `selection-criteria-unweighted` | `minor` |
+| Monetization | `monetization-demand-unvalidated` | `major` |
+| Division of Work | `duplicate-capability-owner` | `major` |
+| Division of Work | `component-origin-unstated` | `minor` |
+| Division of Work | `unjustified-storage-duplication` | `major` |
 
 ---
 
@@ -407,6 +505,18 @@ The separately loadable [Validation Checklist module](./prd-tad-adr-verification
 - Require current artifact continuity before baseline sign-off: CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module
 - Discharge the alignment gate before baseline sign-off; zero `blocker` findings is the exit condition, and `major` and `minor` findings are resolved or formally tracked with an owner
 - Compare the finding set against the prior run on every baselined change; a new `blocker` is a regression, not a note
+
+---
+
+## Division of Work
+
+The separately loadable [Division of Work module](./prd-tad-adr-division-of-work.md) owns the capability-ownership procedure and the reuse-decision record form. This section owns only the obligations that bind a TAD or ADR directly, and extends Role—Action—Outcome from roles-to-documents into components-to-capabilities.
+
+**Directives**:
+- Assign exactly one owning component per capability (a pricing computation, a state-change detection, a ledger mutation); every other consumer calls the owning component rather than re-implementing its logic; a second implementation of an existing capability is a `duplicate-capability-owner` finding at `major` severity, extending `duplicate-owner` from document ownership to component ownership
+- Record an explicit reuse-or-new decision, as an ADR or equivalent, for every component added to an architecture; a component with neither a stated reuse rationale nor a stated new-dependency rationale is a `component-origin-unstated` finding
+- Prefer extending an existing store, function, or ledger with a new dimension (a flag, a field, a row type) over introducing a second one for structurally identical data; an unjustified second store is an `unjustified-storage-duplication` finding at `major` severity
+- Permit cross-artifact reuse on the same terms as within-artifact reuse; require the consuming artifact to name the exact owning artifact and its version, not merely describe the capability in its own words
 
 ---
 
@@ -434,12 +544,18 @@ The separately loadable [Validation Checklist module](./prd-tad-adr-verification
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · RAO aligns team responsibilities · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · Pain points ground every feature · Demo skeletons prove the story in one sitting · Domain-object rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before it tests a mechanism · RAO aligns team responsibilities · Division of work gives each capability exactly one owner · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
 
 - **CID frames**: establishes scope (product + technical), purpose (user value + clarity), rules (problem-first · domain-agnostic · traceable)
 - **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
 - **Agent-platform readiness sequences**: Agentic OS visibility → AI Agent discovery → Gateway federation (Must); then spend safety → live orchestration proof → operator UI (Follow-on); forbid proxy duplication and dependency-blind parallel surface work
+- **Pain points ground**: every `Must` feature traces to one named pain point in fixed form, labelled `unvalidated` until an evidence reference exists — a feature with no pain point is unscoped, not merely under-documented
+- **Demo skeletons prove**: a fixed, time-boxed beat table anchors the Reveal beat to the feature's own VCC, so the demonstration shows the acceptance condition holding rather than narrating a claim of it
+- **Domain-object rubrics name**: the product's actual domain object is identified before any external rubric is applied, and the reported level is the lowest not yet cleared — never the highest aspired to
+- **Roadmaps sequence**: phases order by reuse-adjusted build cost, each stating what it reuses and what is genuinely new; a real, deferred idea is marked `Won't (this increment)`, never silently dropped
+- **Monetization tests**: a stream is `mechanism-proven` or `demand-validated`, never presented as one when it is only the other, and the nearest-term stream is chosen by which customer segment already exists, not by which mechanism is simplest to build
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes
+- **Division of work**: assigns exactly one owning component per capability, extending RAO from roles-to-documents into components-to-capabilities — every other consumer calls the owner rather than re-implementing it
 - **SVO (Subject-Verb-Object) clarifies**: expresses all requirements with grammatical precision — users accomplish tasks → systems process data → components deliver artifacts — enabling unambiguous implementation
 - **Evidence earns**: a readiness rung is computed from named checks with recorded results, never asserted; the ladder is monotone under added evidence, so status can only be raised by proof
 - **Findings make checkable**: every prohibition carries a type and a severity, so alignment is a comparable measurement across runs rather than an impression that resets each review

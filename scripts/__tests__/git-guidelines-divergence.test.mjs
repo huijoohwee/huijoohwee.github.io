@@ -47,6 +47,99 @@ test("every C1-C9 family fails closed when its named owner evidence changes", ()
   }
 });
 
+test("delivery ownership requires protected immutable authorization and proof-gated cleanup", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const mutations = [
+    ["Only the target-scoped protected integration controller may advance the", "Any workflow may advance the"],
+    ["profile declares exactly one integration method", "profile accepts any enabled integration method"],
+    ["`integrationMethod: squash`", "`integrationMethod: merge-commit`"],
+    ["Direct canonical writes are", "Direct canonical writes may be"],
+    ["Dirty, unversioned, or local-checkout deployment is forbidden.", "Dirty deployment is acceptable."],
+    ["Exact authenticated human authorization binds one immutable candidate", "Automation authorization binds a mutable candidate"],
+    ["Deploy the sealed artifact without rebuilding or retargeting it.", "Rebuild the artifact during deployment."],
+    ["reconciles state by direct authoritative readback", "accepts the controller response without readback"],
+    ["Verify every live surface before", "Verify every live surface after"],
+    ["Cleanup removes only clean, integrated, completion-proven lanes.", "Cleanup removes every old lane."],
+    ["active, parked, dirty, divergent, ambiguous, and unrelated work", "only active work"],
+  ];
+  for (const [before, after] of mutations) {
+    assert.ok(owners[ownerPath].includes(before), `delivery mutation fixture is stale: ${before}`);
+    const findings = run(source, { ...owners, [ownerPath]: owners[ownerPath].replace(before, after) });
+    assert.ok(findings.some(item => item.message.startsWith("owner-divergence: C9 ")), before);
+  }
+});
+
+test("delivery ownership parses target-specific frontmatter and the byte-exact Run A challenge", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const mutations = [
+    ['integrationMethod: "squash"', 'integrationMethod: "rebase"'],
+    ['agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]',
+      'agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Runtime Readiness Gate"]'],
+    ["artifact <artifactId> sha256 <artifactDigest>", "artifact <artifactId> digest <artifactDigest>"],
+  ];
+  for (const [before, after] of mutations) {
+    assert.ok(owners[ownerPath].includes(before), `structured delivery fixture is stale: ${before}`);
+    const mutatedOwners = { ...owners, [ownerPath]: owners[ownerPath].replace(before, after) };
+    const findings = run(source, mutatedOwners);
+    assert.ok(findings.some(item => item.message.includes("delivery owner structured policy differs")), before);
+  }
+});
+
+test("delivery ownership keeps the human profile table byte-consistent with structured profiles", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const gamexrRow = "| `huijoohwee/GameXR` | isolated worktree | squash | `Integration Gate` |";
+  const mutantRow = "| `huijoohwee/GameXR` | isolated worktree | squash | `Runtime Readiness Gate` |";
+  assert.ok(owners[ownerPath].includes(gamexrRow), "GameXR delivery-profile fixture is stale");
+  const findings = run(source, { ...owners, [ownerPath]: owners[ownerPath].replace(gamexrRow, mutantRow) });
+  assert.ok(findings.some(item => item.message.includes("human repository-profile table")));
+});
+
+test("delivery ownership rejects retired unsafe command and deployment patterns", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const retired = [
+    "git pull --rebase origin main",
+    "git stash",
+    "git stash push -m WIP",
+    "git stash pop",
+    "git add .",
+    "git add -A",
+    "git add --all",
+    "git push -u origin main",
+    "git push --set-upstream origin main",
+    "git push origin main",
+    "git push origin HEAD:main",
+    "git push origin main # never skip verification",
+    "Never skip verification: git push origin main",
+    "git push origin \\\n  main",
+    "git branch -d feature",
+    "git branch -D feature",
+    "git push origin --delete feature",
+    "--commit-dirty",
+    "pages:deploy-cloudflare",
+    "Pushing to main IS the production deploy",
+    "Commit-free exceptions",
+  ];
+  for (const value of retired) {
+    const mutated = `${owners[ownerPath]}\n\n${value}\n`;
+    const findings = run(source, { ...owners, [ownerPath]: mutated });
+    assert.ok(findings.some(item => item.message.includes("retired delivery behavior remains")), value);
+  }
+});
+
+test("delivery ownership permits explicit prohibitions to name a retired command", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const mutated = `${owners[ownerPath]}\n\nNever run \`git push origin HEAD:main\`; it is forbidden.\nThe command \`git branch -D feature\` is forbidden.\nDo not use \`git stash push -m WIP\`.\n`;
+  const findings = run(source, { ...owners, [ownerPath]: mutated });
+  assert.equal(findings.some(item => item.message.includes("retired delivery behavior remains")), false);
+});
+
+test("delivery phase headings occur exactly once and in order", () => {
+  const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
+  const duplicated = `${owners[ownerPath]}\n\n## Phase 2: Push\n`;
+  const findings = run(source, { ...owners, [ownerPath]: duplicated });
+  assert.ok(findings.some(item => item.message.includes("must occur exactly once and in order")));
+});
+
 test("ordered consumed domains reject claim-state, action, lane-class, and root-operation substitutions", () => {
   const mutations = [
     ["`active`, `review-ready`", "`current`, `review-ready`", "C1", "coordination-artifacts#10"],
@@ -99,6 +192,34 @@ test("terminology drift and unlicensed delivery commands carry supplied RuleInde
   const commandFindings = run(commandMutant, owners);
   assert.ok(commandFindings.some(item => item.ruleId === "authoring--write-scope#3"
     && item.message.includes("owner command sequence is restated outside a reference implementation block")));
+
+  const fencedMutant = source.replace(
+    "- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.",
+    "- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.\n\n  ```sh\n  git push origin main\n  ```",
+  );
+  const fencedFindings = run(fencedMutant, owners);
+  assert.ok(fencedFindings.some(item => item.message.includes(
+    "owner command sequence is restated outside a reference implementation block: `git push origin main`",
+  )));
+
+  for (const command of ["git branch -D feature", "git stash", "git stash push -m WIP", "git stash pop"]) {
+    const inlineMutant = source.replace(
+      "- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.",
+      `- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks with \`${command}\`.`,
+    );
+    const inlineFindings = run(inlineMutant, owners);
+    assert.ok(inlineFindings.some(item => item.ruleId === "authoring--write-scope#3"
+      && item.message.includes(`owner command sequence is restated outside a reference implementation block: \`${command}\``)), command);
+  }
+
+  const continuedMutant = source.replace(
+    "- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.",
+    "- [artifact-bearing] Stage only explicit repository-relative paths or selected interactive hunks.\n\n  ```sh\n  git push origin \\\n    main\n  ```",
+  );
+  const continuedFindings = run(continuedMutant, owners);
+  assert.ok(continuedFindings.some(item => item.message.includes(
+    "owner command sequence is restated outside a reference implementation block: `git push origin main`",
+  )));
 });
 
 function run(documentSource, ownerInput) {

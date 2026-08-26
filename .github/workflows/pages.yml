@@ -1,47 +1,599 @@
 name: Deploy GitHub Pages
+run-name: Deploy GitHub Pages at ${{ inputs.candidate_sha }}
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: Exact current protected main SHA
+        required: true
+        type: string
+      authorization_statement:
+        description: authorize github-pages-production <candidateSha>
+        required: true
+        type: string
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages-production
   cancel-in-progress: false
 
 jobs:
-  build:
+  authorize:
+    name: Authorize exact canonical candidate
     runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+    outputs:
+      candidate_sha: ${{ steps.canonical.outputs.candidate_sha }}
+      policy_digest: ${{ steps.canonical.outputs.policy_digest }}
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Assemble static site
+      - name: Validate authenticated typed authorization
+        env:
+          AUTHORIZATION_STATEMENT: ${{ inputs.authorization_statement }}
+          CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          DISPATCH_REF: ${{ github.ref }}
+          DISPATCH_REF_PROTECTED: ${{ github.ref_protected }}
+          DISPATCH_SHA: ${{ github.sha }}
+          EXPECTED_OPERATOR_ID: ${{ github.repository_owner_id }}
+          REQUESTING_ACTOR_ID: ${{ github.actor_id }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
         run: |
-          mkdir -p _site
-          cp index.html _site/index.html
-          cp -R guidelines _site/guidelines
+          test "$REQUESTING_ACTOR_ID" = "$EXPECTED_OPERATOR_ID"
+          test "$DISPATCH_REF" = "refs/heads/main"
+          test "$DISPATCH_REF_PROTECTED" = "true"
+          test "$DISPATCH_SHA" = "$CANDIDATE_SHA"
+          test "$WORKFLOW_SHA" = "$CANDIDATE_SHA"
+          test "${#CANDIDATE_SHA}" -eq 40
+          case "$CANDIDATE_SHA" in
+            (*[!0-9a-f]*) exit 1 ;;
+          esac
+          test "$AUTHORIZATION_STATEMENT" = "authorize github-pages-production $CANDIDATE_SHA"
 
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Bind current protected canonical revision and trusted required check
+        id: canonical
+        env:
+          CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          EXPECTED_CHECK_APP_ID: "15368"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d"
+          EXPECTED_RULESET_ID: "20008203"
+          EXPECTED_RULESET_STATE_DIGEST: "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b"
+          EXPECTED_RULESET_UPDATED_AT: "2026-07-30T00:43:30.062Z"
+          EXPECTED_RULESET_VERSION_ID: "44827461"
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          test "$canonical_sha" = "$CANDIDATE_SHA"
+
+          ruleset_json="$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rulesets/$EXPECTED_RULESET_ID")"
+          jq -e \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --argjson app_id "$EXPECTED_CHECK_APP_ID" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+              .id == $ruleset_id
+              and .name == "Agentic SDLC policy contract"
+              and .target == "branch"
+              and .source_type == "Repository"
+              and .source == $repository
+              and .enforcement == "active"
+              and .conditions.ref_name == {exclude: [], include: ["~DEFAULT_BRANCH"]}
+              and (.bypass_actors == null or .bypass_actors == [])
+              and (.current_user_can_bypass == null or .current_user_can_bypass == "never")
+              and (([.rules[].type] | sort)
+                == (["deletion", "non_fast_forward", "pull_request", "required_linear_history", "required_status_checks"] | sort))
+              and ([.rules[] | select(.type == "required_status_checks")] | length) == 1
+              and ([.rules[] | select(.type == "required_status_checks")][0].parameters
+                == {
+                  strict_required_status_checks_policy: true,
+                  do_not_enforce_on_create: false,
+                  required_status_checks: [{context: "agentic-sdlc-policy-contract", integration_id: $app_id}]
+                })
+            ' <<< "$ruleset_json" > /dev/null
+
+          ruleset_updated_at="$(RULESET_JSON="$ruleset_json" node -e '
+            const value = new Date(JSON.parse(process.env.RULESET_JSON).updated_at);
+            if (Number.isNaN(value.valueOf())) process.exit(1);
+            process.stdout.write(value.toISOString());
+          ')"
+          test "$ruleset_updated_at" = "$EXPECTED_RULESET_UPDATED_AT"
+          ruleset_state_projection="$(jq -cS \
+            '{id,name,target,source_type,source,enforcement,conditions,rules:(.rules|sort_by(.type)),bypass_actors:[]}' \
+            <<< "$ruleset_json")"
+          ruleset_state_digest="$(printf '%s' "$ruleset_state_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$ruleset_state_digest" = "$EXPECTED_RULESET_STATE_DIGEST"
+
+          effective_rules_json="$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
+          expected_effective_rules="$(jq -cS \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+              .rules | map({
+                ruleset_id: $ruleset_id,
+                ruleset_source_type: "Repository",
+                ruleset_source: $repository,
+                type,
+                parameters: (.parameters // null)
+              }) | sort_by(.type)
+            ' <<< "$ruleset_json")"
+          observed_effective_rules="$(jq -cS '
+            map({ruleset_id,ruleset_source_type,ruleset_source,type,parameters:(.parameters // null)})
+            | sort_by(.type)
+          ' <<< "$effective_rules_json")"
+          test "$observed_effective_rules" = "$expected_effective_rules"
+
+          policy_projection="$(jq -cnS \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg ruleset_state_digest "$ruleset_state_digest" \
+            --arg ruleset_updated_at "$ruleset_updated_at" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" \
+            --argjson ruleset_version_id "$EXPECTED_RULESET_VERSION_ID" '
+              {
+                schema: "agentic-github-ruleset-attestation/v1",
+                repository: $repository,
+                ruleset_id: $ruleset_id,
+                ruleset_version_id: $ruleset_version_id,
+                ruleset_updated_at: $ruleset_updated_at,
+                ruleset_state_digest: $ruleset_state_digest
+              }
+            ')"
+          policy_digest="$(printf '%s' "$policy_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$policy_digest" = "$EXPECTED_RULESET_ATTESTATION_DIGEST"
+
+          check_json="$(
+            gh api --method GET "repos/$GITHUB_REPOSITORY/commits/$CANDIDATE_SHA/check-runs" \
+              -f filter=all -f per_page=100 \
+              --jq '[.check_runs[] | select(.name == "agentic-sdlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
+          )"
+          test "$(jq -r '.status // ""' <<< "$check_json")" = "completed"
+          test "$(jq -r '.conclusion // ""' <<< "$check_json")" = "success"
+          test "$(jq -r '.head_sha // ""' <<< "$check_json")" = "$CANDIDATE_SHA"
+          test "$(jq -r '.app.id // 0' <<< "$check_json")" = "$EXPECTED_CHECK_APP_ID"
+          details_url="$(jq -r '.details_url // ""' <<< "$check_json")"
+          details_prefix="https://github.com/$GITHUB_REPOSITORY/actions/runs/"
+          case "$details_url" in
+            ("$details_prefix"*) ;;
+            (*) exit 1 ;;
+          esac
+          run_id="${details_url#"$details_prefix"}"
+          run_id="${run_id%%/*}"
+          case "$run_id" in
+            (""|*[!0-9]*) exit 1 ;;
+          esac
+          run_json="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id")"
+          test "$(jq -r '.path // ""' <<< "$run_json")" = ".github/workflows/guideline-contract.yml"
+          test "$(jq -r '.event // ""' <<< "$run_json")" = "push"
+          test "$(jq -r '.head_branch // ""' <<< "$run_json")" = "main"
+          test "$(jq -r '.head_sha // ""' <<< "$run_json")" = "$CANDIDATE_SHA"
+          test "$(jq -r '.status // ""' <<< "$run_json")" = "completed"
+          test "$(jq -r '.conclusion // ""' <<< "$run_json")" = "success"
+          echo "candidate_sha=$CANDIDATE_SHA" >> "$GITHUB_OUTPUT"
+          echo "policy_digest=$policy_digest" >> "$GITHUB_OUTPUT"
+          {
+            echo "candidate_sha=$CANDIDATE_SHA"
+            echo "actor_id=${{ github.actor_id }}"
+            echo "policy_digest=$policy_digest"
+            echo "ruleset_id=$EXPECTED_RULESET_ID"
+            echo "ruleset_version_id=$EXPECTED_RULESET_VERSION_ID"
+            echo "ruleset_updated_at=$ruleset_updated_at"
+            echo "ruleset_state_digest=$ruleset_state_digest"
+            echo "trusted_check_run_id=$(jq -r '.id' <<< "$check_json")"
+            echo "trusted_workflow_run_id=$run_id"
+            echo "authorization=verified"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  build:
+    name: Seal exact Pages artifact
+    needs: authorize
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      artifact_id: ${{ steps.assemble.outputs.artifact_id }}
+      effect_id: ${{ steps.assemble.outputs.effect_id }}
+      payload_manifest_digest: ${{ steps.assemble.outputs.payload_manifest_digest }}
+      provider_artifact_id: ${{ steps.upload.outputs.artifact_id }}
+    steps:
+      - name: Check out exact authorized candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          path: _site
+          fetch-depth: 1
+          persist-credentials: false
+          ref: ${{ needs.authorize.outputs.candidate_sha }}
+
+      - name: Verify exact clean source
+        env:
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+
+      - name: Assemble and seal static site
+        id: assemble
+        env:
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
+          SITE_ROOT: ${{ runner.temp }}/pages-site
+        run: |
+          test ! -e "$SITE_ROOT"
+          test ! -e "$RUNNER_TEMP/payload-files.sha256"
+          mkdir -p "$SITE_ROOT/release"
+
+          SOURCE_ROOT="$PWD" node <<'NODE'
+          const { copyFileSync, lstatSync, mkdirSync, readdirSync } = require("node:fs");
+          const path = require("node:path");
+          const sourceRoot = process.env.SOURCE_ROOT;
+          const siteRoot = process.env.SITE_ROOT;
+          function rejectName(name, relative) {
+            if (name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name)) {
+              throw new Error(`Unsupported Pages source path: ${relative}`);
+            }
+          }
+          function copyRegular(relative) {
+            const source = path.join(sourceRoot, relative);
+            const target = path.join(siteRoot, relative);
+            const stat = lstatSync(source);
+            if (!stat.isFile()) throw new Error(`Non-regular Pages source: ${relative}`);
+            copyFileSync(source, target, 0);
+          }
+          function copyDirectory(relative) {
+            const source = path.join(sourceRoot, relative);
+            const stat = lstatSync(source);
+            if (!stat.isDirectory()) throw new Error(`Non-directory Pages source: ${relative}`);
+            mkdirSync(path.join(siteRoot, relative), { recursive: false });
+            const names = readdirSync(source).sort((left, right) =>
+              Buffer.compare(Buffer.from(left), Buffer.from(right)));
+            for (const name of names) {
+              const child = path.posix.join(relative, name);
+              rejectName(name, child);
+              const childStat = lstatSync(path.join(sourceRoot, child));
+              if (childStat.isDirectory()) copyDirectory(child);
+              else if (childStat.isFile()) copyRegular(child);
+              else throw new Error(`Non-regular Pages source: ${child}`);
+            }
+          }
+          rejectName("index.html", "index.html");
+          copyRegular("index.html");
+          rejectName("guidelines", "guidelines");
+          copyDirectory("guidelines");
+          NODE
+
+          PAYLOAD_ROOT="$SITE_ROOT" MANIFEST_PATH="$RUNNER_TEMP/payload-files.sha256" node <<'NODE'
+          const { createHash } = require("node:crypto");
+          const { lstatSync, readFileSync, readdirSync, writeFileSync } = require("node:fs");
+          const path = require("node:path");
+          const root = process.env.PAYLOAD_ROOT;
+          const manifestPath = process.env.MANIFEST_PATH;
+          const files = [];
+          function walk(directory) {
+            const names = readdirSync(directory).sort((left, right) =>
+              Buffer.compare(Buffer.from(left), Buffer.from(right)));
+            for (const name of names) {
+              const absolute = path.join(directory, name);
+              const stat = lstatSync(absolute);
+              const relative = path.relative(root, absolute).split(path.sep).join("/");
+              if (name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name)) {
+                throw new Error(`Unsupported artifact path: ${relative}`);
+              }
+              if (stat.isDirectory()) walk(absolute);
+              else if (stat.isFile()) {
+                if (relative.startsWith("release/")) {
+                  throw new Error(`Unexpected pre-seal release carrier: ${relative}`);
+                }
+                files.push(relative);
+              } else throw new Error(`Non-regular artifact entry: ${relative}`);
+            }
+          }
+          walk(root);
+          if (files.length === 0) throw new Error("Pages payload is empty.");
+          files.sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)));
+          const lines = files.map(relative => {
+            if (relative.includes("\n")) throw new Error("Artifact paths may not contain newlines.");
+            const digest = createHash("sha256")
+              .update(readFileSync(path.join(root, relative))).digest("hex");
+            return `${digest}  ./${relative}`;
+          });
+          writeFileSync(manifestPath, `${lines.join("\n")}\n`, { flag: "wx", mode: 0o600 });
+          NODE
+
+          (cd "$SITE_ROOT" && shasum -a 256 -c "$RUNNER_TEMP/payload-files.sha256")
+          payload_manifest_digest="$(shasum -a 256 "$RUNNER_TEMP/payload-files.sha256" | awk '{print $1}')"
+          artifact_id="agentic-guideline-pages-release:$CANDIDATE_SHA:$payload_manifest_digest"
+          cp "$RUNNER_TEMP/payload-files.sha256" "$SITE_ROOT/release/files.sha256"
+          ARTIFACT_ID="$artifact_id" \
+            PAYLOAD_MANIFEST_DIGEST="$payload_manifest_digest" \
+            POLICY_DIGEST="$POLICY_DIGEST" \
+            RELEASE_CARRIER_PATH="$SITE_ROOT/release/release.json" \
+            node scripts/lib/git-guidelines/pages-release-controller.mjs seal
+          test "$(shasum -a 256 "$SITE_ROOT/release/files.sha256" | awk '{print $1}')" = "$payload_manifest_digest"
+          RELEASE_ROOT="$SITE_ROOT/release" node -e '
+            const { lstatSync, readdirSync } = require("node:fs");
+            const path = require("node:path");
+            const expected = ["files.sha256", "release.json"];
+            const names = readdirSync(process.env.RELEASE_ROOT).sort();
+            if (JSON.stringify(names) !== JSON.stringify(expected)
+              || names.some(name => !lstatSync(path.join(process.env.RELEASE_ROOT, name)).isFile())) {
+              process.exit(1);
+            }
+          '
+          test -z "$(find "$SITE_ROOT" ! -type d ! -type f -print -quit)"
+          {
+            echo "artifact_id=$artifact_id"
+            echo "payload_manifest_digest=$payload_manifest_digest"
+          } >> "$GITHUB_OUTPUT"
+          {
+            echo "artifact_id=$artifact_id"
+            echo "effect_id=$(jq -r '.effectId' "$SITE_ROOT/release/release.json")"
+            echo "payload_manifest_digest=$payload_manifest_digest"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload exact Pages artifact
+        id: upload
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: ${{ runner.temp }}/pages-site
 
   deploy:
-    needs: build
+    name: Deploy and verify exact Pages artifact
+    needs: [authorize, build]
     runs-on: ubuntu-latest
+    timeout-minutes: 24
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      id-token: write
+      pages: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || 'https://huijoohwee.github.io/' }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Check out exact authorized candidate for release control
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          ref: ${{ needs.authorize.outputs.candidate_sha }}
+
+      - name: Verify exact release-controller source
+        env:
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+
+      - name: Revalidate canonical, policy, and trusted check before deployment
+        id: preflight
+        env:
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          DISPATCH_REF: ${{ github.ref }}
+          DISPATCH_REF_PROTECTED: ${{ github.ref_protected }}
+          DISPATCH_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_CHECK_APP_ID: "15368"
+          EXPECTED_PAGE_URL: https://huijoohwee.github.io/
+          EXPECTED_POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d"
+          EXPECTED_RULESET_ID: "20008203"
+          EXPECTED_RULESET_STATE_DIGEST: "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b"
+          EXPECTED_RULESET_UPDATED_AT: "2026-07-30T00:43:30.062Z"
+          EXPECTED_RULESET_VERSION_ID: "44827461"
+          PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
+          PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          test "$DISPATCH_REF" = "refs/heads/main"
+          test "$DISPATCH_REF_PROTECTED" = "true"
+          test "$DISPATCH_SHA" = "$CANDIDATE_SHA"
+          test "$WORKFLOW_SHA" = "$CANDIDATE_SHA"
+          test -n "$ARTIFACT_ID"
+          test -n "$PROVIDER_ARTIFACT_ID"
+          test "${#PAYLOAD_MANIFEST_DIGEST}" -eq 64
+          case "$PAYLOAD_MANIFEST_DIGEST" in
+            (*[!0-9a-f]*) exit 1 ;;
+          esac
+          test "$ARTIFACT_ID" = "agentic-guideline-pages-release:$CANDIDATE_SHA:$PAYLOAD_MANIFEST_DIGEST"
+
+          canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          test "$canonical_sha" = "$CANDIDATE_SHA"
+          pages_json="$(gh api "repos/$GITHUB_REPOSITORY/pages")"
+          jq -e --arg page_url "$EXPECTED_PAGE_URL" '
+            .build_type == "workflow"
+            and .html_url == $page_url
+            and (.cname == null or .cname == "")
+          ' <<< "$pages_json" > /dev/null
+          ruleset_json="$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rulesets/$EXPECTED_RULESET_ID")"
+          jq -e \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --argjson app_id "$EXPECTED_CHECK_APP_ID" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+              .id == $ruleset_id
+              and .name == "Agentic SDLC policy contract"
+              and .target == "branch"
+              and .source_type == "Repository"
+              and .source == $repository
+              and .enforcement == "active"
+              and .conditions.ref_name == {exclude: [], include: ["~DEFAULT_BRANCH"]}
+              and (.bypass_actors == null or .bypass_actors == [])
+              and (.current_user_can_bypass == null or .current_user_can_bypass == "never")
+              and (([.rules[].type] | sort)
+                == (["deletion", "non_fast_forward", "pull_request", "required_linear_history", "required_status_checks"] | sort))
+              and ([.rules[] | select(.type == "required_status_checks")] | length) == 1
+              and ([.rules[] | select(.type == "required_status_checks")][0].parameters
+                == {
+                  strict_required_status_checks_policy: true,
+                  do_not_enforce_on_create: false,
+                  required_status_checks: [{context: "agentic-sdlc-policy-contract", integration_id: $app_id}]
+                })
+            ' <<< "$ruleset_json" > /dev/null
+
+          ruleset_updated_at="$(RULESET_JSON="$ruleset_json" node -e '
+            const value = new Date(JSON.parse(process.env.RULESET_JSON).updated_at);
+            if (Number.isNaN(value.valueOf())) process.exit(1);
+            process.stdout.write(value.toISOString());
+          ')"
+          test "$ruleset_updated_at" = "$EXPECTED_RULESET_UPDATED_AT"
+          ruleset_state_projection="$(jq -cS \
+            '{id,name,target,source_type,source,enforcement,conditions,rules:(.rules|sort_by(.type)),bypass_actors:[]}' \
+            <<< "$ruleset_json")"
+          ruleset_state_digest="$(printf '%s' "$ruleset_state_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$ruleset_state_digest" = "$EXPECTED_RULESET_STATE_DIGEST"
+
+          effective_rules_json="$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
+          expected_effective_rules="$(jq -cS \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+              .rules | map({
+                ruleset_id: $ruleset_id,
+                ruleset_source_type: "Repository",
+                ruleset_source: $repository,
+                type,
+                parameters: (.parameters // null)
+              }) | sort_by(.type)
+            ' <<< "$ruleset_json")"
+          observed_effective_rules="$(jq -cS '
+            map({ruleset_id,ruleset_source_type,ruleset_source,type,parameters:(.parameters // null)})
+            | sort_by(.type)
+          ' <<< "$effective_rules_json")"
+          test "$observed_effective_rules" = "$expected_effective_rules"
+
+          policy_projection="$(jq -cnS \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg ruleset_state_digest "$ruleset_state_digest" \
+            --arg ruleset_updated_at "$ruleset_updated_at" \
+            --argjson ruleset_id "$EXPECTED_RULESET_ID" \
+            --argjson ruleset_version_id "$EXPECTED_RULESET_VERSION_ID" '
+              {
+                schema: "agentic-github-ruleset-attestation/v1",
+                repository: $repository,
+                ruleset_id: $ruleset_id,
+                ruleset_version_id: $ruleset_version_id,
+                ruleset_updated_at: $ruleset_updated_at,
+                ruleset_state_digest: $ruleset_state_digest
+              }
+            ')"
+          policy_digest="$(printf '%s' "$policy_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$policy_digest" = "$EXPECTED_RULESET_ATTESTATION_DIGEST"
+          test "$policy_digest" = "$EXPECTED_POLICY_DIGEST"
+          check_json="$(
+            gh api --method GET "repos/$GITHUB_REPOSITORY/commits/$CANDIDATE_SHA/check-runs" \
+              -f filter=all -f per_page=100 \
+              --jq '[.check_runs[] | select(.name == "agentic-sdlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
+          )"
+          test "$(jq -r '.status // ""' <<< "$check_json")" = "completed"
+          test "$(jq -r '.conclusion // ""' <<< "$check_json")" = "success"
+          test "$(jq -r '.head_sha // ""' <<< "$check_json")" = "$CANDIDATE_SHA"
+          test "$(jq -r '.app.id // 0' <<< "$check_json")" = "$EXPECTED_CHECK_APP_ID"
+          details_url="$(jq -r '.details_url // ""' <<< "$check_json")"
+          details_prefix="https://github.com/$GITHUB_REPOSITORY/actions/runs/"
+          case "$details_url" in
+            ("$details_prefix"*) ;;
+            (*) exit 1 ;;
+          esac
+          run_id="${details_url#"$details_prefix"}"
+          run_id="${run_id%%/*}"
+          case "$run_id" in
+            (""|*[!0-9]*) exit 1 ;;
+          esac
+          run_json="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id")"
+          test "$(jq -r '.path // ""' <<< "$run_json")" = ".github/workflows/guideline-contract.yml"
+          test "$(jq -r '.event // ""' <<< "$run_json")" = "push"
+          test "$(jq -r '.head_branch // ""' <<< "$run_json")" = "main"
+          test "$(jq -r '.head_sha // ""' <<< "$run_json")" = "$CANDIDATE_SHA"
+          test "$(jq -r '.status // ""' <<< "$run_json")" = "completed"
+          test "$(jq -r '.conclusion // ""' <<< "$run_json")" = "success"
+
+      - name: Gate exact Pages release effect
+        id: effect_gate
+        env:
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          EFFECT_ID: ${{ needs.build.outputs.effect_id }}
+          EXPECTED_OPERATOR_ID: ${{ github.repository_owner_id }}
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: https://huijoohwee.github.io/
+          PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
+          POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
+          PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
+        run: node scripts/lib/git-guidelines/pages-release-controller.mjs gate
+
+      - name: Deploy exact Pages artifact
         id: deployment
-        uses: actions/deploy-pages@v4
+        if: ${{ steps.effect_gate.outputs.decision == 'apply' }}
+        continue-on-error: true
+        timeout-minutes: 8
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        with:
+          timeout: 360000
+
+      - name: Reconcile exact Pages release effect
+        id: reconciliation
+        if: ${{ always() && steps.effect_gate.outcome == 'success' }}
+        timeout-minutes: 6
+        env:
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          EFFECT_ID: ${{ needs.build.outputs.effect_id }}
+          GATE_DECISION: ${{ steps.effect_gate.outputs.decision }}
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: https://huijoohwee.github.io/
+          PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
+          POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
+          PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
+          RECONCILIATION_DEADLINE_MS: "300000"
+        run: node scripts/lib/git-guidelines/pages-release-controller.mjs reconcile
+
+      - name: Require terminal controller receipt
+        if: ${{ always() }}
+        env:
+          ACTION_PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          CONTROLLER_STATUS: ${{ steps.reconciliation.outputs.controller_status }}
+          EFFECT_GATE_OUTCOME: ${{ steps.effect_gate.outcome }}
+          EFFECT_ID: ${{ needs.build.outputs.effect_id }}
+          GATE_RECEIPT_B64: ${{ steps.effect_gate.outputs.result_json }}
+          PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
+          PREFLIGHT_OUTCOME: ${{ steps.preflight.outcome }}
+          PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
+          RECONCILIATION_RECEIPT_B64: ${{ steps.reconciliation.outputs.result_json }}
+          RECONCILIATION_OUTCOME: ${{ steps.reconciliation.outcome }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+        run: |
+          test "$PREFLIGHT_OUTCOME" = "success"
+          test "$EFFECT_GATE_OUTCOME" = "success"
+          test "$RECONCILIATION_OUTCOME" = "success"
+          node <<'NODE'
+          const E = process.env, decode = name => JSON.parse(Buffer.from(E[name], "base64").toString("utf8"));
+          const exact = (value, keys) => value && typeof value === "object" && !Array.isArray(value) && JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...keys].sort());
+          const verify = value => exact(value, ["schema", "status", "effectId", "sourceRevision", "payloadManifestDigest", "verifiedFileCount", "releaseCarrierDigest"]) && value.schema === "agentic-guideline-pages-public-verification/v1" && value.status === "verified" && value.effectId === E.EFFECT_ID && value.sourceRevision === E.CANDIDATE_SHA && value.payloadManifestDigest === E.PAYLOAD_MANIFEST_DIGEST && /^[0-9a-f]{64}$/.test(value.releaseCarrierDigest) && Number.isSafeInteger(value.verifiedFileCount) && value.verifiedFileCount > 0;
+          const gateReceipt = decode("GATE_RECEIPT_B64"), reconciliationReceipt = decode("RECONCILIATION_RECEIPT_B64");
+          const gateKeys = ["schema", "decision", "effectId", "sourceRevision", "priorRunCount", "providerStatus", "providerArtifactId", "workflowRunId", ...(gateReceipt.decision === "coalesced-success" ? ["verification"] : [])];
+          if (!exact(gateReceipt, gateKeys) || gateReceipt.schema !== "agentic-guideline-pages-release-gate/v1" || !["apply", "reconcile-only", "coalesced-success"].includes(gateReceipt.decision) || gateReceipt.effectId !== E.EFFECT_ID || gateReceipt.sourceRevision !== E.CANDIDATE_SHA || gateReceipt.providerArtifactId !== E.PROVIDER_ARTIFACT_ID || gateReceipt.workflowRunId !== E.WORKFLOW_RUN_ID || !Number.isSafeInteger(gateReceipt.priorRunCount) || gateReceipt.priorRunCount < 0 || typeof gateReceipt.providerStatus !== "string" || (gateReceipt.verification && !verify(gateReceipt.verification))) process.exit(1);
+          if (!exact(reconciliationReceipt, ["schema", "status", "effectId", "sourceRevision", "gateDecision", "providerStatus", "providerArtifactId", "workflowRunId", "verification"]) || reconciliationReceipt.schema !== "agentic-guideline-pages-release-result/v1" || !["terminal-success", "coalesced-success"].includes(reconciliationReceipt.status) || reconciliationReceipt.status !== E.CONTROLLER_STATUS || reconciliationReceipt.gateDecision !== gateReceipt.decision || reconciliationReceipt.effectId !== E.EFFECT_ID || reconciliationReceipt.sourceRevision !== E.CANDIDATE_SHA || reconciliationReceipt.providerArtifactId !== E.PROVIDER_ARTIFACT_ID || reconciliationReceipt.workflowRunId !== E.WORKFLOW_RUN_ID || reconciliationReceipt.providerStatus !== "succeed" || !verify(reconciliationReceipt.verification)) process.exit(1);
+          if ((gateReceipt.decision === "coalesced-success") !== (reconciliationReceipt.status === "coalesced-success")) process.exit(1);
+          if (gateReceipt.verification && JSON.stringify(gateReceipt.verification) !== JSON.stringify(reconciliationReceipt.verification)) process.exit(1);
+          const pageUrl = E.ACTION_PAGE_URL;
+          if (pageUrl && new URL(pageUrl).href !== "https://huijoohwee.github.io/") process.exit(1);
+          NODE
+          {
+            echo "controller_status=$CONTROLLER_STATUS"
+            echo "effect_id=$EFFECT_ID"
+            echo "source_revision=$CANDIDATE_SHA"
+          } >> "$GITHUB_STEP_SUMMARY"

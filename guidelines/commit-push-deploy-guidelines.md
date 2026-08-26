@@ -1,283 +1,296 @@
 ---
-title: "Commit / Push / Deploy Guidelines"
-author: "huijoohwee"
-tags: [Git, GitHub, Deploy, Cloudflare, Vercel, CI/CD, Release]
-date: 2026-06-10
-version: 1.2
+title: "Commit, Push, Integrate, and Deploy Guidelines"
+doc_type: "Delivery and Release Control Guideline"
+version: "2.0.0"
+date: "2026-08-26"
+lang: "en-US"
+owner: "Delivery policy"
+local_rung: "runtime-ready"
+delivered_rung: "production-verified"
+lane: "protected-release"
+universal_scope: true
+status: "runtime-ready"
+repository: "huijoohwee/huijoohwee.github.io"
+workspaceTopology: "isolated-worktree"
+integrationMethod: "squash"
+required_checks:
+  - "agentic-sdlc-policy-contract"
 applies_to:
-  - knowgrph        # /Users/huijoohwee/Documents/GitHub/knowgrph
-  - huijoohwee      # /Users/huijoohwee/Documents/GitHub/huijoohwee (Prod mirror)
-  - agentic-canvas-os  # /Users/huijoohwee/Documents/GitHub/agentic-canvas-os
+  - "huijoohwee/huijoohwee.github.io"
+  - "huijoohwee/agentic-canvas-os"
+  - "huijoohwee/knowgrph"
+  - "huijoohwee/GameXR"
+  - "huijoohwee/huijoohwee"
+repository_profiles:
+  guideline_site: ["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]
+  agentic_canvas_os: ["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]
+  agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]
+  gamexr: ["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]
+  generated_production: ["huijoohwee/huijoohwee", "isolated-worktree", "squash", "Runtime Readiness Gate"]
 ---
 
-# Commit / Push / Deploy Guidelines
+# Commit, Push, Integrate, and Deploy Guidelines
 
-**Principle**: commit and push are the default; skip only with an explicit reason
-and a known expiry date for the exception.
+## Authority
 
----
+Only the target-scoped protected integration controller may advance the
+canonical release frontier or initiate delivery. Commit, push, integration,
+and deployment are different authority transitions; success at one boundary
+does not authorize the next.
 
-## Why commit and push?
+This top-level repository profile declares exactly one integration method and
+applies only to `huijoohwee/huijoohwee.github.io`:
+`integrationMethod: squash`. It declares
+`workspaceTopology: isolated-worktree` and the app-bound required check named
+in `required_checks`. Each entry in `repository_profiles` is an ordered tuple
+of repository, workspace topology, integration method, and one or more exact
+required-check names. Direct canonical writes are forbidden.
+Dirty, unversioned, or local-checkout deployment is forbidden.
 
-- **Reproducibility** — every deployed artifact is pinned to a SHA; you can
-  reproduce or roll back exactly what is live.
-- **History / audit trail** — working-tree deploys (`--commit-dirty`) ship
-  *unknown* code; git commits ship *named* code.
-- **Collaboration** — changes that live only on disk are invisible to teammates,
-  CI, and future-you.
-- **Safety net** — `git revert`, `git bisect`, and branch protection all require
-  a commit history.
+The [Agentic SDLC Guidelines](./agentic-sdlc-guidelines.md) own universal task,
+authority, verification, and release-control rules. The Agentic Canvas OS
+`START-WORKFLOW.md` and `RELEASE-WORKFLOW.md` are the executable reference
+contracts. This document owns the commit, push, protected-integration, and
+delivery sequence.
 
----
+## Identity and repository profile
 
-## Priority Legend
+Product identity and physical provider identity are separate:
 
-- 🔴 **CRITICAL** — must be done every time, no exceptions
-- 🟡 **HIGH** — strongly recommended; skip only with documented reason
-- 🟢 **MEDIUM** — good practice; context-dependent
-- ⚪ **OPTIONAL** — nice to have
+| Surface | Current identity | Rule |
+|---|---|---|
+| Product | Agentic Graph (`agenticgraph`) | Use for packages, modules, generated paths, canonical routes, UI, and new runtime identifiers. |
+| Source repository | `huijoohwee/knowgrph` | Retain as an immutable provider/provenance locator until a separately authorized repository transfer. |
+| Game source | `huijoohwee/GameXR` | Consume only the protected Agentic Graph integration SHA. |
+| Generated production repository | `huijoohwee/huijoohwee` | Artifact-only; never a source-authoring target. |
+| Canonical route | `https://airvio.co/agenticgraph` | Primary Agentic Graph route. |
+| Compatibility route | `https://airvio.co/knowgrph` | Release-A redirect/carrier only; retire through the authorized Release-B plan. |
+| Game route | `https://airvio.co/gamexr` | Stable GameXR route. |
 
----
+The legacy provider repository name, immutable legal notices, historical D1
+migration names, and time-bounded compatibility routes are classified
+provenance or migration carriers. They are not permission to reintroduce the
+retired product name into active source identifiers.
 
-## Phase 0: Before You Start Work
+## Phase 0: Inspect and admit
 
-### 🔴 CRITICAL
+Before authoring:
 
-| When | Action | Command | Do / Don't |
+1. Fetch provider refs without integrating them into the current checkout.
+2. Prove the canonical worktree is clean and equal to the fetched canonical
+   frontier.
+3. Inventory every registered worktree, current remote claim, review request,
+   and declared write set.
+4. Admit one isolated task lane from the exact frontier with an external
+   owner-only task capability and a current non-overlapping cloud claim.
+5. Record the repository adapter, `workspaceTopology`,
+   `integrationMethod`, semantic scope, exact paths, base SHA, fence, lease,
+   and draft review locator.
+
+Unattributed dirt, ambiguous ownership, an overlapping scope, a stale fence,
+or an undeclared adapter blocks mutation. Preserve another lane's bytes and
+authority in place; do not move, hide, adopt, or clean them.
+
+## Phase 1: Commit
+
+Commit only from the admitted task worktree:
+
+1. Revalidate the live cloud claim, task-capability proof, local lease, epoch,
+   fence, branch, and expiry immediately before each edit batch.
+2. Change only the exact declared paths.
+3. Run the focused tests and repository contract from the same tree that will
+   be committed.
+4. Seal an exact change manifest. The repository-owned controller stages those
+   paths explicitly and rejects missing, extra, ignored, staged, untracked, or
+   mode-drifted residue.
+5. Create an attributed commit whose subject, body, and trailers bind the task,
+   semantic scope, lease epoch, and controller mechanism.
+
+Do not broaden a manifest after authoring. A required new path is a
+scope-expansion transition with fresh overlap proof, not an informal addition.
+Do not rewrite a published shared task history.
+
+## Phase 2: Push
+
+Push only the fenced task ref through the repository-owned lifecycle:
+
+1. Reconcile the immutable candidate with the current canonical frontier.
+2. Push the exact task head and verify provider readback of the same object.
+3. Bind the draft review request to the task branch, canonical base, exact
+   head, claim, scope, manifest digest, epoch, and fence.
+4. Run the named required checks on the exact review head.
+5. Transition to review-ready only after the provider head and cloud claim
+   agree; a push response is not proof of publication.
+
+Never push directly to the canonical ref, force a task ref, bypass hooks, or
+infer authorization from branch naming, mergeability, labels, tree equality,
+or a green task-head check.
+
+## Phase 3: Integrate and deploy
+
+Commit and push the admitted task candidate first. Run the deploy chain only
+after protected integration and release planning produce the required
+receipts. Don't deploy over a red CI result. Verify every live surface before
+publishing the production mirror.
+
+### Protected integration
+
+The protected integration controller must:
+
+1. Re-fetch the canonical frontier and invalidate a candidate based on an
+   earlier frontier.
+2. Prove immutable candidate identity, admitted ownership, dependency closure,
+   exact required-check success, and current integration policy.
+3. Obtain the policy-permitted authenticated integration authorization for the
+   exact review head.
+4. Request a matched-head squash and wait for provider state `MERGED`.
+5. Verify the resulting one-parent canonical commit, tree, attribution,
+   required check, and containment in the fetched canonical frontier.
+
+A provider default or enabled merge button does not select the integration
+method. This profile rejects rebase-linear and merge-commit integration.
+
+### Release Run A: immutable planning
+
+Run A is read-only with respect to production. It:
+
+- starts from the exact protected source and dependency SHAs;
+- runs source, browser, mobile-first, offline-first, on-device, and package
+  checks required by the affected surface;
+- builds the production artifact once and seals every file, route, source
+  revision, dependency revision, and digest;
+- computes the Cloudflare Worker, Pages, D1, KV, Queue, R2, route, and generated
+  mirror plan from direct authoritative observations;
+- proves the generated mirror is derived output and contains no independent
+  authored bytes; and
+- emits the candidate, plan, attestations, evidence archive, and typed
+  authorization challenge without mutating production.
+
+For Agentic Graph production state, the authorization statement is byte-exact:
+
+```text
+authorize agentic-graph-production-state-plan <planDigest> plan-run <planRunId> artifact <artifactId> sha256 <artifactDigest>
+```
+
+Exact authenticated human authorization binds one immutable candidate and
+target. A prior approval, a branch, a merge event, an environment name, a
+deployment label, or approval of another digest grants no authority.
+
+### Release Run B: controlled effects
+
+Only the protected production job consumes Run A. It independently verifies
+the downloaded artifact, both attestations, protected source head, dependency
+closure, exact authorization statement, current provider state, and required
+human environment approval before its first external effect.
+
+The controller then:
+
+1. initializes the durable journal and stable effect identities;
+2. applies the authorized state transition;
+3. publishes the zero-slot root Pages artifact and verifies its receipt;
+4. attests the terminal payload;
+5. deploys the terminal Pages artifact;
+6. reconciles state by direct authoritative readback;
+7. verifies public routes, health, cache, compatibility, and provenance
+   carriers; and
+8. publishes the exact verified generated mirror through its own protected
+   branch, required check, and matched-head squash boundary.
+
+Deploy the sealed artifact without rebuilding or retargeting it. Local commands
+may inspect, plan, or verify, but cannot become an alternate Production
+controller.
+
+After any observed or unknown Worker-side effect, preserve the journal and
+resume forward from the same stable effect identity. A Pages or D1 reversal
+cannot claim to roll back Workers, Durable Objects, Queues, or R2. Before the
+first observed production effect, a failed run may stop and require a fresh
+candidate authorization.
+
+## Delivery profiles
+
+Repository adapters are target-specific; a check name from one repository
+never satisfies another repository's profile:
+
+| Repository | Workspace | Integration | Required checks |
 |---|---|---|---|
-| Beginning any change | Pull latest from remote | `git pull --rebase origin <branch>` | ✅ Start clean<br>❌ Don't work on stale base |
-| Stale/unrelated WIP in tree | Stash it before building or deploying | `git stash push -m "WIP: <topic>"` | ✅ Keep the deploy tree clean<br>❌ Don't let WIP ride along silently |
+| `huijoohwee/huijoohwee.github.io` | isolated worktree | squash | `agentic-sdlc-policy-contract` |
+| `huijoohwee/agentic-canvas-os` | isolated worktree | squash | `test`, `build`, `docs-contract`, `collaboration-integration`, `cloud-collaboration` |
+| `huijoohwee/knowgrph` | isolated worktree | squash | `Integration Gate` |
+| `huijoohwee/GameXR` | isolated worktree | squash | `Integration Gate` |
+| `huijoohwee/huijoohwee` | isolated worktree | squash | `Runtime Readiness Gate` |
 
----
-
-## Phase 1: Commit (Dev → local history)
-
-### 🔴 CRITICAL
-
-| When | Action | Command | Do / Don't |
+| Target | Candidate authorization | Controller | Terminal evidence |
 |---|---|---|---|
-| Feature/fix is buildable and tests pass | Stage **related** files only | `git add <specific-files>` or `git add -p` | ✅ Stage by topic<br>❌ Don't `git add .` without reviewing `git status` first |
-| Files staged | Commit with a clear message | `git commit -m "<type>: <short summary>"` | ✅ Imperative mood, ≤72 chars subject<br>❌ Don't use "fix", "update", "changes" alone |
-| Multiple unrelated changes in tree | Split into separate commits | `git add -p` → commit each topic | ✅ One commit per logical unit<br>❌ Don't bundle unrelated changes |
-| Commit message types | Use conventional prefix | `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:` | ✅ Consistent prefix<br>❌ Don't invent new prefixes |
+| Agentic Graph and GameXR on Cloudflare | Exact Run-A plan, run, artifact, and digest statement plus protected `production` approval | Repository-owned Run B | Direct provider readback, public route checks, artifact/provenance receipts, protected generated-mirror integration |
+| This guideline site's GitHub Pages surface | `authorize github-pages-production <candidateSha>` supplied in an authenticated manual dispatch | `.github/workflows/pages.yml` plus `scripts/lib/git-guidelines/pages-release-controller.mjs` | Current canonical SHA, successful required check, exact checkout, sealed file manifest and effect ID, matched gate/reconciliation receipts, full public payload verification |
 
-**Commit message format:**
-```
-<type>(<optional scope>): <short summary>
+The GitHub Pages workflow is manual by design. A canonical merge may make a
+candidate eligible; it does not initiate delivery.
 
-<optional body — what and why, not how>
-```
+The Pages controller inventories every same-candidate dispatch and prior rerun
+attempt before allowing the deploy action. Only a first proven no-effect run
+may return `apply`; all ambiguous or observed effects are reconciliation-only.
+The terminal step joins the exact run, provider artifact, candidate, effect,
+manifest, policy, canonical public origin, and byte-verified payload receipts.
 
-**Examples:**
-```bash
-git commit -m "feat(settings): add operator-deploy MCP settings to MainPanel"
-git commit -m "docs: annotate PRD/TAD frontmatter with monorepo topology"
-git commit -m "fix(canvas): repair flow-editor run-button regression"
-```
+## Verification and release evidence
 
-### 🟡 HIGH
+Every production result records:
 
-| When | Action | Do / Don't |
-|---|---|---|
-| Commit is unpushed and only on your branch | Amend rather than create a fixup | ✅ `git commit --amend --no-edit` for tiny typos<br>❌ Don't amend already-pushed commits |
-| Pre-commit hooks (hygiene/lint) fail | Fix, don't skip | ✅ Fix the issue<br>❌ Don't `--no-verify` as a habit |
+| Evidence | Required binding |
+|---|---|
+| Source | Canonical repository identity and exact protected SHA |
+| Dependencies | Exact protected revisions and lockfile identities |
+| Artifact | Stable artifact ID, archive digest, file manifest, and attestations |
+| Authorization | Authenticated actor, exact statement, candidate, target, policy, and decision time |
+| Effects | Stable effect IDs, pre-state, result, direct readback, and replay status |
+| Public verification | Canonical and compatibility routes, health surfaces, cache behavior, source revision, and artifact digest |
+| Mirror | Generated path inventory, source/provenance digest, required check, review head, and canonical integration SHA |
+| Cost | Build time, deployment duration, bytes, paid-call count, retry count, and retained resources |
 
----
+Evidence must distinguish `passed`, `failed`, `blocked`, `not-required`,
+and `unevaluated`. Terminal output, an HTTP request without an expected
+revision, or a controller response without direct readback is not production
+proof.
 
-## Phase 2: Push (Dev → remote / GitHub)
+## Release-A compatibility and Release-B retirement
 
-### 🔴 CRITICAL
+Release A may retain only manifest-classified compatibility carriers needed for
+existing users or provider continuity. Each carrier requires a reason,
+physical owner, verifier, and retirement condition. The canonical Agentic
+Graph identity must already own active packages, code symbols, generated
+paths, routes, and UI.
 
-| When | Action | Command | Do / Don't |
-|---|---|---|---|
-| Commit is ready to share | Push to a **feature branch** | `git push -u origin <branch>` | ✅ Push to branch, never directly to main<br>❌ Don't force-push shared branches |
-| Branch is the first of its kind on remote | Set upstream | `git push -u origin <branch>` | ✅ Establishes tracking for future `git push`<br>❌ Don't forget `-u` on first push |
-| Branch is ready for production | Open a PR or merge to main | GitHub PR → review → squash/merge | ✅ PR title ≤70 chars; describe what + why<br>❌ Don't merge your own PR without review on shared repos |
+Release B is a fresh plan with fresh authorization after the required soak. It
+may retire only carriers proved drained by direct observations. Immutable legal
+notices, provider provenance, and historical migrations remain unchanged when
+their governing record requires preservation.
 
-### 🟡 HIGH
+## Cleanup
 
-| When | Action | Do / Don't |
-|---|---|---|
-| Push triggers CI | Watch the CI result before deploying | ✅ Green CI gate is the signal to deploy<br>❌ Don't deploy over a red CI |
-| Branch is stale | Delete after merge | `git branch -d <branch>` + `git push origin --delete <branch>` | ✅ Keep remote clean<br>❌ Don't accumulate merged branches |
+Cleanup removes only clean, integrated, completion-proven lanes. It preserves
+active, parked, dirty, divergent, ambiguous, and unrelated work.
 
----
+The controller must verify the merged review head, canonical containment,
+terminal cloud retirement, clean detached task worktree, and exact cleanup
+target before unregistering a worktree. Branch deletion, ref pruning, cache
+removal, provider-resource retirement, and compatibility-route retirement are
+separate effects and require their own policy eligibility.
 
-## Phase 3: knowgrph Dev → Prod mirror → Cloudflare deploy
+## Stop conditions
 
-The `knowgrph` → `huijoohwee` → Cloudflare pipeline uses **Wrangler Pages** with
-`--commit-dirty=true`, which means it can deploy a dirty working tree. The
-**correct operating mode** is:
+Stop before mutation or delivery when any of these is true:
 
-1. **Commit and push in knowgrph first** (Phase 1–2 above).
-2. Run the deploy chain, which builds from the now-clean tree.
-3. The Cloudflare deployment record is then pinned to a real SHA.
+- source, dependency, candidate, artifact, plan, authorization, or target
+  identity differs from the sealed value;
+- required checks are missing, non-terminal, stale, or unsuccessful;
+- the canonical frontier advanced after candidate sealing;
+- claim, lease, epoch, fence, review, task capability, or environment approval
+  is missing or stale;
+- a provider effect is ambiguous and the journal cannot reconcile it;
+- a production observation cannot be read directly; or
+- cleanup eligibility is incomplete.
 
-Using `--commit-dirty=true` as a **crutch** (deploying without committing) is
-acceptable **only** during a fast demo crunch, and only when the uncommitted
-changes are intentional and bounded. Never use it as the default mode.
-
-### 🔴 CRITICAL — deploy sequence
-
-| Step | Command | Gate |
-|---|---|---|
-| 1. Stash unrelated WIP | `git stash push -m "WIP: <topic>"` | Clean tree before build |
-| 2. Production build | `npm run pages:build` | Must exit 0 |
-| 3. Sync check | `npm run pages:check-sync` | Skip deploy if "up to date" **and** nothing changed |
-| 4. Responsive parity gate | `npm --prefix canvas run test:smoke:mobile-keyboard:browser` + review `docs/documents/knowgrph-feature-map.md` | Required when mobile grammar reachability, heavy-runtime intent policy, or touch-first responsive behavior changes |
-| 5. Sync if needed | `npm run pages:sync` | Only on drift |
-| 6. Deploy + D1 seed | `npm run pages:deploy-cloudflare` | Block if sync proof, mobile keyboard proof, or route-and-action review is missing; record the deployment URL/ID |
-| 7. Verify live surfaces | `npm run runtime:verify` | Three `/health`/reachability surfaces green before demoing |
-| 8. Restore stash | `git stash pop` | Don't leave stash dangling |
-
-### 🟡 HIGH - release evidence to record
-
-After a real `knowgrph` release, record the bounded evidence that proves the
-ship actually happened instead of relying on terminal scrollback alone.
-
-| Evidence | Source | What to record |
-|---|---|---|
-| Pages build | `npm run pages:build` | success/failure plus total wall time |
-| Sync check | `npm run pages:check-sync` | whether deploy scope was already in sync or required publish drift correction |
-| Responsive parity gate | `npm --prefix canvas run test:smoke:mobile-keyboard:browser` + route-and-action review | pass/fail result plus the feature-map revision reviewed for the deploy |
-| Pages deploy | `npm run pages:deploy-cloudflare` | preview URL or deployment id returned by Wrangler |
-| Docs seed | `node ./scripts/seed-storage-docs-to-cloudflare.mjs` or deploy log | before-seed export time, per-document D1 progress, final `documents=<n>` verification |
-| Live verify | `npm run runtime:verify` | green/failed result for live `/knowgrph` and MCP health surfaces |
-
-For the canonical-docs D1 seed, the current observable proof shape is:
-
-- `source-files=<n>`
-- `chunked-source-files=<n>`
-- `export start/done: before-seed`
-- `d1 document upsert i/n: <canonicalPath>`
-- `export start/done: direct-d1-verification`
-- `export verification: documents=<n>`
-- `direct D1 seed complete`
-
-This keeps Dev -> Prod -> Cloudflare release notes short, evidence-backed, and
-easy to compare across runs.
-
-### 🟡 HIGH
-
-| When | Action | Do / Don't |
-|---|---|---|
-| Re-deploying with no code change | Check sync first; skip if "up to date" | ✅ Avoid redundant billable deploys + D1 re-seeds<br>❌ Don't re-deploy on every run |
-| `huijoohwee` (Prod mirror) is on a non-main branch | That's fine — wrangler targets the Pages project, not the local branch | ✅ Note the local branch in the deploy log<br>❌ Don't mistake the local branch for the Pages branch |
-
----
-
-## Phase 4: agentic-canvas-os → Vercel
-
-`agentic-canvas-os` is the product tier (Vercel frontend + Vercel serverless
-functions as primary Agent-API, AWS Lambda as fallback). The repo structure
-that matters for Vercel:
-
-```
-agentic-canvas-os/
-  web/                     ← Root Directory for Vercel
-    index.html / main.js / styles.css   static shell
-    api/                   ← Vercel serverless functions
-      auth/session.js      POST /api/auth/session (HS256 JWT mint)
-      run.js               POST /api/run (forward to knowgrph MCP)
-      _runtime.js          shared Agent-API core
-    build.mjs              Vercel buildCommand (node build.mjs)
-    vercel.json            framework:null, outputDirectory:dist
-```
-
-The **full knowgrph canvas** is served by `airvio.co/knowgrph`. The Vercel app
-embeds it in an iframe (`https://airvio.co/knowgrph/doc-view?run=<runId>`) for
-100% fidelity. For this to work, `airvio.co` must allow `frame-ancestors` for
-the Vercel origin in its `_headers` file — see the iframe fidelity section below.
-
-### 🔴 CRITICAL — initial Vercel setup
-
-| Step | Action | Do / Don't |
-|---|---|---|
-| 1. Initial commit | `git add -A && git commit -m "feat: initial agentic-canvas-os product tier"` | ✅ One clean commit on an unborn branch<br>❌ Don't `vercel deploy` before the first commit |
-| 2. Push | `git push -u origin main` | ✅ Remote must exist before wiring Vercel Git integration<br>❌ Don't wire Vercel before the remote exists |
-| 3. Create Vercel project | Dashboard → Import → **Root Directory = `web`** | ✅ `web/` is the critical setting — `vercel.json` + `build.mjs` + `api/` all live there<br>❌ Don't leave Root Dir at repo root |
-| 4. Set public build-time env | `CANVAS_BASE_URL=https://airvio.co/knowgrph` | ✅ Public URL only; defaults to `https://airvio.co/knowgrph` if unset<br>❌ Don't put secrets in build-time env |
-| 5. Optionally set fallback | `AGENT_API_FALLBACK_URL=<AWS-endpoint>` | ✅ Vercel functions are primary; AWS Lambda is the 5xx/transport fallback<br>❌ Don't invert — AWS is fallback, not primary |
-| 6. Set server-side secret | `AUTH_JWT_SECRET=<HS256-signing-secret>` as **server** env (not build) | ✅ Server-only; never emitted to the bundle or logs<br>❌ Don't set as a public/build var |
-| 7. Trigger first deploy | Push to `main` → Vercel auto-deploys | ✅ Verify `GET /api/run → 405` and `POST /api/auth/session → 200` |
-| 8. Wire `frame-ancestors` on airvio.co | See iframe fidelity section | ✅ Required for the canvas embed to load inside the Vercel iframe |
-
-### 🔴 CRITICAL — ongoing Vercel deploy cycle
-
-```
-git add -A
-git commit -m "<type>: <summary>"
-git push                        # triggers Vercel auto-deploy on main
-                                # every branch push gets a Vercel preview URL
-```
-
-Vercel's Git integration is the deploy mechanism — there is no manual deploy
-step. Pushing to `main` IS the production deploy.
-
-### 🟡 HIGH — iframe fidelity (knowgrph canvas embedded in Vercel)
-
-The Vercel app frames `airvio.co/knowgrph` via an `<iframe>`. Without the
-correct `Content-Security-Policy: frame-ancestors` header on airvio.co, the
-browser refuses to load the canvas cross-origin and the iframe is blank.
-
-**Rule: whenever a new Vercel deployment URL is created, verify `frame-ancestors`
-covers that origin.**
-
-The current setting in `knowgrph/canvas/public/_headers`:
-
-```
-/knowgrph*
-  Content-Security-Policy: frame-ancestors 'self' https://*.vercel.app https://*.joohwee.pages.dev
-```
-
-This covers:
-- All `*.vercel.app` preview URLs (e.g. `agentic-canvas-f3yw4nhqx-joohwees-projects.vercel.app`)
-- All `*.joohwee.pages.dev` Cloudflare preview URLs
-- `'self'` (airvio.co itself)
-
-If a custom domain is added to the Vercel project, add it explicitly:
-
-```
-/knowgrph*
-  Content-Security-Policy: frame-ancestors 'self' https://*.vercel.app https://*.joohwee.pages.dev https://your-custom-domain.com
-```
-
-Then run `npm run pages:deploy-cloudflare` in `knowgrph` to deploy the updated header.
-
-| When | Action | Do / Don't |
-|---|---|---|
-| New Vercel preview URL appears | Confirm it matches `*.vercel.app` wildcard | ✅ Wildcards cover all `joohwee.vercel.app` variants<br>❌ Don't add per-deployment hashes — the wildcard covers them |
-| Custom domain added to Vercel | Add it to `frame-ancestors` in `canvas/public/_headers` and redeploy knowgrph | ✅ Explicit domain; deploy both repos<br>❌ Don't assume the wildcard covers custom domains |
-| Canvas iframe shows blank | Check browser console for `Refused to display ... in a frame` | ✅ Update `frame-ancestors` and redeploy airvio.co<br>❌ Don't debug in Vercel — the fix is in knowgrph `_headers` |
-
-### 🟡 HIGH — test before every Vercel deploy
-
-| When | Action | Do / Don't |
-|---|---|---|
-| Any change to `web/api/*` | `npm test` in `agentic-canvas-os/` (51 tests, network-free) | ✅ Green gate before push<br>❌ Don't push a red test run |
-| Any change to `web/build.mjs` | `CANVAS_BASE_URL=https://airvio.co/knowgrph npm run web:build` | ✅ Verify `web/dist` is produced correctly<br>❌ Don't push a build that emits secrets |
-| Feature work | Push to a feature branch first | ✅ Vercel auto-creates a preview URL; verify the iframe loads before merging<br>❌ Don't develop directly on `main` |
-
----
-
-## Phase 5: Commit-free exceptions (when --commit-dirty is legitimate)
-
-| Situation | Acceptable? | Expiry |
-|---|---|---|
-| Fast demo crunch; changes are finished but not yet cleaned up for commit | ✅ Yes, with `--commit-dirty` | Commit within the day; before next deploy |
-| Mid-experiment; half-finished branch; don't want noise in history | ✅ Yes | Commit or `git stash` before the next substantive deploy |
-| Ongoing habit; "I'll commit later" for weeks | ❌ No | Commit now |
-| CI is failing and you want to skip the gate | ❌ No | Fix CI |
-
----
-
-## CID Mantras
-
-- **Commit**; guarantee reproducibility; forbid deploying unversioned artifacts
-- **Push**; share verified history; forbid lone-machine knowledge hoarding
-- **Branch**; isolate changes by topic; forbid direct work on `main`
-- **Deploy**; gate on a passing build; forbid deploying over red CI
-- **Stash**; isolate WIP before building; forbid unrelated changes riding silently into prod
-- **Rollback**; keep history clean enough to revert; forbid force-push on shared branches
-- **Verify**; probe live surfaces after every deploy; forbid shipping unverified live endpoints
-- **frame-ancestors**; allow only named origins to embed the canvas; forbid `X-Frame-Options: DENY` on embeddable routes
+Report the typed blocker and preserved state. Never convert an incomplete
+release into success by weakening a check, changing the target, rebuilding the
+artifact, or deleting evidence.

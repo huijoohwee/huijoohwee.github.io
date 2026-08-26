@@ -1,6 +1,7 @@
 import path from "node:path";
 
 import { finding, referenceImplementationRanges, sectionByAnchor, tableCells, tableRows } from "./content.mjs";
+import { readFrontmatter } from "./fm-reader.mjs";
 import { buildRuleIndex } from "./rule-registry.mjs";
 
 const EXACT_TERMS = Object.freeze(["`canonical`", "`overlapping`", "`disjoint-attributed`", "`ambiguous`", "Orchestrator", "Implementer", "Evaluator", "Operator"]);
@@ -25,6 +26,27 @@ const OWNER_FILES = Object.freeze({
   "Collaboration Module": "guidelines/agentic-sdlc-cloud-collaboration.md",
   "Lane Admission Module": "guidelines/agentic-sdlc-scoped-lane-admission.md",
   "Delivery Guidelines": "guidelines/commit-push-deploy-guidelines.md",
+});
+const RETIRED_DELIVERY_COMMAND_PATTERNS = Object.freeze([
+  ["blind pull/rebase", /\bgit\s+pull\b[^\n]*--rebase(?:=\S+)?(?:\s|$)/iu],
+  ["manual stash transport", /\bgit\s+stash\b/iu],
+  ["broad staging", /\bgit\s+add\b[^\n]*(?:^|\s)(?:\.|-A|--all)(?:\s|$)/iu],
+  ["direct canonical push", /\bgit\s+push\b[^\n]*(?:\borigin\b[^\n]*(?:\bmain\b|HEAD:(?:refs\/heads\/)?main\b)|(?:-u|--set-upstream)\b[^\n]*\borigin\b)/iu],
+  ["manual branch cleanup", /\bgit\s+(?:branch\s+(?:-[dD]|--delete)|push\b[^\n]*\s--delete\b)/iu],
+  ["dirty deployment", /--commit-dirty/iu],
+  ["local Cloudflare deployment", /pages:deploy-cloudflare/iu],
+]);
+const RETIRED_DELIVERY_PROSE_PATTERNS = Object.freeze([
+  ["merge-triggered production", /Pushing to main IS the production deploy/iu],
+  ["commit-free delivery", /Commit-free exceptions/iu],
+]);
+const DELIVERY_AUTHORIZATION_CHALLENGE = "authorize agentic-graph-production-state-plan <planDigest> plan-run <planRunId> artifact <artifactId> sha256 <artifactDigest>";
+const DELIVERY_REPOSITORY_PROFILES = Object.freeze({
+  guideline_site: Object.freeze(["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]),
+  agentic_canvas_os: Object.freeze(["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]),
+  agentic_graph: Object.freeze(["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]),
+  gamexr: Object.freeze(["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]),
+  generated_production: Object.freeze(["huijoohwee/huijoohwee", "isolated-worktree", "squash", "Runtime Readiness Gate"]),
 });
 
 const CONSUMED_FAMILIES = Object.freeze([
@@ -71,8 +93,20 @@ const CONSUMED_FAMILIES = Object.freeze([
   ]),
   family("C9", "commit, push, and deploy command sequences", "Delivery Guidelines", [
     projection("term", "commit--attribution#16", [/Consume commit, push, and deploy sequences only from the Delivery Guidelines owner/iu], [/Phase 1: Commit/iu, /Phase 2: Push/iu, /Phase 3: .*deploy/iu]),
-    projection("ordering", "commit--attribution#16", [/commit, push, and deploy sequences/iu], [/Commit and push .* first/isu, /Run the deploy chain/iu]),
-    projection("outcome", "commit--attribution#16", [/only from the Delivery Guidelines owner named in the boundary table/iu], [/Don't deploy over a red CI/iu, /Verify.*live/iu]),
+    projection("ordering", "commit--attribution#16", [/commit, push, and deploy sequences/iu], [/Commit and push the admitted task candidate first/iu, /Run the deploy chain only/iu]),
+    projection("outcome", "commit--attribution#16", [/only from the Delivery Guidelines owner named in the boundary table/iu], [/Don't deploy over a red CI/iu, /Verify every live surface before\s+publishing the production mirror/iu]),
+    projection("authority", "commit--attribution#16", [/only from the Delivery Guidelines owner named in the boundary table/iu], [
+      /Only the target-scoped protected integration controller may advance the\s+canonical release frontier or initiate delivery/iu,
+      /profile declares exactly one integration method/iu,
+      /`integrationMethod: squash`/u,
+      /Direct canonical writes are\s+forbidden/iu,
+      /Dirty,\s+unversioned,\s+or\s+local-checkout deployment is forbidden/iu,
+      /Exact authenticated human authorization binds one immutable candidate and\s+target/iu,
+      /Deploy the sealed artifact without rebuilding or retargeting it/iu,
+      /reconciles? state by direct authoritative readback/iu,
+      /Cleanup removes only clean, integrated, completion-proven lanes/iu,
+      /preserves\s+active, parked, dirty, divergent, ambiguous, and unrelated work/iu,
+    ]),
   ]),
 ]);
 
@@ -205,20 +239,196 @@ function checkFrontmatterProjection(document, ruleIndex, context, findings) {
 
 function checkDeliverySequenceOwnership(document, ruleIndex, context, findings) {
   if (!context) return;
+  checkDeliveryOwnerProfile(document, ruleIndex, context, findings);
   const phasePatterns = [/^## Phase 1: Commit/mu, /^## Phase 2: Push/mu, /^## Phase 3: .*deploy/mu];
-  const positions = phasePatterns.map(pattern => context.ownerText.search(pattern));
-  if (positions.some(position => position < 0) || positions.some((position, index) => index > 0 && position <= positions[index - 1])) {
-    findings.push(issue(document, ruleIndex.byId["commit--attribution#16"] || context.boundaryRule, "owner-divergence", context, context.namedOwner, `owner commit/push/deploy phase order is absent or reordered.`));
+  const phaseMatches = phasePatterns.map(pattern => [...context.ownerText.matchAll(new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`))]);
+  const positions = phaseMatches.map(matches => matches[0]?.index ?? -1);
+  if (phaseMatches.some(matches => matches.length !== 1)
+    || positions.some(position => position < 0)
+    || positions.some((position, index) => index > 0 && position <= positions[index - 1])) {
+    findings.push(issue(document, ruleIndex.byId["commit--attribution#16"] || context.boundaryRule, "owner-divergence", context, context.namedOwner, `owner commit/push/deploy phases must occur exactly once and in order.`));
   }
-  const licensed = referenceImplementationRanges(document);
-  const commandPattern = /`(?:git\s+(?:add|commit|push|pull|merge|rebase|reset|checkout|switch)|npm\s+run\s+(?:pages:|deploy|release)|wrangler\s+|vercel\s+deploy)[^`\n]*`/giu;
-  for (const [index, line] of document.lines.entries()) {
-    if (licensed.some(range => index + 1 >= range.startLine && index + 1 <= range.endLine)) continue;
-    for (const match of line.matchAll(commandPattern)) {
-      const rule = ruleAtLine(ruleIndex, index + 1) || context.boundaryRule;
-      findings.push(issue(document, rule, "owner-divergence", context, context.namedOwner, `owner command sequence is restated outside a reference implementation block: ${match[0]}.`, index + 1));
+  for (const [label, pattern] of RETIRED_DELIVERY_PROSE_PATTERNS) {
+    if (!pattern.test(context.ownerText)) continue;
+    findings.push(issue(document, ruleIndex.byId["commit--attribution#16"] || context.boundaryRule, "owner-divergence", context, context.namedOwner, `retired delivery behavior remains: ${label}.`));
+  }
+  for (const command of executableDeliveryCommands(context.ownerText)) {
+    for (const [label, pattern] of RETIRED_DELIVERY_COMMAND_PATTERNS) {
+      if (!pattern.test(command)) continue;
+      findings.push(issue(document, ruleIndex.byId["commit--attribution#16"] || context.boundaryRule, "owner-divergence", context, context.namedOwner, `retired delivery behavior remains: ${label}.`));
     }
   }
+  const licensed = referenceImplementationRanges(document);
+  for (const command of commandOccurrences(document.text)) {
+    if (licensed.some(range => command.startLine >= range.startLine && command.endLine <= range.endLine)) continue;
+    const rule = ruleAtLine(ruleIndex, command.startLine) || context.boundaryRule;
+    findings.push(issue(document, rule, "owner-divergence", context, context.namedOwner, `owner command sequence is restated outside a reference implementation block: \`${command.text}\`.`, command.startLine));
+  }
+}
+
+function checkDeliveryOwnerProfile(document, ruleIndex, context, findings) {
+  const rule = ruleIndex.byId["commit--attribution#16"] || context.boundaryRule;
+  let frontmatter;
+  try {
+    frontmatter = readFrontmatter(context.ownerText).data;
+  } catch (error) {
+    findings.push(issue(document, rule, "owner-divergence", context, context.namedOwner, `delivery owner frontmatter is not parseable: ${error.message}.`));
+    return;
+  }
+  const expectedRepositories = Object.values(DELIVERY_REPOSITORY_PROFILES).map(profile => profile[0]);
+  const profileErrors = [];
+  if (frontmatter.repository !== "huijoohwee/huijoohwee.github.io") profileErrors.push("current repository");
+  if (frontmatter.workspaceTopology !== "isolated-worktree") profileErrors.push("workspaceTopology");
+  if (frontmatter.integrationMethod !== "squash") profileErrors.push("integrationMethod");
+  if (!sameArray(frontmatter.required_checks, ["agentic-sdlc-policy-contract"])) profileErrors.push("required_checks");
+  if (!sameArray(frontmatter.applies_to, expectedRepositories)) profileErrors.push("applies_to");
+  if (!frontmatter.repository_profiles || typeof frontmatter.repository_profiles !== "object"
+    || Array.isArray(frontmatter.repository_profiles)) profileErrors.push("repository_profiles");
+  else {
+    const observedKeys = Object.keys(frontmatter.repository_profiles);
+    const expectedKeys = Object.keys(DELIVERY_REPOSITORY_PROFILES);
+    if (!sameArray(observedKeys, expectedKeys)) profileErrors.push("repository profile keys");
+    for (const key of expectedKeys) {
+      if (!sameArray(frontmatter.repository_profiles[key], DELIVERY_REPOSITORY_PROFILES[key])) {
+        profileErrors.push(`repository profile ${key}`);
+      }
+    }
+  }
+  const structuredProfiles = frontmatter.repository_profiles && typeof frontmatter.repository_profiles === "object"
+    && !Array.isArray(frontmatter.repository_profiles)
+    ? Object.keys(DELIVERY_REPOSITORY_PROFILES).map(key => frontmatter.repository_profiles[key]).filter(Array.isArray)
+    : [];
+  const expectedHumanRows = structuredProfiles.map(profile => [profile[0], String(profile[1] ?? "").replaceAll("-", " "), profile[2], ...profile.slice(3)]);
+  const observedHumanRows = deliveryProfileTableRows(context.ownerText);
+  if (!observedHumanRows || !sameNestedArray(observedHumanRows, expectedHumanRows)
+    || !sameNestedArray(observedHumanRows, Object.values(DELIVERY_REPOSITORY_PROFILES)
+      .map(profile => [profile[0], profile[1].replaceAll("-", " "), profile[2], ...profile.slice(3)]))) {
+    profileErrors.push("human repository-profile table");
+  }
+  const challengeCount = context.ownerText.split(DELIVERY_AUTHORIZATION_CHALLENGE).length - 1;
+  if (challengeCount !== 1) profileErrors.push("byte-exact Agentic Graph authorization challenge");
+  if (profileErrors.length === 0) return;
+  findings.push(issue(document, rule, "owner-divergence", context, context.namedOwner, `delivery owner structured policy differs: ${profileErrors.join(", ")}.`));
+}
+
+function executableDeliveryCommands(text) {
+  return commandSpans(text)
+    .filter(command => !isExplicitProhibition(command))
+    .map(command => command.text);
+}
+
+function commandOccurrences(text) {
+  const seen = new Set();
+  return commandSpans(text).filter(command => {
+    if (!looksLikeDeliveryCommand(command.text)) return false;
+    const key = `${command.startLine}:${command.endLine}:${command.text}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function looksLikeDeliveryCommand(value) {
+  return /^(?:git\s+(?:add|branch|commit|push|pull|merge|rebase|reset|checkout|stash|switch)\b|npm\s+run\s+(?:pages:|deploy|release)|wrangler\s+|vercel\s+deploy\b)/iu.test(value);
+}
+
+function commandSpans(text) {
+  const commands = [];
+  for (const logicalLine of logicalCommandLines(text)) {
+    const codeRanges = [...logicalLine.text.matchAll(/`([^`\n]+)`/gu)].map(match => ({
+      start: match.index,
+      end: match.index + match[0].length,
+      text: match[1],
+    }));
+    for (const range of codeRanges) {
+      const normalized = normalizeCommandText(range.text);
+      if (!looksLikeDeliveryCommand(normalized)
+        && !RETIRED_DELIVERY_COMMAND_PATTERNS.some(([, pattern]) => pattern.test(normalized))) continue;
+      commands.push(commandSpan(logicalLine, normalized, range.start, range.end, "inline-code"));
+    }
+
+    for (const match of logicalLine.text.matchAll(/\b(?:git\s+(?:add|branch|commit|push|pull|merge|rebase|reset|checkout|stash|switch)\b|npm\s+run\s+(?:pages:|deploy|release)|wrangler\s+|vercel\s+deploy\b)/giu)) {
+      if (codeRanges.some(range => match.index >= range.start && match.index < range.end)) continue;
+      const normalized = normalizeCommandText(logicalLine.text.slice(match.index));
+      commands.push(commandSpan(logicalLine, normalized, match.index, logicalLine.text.length, "plain"));
+    }
+
+    for (const match of logicalLine.text.matchAll(/--commit-dirty|pages:deploy-cloudflare/giu)) {
+      if (codeRanges.some(range => match.index >= range.start && match.index < range.end)) continue;
+      if (commands.some(command => command.logicalLine === logicalLine && match.index >= command.startIndex)) continue;
+      const normalized = normalizeCommandText(logicalLine.text.slice(match.index));
+      commands.push(commandSpan(logicalLine, normalized, match.index, logicalLine.text.length, "plain"));
+    }
+  }
+  return commands;
+}
+
+function logicalCommandLines(text) {
+  const physicalLines = String(text).replace(/\r\n?/gu, "\n").split("\n");
+  const logicalLines = [];
+  for (let index = 0; index < physicalLines.length; index += 1) {
+    const startLine = index + 1;
+    let endLine = startLine;
+    let value = physicalLines[index];
+    while (/\\\s*$/u.test(value) && index + 1 < physicalLines.length) {
+      value = `${value.replace(/\\\s*$/u, " ")}${physicalLines[index + 1].trimStart()}`;
+      index += 1;
+      endLine = index + 1;
+    }
+    logicalLines.push({ text: value, startLine, endLine });
+  }
+  return logicalLines;
+}
+
+function commandSpan(logicalLine, text, startIndex, endIndex, kind) {
+  return { ...logicalLine, logicalLine, text, startIndex, endIndex, kind };
+}
+
+function normalizeCommandText(value) {
+  return String(value).trim().replace(/^\$\s*/u, "").replace(/\\\s+/gu, " ").replace(/\s+/gu, " ");
+}
+
+function isExplicitProhibition(command) {
+  const prefix = command.logicalLine.text.slice(0, command.startIndex)
+    .replace(/^\s*(?:[-*+]\s+)?/u, "")
+    .split(/[.!?;]|\s+#/u).at(-1).trim();
+  if (/(?:^|\b)(?:(?:never|do not|don't|must not|may not)(?:\s+(?:run|execute|invoke|issue|use|allow|permit))?(?:\s+the)?(?:\s+shell)?(?:\s+command)?\s*:?|(?:it\s+is\s+)?(?:forbidden|prohibited)\s+to\s+(?:run|execute|invoke|issue|use)(?:\s+the)?(?:\s+command)?|(?:forbidden|prohibited|retired)\s+(?:shell\s+)?command\s*:)\s*$/iu.test(prefix)) return true;
+  if (command.kind !== "inline-code") return false;
+  const suffix = command.logicalLine.text.slice(command.endIndex);
+  return /^\s*(?:is|remains)\s+(?:strictly\s+)?(?:forbidden|prohibited|retired)\b/iu.test(suffix);
+}
+
+function deliveryProfileTableRows(text) {
+  const lines = String(text).replace(/\r\n?/gu, "\n").split("\n");
+  const sectionStarts = lines.map((line, index) => /^## Delivery profiles\s*$/u.test(line) ? index : -1).filter(index => index >= 0);
+  if (sectionStarts.length !== 1) return null;
+  const sectionStart = sectionStarts[0];
+  const sectionEndOffset = lines.slice(sectionStart + 1).findIndex(line => /^##\s+/u.test(line));
+  const sectionEnd = sectionEndOffset < 0 ? lines.length : sectionStart + 1 + sectionEndOffset;
+  const headerIndexes = [];
+  for (let index = sectionStart + 1; index < sectionEnd; index += 1) {
+    if (sameArray(tableCells(lines[index]), ["Repository", "Workspace", "Integration", "Required checks"])) headerIndexes.push(index);
+  }
+  if (headerIndexes.length !== 1) return null;
+  const headerIndex = headerIndexes[0];
+  if (!tableCells(lines[headerIndex + 1] || "").every(cell => /^:?-{3,}:?$/u.test(cell))) return null;
+  const rows = [];
+  for (let index = headerIndex + 2; index < sectionEnd; index += 1) {
+    const cells = tableCells(lines[index]);
+    if (cells.length === 0) break;
+    if (cells.length !== 4) return null;
+    const repository = exactCodeCell(cells[0]);
+    const checks = exactCodeList(cells[3]);
+    if (!repository || !checks) return null;
+    rows.push([repository, cells[1], cells[2], ...checks]);
+  }
+  return rows;
+}
+
+function exactCodeCell(value) { return String(value).match(/^`([^`]+)`$/u)?.[1] || null; }
+function exactCodeList(value) {
+  const checks = [...String(value).matchAll(/`([^`]+)`/gu)].map(match => match[1]);
+  return checks.length > 0 && String(value) === checks.map(check => `\`${check}\``).join(", ") ? checks : null;
 }
 
 function checkInheritedFindingRows(document, ruleIndex, contexts, findings) {
@@ -317,6 +527,7 @@ function tableLines(text) { return String(text).split(/\r?\n/u).map(tableCells).
 function findingTypes(cell) { return [...String(cell || "").matchAll(/`([a-z0-9-]+)`/gu)].map(match => match[1]); }
 function splitList(value = "") { return String(value).replace(/\band\b|\bor\b/giu, ",").split(",").map(item => item.trim()).filter(Boolean); }
 function sameArray(left, right) { return left.length === right.length && left.every((value, index) => value === right[index]); }
+function sameNestedArray(left, right) { return left.length === right.length && left.every((value, index) => sameArray(value, right[index] || [])); }
 function ruleAtLine(ruleIndex, line) { return ruleIndex.rules.find(rule => rule.line === line); }
 function ruleContaining(ruleIndex, value) { return ruleIndex.rules.find(rule => rule.ruleText.includes(value)); }
 function normalizedPath(value) { return path.posix.normalize(String(value).replaceAll("\\", "/")).replace(/^\.\//u, ""); }

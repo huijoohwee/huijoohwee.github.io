@@ -15,6 +15,9 @@ const upstreamAdmissionUrl = new URL("../guidelines/agentic-sdlc-upstream-depend
 const cloudCollaborationUrl = new URL("../guidelines/agentic-sdlc-cloud-collaboration.md", import.meta.url);
 const scopedLaneAdmissionUrl = new URL("../guidelines/agentic-sdlc-scoped-lane-admission.md", import.meta.url);
 const repositoryRuntimeReadinessUrl = new URL("../guidelines/agentic-sdlc-repository-runtime-readiness.md", import.meta.url);
+const antiPatternGuardsUrl = new URL("../guidelines/agentic-sdlc-anti-pattern-guards.md", import.meta.url);
+const autonomousContinuationUrl = new URL("../guidelines/agentic-sdlc-autonomous-continuation.md", import.meta.url);
+const rapidMvpSprintUrl = new URL("../guidelines/agentic-sdlc-rapid-mvp-sprint.md", import.meta.url);
 const source = fs.readFileSync(guidelineUrl, "utf8");
 const authoringGuideline = fs.readFileSync(authoringGuidelineUrl, "utf8");
 const productionReleaseLifecycle = fs.readFileSync(productionReleaseLifecycleUrl, "utf8");
@@ -26,6 +29,9 @@ const upstreamAdmission = fs.readFileSync(upstreamAdmissionUrl, "utf8");
 const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const scopedLaneAdmission = fs.readFileSync(scopedLaneAdmissionUrl, "utf8");
 const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
+const antiPatternGuards = fs.readFileSync(antiPatternGuardsUrl, "utf8");
+const autonomousContinuation = fs.readFileSync(autonomousContinuationUrl, "utf8");
+const rapidMvpSprint = fs.readFileSync(rapidMvpSprintUrl, "utf8");
 const lines = source.split("\n");
 const guidelineLogicalLineCount =
   source.length === 0 ? 0 : lines.length - Number(source.endsWith("\n"));
@@ -85,6 +91,20 @@ assert.ok(
   "production-release lifecycle module must remain below 600 lines",
 );
 assert.match(source, /\.\/agentic-sdlc-production-release-lifecycle\.md/);
+for (const [moduleSource, moduleLink] of [
+  [antiPatternGuards, "agentic-sdlc-anti-pattern-guards.md"],
+  [autonomousContinuation, "agentic-sdlc-autonomous-continuation.md"],
+  [rapidMvpSprint, "agentic-sdlc-rapid-mvp-sprint.md"],
+]) {
+  assert.ok(moduleSource.startsWith("---\n"), `${moduleLink} frontmatter must be present`);
+  assert.match(moduleSource, /\ndoc_type: "Guideline Module"\n/);
+  assert.match(moduleSource, /\nuniversal_scope: "true"\n/);
+  assert.match(moduleSource, /\nprovider_neutral: "true"\n/);
+  assert.match(source, new RegExp(`\\.\\/${moduleLink.replace(".", "\\.")}`));
+}
+assert.match(autonomousContinuation, /derive, sign, store, and transport every required machine encoding internally/);
+assert.match(autonomousContinuation, /one unresolved semantic decision/);
+assert.match(rapidMvpSprint, /fewer named phases discharging the same obligations, never fewer obligations/);
 assert.ok(conformanceRuntime.startsWith("---\n"), "conformance-runtime frontmatter must be present");
 assert.match(conformanceRuntime, /\nversion: "1\.0\.0"\n/);
 assert.match(conformanceRuntime, /\nlocal_rung: "spec-complete"\n/);
@@ -831,12 +851,13 @@ for (const finding of [
   assert.match(source, new RegExp(finding), `finding vocabulary must include ${finding}`);
 }
 
-const antiPatternGuards = contractSlice(
+const antiPatternSeam = contractSlice(
   source,
   "## Anti-Pattern Guards",
   "## Mantra Application",
   "anti-pattern guards",
 );
+assert.match(antiPatternSeam, /\.\/agentic-sdlc-anti-pattern-guards\.md/);
 const antiPatternTable = antiPatternGuards
   .split("\n")
   .filter(line => line.startsWith("|"));
@@ -858,6 +879,7 @@ assert.deepEqual(antiPatternTable, [
   "| Two devices dispatching the same target concurrently, or handing off mutable local state between users | One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts |",
   "| Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics | A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters |",
   "| The same effect split across successive recovery controllers, each demanding fresh authorization after creating the next projection-only blocker | One stable atomic convergence run reuses its bounded effect authorization, continues authority with successors, and stops as a controller defect if terminal projection cannot converge |",
+  "| Asking an Operator to relay a machine token, digest, nonce, or successor command for an unchanged recorded decision | Derive and transport encodings internally; re-prompt only after material decision drift |",
   "| A task list with cycles, or a wave whose tasks write the same artifact concurrently | Acyclic dependency graph; wave membership checked for write disjointness before dispatch |",
   "| A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |",
 ]);

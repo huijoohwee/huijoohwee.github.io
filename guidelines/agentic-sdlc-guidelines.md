@@ -24,6 +24,7 @@ lifecycle_status: "proposed"
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
 - **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
+- **Autonomous**: after the Operator supplies an objective, scope, bounds, and the capabilities needed to act, the Orchestrator continues through every safe, in-scope, dependency-ready step without requesting clerical confirmation. It derives and transports machine tokens, digests, commands, retries, and idempotent continuations internally. Autonomy never invents a missing product choice, widens scope or capability, crosses a promotion boundary, or authorizes a new irreversible effect.
 ## Module Index
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
@@ -36,6 +37,7 @@ lifecycle_status: "proposed"
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
+- [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) — bounded autonomous progress, decision-versus-transport separation, and minimum necessary Operator interruption
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `global-release-control-rule` — universal control boundary for every enrolled repository and deployment target
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
@@ -45,8 +47,9 @@ lifecycle_status: "proposed"
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
+- [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) — reference-implementation phase-collapse mapping for a declared, time-boxed sprint clock, and what a collapse may never elide
 - `validation-checklist` — pre-execution, per-task, and post-run gates
-- `anti-pattern-guards` — prohibited execution patterns and their corrections
+- [Execution Anti-Pattern Guards](./agentic-sdlc-anti-pattern-guards.md) — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
 - [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
 - [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./agentic-sdlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback
@@ -185,11 +188,13 @@ Any repository profile may declare its own tie-breaker criteria in place of thes
 - Group ready tasks into waves for concurrent dispatch; forbid two tasks in one wave writing the same artifact, which is a `concurrent-write-conflict`
 - Revalidate declared write scopes and fence revisions before dispatch, handoff, integration, and cleanup; post-baseline authored state remains owned by its originating lane
 - State the graph explicitly; forbid inferring order from list position alone, which silently couples ordering to formatting
+
 ### Orchestration-Reasoned Completion-Time Estimation
 - Before dispatch, the Orchestrator derives a dependency-closed outcome work breakdown structure (WBS) from the selected VCCs and mandatory obligations: every leaf states a measurable verified outcome, includes every transitive predecessor needed to achieve it, and records a duration range with its evidence or explicit assumption
 - Compute the end-to-end completion range from the WBS critical path; admit concurrency only where dependency and write-scope disjointness plus recorded resource, evaluator, and coordination capacity support it, and otherwise serialize
 - Account once for overhead (orchestration, setup, and handoff), external waits, independent verification, expected rework, and explicit contingency; record the completion range, confidence, critical path, capacity and concurrency evidence, assumptions, external dependencies, and evaluation time. Use the simplest auditable method proportionate to uncertainty and consequence; no estimator, duration unit, or contingency percentage is universal
 - Trigger a reforecast when observed duration, dependency, capacity, wait, verification, or rework evidence invalidates an assumption or changes the critical path; the evidence-triggered reforecast retains the prior forecast and records the triggering evidence, range delta, confidence change, and reason. A forecast missing the dependency-closed outcome WBS, evidenced critical-path and capacity basis, required time components, range, confidence, or assumptions, or not reforecast after such evidence, is an `orchestration-estimate-unfounded` finding
+
 ### State Vocabulary
 Strictly ordered, with exactly one terminal success state:
 ```
@@ -203,7 +208,7 @@ not-started → queued → ready → in-progress → {verified | failed | blocke
 | `in-progress` | Dispatched to an Implementer | Orchestrator |
 | `verified` | Evaluator confirmed the VCC from surfaced output — **the only success state** | Evaluator |
 | `failed` | Evaluator rejected, budget exhausted, or the check did not pass | Evaluator or Orchestrator |
-| `blocked` | Awaiting an Operator decision or an external precondition | Orchestrator |
+| `blocked` | Awaiting a genuinely unavailable Operator decision or external precondition, never a mechanically derivable token | Orchestrator |
 | `abandoned` | Withdrawn by Operator decision, with a recorded reason | Operator |
 **Directives**:
 - Forbid any state named `done`, `complete`, or equivalent that an Implementer may set; `verified` is the only success state and only the Evaluator sets it
@@ -307,6 +312,11 @@ Long runs outlive working context. A run that cannot resume is a run that must r
 - Treat a partially applied task as `failed` with recorded partial state, not as `in-progress`, so recovery decides explicitly whether to resume or re-derive
 - Forbid a recovery path that re-dispatches a `verified` task; re-verification is a re-derivation and resets the task explicitly
 - Record enough in each transition that a reader who followed none of the run can reconstruct what happened and why
+
+## Autonomous Continuation & Interaction Economy
+
+The canonical [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) module owns bounded autonomous progress, decision-versus-transport separation, adapter behavior, findings, and verification. Execution consumes it by reference; this seam does not duplicate its rules.
+
 ## Human-in-the-Loop Gates
 
 Some decisions an agent must not make alone, regardless of confidence.
@@ -324,6 +334,7 @@ Some decisions an agent must not make alone, regardless of confidence.
 **Directives**:
 - Forbid inferring, defaulting, scheduling, or simulating an Operator decision; an absent decision is a `blocked` state, never an assumed yes
 - Present a gate with the decision, the options, and the consequence of each; forbid escalating with a question the Operator cannot answer from what was surfaced
+- Treat the configured interaction adapter—not manual transcription of a machine token—as the decision boundary. After it records an exact decision, propagate that receipt through downstream controllers without asking the Operator to restate it
 - Forbid bundling an unrelated change into a gated task while waiting; a blocked task stays blocked
 - Record the Operator decision reference on the transition it authorises, so the authorisation is auditable later
 ## Global Release-Control Rule
@@ -454,6 +465,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `evidence-without-run` | `blocker` |
 | Recovery | `unresumable-run` | `major` |
 | Human gates | `assumed-operator-decision` | `blocker` |
+| Human gates | `avoidable-operator-interruption` | `major` |
 | Release lifecycle | `unreviewed-release-candidate` | `blocker` |
 | Release lifecycle | `dependency-closure-drift` | `blocker` |
 | Release lifecycle | `authorization-evidence-unjoined` | `blocker` |
@@ -493,17 +505,21 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Chain seam check | `specification-chain-phases`, [Specification Chain](./agentic-sdlc-specification-chain.md) |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
 | Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
-| Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets` |
-| Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius` |
+| Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets`, `autonomous-continuation--interaction-economy` |
+| Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius`, `autonomous-continuation--interaction-economy` |
 | Verification | `verification-strategy`, `execution-conformance-findings` |
-| Recovery | `checkpoint--recovery` |
-| Escalation | `human-in-the-loop-gates` |
-| Release handoff | `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `human-in-the-loop-gates` |
+| Recovery | `checkpoint--recovery`, `autonomous-continuation--interaction-economy` |
+| Escalation | `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Release handoff | `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
 **Directives**:
 - Load by section anchor for the current stage; forbid loading the whole set as a precondition for a single-stage action
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
+- Load `rapid-mvp-sprint-profile` at Run start alongside the roles and bridge sections whenever a Sprint Clock is declared; skip it entirely otherwise
+## Rapid MVP Sprint Profile
+
+The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
 ## Validation Checklist
 
 **Pre-Execution**:
@@ -542,6 +558,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Finding set compared** to the prior run; any new `blocker` treated as a regression
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
 - [ ] **Per-run consumption compared** to the specification's token budget
+- [ ] **Autonomous continuation economical**: every safe in-scope dependency-ready step continued without avoidable Operator interruption; machine tokens and idempotent continuations were carried internally, and each actual prompt maps to one unresolved semantic decision
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
 - [ ] **Protected review metadata exact**: the repository-owned review-request template is instantiated, the current canonical base revision is recorded, and the declared scope token equals the admitted semantic scope and any projected branch-scope segment
@@ -564,28 +581,11 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
 ## Anti-Pattern Guards
 
-| Prohibited pattern | Required correction |
-|---|---|
-| An Implementer marking its own task complete; a `done` state any role may set; a verdict derived from state the Evaluator cannot see | `verified` as the only success state, set only by an Evaluator that is a distinct mechanism, judging surfaced output only |
-| Tasks invented at task-authoring time to cover behaviour the specification never stated | Every task derived from a VCC; a behaviour gap returned to the authoring loop as a specification defect |
-| Picking among several equally-ready candidates by convenience, recency, or an unstated preference, with no recorded reason | Constraint satisfaction filters infeasible candidates first, outranking eliminates the dominated, and argumentation settles what remains — with the trail recorded |
-| Tasks dispatched with no token, iteration, wall-clock, or context bound; bounds raised mid-run to rescue a failing task | All four bounds stated before dispatch with a circuit-breaker; overruns trigger re-decomposition, not a larger bound |
-| Session-wide capability grants; an agent widening its own permissions mid-task; a standing approval for irreversible operations | Narrowest sufficient class granted per task; escalation via `blocked` and re-dispatch; an explicit Operator decision per irreversible occurrence |
-| Tasks that reach a mirror or delivery surface, or transmit project content outward, because it was convenient | Execution confined to the authoring lane; promotion is the Deploy Boundary's job and never a task |
-| Success asserted without a named check and a recorded result; a check named after the fact to match what happened | Named check stated before dispatch, run during the task, and its result surfaced in the Implementer's own output |
-| Bug fixes with no check that failed on the unfixed state; stated correctness properties with no executable property test | Failing-first witness per fix; one property test per stated property with its class named and shrinking enabled |
-| Long runs that cannot resume, discovering the context boundary by losing work at it | Run state persisted after every terminal transition; checkpoint before the context bound; resume from persisted state, not memory |
-| Operator decisions inferred, defaulted, simulated, or accepted through a non-interactive confirmation flag because the run would otherwise stall | Absent decisions produce `blocked`; the configured interaction adapter records the exact human challenge response before the authority adapter can authorize |
-| A green merge automatically deploying the current protected ref, one interaction transport treated as universal, or a release rebuilding after human approval | Protected integration emits no deployment authority; the configured interaction and authority adapters record one authenticated exact-candidate decision, and the controller deploys those reviewed bytes without rebuild |
-| Reusing approval after source, dependency, policy, target, artifact, or manifest drift because a mutable ref still has the same name | Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization |
-| Two devices dispatching the same target concurrently, or handing off mutable local state between users | One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts |
-| Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics | A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters |
-| The same effect split across successive recovery controllers, each demanding fresh authorization after creating the next projection-only blocker | One stable atomic convergence run reuses its bounded effect authorization, continues authority with successors, and stops as a controller defect if terminal projection cannot converge |
-| A task list with cycles, or a wave whose tasks write the same artifact concurrently | Acyclic dependency graph; wave membership checked for write disjointness before dispatch |
-| A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |
+The canonical [Execution Anti-Pattern Guards](./agentic-sdlc-anti-pattern-guards.md) module owns the compact prohibited-pattern → required-correction map. This seam keeps the finding vocabulary in this execution owner while avoiding duplicate rule prose.
+
 ## Mantra Application
 
-**"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Persistence makes every run resumable · Gates keep every irreversible choice human"**
+**"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Persistence makes every run resumable · Autonomy carries every safe next step · Gates keep every irreversible choice human"**
 
 - **Specification grounds**: a task with no VCC behind it is work no rung will credit, so the bridge is a derivation and never a fresh authoring act
 - **Bounds make finite**: four bounds and a circuit-breaker per task, because an unbounded task is an unbounded loop wearing a checkbox
@@ -593,4 +593,5 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - **Grants make deliberate**: capability is scoped per task to the narrowest sufficient class, and irreversibility is gated per occurrence rather than per session
 - **Evidence earns**: execution's output is not code, it is the Evidence References that let the Readiness Ladder move; unsurfaced work raises nothing
 - **Persistence makes resumable**: state lives outside working context, so a long run survives compaction instead of re-spending its way back to where it was
+- **Autonomy carries**: once intent and authority are present, safe mechanics and idempotent continuation stay inside the controller instead of becoming repeated Operator work
 - **Gates keep human**: scope, irreversibility, promotion, and re-authorisation are Operator decisions, and an absent decision is a blocked task rather than an assumed yes

@@ -154,6 +154,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Treat `origin/main` as the only shared canonical branch state; forbid treating a private branch or unpushed local `main` commit as published source of truth
 - Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
+- Reset local `main` to the canonical remote ref only after a distinct preservation branch, review request, or recovery object proves it contains the exact local-only commits, tree, and intended review base; switch to local `main`, refresh the canonical remote ref, reset local `main` to that exact remote revision, and leave the preserved lane unchanged
 - Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
 ### Granularity
 A well-sized task follows the universal minimum-time-and-resource / maximum-core-value chain: `highest-ranked baselined core VCC (or coherent group) → smallest dependency-closed mandatory obligation set → narrowest sufficient mechanism → independent verification → stop or select the next ranked core VCC`, within one per-task budget.

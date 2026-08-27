@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.19.0"
-date: "2026-08-24"
+version: "1.22.0"
+date: "2026-08-27"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -19,6 +19,7 @@ lifecycle_status: "proposed"
 - **Universal**: these guidelines apply to any product, domain, language, or runtime, and to any agent implementation; nothing here assumes a specific company, repository, file path, model, framework, or vendor.
 - **Neutral**: name agents, roles, and mechanisms by their function, never by a brand. Where a concrete tool is shown, it appears only under a heading or block whose own text contains the words "reference implementation", and may be swapped for any equivalent.
 - **Agnosticity**: every rule is evaluated from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
+- **Simple**: where two mechanisms discharge the same rule at equivalent rigor, the one with fewer moving parts, fewer new concepts, and fewer configurable knobs is conformant and the other is not required; a rule that a plain check can discharge must never be discharged by a bespoke framework instead.
 - **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
@@ -28,7 +29,7 @@ lifecycle_status: "proposed"
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
-- `task-model` — task identity, granularity, dependency graph, and state vocabulary
+- `task-model` — task identity, minimum-resource core-value granularity, dependency graph, orchestration-reasoned completion-time estimation, and state vocabulary
 - [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
 - `tool-permission--blast-radius` — capability classes, escalation, and irreversibility rules
@@ -59,6 +60,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Rule ID scheme and artifact-bearing classification | Authoring set | Reuses unchanged for execution rules |
 | Finding recording contract, severities, determinism | Authoring set | Reuses unchanged; extends the type enumeration only |
 | VCC primitive and Evidence Reference shape | Authoring set | Produces Evidence References during execution |
+| Pain-point-to-monetization ranking of candidate VCCs (provable demand, solution, feature, time-to-first-dollar) | Authoring set | Consumes the resulting order; breaks ties among equally-ready candidates locally per Task Model's Granularity, with the reasoning trail recorded |
 | Diagram identity, class, notation, and canvas projection rules | Authoring set's diagram companion modules | Obeys; emits the projection check result as an Evidence Reference |
 | Lane topology and Deploy Boundary | Authoring set | Obeys; never promotes across a boundary |
 | CID-to-RAO artifact continuity | Shared continuity module | Verifies joined planning, authoring, execution, demonstration, and successor references |
@@ -154,7 +156,12 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
 - Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
 ### Granularity
-A well-sized task is one an Implementer can complete, verify, and surface within a single per-task budget.
+A well-sized task follows the universal minimum-time-and-resource / maximum-core-value chain: `highest-ranked baselined core VCC (or coherent group) → smallest dependency-closed mandatory obligation set → narrowest sufficient mechanism → independent verification → stop or select the next ranked core VCC`, within one per-task budget.
+
+**What "highest-ranked" resolves against**: a VCC's core value traces back to a pain point → solution → feature → monetization chain — a pain point evidenced by provable demand (a named prospective payer, not a hypothesized one), the solution it justifies, the feature ranked by proximity to code already shipped (zero or minimal change outranks a rewrite of comparable scope), and the fastest path to a first real dollar. The authoring set fixes this order wherever it can; execution never re-derives it from scratch. Where a wave still admits more than one ready candidate for the same budget, break the tie locally and in this fixed sequence, never as three independent votes:
+1. **Constraint satisfaction** first removes any candidate that would violate a hard bound — a stated budget, a FOSS or platform gate, a Deploy Boundary — before ranking runs at all.
+2. **Outranking** then eliminates a surviving candidate that is no worse than another on every remaining criterion and strictly worse on at least one.
+3. **Argumentation** settles what outranking leaves tied, by weighing each surviving candidate's stated reason against its stated counter-reason and keeping the one whose reason survives attack.
 | Signal | Too small | Right-sized | Too large |
 |---|---|---|---|
 | VCC coverage | Fraction of one VCC | One VCC, or a coherent group | Spans unrelated VCCs |
@@ -162,9 +169,15 @@ A well-sized task is one an Implementer can complete, verify, and surface within
 | Budget | Far under bound | Fits within bound | Exceeds bound or is unestimable |
 | Artifacts touched | None | A coherent set | Unbounded or unknown set |
 **Directives**:
-- Size every task so its completion is verifiable by a check named in advance; forbid a task whose completion is judged by inspection
-- Split a task that exceeds its budget rather than raising the budget; a persistent overrun is a decomposition defect, and raising the bound hides it
-- Forbid a task with no verifiable outcome; documentation-only tasks state the artifact and the check that confirms it exists and conforms
+- Before dispatch, record the selected core VCCs, mandatory obligations, named completion check, projected elapsed time and resource consumption, and any known conforming alternative; classify the selection as an `oversized-task` when an alternative delivers at least the same verified core value with no more time or resources and less of at least one
+- Split a task that exceeds its budget rather than raising the budget; a persistent overrun or Pareto-dominated path is a decomposition defect, and adaptation may collapse or reorder mechanisms but never elide a mandatory obligation
+- Forbid a task with no verifiable outcome and forbid over-investing in non-core periphery: defer work untraced to the selected core VCCs or a specification- or policy-required correctness, safety, security, privacy, accessibility, legal, operability, recovery, evidence, or gate obligation; unused budget never authorizes it, and it resumes only after the authoring loop baselines its marginal core value above projected time and resource cost. Documentation-only tasks state the artifact and conforming check
+- Record the tie-break trail wherever a wave admits more than one ready candidate for the same budget: which candidates constraint satisfaction removed, which outranking eliminated, and the argumentation exchange that settled the remainder; an unrecorded choice among competing ready candidates is a `ranking-rationale-absent` finding
+#### Reference implementation — zero-infra tie-breaker profile
+Any repository profile may declare its own tie-breaker criteria in place of these; they are shown only as a concrete example, per the Scope & Neutrality Contract, and carry no universal authority.
+- Prefer the mechanism runnable in a browser or at the edge over one requiring dedicated infrastructure, and the offline-capable mechanism over one requiring a live connection
+- Prefer the lower total-cost-of-ownership, lower per-task token-consuming path when core value and budget are otherwise tied
+- Prefer a FOSS (MIT/Apache-2.0-class) dependency already in use over a new one, and a new consumer of an existing dependency over any new dependency
 ### Dependency Graph
 
 - Express dependencies as a directed acyclic graph over Task IDs; a cycle is a `task-cycle` finding at `blocker` severity
@@ -172,6 +185,11 @@ A well-sized task is one an Implementer can complete, verify, and surface within
 - Group ready tasks into waves for concurrent dispatch; forbid two tasks in one wave writing the same artifact, which is a `concurrent-write-conflict`
 - Revalidate declared write scopes and fence revisions before dispatch, handoff, integration, and cleanup; post-baseline authored state remains owned by its originating lane
 - State the graph explicitly; forbid inferring order from list position alone, which silently couples ordering to formatting
+### Orchestration-Reasoned Completion-Time Estimation
+- Before dispatch, the Orchestrator derives a dependency-closed outcome work breakdown structure (WBS) from the selected VCCs and mandatory obligations: every leaf states a measurable verified outcome, includes every transitive predecessor needed to achieve it, and records a duration range with its evidence or explicit assumption
+- Compute the end-to-end completion range from the WBS critical path; admit concurrency only where dependency and write-scope disjointness plus recorded resource, evaluator, and coordination capacity support it, and otherwise serialize
+- Account once for overhead (orchestration, setup, and handoff), external waits, independent verification, expected rework, and explicit contingency; record the completion range, confidence, critical path, capacity and concurrency evidence, assumptions, external dependencies, and evaluation time. Use the simplest auditable method proportionate to uncertainty and consequence; no estimator, duration unit, or contingency percentage is universal
+- Trigger a reforecast when observed duration, dependency, capacity, wait, verification, or rework evidence invalidates an assumption or changes the critical path; the evidence-triggered reforecast retains the prior forecast and records the triggering evidence, range delta, confidence change, and reason. A forecast missing the dependency-closed outcome WBS, evidenced critical-path and capacity basis, required time components, range, confidence, or assumptions, or not reforecast after such evidence, is an `orchestration-estimate-unfounded` finding
 ### State Vocabulary
 Strictly ordered, with exactly one terminal success state:
 ```
@@ -421,6 +439,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Lane convergence | `coordination-revision-churn` | `minor` |
 | Task model | `state-without-reason` | `minor` |
 | Task model | `oversized-task` | `minor` |
+| Task model | `ranking-rationale-absent` | `major` |
+| Task model | `orchestration-estimate-unfounded` | `major` |
 | Execution contract | `unsurfaced-result` | `major` |
 | Execution contract | `unenumerated-change` | `minor` |
 | Tool permission | `self-escalated-capability` | `blocker` |
@@ -492,6 +512,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Evaluator mechanism named** and demonstrably distinct from the Implementer
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact
+- [ ] **Competing-candidate ranking recorded**: any wave admitting more than one ready candidate for the same budget carries a constraint-satisfaction, outranking, and argumentation trail
+- [ ] **Orchestration completion-time estimate grounded and current**: the dependency-closed outcome WBS, critical path under evidenced concurrency and capacity, overhead, external waits, verification, rework, contingency, range, confidence, assumptions, and every evidence-triggered reforecast are recorded
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
 - [ ] **No live overlapping remote claim exists for the declared scope**; any overlap is resolved upstream through an accepted release, handoff, or reclaim before local mutation, and review state, lease expiry, mergeability, or canonical advancement do not count as release authority
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
@@ -542,50 +564,25 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
 ## Anti-Pattern Guards
 
-❌ An Implementer marking its own task complete; a `done` state any role may set; a verdict derived from state the Evaluator cannot see
-→ ✅ `verified` as the only success state, set only by an Evaluator that is a distinct mechanism, judging surfaced output only
-
-❌ Tasks invented at task-authoring time to cover behaviour the specification never stated
-→ ✅ Every task derived from a VCC; a behaviour gap returned to the authoring loop as a specification defect
-
-❌ Tasks dispatched with no token, iteration, wall-clock, or context bound; bounds raised mid-run to rescue a failing task
-→ ✅ All four bounds stated before dispatch with a circuit-breaker; overruns trigger re-decomposition, not a larger bound
-
-❌ Session-wide capability grants; an agent widening its own permissions mid-task; a standing approval for irreversible operations
-→ ✅ Narrowest sufficient class granted per task; escalation via `blocked` and re-dispatch; an explicit Operator decision per irreversible occurrence
-
-❌ Tasks that reach a mirror or delivery surface, or transmit project content outward, because it was convenient
-→ ✅ Execution confined to the authoring lane; promotion is the Deploy Boundary's job and never a task
-
-❌ Success asserted without a named check and a recorded result; a check named after the fact to match what happened
-→ ✅ Named check stated before dispatch, run during the task, and its result surfaced in the Implementer's own output
-
-❌ Bug fixes with no check that failed on the unfixed state; stated correctness properties with no executable property test
-→ ✅ Failing-first witness per fix; one property test per stated property with its class named and shrinking enabled
-
-❌ Long runs that cannot resume, discovering the context boundary by losing work at it
-→ ✅ Run state persisted after every terminal transition; checkpoint before the context bound; resume from persisted state, not memory
-
-❌ Operator decisions inferred, defaulted, simulated, or accepted through a non-interactive confirmation flag because the run would otherwise stall
-→ ✅ Absent decisions produce `blocked`; the configured interaction adapter records the exact human challenge response before the authority adapter can authorize
-
-❌ A green merge automatically deploying the current protected ref, one interaction transport treated as universal, or a release rebuilding after human approval
-→ ✅ Protected integration emits no deployment authority; the configured interaction and authority adapters record one authenticated exact-candidate decision, and the controller deploys those reviewed bytes without rebuild
-
-❌ Reusing approval after source, dependency, policy, target, artifact, or manifest drift because a mutable ref still has the same name
-→ ✅ Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization
-
-❌ Two devices dispatching the same target concurrently, or handing off mutable local state between users
-→ ✅ One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts
-
-❌ Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics
-→ ✅ A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters
-
-❌ The same effect split across successive recovery controllers, each demanding fresh authorization after creating the next projection-only blocker
-→ ✅ One stable atomic convergence run reuses its bounded effect authorization, continues authority with successors, and stops as a controller defect if terminal projection cannot converge
-
-❌ A task list with cycles, or a wave whose tasks write the same artifact concurrently
-→ ✅ Acyclic dependency graph; wave membership checked for write disjointness before dispatch
+| Prohibited pattern | Required correction |
+|---|---|
+| An Implementer marking its own task complete; a `done` state any role may set; a verdict derived from state the Evaluator cannot see | `verified` as the only success state, set only by an Evaluator that is a distinct mechanism, judging surfaced output only |
+| Tasks invented at task-authoring time to cover behaviour the specification never stated | Every task derived from a VCC; a behaviour gap returned to the authoring loop as a specification defect |
+| Picking among several equally-ready candidates by convenience, recency, or an unstated preference, with no recorded reason | Constraint satisfaction filters infeasible candidates first, outranking eliminates the dominated, and argumentation settles what remains — with the trail recorded |
+| Tasks dispatched with no token, iteration, wall-clock, or context bound; bounds raised mid-run to rescue a failing task | All four bounds stated before dispatch with a circuit-breaker; overruns trigger re-decomposition, not a larger bound |
+| Session-wide capability grants; an agent widening its own permissions mid-task; a standing approval for irreversible operations | Narrowest sufficient class granted per task; escalation via `blocked` and re-dispatch; an explicit Operator decision per irreversible occurrence |
+| Tasks that reach a mirror or delivery surface, or transmit project content outward, because it was convenient | Execution confined to the authoring lane; promotion is the Deploy Boundary's job and never a task |
+| Success asserted without a named check and a recorded result; a check named after the fact to match what happened | Named check stated before dispatch, run during the task, and its result surfaced in the Implementer's own output |
+| Bug fixes with no check that failed on the unfixed state; stated correctness properties with no executable property test | Failing-first witness per fix; one property test per stated property with its class named and shrinking enabled |
+| Long runs that cannot resume, discovering the context boundary by losing work at it | Run state persisted after every terminal transition; checkpoint before the context bound; resume from persisted state, not memory |
+| Operator decisions inferred, defaulted, simulated, or accepted through a non-interactive confirmation flag because the run would otherwise stall | Absent decisions produce `blocked`; the configured interaction adapter records the exact human challenge response before the authority adapter can authorize |
+| A green merge automatically deploying the current protected ref, one interaction transport treated as universal, or a release rebuilding after human approval | Protected integration emits no deployment authority; the configured interaction and authority adapters record one authenticated exact-candidate decision, and the controller deploys those reviewed bytes without rebuild |
+| Reusing approval after source, dependency, policy, target, artifact, or manifest drift because a mutable ref still has the same name | Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization |
+| Two devices dispatching the same target concurrently, or handing off mutable local state between users | One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts |
+| Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics | A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters |
+| The same effect split across successive recovery controllers, each demanding fresh authorization after creating the next projection-only blocker | One stable atomic convergence run reuses its bounded effect authorization, continues authority with successors, and stops as a controller defect if terminal projection cannot converge |
+| A task list with cycles, or a wave whose tasks write the same artifact concurrently | Acyclic dependency graph; wave membership checked for write disjointness before dispatch |
+| A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |
 ## Mantra Application
 
 **"Specification grounds every task · Bounds make every task finite · Independence makes every verdict trustworthy · Grants make every capability deliberate · Evidence earns every rung · Persistence makes every run resumable · Gates keep every irreversible choice human"**

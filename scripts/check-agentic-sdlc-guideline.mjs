@@ -27,6 +27,8 @@ const cloudCollaboration = fs.readFileSync(cloudCollaborationUrl, "utf8");
 const scopedLaneAdmission = fs.readFileSync(scopedLaneAdmissionUrl, "utf8");
 const repositoryRuntimeReadiness = fs.readFileSync(repositoryRuntimeReadinessUrl, "utf8");
 const lines = source.split("\n");
+const guidelineLogicalLineCount =
+  source.length === 0 ? 0 : lines.length - Number(source.endsWith("\n"));
 const authoringGuidelineLines = authoringGuideline.split("\n");
 const productionReleaseLifecycleLines = productionReleaseLifecycle.split("\n");
 const conformanceRuntimeLines = conformanceRuntime.split("\n");
@@ -42,14 +44,17 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.19\.0"\n/);
+assert.match(source, /\nversion: "1\.22\.0"\n/);
+assert.match(source, /minimum-time-and-resource \/ maximum-core-value chain/);
+assert.match(source, /forbid over-investing in non-core periphery/i);
+assert.match(source, /unused budget never authorizes it/);
 assert.match(source, /\nuniversal_scope: "true"\n/);
 assert.match(source, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.match(source, /\nupstream_blocking_policy: "prevent-not-bypass"\n/);
 assert.match(source, /\nlocal_rung: "spec-complete"\n/);
 assert.match(source, /\ndelivered_rung: "undocumented"\n/);
 assert.match(source, /\nlifecycle_status: "proposed"\n/);
-assert.ok(lines.length - 1 < 700, "guideline must remain below 700 lines");
+assert.ok(guidelineLogicalLineCount < 600, "guideline must remain below 600 logical lines");
 assert.match(
   source,
   /projection check named by the authoring set's canvas-render contract/,
@@ -239,6 +244,7 @@ const requiredSections = [
   "## Boundary with the Authoring Set",
   "## Task Model",
   "### Collaboration Identity & Scoped Lane Admission",
+  "### Orchestration-Reasoned Completion-Time Estimation",
   "## Human-in-the-Loop Gates",
   "## Global Release-Control Rule",
   "## Dependency-Ordered Integration",
@@ -256,6 +262,77 @@ for (const heading of requiredSections) {
     `${heading} must occur exactly once`,
   );
 }
+
+assert.match(
+  source,
+  /^- `task-model` — task identity, minimum-resource core-value granularity, dependency graph, orchestration-reasoned completion-time estimation, and state vocabulary$/m,
+  "module index must expose orchestration-reasoned completion-time estimation",
+);
+const taskModel = contractSlice(
+  source,
+  "## Task Model",
+  "## Human-in-the-Loop Gates",
+  "task model",
+);
+const completionEstimate = contractSlice(
+  taskModel,
+  "### Orchestration-Reasoned Completion-Time Estimation",
+  "### State Vocabulary",
+  "orchestration-reasoned completion-time estimation",
+).trimEnd();
+const completionEstimateLines = completionEstimate.split("\n");
+assert.equal(
+  completionEstimateLines.length,
+  5,
+  "completion-time estimation must remain one heading plus four directives",
+);
+assert.equal(
+  completionEstimateLines.filter(line => line === "### Orchestration-Reasoned Completion-Time Estimation").length,
+  1,
+);
+assert.equal(
+  completionEstimateLines.filter(line => line.startsWith("- ")).length,
+  4,
+  "completion-time estimation must contain exactly four directive bullets",
+);
+for (const requirement of [
+  "dependency-closed outcome work breakdown structure (WBS)",
+  "every transitive predecessor",
+  "duration range with its evidence or explicit assumption",
+  "WBS critical path",
+  "dependency and write-scope disjointness",
+  "resource, evaluator, and coordination capacity",
+  "overhead (orchestration, setup, and handoff), external waits, independent verification, expected rework, and explicit contingency",
+  "completion range, confidence, critical path, capacity and concurrency evidence, assumptions, external dependencies, and evaluation time",
+  "simplest auditable method proportionate to uncertainty and consequence",
+  "no estimator, duration unit, or contingency percentage is universal",
+  "evidence invalidates an assumption or changes the critical path",
+  "retains the prior forecast and records the triggering evidence, range delta, confidence change, and reason",
+  "`orchestration-estimate-unfounded`",
+]) {
+  assert.match(
+    completionEstimate,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    `completion-time estimation must include ${requirement}`,
+  );
+}
+for (const term of ["GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "provider", "vendor"]) {
+  assert.doesNotMatch(
+    completionEstimate,
+    new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `completion-time estimation must remain adapter-neutral: ${term}`,
+  );
+}
+assert.match(
+  source,
+  /^\| Task model \| `orchestration-estimate-unfounded` \| `major` \|$/m,
+  "finding vocabulary must classify orchestration-estimate-unfounded as a major Task model finding",
+);
+assert.match(
+  source,
+  /^- \[ \] \*\*Orchestration completion-time estimate grounded and current\*\*: the dependency-closed outcome WBS, critical path under evidenced concurrency and capacity, overhead, external waits, verification, rework, contingency, range, confidence, assumptions, and every evidence-triggered reforecast are recorded$/m,
+  "pre-execution checklist must require a current grounded completion-time estimate",
+);
 
 const releaseStart = source.indexOf("## End-to-End Release Lifecycle Protocol");
 const convergenceStart = source.indexOf("## Atomic Lane Convergence");
@@ -749,9 +826,41 @@ for (const finding of [
   "`duplicate-change-reintegrated`",
   "`stale-candidate-frontier`",
   "`runtime-readiness-unproven`",
+  "`orchestration-estimate-unfounded`",
 ]) {
   assert.match(source, new RegExp(finding), `finding vocabulary must include ${finding}`);
 }
+
+const antiPatternGuards = contractSlice(
+  source,
+  "## Anti-Pattern Guards",
+  "## Mantra Application",
+  "anti-pattern guards",
+);
+const antiPatternTable = antiPatternGuards
+  .split("\n")
+  .filter(line => line.startsWith("|"));
+assert.deepEqual(antiPatternTable, [
+  "| Prohibited pattern | Required correction |",
+  "|---|---|",
+  "| An Implementer marking its own task complete; a `done` state any role may set; a verdict derived from state the Evaluator cannot see | `verified` as the only success state, set only by an Evaluator that is a distinct mechanism, judging surfaced output only |",
+  "| Tasks invented at task-authoring time to cover behaviour the specification never stated | Every task derived from a VCC; a behaviour gap returned to the authoring loop as a specification defect |",
+  "| Picking among several equally-ready candidates by convenience, recency, or an unstated preference, with no recorded reason | Constraint satisfaction filters infeasible candidates first, outranking eliminates the dominated, and argumentation settles what remains — with the trail recorded |",
+  "| Tasks dispatched with no token, iteration, wall-clock, or context bound; bounds raised mid-run to rescue a failing task | All four bounds stated before dispatch with a circuit-breaker; overruns trigger re-decomposition, not a larger bound |",
+  "| Session-wide capability grants; an agent widening its own permissions mid-task; a standing approval for irreversible operations | Narrowest sufficient class granted per task; escalation via `blocked` and re-dispatch; an explicit Operator decision per irreversible occurrence |",
+  "| Tasks that reach a mirror or delivery surface, or transmit project content outward, because it was convenient | Execution confined to the authoring lane; promotion is the Deploy Boundary's job and never a task |",
+  "| Success asserted without a named check and a recorded result; a check named after the fact to match what happened | Named check stated before dispatch, run during the task, and its result surfaced in the Implementer's own output |",
+  "| Bug fixes with no check that failed on the unfixed state; stated correctness properties with no executable property test | Failing-first witness per fix; one property test per stated property with its class named and shrinking enabled |",
+  "| Long runs that cannot resume, discovering the context boundary by losing work at it | Run state persisted after every terminal transition; checkpoint before the context bound; resume from persisted state, not memory |",
+  "| Operator decisions inferred, defaulted, simulated, or accepted through a non-interactive confirmation flag because the run would otherwise stall | Absent decisions produce `blocked`; the configured interaction adapter records the exact human challenge response before the authority adapter can authorize |",
+  "| A green merge automatically deploying the current protected ref, one interaction transport treated as universal, or a release rebuilding after human approval | Protected integration emits no deployment authority; the configured interaction and authority adapters record one authenticated exact-candidate decision, and the controller deploys those reviewed bytes without rebuild |",
+  "| Reusing approval after source, dependency, policy, target, artifact, or manifest drift because a mutable ref still has the same name | Any identity mismatch invalidates approval and restarts convergence, review, candidate binding, and authorization |",
+  "| Two devices dispatching the same target concurrently, or handing off mutable local state between users | One target-and-candidate idempotency key, one fenced controller, and handoff only through immutable revisions and joined receipts |",
+  "| Treating provider-specific branch names, commands, approval products, or hosting services as universal lifecycle semantics | A provider-neutral receipt protocol with concrete behavior isolated in replaceable reference implementation adapters |",
+  "| The same effect split across successive recovery controllers, each demanding fresh authorization after creating the next projection-only blocker | One stable atomic convergence run reuses its bounded effect authorization, continues authority with successors, and stops as a controller defect if terminal projection cannot converge |",
+  "| A task list with cycles, or a wave whose tasks write the same artifact concurrently | Acyclic dependency graph; wave membership checked for write disjointness before dispatch |",
+  "| A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |",
+]);
 
 for (const phrase of [
   "Integration Frontier", "already-integrated", "superseded", "exact-canonical checks", "runtime-convergence evidence", "Seal the Release Frontier",
@@ -759,4 +868,4 @@ for (const phrase of [
   assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
 }
 
-console.log(`agentic SDLC guideline contract ok (${lines.length - 1} lines; authoring ${authoringGuidelineLines.length - 1} lines; artifact-continuity ${artifactContinuityLines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);
+console.log(`agentic SDLC guideline contract ok (${guidelineLogicalLineCount} lines; authoring ${authoringGuidelineLines.length - 1} lines; artifact-continuity ${artifactContinuityLines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);

@@ -71,6 +71,7 @@ This git-layer companion projects the execution set into byte-preserving, provid
 | Recovery_Handle | A completed recovery-capture directory name or a verified immutable bundle filename. | advisory |
 | Reference_Implementation_Block | A heading or block whose own text contains the words “reference implementation”. | advisory |
 | Blocked_Outcome | Own output names a closed condition and path, claim, or revision; pre/post head, index, tracked, and untracked digests match. | advisory |
+| `exact-refresh-proof` | ≤16 same-subject 1st-parent merges; event-bound tip/strict ancestors; divergent base/exact tree; authority=head/scope/epoch; terminal independently valid. | advisory |
 
 ## Load Budget
 
@@ -229,9 +230,9 @@ This git-layer companion projects the execution set into byte-preserving, provid
 | `Agentic-Lease-Epoch` | Current claim epoch | advisory |
 | `Agentic-Mechanism` | Acting agent mechanism | advisory |
 - [artifact-bearing] Use `<type>(<scope>): <summary>` on one line at most 72 chars; type is from the closed table, scope is admitted, and summary is 1–60 chars.
-- [artifact-bearing] Record trailers exactly once on 1–200-char final-block lines; scope and epoch equal the claim. A protected squash has one integration block; never concatenate authored blocks.
-- [artifact-bearing] State what changed and why in the body; forbid a body whose only content restates the subject.
-- [artifact-bearing] Missing, duplicate, empty, or literal escaped `\n` trailers raise `unattributed-agentic-commit`; retain bytes and re-record before push.
+- [artifact-bearing] Use 1–200-char trailer lines once; authored scope/epoch match claim; `exact-refresh-proof` joins head/scope, inherits one valid terminal block; squash one block; never aggregate.
+- [artifact-bearing] State what changed and why in the body; only bare `exact-refresh-proof` inherits its terminal body; forbid a body that only restates the subject.
+- [artifact-bearing] Missing, duplicate, empty, >200-char, or escaped `\n` trailers outside `exact-refresh-proof` raise `unattributed-agentic-commit`; retain bytes and re-record before push.
 - [artifact-bearing] A malformed or over-72-character subject resolves as a Blocked_Outcome naming the violated constraint until corrected.
 - [advisory] Consume commit, push, and deploy sequences only from the Delivery Guidelines owner named in the boundary table.
 

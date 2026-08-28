@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import {
   mkdirSync,
   mkdtempSync,
@@ -227,6 +228,80 @@ test("configured remote probing is a default git fact", () => {
   });
   assert.equal(probeCalls, 1);
   assert.equal(inputs.gitFacts.remote.state, "online");
+});
+
+test("resolver binds a two-hop protected-main refresh chain to exact merge trees and authority", () => {
+  const fixture = createFixture();
+  const branch = `agent/test/${fixture.scope}`;
+  const commonBase = fixture.head;
+  const subject = `fix(${fixture.scope}): refresh protected main`;
+  const parentMessage = `${subject}\n\nPreserve the attributed candidate while refreshing protected main.\n\nAgentic-Task: ${fixture.scope}\nAgentic-Scope: ${fixture.scope}\nAgentic-Lease-Epoch: 61\nAgentic-Mechanism: Codex test fixture\n`;
+
+  writeText(path.join(fixture.repository, "candidate.txt"), "candidate\n");
+  runGit(fixture.repository, ["add", "candidate.txt"]);
+  runGit(fixture.repository, ["commit", "-q", "-F", "-"], parentMessage);
+  const terminalRevision = runGit(fixture.repository, ["rev-parse", "HEAD"]).trim();
+
+  runGit(fixture.repository, ["checkout", "-q", "-b", "main", commonBase]);
+  writeText(path.join(fixture.repository, "protected-one.txt"), "protected one\n");
+  runGit(fixture.repository, ["add", "protected-one.txt"]);
+  runGit(fixture.repository, ["commit", "-q", "-m", "docs(protected-main): first protected advance"]);
+  const olderProtectedRevision = runGit(fixture.repository, ["rev-parse", "HEAD"]).trim();
+
+  runGit(fixture.repository, ["checkout", "-q", branch]);
+  runGit(fixture.repository, ["merge", "--no-ff", "-q", "-m", subject, "main"]);
+  const intermediateRevision = runGit(fixture.repository, ["rev-parse", "HEAD"]).trim();
+
+  runGit(fixture.repository, ["checkout", "-q", "main"]);
+  writeText(path.join(fixture.repository, "protected-two.txt"), "protected two\n");
+  runGit(fixture.repository, ["add", "protected-two.txt"]);
+  runGit(fixture.repository, ["commit", "-q", "-m", "docs(protected-main): second protected advance"]);
+  const protectedRevision = runGit(fixture.repository, ["rev-parse", "HEAD"]).trim();
+
+  runGit(fixture.repository, ["checkout", "-q", branch]);
+  runGit(fixture.repository, ["merge", "--no-ff", "-q", "-m", subject, "main"]);
+  fixture.head = runGit(fixture.repository, ["rev-parse", "HEAD"]).trim();
+  writeProtectedReviewAuthority(fixture, { leaseEpoch: 3, baseRevision: protectedRevision });
+
+  const inputs = resolveFixture(fixture, {
+    expectedBaseRevision: protectedRevision,
+    expectedProtectedRevision: protectedRevision,
+  });
+  const proof = inputs.gitFacts.refreshChain;
+  assert.equal(proof.expectedProtectedRevision, protectedRevision);
+  assert.equal(proof.maximumHops, 16);
+  assert.equal(proof.truncated, false);
+  assert.equal(proof.objectFailure, false);
+  assert.equal(proof.nodes.length, 3);
+  assert.deepEqual(proof.nodes[0].parents, [intermediateRevision, protectedRevision]);
+  assert.equal(proof.nodes[0].tree, proof.nodes[0].expectedMergeTree);
+  assert.deepEqual(proof.nodes[0].protectedLineageBases, []);
+  assert.deepEqual(proof.nodes[1].parents, [terminalRevision, olderProtectedRevision]);
+  assert.equal(proof.nodes[1].tree, proof.nodes[1].expectedMergeTree);
+  assert.deepEqual(proof.nodes[1].mergeBases, [commonBase]);
+  assert.deepEqual(proof.nodes[1].protectedLineageBases, [olderProtectedRevision]);
+  assert.equal(proof.nodes[2].revision, terminalRevision);
+  assert.equal(proof.nodes[2].message.trimEnd(), parentMessage.trimEnd());
+  assert.deepEqual(inputs.gitFacts.refreshAuthority, {
+    laneRevision: fixture.head,
+    leaseEpoch: 3,
+    scopeId: fixture.scope,
+  });
+
+  const unbound = resolveFixture(fixture, {
+    expectedBaseRevision: protectedRevision,
+    expectedProtectedRevision: "f".repeat(40),
+  });
+  assert.equal(unbound.gitFacts.refreshChain.expectedProtectedRevision, null);
+  assert.deepEqual(unbound.gitFacts.refreshChain.nodes, []);
+
+  writeAuthority(fixture, { leaseEpoch: 3, canonicalBaseRevision: protectedRevision });
+  const ordinaryClaim = resolveFixture(fixture, {
+    expectedBaseRevision: protectedRevision,
+    expectedProtectedRevision: protectedRevision,
+  });
+  assert.deepEqual(ordinaryClaim.problems, []);
+  assert.equal(ordinaryClaim.gitFacts.refreshAuthority, null);
 });
 
 test("local git commands receive the remaining verdict deadline", () => {
@@ -472,6 +547,70 @@ function writeAuthority(fixture, claimOverrides = {}, wrapperOverrides = {}) {
   });
 }
 
+function writeProtectedReviewAuthority(fixture, { leaseEpoch, baseRevision }) {
+  const scopeId = fixture.scope;
+  const branch = `agent/test/${scopeId}`;
+  const declaredWriteScope = [
+    "path:docs/documents/git-guidelines.md",
+    "path:scripts/lib/git-guidelines",
+    `semantic:${scopeId}`,
+  ];
+  const claimDigest = "7".repeat(64);
+  const claimId = "6".repeat(64);
+  const ledgerRevision = "c".repeat(40);
+  const reviewRequestId = "github-pull-request:PR_input_resolver";
+  const receiptCore = {
+    schema: "agentic-cloud-collaboration-github-verification/v1",
+    ok: true,
+    ledgerRevision,
+    ledgerDigest: "4".repeat(64),
+    claimId,
+    claimDigest,
+    contractReceiptDigest: "8".repeat(64),
+    evaluationTime: "2026-08-05T16:00:30.000Z",
+    findings: [],
+  };
+  writeJson(fixture.authorityPath, {
+    ledgerRepository: "huijoohwee/agentic-canvas-os",
+    reviewRequestId,
+    scopeId,
+    targetRepository: "example/repository",
+    verificationMode: "protected-review",
+    result: {
+      schema: "agentic-cloud-collaboration-result/v1",
+      ok: true,
+      action: "verify",
+      status: "ready",
+      ledgerRevision,
+      claimDigest,
+      claim: {
+        claimId,
+        state: "reviewed",
+        writeAuthority: false,
+        scopeReserved: true,
+        canonicalBaseRevision: baseRevision,
+        laneRevision: fixture.head,
+        declaredWriteScope,
+        writeSetDigest: sha256(JSON.stringify(declaredWriteScope)),
+        leaseEpoch,
+        reviewRequestId,
+        expiresAt: "2099-01-01T00:00:00.000Z",
+        fenceRevision: claimDigest,
+        operationReceiptDigest: "9".repeat(64),
+      },
+      subject: {
+        repository: "example/repository",
+        pullRequestNumber: 17,
+        branch,
+        headSha: fixture.head,
+        canonicalBaseSha: baseRevision,
+      },
+      findings: [],
+      receipt: { ...receiptCore, receiptDigest: digestValue(receiptCore) },
+    },
+  });
+}
+
 function writePeerAuthority(fixture, { scopeId, requestId, dependencyClass }) {
   const claimDigest = "c".repeat(64);
   writeJson(path.join(fixture.coordinationRoot, `${scopeId}-cloud-authority.json`), {
@@ -499,6 +638,20 @@ function writePeerAuthority(fixture, { scopeId, requestId, dependencyClass }) {
 
 function integrationRequest(requestId, dependencyClass, scopeId, leaseEpoch) {
   return { requestId, dependencyClass, scopeId, leaseEpoch };
+}
+
+function digestValue(value) {
+  return sha256(canonicalJson(value));
+}
+
+function sha256(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function canonicalJson(value) {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
 }
 
 function resolveFixture(fixture, overrides = {}) {
@@ -538,8 +691,10 @@ function writeJson(file, value) {
   writeText(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function runGit(root, argumentsList) {
-  return execFileSync("git", argumentsList, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+function runGit(root, argumentsList, input = undefined) {
+  return execFileSync("git", argumentsList, {
+    cwd: root, encoding: "utf8", input, stdio: ["pipe", "pipe", "pipe"],
+  });
 }
 
 function byteCompare(left, right) {

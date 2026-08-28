@@ -33,6 +33,7 @@ export const RULE_CONTRACTS = Object.freeze([
   contract("lane-topology--admission#28", "artifact-bearing", "integrate-operation", /`integrate\(candidate\)`/u, /reviewed immutable candidate/iu, /dependency closure/iu, /checks/iu, /current claim/iu, /monotonic CAS/iu),
   contract("lane-topology--admission#29", "artifact-bearing", "retire-operation", /root operation emits a typed digest-bound receipt/iu, /authenticated `retire\(claim\)` alone ends authority/u, /preserving revision, review, bytes, checks, and handoff evidence/iu),
   contract("glossary#5", "advisory", "dormant-preservation", /Dormant_Preserved \|/u, /Expired non-writing authority/iu, /revision, review identity, evidence, and bytes remain preserved/iu),
+  contract("glossary#10", "advisory", "exact-refresh-proof", /`exact-refresh-proof` \|/u, /≤16 same-subject 1st-parent merges/iu, /event-bound tip\/strict ancestors/iu, /divergent base\/exact tree/iu, /authority=head\/scope\/epoch/iu, /terminal independently valid/iu),
 
   contract("coordination-artifacts#2", "advisory", "artifact-encoding", /Encoding \|/u, /UTF-8 JSON/iu, /64 KiB/iu),
   contract("coordination-artifacts#3", "advisory", "declared-scope-schema", /Declared scope \|/u, /`agentic-declared-write-scope\/v1`/u),
@@ -99,9 +100,9 @@ export const RULE_CONTRACTS = Object.freeze([
   contract("preservation-recovery--cleanup#24", "artifact-bearing", "restore-mismatch-blocks", /restore mismatch blocks/iu, /retains the capture and pre-restore bytes/iu, /every differing path/iu),
 
   contract("commit--attribution#11", "artifact-bearing", "commit-subject", /<type>\(<scope>\): <summary>/u, /at most 72 chars/iu, /type is from the closed table/iu, /scope is admitted/iu, /summary is 1–60 chars/iu),
-  contract("commit--attribution#12", "artifact-bearing", "commit-trailers", /trailers exactly once/iu, /1–200-char final-block lines/iu, /scope and epoch equal the claim/iu, /protected squash has one integration block/iu, /never concatenate authored blocks/iu),
-  contract("commit--attribution#13", "artifact-bearing", "commit-body", /what changed and why/iu, /forbid a body whose only content restates the subject/iu),
-  contract("commit--attribution#14", "artifact-bearing", "invalid-attribution", /Missing, duplicate, empty, or literal escaped `\\n` trailers/iu, /`unattributed-agentic-commit`/u, /retain bytes and re-record before push/iu),
+  contract("commit--attribution#12", "artifact-bearing", "commit-trailers", /1–200-char trailer lines once/iu, /authored scope\/epoch match claim/iu, /`exact-refresh-proof` joins head\/scope/iu, /inherits one valid terminal block/iu, /squash one block/iu, /never aggregate/iu),
+  contract("commit--attribution#13", "artifact-bearing", "commit-body", /what changed and why/iu, /bare `exact-refresh-proof` inherits its terminal body/iu, /forbid a body that only restates the subject/iu),
+  contract("commit--attribution#14", "artifact-bearing", "invalid-attribution", /trailers outside `exact-refresh-proof`/iu, /missing, duplicate, empty, >200-char, or escaped `\\n` trailers/iu, /`unattributed-agentic-commit`/u, /retain bytes and re-record before push/iu),
   contract("commit--attribution#15", "artifact-bearing", "invalid-subject-block", /malformed or over-72-character subject/iu, /Blocked_Outcome/iu, /until corrected/iu),
 
   contract("verification-gates#6", "artifact-bearing", "terminal-exact-revision-check", /Before remote or protected-canonical push/iu, /`git-guidelines-conformance\(<exact-revision>\)`/u, /terminal status/iu, /within 60 seconds/iu),

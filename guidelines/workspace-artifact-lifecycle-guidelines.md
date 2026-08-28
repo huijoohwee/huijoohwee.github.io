@@ -172,8 +172,8 @@ The initial E2E import binds these exact local sources and repository targets:
 
 | Source | Target | SHA-256 | Bytes |
 |---|---|---:|---:|
-| `/Users/huijoohwee/Downloads/media-gaming-development-guidelines.md` | `guidelines/media-gaming-development-guidelines.md` | `6f3b0ee6414c528d5cffedd15d234895e97df64839759b9272d851e85482f83c` | 43967 |
-| `/Users/huijoohwee/Downloads/media-gaming-development-template.md` | `template/media-gaming-development-template.md` | `0a97ec93189285c6b9217127edf361168b777d96ff4e541ed8f0fbfa83ed74a9` | 15238 |
+| `$HOME/Downloads/media-gaming-development-guidelines.md` | `guidelines/media-gaming-development-guidelines.md` | `6f3b0ee6414c528d5cffedd15d234895e97df64839759b9272d851e85482f83c` | 43967 |
+| `$HOME/Downloads/media-gaming-development-template.md` | `template/media-gaming-development-template.md` | `0a97ec93189285c6b9217127edf361168b777d96ff4e541ed8f0fbfa83ed74a9` | 15238 |
 
 The import succeeds only when each source and target digest is equal and the target repository's focused documentation check passes. This receipt proves local Dev import only; protected integration and publication remain separate.
 

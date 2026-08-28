@@ -349,6 +349,7 @@ Every repository and deployment target governed by this set is subject to one gl
 - Require protected integration to consume one immutable candidate, current policy, independent required checks, admitted ownership, and a digest-bound integration receipt; deployment additionally requires the lifecycle's exact target-scoped authorization and joined release receipts; require every repository adapter to declare exactly one canonical integration method and its permitted topology before review, with method selection treated as policy and never inferred from branch shape, tree equivalence, or provider default
 - Permit canonical local synchronization only when the local mirror is clean, exclusively owned, and proven to reach the fetched canonical remote frontier by fast-forward or exact tree-equivalence under a repository adapter; divergence, unexplained files, or an unverified remote projection blocks synchronization
 - Treat a canonical remote advance as invalidating every unconsumed candidate and authorization bound to an earlier frontier; retire or reseal the affected run rather than retargeting it
+- Bind a release candidate to the source target's exact canonical frontier plus the exact **declared dependency pins** — each an exact fetched, protected-check-verified ancestor of its dependency's canonical remote frontier, with the binding mode recorded — never to a dependency's live canonical tip; a dependency advance does not invalidate a candidate whose pins are unchanged (only a source-frontier advance or pin change does), concurrent devices coordinate through the target-and-candidate idempotency key and one fenced controller by advancing or consuming pins through protected integration, and coupling a candidate to a moving dependency tip is a `dependency-tip-candidate-coupling` finding
 - Require a deterministic global evaluator to report enrolled-target coverage, control adapter identity, policy revision, and a zero/non-zero result; missing enrollment, an unresolved exception, or a nonconforming target blocks release for that target without granting authority over unrelated targets
 
 This rule is adaptive only in its adapter and evidence scale. It does not require a shared repository host, branch convention, deployment provider, or release cadence, and it never lets a smaller change bypass the control boundary.
@@ -484,6 +485,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Integration order | `canonical-frontier-unverified` | `blocker` |
 | Integration order | `duplicate-change-reintegrated` | `major` |
 | Integration order | `stale-candidate-frontier` | `blocker` |
+| Release lifecycle | `dependency-tip-candidate-coupling` | `major` |
 | Runtime readiness | `runtime-readiness-unproven` | `blocker` |
 | Specification chain | `undesigned-criterion` | `major` |
 | Specification chain | `ungrounded-design-element` | `minor` |

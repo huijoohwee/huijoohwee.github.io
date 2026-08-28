@@ -30,7 +30,7 @@
     "avoid_domain_terms": true
   },
   "documentation_paths": [
-    "guidelines/verb‑selection-cheat-sheet.md",
+    "guidelines/verb-selection-cheat-sheet.md",
     "guidelines/documentation-guidelines.md"
   ]
 }

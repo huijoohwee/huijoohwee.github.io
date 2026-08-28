@@ -60,26 +60,31 @@ jobs:
         env:
           CANDIDATE_SHA: ${{ inputs.candidate_sha }}
           EXPECTED_CHECK_APP_ID: "15368"
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d"
-          EXPECTED_RULESET_ID: "20008203"
-          EXPECTED_RULESET_STATE_DIGEST: "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b"
-          EXPECTED_RULESET_UPDATED_AT: "2026-07-30T00:43:30.062Z"
-          EXPECTED_RULESET_VERSION_ID: "44827461"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799"
           GH_TOKEN: ${{ github.token }}
         run: |
           canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
           test "$canonical_sha" = "$CANDIDATE_SHA"
 
-          ruleset_json="$(gh api \
+          effective_rules_json="$(gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            "repos/$GITHUB_REPOSITORY/rulesets/$EXPECTED_RULESET_ID")"
+            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
+          ruleset_id="$(jq -er --arg repository "$GITHUB_REPOSITORY" '
+            [.[] | select(.ruleset_source_type == "Repository" and .ruleset_source == $repository)
+              | .ruleset_id] | unique
+            | if length == 1 and (.[0] | type) == "number" and .[0] > 0
+              then .[0] else error("expected one active repository ruleset") end
+          ' <<< "$effective_rules_json")"
+          ruleset_json="$(gh api -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rulesets/$ruleset_id?includes_parents=false")"
           jq -e \
             --arg repository "$GITHUB_REPOSITORY" \
             --argjson app_id "$EXPECTED_CHECK_APP_ID" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+            --argjson ruleset_id "$ruleset_id" '
               .id == $ruleset_id
-              and .name == "Agentic SDLC policy contract"
               and .target == "branch"
               and .source_type == "Repository"
               and .source == $repository
@@ -98,53 +103,34 @@ jobs:
                 })
             ' <<< "$ruleset_json" > /dev/null
 
-          ruleset_updated_at="$(RULESET_JSON="$ruleset_json" node -e '
-            const value = new Date(JSON.parse(process.env.RULESET_JSON).updated_at);
-            if (Number.isNaN(value.valueOf())) process.exit(1);
-            process.stdout.write(value.toISOString());
-          ')"
-          test "$ruleset_updated_at" = "$EXPECTED_RULESET_UPDATED_AT"
-          ruleset_state_projection="$(jq -cS \
-            '{id,name,target,source_type,source,enforcement,conditions,rules:(.rules|sort_by(.type)),bypass_actors:[]}' \
-            <<< "$ruleset_json")"
-          ruleset_state_digest="$(printf '%s' "$ruleset_state_projection" | shasum -a 256 | awk '{print $1}')"
-          test "$ruleset_state_digest" = "$EXPECTED_RULESET_STATE_DIGEST"
-
-          effective_rules_json="$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
-          expected_effective_rules="$(jq -cS \
-            --arg repository "$GITHUB_REPOSITORY" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
-              .rules | map({
-                ruleset_id: $ruleset_id,
-                ruleset_source_type: "Repository",
-                ruleset_source: $repository,
-                type,
-                parameters: (.parameters // null)
-              }) | sort_by(.type)
-            ' <<< "$ruleset_json")"
+          ruleset_semantic_projection="$(jq -cS '
+            def normalize_rule:
+              if .type == "pull_request" then {type,parameters:{allowed_merge_methods:(.parameters.allowed_merge_methods|sort),dismiss_stale_reviews_on_push:.parameters.dismiss_stale_reviews_on_push,require_code_owner_review:.parameters.require_code_owner_review,require_extra_approval_for_unattributed_changes:.parameters.require_extra_approval_for_unattributed_changes,require_last_push_approval:.parameters.require_last_push_approval,required_approving_review_count:.parameters.required_approving_review_count,required_review_thread_resolution:.parameters.required_review_thread_resolution,required_reviewers:((.parameters.required_reviewers // [])|sort_by(.type,.id))}}
+              elif .type == "required_status_checks" then {type,parameters:{strict_required_status_checks_policy:.parameters.strict_required_status_checks_policy,do_not_enforce_on_create:.parameters.do_not_enforce_on_create,required_status_checks:((.parameters.required_status_checks // [])|sort_by(.context,.integration_id))}}
+              else {type,parameters:null} end;
+            {target,source_type,source,enforcement,conditions:{ref_name:{exclude:(.conditions.ref_name.exclude|sort),include:(.conditions.ref_name.include|sort)}},rules:(.rules|map(normalize_rule)|sort_by(.type)),bypass_actors:[]}
+          ' <<< "$ruleset_json")"
+          ruleset_semantic_digest="$(printf '%s' "$ruleset_semantic_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$ruleset_semantic_digest" = "$EXPECTED_RULESET_SEMANTIC_DIGEST"
+          jq -e --arg repository "$GITHUB_REPOSITORY" --argjson ruleset_id "$ruleset_id" '
+            length == 5 and all(.[]; .ruleset_id == $ruleset_id
+              and .ruleset_source_type == "Repository" and .ruleset_source == $repository)
+          ' <<< "$effective_rules_json" > /dev/null
+          expected_effective_rules="$(jq -c '.rules' <<< "$ruleset_semantic_projection")"
           observed_effective_rules="$(jq -cS '
-            map({ruleset_id,ruleset_source_type,ruleset_source,type,parameters:(.parameters // null)})
-            | sort_by(.type)
+            def normalize_rule:
+              if .type == "pull_request" then {type,parameters:{allowed_merge_methods:(.parameters.allowed_merge_methods|sort),dismiss_stale_reviews_on_push:.parameters.dismiss_stale_reviews_on_push,require_code_owner_review:.parameters.require_code_owner_review,require_extra_approval_for_unattributed_changes:.parameters.require_extra_approval_for_unattributed_changes,require_last_push_approval:.parameters.require_last_push_approval,required_approving_review_count:.parameters.required_approving_review_count,required_review_thread_resolution:.parameters.required_review_thread_resolution,required_reviewers:((.parameters.required_reviewers // [])|sort_by(.type,.id))}}
+              elif .type == "required_status_checks" then {type,parameters:{strict_required_status_checks_policy:.parameters.strict_required_status_checks_policy,do_not_enforce_on_create:.parameters.do_not_enforce_on_create,required_status_checks:((.parameters.required_status_checks // [])|sort_by(.context,.integration_id))}}
+              else {type,parameters:null} end;
+            map(normalize_rule)|sort_by(.type)
           ' <<< "$effective_rules_json")"
           test "$observed_effective_rules" = "$expected_effective_rules"
 
           policy_projection="$(jq -cnS \
             --arg repository "$GITHUB_REPOSITORY" \
-            --arg ruleset_state_digest "$ruleset_state_digest" \
-            --arg ruleset_updated_at "$ruleset_updated_at" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" \
-            --argjson ruleset_version_id "$EXPECTED_RULESET_VERSION_ID" '
-              {
-                schema: "agentic-github-ruleset-attestation/v1",
-                repository: $repository,
-                ruleset_id: $ruleset_id,
-                ruleset_version_id: $ruleset_version_id,
-                ruleset_updated_at: $ruleset_updated_at,
-                ruleset_state_digest: $ruleset_state_digest
-              }
+            --arg ruleset_semantic_digest "$ruleset_semantic_digest" '
+              {schema:"agentic-github-ruleset-semantic-attestation/v1",
+                repository:$repository,ruleset_semantic_digest:$ruleset_semantic_digest}
             ')"
           policy_digest="$(printf '%s' "$policy_projection" | shasum -a 256 | awk '{print $1}')"
           test "$policy_digest" = "$EXPECTED_RULESET_ATTESTATION_DIGEST"
@@ -182,10 +168,8 @@ jobs:
             echo "candidate_sha=$CANDIDATE_SHA"
             echo "actor_id=${{ github.actor_id }}"
             echo "policy_digest=$policy_digest"
-            echo "ruleset_id=$EXPECTED_RULESET_ID"
-            echo "ruleset_version_id=$EXPECTED_RULESET_VERSION_ID"
-            echo "ruleset_updated_at=$ruleset_updated_at"
-            echo "ruleset_state_digest=$ruleset_state_digest"
+            echo "ruleset_id=$ruleset_id"
+            echo "ruleset_semantic_digest=$ruleset_semantic_digest"
             echo "trusted_check_run_id=$(jq -r '.id' <<< "$check_json")"
             echo "trusted_workflow_run_id=$run_id"
             echo "authorization=verified"
@@ -384,11 +368,8 @@ jobs:
           EXPECTED_CHECK_APP_ID: "15368"
           EXPECTED_PAGE_URL: https://huijoohwee.github.io/
           EXPECTED_POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d"
-          EXPECTED_RULESET_ID: "20008203"
-          EXPECTED_RULESET_STATE_DIGEST: "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b"
-          EXPECTED_RULESET_UPDATED_AT: "2026-07-30T00:43:30.062Z"
-          EXPECTED_RULESET_VERSION_ID: "44827461"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799"
           PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
           PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
           WORKFLOW_SHA: ${{ github.workflow_sha }}
@@ -413,16 +394,24 @@ jobs:
             and .html_url == $page_url
             and (.cname == null or .cname == "")
           ' <<< "$pages_json" > /dev/null
-          ruleset_json="$(gh api \
+          effective_rules_json="$(gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            "repos/$GITHUB_REPOSITORY/rulesets/$EXPECTED_RULESET_ID")"
+            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
+          ruleset_id="$(jq -er --arg repository "$GITHUB_REPOSITORY" '
+            [.[] | select(.ruleset_source_type == "Repository" and .ruleset_source == $repository)
+              | .ruleset_id] | unique
+            | if length == 1 and (.[0] | type) == "number" and .[0] > 0
+              then .[0] else error("expected one active repository ruleset") end
+          ' <<< "$effective_rules_json")"
+          ruleset_json="$(gh api -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "repos/$GITHUB_REPOSITORY/rulesets/$ruleset_id?includes_parents=false")"
           jq -e \
             --arg repository "$GITHUB_REPOSITORY" \
             --argjson app_id "$EXPECTED_CHECK_APP_ID" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
+            --argjson ruleset_id "$ruleset_id" '
               .id == $ruleset_id
-              and .name == "Agentic SDLC policy contract"
               and .target == "branch"
               and .source_type == "Repository"
               and .source == $repository
@@ -441,53 +430,34 @@ jobs:
                 })
             ' <<< "$ruleset_json" > /dev/null
 
-          ruleset_updated_at="$(RULESET_JSON="$ruleset_json" node -e '
-            const value = new Date(JSON.parse(process.env.RULESET_JSON).updated_at);
-            if (Number.isNaN(value.valueOf())) process.exit(1);
-            process.stdout.write(value.toISOString());
-          ')"
-          test "$ruleset_updated_at" = "$EXPECTED_RULESET_UPDATED_AT"
-          ruleset_state_projection="$(jq -cS \
-            '{id,name,target,source_type,source,enforcement,conditions,rules:(.rules|sort_by(.type)),bypass_actors:[]}' \
-            <<< "$ruleset_json")"
-          ruleset_state_digest="$(printf '%s' "$ruleset_state_projection" | shasum -a 256 | awk '{print $1}')"
-          test "$ruleset_state_digest" = "$EXPECTED_RULESET_STATE_DIGEST"
-
-          effective_rules_json="$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "repos/$GITHUB_REPOSITORY/rules/branches/main?per_page=100")"
-          expected_effective_rules="$(jq -cS \
-            --arg repository "$GITHUB_REPOSITORY" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" '
-              .rules | map({
-                ruleset_id: $ruleset_id,
-                ruleset_source_type: "Repository",
-                ruleset_source: $repository,
-                type,
-                parameters: (.parameters // null)
-              }) | sort_by(.type)
-            ' <<< "$ruleset_json")"
+          ruleset_semantic_projection="$(jq -cS '
+            def normalize_rule:
+              if .type == "pull_request" then {type,parameters:{allowed_merge_methods:(.parameters.allowed_merge_methods|sort),dismiss_stale_reviews_on_push:.parameters.dismiss_stale_reviews_on_push,require_code_owner_review:.parameters.require_code_owner_review,require_extra_approval_for_unattributed_changes:.parameters.require_extra_approval_for_unattributed_changes,require_last_push_approval:.parameters.require_last_push_approval,required_approving_review_count:.parameters.required_approving_review_count,required_review_thread_resolution:.parameters.required_review_thread_resolution,required_reviewers:((.parameters.required_reviewers // [])|sort_by(.type,.id))}}
+              elif .type == "required_status_checks" then {type,parameters:{strict_required_status_checks_policy:.parameters.strict_required_status_checks_policy,do_not_enforce_on_create:.parameters.do_not_enforce_on_create,required_status_checks:((.parameters.required_status_checks // [])|sort_by(.context,.integration_id))}}
+              else {type,parameters:null} end;
+            {target,source_type,source,enforcement,conditions:{ref_name:{exclude:(.conditions.ref_name.exclude|sort),include:(.conditions.ref_name.include|sort)}},rules:(.rules|map(normalize_rule)|sort_by(.type)),bypass_actors:[]}
+          ' <<< "$ruleset_json")"
+          ruleset_semantic_digest="$(printf '%s' "$ruleset_semantic_projection" | shasum -a 256 | awk '{print $1}')"
+          test "$ruleset_semantic_digest" = "$EXPECTED_RULESET_SEMANTIC_DIGEST"
+          jq -e --arg repository "$GITHUB_REPOSITORY" --argjson ruleset_id "$ruleset_id" '
+            length == 5 and all(.[]; .ruleset_id == $ruleset_id
+              and .ruleset_source_type == "Repository" and .ruleset_source == $repository)
+          ' <<< "$effective_rules_json" > /dev/null
+          expected_effective_rules="$(jq -c '.rules' <<< "$ruleset_semantic_projection")"
           observed_effective_rules="$(jq -cS '
-            map({ruleset_id,ruleset_source_type,ruleset_source,type,parameters:(.parameters // null)})
-            | sort_by(.type)
+            def normalize_rule:
+              if .type == "pull_request" then {type,parameters:{allowed_merge_methods:(.parameters.allowed_merge_methods|sort),dismiss_stale_reviews_on_push:.parameters.dismiss_stale_reviews_on_push,require_code_owner_review:.parameters.require_code_owner_review,require_extra_approval_for_unattributed_changes:.parameters.require_extra_approval_for_unattributed_changes,require_last_push_approval:.parameters.require_last_push_approval,required_approving_review_count:.parameters.required_approving_review_count,required_review_thread_resolution:.parameters.required_review_thread_resolution,required_reviewers:((.parameters.required_reviewers // [])|sort_by(.type,.id))}}
+              elif .type == "required_status_checks" then {type,parameters:{strict_required_status_checks_policy:.parameters.strict_required_status_checks_policy,do_not_enforce_on_create:.parameters.do_not_enforce_on_create,required_status_checks:((.parameters.required_status_checks // [])|sort_by(.context,.integration_id))}}
+              else {type,parameters:null} end;
+            map(normalize_rule)|sort_by(.type)
           ' <<< "$effective_rules_json")"
           test "$observed_effective_rules" = "$expected_effective_rules"
 
           policy_projection="$(jq -cnS \
             --arg repository "$GITHUB_REPOSITORY" \
-            --arg ruleset_state_digest "$ruleset_state_digest" \
-            --arg ruleset_updated_at "$ruleset_updated_at" \
-            --argjson ruleset_id "$EXPECTED_RULESET_ID" \
-            --argjson ruleset_version_id "$EXPECTED_RULESET_VERSION_ID" '
-              {
-                schema: "agentic-github-ruleset-attestation/v1",
-                repository: $repository,
-                ruleset_id: $ruleset_id,
-                ruleset_version_id: $ruleset_version_id,
-                ruleset_updated_at: $ruleset_updated_at,
-                ruleset_state_digest: $ruleset_state_digest
-              }
+            --arg ruleset_semantic_digest "$ruleset_semantic_digest" '
+              {schema:"agentic-github-ruleset-semantic-attestation/v1",
+                repository:$repository,ruleset_semantic_digest:$ruleset_semantic_digest}
             ')"
           policy_digest="$(printf '%s' "$policy_projection" | shasum -a 256 | awk '{print $1}')"
           test "$policy_digest" = "$EXPECTED_RULESET_ATTESTATION_DIGEST"

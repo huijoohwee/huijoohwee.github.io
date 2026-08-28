@@ -100,7 +100,7 @@ test("merge groups remain explicitly blocked until exact member claims can be jo
   assert.match(blocked.run, /exit 1/u);
 });
 
-test("Pages policy gates execute against exact redacted ruleset attestation evidence", () => {
+test("Pages policy gates attest normalized semantics and reject security drift", () => {
   const authorizeGate = pagesWorkflow.jobs.authorize.steps.find(
     step => step.name === "Bind current protected canonical revision and trusted required check",
   );
@@ -120,14 +120,40 @@ test("Pages policy gates execute against exact redacted ruleset attestation evid
       fixture.execute(deployGate);
       assert.match(
         readFileSync(fixture.output, "utf8"),
-        /policy_digest=452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d/u,
+        /policy_digest=ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede/u,
       );
     }
+
+    const metadataVariants = [
+      detail => {
+        detail.name = "Equivalent provider projection";
+        detail.created_at = "2026-08-28T04:05:42.000Z";
+        detail.updated_at = "2026-08-28T04:05:52.110Z";
+        detail.node_id = "provider-local-node";
+      },
+      detail => { detail.id = 98765432; },
+    ];
+    for (const mutate of metadataVariants) {
+      const detail = cloneJson(fixture.detail);
+      mutate(detail);
+      const effective = fixture.effective.map(rule => ({ ...rule, ruleset_id: detail.id }));
+      fixture.writeEvidence(detail, effective);
+      fixture.execute(authorizeGate);
+      fixture.execute(deployGate);
+    }
+
+    const reorderedEffective = cloneJson(fixture.effective).reverse();
+    reorderedEffective.find(rule => rule.type === "pull_request")
+      .parameters.allowed_merge_methods.reverse();
+    fixture.writeEvidence(fixture.detail, reorderedEffective);
+    fixture.execute(authorizeGate);
+    fixture.execute(deployGate);
 
     const mutations = [
       detail => { detail.bypass_actors = [{ actor_id: 1, actor_type: "RepositoryRole", bypass_mode: "always" }]; },
       detail => { detail.current_user_can_bypass = "always"; },
-      detail => { detail.updated_at = "2026-07-30T00:43:30.063Z"; },
+      detail => { detail.rules.find(rule => rule.type === "pull_request")
+        .parameters.required_review_thread_resolution = false; },
       detail => { detail.rules.find(rule => rule.type === "required_status_checks")
         .parameters.strict_required_status_checks_policy = false; },
     ];
@@ -362,7 +388,7 @@ set -eu
 case "$*" in
   (*git/ref/heads/main*) printf '%s\\n' "$CANDIDATE_SHA" ;;
   (*repos/*/pages*) cat "$PAGES_CONFIG_PATH" ;;
-  (*rulesets/20008203*) cat "$RULESET_DETAIL_PATH" ;;
+  (*rulesets/*) cat "$RULESET_DETAIL_PATH" ;;
   (*rules/branches/main?per_page=100*) cat "$EFFECTIVE_RULES_PATH" ;;
   (*commits/*/check-runs*) cat "$CHECK_RUN_PATH" ;;
   (*actions/runs/123*) cat "$WORKFLOW_RUN_PATH" ;;
@@ -377,11 +403,9 @@ esac
     DISPATCH_REF: "refs/heads/main", DISPATCH_REF_PROTECTED: "true", DISPATCH_SHA: candidateSha,
     EFFECTIVE_RULES_PATH: effectivePath, EXPECTED_CHECK_APP_ID: "15368",
     EXPECTED_PAGE_URL: "https://huijoohwee.github.io/",
-    EXPECTED_POLICY_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d",
-    EXPECTED_RULESET_ATTESTATION_DIGEST: "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d",
-    EXPECTED_RULESET_ID: "20008203", EXPECTED_RULESET_VERSION_ID: "44827461",
-    EXPECTED_RULESET_STATE_DIGEST: "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b",
-    EXPECTED_RULESET_UPDATED_AT: "2026-07-30T00:43:30.062Z",
+    EXPECTED_POLICY_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede",
+    EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede",
+    EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799",
     GH_TOKEN: "fixture-token", GITHUB_OUTPUT: output,
     GITHUB_REPOSITORY: repository, GITHUB_STEP_SUMMARY: summary,
     PAGES_CONFIG_PATH: pagesConfigPath, PATH: `${fakeBin}:${process.env.PATH}`,

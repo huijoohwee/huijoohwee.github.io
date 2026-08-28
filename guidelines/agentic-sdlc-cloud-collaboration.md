@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Cloud-Authoritative Collaboration"
 doc_type: "Guideline Module"
-version: "1.0.1"
-date: "2026-08-03"
+version: "1.2.0"
+date: "2026-08-28"
 lang: "en-US"
 schema: "agentic-cloud-collaboration/v1"
 status: "spec-complete"
@@ -18,9 +18,11 @@ mutation_policy: "remote claim before shared mutation"
 
 Enable safe concurrent work from browsers, mobile devices, cloud agents, and
 intermittently connected local tools without a shared machine, database, daemon,
-or always-on coordinator. One protected remote ledger serializes ownership
-transitions; immutable lane revisions carry authored work; review requests and
-local execution locations are replaceable projections.
+or always-on coordinator. One protected remote ledger serializes append order,
+while conflict-set validation lets semantically independent ownership
+transitions progress without a false global lock. Immutable lane revisions
+carry authored work; review requests and local execution locations are
+replaceable projections.
 
 This module is provider-neutral and model-free. It defines data, state
 transitions, evidence, and findings rather than a particular source-control
@@ -59,6 +61,7 @@ execution state projects that tuple; one protected remote claim adds:
 | `leaseEpoch` | Monotonic integer for this task and scope. |
 | `fenceRevision` | Accepted claim digest that fences this lease epoch. |
 | `ledgerRevision` | Accepted remote ledger head containing this transition. |
+| `conflictSetDigest` | Stable digest of the mutation subject and only the claims, handoffs, canonical evidence, and policy inputs that can overlap or otherwise change that mutation's authority. Unrelated disjoint ledger entries are excluded. |
 | `expiresAt` | Finite remote evaluation instant; never a local-device inference. |
 | `evaluationTime` | Explicit remote evaluation instant used for deterministic status and expiry. |
 | `idempotencyKey` | Stable digest of transition type, identity, epoch, and intended payload. |
@@ -106,10 +109,19 @@ but they do not get to rename or relax the underlying authority model.
 ## Ledger Contract
 
 The ledger is a remotely addressable append-only hash chain represented by one
-protected remote head. Each entry contains the schema version, predecessor
-digest, transition, claim identity, normalized payload digest, evaluator
-identity, evaluation time, and resulting entry digest. Entries are sorted and
-encoded canonically before digesting.
+protected remote head. That head is the physical audit parent and compare-and-
+swap target, not a global semantic lock or Stable Plan Identity. Each entry
+contains the schema version, predecessor digest, transition, claim identity,
+normalized payload digest, evaluator identity, evaluation time, and resulting
+entry digest. Entries are sorted and encoded canonically before digesting.
+
+Before mutation, derive a bounded `conflictSetDigest` from the immutable
+mutation subject, current policy and canonical evidence, and the latest claims
+or handoffs whose normalized scopes overlap the requested scope or whose
+lineage can change the requested authority. The digest excludes observation
+time, retry counters, the physical ledger head, and unrelated disjoint claims.
+An adapter may cache the digest only with explicit invalidation at every ledger,
+policy, canonical-source, or mutation-subject refresh.
 
 Accepted states are `active`, `review-ready`, `delivery-authorized`, `parked`,
 `released`, `expired`, and `revoked`. `delivery-authorized` grants only protected
@@ -130,17 +142,44 @@ conflict.
    every current non-terminal claim in the same repository.
 5. Reject any overlap, ambiguous scope, stale base, stale lane revision, expired
    prerequisite, or unjoined handoff.
-6. Build one deterministic entry whose predecessor equals the observed ledger
-   head.
-7. Attempt one compare-and-swap update of the protected remote head.
-8. On mismatch, fetch the new head, re-evaluate from step 2, and surface the
-   competing transition; never force, overwrite, or silently retry as success.
-9. Return the accepted `fenceRevision`, `ledgerRevision`, receipt digest, and
-   typed findings.
+6. Derive and seal the request's `conflictSetDigest`, independently from the
+   observed global head, then build one deterministic semantic transition.
+7. Parent the entry to the latest observed ledger head and attempt one
+   compare-and-swap update of the protected remote head.
+8. On mismatch, fetch and validate the new complete chain. If the immutable
+   mutation subject and `conflictSetDigest` are unchanged, re-parent the same
+   idempotent semantic transition to the new audit head and retry within the
+   declared bound. If either changed, return a typed conflict and require
+   replan. Never force, overwrite, or silently retry as success; never report
+   an unaccepted transition as success.
+9. Return the accepted `fenceRevision`, `ledgerRevision`, accepted audit-parent
+   digest, `conflictSetDigest`, receipt digest, and typed findings.
 
-For two candidates with the same parent fence, at most one transition can be
-accepted. Identical retries return the existing receipt by `idempotencyKey`;
-different payloads using one key are rejected.
+For two overlapping candidates with the same authority fence, at most one
+transition can be accepted. Two disjoint candidates may both succeed in audit
+order: the loser of the physical head compare-and-swap revalidates its unchanged
+conflict set and re-parents automatically. Identical retries return the existing
+receipt by `idempotencyKey`; different payloads using one key are rejected.
+
+### Dynamic Claim-Conflict Decision
+
+Every authoritative refresh re-runs one provider-neutral decision over the
+frozen claim intent and current verified ledger. The decision is derived, not
+stored as a second authority plane:
+
+| Observation | Typed disposition | Required behavior |
+|---|---|---|
+| The same idempotency key and semantic request are already committed | `idempotent-replay` | Return the existing receipt without another write. |
+| The observed head is current and its conflict-set digest is unchanged | `current` | Attempt the frozen transition once. |
+| The audit head advanced but only unrelated disjoint entries changed | `disjoint-rebase` | Re-parent the same frozen transition and retry within the declared bound. |
+| An unsealed dynamic request observes a current overlapping authority | `overlapping` | Apply the current overlap policy; any newcomer remains a non-writing waiting successor. |
+| Related lineage, immutable subject, policy, canonical evidence, or normalized scope changed | `semantic-conflict` | Return a typed conflict and require replan; do not reinterpret the sealed request. |
+| The observation is absent from ancestry or relevant evidence is incomplete or ambiguous | `unknown-observation` | Fail closed with a typed outcome and preserve every lane and byte. |
+
+Refresh and classification may repeat only within the declared compare-and-swap
+attempt bound. Global-head equality, global inactivity, elapsed retries, provider
+event order, or exact inventory parity are never substitutes for semantic
+conflict-set evidence.
 
 ## Claim and Handoff Rules
 
@@ -183,6 +222,13 @@ The evaluator rejects stale fences even when the authored bytes would merge
 cleanly. Content mergeability does not prove ownership safety. A later claim may
 supersede an expired claim only through a new accepted ledger transition that
 preserves the prior lane revision and recovery identity.
+
+Global-head movement alone is not a stale fence. A retry blocks only when the
+refreshed chain changes the mutation subject, canonical or policy evidence, an
+overlapping or ambiguous authority, or a required predecessor/handoff lineage.
+Disjoint peer progress is accepted through its current typed operation receipt
+and recorded in the final observation; it does not change Stable Plan Identity
+or require a recovery lane.
 
 ## Offline-First Boundary
 

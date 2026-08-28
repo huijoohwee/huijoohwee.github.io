@@ -101,21 +101,26 @@ test("Pages delivery authenticates one exact protected candidate and attests pol
     step => step.name === "Bind current protected canonical revision and trusted required check",
   );
   assert.equal(canonical.env.EXPECTED_CHECK_APP_ID, "15368");
-  assert.equal(canonical.env.EXPECTED_RULESET_ID, "20008203");
-  assert.equal(canonical.env.EXPECTED_RULESET_VERSION_ID, "44827461");
-  assert.equal(canonical.env.EXPECTED_RULESET_UPDATED_AT, "2026-07-30T00:43:30.062Z");
-  assert.equal(canonical.env.EXPECTED_RULESET_STATE_DIGEST,
-    "2fac3b84a376a7f06d86b4e64eae4ea9023223c2a2cff1bc74149cefd0fee84b");
+  assert.equal(canonical.env.EXPECTED_RULESET_ID, undefined);
+  assert.equal(canonical.env.EXPECTED_RULESET_VERSION_ID, undefined);
+  assert.equal(canonical.env.EXPECTED_RULESET_UPDATED_AT, undefined);
+  assert.equal(canonical.env.EXPECTED_RULESET_STATE_DIGEST, undefined);
+  assert.equal(canonical.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
+    "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799");
   assert.equal(canonical.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
-    "452368c9d244ec1bd6a5329ca187634e4616fc0b1dd956dbfea3246cbc7e5e7d");
+    "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede");
   assert.match(canonical.run, /git\/ref\/heads\/main/u);
   assert.match(canonical.run, /test "\$canonical_sha" = "\$CANDIDATE_SHA"/u);
-  assert.match(canonical.run, /rulesets\/\$EXPECTED_RULESET_ID/u);
   assert.match(canonical.run, /rules\/branches\/main\?per_page=100/u);
+  assert.match(canonical.run, /expected one active repository ruleset/u);
+  assert.match(canonical.run, /rulesets\/\$ruleset_id\?includes_parents=false/u);
+  assert.match(canonical.run, /agentic-github-ruleset-semantic-attestation\/v1/u);
   assert.match(canonical.run, /strict_required_status_checks_policy: true/u);
   assert.match(canonical.run, /\.app\.slug == "github-actions"/u);
   assert.match(canonical.run, /\.github\/workflows\/guideline-contract\.yml/u);
   assert.match(canonical.run, /test "\$policy_digest" = "\$EXPECTED_RULESET_ATTESTATION_DIGEST"/u);
+  assert.doesNotMatch(pagesWorkflowSource,
+    /EXPECTED_RULESET_(?:ID|VERSION_ID|UPDATED_AT|STATE_DIGEST)/u);
 });
 
 test("Pages controller gates, applies, reconciles, and receipts the exact sealed effect", () => {
@@ -163,6 +168,10 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   assert.match(deploy.steps[sourceIndex].run, /git status --porcelain=v1 --untracked-files=all/u);
   const preflight = deploy.steps[preflightIndex];
   assert.equal(preflight.env.EXPECTED_PAGE_URL, "https://huijoohwee.github.io/");
+  assert.equal(preflight.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
+    "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799");
+  assert.equal(preflight.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
+    "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede");
   assert.match(preflight.run, /gh api "repos\/\$GITHUB_REPOSITORY\/pages"/u);
   assert.match(preflight.run, /\.build_type == "workflow"/u);
   assert.match(preflight.run, /\.html_url == \$page_url/u);

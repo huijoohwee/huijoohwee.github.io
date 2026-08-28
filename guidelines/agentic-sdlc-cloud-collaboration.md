@@ -150,8 +150,8 @@ conflict.
    mutation subject and `conflictSetDigest` are unchanged, re-parent the same
    idempotent semantic transition to the new audit head and retry within the
    declared bound. If either changed, return a typed conflict and require
-   replan. Never force, overwrite, silently retry as success, or report an
-   unaccepted transition as success.
+   replan. Never force, overwrite, or silently retry as success; never report
+   an unaccepted transition as success.
 9. Return the accepted `fenceRevision`, `ledgerRevision`, accepted audit-parent
    digest, `conflictSetDigest`, receipt digest, and typed findings.
 

@@ -1,0 +1,147 @@
+name: Protected head refresh CI
+run-name: ${{ format('Protected head refresh {0} {1}', inputs.operation_id, inputs.expected_head_sha) }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Exact trusted controller operation
+        required: true
+        type: string
+      pull_request_number:
+        description: Canonical positive pull request number
+        required: true
+        type: string
+      branch:
+        description: Exact refreshed pull request branch
+        required: true
+        type: string
+      expected_head_sha:
+        description: Exact lowercase refreshed head SHA
+        required: true
+        type: string
+      operation_id:
+        description: Lowercase SHA-256 digest of the refresh operation
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: protected-head-refresh-ci-${{ inputs.operation_id }}-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  protected-head-refresh:
+    name: agentic-sdlc-policy-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact protected refresh candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Authorize exact protected refresh dispatch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISPATCH_EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_GITHUB_REF: ${{ github.ref }}
+          DISPATCH_GITHUB_REF_NAME: ${{ github.ref_name }}
+          DISPATCH_GITHUB_REF_TYPE: ${{ github.ref_type }}
+          DISPATCH_GITHUB_SHA: ${{ github.sha }}
+          DISPATCH_OPERATION: ${{ inputs.operation }}
+          DISPATCH_PULL_REQUEST_NUMBER: ${{ inputs.pull_request_number }}
+          DISPATCH_BRANCH: ${{ inputs.branch }}
+          DISPATCH_EXPECTED_HEAD_SHA: ${{ inputs.expected_head_sha }}
+          DISPATCH_OPERATION_ID: ${{ inputs.operation_id }}
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+
+          reject() {
+            echo "Protected-head refresh authorization rejected: $1" >&2
+            exit 1
+          }
+
+          [ "$DISPATCH_EVENT_NAME" = "workflow_dispatch" ] || reject "event is not workflow_dispatch"
+          [ "$DISPATCH_OPERATION" = "protected-head-refresh" ] || reject "operation is not exact"
+          [[ "$DISPATCH_PULL_REQUEST_NUMBER" =~ ^[1-9][0-9]{0,9}$ ]] || reject "pull request number is not canonical"
+          [ "$DISPATCH_PULL_REQUEST_NUMBER" -le 2147483647 ] || reject "pull request number is out of bounds"
+          [ -n "$DISPATCH_BRANCH" ] || reject "branch is empty"
+          [ "${#DISPATCH_BRANCH}" -le 255 ] || reject "branch is too long"
+          git check-ref-format --branch "$DISPATCH_BRANCH" >/dev/null || reject "branch is invalid"
+          git check-ref-format "refs/heads/$DISPATCH_BRANCH" >/dev/null || reject "branch ref is invalid"
+          [[ "$DISPATCH_EXPECTED_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || reject "head SHA is not lowercase and full"
+          [[ "$DISPATCH_OPERATION_ID" =~ ^[0-9a-f]{64}$ ]] || reject "operation ID is not a lowercase digest"
+          [ "$DISPATCH_GITHUB_REF_TYPE" = "branch" ] || reject "dispatch ref is not a branch"
+          [ "$DISPATCH_GITHUB_REF_NAME" = "$DISPATCH_BRANCH" ] || reject "dispatch branch drifted"
+          [ "$DISPATCH_GITHUB_REF" = "refs/heads/$DISPATCH_BRANCH" ] || reject "dispatch ref drifted"
+          [ "$DISPATCH_GITHUB_SHA" = "$DISPATCH_EXPECTED_HEAD_SHA" ] || reject "dispatch head drifted"
+          [ "$(git rev-parse --verify 'HEAD^{commit}')" = "$DISPATCH_EXPECTED_HEAD_SHA" ] || reject "checkout head drifted"
+
+          expected_origin="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          observed_origin="$(git remote get-url origin)"
+          case "$observed_origin" in
+            "$expected_origin"|"$expected_origin.git") ;;
+            *) reject "origin repository drifted" ;;
+          esac
+
+          git fetch --no-tags --no-recurse-submodules --depth=1 origin \
+            "+refs/heads/main:refs/remotes/origin/main"
+          PROTECTED_MAIN_SHA="$(git rev-parse --verify 'refs/remotes/origin/main^{commit}')"
+          export PROTECTED_MAIN_SHA
+          [[ "$PROTECTED_MAIN_SHA" =~ ^[0-9a-f]{40}$ ]] || reject "protected main SHA is invalid"
+          candidate_blob="$(git rev-parse --verify "$DISPATCH_EXPECTED_HEAD_SHA:.github/workflows/protected-head-refresh-ci.yml")"
+          protected_blob="$(git rev-parse --verify "$PROTECTED_MAIN_SHA:.github/workflows/protected-head-refresh-ci.yml")"
+          [[ "$candidate_blob" =~ ^[0-9a-f]{40}$ ]] || reject "candidate workflow blob is invalid"
+          [[ "$protected_blob" =~ ^[0-9a-f]{40}$ ]] || reject "protected workflow blob is invalid"
+          [ "$candidate_blob" = "$protected_blob" ] || reject "candidate workflow differs from protected main"
+
+          node --input-type=module <<'NODE'
+          const response = await fetch(
+            `${process.env.GITHUB_API_URL}/repos/${process.env.GITHUB_REPOSITORY}/pulls/${process.env.DISPATCH_PULL_REQUEST_NUMBER}`,
+            {
+              headers: {
+                accept: "application/vnd.github+json",
+                authorization: `Bearer ${process.env.GH_TOKEN}`,
+                "x-github-api-version": "2022-11-28",
+              },
+            },
+          );
+          if (!response.ok) {
+            throw new Error(`pull request metadata returned ${response.status}`);
+          }
+          const pullRequest = await response.json();
+          if (
+            String(pullRequest.number) !== process.env.DISPATCH_PULL_REQUEST_NUMBER
+            || pullRequest.state !== "open"
+            || pullRequest.merged === true
+            || pullRequest.draft === true
+            || pullRequest.base?.ref !== "main"
+            || pullRequest.base?.sha !== process.env.PROTECTED_MAIN_SHA
+            || pullRequest.head?.ref !== process.env.DISPATCH_BRANCH
+            || pullRequest.head?.sha !== process.env.DISPATCH_EXPECTED_HEAD_SHA
+            || pullRequest.head?.repo?.full_name !== process.env.GITHUB_REPOSITORY
+          ) {
+            throw new Error("protected refresh pull request metadata drifted");
+          }
+          NODE
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci
+      # The pull_request workflow owns live reviewed-claim verification. This
+      # dispatch runs after delivery authorization, so it verifies deterministic
+      # candidate contracts without projecting a false reviewed authority.
+      - name: Verify deterministic candidate contracts
+        run: |
+          npm run agentic-sdlc:policy:check
+          npm run agenticrag:guidelines-map:check
+          npm run git-guidelines:test

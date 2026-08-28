@@ -75,6 +75,7 @@ jobs:
       - run: npm test
         env:
           AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os
+          GIT_GUIDELINES_EXPECTED_PROTECTED_REVISION: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || '' }}
       - name: Reverify terminal pull-request review authority
         if: github.event_name == 'pull_request'
         env:

@@ -199,13 +199,27 @@ assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(cloudCollaboration.startsWith("---\n"), "cloud-collaboration frontmatter must be present");
-assert.match(cloudCollaboration, /\nversion: "1\.0\.1"\n/);
+assert.match(cloudCollaboration, /\nversion: "1\.1\.0"\n/);
 assert.match(cloudCollaboration, /\nuniversal_scope: "true"\n/);
 assert.match(cloudCollaboration, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(
   cloudCollaborationLines.length - 1 < 600,
   "cloud-collaboration module must remain below 600 lines",
 );
+for (const requirement of [
+  "physical audit parent",
+  "`conflictSetDigest`",
+  "unrelated disjoint claims",
+  "re-parent the same",
+  "idempotent semantic transition",
+  "Global-head movement alone is not a stale fence",
+]) {
+  assert.match(
+    cloudCollaboration,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `cloud collaboration must include ${requirement}`,
+  );
+}
 assert.ok(scopedLaneAdmission.startsWith("---\n"), "scoped-lane-admission frontmatter must be present");
 assert.match(scopedLaneAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(scopedLaneAdmission, /\nschema: "agentic-scoped-lane-admission\/v1"\n/);

@@ -56,18 +56,21 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 def find_github_root(start: Path) -> Path:
     for candidate in [start] + list(start.parents):
-        knowgrph_checkout = candidate / "knowgrph"
         schema_checkout = candidate / "huijoohwee.github.io"
-        if (
-            (knowgrph_checkout / ".git").exists()
-            and (schema_checkout / ".git").exists()
-        ):
-            return candidate
+        for source_name in ("knowgrph", "agenticgraph"):
+            source_checkout = candidate / source_name
+            if (
+                (source_checkout / ".git").exists()
+                and (schema_checkout / ".git").exists()
+            ):
+                return candidate
     return start.parents[len(start.parents) - 1]
 
 
 def resolve_default_docs_dir(github_root: Path) -> Path:
     knowgrph_checkout = github_root / "knowgrph"
+    if not knowgrph_checkout.exists() and (github_root / "agenticgraph").exists():
+        knowgrph_checkout = github_root / "agenticgraph"
     result = subprocess.run(
         ["git", "-C", str(knowgrph_checkout), "worktree", "list", "--porcelain"],
         capture_output=True,

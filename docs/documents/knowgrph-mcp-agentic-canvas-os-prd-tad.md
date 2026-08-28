@@ -19,8 +19,8 @@ canonical_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents
 agent_ready_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md"
 topology: "knowgrph = native-in-repo control plane + MCP Gateway federation; Vercel/AWS tiers removed (ADR-3)"
 repos:
-  dev: "/Users/huijoohwee/Documents/GitHub/knowgrph"
-  prod: "/Users/huijoohwee/Documents/GitHub/huijoohwee/content/knowgrph"
+  dev: "$GITHUB_ROOT/knowgrph"
+  prod: "$GITHUB_ROOT/huijoohwee/content/knowgrph"
   product: "https://github.com/huijoohwee/agentic-canvas-os"
   product_status: "realized split repo for the product tier; knowgrph remains the control-plane + contract SSOT, with reference implementations also present under knowgrph/aws/{agent-api,agentcore}, knowgrph/web, knowgrph/contracts"
 deploy:

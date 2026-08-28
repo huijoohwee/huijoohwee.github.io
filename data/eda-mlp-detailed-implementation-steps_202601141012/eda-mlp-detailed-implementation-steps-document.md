@@ -3,13 +3,13 @@
 ## Source
 
 - Graph ID: `md:eda-mlp-detailed-implementation-steps`
-- Markdown: `/Users/huijoohwee/Documents/GitHub/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md`
+- Markdown: `$GITHUB_ROOT/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md`
 
 ## Outputs
 
-- Graph JSON-LD: `/Users/huijoohwee/Documents/GitHub/knowgrph/canvas/src/data/eda-mlp-graph.json`
-- Schema JSON-LD: `/Users/huijoohwee/Documents/GitHub/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld`
-- Orchestrator YAML: `/Users/huijoohwee/Documents/GitHub/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-orchestrator-config.yaml`
+- Graph JSON-LD: `$GITHUB_ROOT/knowgrph/canvas/src/data/eda-mlp-graph.json`
+- Schema JSON-LD: `$GITHUB_ROOT/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld`
+- Orchestrator YAML: `$GITHUB_ROOT/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-orchestrator-config.yaml`
 
 ## Outline
 

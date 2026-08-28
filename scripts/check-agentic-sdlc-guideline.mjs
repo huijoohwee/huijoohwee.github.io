@@ -50,7 +50,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.22\.0"\n/);
+assert.match(source, /\nversion: "1\.23\.0"\n/);
 assert.match(source, /minimum-time-and-resource \/ maximum-core-value chain/);
 assert.match(source, /forbid over-investing in non-core periphery/i);
 assert.match(source, /unused budget never authorizes it/);
@@ -199,13 +199,33 @@ assert.match(upstreamAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(upstreamAdmission, /\nuniversal_scope: "true"\n/);
 assert.match(upstreamAdmission, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(cloudCollaboration.startsWith("---\n"), "cloud-collaboration frontmatter must be present");
-assert.match(cloudCollaboration, /\nversion: "1\.0\.1"\n/);
+assert.match(cloudCollaboration, /\nversion: "1\.2\.0"\n/);
 assert.match(cloudCollaboration, /\nuniversal_scope: "true"\n/);
 assert.match(cloudCollaboration, /\nruntime_readiness_policy: "fail-closed"\n/);
 assert.ok(
   cloudCollaborationLines.length - 1 < 600,
   "cloud-collaboration module must remain below 600 lines",
 );
+for (const requirement of [
+  "physical audit parent",
+  "`conflictSetDigest`",
+  "unrelated disjoint claims",
+  "re-parent the same",
+  "idempotent semantic transition",
+  "Global-head movement alone is not a stale fence",
+  "Dynamic Claim-Conflict Decision",
+  "`idempotent-replay`",
+  "`disjoint-rebase`",
+  "`semantic-conflict`",
+  "`unknown-observation`",
+  "exact inventory parity are never substitutes for semantic",
+]) {
+  assert.match(
+    cloudCollaboration,
+    new RegExp(requirement.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    `cloud collaboration must include ${requirement}`,
+  );
+}
 assert.ok(scopedLaneAdmission.startsWith("---\n"), "scoped-lane-admission frontmatter must be present");
 assert.match(scopedLaneAdmission, /\nversion: "1\.0\.0"\n/);
 assert.match(scopedLaneAdmission, /\nschema: "agentic-scoped-lane-admission\/v1"\n/);
@@ -587,6 +607,7 @@ for (const phrase of [
   "cross-repository coordination task as a dependency-ordered group of immutable per-repository work units", "repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence",
   "shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff", "policy-unbounded but operationally bounded concurrent current authorities for disjoint normalized write sets", "each repository adapter declares and enforces its current resource, evaluator, and coordination capacity", "exactly one current write authority remains permitted per overlapping declared write set",
   "overlapping newcomer is a non-writing waiting successor", "monotonic compare-and-swap", "recovery from `dormant-preserved` is independent of the expired local lease", "local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections",
+  "physical audit head from the semantic claim-conflict fence", "claim admission never requires exact global-ledger parity or inactivity", "Re-evaluate a claim dynamically after every compare-and-swap loss or authoritative refresh", "Every outcome preserves existing lanes and bytes",
   "expiry, merge state, detached state, names, or canonical advancement only yield `dormant-preserved`", "authority-bearing aliases or compatibility operations", "conceptual inspiration only", "Forbid copying or adapting its code, prose, schemas, tests, examples, algorithms, or naming", "forbid dependencies, imports, network/runtime reliance, and external conformance authority",
 ]) assert.ok(coordinationSource.includes(phrase), `root collaboration source must include ${phrase}`);
 assert.match(coordinationSource, /#### Reference implementation inspiration[^\n]*\n- \[yjs\/yjs\]\(https:\/\/github\.com\/yjs\/yjs\)/u);

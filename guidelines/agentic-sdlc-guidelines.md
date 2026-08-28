@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Guidelines"
 doc_type: "Guidelines"
-version: "1.22.0"
-date: "2026-08-27"
+version: "1.23.0"
+date: "2026-08-28"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -134,12 +134,13 @@ Every writer is identified by the tuple; [Cloud-Authoritative Collaboration](./a
 ```
 Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
 ```
-
 - Treat every field as distinct: a shared person, device, session, checkout, branch, or label does not imply shared ownership
 - Expose exactly four provider-neutral root operations: `claim(scope)`, `continue(claim)`, `integrate(candidate)`, and `retire(claim)`; each emits a typed digest-bound receipt, and adapters must not add authority-bearing aliases or compatibility operations
 - Define a cross-repository coordination task as a dependency-ordered group of immutable per-repository work units; every unit retains its own repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence
 - Treat dependency edges as the group's only ordering authority; a shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff
 - Permit policy-unbounded but operationally bounded concurrent current authorities for disjoint normalized write sets, meaning unlimited concurrent current authorities for disjoint normalized write sets at the policy layer: each repository adapter declares and enforces its current resource, evaluator, and coordination capacity, and exactly one current write authority remains permitted per overlapping declared write set; equivalently, exactly one current write authority per overlapping declared write set. Authenticate each authority, while local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections. Classify each lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous`, where an overlapping newcomer is a non-writing waiting successor and undeclared or unparseable future scope is `ambiguous` and cannot create authority
+- Separate the append-only ledger's physical audit head from the semantic claim-conflict fence: derive a bounded conflict-set digest from the immutable claim subject, normalized write scope, current policy and canonical evidence, and only overlapping, same-work-item, predecessor, or successor lineages. Exclude provider ordering, observation time, retry count, the global head itself, and unrelated disjoint transitions; global-head movement alone is never a claim conflict and claim admission never requires exact global-ledger parity or inactivity
+- Re-evaluate a claim dynamically after every compare-and-swap loss or authoritative refresh. Return an existing receipt for an exact idempotent replay; attempt or boundedly re-parent the same frozen transition when the conflict set is unchanged; apply current overlap policy to an unsealed request; and return a typed fail-closed conflict requiring replan when the relevant conflict set, immutable subject, policy, canonical evidence, ancestry, or scope becomes changed, missing, or ambiguous. Every outcome preserves existing lanes and bytes, and adapters may change transport but not this decision
 - `claim(scope)` admits only an exact clean canonical base, normalized declared scope, authenticated actor, no competing overlap, and a monotonic compare-and-swap transition; failure leaves every existing lane and the requester unchanged
 - `continue(claim)` revalidates the immutable claim, revision, PR/review identity, epoch, fence, scope, and authenticated authority; recovery from `dormant-preserved` is independent of the expired local lease and never adopts another lane's mutable bytes
 - `integrate(candidate)` consumes one immutable reviewed candidate, dependency closure, named checks, handoff evidence, and current claim through a monotonic compare-and-swap; source owners precede consumers, projections, and mirrors
@@ -520,10 +521,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
 - Load `rapid-mvp-sprint-profile` at Run start alongside the roles and bridge sections whenever a Sprint Clock is declared; skip it entirely otherwise
 ## Rapid MVP Sprint Profile
-
 The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
 ## Validation Checklist
-
 **Pre-Execution**:
 - [ ] **Frontmatter present** with baseline and conformance keys; `owner` declared; `local_rung` and `delivered_rung` separate
 - [ ] **Specification baselined** with zero open `blocker` findings in the authoring domain
@@ -534,6 +533,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 - [ ] **Orchestration completion-time estimate grounded and current**: the dependency-closed outcome WBS, critical path under evidenced concurrency and capacity, overhead, external waits, verification, rework, contingency, range, confidence, assumptions, and every evidence-triggered reforecast are recorded
 - [ ] **Collaboration identity complete when concurrent mutation applies**; authoritative future write scopes, distinct lanes, and exact fences are present without path inference; current local leases are required only for local mutation-capable projections
 - [ ] **No live overlapping remote claim exists for the declared scope**; any overlap is resolved upstream through an accepted release, handoff, or reclaim before local mutation, and review state, lease expiry, mergeability, or canonical advancement do not count as release authority
+- [ ] **Claim conflict resolution is semantic and dynamic**; the physical ledger head is not treated as a global lock, unchanged conflict sets may re-parent within a declared retry bound, and changed or unknowable relevant evidence returns a typed fail-closed outcome without mutating existing lanes
 - [ ] **When additive concurrent authoring is requested, scoped lane admitted and preserved**; joined receipts bind exact source/scope, cloud/local/shared-state digests, target/atomic result, final active claim evidence, zero candidate-caused collateral mutation, `authoringAdmission: admitted`, and claim-plus-local-lease revalidation at first consumption
 - [ ] **Reviewed delivery authority is exact when protected integration applies**; one current `delivery-authorized` receipt binds the unchanged reviewed revision, scope, claim, lease epoch, fence, ledger revision, and review/check evidence without reopening authoring or granting deployment authority
 - [ ] **All four budgets stated** per task, with a circuit-breaker condition

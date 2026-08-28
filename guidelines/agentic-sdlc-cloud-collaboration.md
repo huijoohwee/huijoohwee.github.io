@@ -1,7 +1,7 @@
 ---
 title: "Agentic SDLC Cloud-Authoritative Collaboration"
 doc_type: "Guideline Module"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-08-28"
 lang: "en-US"
 schema: "agentic-cloud-collaboration/v1"
@@ -160,6 +160,26 @@ transition can be accepted. Two disjoint candidates may both succeed in audit
 order: the loser of the physical head compare-and-swap revalidates its unchanged
 conflict set and re-parents automatically. Identical retries return the existing
 receipt by `idempotencyKey`; different payloads using one key are rejected.
+
+### Dynamic Claim-Conflict Decision
+
+Every authoritative refresh re-runs one provider-neutral decision over the
+frozen claim intent and current verified ledger. The decision is derived, not
+stored as a second authority plane:
+
+| Observation | Typed disposition | Required behavior |
+|---|---|---|
+| The same idempotency key and semantic request are already committed | `idempotent-replay` | Return the existing receipt without another write. |
+| The observed head is current and its conflict-set digest is unchanged | `current` | Attempt the frozen transition once. |
+| The audit head advanced but only unrelated disjoint entries changed | `disjoint-rebase` | Re-parent the same frozen transition and retry within the declared bound. |
+| An unsealed dynamic request observes a current overlapping authority | `overlapping` | Apply the current overlap policy; any newcomer remains a non-writing waiting successor. |
+| Related lineage, immutable subject, policy, canonical evidence, or normalized scope changed | `semantic-conflict` | Return a typed conflict and require replan; do not reinterpret the sealed request. |
+| The observation is absent from ancestry or relevant evidence is incomplete or ambiguous | `unknown-observation` | Fail closed with a typed outcome and preserve every lane and byte. |
+
+Refresh and classification may repeat only within the declared compare-and-swap
+attempt bound. Global-head equality, global inactivity, elapsed retries, provider
+event order, or exact inventory parity are never substitutes for semantic
+conflict-set evidence.
 
 ## Claim and Handoff Rules
 

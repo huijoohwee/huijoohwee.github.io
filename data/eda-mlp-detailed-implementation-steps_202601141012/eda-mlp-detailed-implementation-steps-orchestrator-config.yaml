@@ -1,7 +1,7 @@
 graph:
   id: "md:eda-mlp-detailed-implementation-steps"
   codebase_root: .
-  index_jsonld: /Users/huijoohwee/Documents/GitHub/knowgrph/canvas/src/data/eda-mlp-graph.json
+  index_jsonld: $GITHUB_ROOT/knowgrph/canvas/src/data/eda-mlp-graph.json
   index_schema: data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld
 orchestrator:
   parser_script: python -m knowgrph_parser
@@ -42,4 +42,4 @@ agentic_rag:
         - pip should also be in venv
         - "Should show: /path/to/project_name/venv/bin/pip"
         - Core data processing
-      context: Summarize the markdown document at /Users/huijoohwee/Documents/GitHub/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md into a navigable graph structure.
+      context: Summarize the markdown document at $GITHUB_ROOT/joohwee/guidelines-archive/eda-mlp-detailed-implementation-steps.md into a navigable graph structure.

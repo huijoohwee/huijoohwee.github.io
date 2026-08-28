@@ -75,7 +75,7 @@ frontmatter_contract: "required"
 
 - **Adaptive Thresholds**: All extraction boundaries (entity similarity, edge confidence, chunk coherence) adjust dynamically based on document characteristics and feedback signals
 
-- **Multi-Document Unification**: Orchestrator merges entities across documents, resolves conflicts, builds corpus-spanning knowledge graphs
+- **Multi-Document Unification**: Orchestrator merges entities across documents, resolves conflicts, builds corpus-spanning agentic graphs
 
 - **Feedback-Driven Refinement**: System loops quality metrics back to parsers, adjusting extraction parameters in real-time
 
@@ -261,7 +261,7 @@ tuner iterates until_metrics_stabilize_or_max_iterations_reached
 
 ### Component: DocumentUnifier
 
-- **From fragments to corpus**: DocumentUnifier -> merges entities across multiple documents via embedding similarity -> resolves conflicting assertions through provenance voting -> builds corpus-spanning entity registry -> integrates cross-document relationships -> delivers unified knowledge graph representing collective intelligence from entire corpus for comprehensive reasoning.
+- **From fragments to corpus**: DocumentUnifier -> merges entities across multiple documents via embedding similarity -> resolves conflicting assertions through provenance voting -> builds corpus-spanning entity registry -> integrates cross-document relationships -> delivers unified agentic graph representing collective intelligence from entire corpus for comprehensive reasoning.
 
 #### **Subject-Verb-Object Directives**
 ```
@@ -446,7 +446,7 @@ reasoner identifies central_concepts_and_peripheral_topics
 
 ### Component: AgenticQueryEngine
 
-- **From questions to answers**: AgenticQueryEngine -> parses natural language queries into graph patterns -> plans multi-hop traversal strategies -> executes dynamic graph queries with adaptive depth -> retrieves provenance-linked text chunks -> synthesizes answers with citations -> suggests corpus-aware follow-up queries -> delivers intelligent, context-sensitive responses grounded in unified knowledge graph.
+- **From questions to answers**: AgenticQueryEngine -> parses natural language queries into graph patterns -> plans multi-hop traversal strategies -> executes dynamic graph queries with adaptive depth -> retrieves provenance-linked text chunks -> synthesizes answers with citations -> suggests corpus-aware follow-up queries -> delivers intelligent, context-sensitive responses grounded in unified agentic graph.
 
 #### **Subject-Verb-Object Directives**
 ```
@@ -584,7 +584,7 @@ System MUST synthesize answers from unified corpus graph dynamically
 
 - **Threshold Tuning**: Adapter adjusts extraction boundaries dynamically per document profile, applies feedback corrections, maintains quality consistency.
 
-- **Document Unification**: Consolidator merges entities across corpus via embedding clustering, resolves conflicts through voting, builds integrated knowledge graph.
+- **Document Unification**: Consolidator merges entities across corpus via embedding clustering, resolves conflicts through voting, builds integrated agentic graph.
 
 - **Feedback Loops**: Monitor tracks quality metrics, detects degradation patterns, routes adjustment signals, iteratively refines extraction parameters.
 
@@ -592,4 +592,4 @@ System MUST synthesize answers from unified corpus graph dynamically
 
 - **Agentic GraphRAG**: Engine understands queries, plans adaptive traversals, synthesizes grounded answers, suggests topology-aware follow-ups.
 
-- **Result**: Dynamic, self-improving pipeline transforms unstructured prose into queryable, provenance-linked, corpus-scale knowledge graph supporting intelligent reasoning.
+- **Result**: Dynamic, self-improving pipeline transforms unstructured prose into queryable, provenance-linked, corpus-scale agentic graph supporting intelligent reasoning.

@@ -281,18 +281,18 @@ kgDocumentStructureBaselineLock: false
 
 Geospatial reference template:
 
-- `/Users/huijoohwee/Documents/GitHub/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `$GITHUB_ROOT/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
 
 Canonical seed examples aligned to this vocabulary:
 
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/README.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-seeded.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-sea.md`
-- `/Users/huijoohwee/Documents/GitHub/knowgrph/knowgrph-video-demo-the-general.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
-- `/Users/huijoohwee/Documents/GitHub/sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
+- `$GITHUB_ROOT/knowgrph/README.md`
+- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo.md`
+- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-seeded.md`
+- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-sea.md`
+- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-the-general.md`
+- `$GITHUB_ROOT/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
+- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
 
 ## Configuration Reference
 

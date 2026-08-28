@@ -7,6 +7,7 @@ const dir = "guidelines";
 
 const PLANS = [
   {
+    dir: "docs/documents",
     entry: "knowgrph-animatic-prd-tad.md",
     parentTitle: "Knowgrph Animatic PRD/TAD",
     modules: [

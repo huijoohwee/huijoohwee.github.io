@@ -12,7 +12,7 @@ In the publish repo (`huijoohwee`), the following paths are **deployment artifac
 > These are protected via `.github/CODEOWNERS` and should be additionally enforced by GitHub branch protection rules.
 
 ## Allowed workflow (only)
-1) Edit SSOT in dev repo: `singabldr` (`/Users/huijoohwee/Documents/GitHub/singabldr`)
+1) Edit SSOT in dev repo: `singabldr` (`$GITHUB_ROOT/singabldr`)
    - `singabldr-src/**` for the upstream `app.rebundled.js` source
    - `singabldr/assets/**` for shell-managed boot scripts, overrides, fonts, and POI media
    - `singabldr/index.html`, `singabldr/manifest.webmanifest`, `singabldr/sw.js`

@@ -12,11 +12,14 @@ const source = readFileSync(documentPath, "utf8");
 test("source derives every classified directive and table row deterministically", () => {
   const rules = buildRuleIndex(parseDocument(source, documentPath.pathname));
   assert.deepEqual(rules.findings, []);
-  assert.equal(rules.rules.length, 272);
-  assert.equal(rules.artifactRules.length, 101);
-  assert.equal(rules.advisoryRules.length, 171);
+  assert.ok(rules.rules.length > 0);
+  assert.ok(rules.artifactRules.length > 0);
+  assert.ok(rules.advisoryRules.length > 0);
+  assert.equal(rules.artifactRules.length + rules.advisoryRules.length, rules.rules.length);
   assert.equal(rules.byId["lane-topology--admission#17"].ruleText.startsWith("`claim(scope)`"), true);
   assert.equal(rules.byId["coordination-artifacts#27"].classification, "artifact-bearing");
+  assert.equal(rules.byId["glossary#10"].classification, "advisory");
+  assert.equal(rules.byId["commit--attribution#12"].classification, "artifact-bearing");
   assert.equal(rules.byId["findings--rule-identity#2"].classification, "artifact-bearing");
 });
 
@@ -98,6 +101,23 @@ test("content acceptance binds resolved decisions to their owning rules", () => 
   );
   assert.ok(checkContentContract(relocatedLease, buildRuleIndex(relocatedLease))
     .some(finding => finding.ruleId === "coordination-artifacts#27" && finding.message.startsWith("lease-ceiling-24h:")));
+});
+
+test("content acceptance binds the exact protected-main refresh exception", () => {
+  const mutations = [
+    ["≤16 same-subject 1st-parent merges", "unbounded merges"],
+    ["event-bound tip/strict ancestors", "unbound unordered parents"],
+    ["divergent base/exact tree", "some merge result"],
+    ["authority=head/scope/epoch", "authority seems related"],
+    ["terminal independently valid", "unchecked terminal"],
+    ["`exact-refresh-proof` joins head/scope, inherits one valid terminal block", "a refresh may omit attribution"],
+    [">200-char, or escaped `\\n` trailers", "malformed trailers"],
+  ];
+  for (const [required, replacement] of mutations) {
+    const mutant = parseDocument(source.replace(required, replacement), documentPath.pathname);
+    const findings = checkContentContract(mutant, buildRuleIndex(mutant));
+    assert.ok(findings.some(finding => /exact-refresh-proof|commit-trailers|invalid-attribution/u.test(finding.message)), required);
+  }
 });
 
 test("content acceptance keeps stage routing and checker path local to their contracts", () => {

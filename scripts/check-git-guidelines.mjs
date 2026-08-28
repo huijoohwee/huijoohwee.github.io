@@ -35,6 +35,9 @@ const options = {
   acosRoot: readOption("acos-root") || undefined,
   workspaceRoot: readOption("workspace-root") || undefined,
   expectedBaseRevision: readOption("expected-base-revision") || undefined,
+  expectedProtectedRevision: readOption("expected-protected-revision")
+    || process.env.GIT_GUIDELINES_EXPECTED_PROTECTED_REVISION
+    || undefined,
   acceptedFenceRevision: readOption("accepted-fence-revision") || undefined,
   probeRemote: !argumentsList.includes("--skip-remote-probe"),
 };
@@ -61,7 +64,12 @@ try {
   if (inputs.problems.length === 0) {
     const owners = normalizeValue(inputs.owners, { absolutePrefixes });
     const registrations = normalizeValue(inputs.registrations, { absolutePrefixes });
-    const gitFacts = normalizeValue(inputs.gitFacts, { absolutePrefixes });
+    const normalizedGitFacts = normalizeValue(inputs.gitFacts, { absolutePrefixes });
+    const gitFacts = Object.freeze({
+      ...normalizedGitFacts,
+      refreshChain: inputs.gitFacts.refreshChain,
+      refreshAuthority: inputs.gitFacts.refreshAuthority,
+    });
     collectFamily(findings, "rule-registry", () => ruleIndex.findings, inputs, ruleIndex);
     let frontmatter = { parsed: null, findings: [] };
     collectFamily(findings, "frontmatter", () => {

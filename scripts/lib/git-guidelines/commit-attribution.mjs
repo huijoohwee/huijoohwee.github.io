@@ -2,6 +2,8 @@ import { finding } from "./content.mjs";
 import { resolveRuleId } from "./rule-registry.mjs";
 
 const SUBJECT_PATTERN = /^(feat|fix|docs|test|refactor|chore)\(([a-z0-9][a-z0-9._/-]*)\): (\S.*)$/u;
+const OID_PATTERN = /^[0-9a-f]{40}(?:[0-9a-f]{24})?$/u;
+const MAX_REFRESH_HOPS = 16;
 const REQUIRED_TRAILERS = Object.freeze([
   "Agentic-Task",
   "Agentic-Scope",
@@ -12,6 +14,7 @@ const REQUIRED_TRAILERS = Object.freeze([
 export function checkCommitAttribution(document, gitFacts, ruleIndex) {
   if (!requiresAgenticAttribution(gitFacts)) return [];
   const problems = validateCommitAttribution(gitFacts.commitMessage, { branch: gitFacts.branch });
+  if (problems.length === 0 || isExactProtectedMainRefresh(gitFacts)) return [];
   const grouped = Map.groupBy(problems, problem => attributionRuleId(problem, ruleIndex));
   return [...grouped.entries()].map(([ruleId, ruleProblems]) => finding({
     ruleId,
@@ -19,6 +22,59 @@ export function checkCommitAttribution(document, gitFacts, ruleIndex) {
     path: document.sourcePath,
     message: `Commit ${gitFacts.head || "HEAD"} has invalid agentic attribution: ${ruleProblems.join(" ")}`,
   }));
+}
+
+export function isExactProtectedMainRefresh(gitFacts) {
+  const branch = gitFacts?.branch;
+  const proof = gitFacts?.refreshChain;
+  const authority = gitFacts?.refreshAuthority;
+  const branchScope = branchScopeOf(branch);
+  if (!branchScope || !proof || !validRefreshAuthority(authority, branchScope)) return false;
+  if (proof.maximumHops !== MAX_REFRESH_HOPS || proof.truncated !== false || proof.objectFailure !== false) return false;
+  if (!isOid(proof.expectedProtectedRevision) || !Array.isArray(proof.nodes)) return false;
+  if (proof.nodes.length < 2 || proof.nodes.length > MAX_REFRESH_HOPS + 1) return false;
+
+  const firstNode = proof.nodes[0];
+  if (!isOid(gitFacts?.head) || firstNode?.revision !== gitFacts.head) return false;
+  if (authority.laneRevision !== gitFacts.head) return false;
+  const subject = bareEnvelopeSubject(firstNode?.message, branchScope);
+  if (subject === null) return false;
+
+  const visited = new Set();
+  let newerProtectedParent = null;
+  for (let index = 0; index < proof.nodes.length; index += 1) {
+    const node = proof.nodes[index];
+    if (!validCommitNode(node) || visited.has(node.revision)) return false;
+    visited.add(node.revision);
+
+    const attributionProblems = validateCommitAttribution(node.message, { branch });
+    if (attributionProblems.length === 0) {
+      return index > 0
+        && index === proof.nodes.length - 1
+        && firstSubject(node.message) === subject;
+    }
+
+    if (index >= MAX_REFRESH_HOPS || index === proof.nodes.length - 1) return false;
+    if (bareEnvelopeSubject(node.message, branchScope) !== subject) return false;
+    if (node.parents.length !== 2 || node.parents.some(parent => !isOid(parent))) return false;
+    const [firstParent, protectedParent] = node.parents;
+    if (firstParent === protectedParent || visited.has(protectedParent)) return false;
+    visited.add(protectedParent);
+    if (proof.nodes[index + 1]?.revision !== firstParent) return false;
+    if (!exactSingleton(node.mergeBases) || node.mergeBases[0] === firstParent || node.mergeBases[0] === protectedParent) return false;
+    if (!isOid(node.mergeBaseTree) || !isOid(node.protectedTree) || node.mergeBaseTree === node.protectedTree) return false;
+    if (!isOid(node.expectedMergeTree) || node.expectedMergeTree !== node.tree) return false;
+
+    if (index === 0) {
+      if (protectedParent !== proof.expectedProtectedRevision) return false;
+      if (!Array.isArray(node.protectedLineageBases) || node.protectedLineageBases.length !== 0) return false;
+    } else {
+      if (protectedParent === newerProtectedParent) return false;
+      if (!exactSingleton(node.protectedLineageBases) || node.protectedLineageBases[0] !== protectedParent) return false;
+    }
+    newerProtectedParent = protectedParent;
+  }
+  return false;
 }
 
 export function validateCommitAttribution(message, { branch = null } = {}) {
@@ -36,6 +92,9 @@ export function validateCommitAttribution(message, { branch = null } = {}) {
 
   const trailerBlock = finalTrailerBlock(lines);
   if (trailerBlock.start === null) problems.push("A final trailer block separated by a blank line is required.");
+  if (trailerBlock.start !== null && lines.slice(trailerBlock.start).some(line => [...line].length < 1 || [...line].length > 200)) {
+    problems.push("Every final trailer line must contain 1–200 characters.");
+  }
   const values = new Map();
   for (const key of REQUIRED_TRAILERS) {
     const matches = trailerBlock.entries.filter(entry => entry.key === key);
@@ -57,7 +116,7 @@ export function validateCommitAttribution(message, { branch = null } = {}) {
     if (values.has(key) && !values.get(key).trim()) problems.push(`${key} must be non-empty.`);
   }
   if (branch?.startsWith("agent/") && values.has("Agentic-Scope")) {
-    const branchScope = branch.split("/").slice(2).join("/");
+    const branchScope = branchScopeOf(branch);
     if (!branchScope || branchScope !== values.get("Agentic-Scope")) problems.push("Agentic-Scope must equal the task-lane branch scope.");
   }
   return [...new Set(problems)];
@@ -70,7 +129,50 @@ function requiresAgenticAttribution(gitFacts) {
 function attributionRuleId(problem, ruleIndex) {
   return /^(?:Subject|Agentic-Scope must equal the task-lane branch scope)/u.test(problem)
     ? resolveRuleId(ruleIndex, "commit--attribution", /Use `<type>\(<scope>\): <summary>`/u, "commit--attribution#11")
-    : resolveRuleId(ruleIndex, "commit--attribution", /Record each trailer exactly once/u, "commit--attribution#12");
+    : resolveRuleId(ruleIndex, "commit--attribution", /Use 1–200-char trailer lines once/u, "commit--attribution#12");
+}
+
+function validCommitNode(node) {
+  return node && isOid(node.revision) && isOid(node.tree)
+    && typeof node.message === "string" && Array.isArray(node.parents);
+}
+
+function validRefreshAuthority(authority, branchScope) {
+  if (!authority || Object.keys(authority).sort().join(",") !== "laneRevision,leaseEpoch,scopeId") return false;
+  return isOid(authority.laneRevision)
+    && Number.isSafeInteger(authority.leaseEpoch)
+    && authority.leaseEpoch > 0
+    && authority.scopeId === branchScope;
+}
+
+function bareEnvelopeSubject(message, branchScope) {
+  const lines = normalizedMessageLines(message);
+  if (lines.length !== 1 || [...lines[0]].length > 72) return null;
+  const match = lines[0].match(SUBJECT_PATTERN);
+  return match && match[2] === branchScope ? lines[0] : null;
+}
+
+function firstSubject(message) {
+  return normalizedMessageLines(message)[0] || null;
+}
+
+function branchScopeOf(branch) {
+  if (typeof branch !== "string" || !branch.startsWith("agent/")) return null;
+  return branch.split("/").slice(2).join("/") || null;
+}
+
+function normalizedMessageLines(message) {
+  const lines = String(message || "").replace(/\r\n?/gu, "\n").split("\n");
+  while (lines.at(-1) === "") lines.pop();
+  return lines;
+}
+
+function exactSingleton(values) {
+  return Array.isArray(values) && values.length === 1 && isOid(values[0]);
+}
+
+function isOid(value) {
+  return OID_PATTERN.test(String(value || ""));
 }
 
 function finalTrailerBlock(lines) {

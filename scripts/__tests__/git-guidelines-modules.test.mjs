@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { digestValue, normalizedWriteSetsOverlap, validateArtifact } from "../lib/git-guidelines/artifact-schema.mjs";
-import { validateCommitAttribution } from "../lib/git-guidelines/commit-attribution.mjs";
+import {
+  isExactProtectedMainRefresh,
+  validateCommitAttribution,
+} from "../lib/git-guidelines/commit-attribution.mjs";
 import { readFrontmatter } from "../lib/git-guidelines/fm-reader.mjs";
 import { normalizeValue, NORMALIZATION_CLASSES, NORMALIZATION_EXCLUSIONS } from "../lib/git-guidelines/normalizer.mjs";
 import { collapseFindings } from "../lib/git-guidelines/report.mjs";
@@ -111,6 +114,15 @@ test("commit attribution rejects literal newline escapes and accepts a real trai
   assert.ok(validateCommitAttribution(malformed, { branch: "agent/test/git-guidelines-companion" }).some(problem => /Literal escaped newline/u.test(problem)));
 });
 
+test("commit attribution enforces the 1–200-codepoint final trailer-line bound", () => {
+  const prefix = "Agentic-Note: ";
+  const valid = `${validAttributedMessage().trimEnd()}\n${prefix}${"x".repeat(200 - [...prefix].length)}\n`;
+  assert.deepEqual(validateCommitAttribution(valid, { branch: "agent/test/git-guidelines-companion" }), []);
+  const overlong = `${validAttributedMessage().trimEnd()}\n${prefix}${"x".repeat(201 - [...prefix].length)}\n`;
+  assert.ok(validateCommitAttribution(overlong, { branch: "agent/test/git-guidelines-companion" })
+    .includes("Every final trailer line must contain 1–200 characters."));
+});
+
 test("protected squash attribution accepts one integration block and rejects aggregated authored blocks", () => {
   const canonical = "fix(git-guidelines-companion): preserve squash attribution (#102)\n\nBind the protected integration commit to one accepted claim.\n\nAgentic-Task: git-guidelines-companion\nAgentic-Scope: git-guidelines-companion\nAgentic-Lease-Epoch: 1\nAgentic-Mechanism: Codex protected integration\n";
   assert.deepEqual(validateCommitAttribution(canonical, { branch: "main" }), []);
@@ -124,6 +136,134 @@ test("protected squash attribution accepts one integration block and rejects agg
     assert.ok(problems.includes(`${trailer} must occur exactly once in the commit message.`));
   }
 });
+
+test("exact refresh joins current authority to HEAD and independently validates its terminal attribution", () => {
+  const exact = exactRefreshChainFacts();
+  assert.equal(isExactProtectedMainRefresh(exact), true);
+
+  const mutations = [
+    facts => ({ ...facts, branch: "main" }),
+    facts => mutateNode(facts, 0, node => ({ ...node, parents: [node.parents[0]] })),
+    facts => mutateNode(facts, 0, node => ({ ...node, parents: [...node.parents].reverse() })),
+    facts => ({ ...facts, refreshChain: { ...facts.refreshChain, expectedProtectedRevision: "9".repeat(40) } }),
+    facts => mutateNode(facts, 0, node => ({ ...node, mergeBases: [] })),
+    facts => mutateNode(facts, 0, node => ({ ...node, mergeBases: ["d".repeat(40), "8".repeat(40)] })),
+    facts => mutateNode(facts, 0, node => ({ ...node, mergeBases: [node.parents[0]] })),
+    facts => mutateNode(facts, 0, node => ({ ...node, protectedTree: node.mergeBaseTree })),
+    facts => mutateNode(facts, 0, node => ({ ...node, expectedMergeTree: "8".repeat(40) })),
+    facts => mutateNode(facts, 0, node => ({ ...node, message: `${node.message.trimEnd()}\n\nmerge body\n` })),
+    facts => mutateNode(facts, 0, node => ({ ...node, message: "fix(git-guidelines-companion): different subject\n" })),
+    facts => mutateNode(facts, 1, node => ({ ...node, expectedMergeTree: "8".repeat(40) })),
+    facts => mutateNode(facts, 1, node => ({ ...node, protectedLineageBases: [facts.refreshChain.nodes[0].parents[1]] })),
+    facts => mutateNode(facts, 1, node => ({ ...node, parents: [node.parents[0], facts.refreshChain.nodes[0].parents[1]] })),
+    facts => mutateNode(facts, 2, node => ({ ...node, message: "invalid terminal\n" })),
+    facts => ({ ...facts, refreshChain: { ...facts.refreshChain, truncated: true } }),
+    facts => ({ ...facts, refreshChain: { ...facts.refreshChain, maximumHops: 15 } }),
+    facts => ({ ...facts, refreshChain: { ...facts.refreshChain, objectFailure: true } }),
+    facts => mutateNode(facts, 0, node => ({ ...node, expectedMergeTree: null })),
+    facts => ({ ...facts, refreshAuthority: { ...facts.refreshAuthority, leaseEpoch: 0 } }),
+    facts => ({ ...facts, refreshAuthority: { ...facts.refreshAuthority, scopeId: "other-scope" } }),
+    facts => ({ ...facts, refreshAuthority: null }),
+    facts => ({ ...facts, refreshChain: null }),
+  ];
+  for (const mutate of mutations) assert.equal(isExactProtectedMainRefresh(mutate(exact)), false);
+  assert.equal(isExactProtectedMainRefresh({
+    ...exact,
+    refreshAuthority: { ...exact.refreshAuthority, leaseEpoch: 99 },
+  }), true, "a current reseeded claim need not reuse the historical terminal epoch");
+  assert.equal(isExactProtectedMainRefresh({
+    ...exact,
+    refreshAuthority: { ...exact.refreshAuthority, laneRevision: "9".repeat(40) },
+  }), false, "the current accepted authority must join the bare refresh HEAD");
+
+  assert.equal(isExactProtectedMainRefresh(mutateNode(exact, 2, node => ({
+    ...node, revision: "9".repeat(40),
+  }))), false, "the terminal remains bound to the first-parent chain");
+  assert.equal(isExactProtectedMainRefresh(mutateNode(exact, 2, node => ({
+    ...node, message: node.message.replace("Agentic-Lease-Epoch: 61", "Agentic-Lease-Epoch: 0"),
+  }))), false, "the historical terminal epoch remains positive");
+  assert.equal(isExactProtectedMainRefresh(mutateNode(exact, 2, node => ({
+    ...node, message: node.message.replaceAll("git-guidelines-companion", "other-scope"),
+  }))), false, "the historical terminal scope remains branch-bound");
+
+  const overlongTerminal = mutateNode(exact, 2, node => ({
+    ...node,
+    message: `${node.message.trimEnd()}\nAgentic-Note: ${"x".repeat(201)}\n`,
+  }));
+  assert.equal(isExactProtectedMainRefresh(overlongTerminal), false);
+
+  const truncatedNodes = Array.from({ length: 17 }, (_, index) => ({
+    ...exact.refreshChain.nodes[index < 2 ? index : 1],
+    revision: index.toString(16).padStart(40, "0"),
+    message: `${refreshSubject()}\n`,
+  }));
+  assert.equal(isExactProtectedMainRefresh({
+    ...exact,
+    head: truncatedNodes[0].revision,
+    refreshChain: { ...exact.refreshChain, truncated: true, nodes: truncatedNodes },
+  }), false);
+});
+
+function exactRefreshChainFacts() {
+  const head = "a".repeat(40);
+  const firstParent = "b".repeat(40);
+  const terminal = "e".repeat(40);
+  return {
+    head,
+    branch: "agent/test/git-guidelines-companion",
+    commitMessage: `${refreshSubject()}\n`,
+    refreshAuthority: { laneRevision: head, leaseEpoch: 3, scopeId: "git-guidelines-companion" },
+    refreshChain: {
+      expectedProtectedRevision: "c".repeat(40),
+      maximumHops: 16,
+      truncated: false,
+      objectFailure: false,
+      nodes: [
+        refreshNode({
+          revision: head, tree: "1".repeat(40), firstParent, protectedParent: "c".repeat(40),
+          mergeBase: "d".repeat(40), mergeBaseTree: "2".repeat(40), protectedTree: "3".repeat(40),
+        }),
+        refreshNode({
+          revision: firstParent, tree: "4".repeat(40), firstParent: terminal, protectedParent: "f".repeat(40),
+          mergeBase: "0".repeat(40), mergeBaseTree: "5".repeat(40), protectedTree: "6".repeat(40),
+          protectedLineageBases: ["f".repeat(40)],
+        }),
+        {
+          revision: terminal, tree: "7".repeat(40), message: validAttributedMessage(), parents: [], mergeBases: [],
+          mergeBaseTree: null, protectedTree: null, expectedMergeTree: null, protectedLineageBases: [],
+        },
+      ],
+    },
+  };
+}
+
+function refreshNode({
+  revision, tree, firstParent, protectedParent, mergeBase, mergeBaseTree, protectedTree,
+  protectedLineageBases = [],
+}) {
+  return {
+    revision, tree, message: `${refreshSubject()}\n`, parents: [firstParent, protectedParent],
+    mergeBases: [mergeBase], mergeBaseTree, protectedTree, expectedMergeTree: tree, protectedLineageBases,
+  };
+}
+
+function mutateNode(facts, index, mutate) {
+  return {
+    ...facts,
+    refreshChain: {
+      ...facts.refreshChain,
+      nodes: facts.refreshChain.nodes.map((node, nodeIndex) => nodeIndex === index ? mutate(node) : node),
+    },
+  };
+}
+
+function refreshSubject() {
+  return "fix(git-guidelines-companion): record agentic attribution";
+}
+
+function validAttributedMessage() {
+  return `${refreshSubject()}\n\nRecord why the attributed candidate exists.\n\nAgentic-Task: git-guidelines-companion\nAgentic-Scope: git-guidelines-companion\nAgentic-Lease-Epoch: 61\nAgentic-Mechanism: Codex task test\n`;
+}
 
 function operationReceipt(overrides = {}) {
   const draft = {

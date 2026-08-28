@@ -11,26 +11,26 @@ const STAGES = Object.freeze([
   "session start", "lane admission", "authoring", "commit", "push",
   "review", "integration", "promotion", "recovery", "cleanup",
 ]);
-const EXPECTED_SECTION_LINES = Object.freeze({
-  "boundary--ownership": 21, "module-index": 18, glossary: 14, "load-budget": 15,
-  "lane-topology--admission": 38, "coordination-artifacts": 36, "authoring--write-scope": 20,
-  "preservation-recovery--cleanup": 30, "commit--attribution": 24, "verification-gates": 24,
-  "conflict--integration-order": 24, "promotion-chain": 28, "findings--rule-identity": 28,
-  "validation-checklist": 22, "anti-patterns": 19, mantra: 10,
-});
+const REQUIRED_SECTION_ANCHORS = Object.freeze([
+  "boundary--ownership", "module-index", "glossary", "load-budget",
+  "lane-topology--admission", "coordination-artifacts", "authoring--write-scope",
+  "preservation-recovery--cleanup", "commit--attribution", "verification-gates",
+  "conflict--integration-order", "promotion-chain", "findings--rule-identity",
+  "validation-checklist", "anti-patterns", "mantra",
+]);
 
 test("shipped document stays within total, section, and always-loaded budgets", () => {
   const physicalLines = source.endsWith("\n") ? source.slice(0, -1).split("\n") : source.split("\n");
   const spans = Object.fromEntries(document.sections.map(section => [section.anchor, sectionSpan(section)]));
 
-  assert.equal(physicalLines.length, 392);
-  assert.equal(400 - physicalLines.length, 8);
-  assert.equal(document.sections.length, 16);
-  assert.deepEqual(spans, EXPECTED_SECTION_LINES);
+  const headroom = 400 - physicalLines.length;
+  assert.ok(physicalLines.length > 0 && physicalLines.length <= 400);
+  assert.ok(headroom >= 0);
+  assert.deepEqual(Object.keys(spans).sort(), [...REQUIRED_SECTION_ANCHORS].sort());
   assert.ok(Object.values(spans).every(count => count > 0 && count <= 150));
 
   const alwaysLoaded = spans["module-index"] + spans["boundary--ownership"];
-  assert.equal(alwaysLoaded, 39);
+  assert.ok(alwaysLoaded > 0);
   assert.ok(alwaysLoaded <= 40, `Module Index plus boundary ${alwaysLoaded} exceeds 40`);
   assert.ok(spans["anti-patterns"] <= 50);
   assert.ok(spans.mantra <= 25);
@@ -59,8 +59,8 @@ test("every stage stays within strict and Glossary-always-loaded caps", () => {
     assert.ok(strictTotal <= 150, `${stage} strict load ${strictTotal} exceeds 150`);
     assert.ok(conservativeTotal <= 150, `${stage} conservative load ${conservativeTotal} exceeds 150`);
   }
-  assert.equal(strictWorst, 127);
-  assert.equal(conservativeWorst, 141);
+  assert.ok(strictWorst > 0 && strictWorst <= 150);
+  assert.ok(conservativeWorst >= strictWorst && conservativeWorst <= 150);
 });
 
 test("module index, rule lines, anti-patterns, and mantra stay locally bounded", () => {

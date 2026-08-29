@@ -282,6 +282,7 @@ function makeRouter(state = {}) {
       if (suffix === `/pages/deployments/${data.input.candidateSha}`) {
         const statuses = cancelled ? afterCancelStatuses : deploymentStatuses;
         const status = statuses.length > 1 ? statuses.shift() : statuses[0];
+        if (status === "blank") return json(url, { status: "", ...(state.blankDeploymentFields || {}) });
         if (!status || status === "absent") return response(url, 404);
         return json(url, { status, pages_build_version: data.input.candidateSha });
       }
@@ -415,10 +416,16 @@ test("native streaming reads honor the request timeout", async () => {
 });
 
 test("first dispatch applies only with no earlier run, deployment, or exact carrier", async () => {
-  const router = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["absent"] });
-  const gate = await gateRelease(router.input, { fetchImpl: router.fetchImpl });
-  assert.equal(gate.decision, "apply");
-  assert.equal(gate.providerStatus, "absent");
+  for (const status of ["absent", "blank"]) {
+    const router = makeRouter({ liveCarrier: "absent", deploymentStatuses: [status] });
+    const gate = await gateRelease(router.input, { fetchImpl: router.fetchImpl });
+    assert.equal(gate.decision, "apply");
+    assert.equal(gate.providerStatus, "absent");
+  }
+  const enriched = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["blank"],
+    blankDeploymentFields: { pages_build_version: "a".repeat(40) } });
+  assert.equal((await gateRelease(enriched.input, { fetchImpl: enriched.fetchImpl })).decision,
+    "reconcile-only");
 });
 
 test("the running dispatch ignores a newer duplicate that has not executed", async () => {
@@ -471,7 +478,7 @@ test("reruns reconcile unless prior-attempt jobs prove the deploy step never ent
   const rerun = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["absent"],
     inputOverrides: { runAttempt: 2 } });
   assert.equal((await gateRelease(rerun.input, { fetchImpl: rerun.fetchImpl })).decision, "reconcile-only");
-  const safeRerun = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["absent"],
+  const safeRerun = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["blank"],
     inputOverrides: { runAttempt: 2 }, priorAttemptJobs: { 1: { total_count: 0, jobs: [] } } });
   assert.equal((await gateRelease(safeRerun.input, { fetchImpl: safeRerun.fetchImpl })).decision, "apply");
   const duplicate = makeRouter({ liveCarrier: "absent", deploymentStatuses: ["absent"],
@@ -534,11 +541,13 @@ test("reconciliation rejects deadlines outside the internal workflow bound", asy
   }
 });
 
-test("deployment visibility 404 is polled before an unknown-effect verdict", async () => {
-  const router = makeRouter({ deploymentStatuses: ["absent", "deployment_queued", "succeed"] });
-  const result = await reconcileRelease({ ...router.input, gateDecision: "apply", pollAttempts: 3 },
-    { fetchImpl: router.fetchImpl, sleep: async () => {} });
-  assert.equal(result.status, "terminal-success");
+test("deployment absence is polled before an unknown-effect verdict", async () => {
+  for (const status of ["absent", "blank"]) {
+    const router = makeRouter({ deploymentStatuses: [status, "deployment_queued", "succeed"] });
+    const result = await reconcileRelease({ ...router.input, gateDecision: "apply", pollAttempts: 3 },
+      { fetchImpl: router.fetchImpl, sleep: async () => {} });
+    assert.equal(result.status, "terminal-success");
+  }
 });
 
 test("bounded nonterminal deployment is cancelled and confirmed without a second apply", async () => {

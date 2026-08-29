@@ -359,7 +359,7 @@ async function artifactEvidence(fetchImpl, input) {
 async function deploymentEvidence(fetchImpl, input) {
   const result = await apiRequest(fetchImpl, input,
     `/pages/deployments/${input.candidateSha}`, {}, [200, 404]);
-  if (result.status === 404) return null;
+  if (result.status === 404 || canonicalJson(result.value) === canonicalJson({ status: "" })) return null;
   requireCondition(result.value && typeof result.value.status === "string",
     "invalid-github-response", "Pages deployment response is malformed.");
   if (result.value.pages_build_version !== undefined) {

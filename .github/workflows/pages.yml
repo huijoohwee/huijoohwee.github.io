@@ -340,6 +340,7 @@ jobs:
       pages: write
     environment:
       name: github-pages
+      deployment: false
       url: ${{ steps.deployment.outputs.page_url || 'https://huijoohwee.github.io/' }}
     steps:
       - name: Check out exact authorized candidate for release control

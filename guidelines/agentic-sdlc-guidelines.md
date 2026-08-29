@@ -42,6 +42,7 @@ lifecycle_status: "proposed"
 - `global-release-control-rule` — universal control boundary for every enrolled repository and deployment target
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `atomic-lane-convergence` — one externally simple controller for integration, preservation, recovery, retirement, and minimal active-lane closure through modular adapters
+- [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md) — least-powerful outcome selection, disjoint progress, exact evidence reuse, and retained cleanup
 - [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
@@ -367,7 +368,7 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Snapshot one immutable Integration Frontier before planning; a mutable branch, label, local checkout, or running process is not frontier identity
 - Classify each unit as `pending`, `already-integrated`, `superseded`, `integrated`, or `blocked`; forbid reintegrating an equivalent change or replacing newer canonical behavior with an older unit
 - Build a directed acyclic graph from declared unit dependencies; a cycle is an `integration-order-cycle`, and integrating a unit before a dependency is `integration-before-dependency`
-- Dispatch ready units in deterministic waves only when their write scopes are disjoint; serialize overlapping source owners even when their dependency sets differ
+- Dispatch ready units in deterministic waves; let each reviewed, dependency-ready, disjoint lane proceed immediately because unrelated worktrees, claims, reviews, deployments, and cleanup cannot block it. Serialize only overlapping scopes and updates to the same canonical frontier
 - Require the publication and protected-integration boundary to preserve one current revision authority per path; if two independent units can publish different bytes for the same path, the boundary is invalid until ownership is serialized or one unit is retired
 - Integrate shared control, contract, and source owners before consumers, generated projections, mirrors, or release candidates; source ownership, not repository or list position, determines order
 - Rebase or merge the current canonical frontier into the owned mutation lane, resolve conflicts at the source owner, run named checks, and enter through protected integration without bypass
@@ -380,7 +381,7 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
 ## Atomic Lane Convergence
 
-One atomic top-level convergence controller owns a logical work unit from observed inventory to terminal closure. Its externally stable contract is provider-, repository-, branch-, workspace-, and deployment-agnostic; repository profiles supply replaceable internal phase adapters for admission, preservation, review, integration, authority continuation, recovery, retirement, cleanup, and verification without exposing those phases as a chain of separately authorized top-level controllers.
+One atomic top-level convergence controller owns a logical work unit from observed inventory to terminal closure. Its externally stable contract remains provider-, repository-, branch-, workspace-, and deployment-agnostic, with replaceable internal phase adapters that never become separately authorized top-level controllers. The separately loadable [Proportionate Closeout Module](./agentic-sdlc-proportionate-closeout.md) owns requested-outcome selection, the source-integrated fast path, immutable evidence reuse, and `integrated-retained`; this section retains convergence, preservation, authority, and no-discard invariants.
 
 ```
 Convergence = stable plan identity + bounded effect authorization + atomic authority continuation + minimal active set + terminal receipt
@@ -400,13 +401,11 @@ Stable Plan Identity = intended effect class + exact subject set + immutable val
 - Emit one terminal receipt binding plan and authorization identities, canonical remote/local revisions, zero file delta, final minimal inventory, removed and retained projections, recovery locators, untouched out-of-scope work, and every adapter effect; closure requires the canonical local ref equals the canonical remote ref and no requested effect remains pending
 ## End-to-End Release Lifecycle Protocol
 
-The separately loadable [End-to-End Production Release Lifecycle Module](./agentic-sdlc-production-release-lifecycle.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
+The separately loadable [End-to-End Production Release Lifecycle Module](./agentic-sdlc-production-release-lifecycle.md) owns the complete reusable protocol only when sealed intent includes delivery or publication; source integration alone neither loads nor invokes it. This section owns its mandatory execution seam.
 
 **Directives**:
 - Treat protected integration as Integration Receipt authority only; it never creates forward-deployment authority
 - Seal one immutable candidate from the exact final Release Frontier, including source, transitive dependencies, policy, schema, catalog, generated projections, state contract, target, review, artifact, manifest, and rollback identities
-- Inventory every pre-existing non-canonical lane or worktree before candidate sealing and classify each exact item as `keep`, `port`, or `drop`, with its identity, scope, evidence, and rationale; preserve `keep`, integrate `port` before frontier closure, and allow `drop` only after exact no-remaining-value proof plus cleanup authority
-- End each implementation turn with one of two explicit closeout states only: either the completed lane payload is integrated through the protected canonical frontier and the canonical owner is re-parked there cleanly, or incomplete work is preserved and parked in its owned mutation lane without leaving canonical dirt or ambiguous ownership behind
 - Require a current Runtime Review Receipt before prompting and a separate authenticated human decision for the exact candidate and target before deployment; fence one canonical release-owner checkout per repository to the exact protected review revision until the interaction terminates or the run is retired, and treat branch, purpose, or local-ref drift as invalidating prompt readiness until reattachment, refetch, and revalidation
 - Require terminal authorization automation to follow a sequential prompt handshake: capture the exact candidate-bound reply emitted by the prompt formatter, wait for the live input prompt, then send that exact reply; precomputed, reordered, promptless, or partially matched input creates no authorization evidence
 - Keep interaction, authority, deployment, state reconciliation, verification, publication, rollback, and cleanup as replaceable typed adapter ports; invalidate the affected receipt chain on identity movement, and cancel or retire stale unapproved runs rather than retargeting, rebuilding, or reusing authorization
@@ -513,7 +512,8 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery`, `autonomous-continuation--interaction-economy` |
 | Escalation | `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
-| Release handoff | `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Protected source integration | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Production or publication handoff | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
 **Directives**:
@@ -551,7 +551,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 - [ ] For diagram-bearing tasks, projection check run and its node, edge, cluster, and zero-cost counts surfaced
 - [ ] State transition recorded with the role that made it and a reason where terminal
 
-**Post-Run**:
+**Post-Run** — evaluate only obligations triggered by the sealed closeout outcome and record every other row as `not-applicable`:
 - [ ] **Runtime readiness derived** by the deterministic evaluator from one immutable input and joined, layer-specific proof; every missing or stale obligation fails closed
 - [ ] **Every task in a terminal state**; no task left `in-progress`
 - [ ] **Every `failed`, `blocked`, and `abandoned` task carries a reason**

@@ -59,7 +59,7 @@ lifecycle_status: "proposed"
 The two sets meet at a single seam: **a baselined document pair with derived VCCs on one side, an executable task list with recorded Evidence References on the other.**
 | Concern | Owner | This set's relationship |
 |---|---|---|
-| Document contents, templates, phase gates | Authoring set | Consumes as precondition |
+| Document contents, non-native-input Codebase Grounding Records, templates, phase gates | Authoring set | Consumes as precondition |
 | Readiness Ladder and rung derivation | Authoring set | Writes Evidence References that the ladder reads |
 | Rule ID scheme and artifact-bearing classification | Authoring set | Reuses unchanged for execution rules |
 | Finding recording contract, severities, determinism | Authoring set | Reuses unchanged; extends the type enumeration only |
@@ -76,7 +76,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
 | Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
 **Directives**:
-- Treat a baselined document pair with zero open `blocker` findings as the entry precondition for execution; forbid starting execution against an unbaselined or blocker-carrying specification
+- Treat a baselined document pair with zero open `blocker` findings, including a current Codebase Grounding Record for every externally authored, generated, or imported specification input, as the entry precondition for execution; reject dispatch when a material current-state claim used to justify baseline, execution, or readiness is `contradicted`, `absent`, or `unverified`, and return the conflict to the authoring loop rather than repairing it downstream
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
 - Forbid either set redefining a Finding Type the other owns; the conformance vocabulary is the union of the two enumerations
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
@@ -525,7 +525,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 ## Validation Checklist
 **Pre-Execution**:
 - [ ] **Frontmatter present** with baseline and conformance keys; `owner` declared; `local_rung` and `delivered_rung` separate
-- [ ] **Specification baselined** with zero open `blocker` findings in the authoring domain
+- [ ] **Specification baselined and codebase-grounded** with zero open `blocker` findings in the authoring domain; every non-native input has a current Codebase Grounding Record and no unresolved material current-state claim supports baseline, execution, or readiness
 - [ ] **Evaluator mechanism named** and demonstrably distinct from the Implementer
 - [ ] **Every task traced** to at least one VCC; every VCC covered by at least one task; bridge coverage ratio reported
 - [ ] **Dependency graph acyclic**; waves contain no two tasks writing the same artifact

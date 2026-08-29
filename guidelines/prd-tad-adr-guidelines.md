@@ -32,7 +32,7 @@ universal_scope: "true"
 - `overview` — what PRD/TAD are and the governing standards
 - `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
-- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, RAO grounding, revision joins, and execution handoff
+- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, and execution handoff
 - `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
 - `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
 - `time-to-value` — binding TTV metric obligation -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
@@ -177,12 +177,13 @@ The [Artifact Continuity Module](./agentic-sdlc-artifact-continuity.md) owns the
 
 **Directives**:
 - Declare stable continuity IDs and exact revisions across PRD, TAD, and ADR; forbid prose, filename, or co-location joins
+- Before baseline, produce an embedded or linked **Codebase Grounding Record** for every externally authored, generated, or imported document (a non-native input) used as specification input, including any PRD: bind the input revision and scoped codebase revision or digest; enumerate every material current-state claim used for capability existence, ownership, reuse, dependency or interface/configuration choice, feasibility, or readiness; cite source, configuration, schema, test, or runtime-contract evidence; and disposition each claim as `confirmed`, `contradicted`, `absent`, or `unverified`. Document provenance and internal consistency are not implementation evidence, while codebase evidence never silently rewrites product intent; a missing record or unresolved claim used to justify baseline, execution, or readiness is an `unproven-claim`
 - Close PRD-to-TAD coverage, TAD grounding, and applicable ADR joins before deriving RAO Steps
 - Re-run Directive-to-RAO coverage and affected re-derivation after any upstream revision
 - Require joined independent evidence before satisfaction or readiness advances; forbid narrative or self-graded completion
 - Reuse the Artifact Continuity Module's findings and reference projections; forbid a parallel continuity vocabulary
 
-**Authoring-to-execution gate**: advance only when PRD-to-TAD coverage, TAD grounding, Directive-to-RAO coverage, RAO grounding, revision freshness, and evaluator independence are complete. An absent or failing join yields a typed finding and a blocked transition, never an inferred approval.
+**Authoring-to-execution gate**: advance only when Codebase Grounding Record closure, PRD-to-TAD coverage, TAD grounding, Directive-to-RAO coverage, RAO grounding, revision freshness, and evaluator independence are complete. An absent or failing join yields a typed finding and a blocked transition, never an inferred approval.
 
 ---
 
@@ -502,7 +503,7 @@ The separately loadable [Conformance Findings module](./prd-tad-adr-verification
 The separately loadable [Validation Checklist module](./prd-tad-adr-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists, each item mapped to a Finding Type. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
-- Require current artifact continuity before baseline sign-off: CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module
+- Require current artifact continuity before baseline sign-off: Codebase Grounding Records for non-native inputs, CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module
 - Discharge the alignment gate before baseline sign-off; zero `blocker` findings is the exit condition, and `major` and `minor` findings are resolved or formally tracked with an owner
 - Compare the finding set against the prior run on every baselined change; a new `blocker` is a regression, not a note
 

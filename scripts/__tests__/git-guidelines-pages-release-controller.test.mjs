@@ -144,6 +144,7 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   assert.equal(deploy["timeout-minutes"], 24);
   assert.deepEqual(deploy.needs, ["authorize", "build"]);
   assert.equal(deploy.environment.name, "github-pages");
+  assert.equal(deploy.environment.deployment, false);
   assert.equal(deploy.environment.url,
     "${{ steps.deployment.outputs.page_url || 'https://huijoohwee.github.io/' }}");
   assert.equal(deploy.permissions.pages, "write");

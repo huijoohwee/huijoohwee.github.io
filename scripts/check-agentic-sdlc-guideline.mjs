@@ -906,7 +906,7 @@ assert.deepEqual(antiPatternTable, [
 ]);
 
 for (const phrase of [
-  "Integration Frontier", "already-integrated", "superseded", "exact-canonical checks", "runtime-convergence evidence", "Seal the Release Frontier",
+  "Integration Frontier", "already-integrated", "superseded", "exact-canonical checks", "runtime-convergence evidence", "Seal the Release Frontier", "immutable actual delta", "admitted write scopes", "remaining non-canonical delta", "preserve every other frontier entry", "whole-workspace, whole-tree, or all-file copying or replacement", "full-tree identity is integrity proof, not integration payload",
 ]) {
   assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
 }

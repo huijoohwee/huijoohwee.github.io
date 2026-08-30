@@ -29,7 +29,7 @@ Each unit is immutable planning input with these fields:
 |---|---|
 | `unitId` | Stable identifier within one plan |
 | `sourceRevision` | Immutable revision containing the proposed change |
-| `changeDigest` | Content-addressed identity of the intended semantic delta |
+| `changeDigest` | Content-addressed identity of the immutable actual delta from the recorded base revision and collaboration fence to the reviewed source revision; every entry must lie within the admitted write scopes |
 | `writeScopes` | Non-empty source-owner scopes the unit may mutate |
 | `dependencies` | Unit identifiers that must reach terminal success first |
 | `kind` | `control`, `contract`, `source`, `consumer`, or `projection` |
@@ -102,7 +102,7 @@ For each ready unit:
 
 1. Revalidate its collaboration fence and declared write scopes.
 2. Materialize its exact locked dependency closure in its isolated lane.
-3. Reconcile the latest Integration Frontier into that lane.
+3. Pin the freshly fetched Integration Frontier; derive and verify the unit's `changeDigest` against the recorded base, fence, reviewed source, and admitted write scopes; materialize only the remaining non-canonical delta in the isolated lane; preserve every other frontier entry; forbid whole-workspace, whole-tree, or all-file copying or replacement because full-tree identity is integrity proof, not integration payload.
 4. Resolve conflicts only at the owning source or shared contract.
 5. Run the unit's named checks and the repository integration lane.
 6. Enter the canonical protected source through the configured adapter.

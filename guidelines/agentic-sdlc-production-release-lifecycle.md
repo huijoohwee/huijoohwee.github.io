@@ -174,6 +174,36 @@ Verification is not publication.
   `assumed-operator-decision`. A run that cannot obtain authorization reports the
   exact missing decision and stops, never widening its own authority to proceed.
 
+#### Deploy Authorization Request
+
+The run reaches the boundary unaided and produces one artifact there. Emitting it
+requires no Operator involvement, because it grants nothing.
+
+- Bind the candidate digest, sealed artifact identity, joined check evidence,
+  claim lineage with every restoration and reconcile receipt, source and target
+  identities, rollback identity, and the exact candidate-bound challenge string
+- State explicitly what the request does not grant, so the artifact is readable as
+  a request and can never be mistaken for a receipt
+- Produce it as the terminal act of the autonomous sequence rather than as a
+  message: a stall that leaves no artifact spends the run's work and records none
+  of it
+- Treat an unanswered request as `dormant-preserved`, never as denial, and
+  supersede it when any bound identity changes rather than editing it
+
+### Post-Authorization Autonomy
+
+Once an Operator authorizes an exact candidate, execution proceeds without further
+prompting, and interruption is resumed rather than re-decided.
+
+- Resume from the receipt chain, never from a fresh prompt. Re-asking for a
+  decision already given is `avoidable-operator-interruption`, and re-deciding an
+  authorized candidate risks a second promotion of the same bytes
+- Make every stage idempotent under replay so a resumed run converges on the same
+  receipts, and refuse to widen scope beyond the authorized candidate
+- Prove the boundary rather than assert it: emit evidence that no unauthorized
+  target, mirror, or runtime was mutated, so "no deployment occurred" is checkable
+  by an independent reader instead of taken on trust
+
 ### 6. Authorized Deployment
 
 - Consume authorization durably before target mutation.

@@ -290,6 +290,51 @@ A run performs its own non-disruptive reclaim without an Operator decision when
 the claim is uncontested. Contention by another live actor, an overlapping write
 set, or any step that raises authority escalates instead.
 
+## Projection Reconciliation
+
+The writer lease, its cloud-authority projection, the pull-request marker, the
+fence, and the lifecycle report are all functions of one claim and observable
+source state. None is an independent source of truth, so restoring them is one
+operation and not a family of them.
+
+- Expose exactly one reconcile transition that re-derives every projection of a
+  claim in a single compare-and-swap and emits one receipt. Where restoring a
+  claim needs more than one transition, so that repairing one projection
+  invalidates the next gate derived from the same stale claim, that surface is
+  `reconcile-surface-fragmented`
+- Let adapters specialize transport and never own a slice of the projection set. A
+  repair path per projection multiplies preconditions until some producible state
+  satisfies none of them
+- Require every projection to agree with its claim when the reconcile completes,
+  and raise `projection-divergence-unreconciled` for any surviving disagreement at
+  its source rather than leaving a later gate to rediscover it
+- Reconcile before concluding staleness, never after refusing
+
+### Deciding Divergence
+
+A projection that differs from observed source state is not evidence of a foreign
+writer. Concluding otherwise from inequality alone is
+`staleness-inferred-from-inequality`, and it is a false positive that strands
+authored work behind a gate no operation can open.
+
+| Observation | Meaning | Action |
+|---|---|---|
+| Observed head descends from the recorded projection and no competing claim covers the branch or scope | The lane's own unrecorded advance | Reconcile and continue without an Operator decision |
+| Observed head does not descend from the recorded projection | Genuine divergence | Escalate; never advance a projection over unexplained history |
+| Any competing claim covers the branch or scope | Contention | Escalate to handoff or replan |
+
+Commit authorship, committer identity, and pull-request ownership are never part
+of this test. Each is settable by anyone who can write a commit and proves nothing
+about authorization; the ledger is the only authority on who owns a lane.
+
+### Bounded Publication Sequence
+
+Recording, reconciling, renewing, and publishing are one operation with one
+receipt chain, a bounded attempt budget per goal, and exactly two exits:
+published, or escalated on contention. Split across separately gated commands, a
+run can satisfy three and strand on the fourth with no path back, which is the
+cascade this contract exists to prevent.
+
 ## Conflict and Concurrency Policy
 
 Disjoint normalized write sets may proceed concurrently. Equal paths, ancestor
@@ -410,9 +455,12 @@ scope, ledger, or projection state fails closed.
 | `unreachable-authority-state` | `blocker` |
 | `volatile-operand-in-durable-binding` | `blocker` |
 | `liveness-gated-renewal` | `blocker` |
+| `staleness-inferred-from-inequality` | `blocker` |
 | `authority-liveness-unverified` | `major` |
 | `projection-gated-recovery` | `major` |
 | `recording-gate-overreach` | `major` |
+| `projection-divergence-unreconciled` | `major` |
+| `reconcile-surface-fragmented` | `major` |
 | `evidence-without-run` | `major` |
 | `runtime-readiness-unproven` | `blocker` |
 
@@ -426,4 +474,4 @@ remediation state. Emit zero counts for checked finding types with no occurrence
 |---|---|
 | Variables | Identity, ledger chain, protected source, normalized write sets, lane revisions, projections, evaluation time, and focused evidence. |
 | Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, capability-specific authority without implicit promotion, durable bindings over stable operands only, restorations that never assert what they repair, authority gates placed on shared mutation only, and one reachable exit from every producible state. |
-| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, cost bounds, lane-drift survival, same-subject re-anchor under drift and expiry, foreign-lane refusal, start-time authority usability, renewal of an expired uncontested claim, reclaim invariance across bytes and review state, contested-reclaim escalation, and local recording under lapsed authority. |
+| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, cost bounds, lane-drift survival, same-subject re-anchor under drift and expiry, foreign-lane refusal, start-time authority usability, renewal of an expired uncontested claim, reclaim invariance across bytes and review state, contested-reclaim escalation, local recording under lapsed authority, single-transition reconcile of every projection, descendant advance reconciled without escalation, non-descendant divergence refused, competing-claim contention escalated, and authorship rejected as ownership evidence. |

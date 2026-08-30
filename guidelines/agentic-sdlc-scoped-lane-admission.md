@@ -407,6 +407,27 @@ integration, publication, deployment, runtime execution, or review authority.
 Publishing an authored immutable lane revision follows the protected
 collaboration protocol and is outside this provisioning envelope.
 
+## Declared Scope Extension
+
+A write set is declared before the work that discovers its true shape, so a lane
+that cannot widen its own scope has only two honest outcomes: stall when
+implementation legitimately produces an undeclared path, or over-declare
+defensively at admission. Both defeat disjoint scoping — the first wastes a
+verified lane, the second reserves paths the lane will never touch and blocks
+peers that would not have collided.
+
+- Expose scope extension as a first-class in-lane operation: one accepted
+  transition adding paths to the declared write set, re-checked for overlap
+  against every concurrent claim, recorded with its own digest and receipt
+- Refuse an extension that overlaps a concurrent claim exactly as admission would;
+  extension widens a lane, never its precedence, and never pre-empts a peer
+- Treat work that produces a path no operation can admit as
+  `scope-growth-inadmissible`, and resolve it by extending the claim, never by
+  writing outside the declared set and never by abandoning recorded work
+- Forbid extension as a substitute for classification: paths belonging to a
+  different semantic scope are a separate lane, and bundling them under one claim
+  to avoid a second admission is `scope-admission-collision`
+
 ## Receipts and Preservation Proof
 
 The Admission Receipt binds the request, policy, canonical base, remote-claim
@@ -504,6 +525,7 @@ publication, or deployment.
 | `collateral-lane-mutation` | `blocker` |
 | `admission-runtime-conflation` | `major` |
 | `candidate-lane-orphaned` | `major` |
+| `scope-growth-inadmissible` | `major` |
 
 Every finding names the repository, work item, candidate, semantic scope,
 write-set digest, applicable peer claim or local lane and its state digest,

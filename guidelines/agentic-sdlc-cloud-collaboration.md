@@ -211,6 +211,45 @@ conflict-set evidence.
   state, compare fences and scope ownership again, and continue only through a
   fresh accepted transition
 
+## Durable Authority Binding
+
+A durable authorization digest is written once and read for the lifetime of the
+lane, so it may cover only operands the lane lifecycle never changes. Lease
+epochs advance on renewal, base revisions move when protected source moves, and
+claim identities change whenever a claim is re-minted. Binding those into a
+write-once digest means ordinary lane progress invalidates the authorization,
+which is `volatile-operand-in-durable-binding`.
+
+- Bind the stable lane identity durably: the branch, the semantic scope, and the
+  device. Bind every volatile operand per operation instead, inside the proof
+  challenge that authorizes one mutation, where re-derivation is free and the
+  coverage is strictly stronger than a stale digest
+- Never cover one operand in both places. A volatile operand bound durably *and*
+  per operation is not defence in depth; the durable copy contributes no
+  authorization the challenge does not already provide, and it is the only copy
+  that can rot
+- Declare, for every state a transition can produce, at least one transition that
+  leaves it. A gate that refuses a state its own lifecycle creates is
+  `unreachable-authority-state`, and enumerating transitions without proving
+  reachability from each produced state is how one ships undetected
+- Provide a same-subject re-anchor transition for lane drift, distinct from both
+  first grant and subject replacement. It holds the authority subject,
+  generation, and key identical, so it repairs an anchor and can never move
+  authority
+- Never make a repair transition depend on the invariant it repairs. A re-anchor
+  authorized through the durable binding it exists to replace is unreachable
+  exactly when it is needed; possession of the bound capability is the
+  authorization
+- Keep repair orthogonal to liveness. A re-anchor confers no expiry extension and
+  is therefore permitted on an expired lease, because a lease that is both
+  expired and drifted is otherwise unrecoverable when renewal itself asserts the
+  drifted binding
+- Verify authority is *usable*, not merely present, before work begins: perform
+  one authorized no-op mutation at lane start, and re-verify immediately before
+  each recording operation. Authority checked only at the boundary that consumes
+  it is `authority-liveness-unverified`, and it converts a first-minute failure
+  into a whole-session loss
+
 ## Conflict and Concurrency Policy
 
 Disjoint normalized write sets may proceed concurrently. Equal paths, ancestor
@@ -308,6 +347,9 @@ scope, ledger, or projection state fails closed.
 | `parallel-scope-collision` | `blocker` |
 | `stale-collaboration-fence` | `blocker` |
 | `delivery-authority-unjoined` | `blocker` |
+| `unreachable-authority-state` | `blocker` |
+| `volatile-operand-in-durable-binding` | `blocker` |
+| `authority-liveness-unverified` | `major` |
 | `evidence-without-run` | `major` |
 | `runtime-readiness-unproven` | `blocker` |
 
@@ -320,5 +362,5 @@ remediation state. Emit zero counts for checked finding types with no occurrence
 | Field | Requirement |
 |---|---|
 | Variables | Identity, ledger chain, protected source, normalized write sets, lane revisions, projections, evaluation time, and focused evidence. |
-| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, and capability-specific authority without implicit promotion. |
-| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, and cost bounds. |
+| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, capability-specific authority without implicit promotion, durable bindings over stable operands only, and one reachable exit from every producible state. |
+| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, cost bounds, lane-drift survival, same-subject re-anchor under drift and expiry, foreign-lane refusal, and start-time authority usability. |

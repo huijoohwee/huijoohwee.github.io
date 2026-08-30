@@ -50,7 +50,7 @@ const normalizedCloudCollaboration = cloudCollaboration.replace(/\s+/g, " ");
 const normalizedProductionReleaseLifecycle = productionReleaseLifecycle.replace(/\s+/g, " ");
 
 assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
-assert.match(source, /\nversion: "1\.23\.0"\n/);
+assert.match(source, /\nversion: "1\.24\.0"\n/);
 assert.match(source, /minimum-time-and-resource \/ maximum-core-value chain/);
 assert.match(source, /forbid over-investing in non-core periphery/i);
 assert.match(source, /unused budget never authorizes it/);
@@ -116,7 +116,7 @@ assert.ok(
   conformanceRuntimeLines.length - 1 < 600,
   "conformance-runtime module must remain below 600 lines",
 );
-assert.match(integrationOrder, /\nversion: "1\.0\.0"\n/);
+assert.match(integrationOrder, /\nversion: "1\.1\.0"\n/);
 assert.match(integrationOrder, /\nuniversal_scope: "true"\n/);
 assert.ok(integrationOrderLines.length - 1 < 600, "integration-order module must remain below 600 lines");
 assert.ok(specificationChain.startsWith("---\n"), "specification-chain frontmatter must be present");
@@ -905,10 +905,99 @@ assert.deepEqual(antiPatternTable, [
   "| A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |",
 ]);
 
-for (const phrase of [
-  "Integration Frontier", "already-integrated", "superseded", "exact-canonical checks", "runtime-convergence evidence", "Seal the Release Frontier", "immutable actual delta", "admitted write scopes", "remaining non-canonical delta", "preserve every other frontier entry", "whole-workspace, whole-tree, or all-file copying or replacement", "full-tree identity is integrity proof, not integration payload",
+function assertExactCanonicalReceiptContract(globalPolicy, integrationPolicy) {
+  const directive = globalPolicy
+    .split("\n")
+    .find(line => line.startsWith("- Resolve protected-integration authorization"));
+  assert.ok(directive, "global exact-canonical directive must exist");
+  for (const clause of [
+    "topology-bound exact-canonical Integration Receipt",
+    "absent or still nonterminal duplicate post-integration canonical-source run",
+    "reviewed or protected-refreshed candidate revision and tree",
+    "declared integration method and exact parent list",
+    "deferred automatic-integration requester, method, title, and body; actual merger identity and merge time",
+    "collaboration claim, review transition, integration receipt, terminal retirement, ledger revision and digest, and operation identity",
+    "newest terminal source run, suite, and check chain",
+    "declared protected-refresh rollup and remote collaboration-check identity and projection",
+    "canonical tree to equal the adapter-declared deterministic transformation of the exact protected base tree plus the admitted reviewed delta",
+    "for squash, additionally require parents exactly `[protected base]`",
+    "candidate tree to equal the canonical tree",
+    "provider-neutral functional event class `review-record-closed` or `operation-dispatch`",
+    "isolate every concrete wire-event mapping in a replaceable reference adapter outside this universal contract",
+    "never infer association from inferred or non-authoritative review association metadata",
+    "newest terminal failure for the same canonical source invalidates the receipt",
+    "provider observation read-only and non-mutating",
+    "synthesizing, updating, rolling up, cancelling, or otherwise mutating checks",
+  ]) {
+    assert.ok(directive.includes(clause), `global exact-canonical directive must include ${clause}`);
+  }
+
+  const evidenceSection = integrationPolicy.slice(
+    integrationPolicy.indexOf("## Required Evidence"),
+    integrationPolicy.indexOf("## Findings"),
+  );
+  const evidenceRows = new Map(
+    evidenceSection
+      .split("\n")
+      .filter(line => /^\| [^|-].* \|$/.test(line))
+      .map(line => line.slice(2, -2).split(" | ")),
+  );
+  const requiredRows = new Map([
+    ["Exact-canonical receipt subject", "Repository adapter and policy revision; immutable closed review locator; candidate revision and tree; protected base revision and tree; canonical revision and tree"],
+    ["Exact-canonical receipt topology", "Declared method and exact parent list; canonical tree equals the adapter-declared deterministic transformation of the exact protected base tree plus admitted reviewed delta; squash parents exactly `[protected base]` and candidate tree must equal the canonical tree"],
+    ["Exact-canonical receipt authority", "Integration controller; deferred automatic-integration requester, method, title, and body; actual merger identity and merge time; collaboration claim, review transition, integration receipt, terminal retirement, ledger revision and digest, and operation identity"],
+    ["Exact-canonical receipt checks", "Newest terminal source run, suite, and check chain for the exact reviewed or protected-refreshed candidate; declared protected-refresh rollup and remote collaboration-check identity and projection; fresh required-check context, evaluator application, and strictness policy"],
+    ["Exact-canonical receipt association", "Functional event class `review-record-closed` or `operation-dispatch`; wire mapping isolated outside the universal contract; no inferred or non-authoritative association metadata; read-only non-mutating observation; no check mutation"],
+  ]);
+  for (const [evidence, identity] of requiredRows) {
+    assert.equal(evidenceRows.get(evidence), identity, `${evidence} must retain its closed identity contract`);
+  }
+  for (const clause of [
+    "stop and retry the same idempotent convergence step unless one topology-bound receipt already satisfies every closed subject, topology, authority, check-chain, association, and no-mutation predicate below",
+    "Keep provider wire grammar outside this universal contract and inside a replaceable reference adapter",
+    "never infer association through inferred or non-authoritative review association metadata",
+    "never synthesize, update, roll up, cancel, or otherwise mutate a check",
+  ]) {
+    assert.ok(integrationPolicy.includes(clause), `integration-order module must include ${clause}`);
+  }
+  assertOrderedPhrases(integrationPolicy, [
+    "newest terminal source run, suite, and check chain",
+    "absent or still nonterminal duplicate post-integration run",
+    "newest terminal failure",
+  ], "exact-canonical evidence precedence");
+}
+
+assertExactCanonicalReceiptContract(source, integrationOrder);
+for (const [from, to] of [
+  ["absent or still nonterminal duplicate post-integration canonical-source run", "any duplicate post-integration canonical-source run"],
+  ["canonical tree to equal the adapter-declared deterministic transformation of the exact protected base tree plus the admitted reviewed delta", "canonical tree may contain additional bytes"],
+  ["provider-neutral functional event class `review-record-closed` or `operation-dispatch`", "any provider event"],
+  ["deferred automatic-integration requester, method, title, and body; actual merger identity and merge time", "one unqualified integration actor"],
+  ["declared protected-refresh rollup and remote collaboration-check identity and projection", "declared protected-refresh rollup"],
+  ["never infer association from inferred or non-authoritative review association metadata", "infer association from review metadata"],
+  ["newest terminal failure for the same canonical source invalidates the receipt", "newest terminal failure may be ignored"],
+  ["provider observation read-only and non-mutating", "provider observation may mutate checks"],
 ]) {
-  assert.match(integrationOrder, new RegExp(phrase), `integration-order module must include ${phrase}`);
+  assert.throws(
+    () => assertExactCanonicalReceiptContract(source.replaceAll(from, to), integrationOrder),
+    { name: "AssertionError" },
+    `global exact-canonical checker must reject weakened clause: ${from}`,
+  );
+}
+for (const [from, to] of [
+  ["parents exactly `[protected base]`", "one parent"],
+  ["candidate tree must equal the canonical tree", "candidate tree may differ from the canonical tree"],
+  ["canonical tree equals the adapter-declared deterministic transformation of the exact protected base tree plus admitted reviewed delta", "canonical tree may contain additional bytes"],
+  ["newest terminal source run, suite, and check chain", "any successful source check"],
+  ["no inferred or non-authoritative association metadata", "inferred association metadata allowed"],
+  ["no check mutation", "check mutation allowed"],
+  ["stop and retry the same idempotent convergence step unless one topology-bound receipt already satisfies every closed subject, topology, authority, check-chain, association, and no-mutation predicate below", "continue without a complete receipt"],
+]) {
+  assert.throws(
+    () => assertExactCanonicalReceiptContract(source, integrationOrder.replaceAll(from, to)),
+    { name: "AssertionError" },
+    `exact-canonical checker must reject weakened clause: ${from}`,
+  );
 }
 
 console.log(`agentic SDLC guideline contract ok (${guidelineLogicalLineCount} lines; authoring ${authoringGuidelineLines.length - 1} lines; artifact-continuity ${artifactContinuityLines.length - 1} lines; production-release ${productionReleaseLifecycleLines.length - 1} lines; conformance-runtime ${conformanceRuntimeLines.length - 1} lines; integration-order ${integrationOrderLines.length - 1} lines; cloud-collaboration ${cloudCollaborationLines.length - 1} lines; repository-runtime-readiness ${repositoryRuntimeReadinessLines.length - 1} lines; scoped-lane-admission ${scopedLaneAdmissionLines.length - 1} lines)`);

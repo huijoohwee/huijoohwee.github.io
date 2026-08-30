@@ -2,7 +2,7 @@
 title: "Agentic SDLC YAML Frontmatter Runtime Guidelines"
 doc_type: "Guidelines Module"
 schema: "agentic-sdlc-yaml-frontmatter-runtime/v1"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-08-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -16,8 +16,8 @@ runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 runtime_scope: "frontmatter key contract for every authored artifact in an enrolled corpus"
 runtime_claim: "declares and enforces frontmatter identity, accountability, and evidence keys; grants no readiness, integration, or deployment authority"
-runtime_proof: "agentic-canvas-os/__tests__/frontmatter-runtime-contract.test.mjs"
-evaluator: "npm run frontmatter-runtime:check"
+runtime_proof: "agentic-canvas-os/__tests__/frontmatter-dictionary-projection.test.mjs"
+evaluator: "npm run frontmatter-dictionary:check"
 publish_policy: "Dev-only; no protected integration, Production, publication, or deployment authority"
 ---
 
@@ -50,41 +50,32 @@ Only five keys are shared. Beyond them the corpora are disjoint: one records **e
 
 ## Tiers and Applicability
 
-An artifact adopts a tier because of what it claims, not where it lives.
+An artifact adopts a tier because of what it claims, not where it lives. Five tiers exist: **Identity** (every artifact), **Address** (every artifact a machine resolves, digests, or pins), **Accountability** (every artifact whose state gates work), **Evidence** (every artifact claiming readiness above `draft`), and **Boundary** (every artifact whose subject can reach a delivered surface).
 
-| Tier | Keys | Applies to |
-|---|---|---|
-| 1 Identity | `title`, `doc_type`, `date`, `lang`, `frontmatter_contract` | Every authored artifact |
-| 2 Address | `schema`, `version` | Every artifact a machine resolves, digests, or pins |
-| 3 Accountability | `owner`, `local_rung`, `delivered_rung`, `lane`, `runtime_readiness_policy` | Every artifact whose state gates work |
-| 4 Evidence | `runtime_proof`, `evaluator`, `runtime_scope`, `runtime_claim` | Every artifact claiming any readiness above `draft` |
-| 5 Boundary | `publish_policy` | Every artifact whose subject can reach a delivered surface |
+Evidence is the tier that makes a readiness claim legible. An artifact that names a rung without naming its proof and its evaluating mechanism has asserted a conclusion and withheld its basis.
 
-Tier 4 is the tier that makes a readiness claim legible. An artifact that names a rung without naming its proof and its evaluating mechanism has asserted a conclusion and withheld its basis.
+## Where the Vocabulary Lives
 
-## Key Contract
+This module owns the **rules**: why a key exists, when a tier binds, and what a violation means. It deliberately does **not** enumerate the keys.
 
-| Key | Contract |
+Tier membership, per-key contracts, substitute spellings, enforcement levels, and forbidden value patterns are data, and data belongs in one machine-readable place that the checker reads directly:
+
+| Party | Owns |
 |---|---|
-| `title` | Human-readable subject; never a file path. |
-| `doc_type` | Artifact class from the corpus vocabulary. |
-| `date` | `YYYY-MM-DD`, last substantive authoring. |
-| `lang` | BCP-47 tag. |
-| `frontmatter_contract` | `required` where these rules bind; `optional` only for an explicitly exempt class. |
-| `schema` | `<slug>/v<major>`, stable while the artifact's contract is unchanged. Its stem matches `graphId` where both exist. |
-| `version` | Semantic version of this artifact, advanced on every substantive change. Policy digests pin it, so a stale `version` invalidates every digest that bound it. |
-| `graphId` | `md:<slug>` stable address. Required where a graph, canvas, or index resolves the artifact by identity. |
-| `owner` | The function accountable for the artifact, named by role, never by person or vendor. |
-| `local_rung` | Readiness of this artifact in its own lane. |
-| `delivered_rung` | Readiness at the delivered surface. **Never equal to `local_rung` by default and never omitted when `local_rung` is set**; a single conflated status is the defect this pair exists to prevent. |
-| `lane` | Current lane; the Deploy Boundary reads it and never infers it. |
-| `runtime_readiness_policy` | `fail-closed` unless an explicit, versioned, auditable exception names its alternate boundary. |
-| `runtime_scope` | Exactly what the artifact governs, bounded. |
-| `runtime_claim` | Exactly what it asserts and, explicitly, what it does not. |
-| `runtime_proof` | Pointer to the recorded evidence: test path, receipt, or proof ledger. Canonical spelling; `proof` is a permitted short form only where a declared byte budget makes the canonical key infeasible, and the artifact declares that budget. |
-| `evaluator` | The exactly-invocable mechanism that judges this artifact, distinct from whoever authored it. |
-| `publish_policy` | The authority ceiling, stated as what is *not* granted. |
-| `status` | Where a corpus already requires it, `status` **is** `local_rung` and carries no other meaning. Declaring both requires them to agree. |
+| This module | Rules, directives, finding names, severities |
+| `agentic-canvas-os/docs/schemas/frontmatter-runtime-dictionary.v1.json` | Which keys exist, their tier, enforcement level, substitutes, forbidden values |
+| `agentic-canvas-os/scripts/frontmatter-runtime-contract.mjs` | Tier derivation, findings, the non-regressing ratchet |
+
+The dictionary previously existed three times: as frozen arrays in the validator, as a tier table here, and as a key contract table beside it. The three had already diverged — this module named five keys in Tier 3 and Tier 4 that the validator never gated — and no check could see it, because prose is not a checkable surface. The enumeration is now single-sourced, the validator holds no key list of its own and fails closed on an absent or unpinned dictionary, and a human-browsable view is a generated, digest-fenced projection at `agentic-canvas-os/docs/DICTIONARY-FRONTMATTER.md`.
+
+### Enforcement Levels
+
+Every dictionary key declares one:
+
+- `required` — a checker gates it; absent from a triggered tier it raises its finding and exits non-zero
+- `recommended` — documented and reserved, not yet gated
+
+The level is recorded rather than implied, because an unrecorded level is how a specification comes to promise enforcement that no check performs. Promotion from `recommended` to `required` is a ratchet step with its own recorded baseline, never a prose edit.
 
 ### Reference Shape
 
@@ -96,6 +87,10 @@ Tier 4 is the tier that makes a readiness claim legible. An artifact that names 
 - Keep `local_rung` and `delivered_rung` separate always; collapsing readiness into one field is a `rung-conflated` finding, because it lets a green local lane read as a delivered claim
 - Name the evaluating mechanism in `evaluator` before the artifact claims any rung; an unnamed evaluator is `unnamed-evaluator` at `blocker` severity under the Independence Rule
 - Express the same concept with the same key across every enrolled corpus; a second spelling for a key another corpus already owns is a `frontmatter-vocabulary-divergent` finding and is resolved by adopting the existing spelling, never by adding an alias
+- Enumerate the keys in exactly one machine-readable dictionary that the checker reads at load time; a key list restated as frozen constants in code, or as a table in prose, is a second source and is itself a `frontmatter-vocabulary-divergent` finding regardless of whether the copies currently agree
+- Declare an enforcement level on every key, and treat a rule that names a key no checker gates as guidance until the level says otherwise; prose that implies enforcement it cannot demonstrate is the defect the level exists to expose
+- Render any human-readable view of the dictionary as a generated, digest-fenced projection whose staleness a check reports; a hand-maintained second table is the drift, not a convenience
+- Fail closed on a dictionary that is absent, unreadable, or not pinned to the schema the checker accepts; falling back to a built-in vocabulary silently restores the divergence single-sourcing removed
 - Advance `version` on every substantive change, and treat a digest pinned to a stale `version` as invalid rather than merely outdated
 - Enforce this contract with a deterministic check that exits non-zero on violation; frontmatter rules that no check reads are guidance, not rules, and must be labelled as such
 - Migrate an existing corpus by ratchet, never by sweep: record current conformance, require every new and every touched artifact to satisfy its triggered tiers, and forbid regression. A 295-artifact rewrite is an unreviewable change that no evaluator can meaningfully judge
@@ -103,9 +98,9 @@ Tier 4 is the tier that makes a readiness claim legible. An artifact that names 
 
 ## Enforcement
 
-The check reads each artifact's frontmatter, derives its triggered tiers from its own declared claims, and reports per-artifact findings plus a corpus conformance ratio. It runs with zero model calls, zero network access, and no mutation.
+The check loads the dictionary, reads each artifact's frontmatter, derives its triggered tiers from the artifact's own declared claims, and reports per-artifact findings plus a corpus conformance ratio. It runs with zero model calls, zero network access, and no mutation.
 
-Reference implementation: `agentic-canvas-os/scripts/frontmatter-runtime-contract.mjs`, wired into that repository's `docs:check` and exposed as `npm run frontmatter-runtime:check`. Adapters may replace it; the tier derivation, finding names, and non-regression ratchet are the contract.
+Reference implementation: `agentic-canvas-os/scripts/frontmatter-runtime-contract.mjs`, wired into that repository's `docs:check` and exposed as `npm run frontmatter-runtime:check`. The projection checker is `npm run frontmatter-dictionary:check`. Adapters may replace either; the dictionary as single source, the tier derivation, the finding names, and the non-regression ratchet are the contract.
 
 ## Findings
 
@@ -126,9 +121,13 @@ Runtime-readiness and evaluator-independence violations reuse `runtime-readiness
 - [ ] Every artifact whose subject can reach a delivered surface declares `publish_policy`
 - [ ] `runtime_readiness_policy` is `fail-closed` or names a versioned, auditable exception
 - [ ] One key per concept across every enrolled corpus; no aliases introduced
+- [ ] The key enumeration exists in exactly one machine-readable dictionary, and no code or prose restates it
+- [ ] Every key declares `required` or `recommended`, and no rule implies enforcement above its declared level
+- [ ] Every human-readable view of the dictionary is generated, digest-fenced, and staleness-checked
+- [ ] The checker fails closed on an absent, unreadable, or unpinned dictionary
 - [ ] A deterministic check enforces the above and its baseline is non-increasing
 - [ ] No key carries a machine path, credential, provider identity, personal name, or generated value
 
 ## VCC
 
-Given two or more enrolled corpora and their authored artifacts, when the frontmatter contract is evaluated, then every artifact's triggered tiers are derived from its own declared claims; every absent triggered key raises a typed finding; conflated readiness, unnamed evaluators, and divergent spellings for one concept each raise their exact finding; the corpus conformance ratio is reported with per-artifact detail; the check performs no mutation, network, or model call and exits non-zero on any violation; and migration proceeds by non-regressing ratchet so no readiness claim is ever promoted by this specification alone.
+Given two or more enrolled corpora and their authored artifacts, when the frontmatter contract is evaluated, then the key enumeration is read from exactly one machine-readable dictionary and the checker fails closed if that dictionary is absent, unreadable, or unpinned; every key carries a declared enforcement level and only `required` keys gate; every artifact's triggered tiers are derived from its own declared claims; every absent triggered key raises a typed finding; conflated readiness, unnamed evaluators, and divergent spellings for one concept each raise their exact finding; every human-readable view of the dictionary is a digest-fenced projection whose staleness the check reports; the corpus conformance ratio is reported with per-artifact detail; the check performs no mutation, network, or model call and exits non-zero on any violation; and migration proceeds by non-regressing ratchet so no readiness claim is ever promoted by this specification alone.

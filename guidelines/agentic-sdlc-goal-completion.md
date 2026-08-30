@@ -107,6 +107,18 @@ The main set's `autonomous-goal-pursuit` seam delegates these rules here. They r
 - [ ] Gate cascades treated as upstream defects; attempt budget bounded per goal, not per command
 - [ ] Shared-state repair capped at one attempt with its reversal stated; residue reported on termination
 
+## Findings
+
+This module owns the pursuit-domain finding names; the main set enumerates none of them, so no second enumeration can drift from this one.
+
+| Rule family | Finding Type | Severity |
+|---|---|---|
+| Autonomous pursuit | `incomplete-input-report` | `major` |
+| Autonomous pursuit | `derivable-operand-demanded` | `major` |
+| Autonomous pursuit | `late-constraint-discovery` | `minor` |
+
+Gate, authority, and Operator-interruption violations reuse the main set's and the Autonomous Continuation module's existing names; this module defines no parallel vocabulary for them.
+
 ## VCC
 
 Given one goal, its unit set with declared dependencies, write sets, gates, and authority states, and its recorded prior outcomes, when the Orchestrator computes an advance decision, then every blocker bounds only its unit and dependents; every disjoint ready unit remains dispatchable; dispatch order derives deterministically from recorded outcomes with a declared neutral prior; no weight alters admission, authority, or any bound; every unauthorized gated unit is refused; and the run emits one immutable digest-bound advance record that grants no mutation, integration, release, or deployment authority.

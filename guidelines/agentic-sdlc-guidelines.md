@@ -334,7 +334,7 @@ Some decisions an agent must not make alone, regardless of confidence.
 | **Repeated failure** | The same approach failed twice | Diagnose, state the root cause, and switch approach; escalate on the third distinct failure rather than continuing to vary details |
 
 **Directives**:
-- Forbid inferring, defaulting, scheduling, or simulating an Operator decision; an absent decision is a `blocked` state, never an assumed yes
+- Forbid inferring, defaulting, scheduling, or simulating an Operator decision; an absent decision is a `blocked` state, never an assumed yes. A durable standing authorization recorded in advance with a declared class ceiling, scope, target, expiry, and revocation is a recorded decision and is consumed by digest rather than re-asked, while a candidate whose derived autonomy class exceeds that ceiling still escalates; deriving the class from the write set, superseding a review whose head advanced, and pairing autonomous promotion with autonomous rollback are owned by [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) and [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md)
 - Present a gate with the decision, the options, and the consequence of each; forbid escalating with a question the Operator cannot answer from what was surfaced
 - Treat the configured interaction adapter—not manual transcription of a machine token—as the decision boundary. After it records an exact decision, propagate that receipt through downstream controllers without asking the Operator to restate it
 - Forbid bundling an unrelated change into a gated task while waiting; a blocked task stays blocked

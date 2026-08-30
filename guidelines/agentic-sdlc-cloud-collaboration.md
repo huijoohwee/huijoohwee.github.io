@@ -327,6 +327,25 @@ Commit authorship, committer identity, and pull-request ownership are never part
 of this test. Each is settable by anyone who can write a commit and proves nothing
 about authorization; the ledger is the only authority on who owns a lane.
 
+### Review Supersession
+
+A review describes the exact revision it evaluated and nothing else. When the lane
+head advances past the reviewed revision, the review is superseded by that fact,
+and the only question is whether the change is recorded.
+
+- Record supersession as its own transition naming the reviewed revision, the new
+  head, and the classified delta. A head that advances with the prior verdict left
+  standing is `stale-review-unsuperseded`, and it is how a green verdict comes to
+  describe bytes no evaluator ever saw
+- Re-evaluate the new head rather than reusing any earlier result. No check result,
+  approval, or readiness claim survives a head change
+- Continue without an Operator decision where the classified delta stays within a
+  recorded standing grant and the declared checks pass on the exact new head;
+  escalate naming the class transition where it does not
+- Never satisfy a review requirement with the authoring run's own verdict. The
+  Evaluator is mechanical and the implementer never adjudicates it, so required
+  checks discharge the role and a self-approval never does
+
 ### Bounded Publication Sequence
 
 Recording, reconciling, renewing, and publishing are one operation with one
@@ -461,6 +480,7 @@ scope, ledger, or projection state fails closed.
 | `recording-gate-overreach` | `major` |
 | `projection-divergence-unreconciled` | `major` |
 | `reconcile-surface-fragmented` | `major` |
+| `stale-review-unsuperseded` | `major` |
 | `evidence-without-run` | `major` |
 | `runtime-readiness-unproven` | `blocker` |
 

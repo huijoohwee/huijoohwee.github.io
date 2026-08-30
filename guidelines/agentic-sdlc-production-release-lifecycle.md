@@ -108,6 +108,62 @@ Verification is not publication.
 | **Published** | Publish only the exact verified identity | A mirror or projection cannot lead live verification |
 | **Rolled back** | Restore and re-probe the last-known-good identity after failure | Rollback never reuses or creates forward authorization |
 
+## Autonomy Classes and Standing Authorization
+
+Most candidates need no new decision. The Independence Rule is satisfied
+mechanically, so a declared check set discharges the Evaluator role and a human
+reviewer was never required for it. What a human owns is the *boundary*, and a
+boundary decision can be recorded once with bounds instead of re-asked per
+candidate.
+
+### Standing Authorization
+
+A standing authorization is one durable, versioned grant an Operator records
+before the work it covers. Consuming it is reading a recorded decision, not
+inferring one, so it never conflicts with the prohibition on assumed consent.
+
+- Declare the class ceiling, target surface, write-scope bounds, required check
+  identities, expiry, revocation path, and explicitly what is not granted. A grant
+  missing any of these is `standing-authorization-unbounded`, because an unbounded
+  standing grant is indistinguishable from no boundary
+- Consume it by digest and record which grant authorized which promotion, so an
+  auditor can answer who permitted a deployment without asking anyone
+- Stretching a grant past its declared ceiling, target, or expiry is
+  `assumed-operator-decision`, exactly as inventing consent would be
+- Revocation takes effect immediately and retroactively bounds nothing already
+  promoted; a revoked grant blocks the next promotion, never rewrites the last
+
+### Autonomy Class
+
+The class is derived from the normalized write set by a mechanism the benefiting
+run does not adjudicate. A candidate advanced without a derived class is
+`autonomy-class-unclassified`.
+
+| Class | Contents | Ceiling |
+|---|---|---|
+| `docs-only` | Authored documentation and generated projections | Autonomous to the granted surface |
+| `test-only` | Test and fixture paths | Autonomous to the granted surface |
+| `additive-contract` | New modules or schema versions with no existing behavior altered | Autonomous to the granted surface |
+| `behavioral` | Existing runtime behavior changed | Autonomous only where the declared check set covers the changed behavior |
+| `authority-controlling` | Release control, authorization, gates, hooks, credentials, policy, or the class machinery itself | Always escalates |
+
+- Derive the class from paths and diff shape, never from a declaration by the run
+  that benefits from it, and resolve a mixed write set to its highest class
+- Escalate every `authority-controlling` candidate regardless of check state,
+  grant, or urgency. A system that can autonomously merge changes to the gates
+  constraining it has no boundary, only a delay
+- Treat the classifier and its class table as `authority-controlling` themselves,
+  so autonomy can never widen its own definition
+
+### Reversibility Symmetry
+
+- Capture the rollback identity and last-known-good state before any autonomous
+  promotion, verify liveness after it, and revert autonomously on failure without
+  waiting for a decision
+- Autonomous promotion without autonomous rollback is `irreversible-autonomy`: it
+  is the configuration in which a machine can create an outage that only a human
+  can undo
+
 ## Operational Stage Contract
 
 ### 1. Preflight and Preservation
@@ -311,6 +367,19 @@ Required blocker findings include:
 - `client-cache-convergence-unverified`
 - `publication-before-live-verification`
 - `cleanup-ownership-unproven`
+
+## Findings
+
+| Rule family | Finding Type | Severity |
+|---|---|---|
+| Standing authorization | `standing-authorization-unbounded` | `blocker` |
+| Autonomy | `irreversible-autonomy` | `blocker` |
+| Autonomy | `autonomy-class-unclassified` | `major` |
+
+Self-approval of a candidate by the run that authored it reuses
+`self-graded-verdict`, and stretching a grant past its bounds reuses
+`assumed-operator-decision`; this module defines no parallel vocabulary for
+either.
 
 ## Completion VCC
 

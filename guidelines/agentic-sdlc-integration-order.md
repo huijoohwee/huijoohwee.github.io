@@ -1,8 +1,8 @@
 ---
 title: "Agentic SDLC Dependency-Ordered Integration Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-07-29"
+version: "1.1.0"
+date: "2026-08-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Integration orchestrator function"
@@ -107,11 +107,11 @@ For each ready unit:
 5. Run the unit's named checks and the repository integration lane.
 6. Enter the canonical protected source through the configured adapter.
 7. Record the resulting protected merge revision.
-8. Wait for checks attached to that exact canonical revision.
+8. Resolve exact-canonical evidence from the newest terminal source run, suite, and check chain for the exact reviewed or protected-refreshed candidate. A topology-bound exact-canonical Integration Receipt may replace only an absent or still nonterminal duplicate post-integration run for the declared history-shaping topology; the newest terminal failure for that canonical source blocks the unit and requires source repair.
 9. Reconcile canonical runtime when `runtimeImpact` is true.
 10. Emit the unit Integration Receipt and advance the frontier.
 
-A green task revision is review evidence, not exact-canonical evidence. When the protected merge exists but its canonical checks are pending, stop and retry the same idempotent convergence step after those checks resolve.
+A green task revision is review evidence, not exact-canonical evidence. When the protected merge exists and the duplicate canonical-source checks are pending, stop and retry the same idempotent convergence step unless one topology-bound receipt already satisfies every closed subject, topology, authority, check-chain, association, and no-mutation predicate below; only that complete receipt discharges the duplicate wait.
 
 ### 6. Seal the Release Frontier
 
@@ -129,6 +129,9 @@ Candidate preparation consumes this sealed frontier. Any later source, dependenc
 ## Retry and Recovery
 
 - Retry only an idempotent step with the same unit, frontier, collaboration fence, and expected result.
+- Select canonical evidence only through the provider-neutral functional event class `review-record-closed` or `operation-dispatch`, joined to the exact repository adapter and policy, closed review record, reviewed or protected-refreshed candidate revision and tree, protected base revision and tree, canonical revision and tree, declared method and exact parent list, integration metadata, collaboration and terminal lifecycle chain, source-check chain, evaluator application, and strictness policy.
+- Keep provider wire grammar outside this universal contract and inside a replaceable reference adapter; never infer association through inferred or non-authoritative review association metadata.
+- Keep provider inventory read-only and non-mutating for this decision; never synthesize, update, roll up, cancel, or otherwise mutate a check to manufacture canonical evidence.
 - If an isolated lane lacks its declared locked dependencies, materialize them in that lane and replay the same fenced operation.
 - If canonical source advances, discard the stale readiness decision, reconcile the new frontier, and rerun affected checks.
 - If exact-canonical checks fail, repair the owning source through a new fenced revision; never waive or replace the check.
@@ -145,6 +148,11 @@ An integration-plan evaluator records:
 | Existing-change disposition | Unit digest, canonical revision, equivalence-check digest |
 | Supersession disposition | Unit digest, canonical revision, capability-coverage digest |
 | Unit integration | Unit digest, dependency receipts, protected revision, exact-check digest |
+| Exact-canonical receipt subject | Repository adapter and policy revision; immutable closed review locator; candidate revision and tree; protected base revision and tree; canonical revision and tree |
+| Exact-canonical receipt topology | Declared method and exact parent list; canonical tree equals the adapter-declared deterministic transformation of the exact protected base tree plus admitted reviewed delta; squash parents exactly `[protected base]` and candidate tree must equal the canonical tree |
+| Exact-canonical receipt authority | Integration controller; deferred automatic-integration requester, method, title, and body; actual merger identity and merge time; collaboration claim, review transition, integration receipt, terminal retirement, ledger revision and digest, and operation identity |
+| Exact-canonical receipt checks | Newest terminal source run, suite, and check chain for the exact reviewed or protected-refreshed candidate; declared protected-refresh rollup and remote collaboration-check identity and projection; fresh required-check context, evaluator application, and strictness policy |
+| Exact-canonical receipt association | Functional event class `review-record-closed` or `operation-dispatch`; wire mapping isolated outside the universal contract; no inferred or non-authoritative association metadata; read-only non-mutating observation; no check mutation |
 | Runtime convergence | Protected revision, dependency closure, probes digest |
 | Release frontier | Final canonical revisions, dependency closure, terminal dispositions, seal digest |
 
@@ -165,6 +173,7 @@ An integration-plan evaluator records:
 - [ ] Existing-change and supersession decisions carry evaluator evidence.
 - [ ] Each integrated unit names its dependency receipts and exact canonical revision.
 - [ ] Exact-canonical checks, not task-head checks, advance the frontier.
+- [ ] Any topology-bound exact-canonical receipt satisfies every subject, topology, authority, check-chain, association, and no-mutation row above.
 - [ ] Runtime-impacting units carry runtime-convergence evidence.
 - [ ] Generated projections follow their authored source owners.
 - [ ] Every unit is terminal before release-frontier sealing.

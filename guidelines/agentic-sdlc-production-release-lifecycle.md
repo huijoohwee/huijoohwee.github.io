@@ -161,6 +161,18 @@ Verification is not publication.
   waiting run `superseded`, refresh the canonical review owner to the new exact
   protected revision, and reseal a new candidate from that revision. Never
   retarget, reopen, or authorize the stale run.
+- Reach this stage in one request, not a sequence. Every mechanical precondition
+  the run can satisfy alone is satisfied before prompting: restore lapsed
+  authority, reclaim an uncontested claim, extend declared scope, record and push
+  the lane, and join the checks. The prompt then carries the candidate revision,
+  joined evidence, claim lineage and restoration receipts, the target identity,
+  and the exact authorization string, so the Operator has one decision and
+  everything needed to make it.
+- Authorization stays the Operator's alone. Green checks prove the candidate is
+  sound and never that promotion is intended; treating check state, an approving
+  review, a schedule, or a prior authorization for another candidate as consent is
+  `assumed-operator-decision`. A run that cannot obtain authorization reports the
+  exact missing decision and stops, never widening its own authority to proceed.
 
 ### 6. Authorized Deployment
 

@@ -250,6 +250,46 @@ which is `volatile-operand-in-durable-binding`.
   it is `authority-liveness-unverified`, and it converts a first-minute failure
   into a whole-session loss
 
+## Restoration Operations
+
+Renewal, reclaim, and re-anchor form one class: each restores an invariant and
+must therefore never assert it. An operation that requires the state it repairs
+is `liveness-gated-renewal`, and it converts a routine lapse into permanent loss.
+
+- Authorize a restoration from capability possession and unchanged subject
+  identity, never from lease liveness, binding freshness, or projection state
+- Treat expiry as a liveness fact and never as a contention fact. Expiry yields
+  `dormant-preserved`; it never releases a claim, and it never by itself requires
+  an Operator decision to undo
+- Decide a reclaim on claim-layer facts only: claim identity and state, actor and
+  device, normalized write set, canonical base, and overlap against concurrent
+  claims. Reading a pull-request draft flag, marker shape, lease field, or
+  worktree cleanliness to decide ownership is `projection-gated-recovery`
+- Narrow a recovery path on contention, never on presentation. A precondition an
+  actor could satisfy by editing a projection is the wrong precondition, and
+  finishing work by marking a review ready must never forfeit a recovery path
+- Prove reachability across the producible state space rather than per adapter.
+  Where the union of every recovery precondition leaves a producible state with no
+  path, that gap is `unreachable-authority-state` however many adapters exist
+
+### Non-Disruptive Reclaim
+
+A reclaim is non-disruptive when every one of these holds and is checked:
+
+- claim subject, semantic scope, and normalized write set unchanged
+- no authored byte, index entry, `HEAD`, branch ref, or remote ref moves
+- no pull-request state changes: not draft status, not review state, not check
+  results, so an already-green candidate stays green
+- no peer lane, claim, or lease is touched and no overlapping claim is pre-empted
+- the lease epoch may advance and the claim may be re-minted, because a durable
+  binding covers neither
+- one digest-bound receipt names the prior and successor claim and grants no
+  integration, publication, or deployment authority
+
+A run performs its own non-disruptive reclaim without an Operator decision when
+the claim is uncontested. Contention by another live actor, an overlapping write
+set, or any step that raises authority escalates instead.
+
 ## Conflict and Concurrency Policy
 
 Disjoint normalized write sets may proceed concurrently. Equal paths, ancestor
@@ -281,6 +321,26 @@ its base and local lane revision, obtains a fresh claim, rebases or replans when
 required, runs focused checks, and only then publishes the immutable lane
 revision. If another accepted claim overlaps, the offline work remains preserved
 and blocked until its owner replans or receives a handoff.
+
+### Recording Versus Publishing
+
+The same boundary binds an expired or drifted authority, not only a disconnected
+one. Authority state gates shared mutation and never local recording.
+
+- Place every authority gate on the operation whose blast radius it protects:
+  publishing to a shared ref, transitioning a claim, dispatching a review,
+  integrating, and deploying. Committing to the run's own lane is local and
+  reversible and carries no such gate
+- Blocking a local commit on shared authority is `recording-gate-overreach`. It
+  protects no shared state, because the commit touches none, while risking every
+  authored byte the run has not yet recorded
+- Record freely under lapsed authority and mark the lane as carrying unreconciled
+  commits; reconcile at renewal by comparing recorded revisions against the
+  refreshed claim, then publish or preserve-and-block exactly as reconnection does
+- Fail closed on publication, never on memory. A gate that discards recorded work
+  to protect state that work never touched is fail-destructive, and an
+  architecture that leaves `--no-verify` as the only way to keep hours of verified
+  work has inverted its own boundary
 
 ## Review and Integration Projection
 
@@ -349,7 +409,10 @@ scope, ledger, or projection state fails closed.
 | `delivery-authority-unjoined` | `blocker` |
 | `unreachable-authority-state` | `blocker` |
 | `volatile-operand-in-durable-binding` | `blocker` |
+| `liveness-gated-renewal` | `blocker` |
 | `authority-liveness-unverified` | `major` |
+| `projection-gated-recovery` | `major` |
+| `recording-gate-overreach` | `major` |
 | `evidence-without-run` | `major` |
 | `runtime-readiness-unproven` | `blocker` |
 
@@ -362,5 +425,5 @@ remediation state. Emit zero counts for checked finding types with no occurrence
 | Field | Requirement |
 |---|---|
 | Variables | Identity, ledger chain, protected source, normalized write sets, lane revisions, projections, evaluation time, and focused evidence. |
-| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, capability-specific authority without implicit promotion, durable bindings over stable operands only, and one reachable exit from every producible state. |
-| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, cost bounds, lane-drift survival, same-subject re-anchor under drift and expiry, foreign-lane refusal, and start-time authority usability. |
+| Constraints | One accepted remote head, compare-and-swap transitions, no overlapping active claims, immutable handoff, bounded expiry, no offline shared mutation, capability-specific authority without implicit promotion, durable bindings over stable operands only, restorations that never assert what they repair, authority gates placed on shared mutation only, and one reachable exit from every producible state. |
+| Checks | Schema and digest validation, transition matrix, concurrent same-parent race, overlap matrix, stale fence, idempotent delivery authorization and replay, edit-after-review rejection, offline admission, handoff join, projection parity, deterministic replay, cost bounds, lane-drift survival, same-subject re-anchor under drift and expiry, foreign-lane refusal, start-time authority usability, renewal of an expired uncontested claim, reclaim invariance across bytes and review state, contested-reclaim escalation, and local recording under lapsed authority. |

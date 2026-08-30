@@ -37,13 +37,14 @@ lifecycle_status: "proposed"
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
-- [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) — bounded autonomous progress, decision-versus-transport separation, and minimum necessary Operator interruption
+- [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) — bounded autonomous progress, decision-versus-transport separation, and minimum necessary Operator interruption; [Adaptive Goal Completion](./agentic-sdlc-goal-completion.md) — blocker locality, outcome-weighted dispatch order, fail-closed gates under adaptation, and digest-bound advance records
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `global-release-control-rule` — universal control boundary for every enrolled repository and deployment target
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `atomic-lane-convergence` — one externally simple controller for integration, preservation, recovery, retirement, and minimal active-lane closure through modular adapters
 - [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md) — least-powerful outcome selection, disjoint progress, exact evidence reuse, and retained cleanup
 - [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
+- `autonomous-goal-pursuit` — one-shot input completeness, internal operand derivation, earliest-point validation, late binding, and decision-only escalation
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
 - `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
@@ -317,7 +318,11 @@ Long runs outlive working context. A run that cannot resume is a run that must r
 
 ## Autonomous Continuation & Interaction Economy
 
-The canonical [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) module owns bounded autonomous progress, decision-versus-transport separation, adapter behavior, findings, and verification. Execution consumes it by reference; this seam does not duplicate its rules.
+The canonical [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) module owns bounded autonomous progress, decision-versus-transport separation, adapter behavior, findings, and verification. The [Adaptive Goal Completion](./agentic-sdlc-goal-completion.md) module owns blocker locality, outcome-weighted dispatch order, fail-closed gates under adaptation, and the digest-bound advance record; a derived weight may reorder ready work and may never alter admission, authority, or any stated bound. Execution consumes both by reference; this seam does not duplicate their rules.
+
+## Autonomous Goal Pursuit
+
+Every Operator round trip that carries no decision is pure cost: it spends wall-clock, invalidates volatile bindings, and converts a solvable mechanical gap into a stall. The Operator owns decisions; the run owns transport, derivation, and retry. The [Adaptive Goal Completion](./agentic-sdlc-goal-completion.md) module owns the complete directive set for one-shot input completeness, internal operand derivation, earliest-point validation, late binding of volatile identity, environment-only remediation before a verdict, outcome-recorded improvement, and decision-only escalation. It raises `incomplete-input-report`, `derivable-operand-demanded`, and `late-constraint-discovery` from this set's enumeration, and it relaxes no gate. Execution consumes it by reference; this seam does not duplicate its rules.
 
 ## Human-in-the-Loop Gates
 
@@ -467,6 +472,9 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Recovery | `unresumable-run` | `major` |
 | Human gates | `assumed-operator-decision` | `blocker` |
 | Human gates | `avoidable-operator-interruption` | `major` |
+| Autonomous pursuit | `incomplete-input-report` | `major` |
+| Autonomous pursuit | `derivable-operand-demanded` | `major` |
+| Autonomous pursuit | `late-constraint-discovery` | `minor` |
 | Release lifecycle | `unreviewed-release-candidate` | `blocker` |
 | Release lifecycle | `dependency-closure-drift` | `blocker` |
 | Release lifecycle | `authorization-evidence-unjoined` | `blocker` |
@@ -507,11 +515,11 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Chain seam check | `specification-chain-phases`, [Specification Chain](./agentic-sdlc-specification-chain.md) |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
 | Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
-| Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets`, `autonomous-continuation--interaction-economy` |
+| Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets`, `autonomous-continuation--interaction-economy`, [Adaptive Goal Completion](./agentic-sdlc-goal-completion.md) |
 | Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius`, `autonomous-continuation--interaction-economy` |
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery`, `autonomous-continuation--interaction-economy` |
-| Escalation | `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Escalation | `autonomous-continuation--interaction-economy`, `autonomous-goal-pursuit`, `human-in-the-loop-gates` |
 | Protected source integration | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
 | Production or publication handoff | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
@@ -561,6 +569,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 - [ ] **Run state persisted** such that an independent reader can reconstruct the run
 - [ ] **Per-run consumption compared** to the specification's token budget
 - [ ] **Autonomous continuation economical**: every safe in-scope dependency-ready step continued without avoidable Operator interruption; machine tokens and idempotent continuations were carried internally, and each actual prompt maps to one unresolved semantic decision
+- [ ] **Autonomous pursuit clean**: required inputs were reported once and completely; every derivable operand was derived rather than requested; locally knowable constraints failed locally; volatile identity was bound immediately before its transition; environment-only remediation preceded every failing verdict; and each blocked attempt was recorded as an outcome the next selection consumes
 - [ ] **No boundary crossed**: every task ran in the `authoring` lane; every Deploy Boundary still reads `closed` absent an Operator instruction
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
 - [ ] **Protected review metadata exact**: the repository-owned review-request template is instantiated, the current canonical base revision is recorded, and the declared scope token equals the admitted semantic scope and any projected branch-scope segment

@@ -46,7 +46,7 @@ test("artifact validation and overlap algebra fail closed", () => {
 test("cloud request validation matches the repository coordination contract", () => {
   const request = {
     schema: "agentic-cloud-collaboration-request/v1",
-    targetRepository: "huijoohwee/knowgrph",
+    targetRepository: "huijoohwee/agentic-graph",
     workItemId: "work-item:dev-source-resolver-20260803",
     canonicalBaseRevision: "a".repeat(40),
     laneRevision: "b".repeat(40),

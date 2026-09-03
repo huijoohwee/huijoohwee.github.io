@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Animatic Epics & User Stories Module"
+title: "Agentic Graph Animatic Epics & User Stories Module"
 doc_type: "Guidelines Module"
 version: "1.0.0"
 date: "2026-08-20"
@@ -10,17 +10,17 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
-parent: "Knowgrph Animatic PRD/TAD"
+parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
 ---
 
-# Knowgrph Animatic Epics & User Stories Module
+# Agentic Graph Animatic Epics & User Stories Module
 
 ## Scope & Ownership
 
 Owns the epic and user-story decomposition with its acceptance criteria. This is the requirements payload of the PRD.
 
-This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 
@@ -36,12 +36,12 @@ than reading exclusively from frontmatter.
 #### E1-S1 — Frontmatter-driven activation
 
 **As a** Content Author **I want** the 2D Animatic renderer to activate solely from
-`kgCanvas2dRenderer: animatic` in YAML frontmatter **so that** no out-of-band configuration is
+`agenticOsCanvas2dRenderer: animatic` in YAML frontmatter **so that** no out-of-band configuration is
 needed to start the renderer.
 
 **Acceptance Criteria**
 
-- **Given** a document with `kgCanvas2dRenderer: animatic` in frontmatter **When** the KGC canvas
+- **Given** a document with `agenticOsCanvas2dRenderer: animatic` in frontmatter **When** the AGENTIC_OS canvas
   loads the document **Then** the animatic renderer activates and the timeline rail renders without
   any additional configuration.
 
@@ -527,7 +527,7 @@ to verify every runtime interaction **so that** acceptance is deterministic and 
 
 - **Given** any acceptance criterion from E1–E7 **When** the validator runs the corresponding
   test case **Then** it proves the criterion by applying
-  `window.knowgrphWorkspaceCommand.applyMarkdownDocument(...)` and asserting the resulting DOM and
+  `window.agentic-graphWorkspaceCommand.applyMarkdownDocument(...)` and asserting the resulting DOM and
   frontmatter state.
 
   > **`/goal` translation**: `all validator test cases reference applyMarkdownDocument and

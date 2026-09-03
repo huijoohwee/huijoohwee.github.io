@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Animatic Components Module"
+title: "Agentic Graph Animatic Components Module"
 doc_type: "Guidelines Module"
 version: "1.0.0"
 date: "2026-08-20"
@@ -10,17 +10,17 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
-parent: "Knowgrph Animatic PRD/TAD"
+parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
 ---
 
-# Knowgrph Animatic Components Module
+# Agentic Graph Animatic Components Module
 
 ## Scope & Ownership
 
 Owns the architecture overview, the journey-to-system mapping, the component specifications, and the integration contracts.
 
-This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 
@@ -33,7 +33,7 @@ Strip, and Lane Rows. `animaticTimeline.ts` parses frontmatter, builds the timel
 rewrites markdown for timing, metadata, lane controls, and lane order updates. `animaticLaneControls.ts`
 projects lane presentation state, and `animaticKeyboard.ts` owns hotkey mapping/suppression rules.
 Mounted validation runs through `validate_animatic_timeline_interactions.py`, which drives the live
-surface via `window.knowgrphWorkspaceCommand.applyMarkdownDocument(...)` exposed by
+surface via `window.agentic-graphWorkspaceCommand.applyMarkdownDocument(...)` exposed by
 `workspaceRuntimeCommand.ts`.
 
 **Mapping note**: the components below are logical responsibilities. Several are co-owned by the
@@ -63,19 +63,19 @@ same runtime file family rather than by one file per component.
 
 ### C1 — FrontmatterParser
 
-**Responsibility**: Parses YAML frontmatter from the active KGC document into typed Beat Model,
+**Responsibility**: Parses YAML frontmatter from the active AGENTIC_OS document into typed Beat Model,
 Scale Config, and Node Graph structures; emits no side effects.
 
 **Interfaces**:
 - Input: raw YAML string (`flow:`, `timeline:` keys)
 - Output: `BeatModel { beats: Record<string, Beat>, scale: ScaleConfig }`, `NodeGraph { nodes: Node[] }`
 
-**Dependencies**: KGC document store
+**Dependencies**: AGENTIC_OS document store
 
 **Configuration**: none (reads exclusively from frontmatter)
 
 **`/goal` Conditions** (from E1-S1, E1-S2, E1-S3):
-- `renderer activates from kgCanvas2dRenderer: animatic and no demo fixture is loaded`
+- `renderer activates from agenticOsCanvas2dRenderer: animatic and no demo fixture is loaded`
 - `timeline.scale.* is sole scale source and no renderer-only override exists`
 - `ordinal fallback renders when timing absent`
 
@@ -173,14 +173,14 @@ timeline strip; computes timing deltas; enforces non-overlap invariant; dispatch
 
 **Responsibility**: Accepts typed patch objects and rewrites the relevant YAML frontmatter slices
 for the active document, then commits them through the canonical workspace runtime command
-`window.knowgrphWorkspaceCommand.applyMarkdownDocument(...)`; preserves unrelated document state and
+`window.agentic-graphWorkspaceCommand.applyMarkdownDocument(...)`; preserves unrelated document state and
 allows explicit beat insert/delete/reorder mutations when the interaction requires them.
 
 **Interfaces**:
 - Input: `FrontmatterPatch` (typed union: `BeatPatch | LaneControlPatch | LaneOrderPatch | MetadataPatch`)
 - Output: updated YAML string committed to document store
 
-**Dependencies**: KGC document store, `applyMarkdownDocument` workspace command
+**Dependencies**: AGENTIC_OS document store, `applyMarkdownDocument` workspace command
 
 **Configuration**: targeted frontmatter rewrite policy; no parallel persistence store
 
@@ -239,10 +239,10 @@ a text-entry control; routes lane/item/beat-strip roving tabindex events.
 `applyMarkdownDocument`; asserts DOM state and frontmatter values; exits 0 on full pass.
 
 **Interfaces**:
-- Input: mounted KGC surface, test fixtures (markdown documents)
+- Input: mounted AGENTIC_OS surface, test fixtures (markdown documents)
 - Output: `PASS` / `FAIL` per named test case; process exit code 0 (pass) or 1 (fail)
 
-**Dependencies**: `window.knowgrphWorkspaceCommand.applyMarkdownDocument`, DOM query APIs
+**Dependencies**: `window.agentic-graphWorkspaceCommand.applyMarkdownDocument`, DOM query APIs
 
 **Configuration**: test fixture markdown blocks, named test case registry, Playwright Chromium
 

@@ -73,8 +73,8 @@ test("delivery ownership parses target-specific frontmatter and the byte-exact R
   const ownerPath = "guidelines/commit-push-deploy-guidelines.md";
   const mutations = [
     ['integrationMethod: "squash"', 'integrationMethod: "rebase"'],
-    ['agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]',
-      'agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Runtime Readiness Gate"]'],
+    ['agentic_graph: ["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Integration Gate"]',
+      'agentic_graph: ["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Runtime Readiness Gate"]'],
     ["artifact <artifactId> sha256 <artifactDigest>", "artifact <artifactId> digest <artifactDigest>"],
   ];
   for (const [before, after] of mutations) {

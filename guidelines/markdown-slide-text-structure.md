@@ -24,7 +24,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
 ---
 
-## Frontmatter Configuration (fully supported in Knowgrph viewer)
+## Frontmatter Configuration (fully supported in Agentic Graph viewer)
 
 ```yaml
 ---

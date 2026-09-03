@@ -1,22 +1,22 @@
 ---
-title: "Knowgrph YAML Frontmatter Template"
-graphId: "md:knowgrph-yaml-frontmatter-template"
+title: "Agentic Graph YAML Frontmatter Template"
+graphId: "md:agentic-graph-yaml-frontmatter-template"
 doc_type: "Template"
 date: "2026-07-08"
 lang: "en-US"
 
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: true
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: true
+agenticOsDocumentStructureBaselineLock: false
 
-$schema: "kgc-pipeline/v1"
+$schema: "agentic-os-pipeline/v1"
 
 spec:
-  format: kgc-pipeline
+  format: agentic-os-pipeline
   version: "1.0.0"
   parser: yaml-frontmatter
   execution: computing-flow
@@ -89,7 +89,7 @@ flow:
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"out":{"raw_frontmatter":"template_source_signal"}}}
       "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:source_input"}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Author-owned YAML frontmatter is the first SSOT input."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Author-owned YAML frontmatter is the first SSOT input."}
     - id: {key: id, type: string, value: "normalize_context"}
       type: {key: type, type: string, value: "ContextNormalizeWidget"}
       label: {key: label, type: string, value: "Normalize context"}
@@ -102,7 +102,7 @@ flow:
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"raw_frontmatter":"template_source_signal"},"out":{"normalized_context":"template_context_signal"}}}
       "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:normalize_context"}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Frontmatter and body context are normalized without downstream aliases."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Frontmatter and body context are normalized without downstream aliases."}
     - id: {key: id, type: string, value: "compute_graph"}
       type: {key: type, type: string, value: "ComputingFlowWidget"}
       label: {key: label, type: string, value: "Compute graph"}
@@ -115,7 +115,7 @@ flow:
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"normalized_context":"template_context_signal"},"out":{"computed_graph":"template_graph_signal"}}}
       "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:compute_graph"}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "The computing-flow graph stays source-owned in KTV YAML."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "The computing-flow graph stays source-owned in KTV YAML."}
     - id: {key: id, type: string, value: "render_canvas"}
       type: {key: type, type: string, value: "CanvasRenderWidget"}
       label: {key: label, type: string, value: "Render canvas"}
@@ -128,7 +128,7 @@ flow:
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"computed_graph":"template_graph_signal"},"out":{"rendered_surface":"template_graph_signal"}}}
       "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:render_canvas"}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Shared renderer owners project the source graph without proxy mutation."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Shared renderer owners project the source graph without proxy mutation."}
     - id: {key: id, type: string, value: "validate_runtime"}
       type: {key: type, type: string, value: "RuntimeValidationWidget"}
       label: {key: label, type: string, value: "Validate runtime"}
@@ -141,7 +141,7 @@ flow:
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"rendered_surface":"template_graph_signal"},"out":{"validation_proof":"template_proof_signal"}}}
       "flow:widgetFormId": {key: "flow:widgetFormId", type: string, value: "fm:validate_runtime"}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Runtime readiness is proven locally before any publish or deploy step."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Runtime readiness is proven locally before any publish or deploy step."}
   edges:
     - id: {key: id, type: string, value: "source_to_normalize"}
       source: {key: source, type: string, value: "source_input"}
@@ -169,7 +169,7 @@ flow:
       type: {key: type, type: string, value: "template_graph_signal"}
 ---
 
-# Knowgrph YAML Frontmatter Template
+# Agentic Graph YAML Frontmatter Template
 
 ## Architecture Overview
 
@@ -189,17 +189,17 @@ flow:
 
 ## Component Specifications
 
-**From default document state to D3 landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "d3"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on D3 plus Frontmatter Mode.
+**From default document state to D3 landing**: Author sets `agenticOsCanvasSurfaceMode: "2d"`, `agenticOsCanvasRenderMode: "2d"`, `agenticOsCanvas2dRenderer: "d3"`, `agenticOsDocumentSemanticMode: "document"`, `agenticOsFrontmatterModeEnabled: true`, `agenticOsMultiDimTableModeEnabled: false` -> runtime lands on D3 plus Frontmatter Mode.
 
-**From default document state to Storyboard landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "storyboard"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, and computing-flow KTV fields -> runtime lands on Storyboard plus Frontmatter Mode.
+**From default document state to Storyboard landing**: Author sets `agenticOsCanvasSurfaceMode: "2d"`, `agenticOsCanvasRenderMode: "2d"`, `agenticOsCanvas2dRenderer: "storyboard"`, `agenticOsDocumentSemanticMode: "document"`, `agenticOsFrontmatterModeEnabled: true`, and computing-flow KTV fields -> runtime lands on Storyboard plus Frontmatter Mode.
 
-**From default document state to Animatic landing**: Author sets `kgCanvasSurfaceMode: "2d"`, `kgCanvasRenderMode: "2d"`, `kgCanvas2dRenderer: "animatic"`, `kgDocumentSemanticMode: "document"`, `kgFrontmatterModeEnabled: true`, `kgMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Storyboard and treating `timeline.beats.*` as additive timing metadata.
+**From default document state to Animatic landing**: Author sets `agenticOsCanvasSurfaceMode: "2d"`, `agenticOsCanvasRenderMode: "2d"`, `agenticOsCanvas2dRenderer: "animatic"`, `agenticOsDocumentSemanticMode: "document"`, `agenticOsFrontmatterModeEnabled: true`, `agenticOsMultiDimTableModeEnabled: false` -> runtime lands on Animatic while reusing the same canonical `flow:` graph contract as Storyboard and treating `timeline.beats.*` as additive timing metadata.
 
 **From empty graph to computing-flow KTV graph**: Author declares `socket_types`, `flow.direction`, `flow.edgeType`, `flow.balancedViewportPreset`, `flow.computed`, `flow.snapToGrid`, KTV node rows, and KTV edge rows -> runtime can render, inspect, and validate the graph without recalculating structure from prose.
 
-**From document preset to 3D landing**: Author sets `kgCanvasSurfaceMode: "3d"` and optionally `kgCanvas3dMode: "3d"` or `kgCanvas3dMode: "voxel"` -> runtime lands on 3D surface mode and disables Geospatial Mode.
+**From document preset to 3D landing**: Author sets `agenticOsCanvasSurfaceMode: "3d"` and optionally `agenticOsCanvas3dMode: "3d"` or `agenticOsCanvas3dMode: "voxel"` -> runtime lands on 3D surface mode and disables Geospatial Mode.
 
-**From document preset to Geospatial landing**: Author sets `kgCanvasSurfaceMode: "geospatial"` and a compatible `kgCanvas2dRenderer` such as `storyboard` -> runtime enables Geospatial Mode while preserving the requested 2D renderer for widget-panel overlays.
+**From document preset to Geospatial landing**: Author sets `agenticOsCanvasSurfaceMode: "geospatial"` and a compatible `agenticOsCanvas2dRenderer` such as `storyboard` -> runtime enables Geospatial Mode while preserving the requested 2D renderer for widget-panel overlays.
 
 **Documenters preserve widget visibility**: Authors keep `widget_bundle.graph.behavior` lean and source-owned, retain `forbid_cross_renderer_proxy: true` when overlays are present, and do not author stale renderer-owner aliases such as `flowEditor-frontmatter-only`.
 
@@ -207,47 +207,47 @@ flow:
 
 | Use case | Required frontmatter |
 |---|---|
-| README-style document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "d3"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
-| Widget bundle document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "storyboard"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
-| Computing-flow KTV document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "storyboard"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: true` + `socket_types` + KTV `flow:` |
-| Animatic timeline document | `kgCanvasSurfaceMode: "2d"` + `kgCanvasRenderMode: "2d"` + `kgCanvas2dRenderer: "animatic"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + shared `flow:` graph + optional `timeline.beats.*` timing |
-| 3D document | `kgCanvasSurfaceMode: "3d"` + `kgCanvasRenderMode: "3d"` + optional `kgCanvas3dMode: "3d"` or `"voxel"` |
-| Geospatial document | `kgCanvasSurfaceMode: "geospatial"` + `kgCanvas2dRenderer: "storyboard"` + `kgDocumentSemanticMode: "document"` + `kgFrontmatterModeEnabled: true` + `kgMultiDimTableModeEnabled: false` |
+| README-style document | `agenticOsCanvasSurfaceMode: "2d"` + `agenticOsCanvasRenderMode: "2d"` + `agenticOsCanvas2dRenderer: "d3"` + `agenticOsDocumentSemanticMode: "document"` + `agenticOsFrontmatterModeEnabled: true` + `agenticOsMultiDimTableModeEnabled: false` |
+| Widget bundle document | `agenticOsCanvasSurfaceMode: "2d"` + `agenticOsCanvasRenderMode: "2d"` + `agenticOsCanvas2dRenderer: "storyboard"` + `agenticOsDocumentSemanticMode: "document"` + `agenticOsFrontmatterModeEnabled: true` + `agenticOsMultiDimTableModeEnabled: false` |
+| Computing-flow KTV document | `agenticOsCanvasSurfaceMode: "2d"` + `agenticOsCanvasRenderMode: "2d"` + `agenticOsCanvas2dRenderer: "storyboard"` + `agenticOsFrontmatterModeEnabled: true` + `agenticOsMultiDimTableModeEnabled: true` + `socket_types` + KTV `flow:` |
+| Animatic timeline document | `agenticOsCanvasSurfaceMode: "2d"` + `agenticOsCanvasRenderMode: "2d"` + `agenticOsCanvas2dRenderer: "animatic"` + `agenticOsDocumentSemanticMode: "document"` + `agenticOsFrontmatterModeEnabled: true` + shared `flow:` graph + optional `timeline.beats.*` timing |
+| 3D document | `agenticOsCanvasSurfaceMode: "3d"` + `agenticOsCanvasRenderMode: "3d"` + optional `agenticOsCanvas3dMode: "3d"` or `"voxel"` |
+| Geospatial document | `agenticOsCanvasSurfaceMode: "geospatial"` + `agenticOsCanvas2dRenderer: "storyboard"` + `agenticOsDocumentSemanticMode: "document"` + `agenticOsFrontmatterModeEnabled: true` + `agenticOsMultiDimTableModeEnabled: false` |
 
 Canonical D3 preset:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "d3"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "d3"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Canonical Storyboard preset:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Canonical Animatic preset:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "animatic"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "animatic"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Animatic authoring contract:
@@ -259,53 +259,53 @@ Animatic authoring contract:
 Canonical 3D preset:
 
 ```yaml
-kgCanvasSurfaceMode: "3d"
-kgCanvasRenderMode: "3d"
-kgCanvas3dMode: "3d"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: false
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "3d"
+agenticOsCanvasRenderMode: "3d"
+agenticOsCanvas3dMode: "3d"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: false
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Canonical Geospatial preset:
 
 ```yaml
-kgCanvasSurfaceMode: "geospatial"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "geospatial"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Geospatial reference template:
 
-- `$GITHUB_ROOT/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `$GITHUB_ROOT/sandbox/demo/agentic-graph-maps-grabmap-multim-demo.md`
 
 Canonical seed examples aligned to this vocabulary:
 
-- `$GITHUB_ROOT/knowgrph/README.md`
-- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo.md`
-- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-seeded.md`
-- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-sea.md`
-- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo-the-general.md`
-- `$GITHUB_ROOT/sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
-- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
-- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
+- `$GITHUB_ROOT/agentic-graph/README.md`
+- `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo.md`
+- `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo-seeded.md`
+- `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo-sea.md`
+- `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo-the-general.md`
+- `$GITHUB_ROOT/sandbox/demo/agentic-graph-maps-grabmap-multim-demo.md`
+- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/agentic-graph-demo-video.md`
+- `$GITHUB_ROOT/sandbox/test-data/test-generate-video/agentic-graph-rich-media-generation-demo.md`
 
 ## Configuration Reference
 
 | Key | Meaning | Canonical values |
 |---|---|---|
-| `kgCanvasSurfaceMode` | Selects the top-level surface mode | `"2d"`, `"3d"`, `"geospatial"` |
-| `kgCanvasRenderMode` | Selects 2D or 3D canvas landing | `"2d"`, `"3d"` |
-| `kgCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
-| `kgCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"animation"`, `"storyboard"`, `"design"` |
-| `kgDocumentSemanticMode` | Selects the document semantic mode | `"document"`, `"keyword"` |
-| `kgFrontmatterModeEnabled` | Enables Frontmatter Mode | `true`, `false` |
-| `kgMultiDimTableModeEnabled` | Enables Multi-dimensional Table Mode | `true`, `false` |
-| `kgDocumentStructureBaselineLock` | Locks or unlocks the document structure baseline | `true`, `false` |
+| `agenticOsCanvasSurfaceMode` | Selects the top-level surface mode | `"2d"`, `"3d"`, `"geospatial"` |
+| `agenticOsCanvasRenderMode` | Selects 2D or 3D canvas landing | `"2d"`, `"3d"` |
+| `agenticOsCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
+| `agenticOsCanvas2dRenderer` | Selects the 2D renderer | `"d3"`, `"flowchart"`, `"flow"`, `"animation"`, `"storyboard"`, `"design"` |
+| `agenticOsDocumentSemanticMode` | Selects the document semantic mode | `"document"`, `"keyword"` |
+| `agenticOsFrontmatterModeEnabled` | Enables Frontmatter Mode | `true`, `false` |
+| `agenticOsMultiDimTableModeEnabled` | Enables Multi-dimensional Table Mode | `true`, `false` |
+| `agenticOsDocumentStructureBaselineLock` | Locks or unlocks the document structure baseline | `true`, `false` |
 | `socket_types` | Declares typed port/edge signals before graph materialization | Provider-neutral signal ids |
 | `flow.direction` | KTV graph direction | `{key: direction, type: string, value: "LR"}` |
 | `flow.edgeType` | KTV edge rendering mode | `{key: edgeType, type: string, value: "smoothstep"}` |
@@ -320,13 +320,13 @@ Canonical seed examples aligned to this vocabulary:
 - [ ] Documenters declare `socket_types` before `flow:` and reference only declared socket ids from `flow:portTypes` and `flow.edges[*].type`.
 - [ ] Documenters include `flow.balancedViewportPreset: {key: balancedViewportPreset, type: string, value: "widgetFrontmatter"}` for frontmatter-owned computing-flow graphs.
 - [ ] Documenters treat switch-sensitive `*.md` files as directly runnable canonical seeds by adding the explicit Canvas View frontmatter block at the top of the file.
-- [ ] Documenters set `kgCanvasSurfaceMode` explicitly when switching between 2D, 3D, and Geospatial surfaces.
-- [ ] Documenters keep `kgFrontmatterModeEnabled: true` for switchable canvas-view documents.
-- [ ] Documenters keep `kgMultiDimTableModeEnabled: false` for README-style and Storyboard widget-bundle documents unless table mode is the explicit target.
+- [ ] Documenters set `agenticOsCanvasSurfaceMode` explicitly when switching between 2D, 3D, and Geospatial surfaces.
+- [ ] Documenters keep `agenticOsFrontmatterModeEnabled: true` for switchable canvas-view documents.
+- [ ] Documenters keep `agenticOsMultiDimTableModeEnabled: false` for README-style and Storyboard widget-bundle documents unless table mode is the explicit target.
 - [ ] Documenters use `storyboard` for widget-bundle documents and avoid `Flow Canvas` or `Flowchart` labels in canonical examples.
 - [ ] Documenters use `animation` only when the file reuses the shared `flow:` graph contract and keeps timing under `timeline.beats.*`.
-- [ ] Documenters use `kgCanvas3dMode` only when `kgCanvasSurfaceMode: "3d"` is the target.
-- [ ] Documenters use `kgCanvasSurfaceMode: "geospatial"` for map-first documents instead of relying on stored Geospatial Mode state.
+- [ ] Documenters use `agenticOsCanvas3dMode` only when `agenticOsCanvasSurfaceMode: "3d"` is the target.
+- [ ] Documenters use `agenticOsCanvasSurfaceMode: "geospatial"` for map-first documents instead of relying on stored Geospatial Mode state.
 - [ ] Documenters keep widget-bundle behavior lean, retain `forbid_cross_renderer_proxy: true` when widgets or rich media panels are present, and do not author stale renderer-owner aliases.
 
 ## Body

@@ -1,0 +1,4245 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@type": "kg:Graph",
+  "metadata": {
+    "schemaVersion": "1.0.1",
+    "source": "system:docs-sync",
+    "description": "Structural-only mapping between Agentic Graph docs/documents and AgenticRAG schema directive surfaces.",
+    "languages": [
+      "en-us",
+      "zh-cn"
+    ]
+  },
+  "@graph": [
+    {
+      "@id": "node:schema:agenticrag:readme",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "AgenticRAG README"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/README.md",
+        "surface": "README"
+      },
+      "chunk_text": "AgenticRAG schema README (structural contract and principles)."
+    },
+    {
+      "@id": "node:schema:agenticrag:context",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "AgenticRAG context.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/v1/context.jsonld",
+        "surface": "context"
+      },
+      "chunk_text": "AgenticRAG JSON-LD @context vocabulary surface."
+    },
+    {
+      "@id": "node:schema:agenticrag:node-schema",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "node-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/node-schema.jsonld",
+        "surface": "node"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:edge-schema",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "edge-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/edge-schema.jsonld",
+        "surface": "edge"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:graph-schema",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "graph-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/graph-schema.jsonld",
+        "surface": "graph"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:metadata",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "metadata.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/metadata.jsonld",
+        "surface": "metadata"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:neutrality",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "neutrality.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/neutrality.jsonld",
+        "surface": "neutrality"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:colors",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "colors.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/colors.jsonld",
+        "surface": "colors"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:canvas",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "canvas.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/canvas.jsonld",
+        "surface": "canvas"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:panels",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "panels.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/panels.jsonld",
+        "surface": "panels"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:flow-widget-bundle",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "flow-widget-bundle.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/flow-widget-bundle.jsonld",
+        "surface": "flow-widget-bundle"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:curation",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "curation.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/curation.jsonld",
+        "surface": "curation"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:settings",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "settings.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/settings.jsonld",
+        "surface": "settings"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:semantic-mode",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "semantic-mode.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/semantic-mode.jsonld",
+        "surface": "semantic-mode"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:keyword-mode",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "keyword-mode.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/keyword-mode.jsonld",
+        "surface": "keyword-mode"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:geospatial",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "geospatial.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/geospatial.jsonld",
+        "surface": "geospatial"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:youtube",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "youtube.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/youtube.jsonld",
+        "surface": "youtube"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:markdown",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "markdown.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/markdown.jsonld",
+        "surface": "markdown"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:parser",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "parser.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/parser.jsonld",
+        "surface": "parser"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:pipeline",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "pipeline.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/pipeline.jsonld",
+        "surface": "pipeline"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:workflow",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "workflow.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/workflow.jsonld",
+        "surface": "workflow"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:orchestrator",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "orchestrator.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/orchestrator.jsonld",
+        "surface": "orchestrator"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:graphrag-pipeline",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "graphrag-pipeline.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/graphrag-pipeline.jsonld",
+        "surface": "graphrag-pipeline"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:roles-actions-outcomes",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "roles-actions-outcomes-schema.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld",
+        "surface": "roles-actions-outcomes"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:documentation",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "documentation.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/documentation.jsonld",
+        "surface": "documentation"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:stage-metrics",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "stage-metrics.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/stage-metrics.jsonld",
+        "surface": "stage-metrics"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:system-design-pattern",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "system-design-pattern.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/system-design-pattern.jsonld",
+        "surface": "system-design-pattern"
+      }
+    },
+    {
+      "@id": "node:schema:agenticrag:prompt-shaping",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "prompt-shaping-heuristics-framework.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/prompt-shaping-heuristics-framework.jsonld",
+        "surface": "prompt-shaping"
+      }
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-2d-renderer-enhancement-design",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-2d-renderer-enhancement-design.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-2d-renderer-enhancement-design.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-2d-renderer-enhancement-design.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-adm0-singapore-prd-tad-ard.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-adm0-singapore-prd-tad-ard.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-adm0-singapore-prd-tad-ard.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-adm0-singapore-prd-tad-ard.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agent-ready-cloudflare-isitagentready",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agent-ready-cloudflare-isitagentready.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agent-ready-cloudflare-isitagentready.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agent-ready-cloudflare-isitagentready.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agent-ready-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agent-ready-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agent-ready-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agent-ready-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agent-ready-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agent-ready-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agent-ready-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agent-ready-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agent-ready-prd-tad.runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agent-ready-prd-tad.runtime.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agent-ready-prd-tad.runtime.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agent-ready-prd-tad.runtime.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agent-ready-webmcp-release-note-20260522",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agent-ready-webmcp-release-note-20260522.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agent-ready-webmcp-release-note-20260522.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agent-ready-webmcp-release-note-20260522.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-commerce-platform-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-commerce-platform-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-commerce-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-commerce-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-commerce-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-commerce-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-entity-component-system-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-entity-component-system-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-entity-component-system-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-entity-component-system-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-os-follow-on-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-os-follow-on-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-os-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-os-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-os-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-os-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-os-video-agent-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-os-video-agent-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-os-video-agent-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-os-video-agent-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-travel-agencies-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agentic-travel-agencies-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-agnes-ai-api-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-agnes-ai-api-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-agnes-ai-api-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-agnes-ai-api-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ai-agents-memory-layer-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ai-agents-memory-layer-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ai-agents-memory-layer-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ai-agents-memory-layer-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ai-gateway-enhancement-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ai-gateway-enhancement-plan.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ai-gateway-enhancement-plan.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ai-gateway-enhancement-plan.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ai-voice-studio-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ai-voice-studio-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ai-voice-studio-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ai-voice-studio-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-miromind-api-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-miromind-api-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-miromind-api-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-miromind-api-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-straitsx-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-straitsx-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-straitsx-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-straitsx-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-straitsx-authentication-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-straitsx-authentication-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-straitsx-authentication-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-straitsx-authentication-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-stripe-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-stripe-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-stripe-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-stripe-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-stripe-mcp-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-stripe-mcp-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-stripe-mcp-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-stripe-mcp-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--agentic-graph-videodb-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/agentic-graph-videodb-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/agentic-graph-videodb-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/agentic-graph-videodb-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-byteplus-modelark-chat-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-chat-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-chat-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-chat-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-byteplus-modelark-image-generation-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-image-generation-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-image-generation-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-image-generation-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-deerflow-gateway-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-gemini-veo-video-generation-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-gemini-veo-video-generation-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-gemini-veo-video-generation-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-gemini-veo-video-generation-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-grabmaps-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-grabmaps-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-grabmaps-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-grabmaps-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-openai-images-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-images-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-images-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-images-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-openai-responses-api-reference-codebase-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-responses-api-reference-codebase-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-responses-api-reference-codebase-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-openai-responses-api-reference-codebase-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--byteplus-modelark-3d-generation-hyper3d-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/byteplus-modelark-3d-generation-hyper3d-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/byteplus-modelark-3d-generation-hyper3d-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/byteplus-modelark-3d-generation-hyper3d-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--byteplus-modelark-chat-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-chat-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-chat-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-chat-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--byteplus-modelark-image-generation-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-image-generation-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-image-generation-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-image-generation-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--byteplus-modelark-video-generation-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-video-generation-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-video-generation-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/byteplus-modelark-video-generation-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--openai-images-api-reference-index.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--openai-images-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-images-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-index_202604261230--openai-responses-api-reference-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-api-reference/api-reference-index_202604261230/openai-responses-api-reference-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-responses-api-reference-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-index_202604261230/openai-responses-api-reference-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-apple-spatial-input-shared-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-apple-spatial-input-shared-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-apple-spatial-input-shared-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-apple-spatial-input-shared-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-apple-spatial-input-ssot-distribution",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-apple-spatial-input-ssot-distribution.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-apple-spatial-input-ssot-distribution.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-apple-spatial-input-ssot-distribution.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ar-vr-xr-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ar-vr-xr-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-architecture-decisions",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-architecture-decisions.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-architecture-decisions.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-architecture-decisions.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-artifact-media-storage-architecture",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-artifact-media-storage-architecture.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-artifact-media-storage-architecture.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-artifact-media-storage-architecture.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-backend-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-backend-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-backend-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-backend-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-byteplus-openark-chat-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-byteplus-openark-chat-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-byteplus-openark-chat-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-byteplus-openark-chat-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-byteplus-openark-image-generation-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-byteplus-openark-image-generation-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-byteplus-openark-image-generation-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-byteplus-openark-image-generation-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-byteplus-openark-video-generation-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-byteplus-openark-video-generation-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-byteplus-openark-video-generation-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-byteplus-openark-video-generation-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-canvas-default-initialization-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-canvas-default-initialization-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-canvas-default-initialization-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-canvas-default-initialization-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-canvas-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-canvas-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-canvas-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-canvas-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-chat-ai-markdown-pipeline-document.fallback-recovery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-chat-ai-markdown-pipeline-document.fallback-recovery.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.fallback-recovery.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.fallback-recovery.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-chat-ai-markdown-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-chat-ai-markdown-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-chat-ai-markdown-pipeline-document.promotion-retry",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-chat-ai-markdown-pipeline-document.promotion-retry.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.promotion-retry.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-chat-ai-markdown-pipeline-document.promotion-retry.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-chat-skill-release-note-20260615",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-chat-skill-release-note-20260615.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-chat-skill-release-note-20260615.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-chat-skill-release-note-20260615.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-cloudflare-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-cloudflare-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-cloudflare-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-cloudflare-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-codebase-index-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-codebase-index-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-codebase-index-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-codebase-index-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-codebase-responsibility-flow-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-codebase-responsibility-flow-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-codebase-responsibility-flow-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-codebase-responsibility-flow-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-codebase-semantics-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-codebase-semantics-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-codebase-semantics-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-codebase-semantics-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-codex-goal-setup",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-codex-goal-setup.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-codex-goal-setup.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-codex-goal-setup.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-compute-integrity-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-compute-integrity-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-compute-integrity-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-compute-integrity-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-computing-data-flows-import-render-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-computing-data-flows-import-render-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-computing-data-flows-import-render-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-computing-data-flows-import-render-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-computing-data-flows-react-flow-inspiration-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-computing-data-flows-react-flow-inspiration-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-computing-data-flows-react-flow-inspiration-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-computing-data-flows-react-flow-inspiration-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-crawler-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-crawler-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-crawler-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-crawler-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-cross-repo-publish-topology",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-cross-repo-publish-topology.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-cross-repo-publish-topology.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-cross-repo-publish-topology.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-csv-json-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-csv-json-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-csv-json-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-csv-json-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-database",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-database.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-database.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-database.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-delivery-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-delivery-validation.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-delivery-validation.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-delivery-validation.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-integration-contracts-and-patterns",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-integration-contracts-and-patterns.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-integration-contracts-and-patterns.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-integration-contracts-and-patterns.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-setup-guide.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-setup-guide",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-demo-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-demo-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-demo-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-demo-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-design-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-design-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-design-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-design-editor-baseline-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-design-editor-baseline-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-design-editor-baseline-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-design-editor-baseline-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-deterministic-knowledge-graph-runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-deterministic-knowledge-graph-runtime.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-deterministic-knowledge-graph-runtime.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-deterministic-knowledge-graph-runtime.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-disjoint-force-frontmatter-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-disjoint-force-frontmatter-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-disjoint-force-frontmatter-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-disjoint-force-frontmatter-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-docs-sheets-slides-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-docs-sheets-slides-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-docs-sheets-slides-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-docs-sheets-slides-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-docs-sheets-slides-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-docs-sheets-slides-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-docs-sheets-slides-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-docs-sheets-slides-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-embeddability-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-embeddability-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-embeddability-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-embeddability-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-feature-map",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-feature-map.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-feature-map.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-feature-map.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-fields-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-fields-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-fields-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-fields-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-flow-run-all-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-flow-run-all-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-flow-run-all-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-flow-run-all-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-frontend-document-interactions-and-operations",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-frontend-document-interactions-and-operations.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-frontend-document-interactions-and-operations.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-frontend-document-interactions-and-operations.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-frontend-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-frontend-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-frontend-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-frontend-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-city-building-sim-prd-tad-ard",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-city-building-sim-prd-tad-ard.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-city-building-sim-prd-tad-ard.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-city-building-sim-prd-tad-ard.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-city-building-sim-vcc-delivery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-city-building-sim-vcc-delivery.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-city-building-sim-vcc-delivery.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-city-building-sim-vcc-delivery.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-flight-sim-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-flight-sim-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-flight-sim-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-flight-sim-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-fps-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-fps-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-fps-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-fps-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-fps-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-fps-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-fps-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-fps-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-game-mmorpg-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-game-mmorpg-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-game-mmorpg-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-game-mmorpg-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-geo-xr-mode-prd-tad-ard",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-geo-xr-mode-prd-tad-ard.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-geo-xr-mode-prd-tad-ard.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-geo-xr-mode-prd-tad-ard.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-geospatial-mode-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-geospatial-mode-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-geospatial-mode-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-geospatial-mode-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-grabmaps-api-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-grabmaps-api-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-grabmaps-api-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-grabmaps-api-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-grabmaps-sgp-administrative-areas-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-grabmaps-sgp-administrative-areas-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-grabmaps-sgp-administrative-areas-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-grabmaps-sgp-administrative-areas-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graph-canvas-layout-ssot",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graph-canvas-layout-ssot.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graph-canvas-layout-ssot.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graph-canvas-layout-ssot.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graph-data-curation-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graph-data-curation-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graph-data-curation-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graph-data-curation-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graph-data-table-fast-grid-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graph-data-table-fast-grid-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graph-data-table-fast-grid-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graph-data-table-fast-grid-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graph-elements-and-configs-semantics-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graph-elements-and-configs-semantics-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graph-elements-and-configs-semantics-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graph-elements-and-configs-semantics-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graphrag-pipeline-in-action-prd-tad-tad-core",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graphrag-pipeline-in-action-prd-tad-tad-core.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad-tad-core.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad-tad-core.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad-validation-and-appendix.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-graphrag-pipeline-in-action-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-graphrag-pipeline-in-action-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-graphrag-pipeline-in-action-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-html-canvas-export-callgraph",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-html-canvas-export-callgraph.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-html-canvas-export-callgraph.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-html-canvas-export-callgraph.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-html-canvas-export-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-html-canvas-export-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-html-canvas-export-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-html-canvas-export-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-image-to-glb-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-image-to-glb-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-image-to-glb-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-image-to-glb-api.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-image-to-threejs-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-image-to-threejs-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-image-to-threejs-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-image-to-threejs-api.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-infinite-canvas-interaction-performance-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-infinite-canvas-interaction-performance-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-infinite-canvas-interaction-performance-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-infinite-canvas-interaction-performance-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ingestor-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ingestor-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ingestor-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ingestor-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-integrations-ssot-sync-directives",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-integrations-ssot-sync-directives.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-integrations-ssot-sync-directives.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-integrations-ssot-sync-directives.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-live-canvas-hero",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-live-canvas-hero.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-live-canvas-hero.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-live-canvas-hero.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-llm-prompt-contract-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-llm-prompt-contract-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-llm-prompt-contract-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-llm-prompt-contract-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-llm-prompt-contract-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-llm-prompt-contract-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-llm-prompt-contract-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-llm-prompt-contract-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-llm-prompt-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-llm-prompt-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-llm-prompt-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-llm-prompt-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-local-storage-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-local-storage-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-local-storage-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-local-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-commerce-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-commerce-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-commerce-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-commerce-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-help-cheatsheet",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-help-cheatsheet.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-help-cheatsheet.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-help-cheatsheet.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-help-dev",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-help-dev.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-help-dev.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-help-dev.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-help-icons",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-help-icons.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-help-icons.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-help-icons.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-help-shortcuts",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-help-shortcuts.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-help-shortcuts.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-help-shortcuts.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-readiness-rubric",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-readiness-rubric.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-readiness-rubric.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-readiness-rubric.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-section-descriptions",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-section-descriptions.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-section-descriptions.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-section-descriptions.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-tabs",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-tabs.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-tabs.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-tabs.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-workflow-links",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-workflow-links.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-workflow-links.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-workflow-links.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-manus-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-manus-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-manus-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-manus-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mapping-stack-prd-tad-extension-delivery-and-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mapping-stack-prd-tad-extension-delivery-and-validation.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mapping-stack-prd-tad-extension-delivery-and-validation.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mapping-stack-prd-tad-extension-delivery-and-validation.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mapping-stack-prd-tad-integration-contracts-and-patterns",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mapping-stack-prd-tad-integration-contracts-and-patterns.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mapping-stack-prd-tad-integration-contracts-and-patterns.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mapping-stack-prd-tad-integration-contracts-and-patterns.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mapping-stack-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mapping-stack-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mapping-stack-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mapping-stack-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-maps-grabmap",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-maps-grabmap.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-maps-grabmap.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-maps-grabmap.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-agent-discovery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-agent-discovery.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-agent-discovery.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-agent-discovery.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-editor-mode-contract-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-editor-mode-contract-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-editor-mode-contract-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-editor-mode-contract-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-processing-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-processing-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-processing-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-processing-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-slide-styling-guidelines-advanced-and-export",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-slide-styling-guidelines-advanced-and-export.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-slide-styling-guidelines-advanced-and-export.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-slide-styling-guidelines-advanced-and-export.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-slide-styling-guidelines",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-slide-styling-guidelines.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-slide-styling-guidelines.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-slide-styling-guidelines.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-markdown-ssot-ui-contract-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-markdown-ssot-ui-contract-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-markdown-ssot-ui-contract-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-markdown-ssot-ui-contract-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp-install-boundary-release-note-20260710",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp-install-boundary-release-note-20260710.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp-install-boundary-release-note-20260710.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp-install-boundary-release-note-20260710.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp-install-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp-install-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp-install-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp-install-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp-onboarding-index",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp-onboarding-index.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp-onboarding-index.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp-onboarding-index.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-exa-mcp-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-exa-mcp-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-exa-mcp-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-exa-mcp-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-feishu-base-mcp-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-feishu-base-mcp-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-feishu-base-mcp-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-lark-app-mcp-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-lark-app-mcp-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-lark-app-mcp-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-agentic-os-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-agentic-os-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-service-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-service-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-mcp.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-sensenova-api-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-sensenova-api-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-sensenova-api-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-sensenova-api-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-stripe-mcp-service.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-stripe-mcp-service.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-stripe-mcp-service.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-stripe-mcp-service.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-stripe-mcp-service",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-stripe-mcp-service.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-stripe-mcp-service.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-stripe-mcp-service.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-videodb-mcp-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mcp/agentic-graph-videodb-mcp-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-videodb-mcp-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-videodb-mcp-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mermaid-frontmatter-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mermaid-frontmatter-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mermaid-frontmatter-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mermaid-frontmatter-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mermaid-layout-configuration-examples",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mermaid-layout-configuration-examples.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mermaid-layout-configuration-examples.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mermaid-layout-configuration-examples.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mermaid-layout-configuration",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mermaid-layout-configuration.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mermaid-layout-configuration.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mermaid-layout-configuration.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-metadata-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-metadata-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-metadata-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-metadata-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mobile-first-enhancement-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mobile-first-enhancement-plan.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mobile-first-enhancement-plan.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mobile-first-enhancement-plan.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-modularity-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-modularity-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-modularity-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-modularity-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-motion-capture-platform-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-motion-capture-platform-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-motion-capture-platform-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-motion-capture-platform-api.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-motion-control-live-camera-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-motion-control-live-camera-readiness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-motion-control-live-camera-readiness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-motion-control-live-camera-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-motion-control-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-motion-control-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-motion-control-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-motion-control-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-multi-user-collaboration-prd.tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-multi-user-collaboration-prd.tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-multi-user-collaboration-prd.tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-multi-user-collaboration-prd.tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-multi-user-collaboration-prd.tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-multi-user-collaboration-prd.tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-multi-user-collaboration-prd.tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-multi-user-collaboration-prd.tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-native-marketplace-settlement-runtime",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-native-marketplace-settlement-runtime.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-native-marketplace-settlement-runtime.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-native-marketplace-settlement-runtime.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-native-overlap-resolution-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-native-overlap-resolution-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-native-overlap-resolution-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-native-overlap-resolution-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-native-physics-engines-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-native-physics-engines-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-native-physics-engines-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-native-physics-engines-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-native-web-import-crawler-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-native-web-import-crawler-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-native-web-import-crawler-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-native-web-import-crawler-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-natural-language-commands-md",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-natural-language-commands-md.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-natural-language-commands-md.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-natural-language-commands-md.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ontology-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ontology-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ontology-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ontology-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-orchestrator-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-orchestrator-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-orchestrator-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-orchestrator-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-parser-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-parser-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-parser-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-parser-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-parser-schema-config-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-parser-schema-config-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-parser-schema-config-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-parser-schema-config-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-payments-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-payments-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-payments-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-payments-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pdf-ocr-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pdf-ocr-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pdf-ocr-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pdf-ocr-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pdf-workspace-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pdf-workspace-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pdf-workspace-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pdf-workspace-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pipeline-deep-dive-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pipeline-deep-dive-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pipeline-deep-dive-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pipeline-deep-dive-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pipeline-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pipeline-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pipeline-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pipeline-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pipeline-map.graph",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pipeline-map.graph.json"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pipeline-map.graph.json"
+      },
+      "documentPath": "docs/documents/agentic-graph-pipeline-map.graph.json",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pitchdeck-frontmatter-template-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pitchdeck-frontmatter-template-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pitchdeck",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pitchdeck.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pitchdeck.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pitchdeck.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-port-handles-and-subgraph-layout-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-port-handles-and-subgraph-layout-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-port-handles-and-subgraph-layout-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-port-handles-and-subgraph-layout-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-prd-tad-adr-conformance-report",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-prd-tad-adr-conformance-report.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-prd-tad-adr-conformance-report.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-conformance-report.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-prd",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-prd.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-prd.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-prd.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-probe-tree-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-probe-tree-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-probe-tree-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-probe-tree-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-pwa",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-pwa.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-pwa.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-pwa.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-query-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-query-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-query-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-query-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-renderer-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-renderer-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-renderer-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-renderer-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-repo-hygiene-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-repo-hygiene-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-repo-hygiene-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-repo-hygiene-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-research-agent-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-research-agent-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-research-agent-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-research-agent-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-rich-media-deliverables-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-rich-media-deliverables-contract.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-rich-media-deliverables-contract.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-rich-media-deliverables-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-schema-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-schema-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-schema-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-schema-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-schema-document.tree-mermaid-appendix",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-schema-document.tree-mermaid-appendix.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-schema-document.tree-mermaid-appendix.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-schema-document.tree-mermaid-appendix.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-semantic-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-semantic-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-semantic-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-semantic-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-settings-document-schema-and-specs",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-settings-document-schema-and-specs.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-settings-document-schema-and-specs.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-settings-document-schema-and-specs.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-settings-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-settings-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-settings-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-settings-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-shared-utils-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-shared-utils-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-shared-utils-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-shared-utils-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-single-file-html-page-export",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-single-file-html-page-export.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-single-file-html-page-export.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-single-file-html-page-export.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-site-selection-widget",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-site-selection-widget.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-site-selection-widget.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-site-selection-widget.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-sme-protection-gap-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-sme-protection-gap-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-sme-protection-gap-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-sme-protection-gap-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-source-files-import-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-source-files-import-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-source-files-import-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-source-files-import-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-spreadsheet-storage-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-spreadsheet-storage-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-spreadsheet-storage-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-spreadsheet-storage-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-git-file-sync-runtime-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-git-file-sync-runtime-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-git-file-sync-runtime-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-git-file-sync-runtime-api.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-schemas-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-schemas-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-schemas-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-schemas-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-schemas-extensions-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-schemas-extensions-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-schemas-extensions-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-schemas-extensions-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-adrs-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-sync-adrs-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-sync-adrs-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-sync-adrs-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-document.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-sync-document.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-sync-document.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-sync-document.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-sync-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-sync-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-sync-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storage-sync-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storyboard-widget-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storyboard-widget-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storyboard-widget-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storyboard-widget-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-storyboard-widget-pan-zoom-overlay-failsafe-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-storyboard-widget-pan-zoom-overlay-failsafe-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-storyboard-widget-pan-zoom-overlay-failsafe-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-storyboard-widget-pan-zoom-overlay-failsafe-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strybldr-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strybldr-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strybldr-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strybldr-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-superagent-harness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-superagent-harness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-superagent-harness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-superagent-harness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-superagent-swarm-checklist",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-superagent-swarm-checklist.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-superagent-swarm-checklist.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-superagent-swarm-checklist.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-swarm-prediction-engine-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-swarm-prediction-engine-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-swarm-prediction-engine-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-swarm-prediction-engine-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-telegram-import-url-tco-plan",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-telegram-import-url-tco-plan.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-telegram-import-url-tco-plan.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-telegram-import-url-tco-plan.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-testing-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-testing-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-testing-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-testing-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-token-and-budget-management-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-token-and-budget-management-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-token-and-budget-management-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-token-and-budget-management-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-token-economics-model-prd-tad.companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-token-economics-model-prd-tad.companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-token-economics-model-prd-tad.companion.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-token-economics-model-prd-tad.companion.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-token-economics-model-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-token-economics-model-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-token-economics-model-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-token-economics-model-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-ui-ux-design-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ui-ux-design-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ui-ux-design-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ui-ux-design-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-vdeoxpln-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-vdeoxpln-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-vdeoxpln-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-vdeoxpln-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-webpage-proxy-and-srcdoc-iframe-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-webpage-proxy-and-srcdoc-iframe-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-webpage-proxy-and-srcdoc-iframe-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-webpage-proxy-and-srcdoc-iframe-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-wechat-mini-program",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-wechat-mini-program.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-wechat-mini-program.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-wechat-mini-program.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-wireframe-enhanced-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-wireframe-enhanced-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-wireframe-enhanced-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-wireframe-enhanced-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-workspace-export-reference",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-workspace-export-reference.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-workspace-export-reference.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-workspace-export-reference.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-gaussian-splat-editor-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-gaussian-splat-editor-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-gaussian-splat-editor-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-gaussian-splat-editor-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-invocation-runtime-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-invocation-runtime-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-invocation-runtime-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-invocation-runtime-api.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-mode-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-mode-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-mode-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-mode-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-motion-reference-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-motion-reference-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-motion-reference-document.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-motion-reference-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-spatial-capture-fallback-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-spatial-capture-fallback-readiness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-spatial-capture-fallback-readiness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-spatial-capture-fallback-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-v2-runtime-readiness",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-v2-runtime-readiness.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-v2-runtime-readiness.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-v2-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-yaml-mermaid-gitgraph-frontmatter-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-yaml-mermaid-gitgraph-frontmatter-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:markdown-convertible-agent-discovery-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "markdown-convertible-agent-discovery-document.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/markdown-convertible-agent-discovery-document.md"
+      },
+      "documentPath": "docs/documents/markdown-convertible-agent-discovery-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:markdown-syntax-guidelines",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "markdown-syntax-guidelines.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/markdown-syntax-guidelines.md"
+      },
+      "documentPath": "docs/documents/markdown-syntax-guidelines.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:refactor-pipeline-cleanup",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "refactor-pipeline-cleanup.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/refactor-pipeline-cleanup.md"
+      },
+      "documentPath": "docs/documents/refactor-pipeline-cleanup.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:sme-care-agent-prd-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "sme-care-agent-prd-tad.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/sme-care-agent-prd-tad.md"
+      },
+      "documentPath": "docs/documents/sme-care-agent-prd-tad.md",
+      "language": "en-us"
+    }
+  ]
+}

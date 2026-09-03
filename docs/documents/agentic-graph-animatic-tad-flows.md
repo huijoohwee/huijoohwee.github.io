@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Animatic Flows & Diagrams Module"
+title: "Agentic Graph Animatic Flows & Diagrams Module"
 doc_type: "Guidelines Module"
 version: "1.0.0"
 date: "2026-08-20"
@@ -10,17 +10,17 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
-parent: "Knowgrph Animatic PRD/TAD"
+parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
 ---
 
-# Knowgrph Animatic Flows & Diagrams Module
+# Agentic Graph Animatic Flows & Diagrams Module
 
 ## Scope & Ownership
 
 Owns the runtime behaviour views: the two workflows, the data flows, and the architecture diagrams.
 
-This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 
@@ -52,7 +52,7 @@ values; no beat overlap exists; timeline strip reflects new positions.
 ## Workflow: Validator Script Run
 
 **Trigger**: `python3 ./scripts/validate_animatic_timeline_interactions.py`  
-**Actors**: QA Validator, ValidatorScript (C9), mounted KGC surface.
+**Actors**: QA Validator, ValidatorScript (C9), mounted AGENTIC_OS surface.
 
 **Happy Path**:
 1. Validator loads test fixture markdown documents
@@ -103,7 +103,7 @@ values; no beat overlap exists; timeline strip reflects new positions.
 
 ```mermaid
 flowchart TB
-  subgraph doc["KGC Document (SSOT)"]
+  subgraph doc["AGENTIC_OS Document (SSOT)"]
     YAML["YAML Frontmatter<br/>timeline.* / flow:"]
     GRAPH["Flow Graph Nodes<br/>NODE_* + beat_ref"]
   end

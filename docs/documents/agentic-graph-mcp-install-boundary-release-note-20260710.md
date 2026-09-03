@@ -1,28 +1,28 @@
-# Knowgrph MCP Install Boundary Release Note 2026-07-10
+# Agentic Graph MCP Install Boundary Release Note 2026-07-10
 
 ## Summary
 
-Knowgrph now publishes one explicit operator-facing MCP install rule for remote hosts.
+Agentic Graph now publishes one explicit operator-facing MCP install rule for remote hosts.
 
 Map intent. Orchestrate agents. Prove outcomes.
 
 A source-backed canvas where `/` routes work, `#` sets meaning, and `@` binds context.
 
-- Public install and discovery stay on `https://airvio.co/knowgrph/mcp`
+- Public install and discovery stay on `https://airvio.co/agentic-graph/mcp`
 - Approval-gated orchestration and live `/`, `#`, `@` grammar invocation stay on
-  `https://airvio.co/knowgrph/control-plane/mcp`
+  `https://airvio.co/agentic-graph/control-plane/mcp`
 - The canonical onboarding and host recipes now live in
-  `docs/documents/knowgrph-mcp-install-contract.md`
+  `docs/documents/agentic-graph-mcp-install-contract.md`
 - The Live Canvas Hero Markdown discovery contract now lives in
   `docs/documents/markdown-convertible-agent-discovery-document.md`
 - The cheapest proof path before hosted setup is the source-side offline deterministic route in
-  `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`
+  `huijoohwee/agentic-graph` `README.md` or `docs/documents/agentic-graph-superagent-harness.md`
 
 This update is documentation-only. It does not change runtime ownership, route behavior, or MCP
 tool registration.
 
 For the one-page onboarding path across the install contract, agent-ready context, and MCP
-overview, open `docs/documents/knowgrph-mcp-onboarding-index.md`.
+overview, open `docs/documents/agentic-graph-mcp-onboarding-index.md`.
 
 ## Shipped Change
 
@@ -37,7 +37,7 @@ overview, open `docs/documents/knowgrph-mcp-onboarding-index.md`.
 ## Latest Release Evidence (2026-07-11)
 
 - Pages preview: `https://8ccfa5b7.joohwee.pages.dev`
-- Live route: `https://airvio.co/knowgrph/`
+- Live route: `https://airvio.co/agentic-graph/`
 - Live verify: `npm run runtime:verify` passed
 - Canonical docs seed: `node ./scripts/seed-storage-docs-to-cloudflare.mjs` passed
 - Canonical docs seed proof:
@@ -63,11 +63,11 @@ For the landing-surface discovery route and public Markdown proof, use
 
 Use:
 
-- Map intent: `https://airvio.co/knowgrph/mcp` for basic remote MCP installation, discovery,
+- Map intent: `https://airvio.co/agentic-graph/mcp` for basic remote MCP installation, discovery,
   read-only retrieval, prompt discovery, resource discovery, and inspection
-- Orchestrate agents: `https://airvio.co/knowgrph/control-plane/mcp` only when the host can
+- Orchestrate agents: `https://airvio.co/agentic-graph/control-plane/mcp` only when the host can
   manage the MCP session flow and needs approval-gated orchestration or live
-  `knowgrph.agentic_canvas_os.docs.invoke`
+  `agentic-graph.agentic_canvas_os.docs.invoke`
 
 To prove outcomes before setup, use the local harness path first. If a host cannot manage the
 second sessioned MCP surface, keep discovery on the public endpoint and route grammar invocation
@@ -77,9 +77,9 @@ through an app-owned forwarder.
 
 When an operator needs live grammar rather than read-only discovery:
 
-1. install `https://airvio.co/knowgrph/mcp` first
-2. add `https://airvio.co/knowgrph/control-plane/mcp` only for session-capable hosts
-3. execute grammar through `knowgrph.agentic_canvas_os.docs.invoke`
+1. install `https://airvio.co/agentic-graph/mcp` first
+2. add `https://airvio.co/agentic-graph/control-plane/mcp` only for session-capable hosts
+3. execute grammar through `agentic-graph.agentic_canvas_os.docs.invoke`
 
 Current live examples:
 
@@ -90,13 +90,13 @@ Current live examples:
 ## Source Of Truth
 
 - Canonical install contract:
-  `docs/documents/knowgrph-mcp-install-contract.md`
+  `docs/documents/agentic-graph-mcp-install-contract.md`
 - Canonical Markdown discovery contract:
   `docs/documents/markdown-convertible-agent-discovery-document.md`
 - Canonical agent-ready landing doc:
-  `docs/documents/knowgrph-agent-ready-document.md`
+  `docs/documents/agentic-graph-agent-ready-document.md`
 - Canonical MCP overview:
-  `docs/documents/knowgrph-mcp/knowgrph-mcp.md`
+  `docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
 - Planning ledger:
   `todo-log.md`
 
@@ -104,7 +104,7 @@ Current live examples:
 
 For publish-side promotion retry semantics, use:
 
-- `https://airvio.co/knowgrph/.well-known/mcp/apps/knowgrph-agent-ready.html`
+- `https://airvio.co/agentic-graph/.well-known/mcp/apps/agentic-graph-agent-ready.html`
 
 That card reuses the shared MCP Apps source owner and shows the template-only
 `#promotion.retry <path...>` contract. Exact path-bearing retry commands still come from
@@ -112,7 +112,7 @@ browser-local finalize inspection after a real mirroring failure.
 
 ## Guardrails
 
-- Do not document `/knowgrph/mcp` as if it already exposes the control-plane grammar tool.
+- Do not document `/agentic-graph/mcp` as if it already exposes the control-plane grammar tool.
 - Do not collapse public discovery and approval-gated orchestration into one install URL by copy.
 - Do not claim universal one-URL plug-and-play grammar invocation for hosts that cannot manage MCP
   session lifecycle.

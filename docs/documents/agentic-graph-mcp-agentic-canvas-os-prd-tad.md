@@ -1,34 +1,34 @@
 ---
-title: "Knowgrph MCP Agentic Canvas OS"
+title: "Agentic Graph MCP Agentic Canvas OS"
 doc_type: "PRD + TAD"
 version: "0.3.3"
 status: "superseded"
-superseded_by: "knowgrph/docs/documents/knowgrph-agentic-os-prd-tad.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
+superseded_by: "agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
 superseded_publish_entry_points:
-  - "docs/documents/knowgrph-mcp-service-prd-tad.md"
-  - "docs/documents/knowgrph-mcp-agentic-os-prd-tad.md"
-  - "docs/documents/knowgrph-mcp-onboarding-index.md"
+  - "docs/documents/agentic-graph-mcp-service-prd-tad.md"
+  - "docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md"
+  - "docs/documents/agentic-graph-mcp-onboarding-index.md"
 superseded_date: "2026-07-03"
 superseded_note: "The Vercel product tier, AWS Agent-API fallback, and AWS AgentCore wrapper lane described below are REMOVED from the runtime topology. Video_Remix Director connector content is consolidated into the Agentic OS PRD/TAD as a native-in-repo harness. MCP Gateway is discovery-first federation over four existing surfaces (ADR-4) — not a fifth proxy tier. This file is retained for historical reference only; do not derive runtime, deployment, or stack decisions from it."
 date: "2026-06-10"
 lang: "en-US"
 owners:
-  - "knowgrph mcp agentic canvas os"
+  - "agentic-graph mcp agentic canvas os"
 product: "agentic-canvas-os"
-canonical_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md"
-agent_ready_ssot: "https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md"
-topology: "knowgrph = native-in-repo control plane + MCP Gateway federation; Vercel/AWS tiers removed (ADR-3)"
+canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md"
+agent_ready_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agent-ready-document.md"
+topology: "agentic-graph = native-in-repo control plane + MCP Gateway federation; Vercel/AWS tiers removed (ADR-3)"
 repos:
-  dev: "$GITHUB_ROOT/knowgrph"
-  prod: "$GITHUB_ROOT/huijoohwee/content/knowgrph"
+  dev: "$GITHUB_ROOT/agentic-graph"
+  prod: "$GITHUB_ROOT/huijoohwee/content/agentic-graph"
   product: "https://github.com/huijoohwee/agentic-canvas-os"
-  product_status: "realized split repo for the product tier; knowgrph remains the control-plane + contract SSOT, with reference implementations also present under knowgrph/aws/{agent-api,agentcore}, knowgrph/web, knowgrph/contracts"
+  product_status: "realized split repo for the product tier; agentic-graph remains the control-plane + contract SSOT, with reference implementations also present under agentic-graph/aws/{agent-api,agentcore}, agentic-graph/web, agentic-graph/contracts"
 deploy:
-  control_plane: "Cloudflare (airvio.co, airvio.co/knowgrph) — from knowgrph/cloudflare"
+  control_plane: "Cloudflare (airvio.co, airvio.co/agentic-graph) — from agentic-graph/cloudflare"
   frontend: "Vercel (agentic-canvas-os product tier) — deployed from agentic-canvas-os/web"
-  backend: "Vercel serverless Agent-API (primary/default) from agentic-canvas-os/web/api + AWS Agent-API fallback from agentic-canvas-os/agent-api; AgentCore wrapper lane remains in knowgrph/aws/agentcore"
+  backend: "Vercel serverless Agent-API (primary/default) from agentic-canvas-os/web/api + AWS Agent-API fallback from agentic-canvas-os/agent-api; AgentCore wrapper lane remains in agentic-graph/aws/agentcore"
 stack:
-  knowgrph:
+  agentic-graph:
     - "Cloudflare Workers + Pages (control-plane host)"
     - "Cloudflare AI Gateway (model routing, response caching, token counting, fallback, unified billing)"
     - "MCP server on Cloudflare Workers via Agents SDK (McpAgent + Workflows + HITL needsApproval + queue/retry + diagnostics observability)"
@@ -37,7 +37,7 @@ stack:
     - "Stripe (payments and payouts)"
   agentic-canvas-os:
     - "Vercel (product frontend host + primary/default Agent-API serverless routes) — source at agentic-canvas-os/web"
-    - "AWS (fallback Agent-API host + additive AgentCore wrapper lane) — source at agentic-canvas-os/agent-api and knowgrph/aws/agentcore"
+    - "AWS (fallback Agent-API host + additive AgentCore wrapper lane) — source at agentic-canvas-os/agent-api and agentic-graph/aws/agentcore"
 lenses:
   - "min-viable-max-value"
   - "tco-zero"
@@ -46,39 +46,39 @@ lenses:
 frontmatter_contract: "required"
 ---
 
-# Knowgrph MCP Agentic Canvas OS
+# Agentic Graph MCP Agentic Canvas OS
 
 > **SUPERSEDED (2026-07-03)**: this document is consolidated into
-> [`knowgrph/docs/documents/knowgrph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md) **v0.4.0**
-> and [`knowgrph/docs/documents/knowgrph-agent-ready-document.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agent-ready-document.md) **v1.2.0**.
+> [`agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md) **v0.4.0**
+> and [`agentic-graph/docs/documents/agentic-graph-agent-ready-document.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agent-ready-document.md) **v1.2.0**.
 > The Vercel and AWS tiers described below are removed from the runtime topology; Supabase is permanently excluded.
 > Retained for historical reference only.
 >
 > For the current publish-side MCP contract pages, open
-> `docs/documents/knowgrph-mcp-service-prd-tad.md` for the implemented MCP
-> baseline and `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md` for the
+> `docs/documents/agentic-graph-mcp-service-prd-tad.md` for the implemented MCP
+> baseline and `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md` for the
 > Agentic Canvas OS orchestration contract.
 >
 > For the current remote MCP onboarding path, start with
-> `docs/documents/knowgrph-mcp-onboarding-index.md`, then use
-> `docs/documents/knowgrph-mcp-install-contract.md` for the canonical
-> `/knowgrph/mcp` vs `/knowgrph/control-plane/mcp` boundary.
-> Map intent on `https://airvio.co/knowgrph/mcp`, orchestrate agents on
-> `https://airvio.co/knowgrph/control-plane/mcp` only for session-capable
+> `docs/documents/agentic-graph-mcp-onboarding-index.md`, then use
+> `docs/documents/agentic-graph-mcp-install-contract.md` for the canonical
+> `/agentic-graph/mcp` vs `/agentic-graph/control-plane/mcp` boundary.
+> Map intent on `https://airvio.co/agentic-graph/mcp`, orchestrate agents on
+> `https://airvio.co/agentic-graph/control-plane/mcp` only for session-capable
 > hosts, and prove outcomes first with the source-side `README.md` or
-> `docs/documents/knowgrph-superagent-harness.md` offline path.
+> `docs/documents/agentic-graph-superagent-harness.md` offline path.
 
 ## Consolidation Map (what moved where)
 
 | Former content (this doc) | Current SSOT (native-in-repo) |
 |---|---|
-| Video_Remix Director + 5 stage harnesses | `knowgrph-agentic-os-prd-tad.md` → Component: Video_Remix Director; `mcp/video-remix-runtime.js` |
+| Video_Remix Director + 5 stage harnesses | `agentic-graph-agentic-os-prd-tad.md` → Component: Video_Remix Director; `mcp/video-remix-runtime.js` |
 | Vercel frontend + Agent-API primary | **Removed** (ADR-3) → CF Pages product frontend |
-| AWS Agent-API fallback + AgentCore | **Removed** (ADR-3) → Cloudflare `McpAgent` at `/knowgrph/control-plane/mcp` |
-| Agent discovery + HTTP MCP | `knowgrph-agent-ready-document.md` → Pages HTTP MCP `/knowgrph/mcp` |
-| MCP Gateway (unified agent onboarding) | `knowgrph-agentic-os-prd-tad.md` ADR-4 → four-surface federation + `knowgrph.os.status` |
-| Agentic OS cross-harness visibility | `knowgrph-agentic-os-prd-tad.md` → `knowgrph.os.status` (5 read views) |
-| Agentic OS follow-on (HITL / live / dashboard) | [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md): Tracks A/B/C |
+| AWS Agent-API fallback + AgentCore | **Removed** (ADR-3) → Cloudflare `McpAgent` at `/agentic-graph/control-plane/mcp` |
+| Agent discovery + HTTP MCP | `agentic-graph-agent-ready-document.md` → Pages HTTP MCP `/agentic-graph/mcp` |
+| MCP Gateway (unified agent onboarding) | `agentic-graph-agentic-os-prd-tad.md` ADR-4 → four-surface federation + `agentic-graph.os.status` |
+| Agentic OS cross-harness visibility | `agentic-graph-agentic-os-prd-tad.md` → `agentic-graph.os.status` (5 read views) |
+| Agentic OS follow-on (HITL / live / dashboard) | [`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md): Tracks A/B/C |
 | HITL approval gates | Unchanged in-repo → `contracts/approval.schema.js`, `mcp/video-remix/approval-token-issuer.js` (local **implemented**) |
 | Cloudflare AI Gateway model routing | Unchanged → Cloudflare Workers + AI Gateway binding |
 
@@ -86,10 +86,10 @@ frontmatter_contract: "required"
 
 Use these publish-side docs instead of this historical record for current MCP/runtime understanding:
 
-- `docs/documents/knowgrph-mcp-onboarding-index.md`
-- `docs/documents/knowgrph-mcp-install-contract.md`
-- `docs/documents/knowgrph-mcp-service-prd-tad.md`
-- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md`
+- `docs/documents/agentic-graph-mcp-onboarding-index.md`
+- `docs/documents/agentic-graph-mcp-install-contract.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md`
 
 ## Markdown YAML Frontmatter Contract
 
@@ -103,9 +103,9 @@ Use these publish-side docs instead of this historical record for current MCP/ru
 
 ## Dev Implementation Status — 2026-06-09
 
-- Implemented in Dev only: `knowgrph.video_remix.run` is now exposed through the existing local MCP server contract as an approval-gated video-remix run manifest.
-- Shared owners: `mcp/video-remix-runtime.js`, `mcp/local-tool-contract.js`, `mcp/server.js`, and `canvas/src/features/agent-ready/knowgrphVdeoxplnContract.mjs`.
-- Implemented acceptance coverage: live mode without approvals blocks with zero estimated cost and no provider execution log; source-card-backed research enforces citations; storyboard emits `kgc-computing-flow/v1` with one node per planned shot; checkout/payout requires `payment-action`; injected failure retries within `maxIterations` and fails closed.
+- Implemented in Dev only: `agentic-graph.video_remix.run` is now exposed through the existing local MCP server contract as an approval-gated video-remix run manifest.
+- Shared owners: `mcp/video-remix-runtime.js`, `mcp/local-tool-contract.js`, `mcp/server.js`, and `canvas/src/features/agent-ready/agentic-graphVdeoxplnContract.mjs`.
+- Implemented acceptance coverage: live mode without approvals blocks with zero estimated cost and no provider execution log; source-card-backed research enforces citations; storyboard emits `agentic-os-computing-flow/v1` with one node per planned shot; checkout/payout requires `payment-action`; injected failure retries within `maxIterations` and fails closed.
 - Non-implemented by design in this Dev pass: no Prod mirror, Cloudflare deploy, AWS deploy, Vercel deploy, Stripe mutation, Exa live fetch, BytePlus provider call, or payout settlement was executed.
 - Local research evidence is source-card driven so validation can prove the contract without fabricating live Exa results or spending tokens.
 
@@ -115,7 +115,7 @@ Use these publish-side docs instead of this historical record for current MCP/ru
 
 ### Problem Statement
 
-A solo AI-native founder can already ship a deployed knowledge-graph product on Cloudflare (`airvio.co/knowgrph`) with a working video-generation pipeline (BytePlus), an Exa research integration, and a Stripe payment worker — but these capabilities are **disconnected dry-run surfaces**. There is no single autonomous agent that takes a creative goal and a reference video URL and drives the full loop: research -> plan -> generate -> sell, across the mandated hackathon stack (AWS backend, Vercel frontend, Exa, Stripe). The pain is **fragmentation and manual orchestration**: every stage is a separate tool invocation, there is no live execution mode, no human-approval gating across spend boundaries, and no judge-ready evidence pack. The opportunity is to turn the existing `knowgrph.agentic_canvas_os.plan` dry-run planner into the **live control plane** for a deployed product, `agentic-canvas-os`, reusing existing assets at near-zero incremental TCO.
+A solo AI-native founder can already ship a deployed knowledge-graph product on Cloudflare (`airvio.co/agentic-graph`) with a working video-generation pipeline (BytePlus), an Exa research integration, and a Stripe payment worker — but these capabilities are **disconnected dry-run surfaces**. There is no single autonomous agent that takes a creative goal and a reference video URL and drives the full loop: research -> plan -> generate -> sell, across the mandated hackathon stack (AWS backend, Vercel frontend, Exa, Stripe). The pain is **fragmentation and manual orchestration**: every stage is a separate tool invocation, there is no live execution mode, no human-approval gating across spend boundaries, and no judge-ready evidence pack. The opportunity is to turn the existing `agentic-graph.agentic_canvas_os.plan` dry-run planner into the **live control plane** for a deployed product, `agentic-canvas-os`, reusing existing assets at near-zero incremental TCO.
 
 ### Personas
 
@@ -130,8 +130,8 @@ A solo AI-native founder can already ship a deployed knowledge-graph product on 
 | Stage    | Action                                   | Touchpoint                    | Pain Point                          | Opportunity                                  |
 |----------|------------------------------------------|-------------------------------|-------------------------------------|----------------------------------------------|
 | Trigger  | Pastes reference video URL + brief       | Vercel frontend chat          | Unclear what the agent will do/cost | Show planned stages + budget upfront         |
-| Discover | Agent researches the reference           | Exa via knowgrph MCP          | Generic, unsourced suggestions      | Cited evidence pack from live web            |
-| Engage   | Reviews storyboard on canvas             | knowgrph canvas (embedded)    | No visual of the plan               | Shot-plan graph, one node per shot           |
+| Discover | Agent researches the reference           | Exa via agentic-graph MCP          | Generic, unsourced suggestions      | Cited evidence pack from live web            |
+| Engage   | Reviews storyboard on canvas             | agentic-graph canvas (embedded)    | No visual of the plan               | Shot-plan graph, one node per shot           |
 | Approve  | Approves budget + render                 | HITL gate in UI               | Fear of runaway spend               | Per-gate approval tokens, bounded budget     |
 | Complete | Receives rendered remix + checkout       | Vercel UI + Stripe checkout   | No clear way to pay/own output      | One-click Stripe purchase, asset delivery    |
 | Return   | Comes back for a new remix               | Saved runs / canvas history   | Loses prior context                 | Learning-loop recall of preferences          |
@@ -154,10 +154,10 @@ A solo AI-native founder can already ship a deployed knowledge-graph product on 
 
 **AC-1 (Live run, gated)**
 **Given** a reference video URL, a creative brief, and a budget cap
-**When** the operator calls `knowgrph.video_remix.run` in `mode:"live"` without approval tokens
+**When** the operator calls `agentic-graph.video_remix.run` in `mode:"live"` without approval tokens
 **Then** the run halts at the first spend gate in `dry-run` state and emits the required approval gates, performing zero paid actions
 
-> **`/goal` translation**: `knowgrph.video_remix.run live without approval tokens returns state "blocked" with approvalGates length >= 5 and budgetMeters.estimatedCostUsd == 0, and no Stripe/BytePlus/deploy call is logged`
+> **`/goal` translation**: `agentic-graph.video_remix.run live without approval tokens returns state "blocked" with approvalGates length >= 5 and budgetMeters.estimatedCostUsd == 0, and no Stripe/BytePlus/deploy call is logged`
 
 **AC-2 (Research is sourced)**
 **Given** a reference video URL
@@ -169,16 +169,16 @@ A solo AI-native founder can already ship a deployed knowledge-graph product on 
 **AC-3 (Storyboard materializes on canvas)**
 **Given** an approved brief
 **When** the storyboard stage runs
-**Then** a KGC canvas document is produced with one node per planned shot and a valid frontmatter flow
+**Then** a AGENTIC_OS canvas document is produced with one node per planned shot and a valid frontmatter flow
 
-> **`/goal` translation**: `the emitted canvas document parses as kgc-computing-flow/v1 and flow.nodes length == number of planned shots`
+> **`/goal` translation**: `the emitted canvas document parses as agentic-os-computing-flow/v1 and flow.nodes length == number of planned shots`
 
 **AC-4 (Render reuses existing pipeline)**
 **Given** an approved render gate
 **When** the render stage runs
 **Then** generation is dispatched through the existing Strytree/BytePlus queue and produces an R2-stored asset reference
 
-> **`/goal` translation**: `render stage returns an asset URL under the knowgrph media bucket and a credit-ledger event id`
+> **`/goal` translation**: `render stage returns an asset URL under the agentic-graph media bucket and a credit-ledger event id`
 
 **AC-5 (Sale + payout gated)**
 **Given** a published asset
@@ -237,7 +237,7 @@ A solo AI-native founder can already ship a deployed knowledge-graph product on 
 
 ### Min-Viable Scope
 
-One hero, fully gated end-to-end flow per AC-1..AC-7: a single director run that researches a reference video (Exa), storyboards onto the knowgrph canvas, renders via the existing BytePlus pipeline, and sells via Stripe — surfaced through a deployed Vercel UI using same-origin Vercel Agent-API routes as the primary path, with AWS retained as the fallback health-checked endpoint, and all spend behind approval tokens. Explicitly excludes all Could/Won't items.
+One hero, fully gated end-to-end flow per AC-1..AC-7: a single director run that researches a reference video (Exa), storyboards onto the agentic-graph canvas, renders via the existing BytePlus pipeline, and sells via Stripe — surfaced through a deployed Vercel UI using same-origin Vercel Agent-API routes as the primary path, with AWS retained as the fallback health-checked endpoint, and all spend behind approval tokens. Explicitly excludes all Could/Won't items.
 
 ### Out of Scope
 
@@ -255,7 +255,7 @@ One hero, fully gated end-to-end flow per AC-1..AC-7: a single director run that
 - Exa MCP (hosted-free or API-key) per `exaMcpSsot`.
 - AWS account (CDK, Lambda, API Gateway, S3) — no model keys on AWS.
 - Vercel account (project + static/frontend + serverless route deploy).
-- Knowgrph MCP server + tool-contract registration.
+- Agentic Graph MCP server + tool-contract registration.
 
 ### Open Questions
 
@@ -264,7 +264,7 @@ One hero, fully gated end-to-end flow per AC-1..AC-7: a single director run that
 - Resolved: the product surface is a thin Vercel-hosted web app plus same-origin serverless API routes; no Next.js-only assumption is required in the spec.
 - Whether checkout sells per-asset (one-time) or subscription for MVP demo.
 - Exa connection mode for demo: hosted-free vs API-key header.
-- Whether to migrate the deployed HTTP MCP (`cloudflare/pages/knowgrph-agent-ready.mjs`) to an Agents SDK `McpAgent` Worker now or incrementally (ADR-7).
+- Whether to migrate the deployed HTTP MCP (`cloudflare/pages/agentic-graph-agent-ready.mjs`) to an Agents SDK `McpAgent` Worker now or incrementally (ADR-7).
 
 ---
 
@@ -274,24 +274,24 @@ One hero, fully gated end-to-end flow per AC-1..AC-7: a single director run that
 
 ### Overview
 
-**From a reference video URL to a sold remix**: the Vercel frontend (in `agentic-canvas-os`) collects intent -> same-origin Vercel Agent-API routes mint/verify Auth_Tokens and forward the run to the knowgrph MCP control plane on Cloudflare -> if the Vercel route is unavailable or returns 5xx, the browser can retry against the AWS Agent-API fallback -> the control plane MCP server built on the **Agents SDK (`McpAgent`)** delegates to research (Exa), storyboard (knowgrph canvas), render (BytePlus via the existing payment worker), and commerce (Stripe) harnesses -> **every model call routes through Cloudflare AI Gateway** for caching, token counting, fallback, and unified billing -> human approval gates (`needsApproval`) bind every spend boundary -> the returned run manifest drives a run-scoped `doc-view` iframe so the product consumes the live knowgrph canvas rather than rebuilding it.
+**From a reference video URL to a sold remix**: the Vercel frontend (in `agentic-canvas-os`) collects intent -> same-origin Vercel Agent-API routes mint/verify Auth_Tokens and forward the run to the agentic-graph MCP control plane on Cloudflare -> if the Vercel route is unavailable or returns 5xx, the browser can retry against the AWS Agent-API fallback -> the control plane MCP server built on the **Agents SDK (`McpAgent`)** delegates to research (Exa), storyboard (agentic-graph canvas), render (BytePlus via the existing payment worker), and commerce (Stripe) harnesses -> **every model call routes through Cloudflare AI Gateway** for caching, token counting, fallback, and unified billing -> human approval gates (`needsApproval`) bind every spend boundary -> the returned run manifest drives a run-scoped `doc-view` iframe so the product consumes the live agentic-graph canvas rather than rebuilding it.
 
 ### Tech Stack (per repo)
 
 > **Topology note (UPDATED):** the two columns below are now backed by two real
-> repos. `knowgrph` remains the control-plane + contract SSOT. The split product
+> repos. `agentic-graph` remains the control-plane + contract SSOT. The split product
 > shell lives in `agentic-canvas-os`, where the Vercel web app and same-origin
 > serverless routes are the PRIMARY/DEFAULT product path and the AWS Agent-API is
-> the FALLBACK path. Reference implementations remain mirrored in `knowgrph`
-> (`knowgrph/aws/agent-api`, `knowgrph/web`, `knowgrph/contracts`,
-> `knowgrph/aws/agentcore`) so the runtime seams can stay aligned. The stack
+> the FALLBACK path. Reference implementations remain mirrored in `agentic-graph`
+> (`agentic-graph/aws/agent-api`, `agentic-graph/web`, `agentic-graph/contracts`,
+> `agentic-graph/aws/agentcore`) so the runtime seams can stay aligned. The stack
 > boundary (R11) is enforced by repo ownership + secret-scan smoke tests, not by
 > claims that MCP and canvas rendering are the same transport. SSOT:
-> [`knowgrph/docs/knowgrph-acos-topology-decision.md`](../../knowgrph/docs/knowgrph-acos-topology-decision.md).
+> [`agentic-graph/docs/agentic-graph-acos-topology-decision.md`](../../agentic-graph/docs/agentic-graph-acos-topology-decision.md).
 
-The two tiers own distinct stacks; the product (`agentic-canvas-os`) delegates all intelligence and spend-bearing actions to the knowgrph control plane.
+The two tiers own distinct stacks; the product (`agentic-canvas-os`) delegates all intelligence and spend-bearing actions to the agentic-graph control plane.
 
-| Concern | `knowgrph` (control plane) | `agentic-canvas-os` (product) |
+| Concern | `agentic-graph` (control plane) | `agentic-canvas-os` (product) |
 |---|---|---|
 | Host | Cloudflare Workers + Pages (`airvio.co`) | Vercel (frontend + primary/default Agent-API) + AWS (fallback Agent-API / additive AgentCore wrapper) |
 | Agent runtime | MCP server on Cloudflare Workers via Agents SDK (`McpAgent`, `AgentWorkflow`) | thin Agent-API adapters calling the control plane |
@@ -311,7 +311,7 @@ The two tiers own distinct stacks; the product (`agentic-canvas-os`) delegates a
 |---------------|----------|-----------|-----------|
 | Trigger | Submit intent | brief+url -> same-origin `/api/run` request -> MCP forward | Vercel frontend + Vercel Agent-API primary |
 | Discover | Research | url -> Exa query -> evidence pack | Research harness |
-| Engage | Storyboard | evidence -> shot plan -> KGC doc | Storyboard harness + knowgrph canvas |
+| Engage | Storyboard | evidence -> shot plan -> AGENTIC_OS doc | Storyboard harness + agentic-graph canvas |
 | Approve | Gate | gate request -> approval token | HITL gate service |
 | Complete | Render + Sell | shot -> BytePlus job -> R2 asset -> Stripe session | Render harness + Commerce harness |
 | Return | Recall | trace -> recall cards | Learning-loop service |
@@ -319,18 +319,18 @@ The two tiers own distinct stacks; the product (`agentic-canvas-os`) delegates a
 ### Work Flow: Video-Remix Director Run
 
 **Trigger**: User submits a reference video URL, a creative brief, and a budget cap from the Vercel frontend.
-**Actors**: End creator user; Vercel frontend; Vercel Agent-API (primary/default); AWS Agent-API (fallback); knowgrph MCP control plane (`McpAgent`); Director Workflow; Research/Storyboard/Render/Commerce harnesses; HITL Gate Service; Cloudflare AI Gateway; Exa; BytePlus; Stripe.
+**Actors**: End creator user; Vercel frontend; Vercel Agent-API (primary/default); AWS Agent-API (fallback); agentic-graph MCP control plane (`McpAgent`); Director Workflow; Research/Storyboard/Render/Commerce harnesses; HITL Gate Service; Cloudflare AI Gateway; Exa; BytePlus; Stripe.
 
 **Happy Path**:
 1. User submits intent -> Vercel frontend POSTs to same-origin `/api/auth/session`, then `/api/run`.
-2. Vercel Agent-API verifies the Auth_Token and forwards an MCP `knowgrph.video_remix.run` call (mode=live) -> control plane starts a Director `AgentWorkflow`.
+2. Vercel Agent-API verifies the Auth_Token and forwards an MCP `agentic-graph.video_remix.run` call (mode=live) -> control plane starts a Director `AgentWorkflow`.
 3. If the Vercel Agent-API is unavailable or returns 5xx, the browser retries the same request against the configured AWS Agent-API fallback.
 4. Research harness calls Exa (model summary via Cloudflare AI Gateway) -> emits cited evidence pack.
-5. Storyboard harness reasons over evidence (BytePlus via Cloudflare AI Gateway) -> emits a KGC shot-plan canvas document.
+5. Storyboard harness reasons over evidence (BytePlus via Cloudflare AI Gateway) -> emits a AGENTIC_OS shot-plan canvas document.
 6. Director raises a `needsApproval` budget + render gate -> user approves -> the browser re-submits `/api/run` with updated `approvals[]`.
 7. Render harness dispatches per-shot generation through the existing BytePlus/Strytree queue -> R2 assets + credit-ledger events.
 8. Director raises a `needsApproval` payment gate -> user approves -> Commerce harness publishes the asset and creates a Stripe checkout session.
-9. On checkout webhook success, payout settles -> Director assembles the run manifest + demo pack -> Agent-API returns result -> frontend renders asset + receipt and embeds the run-scoped knowgrph `doc-view` iframe. Workflow completes.
+9. On checkout webhook success, payout settles -> Director assembles the run manifest + demo pack -> Agent-API returns result -> frontend renders asset + receipt and embeds the run-scoped agentic-graph `doc-view` iframe. Workflow completes.
 
 **Alternate Paths**:
 - Weak evidence (< 3 Exa sources): Director marks research `weak_signal`, surfaces a "collect more evidence" prompt, and pauses before storyboard rather than fabricating sources.
@@ -350,19 +350,19 @@ The two tiers own distinct stacks; the product (`agentic-canvas-os`) delegates a
 |-------|-----------|--------------|---------------|-------------|----------------|
 | Ingest | Vercel Agent-API `/api/run` (primary) + AWS `/run` (fallback) | `{ referenceUrl, brief, budgetUsd, approvals[] }` JSON | validated MCP `run` args | none (pass-through) | 4xx on schema fail; fallback only on transport error or 5xx |
 | Research | Research harness -> Exa (via AI Gateway) | `{ referenceUrl, query?, maxResults<=10 }` | `{ sources[], citations[], summary }` | run manifest (Workers SQLite) | degraded summary, `weak_signal`, never fabricate sources |
-| Transform | Storyboard harness -> BytePlus (via AI Gateway) | `{ brief, evidencePack, shotCount? }` | `kgc-computing-flow/v1` markdown + `{ nodes[], edges[] }` | KGC doc in R2/Source Files | minimal single-scene fallback |
+| Transform | Storyboard harness -> BytePlus (via AI Gateway) | `{ brief, evidencePack, shotCount? }` | `agentic-os-computing-flow/v1` markdown + `{ nodes[], edges[] }` | AGENTIC_OS doc in R2/Source Files | minimal single-scene fallback |
 | Gate | HITL Gate Service (`needsApproval`) | `{ gateId, decision, token }` | approval token | Durable Object state | reject -> stage stays `approval_required` |
 | Store/Render | Render harness -> BytePlus queue -> R2 | `{ shots[], renderGateToken }` | `{ assets:[{ shotId, assetUrl, ledgerEventId, costCents }] }` | R2 media bucket + credit-ledger DO | budget guard -> mock provider; queue retry/DLQ |
 | Serve/Sell | Commerce harness -> Stripe | `{ assetUrl, priceId, paymentGateToken }` | `{ sessionId }` + signed asset URL | D1 order record + R2 asset | gate rejection; webhook reconciliation |
-| Consume | Vercel frontend + knowgrph `doc-view` | run manifest + signed URLs + run-scoped canvas URL | rendered UI (asset + receipt + demo pack + iframe canvas) | CDN cache | fallback to manifest-only UI when canvas iframe is unavailable |
+| Consume | Vercel frontend + agentic-graph `doc-view` | run manifest + signed URLs + run-scoped canvas URL | rendered UI (asset + receipt + demo pack + iframe canvas) | CDN cache | fallback to manifest-only UI when canvas iframe is unavailable |
 
 Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }`, satisfying the harness cost-log contract and the token-economics quality attribute.
 
 ### Component Specifications
 
-**Component**: Director Orchestrator (`knowgrph.video_remix.run`)
+**Component**: Director Orchestrator (`agentic-graph.video_remix.run`)
 **Responsibility**: Sequences stages, enforces budget and approval gates, applies bounded-retry failure handling.
-**Runtime**: Cloudflare Worker MCP server via Agents SDK — a durable `AgentWorkflow` with `this.retry()` (backoff + jitter), `needsApproval` HITL gates, built-in `queue()`, and `diagnostics_channel` observability; tool surface exposed through `McpAgent` (Streamable HTTP transport on `airvio.co/knowgrph/mcp`).
+**Runtime**: Cloudflare Worker MCP server via Agents SDK — a durable `AgentWorkflow` with `this.retry()` (backoff + jitter), `needsApproval` HITL gates, built-in `queue()`, and `diagnostics_channel` observability; tool surface exposed through `McpAgent` (Streamable HTTP transport on `airvio.co/agentic-graph/mcp`).
 **Interfaces**: MCP tool — input `{ referenceUrl, brief, budgetUsd, mode, approvals[] }`, output run manifest `{ state, stages[], approvalGates[], budgetMeters, demoPack }`.
 **Dependencies**: research/storyboard/render/commerce harnesses; Cloudflare AI Gateway for all model calls; reuses `buildPlanner`, `buildToolCalls`, `buildApprovalGates`, `buildFailureHandling` from `mcp/agentic-canvas-os-lanes.js`.
 **Configuration**: `maxIterations`, `tokenBudget`, `tcoBudgetUsd`, `mode` (dry-run|live), `AI_GATEWAY_ID`.
@@ -370,7 +370,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **Orchestration Topology**: Agentic loop — max `maxIterations` (default 8), circuit-breaker: `state in {blocked, budget_exceeded, approval_required, verification_failed}`.
 **`/goal` Conditions**: AC-1, AC-6.
 
-**Component**: Research Harness (`knowgrph.video_remix.research`)
+**Component**: Research Harness (`agentic-graph.video_remix.research`)
 **Responsibility**: Retrieves and cites live web context about the reference video.
 **Interfaces**: input `{ referenceUrl, query?, maxResults }`, output `{ sources[], citations[], summary }`.
 **Dependencies**: Exa MCP (`web_search_exa`, `web_fetch_exa`) per `grph-shared/src/search/exaMcpSsot.ts`; summary reasoning via BytePlus through Cloudflare AI Gateway.
@@ -384,10 +384,10 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **Orchestration Topology**: Fan-out (parallel queries) -> fan-in (dedupe sources), max 1 round.
 **`/goal` Conditions**: AC-2.
 
-**Component**: Storyboard Harness (`knowgrph.video_remix.storyboard`)
-**Responsibility**: Converts approved brief + evidence into a KGC canvas shot-plan document.
+**Component**: Storyboard Harness (`agentic-graph.video_remix.storyboard`)
+**Responsibility**: Converts approved brief + evidence into a AGENTIC_OS canvas shot-plan document.
 **Interfaces**: input `{ brief, evidencePack, shotCount? }`, output `{ canvasDocumentMarkdown, flow: { nodes[], edges[] } }`.
-**Dependencies**: knowgrph KGC frontmatter-flow path (`kgc-computing-flow/v1`); canvas renderer; BytePlus chat model via Cloudflare AI Gateway.
+**Dependencies**: agentic-graph AGENTIC_OS frontmatter-flow path (`agentic-os-computing-flow/v1`); canvas renderer; BytePlus chat model via Cloudflare AI Gateway.
 **FOSS / Vendor**: FOSS (own code) + BytePlus reasoning (ADR-6).
 **Harness Contract**:
   - Input schema: `{ brief: string, evidencePack: object, shotCount?: int }`
@@ -398,7 +398,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **Orchestration Topology**: Sequential (after research approval).
 **`/goal` Conditions**: AC-3.
 
-**Component**: Render Harness (`knowgrph.video_remix.render`)
+**Component**: Render Harness (`agentic-graph.video_remix.render`)
 **Responsibility**: Dispatches per-shot video generation and returns stored asset references.
 **Interfaces**: input `{ shots[], renderGateToken }`, output `{ assets: [{ shotId, assetUrl, ledgerEventId }] }`.
 **Dependencies**: existing payment worker `strytreeApi.ts` (BytePlus/ModelArk video providers, queue, R2 bucket, `StrytreeCreditLedgerActor`); media-model calls route through Cloudflare AI Gateway where supported.
@@ -412,7 +412,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **Orchestration Topology**: Fan-out per shot via queue (`max_batch_size = 3`), fan-in on completion.
 **`/goal` Conditions**: AC-4.
 
-**Component**: Commerce Harness (`knowgrph.video_remix.publish` + `.checkout`)
+**Component**: Commerce Harness (`agentic-graph.video_remix.publish` + `.checkout`)
 **Responsibility**: Publishes the asset and creates a gated Stripe checkout + payout settlement.
 **Interfaces**: publish `{ assets[] } -> { publishedUrls[] }`; checkout `{ assetUrl, priceId, paymentGateToken } -> { sessionId }`; payout gated.
 **Dependencies**: payment worker (`payments.ts`, `agenticCommerce*`), Stripe (`STRIPE_CHECKOUT_PRICE_ID`), R2.
@@ -427,7 +427,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **`/goal` Conditions**: AC-1, AC-5, AC-7.
 
 **Component**: Vercel Agent-API (`agentic-canvas-os/web/api/*`)
-**Responsibility**: PRIMARY/DEFAULT product API path; mints/verifies Auth_Tokens and forwards `POST /run` to the knowgrph control plane.
+**Responsibility**: PRIMARY/DEFAULT product API path; mints/verifies Auth_Tokens and forwards `POST /run` to the agentic-graph control plane.
 **Interfaces**: HTTPS — same-origin `POST /api/auth/session`, `POST /api/run`; forwards MCP calls to the control plane (`McpAgent` over Streamable HTTP).
 **Dependencies**: Vercel serverless functions over the platform-neutral `agentic-canvas-os/agent-api/src/app.js` core. No model keys; reasoning + media + payments are delegated to the Cloudflare control plane.
 **FOSS / Vendor**: Vercel hosting proprietary; shared handler core is FOSS JavaScript.
@@ -442,7 +442,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 
 **Component**: Vercel Frontend (`agentic-canvas-os/web`)
 **Responsibility**: User-facing web app + embedded canvas; renders approval prompts; surfaces run manifest + assets.
-**Interfaces**: HTTPS UI; auth-aware API client -> same-origin Vercel Agent-API primary -> AWS fallback only on transport error or 5xx -> MCP control plane. Canvas rendering is a run-scoped iframe to `https://airvio.co/knowgrph/doc-view?run=<runId>[&doc=<docId>]`, not an MCP browser transport.
+**Interfaces**: HTTPS UI; auth-aware API client -> same-origin Vercel Agent-API primary -> AWS fallback only on transport error or 5xx -> MCP control plane. Canvas rendering is a run-scoped iframe to `https://airvio.co/agentic-graph/doc-view?run=<runId>[&doc=<docId>]`, not an MCP browser transport.
 **Dependencies**: static web shell, browser-safe config, Vercel hosting; optional AWS fallback base; no client-side model provider calls.
 **FOSS / Vendor**: Static frontend code is FOSS; Vercel hosting proprietary (hobby tier) — see ADR-3.
 **`/goal` Conditions**: AC-7.
@@ -451,7 +451,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 
 - **Interface**: Frontend -> Agent-API | **Protocol**: HTTPS/JSON | **Format**: same-origin `POST /api/auth/session`, `POST /api/run`, re-submit with updated `approvals[]` | **Errors**: 4xx validation/auth are definitive; fallback to AWS only on transport error or 5xx.
 - **Interface**: Agent-API -> MCP control plane | **Protocol**: MCP Streamable HTTP (Agents SDK `McpAgent` on Workers) | **Format**: MCP tool call | **Errors**: typed MCP error -> mapped to gate or failure record.
-- **Interface**: Frontend -> knowgrph canvas doc-view | **Protocol**: HTTPS iframe | **Format**: `/doc-view?run=<runId>[&doc=<docId>]` | **Errors**: canvas hidden when storyboard is not ready or the iframe route is unavailable.
+- **Interface**: Frontend -> agentic-graph canvas doc-view | **Protocol**: HTTPS iframe | **Format**: `/doc-view?run=<runId>[&doc=<docId>]` | **Errors**: canvas hidden when storyboard is not ready or the iframe route is unavailable.
 - **Interface**: Harness -> model provider | **Protocol**: HTTPS via Cloudflare AI Gateway (`gateway.ai.cloudflare.com/v1/{account}/{gateway}`) | **Format**: OpenAI-compatible chat / provider passthrough to BytePlus | **Errors**: AI Gateway fallback routing; degraded structured error on total provider failure; per-call log `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }`.
 - **Interface**: Research harness -> Exa | **Protocol**: HTTPS MCP (`mcp.exa.ai/mcp`) | **Format**: `web_search_exa` args | **Errors**: degraded summary, `weak_signal`.
 - **Interface**: Render harness -> payment worker | **Protocol**: HTTPS + Queue | **Format**: Strytree generation message (BytePlus video) | **Errors**: budget guard, mock fallback.
@@ -462,7 +462,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **ADR-1: Hybrid topology — Cloudflare control plane, Vercel primary product host, AWS fallback**
 **Status**: Accepted
 **Date**: 2026-06-09
-**Context**: Hackathon stack mandates AWS + Vercel; knowgrph is Cloudflare-native with a working pipeline.
+**Context**: Hackathon stack mandates AWS + Vercel; agentic-graph is Cloudflare-native with a working pipeline.
 **Decision**: Keep the MCP control plane and video/payment pipeline on Cloudflare; use a Vercel frontend plus same-origin Vercel Agent-API as the primary/default product path, and retain an AWS Agent-API as the fallback/proof surface that delegates to the same control plane.
 **Alternatives Considered**: (1) Full migration to AWS+Vercel — pros: single stack; cons: discards working Cloudflare assets, high build cost. (2) Cloudflare-only with AWS/Vercel as dry-run plans — pros: zero new TCO; cons: fails the live-product mandate. (3) FOSS alternative: self-host on Fly.io/Render — pros: portable; cons: more ops, no judging-stack credit.
 **Rationale**: Maximizes reuse (lowest build hours), satisfies the mandated stack, isolates spend.
@@ -517,7 +517,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 **ADR-6: BytePlus / ModelArk as reasoning + media provider**
 **Status**: Accepted
 **Date**: 2026-06-09
-**Context**: Need chat reasoning (research summary, storyboard) and image/video generation; knowgrph already ships BytePlus SSOTs.
+**Context**: Need chat reasoning (research summary, storyboard) and image/video generation; agentic-graph already ships BytePlus SSOTs.
 **Decision**: Use BytePlus / ModelArk (chat + image + video) behind Cloudflare AI Gateway as the canonical model provider; reuse `byteplusChatApiSsot.ts`, `byteplusImageGenerationSsot.ts`, `byteplusVideoGenerationSsot.ts`.
 **Alternatives Considered**: (1) OpenAI — pros: ubiquity; cons: cost, not pre-integrated. (2) AWS Bedrock — cons: splits the control plane. (3) FOSS alternative: self-hosted OSS models (Llama, Stable Video) — pros: zero API cost; cons: GPU hosting TCO and ops.
 **Rationale**: Already integrated (lowest build hours), covers chat + media in one vendor, fronted by AI Gateway for portability.
@@ -550,7 +550,7 @@ Every model-bearing stage emits a Cloudflare AI Gateway log `{ model, prompt_tok
 - Control plane: existing Cloudflare deploy flow (`pages:build-sync-cloudflare`, workers deploy) — unchanged.
 - AWS agent-api: CDK `cdk deploy` behind the `cloud-deploy` approval gate; rollback via `cdk destroy` / previous stack.
 - Vercel frontend: `vercel deploy` (preview -> promote) behind the same deploy gate; rollback via instant previous-deployment promotion.
-- Migration path: dry-run plan first (existing `knowgrph.agentic_canvas_os.plan`), then gated live deploy.
+- Migration path: dry-run plan first (existing `agentic-graph.agentic_canvas_os.plan`), then gated live deploy.
 
 ### Architecture Diagrams
 
@@ -567,7 +567,7 @@ flowchart TB
     lambda[Lambda Agent-API fallback]
     s3[S3 storage]
   end
-  subgraph cfLayer [Cloudflare Control Plane - knowgrph]
+  subgraph cfLayer [Cloudflare Control Plane - agentic-graph]
     mcp[McpAgent on Workers]
     director[Director Workflow]
     aigw[Cloudflare AI Gateway]
@@ -619,7 +619,7 @@ sequenceDiagram
   Dir->>Exa: research(referenceUrl)
   Exa-->>Dir: cited evidence pack
   Dir->>Canvas: storyboard(brief, evidence)
-  Canvas-->>Dir: KGC shot-plan doc
+  Canvas-->>Dir: AGENTIC_OS shot-plan doc
   Dir->>Gate: request budget + render gate
   Gate-->>User: approval prompt
   User-->>Gate: approval token
@@ -643,8 +643,8 @@ flowchart LR
   ingest --> research[Research via Exa + AI Gateway]
   research --> evidence[(Evidence pack)]
   evidence --> story[Storyboard via BytePlus + AI Gateway]
-  story --> kgc[(KGC shot-plan doc)]
-  kgc --> gate{HITL gate approved?}
+  story --> agentic-os[(AGENTIC_OS shot-plan doc)]
+  agentic-os --> gate{HITL gate approved?}
   gate -->|"no"| blocked[Blocked dry-run artifact]
   gate -->|"yes"| render[Render via BytePlus queue]
   render --> r2[(R2 asset + ledger)]
@@ -657,17 +657,17 @@ flowchart LR
 
 | Layer | Component | File / Module | Status |
 |-------|-----------|---------------|--------|
-| Control plane | MCP server on Workers (Agents SDK `McpAgent`) | `knowgrph/cloudflare/workers/knowgrph-mcp`, `knowgrph/cloudflare/pages/knowgrph-agent-ready.mjs` | Exists |
+| Control plane | MCP server on Workers (Agents SDK `McpAgent`) | `agentic-graph/cloudflare/workers/agentic-graph-mcp`, `agentic-graph/cloudflare/pages/agentic-graph-agent-ready.mjs` | Exists |
 | Control plane | Agentic Canvas OS runtime (add live mode) | `mcp/agentic-canvas-os-runtime.js` | Exists, extend |
 | Control plane | Lane / gate / demo-pack builders | `mcp/agentic-canvas-os-lanes.js` | Exists, reuse |
 | Control plane | Video-remix director + stage tools | `mcp/video-remix-runtime.js` | Implemented in Dev local MCP |
-| Control plane | MCP tool registration | `mcp/server.js`, `mcp/local-tool-contract.js` | Extended with `knowgrph.video_remix.run` |
+| Control plane | MCP tool registration | `mcp/server.js`, `mcp/local-tool-contract.js` | Extended with `agentic-graph.video_remix.run` |
 | Model routing | Cloudflare AI Gateway binding | `wrangler` `ai` binding + `AI_GATEWAY_ID` | New config |
 | Reasoning + media | BytePlus / ModelArk SSOTs | `canvas/src/features/integrations/byteplus*Ssot.ts` | Exists, reuse |
 | Research | Exa client SSOT | `grph-shared/src/search/exaMcpSsot.ts` | Exists, reuse |
-| Storyboard | KGC frontmatter-flow + canvas | `canvas/src/features/agent-ready/*`, KGC apply path | Exists, reuse |
-| Render | Strytree pipeline (BytePlus video) | `cloudflare/workers/knowgrph-payment/strytreeApi.ts` | Exists, reuse |
-| Commerce | Stripe + agentic commerce | `cloudflare/workers/knowgrph-payment/payments.ts`, `agenticCommerce*.ts` | Exists, reuse |
+| Storyboard | AGENTIC_OS frontmatter-flow + canvas | `canvas/src/features/agent-ready/*`, AGENTIC_OS apply path | Exists, reuse |
+| Render | Strytree pipeline (BytePlus video) | `cloudflare/workers/agentic-graph-payment/strytreeApi.ts` | Exists, reuse |
+| Commerce | Stripe + agentic commerce | `cloudflare/workers/agentic-graph-payment/payments.ts`, `agenticCommerce*.ts` | Exists, reuse |
 | Commerce | Stripe SSOT | `grph-shared/src/payments/stripeMcpSsot.ts` | Exists, reuse |
 | Backend | Vercel Agent-API primary | `agentic-canvas-os/web/api/*`, `agentic-canvas-os/agent-api/src/app.js` | Implemented |
 | Backend | AWS Agent-API fallback | `agentic-canvas-os/agent-api` | Implemented, deploy proof pending |
@@ -683,7 +683,7 @@ flowchart LR
 |---|---|---|
 | ACO-LiveRun ↔ AC-1 | Director-run, HITL Gate | `live without tokens -> state blocked, gates>=5, cost==0` |
 | ACO-Research ↔ AC-2 | Research-Exa | `evidencePack.sources>=3, claims sourced` |
-| ACO-Storyboard ↔ AC-3 | Storyboard-canvas | `kgc-computing-flow/v1 doc, nodes==shots` |
+| ACO-Storyboard ↔ AC-3 | Storyboard-canvas | `agentic-os-computing-flow/v1 doc, nodes==shots` |
 | ACO-Render ↔ AC-4 | Render-BytePlus | `asset URL + ledger event id` |
 | ACO-Sale ↔ AC-5 | Commerce-Stripe | `session id; payout only if gate approved` |
 | ACO-Failure ↔ AC-6 | Director-failure | `retry>=1 then complete or blocked, <=maxIterations` |
@@ -695,7 +695,7 @@ flowchart LR
 |---|---|
 | Agent Overview | Director + 4 harnesses; PRD Feature + Component Specs |
 | Autonomy & Decision-Making | Agentic-loop topology (Agents SDK `AgentWorkflow`), `buildPlanner` dependency graph, gate-aware branching |
-| Actions & Tool Use | Exa search, BytePlus reasoning/media via Cloudflare AI Gateway, knowgrph canvas, BytePlus render, Stripe checkout, AWS/Vercel deploy |
+| Actions & Tool Use | Exa search, BytePlus reasoning/media via Cloudflare AI Gateway, agentic-graph canvas, BytePlus render, Stripe checkout, AWS/Vercel deploy |
 | Orchestration | Director Workflow sequence diagram; fan-out render queue; stage dependencies |
 | Human-in-the-Loop | HITL Gate Service via Agents SDK `needsApproval`; 5 approval gates (ADR-4) |
 | Failure Handling | Bounded-retry fail-closed (AC-6, `buildFailureHandling`) |
@@ -808,7 +808,7 @@ fastest truthful state that is both:
 
 | Workstream | Current State | Gap to Runtime-Ready | `spec-complete -> runtime-ready` tasks | Exit Criteria | Priority |
 |---|---|---|---|---|---|
-| Repo topology + SSOT | `knowgrph` is the control-plane + contract SSOT; `agentic-canvas-os` is a realized split product repo with the Vercel primary path and AWS fallback path implemented there | Some docs still reflected the older monorepo-only narrative and conflated MCP orchestration with canvas rendering | 1. Update PRD/TAD + demo docs to say `knowgrph` owns the control plane/canvas engine and `agentic-canvas-os` owns the thin product shell. 2. Mark Vercel Agent-API as primary/default and AWS as fallback. 3. State the canvas seam as `doc-view` iframe, not “browser canvas via MCP”. 4. Keep reference implementations in `knowgrph` called out as mirrors, not the only runtime location. | Repo layout, docs, deployment commands, and demo narrative all describe the same cross-repo topology without ambiguity | P0 |
+| Repo topology + SSOT | `agentic-graph` is the control-plane + contract SSOT; `agentic-canvas-os` is a realized split product repo with the Vercel primary path and AWS fallback path implemented there | Some docs still reflected the older monorepo-only narrative and conflated MCP orchestration with canvas rendering | 1. Update PRD/TAD + demo docs to say `agentic-graph` owns the control plane/canvas engine and `agentic-canvas-os` owns the thin product shell. 2. Mark Vercel Agent-API as primary/default and AWS as fallback. 3. State the canvas seam as `doc-view` iframe, not “browser canvas via MCP”. 4. Keep reference implementations in `agentic-graph` called out as mirrors, not the only runtime location. | Repo layout, docs, deployment commands, and demo narrative all describe the same cross-repo topology without ambiguity | P0 |
 | Cloudflare control plane | Existing MCP Worker, `McpAgent`, approval boundary, tool registry, and run-manifest persistence are implemented and locally validated | The control plane is closest to live readiness, but the full externally evidenced live path still needs one approved end-to-end proof | 1. Confirm which stage harnesses are live versus simulated. 2. Run one approved end-to-end flow through the deployed MCP worker. 3. Ensure run manifests capture stage evidence, URLs, gates, retries, and costs. 4. Freeze the MCP contract used by AWS and frontend tiers. | A deployed Cloudflare MCP endpoint completes one approved live run and returns a persisted manifest with evidence suitable for the demo pack. | P0 |
 | AWS Agent-API | Source handlers and tests exist for `/auth/session`, `/run`, `/runs/{id}`, and `/health`; the thin-adapter boundary is well specified | The CDK deployment path still lags the handler contract and the live MCP forwarding seam is not yet the default runtime path | 1. Replace API Gateway placeholder/mock integrations with real Lambda integrations. 2. Wire the live MCP Streamable HTTP transport to the Cloudflare control plane. 3. Validate auth, run submission, and run-manifest read-back against deployed infrastructure. 4. Add focused deployed smoke checks for `/health`, `/run`, and `/runs/{id}`. | The deployed AWS endpoint returns `200` on `/health`, accepts authenticated `/run`, and resolves `/runs/{id}` with persisted live state. | P0 |
 | Frontend product surface | The product/UI tier exists as a Vercel web app plus same-origin serverless API routes, and it already mirrors the doc-view iframe seam | The remaining gap is deployed proof, not framework choice; some docs still describe the browser path as AWS-first or MCP-rendered | 1. Keep the current thin Vercel web app; do not reopen the Next.js vs Vite decision. 2. Prove live submission through same-origin `/api/*` as the primary/default path. 3. Render approval gates, run status, citations, and artifact links. 4. Expose the final demo-pack URLs in the UI. | A reachable frontend URL allows a user to submit, approve, monitor, and open final outputs in a live deployed flow, with the same-origin Vercel path working first | P0 |
@@ -883,6 +883,6 @@ fastest truthful state that is both:
 
 ### Implementation Principle
 
-- **Do not re-platform first**: keep `knowgrph` as the real control plane and preserve the existing Cloudflare-first architecture.
+- **Do not re-platform first**: keep `agentic-graph` as the real control plane and preserve the existing Cloudflare-first architecture.
 - **Use AWS as a thin facade**: satisfy the product and stack mandate without duplicating orchestration logic.
 - **Use AgentCore as a wrapper**: adopt `agentcore-cli` only after the live product path is proven, so it amplifies the system instead of destabilizing it.

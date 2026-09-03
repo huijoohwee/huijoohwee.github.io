@@ -247,7 +247,7 @@ Most diagrams must satisfy two consumers at once: a static notation renderer emb
 
 *Non-binding. This section names concrete products solely to show one registry that satisfies the contract above; every identifier here may be swapped for an equivalent without changing any rule.*
 
-One reference implementation is the `knowgrph` Canvas, whose two-dimensional render mode exposes a named surface registry titled `2D Renderer: [label]`. Its twelve surface identifiers, and what each projects, are the concrete instance of the Surface Declaration rules:
+One reference implementation is the `agentic-graph` Canvas, whose two-dimensional render mode exposes a named surface registry titled `2D Renderer: [label]`. Its twelve surface identifiers, and what each projects, are the concrete instance of the Surface Declaration rules:
 
 | Surface id | Registry label | Projects a node-link graph | Notes |
 |---|---|---|---|
@@ -269,7 +269,7 @@ Concrete bindings for the neutral rules above, in this reference implementation:
 - **Notation**: Mermaid. Recognised fence languages are `mermaid` and `mmd`; `graph` and `gitgraph` are tolerated aliases, and an untagged fence is sniffed from its first meaningful line
 - **Convertibility**: only `flowchart` / `graph` declarations project into nodes and edges. `gitGraph`, `gantt`, and `timeline` declarations render on their own surfaces and contribute no graph elements
 - **Ingest surfaces**: a fenced body block; the frontmatter `mermaid:` scalar, optionally narrowed by `mermaidAnchorsOnly: true`; and the frontmatter `flow:` envelope carrying `nodes`, `connections` or `edges`, and `socket_types`
-- **Surface declaration keys**: `kgCanvasRenderMode: "2d"` with `kgCanvas2dRenderer: "[surface id]"`, plus an optional `surfaces: ["2D Renderer: [label]", ...]` list
+- **Surface declaration keys**: `agenticOsCanvasRenderMode: "2d"` with `agenticOsCanvas2dRenderer: "[surface id]"`, plus an optional `surfaces: ["2D Renderer: [label]", ...]` list
 - **Graph element contract**: `GraphNode` requires `id`, `label`, `type`, `properties`; `GraphEdge` requires `id`, `source`, `target`, `label`, `properties`
 - **Presentation namespace**: the `visual:` prefix — `visual:fill`, `visual:stroke`, `visual:labelColor`, `visual:color`, `visual:shape` (`rect` | `circle` | `diamond` | `hex`), `visual:width`, `visual:height`, `visual:nodeSize`, `visual:strokeWidth`, `visual:zIndex`, `visual:layer`, `visual:nestingDepth`. Notation `style`, `classDef`, `class`, and `linkStyle` statements map onto this namespace
 - **Shape-primitive divergence**: the `circle` shape projects as a *cluster* primitive and `hex` projects as an *edge* primitive, so a non-cluster node authored as a circle triggers `shape-primitive-mismatch`; author non-cluster nodes as `rect` or `diamond`

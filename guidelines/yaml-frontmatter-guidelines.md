@@ -5,13 +5,13 @@ doc_type: "Guidelines"
 date: "2026-05-03"
 lang: en-US
 
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ---
 
 # YAML Frontmatter Guidelines for Canvas View Switching
@@ -31,27 +31,27 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 - Parser repair or warning paths are safety nets, not authoring targets; malformed YAML frontmatter must be treated as invalid source that needs correction upstream.
 - Do not split metadata ownership across duplicate blocks, renderer-only aliases, or body-only mirror declarations when the same value belongs in frontmatter.
 - Keep one frontmatter block per Markdown document. Do not close frontmatter, place metadata in the body, and reopen or mirror schema-bearing YAML later in the file.
-- Frontmatter-flow graph topology, node metadata, renderer presets, workflow sections, and KGC-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
-- Use node-owned fields such as `kgc:readingSummary` for concise machine-readable node summaries in normalized fixtures. Do not add `## KGC Reading Layer`, line-start `@node:...`, or line-start `@edge:...` sections to mirror frontmatter.
+- Frontmatter-flow graph topology, node metadata, renderer presets, workflow sections, and AGENTIC_OS-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.
+- Use node-owned fields such as `agentic-os:readingSummary` for concise machine-readable node summaries in normalized fixtures. Do not add `## AGENTIC_OS Reading Layer`, line-start `@node:...`, or line-start `@edge:...` sections to mirror frontmatter.
 - Canonical docs must not commit localhost URLs, signed media tokens, upload-run ids, or generated provider artifact URLs in frontmatter or body prose. Keep generated fields blank until runtime evidence exists, or use an explicit source-owned workspace placeholder when a non-secret reference must be shown.
 - Runnable demo documents that need parser/routing portability should include `kgParserRoutingContract` in opening frontmatter. The contract names parser logic, routing keys, diagram kinds, render surfaces, edge policy, and fork policy in one source-owned block.
-- `kgParserRoutingContract.routingKeys` must point to existing canonical keys such as `kgCanvasSurfaceMode`, `kgCanvasRenderMode`, `kgCanvas2dRenderer`, `kgDocumentSemanticMode`, `kgFrontmatterModeEnabled`, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, and `kgStrybldrStoryboard`. Do not add duplicate aliases for the same runtime concept.
+- `kgParserRoutingContract.routingKeys` must point to existing canonical keys such as `agenticOsCanvasSurfaceMode`, `agenticOsCanvasRenderMode`, `agenticOsCanvas2dRenderer`, `agenticOsDocumentSemanticMode`, `agenticOsFrontmatterModeEnabled`, `flow`, `flow.nodes`, `flow.edges`, `flow_diagrams`, and `kgStrybldrStoryboard`. Do not add duplicate aliases for the same runtime concept.
 - `kgParserRoutingContract.edgePolicy` and `kgParserRoutingContract.forkPolicy` must preserve authored topology. A document may declare edges through `flow.edges`, workflow edges, Mermaid diagrams, or Strybldr storyboard payloads, but it must not mirror those same edges in body prose as a second machine-readable graph.
-- Storyboard-facing documents must keep renderer identity canonical as `kgCanvas2dRenderer: "storyboard"` while relying on shared Storyboard/frontmatter-flow toolbar helpers and shared Workspace/Kanban data-view utility owners at runtime; do not encode renderer-local utility forks or alias renderers in frontmatter.
+- Storyboard-facing documents must keep renderer identity canonical as `agenticOsCanvas2dRenderer: "storyboard"` while relying on shared Storyboard/frontmatter-flow toolbar helpers and shared Workspace/Kanban data-view utility owners at runtime; do not encode renderer-local utility forks or alias renderers in frontmatter.
 
 ## Context-Intent-Directive
 
 | Context | Intent | Directive |
 |---|---|---|
 | Canvas View | Preserve deterministic landing | - [ ] Declare all Canvas View keys in frontmatter; preserve deterministic landing; forbid partial renderer-only presets |
-| Document Modes | Keep frontmatter as SSOT | - [ ] Set `kgDocumentSemanticMode` and `kgFrontmatterModeEnabled` together; keep frontmatter as SSOT; forbid implicit mode carryover |
+| Document Modes | Keep frontmatter as SSOT | - [ ] Set `agenticOsDocumentSemanticMode` and `agenticOsFrontmatterModeEnabled` together; keep frontmatter as SSOT; forbid implicit mode carryover |
 | Initialization Files | Support Source Files switching | - [ ] Use canonical presets on seed documents; support switching; forbid relying on stale runtime state |
-| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `kgMultiDimTableModeEnabled` explicitly; use `false` for simple D3/Storyboard landings and `true` only when Workflow Manager / Multi-dimensional Table companion views are intentional; forbid ambiguous table-mode defaults |
-| Surface Modes | Keep surface state frontmatter-driven | - [ ] Set `kgCanvasSurfaceMode` explicitly; keep surface state frontmatter-driven; forbid stored geospatial or 3D carryover |
+| Multi-dimensional Table | Avoid unintended mode takeover | - [ ] Set `agenticOsMultiDimTableModeEnabled` explicitly; use `false` for simple D3/Storyboard landings and `true` only when Workflow Manager / Multi-dimensional Table companion views are intentional; forbid ambiguous table-mode defaults |
+| Surface Modes | Keep surface state frontmatter-driven | - [ ] Set `agenticOsCanvasSurfaceMode` explicitly; keep surface state frontmatter-driven; forbid stored geospatial or 3D carryover |
 | Widget Bundles | Preserve overlay ownership | - [ ] Keep widget-bundle behavior lean and source-owned; preserve overlay ownership; forbid cross-renderer proxy interference and stale renderer-owner aliases |
 | SuperAgent Harness | Preserve harness metadata without renderer drift | - [ ] Keep `superagent_harness_template` / `superagent_harness_demo` as metadata unless nodes are explicitly authored under `flow:`; forbid second parser, renderer, provider, memory, or graph apply owners |
-| MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic KGC backfill or renderer-local graph patches |
-| Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## KGC Reading Layer`, and line-start `@node:` / `@edge:` mirrors for frontmatter-flow topology |
+| MCP Structured Chat | Land LLM tool-result responses through shared owners | - [ ] Accept renderable MCP `structuredContent` at submit validation; project widgets, panels, cards, media, safe inline compute, and edges into frontmatter flow; forbid synthetic AGENTIC_OS backfill or renderer-local graph patches |
+| Markdown Body | Keep body as human projection | - [ ] Use headings, tables, validation checklists, and inspection notes as human-facing documentation only; forbid body `flow:` blocks, `## AGENTIC_OS Reading Layer`, and line-start `@node:` / `@edge:` mirrors for frontmatter-flow topology |
 | Parser Routing | Keep diagram and workflow dispatch source-owned | - [ ] Declare parser routing keys, diagram kinds, surfaces, edges, and fork policy in `kgParserRoutingContract`; forbid renderer-local aliases, stale routing carryover, and body-side topology mirrors |
 | Storyboard / Workspace Reuse | Keep shared utility ownership neutral | - [ ] Keep Storyboard frontmatter on canonical `storyboard`; reuse shared toolbar and Workspace/Kanban utility owners at runtime; forbid alias renderers or frontmatter-local utility forks |
 
@@ -63,12 +63,12 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 
 ## Markdown Body Structure
 
-For frontmatter-driven Knowgrph documents, the body is a human-readable projection of the same authored state, not another machine authority.
+For frontmatter-driven Agentic Graph documents, the body is a human-readable projection of the same authored state, not another machine authority.
 
 - Start the body after the single closing `---` with one `#` heading.
 - Use body sections for purpose, workflow explanation, validation evidence, and inspection steps.
 - Reference frontmatter node ids and edge ids with inline code when helpful.
-- Keep reusable summaries on their owning frontmatter nodes, commonly as `kgc:readingSummary` in normalized fixtures.
+- Keep reusable summaries on their owning frontmatter nodes, commonly as `agentic-os:readingSummary` in normalized fixtures.
 - Do not put a second YAML-like metadata block in the body.
 - Do not put `flow:`, `nodes:`, `edges:`, `@node:`, or `@edge:` declarations in the body to mirror the frontmatter graph.
 
@@ -77,37 +77,37 @@ For frontmatter-driven Knowgrph documents, the body is a human-readable projecti
 README / D3 / Frontmatter Mode:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "d3"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "d3"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Video demo / Storyboard / Frontmatter Mode:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Computing-flow demo / Storyboard / Workflow Manager companion:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: true
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: true
+agenticOsDocumentStructureBaselineLock: false
 kgWorkflowManagerModeEnabled: true
 ```
 
@@ -115,32 +115,32 @@ Long-horizon SuperAgent template metadata:
 
 ```yaml
 superagent_harness_template:
-  schema_version: "knowgrph-superagent-harness-template/v1"
+  schema_version: "agentic-graph-superagent-harness-template/v1"
   harness_id: "example_superagent_harness"
   mode: "local-template-long-horizon"
   inspiration_policy: "deer-flow-inspired concepts only; no copied code, no copied architecture"
   native_owners:
-    - "knowgrph_parser/superagent_harness.py"
+    - "agentic-graph_parser/superagent_harness.py"
     - "mcp/local-tool-contract.js"
   capabilities:
     message_gateway: ["MainPanel Integrations", "FloatingPanel Chat", "local MCP"]
     outputs: ["output", "imageUrl", "videoUrl", "outputSrcDoc"]
 ```
 
-This block is metadata. It does not author graph nodes, change `kgCanvas2dRenderer`, or bypass the shared Markdown parser.
+This block is metadata. It does not author graph nodes, change `agenticOsCanvas2dRenderer`, or bypass the shared Markdown parser.
 
-MCP-structured FloatingPanel Chat responses may materialize equivalent frontmatter-flow records only through the shared submit validation and structured-content projection owners. A literal MCP result with renderable `structuredContent` finalizes without KGC retry, then lands in Editor Workspace and renders Widgets, Rich Media Panels, Cards, media, inline compute, and edges through the same `flow:` contract.
+MCP-structured FloatingPanel Chat responses may materialize equivalent frontmatter-flow records only through the shared submit validation and structured-content projection owners. A literal MCP result with renderable `structuredContent` finalizes without AGENTIC_OS retry, then lands in Editor Workspace and renders Widgets, Rich Media Panels, Cards, media, inline compute, and edges through the same `flow:` contract.
 
 Timeline demo / Animatic / Frontmatter Mode:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "animatic"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "animatic"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Animatic authoring contract:
@@ -152,13 +152,13 @@ Animatic authoring contract:
 Storyboard / Strybldr / Frontmatter Mode:
 
 ```yaml
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 - Storyboard cards may project graph-backed fields differently, but toolbar/data-view affordances still reuse shared Storyboard/frontmatter-flow and Workspace/Kanban utility owners at runtime.
@@ -167,40 +167,40 @@ kgDocumentStructureBaselineLock: false
 3D surface / Document Mode:
 
 ```yaml
-kgCanvasSurfaceMode: "3d"
-kgCanvasRenderMode: "3d"
-kgCanvas3dMode: "3d"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: false
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "3d"
+agenticOsCanvasRenderMode: "3d"
+agenticOsCanvas3dMode: "3d"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: false
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Geospatial surface / Storyboard widgets:
 
 ```yaml
-kgCanvasSurfaceMode: "geospatial"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "geospatial"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 ```
 
 Reference document for Geospatial Mode structure:
 
-- `sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
+- `sandbox/demo/agentic-graph-maps-grabmap-multim-demo.md`
 
 Canonical seed documents aligned to the explicit vocabulary:
 
-- `knowgrph/README.md`
-- `knowgrph/knowgrph-video-demo.md`
-- `knowgrph/knowgrph-video-demo-seeded.md`
-- `knowgrph/knowgrph-video-demo-sea.md`
-- `knowgrph/knowgrph-video-demo-the-general.md`
-- `sandbox/demo/knowgrph-maps-grabmap-multim-demo.md`
-- `sandbox/test-data/test-generate-video/knowgrph-demo-video.md`
-- `sandbox/test-data/test-generate-video/knowgrph-rich-media-generation-demo.md`
+- `agentic-graph/README.md`
+- `agentic-graph/agentic-graph-video-demo.md`
+- `agentic-graph/agentic-graph-video-demo-seeded.md`
+- `agentic-graph/agentic-graph-video-demo-sea.md`
+- `agentic-graph/agentic-graph-video-demo-the-general.md`
+- `sandbox/demo/agentic-graph-maps-grabmap-multim-demo.md`
+- `sandbox/test-data/test-generate-video/agentic-graph-demo-video.md`
+- `sandbox/test-data/test-generate-video/agentic-graph-rich-media-generation-demo.md`
 
 ## E2E Normalized Frontmatter
 
@@ -235,15 +235,15 @@ Contract split:
 
 ## Configuration Reference
 
-**From missing renderer choice to explicit view choice**: Authors set `kgCanvas2dRenderer` to the exact target renderer -> runtime applies the requested Canvas View after graph hydration -> switching stays file-driven.
+**From missing renderer choice to explicit view choice**: Authors set `agenticOsCanvas2dRenderer` to the exact target renderer -> runtime applies the requested Canvas View after graph hydration -> switching stays file-driven.
 
-**From ambiguous mode state to explicit frontmatter mode**: Authors pair `kgDocumentSemanticMode: "document"` with `kgFrontmatterModeEnabled: true` -> runtime avoids stale mode seepage -> Source Files switching stays stable.
+**From ambiguous mode state to explicit frontmatter mode**: Authors pair `agenticOsDocumentSemanticMode: "document"` with `agenticOsFrontmatterModeEnabled: true` -> runtime avoids stale mode seepage -> Source Files switching stays stable.
 
-**From ambiguous surface state to explicit surface ownership**: Authors set `kgCanvasSurfaceMode` to `2d`, `3d`, or `geospatial` -> runtime normalizes render-mode and geospatial switching through one shared preset path -> surface-state churn stays neutralized upstream.
+**From ambiguous surface state to explicit surface ownership**: Authors set `agenticOsCanvasSurfaceMode` to `2d`, `3d`, or `geospatial` -> runtime normalizes render-mode and geospatial switching through one shared preset path -> surface-state churn stays neutralized upstream.
 
 **From widget bundle definition to visible overlays**: Authors keep widget-bundle behavior lean, preserve `forbid_cross_renderer_proxy: true`, and do not author stale renderer-owner aliases -> runtime keeps widget ownership source-owned -> Rich Media Panels stay visible.
 
-Supported `kgCanvas2dRenderer` values:
+Supported `agenticOsCanvas2dRenderer` values:
 
 | Value | Meaning | Usage guidance |
 |---|---|---|
@@ -256,20 +256,20 @@ Supported `kgCanvas2dRenderer` values:
 
 Alias guidance:
 
-- `Flowchart` should be authored canonically as `kgCanvas2dRenderer: "flowchart"`.
+- `Flowchart` should be authored canonically as `agenticOsCanvas2dRenderer: "flowchart"`.
 - `Flow Canvas` normalizes to `flow`.
 - `Document Structure Mode` normalizes to `document`.
 - `Keyword Mode` normalizes to `keyword`.
-- `Geospatial Mode` should be authored canonically as `kgCanvasSurfaceMode: "geospatial"`.
+- `Geospatial Mode` should be authored canonically as `agenticOsCanvasSurfaceMode: "geospatial"`.
 - Canonical documents should use normalized values, not aliases.
 
 Surface guidance:
 
 | Key | Meaning | Canonical values |
 |---|---|---|
-| `kgCanvasSurfaceMode` | Selects the top-level canvas surface | `"2d"`, `"3d"`, `"geospatial"` |
-| `kgCanvasRenderMode` | Selects the 2D/3D render family when surface mode is not geospatial | `"2d"`, `"3d"` |
-| `kgCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
+| `agenticOsCanvasSurfaceMode` | Selects the top-level canvas surface | `"2d"`, `"3d"`, `"geospatial"` |
+| `agenticOsCanvasRenderMode` | Selects the 2D/3D render family when surface mode is not geospatial | `"2d"`, `"3d"` |
+| `agenticOsCanvas3dMode` | Selects the active 3D submode | `"3d"`, `"voxel"` |
 
 ## Widget Bundle Contract
 
@@ -299,49 +299,49 @@ widget_bundle:
 - [ ] Reviewers confirm there is exactly one frontmatter block and no body-side metadata mirror.
 - [ ] Reviewers confirm the YAML frontmatter parses cleanly under a strict parser with no recovery-only dependency.
 - [ ] Reviewers confirm switch-sensitive `*.md` files are directly runnable canonical seeds with explicit Canvas View frontmatter.
-- [ ] Reviewers confirm `kgCanvasSurfaceMode` is explicit for switch-sensitive documents.
-- [ ] Reviewers confirm `README.md`-style files use `kgCanvas2dRenderer: "d3"`.
-- [ ] Reviewers confirm widget-bundle files use `kgCanvas2dRenderer: "storyboard"`.
-- [ ] Reviewers confirm animatic timeline files use `kgCanvas2dRenderer: "animatic"` while reusing the same canonical `flow:` YAML syntax as Storyboard.
-- [ ] Reviewers confirm 3D examples pair `kgCanvasSurfaceMode: "3d"` with `kgCanvas3dMode`.
-- [ ] Reviewers confirm geospatial examples use `kgCanvasSurfaceMode: "geospatial"` instead of relying on stored geospatial state.
-- [ ] Reviewers confirm `kgMultiDimTableModeEnabled` is explicitly set for switch-sensitive documents.
+- [ ] Reviewers confirm `agenticOsCanvasSurfaceMode` is explicit for switch-sensitive documents.
+- [ ] Reviewers confirm `README.md`-style files use `agenticOsCanvas2dRenderer: "d3"`.
+- [ ] Reviewers confirm widget-bundle files use `agenticOsCanvas2dRenderer: "storyboard"`.
+- [ ] Reviewers confirm animatic timeline files use `agenticOsCanvas2dRenderer: "animatic"` while reusing the same canonical `flow:` YAML syntax as Storyboard.
+- [ ] Reviewers confirm 3D examples pair `agenticOsCanvasSurfaceMode: "3d"` with `agenticOsCanvas3dMode`.
+- [ ] Reviewers confirm geospatial examples use `agenticOsCanvasSurfaceMode: "geospatial"` instead of relying on stored geospatial state.
+- [ ] Reviewers confirm `agenticOsMultiDimTableModeEnabled` is explicitly set for switch-sensitive documents.
 - [ ] Reviewers confirm `kgWorkflowManagerModeEnabled: true` appears only when workflow sections or table companion rendering are intentional, and that Storyboard remains the renderer authority.
 - [ ] Reviewers confirm canonical docs use normalized values instead of aliases.
 - [ ] Reviewers confirm widget-bundle docs keep behavior lean, retain `forbid_cross_renderer_proxy: true` when overlays are present, and do not author stale renderer-owner aliases.
 - [ ] Reviewers confirm normalized frontmatter-flow fixtures map `{key,type,value}` rows by semantic key / schema path and do not render `handles.source` or `handles.target` as substitute port keys.
 - [ ] Reviewers confirm matching field/port rows are consolidated into one inline-editable KTV row with the functional handle attached.
-- [ ] Reviewers confirm frontmatter-flow documents do not contain `## KGC Reading Layer` or line-start `@node:` / `@edge:` body mirrors.
+- [ ] Reviewers confirm frontmatter-flow documents do not contain `## AGENTIC_OS Reading Layer` or line-start `@node:` / `@edge:` body mirrors.
 
 ## Anti-Patterns
 
-- Do not omit `kgFrontmatterModeEnabled` and rely on a prior document's mode.
+- Do not omit `agenticOsFrontmatterModeEnabled` and rely on a prior document's mode.
 - Do not treat a switch-sensitive `*.md` file as a canonical seed unless it declares the full Canvas View frontmatter block explicitly.
-- Do not omit `kgCanvasSurfaceMode` when the document must switch deterministically across 2D, 3D, and Geospatial surfaces.
+- Do not omit `agenticOsCanvasSurfaceMode` when the document must switch deterministically across 2D, 3D, and Geospatial surfaces.
 - Do not use `Flow Canvas` as the canonical renderer label for widget-bundle docs.
-- Do not leave `kgMultiDimTableModeEnabled` unspecified when the document must switch deterministically.
+- Do not leave `agenticOsMultiDimTableModeEnabled` unspecified when the document must switch deterministically.
 - Do not rely on persisted Geospatial Mode when the document itself is map-first.
 - Do not mix frontmatter-flow widget bundles with cross-renderer proxy behavior.
 - Do not treat renderer aliases as the canonical authoring format.
 - Do not leave invalid inline YAML scalars unquoted and expect parser repair to recover them silently.
 - Do not split one semantic frontmatter-flow driver into a separate editable value row and a separate read-only port row when both resolve to the same schema path.
 - Do not close frontmatter early and place `title`, renderer presets, `workflow_sections`, `socket_types`, or `flow:` in the Markdown body.
-- Do not keep parallel KGC reading sections in the body when the same node summaries can live on the frontmatter node records.
+- Do not keep parallel AGENTIC_OS reading sections in the body when the same node summaries can live on the frontmatter node records.
 
 
 ## Runnable Demo Compliance
 
-Every `*-demo.md` file that uses `kgCanvas2dRenderer: "storyboard"` must be runnable without any configuration outside the document itself. The following keys are required in the frontmatter:
+Every `*-demo.md` file that uses `agenticOsCanvas2dRenderer: "storyboard"` must be runnable without any configuration outside the document itself. The following keys are required in the frontmatter:
 
 ```yaml
-schema: "kgc-computing-flow/v1"
+schema: "agentic-os-computing-flow/v1"
 kgWorkflowManagerModeEnabled: true
 kgAutoSaveEnabled: true
 kgAutoSaveDebounceMs: 1500
 kgAutoSaveOn: ["nodeEdit", "runComplete", "approval", "assetReady"]
 ```
 
-When a runnable document also has a domain-specific demo identity, preserve it under `demo_schema`; the canonical `schema` key remains `kgc-computing-flow/v1` so parser and runtime routing do not split across competing graph-schema owners.
+When a runnable document also has a domain-specific demo identity, preserve it under `demo_schema`; the canonical `schema` key remains `agentic-os-computing-flow/v1` so parser and runtime routing do not split across competing graph-schema owners.
 
 ### Diagram kinds and rendering surfaces
 
@@ -427,7 +427,7 @@ Image and video output nodes must use typed fields:
 | `test:ci` `testMarkdownFrontmatterFlowGraphPublishedAgenticCanvasOsDemoArchitectureAndEventModeling` | Routing keys present; no derived panel for routed entries | Every CI run |
 | Kiro hook `runnable-demo-compliance-check` | Runs `doc:sanity` on every `*-demo.md` save | File save |
 
-Run manually from `knowgrph/canvas/`:
+Run manually from `agentic-graph/canvas/`:
 
 ```bash
 npm run doc:sanity
@@ -475,4 +475,4 @@ run_status: {key: run_status, type: string, value: "idle"}
 | `test:ci` `testFlowEditorComputeIntegrity` | Same as above | Every CI run |
 | Kiro hook | Runs `doc:sanity` on every `*-demo.md` save | File save |
 
-See `knowgrph/docs/documents/knowgrph-compute-integrity-document.md` for the full parser logic, routing key contract, diagram kinds table, and companion source file references.
+See `agentic-graph/docs/documents/agentic-graph-compute-integrity-document.md` for the full parser logic, routing key contract, diagram kinds table, and companion source file references.

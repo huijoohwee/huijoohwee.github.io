@@ -1,6 +1,6 @@
 {
   "schema": "agentic-cloud-collaboration-request/v1",
-  "targetRepository": "huijoohwee/knowgrph",
+  "targetRepository": "huijoohwee/agentic-graph",
   "workItemId": "work-item:dev-source-resolver-20260803",
   "canonicalBaseRevision": "7497dd63b271565ab4f88a8d76615af539ed962a",
   "laneRevision": "7497dd63b271565ab4f88a8d76615af539ed962a",

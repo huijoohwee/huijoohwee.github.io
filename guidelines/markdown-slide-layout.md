@@ -24,7 +24,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
 ---
 
-## Slide Separation and Reordering in Knowgrph
+## Slide Separation and Reordering in Agentic Graph
 
 ```markdown
 # Slide 1
@@ -34,15 +34,15 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 # Slide 2
 ```
 
-**Semantics in Knowgrph:**
+**Semantics in Agentic Graph:**
 - Top-of-document YAML frontmatter (`---` … `---` at the very start) is treated as metadata and does not create a slide break.
-- `---` lines that appear outside YAML frontmatter and outside fenced code blocks are treated as slide separators by the Knowgrph markdown viewer and fullscreen slide gallery.
+- `---` lines that appear outside YAML frontmatter and outside fenced code blocks are treated as slide separators by the Agentic Graph markdown viewer and fullscreen slide gallery.
 - `---` that appear inside fenced code blocks or inside YAML frontmatter are treated as literal content, not slide breaks.
 
 **Reordering behavior:**
-- The fullscreen Markdown slide gallery sidebar lets you drag thumbnails to change slide order; Knowgrph rewrites the underlying markdown to match that order so the editor, viewer, and on-disk file stay aligned.
+- The fullscreen Markdown slide gallery sidebar lets you drag thumbnails to change slide order; Agentic Graph rewrites the underlying markdown to match that order so the editor, viewer, and on-disk file stay aligned.
 - Reordering operates on slide-sized chunks, preserving per-slide YAML blocks, notes, and fenced code blocks (including those that contain `---`) as intact units.
-- When Knowgrph rewrites a deck after reordering, it normalizes slide separators to the form:
+- When Agentic Graph rewrites a deck after reordering, it normalizes slide separators to the form:
 
   ```markdown
   <last non-empty line of previous slide>
@@ -54,7 +54,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
   enforcing a single blank line before and after each `---` separator.
 
-**Fullscreen frame, zoom, and scroll semantics in Knowgrph:**
+**Fullscreen frame, zoom, and scroll semantics in Agentic Graph:**
 - The fullscreen slide gallery renders each slide inside a static frame; the frame border, corner radius, and drop shadow do not zoom.
 - The slide content inside the frame can be zoomed and panned for detail inspection, while the frame stays fixed.
 - Mouse wheel or trackpad scroll **inside the frame** scrolls the slide content; it does not trigger zoom.

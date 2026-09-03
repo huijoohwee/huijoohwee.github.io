@@ -1,22 +1,22 @@
 ---
-title: "Knowgrph 2D Renderer Storyboard Template"
-graphId: "md:knowgrph-2d-renderer-storyboard-template"
+title: "Agentic Graph 2D Renderer Storyboard Template"
+graphId: "md:agentic-graph-2d-renderer-storyboard-template"
 doc_type: "Template"
 date: "2026-07-08"
 lang: "en-US"
-schema: "kgc-2d-renderer-storyboard-template/v1"
-source_reference: "huijoohwee/docs/knowgrph-strybldr-starter-template.md"
+schema: "agentic-os-2d-renderer-storyboard-template/v1"
+source_reference: "huijoohwee/docs/agentic-graph-strybldr-starter-template.md"
 template_policy: "Universal, neutral, provider-agnostic Storyboard seed for frontmatter-owned 2D renderer authoring; runtime outputs stay blank until operator-approved local or live runs return evidence."
 validation_input_forbid_hardcode_in_repo: "true"
 deployed_api_claim: "false"
 
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 kgStrybldrStoryboard: true
 kgBottomPanelOpen: true
 kgBottomPanelTab: "timeline"
@@ -170,7 +170,7 @@ flow:
       handles: {key: handles, type: object, value: {"source":["normalized_source"]}}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"out":{"normalized_source":"storyboard_source_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Operator-owned source fields are normalized before ideation."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Operator-owned source fields are normalized before ideation."}
     - id: {key: id, type: string, value: "ideation"}
       type: {key: type, type: string, value: "AgenticInvocationWidget"}
       label: {key: label, type: string, value: "Ideation"}
@@ -182,7 +182,7 @@ flow:
       bindings: {key: bindings, type: array, value: ["@source.frontmatter","@source.body"]}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"normalized_source":"storyboard_source_signal"},"out":{"candidate_beats":"storyboard_plan_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Zero-spend ideation creates paraphrased storyboard hypotheses."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Zero-spend ideation creates paraphrased storyboard hypotheses."}
     - id: {key: id, type: string, value: "invocation"}
       type: {key: type, type: string, value: "HarnessPlanWidget"}
       label: {key: label, type: string, value: "Invocation"}
@@ -194,7 +194,7 @@ flow:
       bindings: {key: bindings, type: array, value: ["@local-harness","@cost-log"]}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"candidate_beats":"storyboard_plan_signal"},"out":{"bounded_manifest":"storyboard_plan_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Typed harness manifest gates cost, approval, and bounds before execution."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Typed harness manifest gates cost, approval, and bounds before execution."}
     - id: {key: id, type: string, value: "projection"}
       type: {key: type, type: string, value: "StoryboardProjectionWidget"}
       label: {key: label, type: string, value: "Storyboard"}
@@ -206,7 +206,7 @@ flow:
       bindings: {key: bindings, type: array, value: ["@canvas","@runtime-proof"]}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"bounded_manifest":"storyboard_plan_signal"},"out":{"storyboard_cards":"storyboard_runtime_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Storyboard renderer projects frontmatter-owned cards without owning source data."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Storyboard renderer projects frontmatter-owned cards without owning source data."}
     - id: {key: id, type: string, value: "validation"}
       type: {key: type, type: string, value: "RuntimeGateWidget"}
       label: {key: label, type: string, value: "Runtime"}
@@ -218,7 +218,7 @@ flow:
       bindings: {key: bindings, type: array, value: ["@runtime-proof","@dev-only"]}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"storyboard_cards":"storyboard_runtime_signal"},"out":{"runtime_proof":"storyboard_runtime_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Local runtime proof is required before any live provider evidence claim."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Local runtime proof is required before any live provider evidence claim."}
     - id: {key: id, type: string, value: "deploy_guard"}
       type: {key: type, type: string, value: "DeployGuardWidget"}
       label: {key: label, type: string, value: "Publish"}
@@ -230,7 +230,7 @@ flow:
       bindings: {key: bindings, type: array, value: ["@operator","@dev-only"]}
       "flow:portTypes": {key: "flow:portTypes", type: object, value: {"in":{"runtime_proof":"storyboard_runtime_signal"},"out":{"local_only_boundary":"storyboard_publish_signal"}}}
       "frontmatter:primitive": {key: "frontmatter:primitive", type: string, value: "node"}
-      "kgc:readingSummary": {key: "kgc:readingSummary", type: string, value: "Publish remains local-only until explicit operator approval opens Prod or Cloudflare."}
+      "agentic-os:readingSummary": {key: "agentic-os:readingSummary", type: string, value: "Publish remains local-only until explicit operator approval opens Prod or Cloudflare."}
   edges:
     - {"id":"edge_source_to_ideation","source":"source","sourceHandle":"normalized_source","target":"ideation","targetHandle":"normalized_source","label":"normalized source","type":"storyboard_source_signal"}
     - {"id":"edge_ideation_to_invocation","source":"ideation","sourceHandle":"candidate_beats","target":"invocation","targetHandle":"candidate_beats","label":"candidate beats","type":"storyboard_plan_signal"}
@@ -276,7 +276,7 @@ flow_diagrams:
 
 strybldr_storyboard:
   version: "1"
-  runId: "knowgrph-2d-renderer-storyboard-template"
+  runId: "agentic-graph-2d-renderer-storyboard-template"
   notes: "Neutral Storyboard renderer seed. Replace source fields with operator-owned inputs before live provider calls."
   workflow:
     stages:
@@ -294,8 +294,8 @@ strybldr_storyboard:
       policy: "Write local packet fields only; do not claim Prod, Cloudflare, provider IDs, or stream URLs without explicit operator approval and returned evidence."
   sources:
     - sourceUnitId: "storyboard-template-source"
-      workspacePath: "template/knowgrph-2d-renderer-storyboard-template.md"
-      relativePath: "knowgrph-2d-renderer-storyboard-template.md"
+      workspacePath: "template/agentic-graph-2d-renderer-storyboard-template.md"
+      relativePath: "agentic-graph-2d-renderer-storyboard-template.md"
       originalName: "Storyboard template source"
       mediaKind: "doc"
       mimeHint: "text/markdown"
@@ -307,7 +307,7 @@ strybldr_storyboard:
       lane: "Source"
       order: 1
       evidenceKind: "source-metadata"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Summarize the operator-owned source without copying transcript text or generated output."
       action: "Fill source fields before approving storyboard cards."
       summary: "Capture source URL, title, author, constraints, and notes."
@@ -317,7 +317,7 @@ strybldr_storyboard:
       lane: "Ideation"
       order: 2
       evidenceKind: "agentic-os-invocation"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Run /memory.seed #frontmatter #token-economics @source.frontmatter @source.body."
       action: "Keep ideas paraphrased, source-backed, and zero-spend."
       summary: "Derive candidate beats and reuse constraints."
@@ -327,7 +327,7 @@ strybldr_storyboard:
       lane: "Invocation"
       order: 3
       evidenceKind: "harness-plan"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Run /harness.define #harness #approval-gate @local-harness @cost-log."
       action: "Produce typed invocation bounds before model or media calls."
       summary: "Bind commands, max iterations, cost ledger, and approval gates."
@@ -337,7 +337,7 @@ strybldr_storyboard:
       lane: "Storyboard"
       order: 4
       evidenceKind: "runtime-plan"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Run /canvas.project #canvas #runtime-ready @canvas @runtime-proof."
       action: "Project approved beats into frontmatter-owned cards."
       summary: "Renderer displays cards without owning source data."
@@ -347,7 +347,7 @@ strybldr_storyboard:
       lane: "Elements"
       order: 5
       evidenceKind: "user-edit"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Convert approved beats into reusable elements and constraints."
       action: "Leave generated media URLs blank until real outputs exist."
       summary: "List reusable characters, places, props, UI states, shots, or evidence cards."
@@ -357,7 +357,7 @@ strybldr_storyboard:
       lane: "Runtime"
       order: 6
       evidenceKind: "runtime-proof"
-      provider: "knowgrph-local"
+      provider: "agentic-graph-local"
       prompt: "Run /runtime-ready.check #runtime-ready #dev-only @runtime-proof @dev-only."
       action: "Generate local proof first; require operator approval before paid or mutating provider calls."
       summary: "Runtime-ready means source-backed, parseable, locally provable, and cost-bounded."
@@ -367,7 +367,7 @@ strybldr_storyboard:
       lane: "Review"
       order: 7
       evidenceKind: "runtime-review"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Separate local evidence from live provider evidence."
       action: "Reject fabricated IDs, stream URLs, transcripts, credentials, or generated asset URLs."
       summary: "Review provenance, approvals, cost, and runtime proof."
@@ -377,14 +377,14 @@ strybldr_storyboard:
       lane: "Publish"
       order: 8
       evidenceKind: "runtime-publish"
-      provider: "knowgrph"
+      provider: "agentic-graph"
       prompt: "Run /deploy.guard #approval-gate #dev-only @operator @dev-only."
       action: "Keep publish scope local-only until the operator explicitly authorizes Prod or Cloudflare."
       summary: "Final output is a local packet path and gate status, not a deployment claim."
   cards: []
 ---
 
-# Knowgrph 2D Renderer Storyboard Template
+# Agentic Graph 2D Renderer Storyboard Template
 
 This template is a runtime-ready seed for the shared `2D Renderer: Storyboard` surface. It keeps the opening YAML frontmatter as the source of truth, uses the Agentic OS `/`, `#`, and `@` invocation grammar, and defaults to local dry-run proof with `paid_call_count: 0`.
 
@@ -405,7 +405,7 @@ Storyboard exports and embedded previews should map card groups to semantic boun
 
 ## Use
 
-1. Open this Markdown file in Knowgrph.
+1. Open this Markdown file in Agentic Graph.
 2. Confirm Canvas View reports `2D Renderer: Storyboard`.
 3. Fill `storyboard_template_inputs` with operator-owned source data.
 4. Run `/memory.seed`, `/harness.define`, and `/canvas.project` before any live provider call.
@@ -415,7 +415,7 @@ Storyboard exports and embedded previews should map card groups to semantic boun
 ## Acceptance Checklist
 
 - [ ] Opening YAML frontmatter remains byte-zero and parseable.
-- [ ] `kgCanvas2dRenderer` remains `storyboard`; no `strybldr` renderer alias is introduced.
+- [ ] `agenticOsCanvas2dRenderer` remains `storyboard`; no `strybldr` renderer alias is introduced.
 - [ ] `flow.nodes`, `flow.edges`, `flow_diagrams`, and `strybldr_storyboard.elements` describe the same source-owned workflow.
 - [ ] Runtime fields for provider jobs, stream URLs, generated assets, and proof paths stay blank until real evidence exists.
 - [ ] Local dry-run proof is accepted before any paid or mutating provider call.

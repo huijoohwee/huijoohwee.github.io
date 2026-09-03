@@ -1,21 +1,21 @@
 ---
 # ── Tier A — DOCUMENT IDENTITY ────────────────────────────────────────────────
-title:       "Universal AI Pipeline — PRD + TAD"
-graphId:     "md:universal-ai-pipeline"
-doc_type:    "PRD + TAD"
-date:        "2026-04-19"
-ai_model:    "claude-sonnet-4-20250514"
-lang:        en-US
+title:    "{{product}} · AI Pipeline — Chat Response"
+graphId:  "md:{{domain}}-pipeline"
+doc_type: "Chat Response"
+date:     "{{date}}"
+ai_model: "claude-sonnet-4-20250514"
+lang:     en-US
 
 # ── Tier A — SELF-RUNNER + GRAPH REGISTRY ────────────────────────────────────
 # A conformant Knowledge Graph Canvas renderer ingests this block directly;
 # no external config is required. All five SSOT surfaces — pipeline:, flow:,
 # mermaid:, runner:, and graph_meta: — are consistent and co-located here.
 
-$schema: "kgc-pipeline/v1"
+$schema: "agentic-os-pipeline/v1"
 
 spec:
-  format:        kgc-pipeline
+  format:        agentic-os-pipeline
   version:       "1.0.0"
   parser:        yaml-frontmatter
   execution:     computing-flow
@@ -38,7 +38,7 @@ runner:
       output: "parsed YAML object"
       description: >
         Read file from disk (or network). Split on first pair of --- delimiters.
-        Parse the frontmatter block as YAML. Validate $schema == 'kgc-pipeline/v1';
+        Parse the frontmatter block as YAML. Validate $schema == 'agentic-os-pipeline/v1';
         halt with runner-error if schema mismatch. Expose parsed object as
         __doc for downstream steps.
 
@@ -117,7 +117,7 @@ links:
   # ↑ H2 anchor in body — first rendered diagram section; renderer jumps here
   #   after completing R06.
 
-  self_ref:    "kgc-ai-pipeline-prd-tad.md"
+  self_ref:    "agentic-os-ai-pipeline-chat-response-base-template.md"
   # ↑ Canonical filename for cross-document @node: and @edge: references from
   #   sibling documents in the same Knowledge Graph Canvas workspace.
 
@@ -241,7 +241,7 @@ pipeline:
     edge_in: "context + correction|null"
     edge_out: md
     user_action: "Request injected as user turn; {{subject}} views streamed response in Chat UI"
-    sys_event: "generateArtifact() calls /v1/messages model claude-sonnet-4-20250514 temp 0.3 max 1000 tokens; appends @flag:correction to user turn when correction non-null"
+    sys_event: "generateArtifact() calls /v1/messages model {{ai_model}} temp 0.3 max 1000 tokens; appends @flag:correction to user turn when correction non-null"
     data_in: "context {selected_scope, frontmatter, context_summary} + correction string[]|null"
     data_out: "md string (raw streamed Markdown)"
     trigger: context received
@@ -419,7 +419,7 @@ flow:
       phase:        {key: phase,        type: string,  value: "generate"}
       actor:        {key: actor,        type: array,   value: ["{{subject}}","AI"]}
       handles:      {key: handles,      type: object,  value: {target: [context, correction], source: [md]}}
-      data:         {key: data,         type: object,  value: {model: "claude-sonnet-4-20250514", temperature: 0.3, max_tokens: 1000}}
+      data:         {key: data,         type: object,  value: {model: "{{ai_model}}", temperature: 0.3, max_tokens: 1000}}
       applies_rules:{key: applies_rules,type: array,   value: ["V-05"]}
       db_writes:    {key: db_writes,    type: string,  value: "flow_nodes"}
       retry_arc:    {key: retry_arc,    type: string,  value: "source"}
@@ -484,9 +484,9 @@ flow:
       }
 
   edges:
-    - {id: e1, source: n-trigger,  sourceHandle: signal,     target: n-pack,     targetHandle: signal,     label: "signal",            animated: true}
-    - {id: e2, source: n-pack,     sourceHandle: context,    target: n-process,  targetHandle: context,    label: "context",           animated: true}
-    - {id: e3, source: n-process,  sourceHandle: md,         target: n-validate, targetHandle: md,         label: "md",                animated: true}
+    - {id: e1, source: n-trigger,  sourceHandle: signal,     target: n-pack,     targetHandle: signal,     label: "signal",             animated: true}
+    - {id: e2, source: n-pack,     sourceHandle: context,    target: n-process,  targetHandle: context,    label: "context",            animated: true}
+    - {id: e3, source: n-process,  sourceHandle: md,         target: n-validate, targetHandle: md,         label: "md",                 animated: true}
     - {id: e4, source: n-validate, sourceHandle: valid_md,   target: n-deliver,  targetHandle: valid_md,   label: "validated artifact", animated: true}
     - {id: e5, source: n-validate, sourceHandle: correction, target: n-process,  targetHandle: correction, label: "@flag:correction",   animated: true}
 ---
@@ -497,7 +497,7 @@ flow:
 
 `bg#E1F5EE:version {{version}}` · `bg#FAEEDA:status {{status}}` · owner `{{owner}}` · {{date}}
 
-> **This document is the pipeline.** YAML frontmatter is the machine-readable form — `$schema: kgc-pipeline/v1` declares the format; `spec:` declares topology; `runner:` (R01–R06) is the self-contained execution protocol; `links:` wires frontmatter to body and back; `graph_meta:` provides a registry summary without full parsing; `mermaid:` defines the graph; `flow:` defines computing nodes and edges; `pipeline:` declares the ordered traversal. The body below is the human-readable projection of that same data, linked via `{{}}` variable references and `@node:` / `@edge:` sigils. Tier B domain identity variables (`{{product}}`, `{{domain}}`, `{{subject}}`, `{{objective}}`, `{{artifact}}`, `{{owner}}`, `{{version}}`, `{{status}}`) render as visible placeholders until replaced in frontmatter — see the Customization Guide at the end of this document.
+> **This document is the pipeline.** YAML frontmatter is the machine-readable form — `$schema: agentic-os-pipeline/v1` declares the format; `spec:` declares topology; `runner:` (R01–R06) is the self-contained execution protocol; `links:` wires frontmatter to body and back; `graph_meta:` provides a registry summary without full parsing; `mermaid:` defines the graph; `flow:` defines computing nodes and edges; `pipeline:` declares the ordered traversal. The body below is the human-readable projection of that same data, linked via `{{}}` variable references and `@node:` / `@edge:` sigils. Tier B domain identity variables (`{{product}}`, `{{domain}}`, `{{subject}}`, `{{objective}}`, `{{artifact}}`, `{{owner}}`, `{{version}}`, `{{status}}`) render as visible placeholders until replaced in frontmatter — see the Customization Guide at the end of this document.
 
 ---
 
@@ -517,7 +517,7 @@ Steps executed in order by any conformant renderer (`runner:` frontmatter block)
 |---|---|---|---|---|
 | `R01` | **Ingest** | Raw file bytes | Parsed YAML object | Halt on `$schema` mismatch |
 | `R02` | **Resolve** | Parsed YAML | Vars substituted | Tier B sentinels exempt from V-03 |
-| `R03` | **Build Graph** | Resolved YAML | `graph { nodes, edges }` | Cross-validate all three SSOT surfaces |
+| `R03` | **Build Graph** | Resolved YAML | `graph { nodes, edges }` | Cross-validate all five SSOT surfaces |
 | `R04` | **Compile Compute** | Graph | Graph (compiled fns) | V-05 purity guard before `new Function()` |
 | `R05` | **Traverse** | Compiled graph | Executed graph | Topological order S01→S05; feedback arc `e5` ≤ `{{runtime.maxRetry}}`× |
 | `R06` | **Render** | Executed graph + body | Knowledge Graph Canvas | `dagre-LR` auto-layout; minimap + controls on |
@@ -552,7 +552,7 @@ Bidirectional anchors between YAML frontmatter and body (`links:` frontmatter bl
 | YAML → body (entry view) | `links.body_anchor` | `#flow-graph` — rendered diagram |
 | YAML → body (docs) | `links.yaml_anchor` | `#computing-flow-definition` — this section |
 | Body → YAML | frontmatter `---` delimiter | Source of truth for all machine data |
-| Cross-document | `links.self_ref` | `kgc-ai-pipeline-prd-tad.md` — canonical filename |
+| Cross-document | `links.self_ref` | `agentic-os-ai-pipeline-chat-response-base-template.md` — canonical filename |
 
 ---
 
@@ -570,7 +570,7 @@ The diagram renders from `mermaid:` frontmatter — the SSOT graph definition. S
 
 | Frontmatter key | Resolves in body as | Example |
 |---|---|---|
-| `$schema` | renderer format gate | `kgc-pipeline/v1` |
+| `$schema` | renderer format gate | `agentic-os-pipeline/v1` |
 | `runner[*]` | Runner Protocol table above | R01–R06 |
 | `graph_meta` | Graph Registry table above | node_count, phases, feedback_arcs |
 | `links` | Document Links table above | `yaml_anchor`, `body_anchor`, `self_ref` |
@@ -584,8 +584,8 @@ The diagram renders from `mermaid:` frontmatter — the SSOT graph definition. S
 | `objective` · `artifact` · `owner` | `{{objective}}` · `{{artifact}}` · `{{owner}}` | Tier B sentinels — literal until customized |
 | `version` · `status` | `{{version}}` · `{{status}}` | Tier B sentinels — literal until customized |
 | `ai_model` | `{{ai_model}}` | `claude-sonnet-4-20250514` |
-| `doc_type` | `{{doc_type}}` | `PRD + TAD` |
-| `date` | `{{date}}` | `2026-04-19` |
+| `doc_type` | `{{doc_type}}` | `Chat Response` |
+| `date` | `{{date}}` | `{{date}}` |
 
 ---
 

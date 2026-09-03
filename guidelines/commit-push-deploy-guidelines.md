@@ -18,13 +18,13 @@ required_checks:
 applies_to:
   - "huijoohwee/huijoohwee.github.io"
   - "huijoohwee/agentic-canvas-os"
-  - "huijoohwee/knowgrph"
+  - "huijoohwee/agentic-graph"
   - "huijoohwee/GameXR"
   - "huijoohwee/huijoohwee"
 repository_profiles:
   guideline_site: ["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]
   agentic_canvas_os: ["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]
-  agentic_graph: ["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]
+  agentic_graph: ["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Integration Gate"]
   gamexr: ["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]
   generated_production: ["huijoohwee/huijoohwee", "isolated-worktree", "squash", "Runtime Readiness Gate"]
 ---
@@ -59,12 +59,12 @@ Product identity and physical provider identity are separate:
 
 | Surface | Current identity | Rule |
 |---|---|---|
-| Product | Agentic Graph (`agenticgraph`) | Use for packages, modules, generated paths, canonical routes, UI, and new runtime identifiers. |
-| Source repository | `huijoohwee/knowgrph` | Retain as an immutable provider/provenance locator until a separately authorized repository transfer. |
+| Product | Agentic Graph (`agentic-graph`) | Use for packages, modules, generated paths, canonical routes, UI, and new runtime identifiers. |
+| Source repository | `huijoohwee/agentic-graph` | Retain as an immutable provider/provenance locator until a separately authorized repository transfer. |
 | Game source | `huijoohwee/GameXR` | Consume only the protected Agentic Graph integration SHA. |
 | Generated production repository | `huijoohwee/huijoohwee` | Artifact-only; never a source-authoring target. |
-| Canonical route | `https://airvio.co/agenticgraph` | Primary Agentic Graph route. |
-| Compatibility route | `https://airvio.co/knowgrph` | Release-A redirect/carrier only; retire through the authorized Release-B plan. |
+| Canonical route | `https://airvio.co/agentic-graph` | Primary Agentic Graph route. |
+| Compatibility route | `https://airvio.co/agentic-graph` | Release-A redirect/carrier only; retire through the authorized Release-B plan. |
 | Game route | `https://airvio.co/gamexr` | Stable GameXR route. |
 
 The legacy provider repository name, immutable legal notices, historical D1
@@ -215,7 +215,7 @@ never satisfies another repository's profile:
 |---|---|---|---|
 | `huijoohwee/huijoohwee.github.io` | isolated worktree | squash | `agentic-sdlc-policy-contract` |
 | `huijoohwee/agentic-canvas-os` | isolated worktree | squash | `test`, `build`, `docs-contract`, `collaboration-integration`, `cloud-collaboration` |
-| `huijoohwee/knowgrph` | isolated worktree | squash | `Integration Gate` |
+| `huijoohwee/agentic-graph` | isolated worktree | squash | `Integration Gate` |
 | `huijoohwee/GameXR` | isolated worktree | squash | `Integration Gate` |
 | `huijoohwee/huijoohwee` | isolated worktree | squash | `Runtime Readiness Gate` |
 

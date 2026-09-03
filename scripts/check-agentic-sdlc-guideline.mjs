@@ -246,7 +246,7 @@ assert.ok(
 );
 
 for (const term of [
-  "GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "Builders Hub", "Avalanche", "Vercel",
+  "GitHub", "Cloudflare", "Agentic Graph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "Builders Hub", "Avalanche", "Vercel",
 ]) {
   assert.doesNotMatch(
     repositoryRuntimeReadiness,
@@ -356,7 +356,7 @@ for (const requirement of [
     `completion-time estimation must include ${requirement}`,
   );
 }
-for (const term of ["GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "provider", "vendor"]) {
+for (const term of ["GitHub", "Cloudflare", "Agentic Graph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "provider", "vendor"]) {
   assert.doesNotMatch(
     completionEstimate,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
@@ -381,7 +381,7 @@ assert.ok(
   "atomic lane convergence must precede the release seam",
 );
 const convergencePolicy = source.slice(convergenceStart, releaseStart);
-for (const term of ["GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "origin/main"]) {
+for (const term of ["GitHub", "Cloudflare", "Agentic Graph", "Agentic Canvas OS", "huijoohwee", "origin/main"]) {
   assert.doesNotMatch(
     convergencePolicy,
     new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
@@ -455,7 +455,7 @@ assert.match(
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "airvio.co",
@@ -516,7 +516,7 @@ function contractSlice(text, start, end, label) {
 }
 
 for (const term of [
-  "GitHub", "Cloudflare", "Knowgrph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "origin/main", "turn:end", "localhost",
+  "GitHub", "Cloudflare", "Agentic Graph", "Agentic Canvas OS", "huijoohwee", "airvio.co", "origin/main", "turn:end", "localhost",
 ]) {
   assert.doesNotMatch(scopedLaneAdmission, new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
 }
@@ -616,7 +616,7 @@ assert.doesNotMatch(coordinationSource, /maximum (?:of )?8 concurrent|at most 8 
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "airvio.co",
@@ -679,7 +679,7 @@ for (const requirement of [
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "origin/main",
@@ -713,7 +713,7 @@ for (const requirement of [
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "airvio.co",
@@ -751,7 +751,7 @@ for (const requirement of [
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "airvio.co",
@@ -793,7 +793,7 @@ for (const requirement of [
 for (const term of [
   "GitHub",
   "Cloudflare",
-  "Knowgrph",
+  "Agentic Graph",
   "Agentic Canvas OS",
   "huijoohwee",
   "airvio.co",

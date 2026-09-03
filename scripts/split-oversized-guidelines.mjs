@@ -235,7 +235,7 @@ const PLANS = [
         title: "Markdown Slide Text & Structure Module",
         intro: "Owns the prose-level features: frontmatter configuration, text styling, lists, footnotes, headings, tables, blockquotes, rules, links, and images.",
         sections: [
-          "Frontmatter Configuration (fully supported in Knowgrph viewer)",
+          "Frontmatter Configuration (fully supported in Agentic Graph viewer)",
           "Text Styling (fully supported)",
           "Lists (fully supported)",
           "Footnotes (fully supported)",
@@ -263,7 +263,7 @@ const PLANS = [
         title: "Markdown Slide Layout Module",
         intro: "Owns spatial arrangement: slide separation, column layouts, layout types, backgrounds, aspect ratio, absolute positioning, and grids.",
         sections: [
-          "Slide Separation and Reordering in Knowgrph",
+          "Slide Separation and Reordering in Agentic Graph",
           "Two-Column Layout: HTML (structural only)",
           "Two-Column Layout: Native (fully supported)",
           "Layout Types (partially supported)",
@@ -278,11 +278,11 @@ const PLANS = [
         title: "Markdown Slide Animation & Navigation Module",
         intro: "Owns time-based and interaction-based behaviour: progressive disclosure, inline markers, slide directives, transitions, fragments, speaker notes, keyboard navigation, and drawing mode.",
         sections: [
-          "Click-Based Progressive Disclosure (fully supported in Knowgrph viewer)",
-          "Inline Text Markers (partially supported in Knowgrph viewer)",
+          "Click-Based Progressive Disclosure (fully supported in Agentic Graph viewer)",
+          "Inline Text Markers (partially supported in Agentic Graph viewer)",
           "Slide-Specific Directives (partially supported)",
           "Transition Effects (structural only today)",
-          "Fragment Animations (fully supported in Knowgrph viewer)",
+          "Fragment Animations (fully supported in Agentic Graph viewer)",
           "Speaker Notes (partially supported)",
           "Keyboard Navigation (partially supported)",
           "Drawing Mode (structural only today)",

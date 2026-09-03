@@ -113,7 +113,7 @@ threshold: 0.8
 
 ### Agentic GraphRAG Pattern
 
-**From queries to knowledge synthesis**: AgenticGraphRAG → decomposes query via intent parsing → retrieves subgraphs using traversal algorithms → reasons over connections through multi-hop inference → synthesizes response with citation chains → delivers grounded output with provenance links.
+**From queries to knowledge synthesis**: Agentic GraphRAG → decomposes query via intent parsing → retrieves subgraphs using traversal algorithms → reasons over connections through multi-hop inference → synthesizes response with citation chains → delivers grounded output with provenance links.
 
 **Systems compose GraphRAG components**:
 - Query decomposer parses intent into subqueries

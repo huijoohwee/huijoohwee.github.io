@@ -1,10 +1,10 @@
 graph:
   id: "md:eda-mlp-detailed-implementation-steps"
   codebase_root: .
-  index_jsonld: $GITHUB_ROOT/knowgrph/canvas/src/data/eda-mlp-graph.json
+  index_jsonld: $GITHUB_ROOT/agentic-graph/canvas/src/data/eda-mlp-graph.json
   index_schema: data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld
 orchestrator:
-  parser_script: python -m knowgrph_parser
+  parser_script: python -m agentic-graph_parser
 agentic_rag:
   schema: "https://huijoohwee.github.io/schema/AgenticRAG"
   node_view_type: AgenticRagNodeView

@@ -1,7 +1,7 @@
 import os
 import sys
 
-from knowgrph_parser import markdown_cmd
+from agentic_graph_parser import markdown_cmd
 
 def main() -> int:
     github_root = os.environ.get('GITHUB_ROOT', os.path.expanduser('~/Documents/GitHub'))

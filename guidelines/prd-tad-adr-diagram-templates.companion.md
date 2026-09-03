@@ -54,8 +54,8 @@ Every template below assumes two things already present in the owning document.
 **Surface declaration** *(frontmatter, once per document)*:
 
 ```yaml
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "[primary surface id]"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "[primary surface id]"
 surfaces:
   - "[primary surface label]"
   - "[secondary surface label]"

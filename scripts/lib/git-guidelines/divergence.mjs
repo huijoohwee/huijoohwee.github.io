@@ -44,7 +44,7 @@ const DELIVERY_AUTHORIZATION_CHALLENGE = "authorize agentic-graph-production-sta
 const DELIVERY_REPOSITORY_PROFILES = Object.freeze({
   guideline_site: Object.freeze(["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]),
   agentic_canvas_os: Object.freeze(["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]),
-  agentic_graph: Object.freeze(["huijoohwee/knowgrph", "isolated-worktree", "squash", "Integration Gate"]),
+  agentic_graph: Object.freeze(["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Integration Gate"]),
   gamexr: Object.freeze(["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]),
   generated_production: Object.freeze(["huijoohwee/huijoohwee", "isolated-worktree", "squash", "Runtime Readiness Gate"]),
 });

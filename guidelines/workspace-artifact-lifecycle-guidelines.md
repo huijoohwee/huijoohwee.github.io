@@ -13,7 +13,7 @@ universal_scope: "true"
 provider_neutral: "true"
 runtime_neutral: "true"
 lifecycle_status: "proposed"
-runtime_owner: "huijoohwee/knowgrph local stdio MCP workspace-artifact runtime"
+runtime_owner: "huijoohwee/agentic-graph local stdio MCP workspace-artifact runtime"
 runtime_invocation: "/workspace.artifact.manage #workspace-artifact-lifecycle @artifact-operation @workspace-entry @artifact-policy @runtime-proof"
 publish_policy: "Dev-only; no protected integration, Production, publication, or deployment authority"
 ---
@@ -49,7 +49,7 @@ These guidelines define one bounded lifecycle for files and folders in a selecte
 | Visible chooser and Launch actions | Existing `/workspace.launch` browser owner | Requests user input; does not invent a filesystem or provider protocol. |
 | Parsed content intake | Existing `/source.ingest` owner | Produces typed content; does not grant destination mutation. |
 | Provider synchronization | Existing `/file.sync` owner | Pulls or pushes through configured provider capability and credentials. |
-| Deterministic operation planning and local apply | `workspace.artifact.lifecycle` and the two Knowgrph local MCP tools | Bounded filesystem effects only; no network, model, token, cost, merge, or deploy authority. |
+| Deterministic operation planning and local apply | `workspace.artifact.lifecycle` and the two Agentic Graph local MCP tools | Bounded filesystem effects only; no network, model, token, cost, merge, or deploy authority. |
 | Persistence | Selected workspace or provider adapter | Must support read-back or return an explicit unverified result. |
 | Presentation | Existing Canvas, Source Files, or host UI | Projects receipts; never becomes the mutation authority. |
 
@@ -142,8 +142,8 @@ The local MCP adapter exposes exactly two tools:
 
 | Tool | Role |
 |---|---|
-| `knowgrph.workspace_artifact.plan` | Read-only normalization, inspection, policy, bounds, and deterministic plan digest. |
-| `knowgrph.workspace_artifact.apply` | Digest-fenced local mutation and read-back receipt. |
+| `agentic-graph.workspace_artifact.plan` | Read-only normalization, inspection, policy, bounds, and deterministic plan digest. |
+| `agentic-graph.workspace_artifact.apply` | Digest-fenced local mutation and read-back receipt. |
 
 Tool names, aliases, skill names, and bindings resolve to the same operation vocabulary. Do not create operation-specific slash aliases or provider-specific semantic tags.
 

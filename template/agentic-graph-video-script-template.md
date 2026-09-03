@@ -1,19 +1,19 @@
 ---
-title: "Knowgrph · Video Script Template (Text → Image → Video)"
-graphId: "md:knowgrph-video-script-template"
+title: "Agentic Graph · Video Script Template (Text → Image → Video)"
+graphId: "md:agentic-graph-video-script-template"
 doc_type: "Video Script Template"
 date: "2026-04-28"
 lang: en-US
 
-kgCanvasSurfaceMode: "2d"
-kgCanvasRenderMode: "2d"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "2d"
+agenticOsCanvasRenderMode: "2d"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 
-$schema: "kgc-pipeline/v1"
+$schema: "agentic-os-pipeline/v1"
 
 inputs:
   byteplus_text_model: "seed-2-0-lite-260228"
@@ -31,7 +31,7 @@ inputs:
     label: "replace me"
 
 spec:
-  format: kgc-pipeline
+  format: agentic-os-pipeline
   version: "1.0.0"
   parser: yaml-frontmatter
   execution: computing-flow
@@ -76,7 +76,7 @@ runner:
       action: ingest
       input: "raw file bytes"
       output: "parsed YAML object"
-      description: "Parse YAML frontmatter; validate $schema == kgc-pipeline/v1; expose __doc."
+      description: "Parse YAML frontmatter; validate $schema == agentic-os-pipeline/v1; expose __doc."
     - seq: R02
       action: resolve
       input: "__doc"

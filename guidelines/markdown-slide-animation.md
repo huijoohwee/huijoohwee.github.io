@@ -24,7 +24,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
 ---
 
-## Click-Based Progressive Disclosure (fully supported in Knowgrph viewer)
+## Click-Based Progressive Disclosure (fully supported in Agentic Graph viewer)
 
 **Group animation:**
 ```html
@@ -44,7 +44,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 <v-click at="2">Appears at step 2</v-click>
 ```
 
-**Knowgrph semantics:**
+**Agentic Graph semantics:**
 - `<v-click>` blocks are treated as slide fragments.
 - `at="N"` sets the explicit fragment index for ordering.
 - When presentation mode is enabled and fragments are configured, fragments appear as the presenter advances steps.
@@ -53,7 +53,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
 ---
 
-## Inline Text Markers (partially supported in Knowgrph viewer)
+## Inline Text Markers (partially supported in Agentic Graph viewer)
 
 ```html
 <v-mark color="red">red highlight</v-mark>
@@ -67,7 +67,7 @@ This module is loaded on demand from [Markdown Slide Styling Guidelines](./markd
 
 **Types:** `highlight`, `circle`, `underline`, `strike-through`
 
-**Knowgrph semantics:**
+**Agentic Graph semantics:**
 - `<v-mark>` blocks participate in fragment stepping like `<v-click>`.
 - Color and type attributes are treated as plain content (no special styling today).
 
@@ -91,7 +91,7 @@ fragments:
 
 Slide content
 
-Additional fragment configuration keys understood by the Knowgrph viewer:
+Additional fragment configuration keys understood by the Agentic Graph viewer:
 - `fragmentTags`: overrides the default fragment tag list (`['v-click', 'v-mark']`).
 - `fragmentClassNames`: overrides the default fragment class list (`['fragment']`).
 - `fragmentSteps` / `fragmentStepCount`: alternative way to specify total steps.
@@ -131,7 +131,7 @@ transition: slide-left
 
 ---
 
-## Fragment Animations (fully supported in Knowgrph viewer)
+## Fragment Animations (fully supported in Agentic Graph viewer)
 
 ```html
 <p class="fragment">Default fade-in</p>
@@ -148,12 +148,12 @@ transition: slide-left
 <p class="fragment" data-fragment-index="2">Second</p>
 ```
 
-**Knowgrph semantics:**
+**Agentic Graph semantics:**
 - Elements with `class="fragment"` are treated as slide fragments.
 - `data-fragment-index="N"` controls the ordering; when omitted, order follows document flow.
 - Fragment visibility is driven by the current presentation “step” within the active slide.
 
-**Knowgrph-only minimal fragment deck (copy-paste template):**
+**Agentic Graph-only minimal fragment deck (copy-paste template):**
 
 ```markdown
 ---

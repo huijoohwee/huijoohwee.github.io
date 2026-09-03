@@ -2,7 +2,7 @@ import { finding, insideRanges, referenceImplementationRanges } from "./content.
 import { buildRuleIndex } from "./rule-registry.mjs";
 
 const KNOWN_CONCRETE_TERMS = Object.freeze([
-  "GitHub", "GitLab", "Bitbucket", "Cloudflare", "Vercel", "Netlify", "Knowgrph", "huijoohwee", "airvio.co",
+  "GitHub", "GitLab", "Bitbucket", "Cloudflare", "Vercel", "Netlify", "Agentic Graph", "huijoohwee", "airvio.co",
   "npm", "npx", "pnpm", "yarn", "bun", "deno", "brew", "Node.js", "yjs/yjs", "wrangler", "gh",
 ]);
 const DOCUMENT_FILE_SUFFIX = /\.(?:md|json|mjs|cjs|js|jsx|ts|tsx|yaml|yml|toml|lock|patch|diff|bundle)$/iu;

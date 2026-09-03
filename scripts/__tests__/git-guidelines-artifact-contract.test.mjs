@@ -38,7 +38,7 @@ test("recovery completeness, canonical paths, and artifact names fail closed", (
 test("the repaired repository-owned cloud request path is accepted exactly", () => {
   const request = {
     schema: "agentic-cloud-collaboration-request/v1",
-    targetRepository: "huijoohwee/knowgrph",
+    targetRepository: "huijoohwee/agentic-graph",
     workItemId: "work-item:dev-source-resolver-20260803",
     canonicalBaseRevision: "a".repeat(40),
     laneRevision: "b".repeat(40),

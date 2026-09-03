@@ -308,7 +308,7 @@ This git-layer companion projects the execution set into byte-preserving, provid
 - [artifact-bearing] Identity drift invalidates authorization and forbids retarget/rebuild; unaffected work may continue in `authoring`, but redeploy needs fresh candidate, review, authorization.
 ### Reference implementation and inspiration-only profile
 
-- [advisory] Profile: `knowgrph` → `airvio.co`/`airvio.co/knowgrph` → `huijoohwee/content/knowgrph`; verify with `npm run git-guidelines:check`.
+- [advisory] Profile: `agentic-graph` → `airvio.co`/`airvio.co/agentic-graph` → `huijoohwee/content/agentic-graph`; verify with `npm run git-guidelines:check`.
 - [advisory] [yjs/yjs](https://github.com/yjs/yjs) inspires neutral observation and convergence only; this contract is independently authored.
 - [artifact-bearing] Forbid copied code, prose, schema, tests, examples, algorithms, names, dependencies, imports, runtime reliance, or external authority.
 

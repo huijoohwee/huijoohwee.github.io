@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Product-Market Fit modelled as a 3-layer bipartite graph. Each node carries three voxel dimensions: Money (Capital-Market Fit), Man (Founder-Market Fit), Machine (Tech-Market Fit). Voxel height encodes fit score 0–1.",
     "historicalArchive": true,
-    "historicalContext": "Preserves the original hackathon-era PMF build description and bipartite-era renderer wording as a dated snapshot, not the current Knowgrph Flowchart contract.",
+    "historicalContext": "Preserves the original hackathon-era PMF build description and bipartite-era renderer wording as a dated snapshot, not the current Agentic Graph Flowchart contract.",
     "layers": ["PRODUCT", "SOLUTION", "MARKET"],
     "dimensions": ["money", "man", "machine"]
   },

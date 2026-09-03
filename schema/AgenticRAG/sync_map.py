@@ -55,30 +55,45 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 
 def find_github_root(start: Path) -> Path:
-    for candidate in [start] + list(start.parents):
-        schema_checkout = candidate / "huijoohwee.github.io"
-        for source_name in ("knowgrph", "agenticgraph"):
-            source_checkout = candidate / source_name
-            if (
-                (source_checkout / ".git").exists()
-                and (schema_checkout / ".git").exists()
-            ):
-                return candidate
+    result = subprocess.run(
+        ["git", "-C", str(start), "rev-parse", "--path-format=absolute", "--git-common-dir"],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    if result.returncode == 0:
+        common_dir = Path(result.stdout.strip()).resolve()
+        if common_dir.name == ".git":
+            return common_dir.parent.parent
     return start.parents[len(start.parents) - 1]
 
 
 def resolve_default_docs_dir(github_root: Path) -> Path:
-    knowgrph_checkout = github_root / "knowgrph"
-    if not knowgrph_checkout.exists() and (github_root / "agenticgraph").exists():
-        knowgrph_checkout = github_root / "agenticgraph"
+    agentic_graph_checkout = github_root / "agentic-graph"
+    if not agentic_graph_checkout.exists():
+        candidates: list[Path] = []
+        for candidate in github_root.iterdir():
+            if not candidate.is_dir():
+                continue
+            remote = subprocess.run(
+                ["git", "-C", str(candidate), "remote", "get-url", "origin"],
+                capture_output=True,
+                check=False,
+                text=True,
+            )
+            if remote.returncode == 0 and remote.stdout.strip().endswith("/agentic-graph.git"):
+                candidates.append(candidate)
+        if len(candidates) != 1:
+            raise RuntimeError("expected exactly one local checkout for the agentic-graph remote")
+        agentic_graph_checkout = candidates[0]
     result = subprocess.run(
-        ["git", "-C", str(knowgrph_checkout), "worktree", "list", "--porcelain"],
+        ["git", "-C", str(agentic_graph_checkout), "worktree", "list", "--porcelain"],
         capture_output=True,
         check=False,
         text=True,
     )
     if result.returncode != 0:
-        return knowgrph_checkout / "docs" / "documents"
+        return agentic_graph_checkout / "docs" / "documents"
 
     main_worktrees: list[Path] = []
     for block in result.stdout.strip().split("\n\n"):
@@ -89,13 +104,13 @@ def resolve_default_docs_dir(github_root: Path) -> Path:
             main_worktrees.append(Path(path_line.removeprefix("worktree ")))
 
     if len(main_worktrees) > 1:
-        raise RuntimeError("multiple registered Knowgrph main worktrees")
+        raise RuntimeError("multiple registered Agentic Graph main worktrees")
     if len(main_worktrees) == 1:
         return main_worktrees[0] / "docs" / "documents"
 
     # Detached CI clones have no checked-out main branch, so keep the sibling
     # checkout fallback when there is no registered canonical main worktree.
-    return knowgrph_checkout / "docs" / "documents"
+    return agentic_graph_checkout / "docs" / "documents"
 
 
 def detect_language_from_path(path_fragment: str) -> Literal["en-us", "zh-cn"]:
@@ -119,13 +134,13 @@ def is_node(item: GraphItem) -> bool:
     return item.get("@type") == "kg:Node"
 
 
-def is_knowgrph_document_node(item: GraphItem) -> bool:
+def is_agentic_graph_document_node(item: GraphItem) -> bool:
     if not is_node(item):
         return False
     properties = item.get("properties")
     if not isinstance(properties, dict):
         return False
-    if properties.get("repo") != "knowgrph":
+    if properties.get("repo") != "agentic-graph":
         return False
     labels = item.get("labels")
     return isinstance(labels, list) and "Document" in labels
@@ -182,7 +197,7 @@ def build_doc_node_id(doc_rel_path: str) -> str:
     else:
         base = Path(doc_rel_path).stem
     base = base.replace("/", "--").replace(" ", "-")
-    return f"node:knowgrph:doc:{base}"
+    return f"node:agentic-graph:doc:{base}"
 
 
 def upsert_document_node(existing: GraphItem | None, doc_rel_path: str) -> GraphItem:
@@ -196,7 +211,7 @@ def upsert_document_node(existing: GraphItem | None, doc_rel_path: str) -> Graph
             "@type": "kg:Node",
             "labels": ["Document"],
             "name": [doc_rel_path],
-            "properties": {"repo": "knowgrph", "relPath": file_rel_path},
+            "properties": {"repo": "agentic-graph", "relPath": file_rel_path},
             "documentPath": file_rel_path,
             "language": language,
         }
@@ -206,7 +221,7 @@ def upsert_document_node(existing: GraphItem | None, doc_rel_path: str) -> Graph
     updated["@type"] = "kg:Node"
     updated["labels"] = ["Document"]
     updated["name"] = [doc_rel_path]
-    updated["properties"] = {"repo": "knowgrph", "relPath": file_rel_path}
+    updated["properties"] = {"repo": "agentic-graph", "relPath": file_rel_path}
     updated["documentPath"] = file_rel_path
     updated["language"] = language
     return updated
@@ -267,18 +282,18 @@ def sync_map(map_obj: JsonObject, docs_rel_paths: list[str]) -> tuple[JsonObject
 
     schema_nodes: list[GraphItem] = []
     keep_other_nodes: list[GraphItem] = []
-    knowgrph_doc_nodes: list[GraphItem] = []
+    agentic_graph_doc_nodes: list[GraphItem] = []
 
     for node in nodes:
         if is_schema_surface_node(node):
             schema_nodes.append(node)
-        elif is_knowgrph_document_node(node):
-            knowgrph_doc_nodes.append(node)
+        elif is_agentic_graph_document_node(node):
+            agentic_graph_doc_nodes.append(node)
         else:
             keep_other_nodes.append(node)
 
     existing_by_rel_path: dict[str, GraphItem] = {}
-    for node in knowgrph_doc_nodes:
+    for node in agentic_graph_doc_nodes:
         doc_rel_path = get_node_doc_rel_path(node)
         if doc_rel_path:
             existing_by_rel_path[doc_rel_path] = node
@@ -336,7 +351,7 @@ def main(argv: list[str]) -> int:
     github_root = find_github_root(agenticrag_dir)
 
     docs_dir = Path(args.docs_dir) if args.docs_dir else resolve_default_docs_dir(github_root)
-    map_file = Path(args.map_file) if args.map_file else (agenticrag_dir / "knowgrph-documents-map.graph.jsonld")
+    map_file = Path(args.map_file) if args.map_file else (agenticrag_dir / "agentic-graph-documents-map.graph.jsonld")
 
     original_text = map_file.read_text(encoding="utf-8")
     map_obj = json.loads(original_text)

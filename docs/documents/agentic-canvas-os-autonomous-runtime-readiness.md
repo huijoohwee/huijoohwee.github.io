@@ -10,12 +10,12 @@ owners:
   - "cross-repo runtime readiness docs"
 product: "agentic-canvas-os"
 frontmatter_contract: "required"
-domain: "knowgrph"
+domain: "agentic-graph"
 related:
   - "docs/documents/hjh-topology-document.md"
-  - "docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md"
-  - "docs/documents/knowgrph-mcp-onboarding-index.md"
-  - "docs/documents/knowgrph-mcp-install-contract.md"
+  - "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md"
+  - "docs/documents/agentic-graph-mcp-onboarding-index.md"
+  - "docs/documents/agentic-graph-mcp-install-contract.md"
 evidence_basis: "source audit of agentic-canvas-os on 2026-07-23; 452 offline node --test cases passing"
 ---
 
@@ -50,10 +50,10 @@ Map the readiness in three words: **built, gated, unenabled**.
 | Agent Definitions registry | Yes | Yes | No | Registry starts empty; no default source-verified agent |
 | Agent Orchestration (delegate / handoff) | Yes | Yes | No | Wired to composition; blocked while composition is unconfigured |
 | Agent Swarm (dynamic tasks, durable ledger) | Yes | Yes | No | Routes fail closed until resolver/planner/worker/synthesizer injected |
-| Function Calling + Knowgrph function gateway | Yes | Yes | Conditional | Live when OpenAI function config + MCP allowlist present |
+| Function Calling + Agentic Graph function gateway | Yes | Yes | Conditional | Live when OpenAI function config + MCP allowlist present |
 | Guardrails + Human Review | Yes | Yes | Conditional | Active around composed runs; primary spend-safety control |
 | Sandbox Agents (container workspace) | Yes | Yes | No | No provider owners injected in the default Worker |
-| MCP control-plane forwarding (`/api/run`, `/api/invoke`) | Yes | Yes | Conditional | Live when `KNOWGRPH_MCP_ENDPOINT` is set |
+| MCP control-plane forwarding (`/api/run`, `/api/invoke`) | Yes | Yes | Conditional | Live when `AGENTIC_OS_MCP_ENDPOINT` is set |
 | HTTP route to invoke the agent loop | No | n/a | No | No `/api/agent/run` equivalent is exposed |
 | Bounded live provider proof | Yes | Yes | n/a | One documented bounded run; general capability remains unverified |
 
@@ -62,7 +62,7 @@ Map the readiness in three words: **built, gated, unenabled**.
 - A generic, bounded agent loop that sequences model, tool, and handoff steps; locks a conversation to one continuation strategy; pauses and resumes within a turn through a durable per-conversation state owner; aggregates cost logs; and fails closed on step, event, timeout, and configuration bounds.
 - A working OpenAI Responses agent adapter that issues real provider requests, parses usage, computes price-derived cost, verifies the effective reasoning-context echo, and redacts secrets and raw response ids from evidence.
 - Supporting runtimes with passing offline coverage for orchestration, swarm, function calling with signed human review, guardrails, and a Docker sandbox control plane.
-- A keyless MCP Streamable-HTTP client that forwards `tools/call` to the Knowgrph control plane and fails closed on any non-2xx or JSON-RPC error.
+- A keyless MCP Streamable-HTTP client that forwards `tools/call` to the Agentic Graph control plane and fails closed on any non-2xx or JSON-RPC error.
 - A whole-suite offline signal: `node --test __tests__/*.test.mjs` reports 452 passing cases with zero failures as of 2026-07-23.
 
 ## Why It Is Not Autonomous By Default
@@ -79,7 +79,7 @@ The reference for closing all four already exists in-repo as the bounded live pr
 ## Verified vs Unverified
 
 - **Verified (bounded, offline or single approved run)**: contract behavior across 452 offline tests; one documented bounded live provider proof restricted to three provider calls with redacted usage and cost evidence.
-- **Unverified (by design until enabled)**: general model quality, default Worker autonomy, durable cross-isolate autonomous behavior under load, and any orchestration of `knowgrph` or another configured repo through a live model. Readiness continues to report `providerExecutionStatus: "unverified"` until a bounded live run returns actual usage and continuation evidence.
+- **Unverified (by design until enabled)**: general model quality, default Worker autonomy, durable cross-isolate autonomous behavior under load, and any orchestration of `agentic-graph` or another configured repo through a live model. Readiness continues to report `providerExecutionStatus: "unverified"` until a bounded live run returns actual usage and continuation evidence.
 
 ## Enablement Path (operator-gated, non-default)
 
@@ -88,13 +88,13 @@ Enabling autonomy is an explicit operator action, not a code change to the shipp
 1. Provide model configuration and a server-side key so the provider adapter resolves ready; keep it opt-in so an unconfigured Worker stays fail-closed.
 2. Register at least one source-verified agent definition and inject the execution adapter into Agent Runtime Composition.
 3. Expose an authenticated route that invokes orchestration or the composed run; never expose an unauthenticated autonomous-execution endpoint.
-4. Point the MCP client at a target control plane — `knowgrph` locally or hosted, or any MCP Streamable-HTTP endpoint for another configured repo — and keep every spend or mutation tool on the review-required allowlist so the human-review gate and control-plane approval gates stay in force.
+4. Point the MCP client at a target control plane — `agentic-graph` locally or hosted, or any MCP Streamable-HTTP endpoint for another configured repo — and keep every spend or mutation tool on the review-required allowlist so the human-review gate and control-plane approval gates stay in force.
 5. Record a bounded live end-to-end proof against that target before promoting any `verified-bounded-live` readiness claim.
 
 ## Guardrails That Must Stay In Force
 
 - Autonomy stays opt-in and fail-closed; absence of model or allowlist configuration means the runtime reports unconfigured, not silently active.
-- Spend and mutation tools remain review-required; the Knowgrph approval gates plus the in-repo human-review runtime are the primary defense against a runaway loop incurring cost.
+- Spend and mutation tools remain review-required; the Agentic Graph approval gates plus the in-repo human-review runtime are the primary defense against a runaway loop incurring cost.
 - Loop bounds — max steps, max turns, max output tokens, and stage timeout — remain enforced.
 - The autonomous-execution route stays authenticated behind the existing session token.
 - External MCP content is treated as untrusted; the client keeps failing closed on non-2xx and JSON-RPC errors.
@@ -102,7 +102,7 @@ Enabling autonomy is an explicit operator action, not a code change to the shipp
 ## Cross-References
 
 - Shared topology contract: `huijoohwee.github.io/docs/documents/hjh-topology-document.md`
-- Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/knowgrph-agentic-os-follow-on-prd-tad.md`
-- Remote MCP onboarding index: `huijoohwee.github.io/docs/documents/knowgrph-mcp-onboarding-index.md`
-- Canonical MCP install boundary: `huijoohwee.github.io/docs/documents/knowgrph-mcp-install-contract.md`
+- Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md`
+- Remote MCP onboarding index: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-onboarding-index.md`
+- Canonical MCP install boundary: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-install-contract.md`
 - Shared directive ledger: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`

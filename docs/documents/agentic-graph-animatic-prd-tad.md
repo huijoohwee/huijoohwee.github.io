@@ -1,46 +1,46 @@
 ---
-title: Knowgrph Animatic — PRD + TAD
-kgDocumentSemanticMode: document
-kgFrontmatterModeEnabled: true
-kgDocumentStructureBaselineLock: false
+title: Agentic Graph Animatic — PRD + TAD
+agenticOsDocumentSemanticMode: document
+agenticOsFrontmatterModeEnabled: true
+agenticOsDocumentStructureBaselineLock: false
 prd_version: "1.1.0"
 tad_version: "1.1.0"
 status: Enhanced Baseline
 date: 2026-05-25
-source_validation_doc: knowgrph-animatic-demo.md
+source_validation_doc: agentic-graph-animatic-demo.md
 guidelines_ref: prd-tad-guidelines.md
 ---
 
-# Knowgrph Animatic — PRD + TAD
+# Agentic Graph Animatic — PRD + TAD
 
-**PRD v1.1.0 · TAD v1.1.0 · Enhanced Baseline 2026-05-25**  
-Source: `knowgrph-animatic-demo.md § Validation Goals`  
+**PRD v1.1.0 · TAD v1.1.0 · Enhanced Baseline 2026-05-25**
+Source: `agentic-graph-animatic-demo.md § Validation Goals`
 Standard: `prd-tad-guidelines.md`
 
 ## Markdown YAML Frontmatter Contract
 
 - This PRD/TAD and its referenced animatic source docs use the opening YAML frontmatter block as the canonical metadata and renderer-activation contract.
-- `kgCanvas2dRenderer: animatic` remains the single frontmatter trigger for the animatic renderer; no duplicate renderer-only bootstrap path is allowed.
+- `agenticOsCanvas2dRenderer: animatic` remains the single frontmatter trigger for the animatic renderer; no duplicate renderer-only bootstrap path is allowed.
 - Canonical animatic authoring keeps `flow:` and `timeline.beats.*` in plain YAML; normalized `{key, type, value}` wrappers are reserved for dedicated validation fixtures, not baseline authored animatic docs.
 - Invalid YAML frontmatter is an acceptance failure because parser warning or repair paths are recovery mechanisms, not release-authoring targets.
 - Scalars with reserved punctuation must be quoted so animatic docs stay valid under strict YAML parsing during ingest, reload, and validation automation.
 
 ## Current Runtime Owners
 
-- Renderer registry SSOT: `knowgrph/canvas/src/lib/config.render.ts`
-- Surface mount owner: `knowgrph/canvas/src/components/CanvasViewport.tsx`
-- Runtime shell + DOM/CSS contract: `knowgrph/canvas/src/components/AnimaticCanvas.tsx`,
-  `knowgrph/canvas/src/components/AnimaticCanvas.css`
+- Renderer registry SSOT: `agentic-graph/canvas/src/lib/config.render.ts`
+- Surface mount owner: `agentic-graph/canvas/src/components/CanvasViewport.tsx`
+- Runtime shell + DOM/CSS contract: `agentic-graph/canvas/src/components/AnimaticCanvas.tsx`,
+  `agentic-graph/canvas/src/components/AnimaticCanvas.css`
 - Timeline model + frontmatter rewrite owner:
-  `knowgrph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts`
+  `agentic-graph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts`
 - Lane presentation owner:
-  `knowgrph/canvas/src/components/AnimaticCanvas/animaticLaneControls.ts`
+  `agentic-graph/canvas/src/components/AnimaticCanvas/animaticLaneControls.ts`
 - Keyboard policy owner:
-  `knowgrph/canvas/src/components/AnimaticCanvas/animaticKeyboard.ts`
+  `agentic-graph/canvas/src/components/AnimaticCanvas/animaticKeyboard.ts`
 - Browser-facing runtime command owner:
-  `knowgrph/canvas/src/features/agent-ready/workspaceRuntimeCommand.ts`
+  `agentic-graph/canvas/src/features/agent-ready/workspaceRuntimeCommand.ts`
 - Mounted validator owner:
-  `knowgrph/canvas/scripts/validate_animatic_timeline_interactions.py`
+  `agentic-graph/canvas/scripts/validate_animatic_timeline_interactions.py`
 - Canonical validator entry command: `npm run validate:animatic-interactions`
 
 ---
@@ -51,86 +51,86 @@ Standard: `prd-tad-guidelines.md`
 
 ## Phase 0 — Problem Discovery
 
-Owned by [Knowgrph Animatic Problem & Scope Module](./knowgrph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## User Journey — Content Author: Author → Playback → Edit
 
-Owned by [Knowgrph Animatic Problem & Scope Module](./knowgrph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Epics & User Stories
 
-Owned by [Knowgrph Animatic Epics & User Stories Module](./knowgrph-animatic-prd-epics.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Epics & User Stories Module](./agentic-graph-animatic-prd-epics.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Scope Boundaries
 
-Owned by [Knowgrph Animatic Problem & Scope Module](./knowgrph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Implementation Constraints
 
-Owned by [Knowgrph Animatic Problem & Scope Module](./knowgrph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Decisions & Open Questions
 
-Owned by [Knowgrph Animatic Problem & Scope Module](./knowgrph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architecture Overview
 
-Owned by [Knowgrph Animatic Components Module](./knowgrph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Journey → System Mapping
 
-Owned by [Knowgrph Animatic Components Module](./knowgrph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Component Specifications
 
-Owned by [Knowgrph Animatic Components Module](./knowgrph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Integration Contracts
 
-Owned by [Knowgrph Animatic Components Module](./knowgrph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Workflow: Beat Drag-to-Move
 
-Owned by [Knowgrph Animatic Flows & Diagrams Module](./knowgrph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Workflow: Validator Script Run
 
-Owned by [Knowgrph Animatic Flows & Diagrams Module](./knowgrph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Data Flows
 
-Owned by [Knowgrph Animatic Flows & Diagrams Module](./knowgrph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architectural Decisions
 
-Owned by [Knowgrph Animatic Decisions & Attributes Module](./knowgrph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Quality Attributes
 
-Owned by [Knowgrph Animatic Decisions & Attributes Module](./knowgrph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Deployment Strategy
 
-Owned by [Knowgrph Animatic Decisions & Attributes Module](./knowgrph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architecture Diagrams
 
-Owned by [Knowgrph Animatic Flows & Diagrams Module](./knowgrph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Component Inventory
 
 | Layer          | Component              | File / Module                                           | Status      |
 |----------------|------------------------|---------------------------------------------------------|-------------|
-| Registry       | Surface registry + mount | `knowgrph/canvas/src/lib/config.render.ts`, `knowgrph/canvas/src/components/CanvasViewport.tsx` | Live |
-| Parse + Model  | C1 FrontmatterParser / C2 BeatLanePopulator | `knowgrph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts` | Live |
-| Render         | C3 TimelineRenderer    | `knowgrph/canvas/src/components/AnimaticCanvas.tsx`, `knowgrph/canvas/src/components/AnimaticCanvas.css` | Live |
-| Player         | C4 PlayerShell         | `knowgrph/canvas/src/components/AnimaticCanvas.tsx`, `knowgrph/canvas/src/components/AnimaticCanvas.css` | Live |
-| Interaction    | C5 InteractionHandler  | `knowgrph/canvas/src/components/AnimaticCanvas.tsx`, `knowgrph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts` | Live |
-| Write          | C6 FrontmatterWriter   | `knowgrph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts`, `knowgrph/canvas/src/features/agent-ready/workspaceRuntimeCommand.ts` | Live |
-| Scroll         | C7 AutoScrollController| `knowgrph/canvas/src/components/AnimaticCanvas.tsx` | Live |
-| Keyboard       | C8 KeyboardHandler     | `knowgrph/canvas/src/components/AnimaticCanvas/animaticKeyboard.ts`, `knowgrph/canvas/src/components/AnimaticCanvas.tsx` | Live |
-| Lane State     | Lane presentation      | `knowgrph/canvas/src/components/AnimaticCanvas/animaticLaneControls.ts` | Live |
-| Validation     | C9 ValidatorScript     | `knowgrph/canvas/scripts/validate_animatic_timeline_interactions.py`, `knowgrph/canvas/package.json` | Live |
+| Registry       | Surface registry + mount | `agentic-graph/canvas/src/lib/config.render.ts`, `agentic-graph/canvas/src/components/CanvasViewport.tsx` | Live |
+| Parse + Model  | C1 FrontmatterParser / C2 BeatLanePopulator | `agentic-graph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts` | Live |
+| Render         | C3 TimelineRenderer    | `agentic-graph/canvas/src/components/AnimaticCanvas.tsx`, `agentic-graph/canvas/src/components/AnimaticCanvas.css` | Live |
+| Player         | C4 PlayerShell         | `agentic-graph/canvas/src/components/AnimaticCanvas.tsx`, `agentic-graph/canvas/src/components/AnimaticCanvas.css` | Live |
+| Interaction    | C5 InteractionHandler  | `agentic-graph/canvas/src/components/AnimaticCanvas.tsx`, `agentic-graph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts` | Live |
+| Write          | C6 FrontmatterWriter   | `agentic-graph/canvas/src/components/AnimaticCanvas/animaticTimeline.ts`, `agentic-graph/canvas/src/features/agent-ready/workspaceRuntimeCommand.ts` | Live |
+| Scroll         | C7 AutoScrollController| `agentic-graph/canvas/src/components/AnimaticCanvas.tsx` | Live |
+| Keyboard       | C8 KeyboardHandler     | `agentic-graph/canvas/src/components/AnimaticCanvas/animaticKeyboard.ts`, `agentic-graph/canvas/src/components/AnimaticCanvas.tsx` | Live |
+| Lane State     | Lane presentation      | `agentic-graph/canvas/src/components/AnimaticCanvas/animaticLaneControls.ts` | Live |
+| Validation     | C9 ValidatorScript     | `agentic-graph/canvas/scripts/validate_animatic_timeline_interactions.py`, `agentic-graph/canvas/package.json` | Live |
 
 ---
 
@@ -138,7 +138,7 @@ Owned by [Knowgrph Animatic Flows & Diagrams Module](./knowgrph-animatic-tad-flo
 
 | PRD Story    | Acceptance Criterion (summary)                               | TAD Component            | `/goal` Condition                                                                   |
 |--------------|--------------------------------------------------------------|--------------------------|--------------------------------------------------------------------------------------|
-| E1-S1        | Renderer activates from `kgCanvas2dRenderer: animatic`      | C1, C3                   | `renderer activates and no demo fixture loaded; validator exits 0`                  |
+| E1-S1        | Renderer activates from `agenticOsCanvas2dRenderer: animatic`      | C1, C3                   | `renderer activates and no demo fixture loaded; validator exits 0`                  |
 | E1-S1        | Canonical flow: YAML syntax reused; no parallel block        | C1                       | `grep animatic-only block returns no match`                                        |
 | E1-S2        | `timeline.scale.*` sole scale config source                  | C1, C3                   | `scale rail matches frontmatter; no renderer-only key in source`                    |
 | E1-S3        | Ordinal fallback when timing absent                          | C1, C3                   | `ordinal beats render when timing absent; validator exits 0`                        |

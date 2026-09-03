@@ -13,11 +13,11 @@
       "@language": "zh-cn"
     },
     {
-      "@value": "Knowgrph repo configuration artifacts are source-owned under data/config/{graphrag,schema,orchestrator,llm-chat}. Pipeline, schema, orchestrator, and LLM-chat consumers should resolve defaults from shared path constants and must not preserve alternate root-level config folders or compatibility aliases.",
+      "@value": "Agentic Graph repo configuration artifacts are source-owned under data/config/{graphrag,schema,orchestrator,llm-chat}. Pipeline, schema, orchestrator, and LLM-chat consumers should resolve defaults from shared path constants and must not preserve alternate root-level config folders or compatibility aliases.",
       "@language": "en-us"
     },
     {
-      "@value": "Knowgrph 仓库配置制品由 data/config/{graphrag,schema,orchestrator,llm-chat} 作为源头所有。Pipeline、schema、orchestrator 与 LLM-chat 消费方应通过共享路径常量解析默认值，禁止保留替代的根级配置目录或兼容别名。",
+      "@value": "Agentic Graph 仓库配置制品由 data/config/{graphrag,schema,orchestrator,llm-chat} 作为源头所有。Pipeline、schema、orchestrator 与 LLM-chat 消费方应通过共享路径常量解析默认值，禁止保留替代的根级配置目录或兼容别名。",
       "@language": "zh-cn"
     },
     {

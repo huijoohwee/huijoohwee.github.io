@@ -1,21 +1,21 @@
 ---
-title: "Knowgrph · GrabMaps × Rich Media — MainPanel Maps Multimodal Fusion Demo"
-graphId: "md:knowgrph-maps-grabmap-multim-demo"
+title: "Agentic Graph · GrabMaps × Rich Media — MainPanel Maps Multimodal Fusion Demo"
+graphId: "md:agentic-graph-maps-grabmap-multim-demo"
 doc_type: "Demo"
 date: "2026-04-24"
 lang: en-US
 
-kgCanvasSurfaceMode: "geospatial"
-kgCanvas2dRenderer: "storyboard"
-kgDocumentSemanticMode: "document"
-kgFrontmatterModeEnabled: true
-kgMultiDimTableModeEnabled: false
-kgDocumentStructureBaselineLock: false
+agenticOsCanvasSurfaceMode: "geospatial"
+agenticOsCanvas2dRenderer: "storyboard"
+agenticOsDocumentSemanticMode: "document"
+agenticOsFrontmatterModeEnabled: true
+agenticOsMultiDimTableModeEnabled: false
+agenticOsDocumentStructureBaselineLock: false
 
-$schema: "kgc-pipeline/v1"
+$schema: "agentic-os-pipeline/v1"
 
 spec:
-  format: kgc-pipeline
+  format: agentic-os-pipeline
   version: "1.0.0"
   parser: yaml-frontmatter
   execution: computing-flow
@@ -125,7 +125,7 @@ widget_bundle:
 links:
   yaml_anchor: "#computing-flow-definition"
   body_anchor: "#flow-graph"
-  self_ref: "knowgrph-maps-grabmap-multim-demo.md"
+  self_ref: "agentic-graph-maps-grabmap-multim-demo.md"
 
 canvas:
   auto_layout: true
@@ -176,7 +176,7 @@ runner:
   entry: R01
   exit: R06
   steps:
-    - {seq: R01, action: ingest, input: "raw file bytes", output: "parsed YAML object", description: "Parse YAML frontmatter; validate $schema == kgc-pipeline/v1; expose __doc."}
+    - {seq: R01, action: ingest, input: "raw file bytes", output: "parsed YAML object", description: "Parse YAML frontmatter; validate $schema == agentic-os-pipeline/v1; expose __doc."}
     - {seq: R02, action: resolve, input: "__doc", output: "__doc_resolved", description: "Resolve {{key}} interpolation for body and tables; expose __doc_resolved."}
     - {seq: R03, action: build-graph, input: "__doc_resolved", output: "graph { nodes[], edges[] }", description: "Build flow graph from flow: and mermaid:. Renderers MAY treat widget_bundle as node registry metadata."}
     - {seq: R04, action: compile-compute, input: "graph", output: "graph (compiled)", description: "Compile compute fns if present; this demo uses widget nodes and static binding only."}
@@ -505,7 +505,7 @@ flow:
     - {id: e-panel-video-to-binder, source: p-rich-media, sourceHandle: videoUrl, target: b-map-media, targetHandle: flyover_video_url, label: "videoUrl → flyover_video_url", animated: true}
 ---
 
-# Knowgrph · GrabMaps × Rich Media (Demo)
+# Agentic Graph · GrabMaps × Rich Media (Demo)
 
 ## Demo intent
 
@@ -521,9 +521,9 @@ Dev → Prod → Cloudflare context:
 
 | Environment | Repo / Deploy | Role |
 |---|---|---|
-| Dev | `$GITHUB_ROOT/knowgrph` (MainPanel Maps) | iterate UI + integration |
-| Prod | `$GITHUB_ROOT/huijoohwee/knowgrph` | release-ready build |
-| Cloudflare | `airvio.co/knowgrph` | deploy + serve |
+| Dev | `$GITHUB_ROOT/agentic-graph` (MainPanel Maps) | iterate UI + integration |
+| Prod | `$GITHUB_ROOT/huijoohwee/agentic-graph` | release-ready build |
+| Cloudflare | `airvio.co/agentic-graph` | deploy + serve |
 
 ---
 

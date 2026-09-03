@@ -72,13 +72,13 @@ frontmatter_contract: "required"
 ## Template Contracts
 
 | [Pitchdeck PRD TAD Frontmatter Contract](./pitchdeck-prd-tad-frontmatter-contract.md) | Canonical author-facing contract for the frontmatter-first pitchdeck templates |
-| [KGC AI Pipeline PRD TAD](./kgc-ai-pipeline-prd-tad.md) | Broader `kgc-pipeline/v1` frontmatter-first pipeline contract |
+| [AGENTIC_OS AI Pipeline PRD TAD](./agentic-os-ai-pipeline-prd-tad.md) | Broader `agentic-os-pipeline/v1` frontmatter-first pipeline contract |
 
 ---
 
 ## Topology Contracts
 
-| [HJH Topology Document](./documents/hjh-topology-document.md) | Shared PRD/TAD-style cross-repo topology for `knowgrph`, `singabldr`, `huijoohwee`, and Cloudflare Pages; defers Knowgrph-specific release gates to the canonical source-owned publish-topology contract |
+| [HJH Topology Document](./documents/hjh-topology-document.md) | Shared PRD/TAD-style cross-repo topology for `agentic-graph`, `singabldr`, `huijoohwee`, and Cloudflare Pages; defers Agentic Graph-specific release gates to the canonical source-owned publish-topology contract |
 | [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Commit-backed canonical shared directive log for cross-repo workspace tasks that do not belong to one app repo |
 
 ---
@@ -91,15 +91,15 @@ frontmatter_contract: "required"
 
 ---
 
-## Knowgrph MCP
+## Agentic Graph MCP
 
-| [Knowgrph MCP Onboarding Index](./documents/knowgrph-mcp-onboarding-index.md) | Fastest public entry point for install, orchestration boundary, and proof path |
-| [Knowgrph MCP Install Contract](./documents/knowgrph-mcp-install-contract.md) | Canonical public-discovery vs control-plane install rule |
-| [Knowgrph MCP Install Boundary Release Note 2026-07-10](./documents/knowgrph-mcp-install-boundary-release-note-20260710.md) | Latest evidence-backed release-proof note for the public-discovery vs control-plane boundary |
-| [Knowgrph MCP Service - PRD & TAD](./documents/knowgrph-mcp-service-prd-tad.md) | Publish-side mirror notice for the implemented MCP baseline; points back to the canonical source-owned PRD/TAD |
-| [Knowgrph MCP Agentic Canvas OS - PRD and TAD](./documents/knowgrph-mcp-agentic-os-prd-tad.md) | Publish-side mirror notice for the Agentic Canvas OS orchestration contract |
-| [Knowgrph MCP Service - PRD & TAD Companion](./documents/knowgrph-mcp-service-prd-tad.companion.md) | Publish-side mirror notice for file-owner and readiness detail |
-| [Knowgrph MCP Agentic Canvas OS - PRD/TAD Companion](./documents/knowgrph-mcp-agentic-os-prd-tad.companion.md) | Publish-side mirror notice for lane payloads and companion guardrails |
+| [Agentic Graph MCP Onboarding Index](./documents/agentic-graph-mcp-onboarding-index.md) | Fastest public entry point for install, orchestration boundary, and proof path |
+| [Agentic Graph MCP Install Contract](./documents/agentic-graph-mcp-install-contract.md) | Canonical public-discovery vs control-plane install rule |
+| [Agentic Graph MCP Install Boundary Release Note 2026-07-10](./documents/agentic-graph-mcp-install-boundary-release-note-20260710.md) | Latest evidence-backed release-proof note for the public-discovery vs control-plane boundary |
+| [Agentic Graph MCP Service - PRD & TAD](./documents/agentic-graph-mcp-service-prd-tad.md) | Publish-side mirror notice for the implemented MCP baseline; points back to the canonical source-owned PRD/TAD |
+| [Agentic Graph MCP Agentic Canvas OS - PRD and TAD](./documents/agentic-graph-mcp-agentic-os-prd-tad.md) | Publish-side mirror notice for the Agentic Canvas OS orchestration contract |
+| [Agentic Graph MCP Service - PRD & TAD Companion](./documents/agentic-graph-mcp-service-prd-tad.companion.md) | Publish-side mirror notice for file-owner and readiness detail |
+| [Agentic Graph MCP Agentic Canvas OS - PRD/TAD Companion](./documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md) | Publish-side mirror notice for lane payloads and companion guardrails |
 
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: "Knowgrph — Tech Stack Document"
-id: "md:knowgrph-tech-stack-document"
+title: "Agentic Graph — Tech Stack Document"
+id: "md:agentic-graph-tech-stack-document"
 author: "airvio / joohwee"
 date: "2026-06-29"
 updated: "2026-07-11"
@@ -13,7 +13,7 @@ status: "current"
 doc_type: "Combined PRD/TAD"
 lang: "en-US"
 frontmatter_contract: "required"
-domain: "knowgrph"
+domain: "agentic-graph"
 orientation:
   - "solo-dev"
   - "AI-native"
@@ -32,25 +32,25 @@ constraints:
 traceability:
   prd: "PRD-TECH-STACK"
   tad: "TAD-TECH-STACK"
-  repo: "huijoohwee/knowgrph"
+  repo: "huijoohwee/agentic-graph"
   feature_surface: "Tech Stack Overview"
-  doc_path: "docs/documents/knowgrph-tech-stack-document.md"
+  doc_path: "docs/documents/agentic-graph-tech-stack-document.md"
 ---
 
-# Knowgrph — Tech Stack Document
+# Agentic Graph — Tech Stack Document
 
-**Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/knowgrph`. Deployed at `airvio.co/knowgrph` via Cloudflare Pages + Workers.
+**Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/agentic-graph`. Deployed at `airvio.co/agentic-graph` via Cloudflare Pages + Workers.
 **Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud (Serverless App Engine / SAS), Alibaba Cloud (ECS), and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
-**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `knowgrph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
-**MCP install note**: For remote MCP onboarding, treat `https://airvio.co/knowgrph/mcp` as the canonical public install/discovery URL and `https://airvio.co/knowgrph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. Live `/`, `#`, and `@` grammar executes through `knowgrph.agentic_canvas_os.docs.invoke` on the control plane; current examples are `/mcp.capabilities`, `#mcp`, and `@mcp-gateway`. The operator-facing setup contract lives in `docs/documents/knowgrph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/knowgrph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/knowgrph` `README.md` or `docs/documents/knowgrph-superagent-harness.md`.
+**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `agentic-graph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
+**MCP install note**: For remote MCP onboarding, treat `https://airvio.co/agentic-graph/mcp` as the canonical public install/discovery URL and `https://airvio.co/agentic-graph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. Live `/`, `#`, and `@` grammar executes through `agentic-graph.agentic_canvas_os.docs.invoke` on the control plane; current examples are `/mcp.capabilities`, `#mcp`, and `@mcp-gateway`. The operator-facing setup contract lives in `docs/documents/agentic-graph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/agentic-graph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/agentic-graph` `README.md` or `docs/documents/agentic-graph-superagent-harness.md`.
 
 **Published MCP entry points**:
-- `docs/documents/knowgrph-mcp-onboarding-index.md`
-- `docs/documents/knowgrph-mcp-install-contract.md`
-- `docs/documents/knowgrph-mcp-service-prd-tad.md`
-- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.md`
-- `docs/documents/knowgrph-mcp-service-prd-tad.companion.md`
-- `docs/documents/knowgrph-mcp-agentic-os-prd-tad.companion.md`
+- `docs/documents/agentic-graph-mcp-onboarding-index.md`
+- `docs/documents/agentic-graph-mcp-install-contract.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad.companion.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md`
 
 ---
 
@@ -88,7 +88,7 @@ traceability:
 
 | Stage | Action | Touchpoint | Pain Point | Opportunity |
 |---|---|---|---|---|
-| **Trigger** | Operator wants to visualise and extend a knowledge graph from docs | `airvio.co/knowgrph` SPA | Cold start with no workspace data | `ensureSeed()` auto-seeds from `workspace.import.defaultSourceUrl` |
+| **Trigger** | Operator wants to visualise and extend a knowledge graph from docs | `airvio.co/agentic-graph` SPA | Cold start with no workspace data | `ensureSeed()` auto-seeds from `workspace.import.defaultSourceUrl` |
 | **Discover** | Browse canvas nodes, run vdeoxpln skill discovery | Canvas Storyboard Widget + FloatingPanel Chat | Unknown which AI skills are available | Vdeoxpln registry surfaces all agent capabilities per session |
 | **Configure** | Set MCP server (Exa, VideoDB, Stripe, GrabMaps, etc.) in MainPanel MCP | `SettingsView mode="mcp"` | Credentials easy to leak into browser storage | Non-secret config only; `${API_KEY}` placeholder pattern enforced |
 | **Engage** | Author markdown, run compute flows, invoke AI harnesses | Storyboard Widget nodes + FloatingPanel Chat | Token cost invisible; async jobs stall silently | Cost log per harness call; 36 × 10s circuit-breaker for async ops |
@@ -99,16 +99,16 @@ traceability:
 
 | Stage | Action | Touchpoint | Pain Point | Opportunity |
 |---|---|---|---|---|
-| **Trigger** | External agent calls `knowgrph.showrunner.start_run` | Local MCP server (`mcp/server.js`) | No durable run lifecycle | Pipeline_Run state machine: queued → running → awaiting_review → complete |
-| **Execute** | Agent posts creative state, queries memory, dispatches video/annotation | MCP tools: `knowgrph.memory.search`, `knowgrph.annotate.image`, `knowgrph.html_video.render` | Runaway token spend | Token budget gate halts before each turn that would exceed budget |
-| **Review** | Operator approves stage via `knowgrph.showrunner.approve_stage` | Approval-gate primitive | Manual approval blocks automation | Gate surfaced in Storyboard Widget; auto-skip option for trusted runs |
+| **Trigger** | External agent calls `agentic-graph.showrunner.start_run` | Local MCP server (`mcp/server.js`) | No durable run lifecycle | Pipeline_Run state machine: queued → running → awaiting_review → complete |
+| **Execute** | Agent posts creative state, queries memory, dispatches video/annotation | MCP tools: `agentic-graph.memory.search`, `agentic-graph.annotate.image`, `agentic-graph.html_video.render` | Runaway token spend | Token budget gate halts before each turn that would exceed budget |
+| **Review** | Operator approves stage via `agentic-graph.showrunner.approve_stage` | Approval-gate primitive | Manual approval blocks automation | Gate surfaced in Storyboard Widget; auto-skip option for trusted runs |
 | **Complete** | Final artifact package written to Source Files | Source Files storage publication helper | Artifact location unknown | Artifact_Package manifest at `showrunner/runs/<run_id>/manifest.md` |
 
 ---
 
 ## Orchestration / Harness Flow
 
-### Pipeline: FloatingPanel Chat → KGC → Canvas
+### Pipeline: FloatingPanel Chat → AGENTIC_OS → Canvas
 
 **Topology pattern**: Sequential | **Max iterations**: 1 (single-turn) | **Circuit-breaker**: structured `{ ok: false }` on schema failure
 **Token budget**: ~1 200 prompt + ~400 completion @ ~40% cache hit rate ≈ $0.002 / call (Claude Sonnet estimate)
@@ -116,9 +116,9 @@ traceability:
 | Role | Component | Input schema | Output schema | Cost log | Fallback |
 |---|---|---|---|---|---|
 | Dispatcher | `floatingPanelChat` router | `{ userMessage, workspaceContext }` | `{ modelId, promptTokens, systemPrompt }` | — | Reject with `{ ok:false, errorCode:"no_model_configured" }` |
-| Executor | LLM harness (Claude / Gemini / BytePlus / OpenAI) | Typed prompt + tool schema | Typed KGC Markdown response | ✓ `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }` | Degraded mode: return partial response; surface cost log gap |
+| Executor | LLM harness (Claude / Gemini / BytePlus / OpenAI) | Typed prompt + tool schema | Typed AGENTIC_OS Markdown response | ✓ `{ model, prompt_tokens, completion_tokens, cache_hits, estimated_cost_usd }` | Degraded mode: return partial response; surface cost log gap |
 | Observer | Cost log emitter | Cost log stream | Metric written to run trace | — | Silent fail; log gap flagged in monitoring |
-| Consumer | `chatKgcCanvasApply.ts` | KGC-validated Markdown/frontmatter | Canvas graph patch | — | Upstream error propagation; no graph mutation on invalid KGC |
+| Consumer | `chatAgenticOsCanvasApply.ts` | AGENTIC_OS-validated Markdown/frontmatter | Canvas graph patch | — | Upstream error propagation; no graph mutation on invalid AGENTIC_OS |
 
 ```mermaid
 sequenceDiagram
@@ -126,14 +126,14 @@ sequenceDiagram
     participant FP as FloatingPanel Chat
     participant LLM as LLM Harness
     participant OB as Observer/Cost Log
-    participant KGC as KGC Validator
+    participant AGENTIC_OS as AGENTIC_OS Validator
     participant CV as Canvas Apply
 
     U->>FP: submit message + workspace context
     FP->>LLM: validated prompt (schema-checked before token spend)
     LLM-->>OB: cost_log { model, prompt_tokens, completion_tokens, cache_hits, cost_usd }
-    LLM-->>KGC: typed KGC Markdown response
-    KGC-->>CV: graph patch (only on valid KGC)
+    LLM-->>AGENTIC_OS: typed AGENTIC_OS Markdown response
+    AGENTIC_OS-->>CV: graph patch (only on valid AGENTIC_OS)
     CV-->>U: canvas updated
 ```
 
@@ -234,9 +234,9 @@ sequenceDiagram
 
 | Stage | Component | Input Format | Output Format | Persistence | Error Handling |
 |---|---|---|---|---|---|
-| Ingest | `uploadGeneratedWorkspaceBlobToKnowgrphStorage()` | Blob (image/video/binary) | POST to `/api/storage/blob/:workspaceId/:path*` | None | Fail-fast: no local artifact claim before R2 confirmation |
-| Store (bytes) | CF R2 (`knowgrph-storage-blobs`) | Blob | R2 object (key = workspace/canonical-path) | R2 (persistent, zero-egress) | Retry × 3; error if key already exists with different hash |
-| Store (manifest) | `writeKgcCompanionOutputBlob()` → D1 `documents` | Sibling Markdown manifest | D1 document row | D1 | Rollback manifest write if R2 upload fails |
+| Ingest | `uploadGeneratedWorkspaceBlobToAgentic GraphStorage()` | Blob (image/video/binary) | POST to `/api/storage/blob/:workspaceId/:path*` | None | Fail-fast: no local artifact claim before R2 confirmation |
+| Store (bytes) | CF R2 (`agentic-graph-storage-blobs`) | Blob | R2 object (key = workspace/canonical-path) | R2 (persistent, zero-egress) | Retry × 3; error if key already exists with different hash |
+| Store (manifest) | `writeAgenticOsCompanionOutputBlob()` → D1 `documents` | Sibling Markdown manifest | D1 document row | D1 | Rollback manifest write if R2 upload fails |
 | Serve | `GET /api/storage/blob/:workspaceId/:path*` | R2 object key | Blob body / HEAD metadata | R2 (cache) | 404 if key absent; 503 on Worker unavailable |
 
 ### Data Flow: Annotation Result → Canvas
@@ -364,11 +364,11 @@ flowchart TB
 
 ### Runtime Selection Posture
 
-| Option | Current role in knowgrph | Decision | Why |
+| Option | Current role in agentic-graph | Decision | Why |
 |---|---|---|---|
 | TypeScript / modern JS | Primary app/runtime language across Canvas SPA, Cloudflare Workers, MCP handlers, and shared contracts | **Primary** | Native fit for Cloudflare Workers and browser runtimes; fastest ship/debug loop for a solo dev; shared types reduce spec drift across UI, Worker, and MCP surfaces |
 | WASM | Targeted acceleration layer inside the browser runtime | **Selective** | Use only where it removes paid API spend or unlocks bounded local inference, such as Transformers.js with WebGPU -> WASM fallback |
-| Go | Productized dependency runtime only | **Not primary** | Keep isolated to PocketBase where the product already ships in Go; do not expand Go into the core knowgrph runtime without a measured bottleneck that TypeScript cannot meet |
+| Go | Productized dependency runtime only | **Not primary** | Keep isolated to PocketBase where the product already ships in Go; do not expand Go into the core agentic-graph runtime without a measured bottleneck that TypeScript cannot meet |
 | Other alts (Rust, Zig, C++) | Not in the current app/runtime path | **Deferred** | Additional toolchain and bridge cost does not beat the current TypeScript-first path for I/O-bound Cloudflare + MCP workloads |
 
 ### Backend — Cloudflare Workers
@@ -389,20 +389,20 @@ flowchart TB
 Responsive deploy note: when a release changes mobile grammar reachability, heavy-runtime intent
 policy, or touch-first behavior, Cloudflare Pages deploys stay blocked until the mobile keyboard
 browser smoke, `pages:check-sync`, and the route-and-action review in
-`docs/documents/knowgrph-feature-map.md` agree.
+`docs/documents/agentic-graph-feature-map.md` agree.
 
 ### AI / Agent Layer
 
 | Layer | Technology | Role | Provider | FOSS / Zero-TCO? |
 |---|---|---|---|---|
-| LLM harness | FloatingPanel Chat → KGC pipeline | Multi-provider chat, structured output | Claude / Gemini / BytePlus / OpenAI | Harness FOSS; model calls pay-per-use |
+| LLM harness | FloatingPanel Chat → AGENTIC_OS pipeline | Multi-provider chat, structured output | Claude / Gemini / BytePlus / OpenAI | Harness FOSS; model calls pay-per-use |
 | Memory layer | Mem0 / local-json runtime (`mcp/memory-layer-runtime.js`) | Cross-session agent memory | Local-json (FOSS, zero-TCO Dev) / Mem0 Platform (pay-per-use) | ✓ Dev path zero-TCO |
 | MCP local server | `mcp/server.js` (@modelcontextprotocol/sdk) | Stdio MCP tool surface | Local dev | ✓ MIT |
-| SuperAgent harness | `knowgrph_parser/superagent_harness.py` | Multi-role research → code → verify loop | Local Python + LLM | ✓ Python harness FOSS |
+| SuperAgent harness | `agentic-graph_parser/superagent_harness.py` | Multi-role research → code → verify loop | Local Python + LLM | ✓ Python harness FOSS |
 | Research compiler | `researchThesisContract.ts` | Investment thesis / research scout | Internal | ✓ Internal |
 | Swarm prediction | `swarmPredictionEngine.ts` | Parallel ensemble scoring | Internal | ✓ Internal |
 | AI showrunner | `mcp/showrunner-runtime.js` | Creative pipeline orchestration (podcast / narrative / writers' room) | Internal + MCP tools | ✓ Internal |
-| Agentic OS (Os_Status_Tool) | `mcp/os-status-runtime.js` (`knowgrph.os.status`) | OS-level read-only unification | Internal ($0/call) | ✓ Implemented — see agentic-os PRD/TAD v0.4.1 |
+| Agentic OS (Os_Status_Tool) | `mcp/os-status-runtime.js` (`agentic-graph.os.status`) | OS-level read-only unification | Internal ($0/call) | ✓ Implemented — see agentic-os PRD/TAD v0.4.1 |
 | Agentic OS follow-on | `mcp/video-remix/approval-token-issuer.js`, `live-clients.js`, agentic canvas plan | HITL + live stages + dashboard lanes | Provider-dependent when live | Follow-on PRD/TAD v1.0.0 — local modules implemented |
 | Vision annotation | Transformers.js + Florence-2-base (MIT) | In-browser image / video-frame annotation | Browser (WASM / WebGPU) | ✓ Zero-TCO |
 | HTML video renderer | `htmlVideoRenderJob.ts` + engine adapters | HTML-to-video local render | Headless-browser (Playwright) / Canvas-2D / Server-side | ✓ Zero-TCO for canvas-2d path |
@@ -421,7 +421,7 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 | Component | Role | FOSS? |
 |---|---|---|
-| `knowgrph_parser/` | Markdown parsing, graph building, JSON-LD, codebase index, GraphRAG, YouTube / web ingest | ✓ Internal + FOSS deps |
+| `agentic-graph_parser/` | Markdown parsing, graph building, JSON-LD, codebase index, GraphRAG, YouTube / web ingest | ✓ Internal + FOSS deps |
 | SuperAgent harness | Multi-role LLM pipeline runner, state.json + trace.jsonl | ✓ Internal |
 | Playwright (Python) | Headless browser automation for video frame capture | ✓ Apache 2.0 |
 
@@ -429,14 +429,14 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 ## Infrastructure Comparison
 
-> Side-by-side: Cloudflare (current) vs Alibaba Cloud (SAS — serverless/managed) vs Alibaba Cloud (ECS — self-managed VM) vs AWS — for each major flow in the Knowgrph stack. The Alibaba Cloud split isolates the "pay only for what runs" serverless path (Function Compute, Serverless App Engine, PolarDB Serverless) from the "pay for provisioned capacity" ECS + self-hosted path (Elastic Compute Service VMs running Docker/Nginx/Postgres/Redis directly), since these carry materially different TCO and ops-effort profiles.
+> Side-by-side: Cloudflare (current) vs Alibaba Cloud (SAS — serverless/managed) vs Alibaba Cloud (ECS — self-managed VM) vs AWS — for each major flow in the Agentic Graph stack. The Alibaba Cloud split isolates the "pay only for what runs" serverless path (Function Compute, Serverless App Engine, PolarDB Serverless) from the "pay for provisioned capacity" ECS + self-hosted path (Elastic Compute Service VMs running Docker/Nginx/Postgres/Redis directly), since these carry materially different TCO and ops-effort profiles.
 
 ### User Flow Infrastructure
 
 | Component | User Flow Role | Cloudflare | Alibaba Cloud (SAS) | Alibaba Cloud (ECS) | AWS | Comments |
 |---|---|---|---|---|---|---|
 | Static SPA hosting | Serve Canvas SPA to browser | **CF Pages** (free tier, global CDN, zero-egress) | OSS + CDN (pay-per-GB egress) | ECS + Nginx (fixed VM cost + egress) | S3 + CloudFront (pay-per-GB egress) | CF Pages wins on TCO at typical indie traffic. Zero-egress is the decisive factor; ECS adds VM uptime cost even at zero traffic. |
-| Domain / DNS | Route traffic | **CF DNS** (free, Anycast, DDoS protection) | Alibaba DNS (basic free) | Alibaba DNS (basic free) | Route 53 ($0.50/zone/month + queries) | CF DNS free tier covers all knowgrph DNS needs; identical DNS layer regardless of SAS/ECS choice. |
+| Domain / DNS | Route traffic | **CF DNS** (free, Anycast, DDoS protection) | Alibaba DNS (basic free) | Alibaba DNS (basic free) | Route 53 ($0.50/zone/month + queries) | CF DNS free tier covers all agentic-graph DNS needs; identical DNS layer regardless of SAS/ECS choice. |
 | Auth / session | Operator login | **CF Pages** (JWT via Worker) / PocketBase | RAM + ACM (managed) | RAM + self-hosted PocketBase on ECS | Cognito ($0.0055/MAU after 50 k) | PocketBase self-hosted is zero fixed cost beyond VPS; CF Worker JWT adds no per-user cost. |
 
 ### Orchestration / Harness Flow Infrastructure
@@ -455,7 +455,7 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 | Database (sync store) | D1 — workspace / document / chunk rows | **CF D1** (SQLite, 10 GB free, zero-egress) | PolarDB Serverless / RDS MySQL (pay-per-GB + per-RCU) | Self-hosted MySQL/Postgres on ECS (fixed VM cost) | RDS / Aurora (pay-per-GB, egress costs) | D1 wins decisively on TCO at dev/indie scale. Self-hosted Postgres on ECS is cheapest at sustained high write volume but requires manual backup/failover; PolarDB/RDS trade cost for managed ops. |
 | Object store (blobs) | R2 — binary artifact bytes | **CF R2** (zero-egress, S3-compatible, 10 GB free) | OSS (pay-per-GB egress) | ECS + local disk or mounted OSS (fixed VM cost + egress) | S3 (pay-per-GB egress) | R2 zero-egress is the single biggest TCO win vs S3/OSS for media-heavy workloads. Storing blobs directly on ECS disk is viable only at low volume and adds single-point-of-failure risk. |
 | Cache layer | KV — short-lived access URLs | **CF KV** (1 GB free, global reads) | Redis (Tair, managed) | Self-hosted Redis on ECS | ElastiCache / DynamoDB TTL | CF KV is sufficient for URL cache use case at zero cost. Self-hosted Redis on ECS undercuts Tair/ElastiCache cost at scale but shifts ops burden to the solo dev. |
-| CRDT relay | PocketBase realtime | Self-hosted PocketBase (zero cost on any VPS) | Serverless App Engine (SAE) container (pay-per-use) | **ECS VM + Docker** (fixed cost, matches current PocketBase deployment model) | ECS Fargate / EC2 + S3 | PocketBase is the only FOSS option with built-in realtime. Alibaba ECS is the closest architectural match to knowgrph's current "PocketBase on a VPS" pattern; SAE trades that fixed cost for pay-per-use at the cost of cold starts on a stateful WebSocket service (a poor fit). |
+| CRDT relay | PocketBase realtime | Self-hosted PocketBase (zero cost on any VPS) | Serverless App Engine (SAE) container (pay-per-use) | **ECS VM + Docker** (fixed cost, matches current PocketBase deployment model) | ECS Fargate / EC2 + S3 | PocketBase is the only FOSS option with built-in realtime. Alibaba ECS is the closest architectural match to agentic-graph's current "PocketBase on a VPS" pattern; SAE trades that fixed cost for pay-per-use at the cost of cold starts on a stateful WebSocket service (a poor fit). |
 | GitHub SSOT bridge | Auto-commit Yjs snapshots | CF Worker route + GitHub Contents API | FC + GitHub API | ECS process + GitHub API | Lambda + GitHub API | Mechanically equivalent. CF Worker already deployed; no additional infra. |
 
 ### Data Flow Infrastructure
@@ -465,12 +465,12 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 | Ingest / seed | `ensureSeed()` fetch from URL or D1 export | CF Worker (`GET /api/storage/export/:id`) | FC + OSS | ECS process + local/OSS read | Lambda + S3 | CF Worker handles this natively. No additional infra needed; ECS adds a persistent process for a low-frequency operation. |
 | Transform / push | `sourceFilesStorageSync.ts` push payload | CF D1 via Worker | PolarDB write via FC | Self-hosted DB write via ECS process | RDS write via Lambda | Equivalent logic. CF D1 has no connection pool overhead (HTTP-native); ECS self-hosted DB avoids per-request connection setup but needs its own pool tuning. |
 | Blob upload | R2 binary artifact | CF Worker blob route → R2 | FC → OSS | ECS process → OSS (or local disk) | Lambda → S3 | R2 zero-egress saves ~$0.09/GB on every read compared to S3/OSS. At 10 GB/month media traffic, that is $10.80/month savings vs both AWS and Alibaba paths regardless of SAS/ECS split. |
-| Manifest store | D1 document row (sibling to R2 blob) | CF D1 | PolarDB / RDS | Self-hosted DB on ECS | RDS / Aurora | D1 row-level writes at D1 free tier limits easily cover knowgrph solo-dev volume; ECS self-hosted DB is cheapest at high sustained volume but adds backup/HA responsibility. |
+| Manifest store | D1 document row (sibling to R2 blob) | CF D1 | PolarDB / RDS | Self-hosted DB on ECS | RDS / Aurora | D1 row-level writes at D1 free tier limits easily cover agentic-graph solo-dev volume; ECS self-hosted DB is cheapest at high sustained volume but adds backup/HA responsibility. |
 | Serve / export | `GET /api/storage/blob/:workspaceId/:path*` | CF R2 via Worker | OSS + CDN | ECS + Nginx serving from local/mounted OSS | S3 + CloudFront | CF R2 + Worker: zero-egress. ECS + Nginx: fixed VM cost regardless of traffic, plus OSS egress if not cached locally. S3 + CloudFront: ~$0.085/GB transfer. |
 
 ### Typical Lean Startup Tech Stack (Similar Projects)
 
-| Layer | Lean Startup Default | Knowgrph Actual | Alibaba Cloud (SAS) equiv. | Alibaba Cloud (ECS) equiv. | Delta vs Knowgrph Actual |
+| Layer | Lean Startup Default | Agentic Graph Actual | Alibaba Cloud (SAS) equiv. | Alibaba Cloud (ECS) equiv. | Delta vs Agentic Graph Actual |
 |---|---|---|---|---|---|
 | Frontend | React + Vite + Vercel | React + Vite + **CF Pages** | OSS + CDN static hosting | ECS + Nginx static hosting | CF Pages is free-tier vs Vercel Pro $20/month and vs ECS fixed VM cost; zero-egress vs both Vercel bandwidth charges and OSS/ECS egress |
 | Database | PlanetScale / Supabase | **CF D1** + Drizzle ORM | PolarDB Serverless / RDS MySQL | Self-hosted MySQL/Postgres on ECS | D1 free 10 GB vs Supabase $25/month for >500 MB; no connection pooling overhead vs both Alibaba paths |
@@ -576,9 +576,9 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 **Status**: Accepted | **Date**: 2026-07-02
 
-**Decision**: All runtime surfaces live in `huijoohwee/knowgrph` on the Cloudflare + local stack. The Vercel product tier and the AWS Agent-API / AgentCore lanes formerly documented in `knowgrph-mcp-agentic-canvas-os-prd-tad.md` are removed from the runtime topology; Supabase is permanently excluded (it was never in the runtime stack — it appears in this document only as a rejected lean-startup comparison). AWS and Alibaba Cloud remain in this document strictly as TCO comparison columns.
+**Decision**: All runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack. The Vercel product tier and the AWS Agent-API / AgentCore lanes formerly documented in `agentic-graph-mcp-agentic-canvas-os-prd-tad.md` are removed from the runtime topology; Supabase is permanently excluded (it was never in the runtime stack — it appears in this document only as a rejected lean-startup comparison). AWS and Alibaba Cloud remain in this document strictly as TCO comparison columns.
 
-**Rationale and full TCO comparison**: see `knowgrph-agentic-os-prd-tad.md` ADR-3 (the normative SSOT for this decision). Summary: the removed tiers held no model keys, ran no orchestration, and stored no source-of-truth state; removing them eliminates two deploy pipelines, two secret-audit surfaces, and the documented spec-vs-runtime drift, at zero build cost and up to ~$300/year avoided exposure.
+**Rationale and full TCO comparison**: see `agentic-graph-agentic-os-prd-tad.md` ADR-3 (the normative SSOT for this decision). Summary: the removed tiers held no model keys, ran no orchestration, and stored no source-of-truth state; removing them eliminates two deploy pipelines, two secret-audit surfaces, and the documented spec-vs-runtime drift, at zero build cost and up to ~$300/year avoided exposure.
 
 **FOSS alternative**: self-hosted VPS shell (Provisioned/Self-Managed, ~$60–180/year + manual ops) — rejected; it re-adds a deploy pipeline and fixed cost to replace something being deleted, not relocated.
 
@@ -590,11 +590,11 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 **Status**: Accepted | **Date**: 2026-07-10
 
-**Decision**: Keep knowgrph TypeScript-first across the main runtime surfaces: Canvas SPA, Cloudflare Workers, MCP handlers, and shared contracts. Use WASM only as a targeted acceleration path inside browser-native workloads, and keep Go limited to PocketBase as an already-productized dependency rather than a precedent for rewriting the core runtime.
+**Decision**: Keep agentic-graph TypeScript-first across the main runtime surfaces: Canvas SPA, Cloudflare Workers, MCP handlers, and shared contracts. Use WASM only as a targeted acceleration path inside browser-native workloads, and keep Go limited to PocketBase as an already-productized dependency rather than a precedent for rewriting the core runtime.
 
 **FOSS alternative**: Go services, Rust/WASM, or other compiled runtimes for the primary app layer.
 
-**Rationale**: knowgrph is dominated by I/O-bound work: Markdown parsing, JSON contracts, MCP dispatch, GitHub fetches, D1 queries, Worker routes, and browser-hosted orchestration. Cloudflare Workers and the browser are already V8-native, so TypeScript gives the fastest path from spec to runtime with shared types and the lowest maintenance surface for a solo dev. WASM remains valuable where it directly removes paid API calls or heavy browser-side compute, but it is not the right default for request/response orchestration. Go remains a good implementation language for PocketBase, yet expanding it into the core app stack would split contracts and slow the edit-test-deploy loop without a measured ROI win.
+**Rationale**: agentic-graph is dominated by I/O-bound work: Markdown parsing, JSON contracts, MCP dispatch, GitHub fetches, D1 queries, Worker routes, and browser-hosted orchestration. Cloudflare Workers and the browser are already V8-native, so TypeScript gives the fastest path from spec to runtime with shared types and the lowest maintenance surface for a solo dev. WASM remains valuable where it directly removes paid API calls or heavy browser-side compute, but it is not the right default for request/response orchestration. Go remains a good implementation language for PocketBase, yet expanding it into the core app stack would split contracts and slow the edit-test-deploy loop without a measured ROI win.
 
 **Consequences**: No repo-wide rewrite to Go, Rust, or generic WASM. New runtime modules should default to TypeScript unless they prove a bounded hotspot with measurable cost or latency gains. Any future compiled-language expansion must show clear upside on TCO, token economics, and operator complexity before entering the main runtime path.
 
@@ -606,14 +606,14 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 | Pipeline | Avg prompt tokens | Avg completion tokens | Cache hit rate | Est. cost / call | Est. cost / 1 000 calls |
 |---|---|---|---|---|---|
-| FloatingPanel Chat (canvas KGC) | 1 200 | 400 | 40% | ~$0.002 | ~$2.00 |
+| FloatingPanel Chat (canvas AGENTIC_OS) | 1 200 | 400 | 40% | ~$0.002 | ~$2.00 |
 | Memory layer `assemble_prompt` | 500 | 0 (local) | 100% | $0.000 | $0.00 |
 | SuperAgent research turn | 3 000 | 800 | 20% | ~$0.008 | ~$8.00 |
 | HTML Video Render Job | 0 | 0 | — | $0.000 | $0.00 |
 | Visual Annotation (Florence-2) | 0 | 0 | — | $0.000 | $0.00 |
 | VideoDB async op (via harness) | 200 (orchestration) | 100 | 0% | ~$0.001 | ~$1.00 |
 | Showrunner agent turn (est.) | 2 500 | 600 | 30% | ~$0.006 | ~$6.00 |
-| Agentic OS `knowgrph.os.status` (any view) | 0 | 0 | — | $0.000 | $0.00 |
+| Agentic OS `agentic-graph.os.status` (any view) | 0 | 0 | — | $0.000 | $0.00 |
 
 ### Circuit-Breaker Bounds
 
@@ -648,7 +648,7 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 >
 > The ECS total above sums each row's ECS-instance cost independently; in practice a single consolidated ECS VM can host compute + cache + collab relay + database together, which would bring the realistic Alibaba ECS total down to roughly ~$400–600/year — still 5–8× CF's cost, but the gap narrows once workloads are consolidated onto shared VM capacity. This is the standard "self-managed VM" tradeoff: lower per-service marginal cost at the price of manual capacity planning, patching, and no per-service isolation.
 
-### ROI Score (Knowgrph platform, current state)
+### ROI Score (Agentic Graph platform, current state)
 
 ```
 ROI Score = (User Impact × Reach) / (Build Hours/month + Monthly TCO + Token Cost/month)
@@ -668,18 +668,18 @@ ROI Score = (User Impact × Reach) / (Build Hours/month + Monthly TCO + Token Co
 ## Agentic OS Follow-On Tracks
 
 Must-tier Agentic OS + MCP Gateway federation is documented in
-[`knowgrph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-agentic-os-prd-tad.md)
+[`agentic-graph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md)
 (v0.4.1). Remaining work is spec-complete in
-[`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).
+[`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md).
 
 | Track | Stack touchpoint | Local status | Deploy exit |
 |---|---|---|---|
-| **A — HITL durable store** | `knowgrph-mcp` Worker KV + `approval-token-issuer.js` | Issuance/verify/consume tests pass | Token survives Worker restart |
+| **A — HITL durable store** | `agentic-graph-mcp` Worker KV + `approval-token-issuer.js` | Issuance/verify/consume tests pass | Token survives Worker restart |
 | **B — Live stage harnesses** | `live-clients.js` + Cloudflare AI Gateway + Exa | Exa/storyboard env-gated; render/commerce async scaffold | One gated live Director golden path |
-| **C — Dashboard UI** | `knowgrph.agentic_canvas_os.plan` → Canvas Storyboard | Dry-run manifest implemented | Dashboard doc renders on Canvas |
+| **C — Dashboard UI** | `agentic-graph.agentic_canvas_os.plan` → Canvas Storyboard | Dry-run manifest implemented | Dashboard doc renders on Canvas |
 
 Validation (repo root): `npm run runtime:test` plus follow-on harness tests listed in the follow-on PRD/TAD.
 
 ---
 
-*Document updated 2026-07-10. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`knowgrph-agentic-os-follow-on-prd-tad.md`](knowgrph-agentic-os-follow-on-prd-tad.md).*
+*Document updated 2026-07-10. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md).*

@@ -5,7 +5,7 @@ doc_type: "PitchDeck PRD TAD Template"
 date: "{{template_inputs.date}}"
 lang: "{{template_inputs.language}}"
 
-$schema: "kgc-pipeline/v1"
+$schema: "agentic-os-pipeline/v1"
 
 template_inputs:
   project_name: "[Project Name]"
@@ -36,7 +36,7 @@ template_inputs:
   next_action: "[Ask / CTA]"
 
 spec:
-  format: kgc-pipeline
+  format: agentic-os-pipeline
   version: "1.0.0"
   parser: yaml-frontmatter
   execution: computing-flow
@@ -114,7 +114,7 @@ runner:
       action: ingest
       input: "raw file bytes"
       output: "parsed YAML object"
-      description: "Parse YAML frontmatter; validate $schema == kgc-pipeline/v1; expose __doc."
+      description: "Parse YAML frontmatter; validate $schema == agentic-os-pipeline/v1; expose __doc."
     - seq: R02
       action: resolve
       input: "__doc"

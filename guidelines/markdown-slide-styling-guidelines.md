@@ -9,7 +9,7 @@ layout: cover
 aspectRatio: 16/9
 lang: en-US
 authors:
-  - Knowgrph Team
+  - Agentic Graph Team
 meeting: "Documentation"
 date: "2026-01-12"
 venue: "GitHub"
@@ -24,11 +24,11 @@ mermaid: |
 
 Universal syntax guide for presentation frameworks
 
-> Status: This document distinguishes between **fully supported semantics** in the Knowgrph canvas markdown viewer and **structurally accepted only** features that are rendered as plain content without special behavior.
+> Status: This document distinguishes between **fully supported semantics** in the Agentic Graph canvas markdown viewer and **structurally accepted only** features that are rendered as plain content without special behavior.
 
 ---
 
-## Frontmatter Configuration (fully supported in Knowgrph viewer)
+## Frontmatter Configuration (fully supported in Agentic Graph viewer)
 
 Owned by [Markdown Slide Text & Structure Module](./markdown-slide-text-structure.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
@@ -84,7 +84,7 @@ Owned by [Markdown Slide Text & Structure Module](./markdown-slide-text-structur
 
 Owned by [Markdown Slide Text & Structure Module](./markdown-slide-text-structure.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
-## Slide Separation and Reordering in Knowgrph
+## Slide Separation and Reordering in Agentic Graph
 
 Owned by [Markdown Slide Layout Module](./markdown-slide-layout.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
@@ -96,11 +96,11 @@ Owned by [Markdown Slide Layout Module](./markdown-slide-layout.md). Loaded on d
 
 Owned by [Markdown Slide Layout Module](./markdown-slide-layout.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
-## Click-Based Progressive Disclosure (fully supported in Knowgrph viewer)
+## Click-Based Progressive Disclosure (fully supported in Agentic Graph viewer)
 
 Owned by [Markdown Slide Animation & Navigation Module](./markdown-slide-animation.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
-## Inline Text Markers (partially supported in Knowgrph viewer)
+## Inline Text Markers (partially supported in Agentic Graph viewer)
 
 Owned by [Markdown Slide Animation & Navigation Module](./markdown-slide-animation.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
@@ -120,7 +120,7 @@ Owned by [Markdown Slide Layout Module](./markdown-slide-layout.md). Loaded on d
 
 Owned by [Markdown Slide Animation & Navigation Module](./markdown-slide-animation.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
-## Fragment Animations (fully supported in Knowgrph viewer)
+## Fragment Animations (fully supported in Agentic Graph viewer)
 
 Owned by [Markdown Slide Animation & Navigation Module](./markdown-slide-animation.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 

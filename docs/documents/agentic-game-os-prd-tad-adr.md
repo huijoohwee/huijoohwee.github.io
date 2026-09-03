@@ -34,7 +34,7 @@ v1.1.0 (2026-08-09):
 - Distinguished active network-offline play, cross-session continuity, and player-absent progression.
 - Added the RTS first slice, bounded catch-up, pathfinding, typed multimodal input, dependency/SBOM, FOSS, TCO, and renderer-parity contracts.
 - Preserved device-local single-writer authority while defining a gated provider-neutral shared-authority reopening path.
-- Added non-binding Knowgrph, GameXR, Dev, generated-Prod, Cloudflare, browser, and Apple-native mapping.
+- Added non-binding Agentic Graph, GameXR, Dev, generated-Prod, Cloudflare, browser, and Apple-native mapping.
 - Removed repeated component narratives and fixed-price assumptions; one table now owns each contract.
 
 v1.0.0 (2026-08-08):
@@ -403,15 +403,15 @@ Non-binding. Paths and products here can change without changing the neutral con
 | Boundary | Mapping | Constraint |
 |---|---|---|
 | Invocation and orchestration SSOT | GitHub/agentic-canvas-os/docs | Canonical slash, at-sign, hash, and MCP registration; extend existing registries only |
-| Shared Game OS core and canonical browser runtime | GitHub/knowgrph; Dev: npm run dev:apex and npm run dev | Owns schemas, reducer, persistence, leases, pathfinding, provenance, cost/evidence constructors, and reusable backend utilities |
+| Shared Game OS core and canonical browser runtime | GitHub/agentic-graph; Dev: npm run dev:apex and npm run dev | Owns schemas, reducer, persistence, leases, pathfinding, provenance, cost/evidence constructors, and reusable backend utilities |
 | Game presentation | GitHub/GameXR; Dev: npm run dev | May vary game family, frontend, and visuals; must not fork simulation, persistence, commands, provenance, evidence, or backend utilities |
-| Generated Prod mirrors | GitHub/huijoohwee/content/knowgrph and GitHub/huijoohwee/content/gamexr | Generated output only; never an authoring source |
-| Delivery targets | https://airvio.co, https://airvio.co/knowgrph, https://airvio.co/gamexr | Release targets only; a route, preview, or HTTP response is not runtime or Production proof |
+| Generated Prod mirrors | GitHub/huijoohwee/content/agentic-graph and GitHub/huijoohwee/content/gamexr | Generated output only; never an authoring source |
+| Delivery targets | https://airvio.co, https://airvio.co/agentic-graph, https://airvio.co/gamexr | Release targets only; a route, preview, or HTTP response is not runtime or Production proof |
 | Optional managed reference | Cloudflare Workers, SQLite-backed Durable Objects, D1, R2, and alarms | Provider-specific, metered, deferred, and absent from the neutral core |
 
-Knowgrph FloatingPanel and its shared surface owners are reused for immersive input, media, animation, motion control, flight simulation, city building, camera, game mode, and geo projections. Panels remain controls; they do not own a second scene or renderer canvas.
+Agentic Graph FloatingPanel and its shared surface owners are reused for immersive input, media, animation, motion control, flight simulation, city building, camera, game mode, and geo projections. Panels remain controls; they do not own a second scene or renderer canvas.
 
-GameXR may expose flight, city building, RTS/MMO, or other games. Difference from Knowgrph is frontend, visuals, game configuration, and presentation—not backend or simulation ownership.
+GameXR may expose flight, city building, RTS/MMO, or other games. Difference from Agentic Graph is frontend, visuals, game configuration, and presentation—not backend or simulation ownership.
 
 All 3D scenes, assets, motions, animations, cameras, controls, and game modes are user-configurable through the stable-ID manifest. Downstream aliases, duplicate stores, copied utilities, and compatibility shims are forbidden; fix defects at the shared owner and remove superseded behavior.
 

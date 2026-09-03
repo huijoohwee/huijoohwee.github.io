@@ -4,7 +4,7 @@
 
 This document explains the canonical frontmatter-first contract used by the reusable pitchdeck templates.
 
-It is the author-facing companion to `knowgrph/docs/documents/knowgrph-pitchdeck-frontmatter-template-contract.md`.
+It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md`.
 
 ## Canonical Templates
 
@@ -58,5 +58,5 @@ It is the author-facing companion to `knowgrph/docs/documents/knowgrph-pitchdeck
 | --- | --- |
 | `template/pitchdeck-prd-tad-template-lite.md` | Minimal template source |
 | `template/pitchdeck-prd-tad-template.md` | Full template source |
-| `docs/kgc-ai-pipeline-prd-tad.md` | Broader KGC pipeline contract reference |
-| `../knowgrph/docs/documents/knowgrph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |
+| `docs/agentic-os-ai-pipeline-prd-tad.md` | Broader AGENTIC_OS pipeline contract reference |
+| `../agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |

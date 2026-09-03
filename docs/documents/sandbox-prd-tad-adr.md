@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Sandbox Execution Layer — PRD/TAD/ADR"
+title: "Agentic Graph Sandbox Execution Layer — PRD/TAD/ADR"
 doc_type: "Combined PRD/TAD/ADR"
 version: "1.1.0"
 date: "2026-07-30"
@@ -13,7 +13,7 @@ lane: "authoring"
 universal_scope: "false"
 ---
 
-# Knowgrph Sandbox Execution Layer — PRD/TAD/ADR
+# Agentic Graph Sandbox Execution Layer — PRD/TAD/ADR
 
 **Governed by**: PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). **Companion set**: Agentic SDLC Guidelines owns execution-domain conformance (task decomposition, agent roles, tool blast radius); a runtime-readiness claim sourced from this document alone is incomplete.
 
@@ -46,7 +46,7 @@ universal_scope: "false"
 
 ### Problem Statement
 
-Knowgrph's probe-tree and Hermes agents increasingly need to run agent-generated code (data transforms, test harnesses, generated controllers, CI-style checks) as part of their own reasoning loop. Running that code on the same process or host as the orchestrator is a liability — untrusted, model-authored code must not share a kernel, a filesystem, or a credential store with anything else in the stack. Without an isolated execution surface, every new agent capability that "runs code" either gets blocked at design time or ships with an ad-hoc, unaudited execution path. The opportunity is a single, reusable, typed execution surface that any probe-tree node or Hermes tool call can invoke, at near-zero TCO and without violating the FOSS hard gate.
+Agentic Graph's probe-tree and Hermes agents increasingly need to run agent-generated code (data transforms, test harnesses, generated controllers, CI-style checks) as part of their own reasoning loop. Running that code on the same process or host as the orchestrator is a liability — untrusted, model-authored code must not share a kernel, a filesystem, or a credential store with anything else in the stack. Without an isolated execution surface, every new agent capability that "runs code" either gets blocked at design time or ships with an ad-hoc, unaudited execution path. The opportunity is a single, reusable, typed execution surface that any probe-tree node or Hermes tool call can invoke, at near-zero TCO and without violating the FOSS hard gate.
 
 ### Personas
 
@@ -208,7 +208,7 @@ The smallest deliverable that satisfies the Must-tier acceptance criteria: **San
 **Error paths**: All tiers exhausted → circuit-breaker exits with a typed error, not a raw exception. Cost-log emission fails → Observer silent-fails; execution result still reaches the Consumer.
 **Postconditions**: cost log persisted or gap flagged; typed output delivered to Consumer; no unbounded retry loop.
 
-### Topology: Knowgrph Sandbox Execution Layer v1 — 2026-07-30
+### Topology: Agentic Graph Sandbox Execution Layer v1 — 2026-07-30
 
 **Boundaries**: Cloudflare edge runtime (Workers/Durable Objects/D1/R2) as the Delivery-lane trust domain; Oracle Cloud ARM host (Singapore) as a Delivery-lane trust domain physically separate from the edge.
 
@@ -277,7 +277,7 @@ flowchart TB
 
 ### Topology
 
-See **Topology: Knowgrph Sandbox Execution Layer v1** above; this TAD references it rather than restating it.
+See **Topology: Agentic Graph Sandbox Execution Layer v1** above; this TAD references it rather than restating it.
 
 ### Orchestration/Harness Flows
 
@@ -432,7 +432,7 @@ See ADR-1 (execution-tier selection) and ADR-2 (self-hosted fallback runtime sel
 | Token Cost | Harness itself must never spend a token | Deterministic routing; no LLM call in the harness | Cost-log field asserted `$0.00` per routing decision |
 | Offline Behaviour | Sandbox surface unreachable → probe-tree node must degrade, not crash | Typed `sandbox_unavailable` error; local-first probe-tree state (Yjs/Dexie) persists the branch for retry | Airplane-mode-equivalent test: sandbox binding disabled, node surfaces typed error and resumes on reconnect |
 | TCO | 12-month projected spend across deployment models vs zero-TCO target | FOSS-first fallback + zero-egress infra; managed vs self-managed compared separately (ADR-1) | Monthly cost audit; ADR review |
-| Device Reach | This is a server/edge-side capability; the calling surface (Knowgrph canvas OS) remains browser-native and mobile-first regardless of which tier executes code | No native-only APIs introduced by this feature | Cross-device manual pass on the calling UI, unaffected by tier choice |
+| Device Reach | This is a server/edge-side capability; the calling surface (Agentic Graph canvas OS) remains browser-native and mobile-first regardless of which tier executes code | No native-only APIs introduced by this feature | Cross-device manual pass on the calling UI, unaffected by tier choice |
 
 ### Deployment Strategy
 
@@ -510,7 +510,7 @@ See the Topology diagram above (Mermaid `flowchart TB`).
 
 ### Context
 
-Knowgrph's probe-tree and Hermes agents need to execute agent-generated code safely. A previously evaluated monolithic self-hosted sandbox/workspace platform failed the FOSS hard gate on license grounds, leaving an open question of what primary execution tier to adopt.
+Agentic Graph's probe-tree and Hermes agents need to execute agent-generated code safely. A previously evaluated monolithic self-hosted sandbox/workspace platform failed the FOSS hard gate on license grounds, leaving an open question of what primary execution tier to adopt.
 
 ### Decision
 
@@ -525,7 +525,7 @@ Adopt a Managed/Serverless edge sandbox as the primary execution tier, coordinat
 
 ### Rationale
 
-The Managed/Serverless edge tier reuses infrastructure Knowgrph is already committed to (~90% of OS scaffolding runs on the same provider), so it is a pragmatic exception to FOSS-first rather than a gate violation: the marginal TCO and integration cost of a *second* vendor (E2B) or a licensing-incompatible platform (Daytona) is strictly worse than extending the existing edge stack. Requiring a FOSS self-hosted fallback (ADR-2) preserves the exit path the FOSS-first principle exists to protect, without blocking the Must-tier build on standing up new self-hosted infrastructure first.
+The Managed/Serverless edge tier reuses infrastructure Agentic Graph is already committed to (~90% of OS scaffolding runs on the same provider), so it is a pragmatic exception to FOSS-first rather than a gate violation: the marginal TCO and integration cost of a *second* vendor (E2B) or a licensing-incompatible platform (Daytona) is strictly worse than extending the existing edge stack. Requiring a FOSS self-hosted fallback (ADR-2) preserves the exit path the FOSS-first principle exists to protect, without blocking the Must-tier build on standing up new self-hosted infrastructure first.
 
 ### TCO Impact
 
@@ -536,7 +536,7 @@ The Managed/Serverless edge tier reuses infrastructure Knowgrph is already commi
 | Infra cost | ~$0.00002/vCPU-second, active-CPU only, scales to $0 at idle | $0 (Oracle Always Free ARM), but a *dedicated* second free-tier instance may be needed | $0 (shares the existing free-tier instance; no new spend) | ≈ $0 either way at current traffic |
 | Egress cost | $0 at current low traffic (Cloudflare zero-egress posture) | $0 (self-hosted, no metered egress) | $0 | No delta |
 | Token cost | $0 (harness has no model call) | $0 | $0 | No delta |
-| Ops burden | Low (provider patches, scales, fails over) | High (solo-dev owns patching, backup, failover for a dedicated host) | Medium (ops burden of the one host Knowgrph already operates, not a second one) | Managed lowest; Hybrid next |
+| Ops burden | Low (provider patches, scales, fails over) | High (solo-dev owns patching, backup, failover for a dedicated host) | Medium (ops burden of the one host Agentic Graph already operates, not a second one) | Managed lowest; Hybrid next |
 | Vendor risk | Medium (single managed vendor for this capability) | Low | Low | Managed carries the only non-trivial risk |
 
 ### Consequences
@@ -707,7 +707,7 @@ for await (const event of watcher) {
 
 ```jsonc
 {
-  "name": "knowgrph-sandbox-executor",
+  "name": "agentic-graph-sandbox-executor",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-30",
   
@@ -771,7 +771,7 @@ npx wrangler deploy
 npx wrangler containers list
 
 # 4. Test endpoint
-curl https://knowgrph-sandbox-executor.your-subdomain.workers.dev/sandbox.execute
+curl https://agentic-graph-sandbox-executor.your-subdomain.workers.dev/sandbox.execute
 ```
 
 ### Integration with Sandbox Tier Router

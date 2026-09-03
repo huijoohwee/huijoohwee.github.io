@@ -1,6 +1,6 @@
 {
   "@context": {
-    "@vocab": "https://huijoohwee.github.io/knowgrph#",
+    "@vocab": "https://huijoohwee.github.io/agentic-graph#",
     "kg": "http://example.org/kg#",
     "schema": "https://schema.org/",
     "name": "schema:name",
@@ -469,7 +469,7 @@
   ],
   "metadata": {
     "agenticRagSchema": "https://huijoohwee.github.io/schema/AgenticRAG",
-    "generatedBy": "knowgrph_parser.schema_config",
+    "generatedBy": "agentic-graph_parser.schema_config",
     "layersFromGraph": {
       "semantic": {
         "nodeTypes": [

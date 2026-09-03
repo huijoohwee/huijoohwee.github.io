@@ -21,7 +21,7 @@
     "inputs": [
       { "repo": "joohwee", "relDir": "guidelines-archive" },
       { "repo": "huijoohwee.github.io", "relDir": "schema/AgenticRAG" },
-      { "repo": "knowgrph", "relDir": "docs/documents" }
+      { "repo": "agentic-graph", "relDir": "docs/documents" }
     ]
   },
   "@graph": [

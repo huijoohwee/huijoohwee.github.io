@@ -74,7 +74,7 @@ Each row is a universal, neutral, project-agnostic directive in `Context | Inten
 ## Anti-Pattern Guards
 
 **Tool contracts**:
-❌ Tool name encodes transport, product, or project name (e.g., `http_get_knowgrph_resource`)
+❌ Tool name encodes transport, product, or project name (e.g., `http_get_agentic-graph_resource`)
 → ✅ `[verb]_[noun]` snake_case; ≤ 64 chars; no transport or brand encoding
 
 ❌ Vague tool description ("Does stuff with the resource")

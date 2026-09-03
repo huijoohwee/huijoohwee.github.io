@@ -7,16 +7,16 @@ date: "2026-08-05"
 lang: "en-US"
 owner: "cross-repo knowledge storage docs"
 frontmatter_contract: "required"
-source_repository: "huijoohwee/knowgrph"
+source_repository: "huijoohwee/agentic-graph"
 source_revision: "9a8e4b8221e85102cc1f7fab9fc5d9716fb5c83a"
-source_document: "docs/documents/knowgrph-storage-sync-document.md"
+source_document: "docs/documents/agentic-graph-storage-sync-document.md"
 ---
 
 # Knowledge-Base SSOT Storage Projection
 
 ## Authority boundary
 
-This document projects the accepted Knowgrph storage decision into the shared documentation repository. The normative product/runtime contract remains [`knowgrph/docs/documents/knowgrph-storage-sync-document.md`](https://github.com/huijoohwee/knowgrph/blob/main/docs/documents/knowgrph-storage-sync-document.md). This projection does not create a second storage authority or claim that a remote Lark adapter is implemented.
+This document projects the accepted Agentic Graph storage decision into the shared documentation repository. The normative product/runtime contract remains [`agentic-graph/docs/documents/agentic-graph-storage-sync-document.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-storage-sync-document.md). This projection does not create a second storage authority or claim that a remote Lark adapter is implemented.
 
 **Decision:** keep Git-backed Markdown plus YAML frontmatter as the portable knowledge-base SSOT. GitHub is the current protected forge and audit surface, not the content format. Integrate Lark Suite as a collaborative control-plane projection; generate Cloudflare serving and query projections; use CSV/JSON only for interchange.
 
@@ -28,7 +28,7 @@ This document projects the accepted Knowgrph storage decision into the shared do
 | Lark Base (Bitable API) | Structured collaboration projection | Catalog fields, review state, assignments, and lightweight workflow | A row or callback cannot overwrite accepted source. |
 | Lark Wiki/Docs | Human collaboration projection | Navigation, discussion, review, and linked editorial context | Page order, title, or timestamp cannot substitute for source revision and digest. |
 | Browser local store | Recoverable working state | Offline save, outbox, cursor, and explicit conflict state | Local state is not cross-device authority. |
-| Cloudflare Pages/static Markdown | Generated publication | Low-cost public reads at `airvio.co/knowgrph` | Published bytes are never an authoring root. |
+| Cloudflare Pages/static Markdown | Generated publication | Low-cost public reads at `airvio.co/agentic-graph` | Published bytes are never an authoring root. |
 | Cloudflare D1 | Rebuildable structured index | Search, relations, metadata, cursors, and runtime queries | Rows must retain accepted source provenance and remain reproducible. |
 | Cloudflare R2/KV/Durable Objects | Bytes, cache, or live coordination | Media/snapshots, small caches, and one selected live room when justified | None becomes document authority; retention and consistency stay explicit. |
 | CSV/JSON | Interchange | Bulk import/export, deterministic transforms, and recovery packages | Imported data is a candidate until normalized and reviewed. |

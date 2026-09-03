@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Animatic Problem & Scope Module"
+title: "Agentic Graph Animatic Problem & Scope Module"
 doc_type: "Guidelines Module"
 version: "1.0.0"
 date: "2026-08-20"
@@ -10,17 +10,17 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
-parent: "Knowgrph Animatic PRD/TAD"
+parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
 ---
 
-# Knowgrph Animatic Problem & Scope Module
+# Agentic Graph Animatic Problem & Scope Module
 
 ## Scope & Ownership
 
 Owns problem discovery, the author journey, scope boundaries, implementation constraints, and open questions.
 
-This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 
@@ -28,7 +28,7 @@ This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-anim
 
 ### Problem Statement
 
-Content authors and renderer implementers working with the Knowgrph 2D Animatic surface lack a
+Content authors and renderer implementers working with the Agentic Graph 2D Animatic surface lack a
 structured, auditable acceptance baseline. Without it, renderer patches introduce regressions in
 timing fidelity, player-shell DOM contracts, keyboard accessibility, and frontmatter persistence —
 each detectable only through manual inspection. The opportunity is a fully specified, autonomously
@@ -39,7 +39,7 @@ frontmatter-backed document.
 
 **P1 — Content Author**  
 Jobs-to-be-done: author `timeline.beats.*` and `flow:` YAML in a Markdown document; play back the
-resulting animatic in the KGC canvas; edit beat timing and metadata without leaving the renderer;
+resulting animatic in the AGENTIC_OS canvas; edit beat timing and metadata without leaving the renderer;
 rely on keyboard shortcuts for efficient navigation.
 
 **P2 — Renderer Implementer**  
@@ -61,11 +61,11 @@ browser inspection.
 
 | Stage    | Action                                              | Touchpoint                        | Pain Point                                     | Opportunity                                  |
 |----------|-----------------------------------------------------|-----------------------------------|------------------------------------------------|----------------------------------------------|
-| Trigger  | Opens a `kgCanvas2dRenderer: animatic` document    | KGC canvas surface                | Renderer fails to activate from frontmatter    | Single-field activation from YAML            |
+| Trigger  | Opens a `agenticOsCanvas2dRenderer: animatic` document    | AGENTIC_OS canvas surface                | Renderer fails to activate from frontmatter    | Single-field activation from YAML            |
 | Discover | Sees timeline rail with beat lanes and player shell | Timeline Editor UI                | Inconsistent lane population from node params  | `beat_ref` drives lane assignment reliably   |
 | Engage   | Drags beats, edits metadata, uses keyboard shortcuts| Timeline strip + inspector panel  | Timing edits lost on reload; no keyboard nav   | Frontmatter write-back + roving tabindex     |
 | Complete | Plays back animatic with auto-scroll enabled       | Player shell                      | Auto-scroll breaks or ignores DOM contract     | Exact switch DOM contract enforced           |
-| Return   | Re-opens document; validates persisted state        | KGC canvas + frontmatter          | Lane controls and order not restored           | `timeline.lane_controls` / `lane_order` SSOT |
+| Return   | Re-opens document; validates persisted state        | AGENTIC_OS canvas + frontmatter          | Lane controls and order not restored           | `timeline.lane_controls` / `lane_order` SSOT |
 
 ---
 

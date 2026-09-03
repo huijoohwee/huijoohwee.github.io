@@ -96,30 +96,30 @@
       }
     },
     "commandGrammar": {
-      "headlessResolutionRule": "Command palette integrations must consume the exact-revision Agentic Canvas OS SSOT via the `knowgrph.agentic_canvas_os.docs.invoke` MCP tool through the app-owned same-origin MCP forwarder. `/`, `@`, and `#` reconcile as one epoch-fenced revision transaction; stale or mismatched results fail closed. Do not fetch GitHub dynamically, duplicate token registries, mutate files, spend model tokens, or add heavy command-palette dependencies.",
+      "headlessResolutionRule": "Command palette integrations must consume the exact-revision Agentic Canvas OS SSOT via the `agentic-graph.agentic_canvas_os.docs.invoke` MCP tool through the app-owned same-origin MCP forwarder. `/`, `@`, and `#` reconcile as one epoch-fenced revision transaction; stale or mismatched results fail closed. Do not fetch GitHub dynamically, duplicate token registries, mutate files, spend model tokens, or add heavy command-palette dependencies.",
       "tokens": {
         "slash": "`/` resolves canonical chat skills and commands.",
         "at": "`@` resolves active Markdown variables or canonical media embeds from cached inventory.",
         "hash": "`#` resolves registered memory, agent, model, or MCP directives without duplicating keywords."
       },
       "xrInvocationRuntime": {
-        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRepository": "huijoohwee/agentic-graph",
         "sourceRevision": "df312d72d3e163bbcc3e9f19ca299223f9a54431",
-        "sourceDocument": "docs/documents/knowgrph-xr-invocation-runtime-api.md",
-        "catalogTool": "knowgrph.agentic_canvas_os.docs.invoke",
-        "runtimeTool": "knowgrph.control_local_xr_scene",
+        "sourceDocument": "docs/documents/agentic-graph-xr-invocation-runtime-api.md",
+        "catalogTool": "agentic-graph.agentic_canvas_os.docs.invoke",
+        "runtimeTool": "agentic-graph.control_local_xr_scene",
         "invocation": "/xr.place @vehicle-helicopter transition=linear",
         "revisionRule": "Admit a catalog response only when its top-level sourceRevision equals the configured revision. Retry only sigils resolved by a losing epoch and terminate as fresh, stale, or blocked.",
         "dispatchRule": "A visible Media invocation is sent byte-for-byte as the sole invocation field; the downstream schema must not parse, rewrite, alias, or complete it.",
         "webMcpLifecycleRule": "Native host registration is bounded and detachable; a readable local fallback remains available until native context is installed and must not become a remote dependency or privileged bridge.",
         "sourceAuthorityRule": "XR, Animation, and Camera inspection or mutation fails closed while Source Files bootstrap or document intent is resolving or failed.",
-        "ownershipRule": "Agentic Canvas OS dictionaries own token metadata and Knowgrph owns execution, persistence, lifecycle, and graph mutation. AgenticRAG mirrors the validated contract only."
+        "ownershipRule": "Agentic Canvas OS dictionaries own token metadata and Agentic Graph owns execution, persistence, lifecycle, and graph mutation. AgenticRAG mirrors the validated contract only."
       },
       "xrObjectMovement": {
-        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRepository": "huijoohwee/agentic-graph",
         "sourceRevision": "b0f26e62e1ef14a1ba991b656ac0e0c9c3ee7e3a",
-        "sourceDocument": "docs/documents/knowgrph-xr-motion-reference-document.md",
-        "runtimeTool": "knowgrph.control_local_animation",
+        "sourceDocument": "docs/documents/agentic-graph-xr-motion-reference-document.md",
+        "runtimeTool": "agentic-graph.control_local_animation",
         "invocation": "/animation.control #action-path @selected-actor operation=move-object keys=w+d distance=0.25",
         "tokenRoles": {
           "slash": "/animation.control selects the canonical animation command.",
@@ -158,15 +158,15 @@
           "Persist browser and agent movement through the same graph-metadata owner.",
           "Keep object movement independent from camera framing, SHOOT, OrbitControls, and camera marks."
         ],
-        "ownershipRule": "This downstream schema mirrors the validated invocation and bounds only. Knowgrph remains the runtime source of truth; AgenticRAG must not reimplement movement math, add command aliases, or register a second MCP tool."
+        "ownershipRule": "This downstream schema mirrors the validated invocation and bounds only. Agentic Graph remains the runtime source of truth; AgenticRAG must not reimplement movement math, add command aliases, or register a second MCP tool."
       },
       "xrMotionControl": {
-        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRepository": "huijoohwee/agentic-graph",
         "sourceRevision": "b80bb3dec3b5d49bc4342741c4515250c5d6c832",
-        "sourceDocument": "docs/documents/knowgrph-motion-control-prd-tad.md",
+        "sourceDocument": "docs/documents/agentic-graph-motion-control-prd-tad.md",
         "runtimeTools": {
-          "inspect": "knowgrph.inspect_local_motion_control",
-          "control": "knowgrph.control_local_motion_control"
+          "inspect": "agentic-graph.inspect_local_motion_control",
+          "control": "agentic-graph.control_local_motion_control"
         },
         "invocations": {
           "open": "/motion.control @canvas #pose operation=open",
@@ -181,7 +181,7 @@
         },
         "tokenRoles": {
           "slash": "/motion.control selects the canonical browser-local Motion Control command.",
-          "at": "@canvas resolves the active Knowgrph canvas and its XR surface.",
+          "at": "@canvas resolves the active Agentic Graph canvas and its XR surface.",
           "hash": "#pose selects local human-pose control semantics."
         },
         "structuredInputArms": {
@@ -217,11 +217,11 @@
         "existingTargetOwners": {
           "xr3d": {
             "label": "3D for XR",
-            "runtimeTool": "knowgrph.control_local_xr_scene"
+            "runtimeTool": "agentic-graph.control_local_xr_scene"
           },
           "animation": {
             "label": "Animation",
-            "runtimeTool": "knowgrph.control_local_animation"
+            "runtimeTool": "agentic-graph.control_local_animation"
           }
         },
         "sharedRuntimeRules": [
@@ -232,20 +232,20 @@
           "3D for XR and Animation remain projections of their existing scene, animation, MCP, and invocation owners; BottomPanel Timeline remains the sole transport owner."
         ],
         "cleanRoomRule": "Do not copy or adapt an external reference project's code, assets, schemas, UI, tests, or build layout, and do not import, fetch, embed, clone, bridge, or call that project.",
-        "ownershipRule": "Knowgrph remains the sole runtime source of truth. AgenticRAG mirrors discovery, strict input arms, privacy, and surface ownership only; it must not add aliases, tools, tokens, pose math, model/runtime code, external dependencies, or validation-specific asset, document, share paths, or tokens."
+        "ownershipRule": "Agentic Graph remains the sole runtime source of truth. AgenticRAG mirrors discovery, strict input arms, privacy, and surface ownership only; it must not add aliases, tools, tokens, pose math, model/runtime code, external dependencies, or validation-specific asset, document, share paths, or tokens."
       },
       "storageSyncRuntime": {
-        "sourceRepository": "huijoohwee/knowgrph",
+        "sourceRepository": "huijoohwee/agentic-graph",
         "sourceRevision": "619f75d7f3d2fb29902ca4e7a2643b1876777c90",
-        "sourceDocument": "docs/documents/knowgrph-storage-git-file-sync-runtime-api.md",
-        "catalogTool": "knowgrph.agentic_canvas_os.docs.invoke",
+        "sourceDocument": "docs/documents/agentic-graph-storage-git-file-sync-runtime-api.md",
+        "catalogTool": "agentic-graph.agentic_canvas_os.docs.invoke",
         "runtimeTools": {
-          "gitInspect": "knowgrph.inspect_local_git_repository",
-          "gitControl": "knowgrph.control_local_git_repository",
-          "fileSyncInspect": "knowgrph.inspect_local_file_sync",
-          "fileSyncControl": "knowgrph.control_local_file_sync",
-          "stdioGitHandoff": "knowgrph.git.run",
-          "stdioFileSyncHandoff": "knowgrph.file.sync"
+          "gitInspect": "agentic-graph.inspect_local_git_repository",
+          "gitControl": "agentic-graph.control_local_git_repository",
+          "fileSyncInspect": "agentic-graph.inspect_local_file_sync",
+          "fileSyncControl": "agentic-graph.control_local_file_sync",
+          "stdioGitHandoff": "agentic-graph.git.run",
+          "stdioFileSyncHandoff": "agentic-graph.file.sync"
         },
         "invocations": {
           "git": "/git.run @local-git-repository @git-remote #git-remote",
@@ -269,7 +269,7 @@
           "The collaboration Save Bridge has no delete operation, so Git document deletion remains retained and unacknowledged.",
           "The runtime is local/Dev only and does not authorize a Production mirror, Cloudflare deployment, remote D1 mutation, or live provider credential use."
         ],
-        "ownershipRule": "Agentic Canvas OS dictionaries own global token metadata and Knowgrph owns execution, persistence, authority, retry, conflict, and provider adapters. AgenticRAG mirrors this exact-revision discovery contract only and must not add aliases, duplicate tools, reimplement Git or file transfer, expose provider credentials, or claim live-provider proof."
+        "ownershipRule": "Agentic Canvas OS dictionaries own global token metadata and Agentic Graph owns execution, persistence, authority, retry, conflict, and provider adapters. AgenticRAG mirrors this exact-revision discovery contract only and must not add aliases, duplicate tools, reimplement Git or file transfer, expose provider credentials, or claim live-provider proof."
       }
     }
   }

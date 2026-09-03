@@ -1,5 +1,5 @@
 ---
-title: "Knowgrph Animatic Decisions & Attributes Module"
+title: "Agentic Graph Animatic Decisions & Attributes Module"
 doc_type: "Guidelines Module"
 version: "1.0.0"
 date: "2026-08-20"
@@ -10,17 +10,17 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: "true"
-parent: "Knowgrph Animatic PRD/TAD"
+parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
 ---
 
-# Knowgrph Animatic Decisions & Attributes Module
+# Agentic Graph Animatic Decisions & Attributes Module
 
 ## Scope & Ownership
 
 Owns the architectural decision records, the quality attribute scenarios, and the deployment strategy.
 
-This module is loaded on demand from [Knowgrph Animatic PRD/TAD](./knowgrph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 
@@ -45,7 +45,7 @@ back to frontmatter only.
 
 #### Rationale
 Frontmatter as SSOT enables Git-diffable history, document reload determinism, and alignment with
-the existing KGC `flow:` authoring surface. It eliminates sync bugs between a renderer store and
+the existing AGENTIC_OS `flow:` authoring surface. It eliminates sync bugs between a renderer store and
 the document.
 
 #### Consequences
@@ -64,7 +64,7 @@ FrontmatterWriter needs a write mechanism to commit patches. Options include dir
 a REST API, or the workspace command API.
 
 #### Decision
-Use `window.knowgrphWorkspaceCommand.applyMarkdownDocument(...)` as the sole write path.
+Use `window.agentic-graphWorkspaceCommand.applyMarkdownDocument(...)` as the sole write path.
 
 #### Alternatives Considered
 1. Direct localStorage write: simple / Cons: bypasses document lifecycle, no undo support
@@ -99,7 +99,7 @@ move focus within each navigation scope (lane rail, lane items, beat strip).
 
 #### Rationale
 Roving tabindex is the ARIA-recommended pattern for composite widgets (listbox, grid, toolbar).
-It provides visible focus styling, correct Tab behavior, and maps directly to the KGC compact
+It provides visible focus styling, correct Tab behavior, and maps directly to the AGENTIC_OS compact
 lane geometry without a separate focus store.
 
 #### Consequences

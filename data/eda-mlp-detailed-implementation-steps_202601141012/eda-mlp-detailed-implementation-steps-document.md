@@ -1,4 +1,4 @@
-# Knowgrph Document – Phase 0: Setup & Data Acquisition - Detailed Implementation Steps
+# Agentic Graph Document – Phase 0: Setup & Data Acquisition - Detailed Implementation Steps
 
 ## Source
 
@@ -7,7 +7,7 @@
 
 ## Outputs
 
-- Graph JSON-LD: `$GITHUB_ROOT/knowgrph/canvas/src/data/eda-mlp-graph.json`
+- Graph JSON-LD: `$GITHUB_ROOT/agentic-graph/canvas/src/data/eda-mlp-graph.json`
 - Schema JSON-LD: `$GITHUB_ROOT/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-schema-config.jsonld`
 - Orchestrator YAML: `$GITHUB_ROOT/huijoohwee.github.io/data/eda-mlp-detailed-implementation-steps_202601141012/eda-mlp-detailed-implementation-steps-orchestrator-config.yaml`
 
@@ -264,4 +264,4 @@
 
 ## Preview
 
-- In Knowgrph Canvas, open the Graph Data Table and click `metadata.codebasePath` to preview the source markdown (supports `#Lstart-end` ranges).
+- In Agentic Graph Canvas, open the Graph Data Table and click `metadata.codebasePath` to preview the source markdown (supports `#Lstart-end` ranges).

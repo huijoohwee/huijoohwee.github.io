@@ -5,14 +5,14 @@
 `npm run dev`
 
 ```
-# UPDATE Dev to Prod -> PUSH to `airvio.co/knowgrph`
+# UPDATE Dev to Prod -> PUSH to `airvio.co/agentic-graph`
 - (FIX) Prod looks different from Dev
 
-## CONTEXT: Dev (`$GITHUB_ROOT/knowgrph`) -> Prod (`$GITHUB_ROOT/huijoohwee/knowgrph` ) -> Cloudflare (`airvio.co/knowgrph`)
+## CONTEXT: Dev (`$GITHUB_ROOT/agentic-graph`) -> Prod (`$GITHUB_ROOT/huijoohwee/agentic-graph` ) -> Cloudflare (`airvio.co/agentic-graph`)
 
 ## EXPLORER -> Source Files -> "Initialization-file": (ENHANCE, switching of files)
-- `$GITHUB_ROOT/knowgrph/README.md` (Canvas View: Toolbar -> 2D Renderer (D3) AND Document Modes (Frontmatter Mode));
-- `$GITHUB_ROOT/knowgrph/knowgrph-video-demo.md` (Canvas View: Toolbar -> 2D Renderer (Storyboard) AND Document Modes (Frontmatter Mode))
+- `$GITHUB_ROOT/agentic-graph/README.md` (Canvas View: Toolbar -> 2D Renderer (D3) AND Document Modes (Frontmatter Mode));
+- `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo.md` (Canvas View: Toolbar -> 2D Renderer (Storyboard) AND Document Modes (Frontmatter Mode))
 
 ## AVOID, CLEANUP, FORBID churn, conflict, duplicate, freeze, infinite loop, hardcode, legacy, re-calculation, re-computation, re-rendering, stale; REUSE shared semantic-key helper, NEUTRALIZE from root/source/upstream (FORBID bug/issue exist at first place; layer local/downstream patches/stacking aliases; NO NEED backward compatibility by remapping legacy; REMOVE 100% legacy/stale/conflicting codes/hardcode fixtures/tests); REDUCE the hot-path cost without changing behavior, USE semantic signatures (NOT raw array identities), cache node/edge lookups per graph revision; only when widget mode is actually active -> BUILD the large widget bundle
 ```
@@ -20,7 +20,7 @@
 ---
 
 
-Toolbar -> Workspace View (Editor Workspace, Multi-dimensional Table), EXPLORER, Source Files, TOC, Split (JSON, Markdown, Viewer), MainPanel Integrations, MainPanel Maps, MainPanel Graph Fields, FloatingPanel Props Panel, Geo, Interaction, Renderer-related legacy/stale/conflicting/test  `$GITHUB_ROOT/knowgrph`  codes
+Toolbar -> Workspace View (Editor Workspace, Multi-dimensional Table), EXPLORER, Source Files, TOC, Split (JSON, Markdown, Viewer), MainPanel Integrations, MainPanel Maps, MainPanel Graph Fields, FloatingPanel Props Panel, Geo, Interaction, Renderer-related legacy/stale/conflicting/test  `$GITHUB_ROOT/agentic-graph`  codes
 
 2D Renderer (D3, Flowchart, Flow Canvas, Design, Storyboard) AND Document Modes (Document Structure Mode, Keyword Mode, Frontmatter Mode, Multi-dimensional Table Mode), FloatingPanel Props Panel, Nodes, Widgets, Rich Media Panels, Edges, Groups/Clusters
 
@@ -30,7 +30,7 @@ Toolbar -> Workspace View (Editor Workspace, Multi-dimensional Table), EXPLORER,
 - CONSOLIDATE other rich media-/iframe-variants into Widget-with-floating-toolbar variant into Rich Media Panels (KEEP only Widget-with-floating-toolbar variant), after consolidate, REMOVE other non-Widget-with-floating-toolbar variant)-related
 
 ## Canvas (2D Renderer (Storyboard)) AND (Document Modes (Frontmatter Mode)) AND MainPanel Integrations, MainPanel Maps, MainPanel Graph Fields, FloatingPanel Props Panel
-- test-validation   `$GITHUB_ROOT/knowgrph/knowgrph-video-demo.md` ;
+- test-validation   `$GITHUB_ROOT/agentic-graph/agentic-graph-video-demo.md` ;
 
 ## AVOID, CLEANUP, FORBID churn, conflict, duplicate, freeze, infinite loop, hardcode, legacy, re-calculation, re-computation, re-rendering, stale; REUSE shared semantic-key helper, NEUTRALIZE from root/source/upstream (FORBID bug/issue exist at first place; layer local/downstream patches/stacking aliases; NO NEED backward compatibility by remapping legacy; REMOVE 100% legacy/stale/conflicting codes/hardcode fixtures/tests); REDUCE the hot-path cost without changing behavior, USE semantic signatures (NOT raw array identities), cache node/edge lookups per graph revision; only when widget mode is actually active -> BUILD the large widget bundle
 

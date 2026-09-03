@@ -8,18 +8,18 @@ const dir = "guidelines";
 const PLANS = [
   {
     dir: "docs/documents",
-    entry: "knowgrph-animatic-prd-tad.md",
-    parentTitle: "Knowgrph Animatic PRD/TAD",
+    entry: "agentic-graph-animatic-prd-tad.md",
+    parentTitle: "Agentic Graph Animatic PRD/TAD",
     modules: [
       {
-        file: "knowgrph-animatic-prd-epics.md",
-        title: "Knowgrph Animatic Epics & User Stories Module",
+        file: "agentic-graph-animatic-prd-epics.md",
+        title: "Agentic Graph Animatic Epics & User Stories Module",
         intro: "Owns the epic and user-story decomposition with its acceptance criteria. This is the requirements payload of the PRD.",
         sections: ["Epics & User Stories"],
       },
       {
-        file: "knowgrph-animatic-prd-scope.md",
-        title: "Knowgrph Animatic Problem & Scope Module",
+        file: "agentic-graph-animatic-prd-scope.md",
+        title: "Agentic Graph Animatic Problem & Scope Module",
         intro: "Owns problem discovery, the author journey, scope boundaries, implementation constraints, and open questions.",
         sections: [
           "Phase 0 — Problem Discovery",
@@ -30,20 +30,20 @@ const PLANS = [
         ],
       },
       {
-        file: "knowgrph-animatic-tad-components.md",
-        title: "Knowgrph Animatic Components Module",
+        file: "agentic-graph-animatic-tad-components.md",
+        title: "Agentic Graph Animatic Components Module",
         intro: "Owns the architecture overview, the journey-to-system mapping, the component specifications, and the integration contracts.",
         sections: ["Architecture Overview", "Journey → System Mapping", "Component Specifications", "Integration Contracts"],
       },
       {
-        file: "knowgrph-animatic-tad-flows.md",
-        title: "Knowgrph Animatic Flows & Diagrams Module",
+        file: "agentic-graph-animatic-tad-flows.md",
+        title: "Agentic Graph Animatic Flows & Diagrams Module",
         intro: "Owns the runtime behaviour views: the two workflows, the data flows, and the architecture diagrams.",
         sections: ["Workflow: Beat Drag-to-Move", "Workflow: Validator Script Run", "Data Flows", "Architecture Diagrams"],
       },
       {
-        file: "knowgrph-animatic-adr.md",
-        title: "Knowgrph Animatic Decisions & Attributes Module",
+        file: "agentic-graph-animatic-adr.md",
+        title: "Agentic Graph Animatic Decisions & Attributes Module",
         intro: "Owns the architectural decision records, the quality attribute scenarios, and the deployment strategy.",
         sections: ["Architectural Decisions", "Quality Attributes", "Deployment Strategy"],
       },

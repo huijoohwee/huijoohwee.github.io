@@ -72,7 +72,7 @@ Ingest → Profile → Engineer → Train → Validate → Deploy → Monitor �
 - Confidence decay: transitive edges = parent confidence × 0.8
 - Extraction method: tag every node/edge (dependency_parsing | pattern_mining | user_curated)
 
-**From query to grounded answer**: AgenticGraphRAG → decompose → retrieve subgraphs → multi-hop inference → synthesize with citations → deliver with provenance
+**From query to grounded answer**: Agentic GraphRAG → decompose → retrieve subgraphs → multi-hop inference → synthesize with citations → deliver with provenance
 
 ## 8. Architecture resilient, contracts explicit
 

@@ -72,7 +72,7 @@ assert.match(
   "the boundary table must name the diagram companion modules as the owner of diagram rules",
 );
 assert.ok(authoringGuideline.startsWith("---\n"), "authoring guideline frontmatter must be present");
-assert.match(authoringGuideline, /\nversion: "2\.2\.0"\n/);
+assert.match(authoringGuideline, /\nversion: "2\.3\.0"\n/);
 assert.match(authoringGuideline, /\.\/agentic-sdlc-artifact-continuity\.md/);
 assert.equal(
   authoringGuideline.split("## Artifact Continuity Authoring Seam").length - 1,

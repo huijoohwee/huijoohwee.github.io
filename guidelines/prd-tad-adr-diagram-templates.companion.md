@@ -337,3 +337,54 @@ One per document that carries any diagram. It is the join target for every canva
 ```
 
 **Recorded counts are the Evidence Reference** for a canvas-renderable claim. A register row with an empty count column is a `render-proof-absent` finding under the canvas-render contract.
+
+## Reference Architecture Diagram
+
+**Diagram `PRD-TAD-ADR-01`** · Class: Data flow · Notation: `flowchart LR` · Version: 1 — 2026-09-03
+**Caption**: `DOC` defaults to `PRD-TAD-ADR` — one combined, non-split document — and a single CID directive traces through its PRD, TAD, and ADR sections to a VCC, an Evidence Reference, and a derived Readiness Ladder rung; the rung echoes back only as an advisory, never as a second status source.
+
+```mermaid
+flowchart LR
+  CID["CID Directive<br/>Producer · Message"]
+
+  subgraph DOC["PRD-TAD-ADR combined document<br/>DOC default = PRD-TAD-ADR, not split"]
+    PRD["PRD section<br/>Producer · Document"]
+    TAD["TAD section<br/>Producer · Document"]
+    ADR["ADR section<br/>Producer · Document"]
+  end
+
+  VCC{"VCC<br/>Router · Condition"}
+  EVID[("Evidence Reference<br/>Store · Record")]
+  EVAL["Evaluator<br/>Observer · Mechanism"]
+  RUNG[("Readiness Ladder<br/>Store · Status")]
+
+  CID -->|"directive dispatch"| PRD
+  PRD -->|"revision consumption"| TAD
+  TAD -->|"decision recording"| ADR
+  PRD -->|"criterion binding"| VCC
+  TAD -->|"interface binding"| VCC
+  VCC -->|"check result"| EVID
+  EVID -->|"rung derivation"| EVAL
+  EVAL -->|"rung write"| RUNG
+  RUNG -.->|"status echo · advisory"| PRD
+```
+
+**Data Flow table**
+
+| Node | Role · type | Description |
+|---|---|---|
+| `CID` | Producer · Message | The dispatched CID directive that opens the authoring loop (Directive Grammar (CID)) |
+| `PRD` | Producer · Document | PRD section of the combined document — Context, Intent, Directives, and VCCs |
+| `TAD` | Producer · Document | TAD section — consumes the exact PRD revision it names, owns the structural response |
+| `ADR` | Producer · Document | ADR section — one grounded decision and its consequences |
+| `VCC` | Router · Condition | The evaluable completion condition a PRD/TAD pairing produces |
+| `Evidence Reference` | Store · Record | The recorded check result that satisfies a VCC |
+| `Evaluator` | Observer · Mechanism | The mechanism that derives `local_rung`/`delivered_rung` from Evidence References only |
+| `Readiness Ladder` | Store · Status | The derived rung; never an authored status |
+
+**Directives**:
+- Read the solid edges above as the authoring-to-evidence chain and the single dotted edge as the sole advisory relationship in this diagram, per the diagram companion's Labelling Contract; forbid adding a second dotted edge without restating what "advisory" means for it
+- Forbid deriving `local_rung` or `delivered_rung` from this diagram directly; the Evaluator's read of Evidence References is the sole source, per Readiness Ladder and the diagram companion's Readiness on Diagrams
+- Keep this diagram's `PRD`, `TAD`, `ADR` node set and the Artifact Continuity Authoring Seam's prose in agreement; a node or role named in one and absent from the other is `diagram-spec-drift`
+
+---

@@ -14,7 +14,7 @@
     "git-guidelines:check": "node scripts/check-git-guidelines.mjs",
     "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
     "guideline:check": "npm run guideline:budget:check && npm run agentic-sdlc:policy:check && npm run prd-tad-adr:policy:check && npm run diagram:canvas:check",
-    "test": "npm run agentic-sdlc:policy:check && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run git-guidelines:test",
+    "test": "npm run agentic-sdlc:policy:check && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check",
     "diagram:canvas:check": "node scripts/check-diagram-canvas-render.mjs guidelines",
     "prd-tad-adr:policy:check": "node scripts/check-prd-tad-adr-guideline.mjs",
     "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs"

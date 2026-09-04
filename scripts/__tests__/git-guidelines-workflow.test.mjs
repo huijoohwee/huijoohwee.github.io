@@ -84,7 +84,7 @@ test("Pages policy gates attest normalized semantics and reject security drift",
       fixture.execute(deployGate);
       assert.match(
         readFileSync(fixture.output, "utf8"),
-        /policy_digest=ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede/u,
+        /policy_digest=8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d/u,
       );
     }
 
@@ -107,8 +107,6 @@ test("Pages policy gates attest normalized semantics and reject security drift",
     }
 
     const reorderedEffective = cloneJson(fixture.effective).reverse();
-    reorderedEffective.find(rule => rule.type === "pull_request")
-      .parameters.allowed_merge_methods.reverse();
     fixture.writeEvidence(fixture.detail, reorderedEffective);
     fixture.execute(authorizeGate);
     fixture.execute(deployGate);
@@ -147,6 +145,32 @@ test("Pages policy gates attest normalized semantics and reject security drift",
     rmSync(fixture.root, { recursive: true, force: true });
   }
 });
+
+for (const [gateName, gate] of [
+  ["authorization", pagesWorkflow.jobs.authorize.steps.find(step => step.id === "canonical")],
+  ["predeployment", pagesWorkflow.jobs.deploy.steps.find(step => step.id === "preflight")],
+]) {
+  test(`Pages ${gateName} accepts squash-only policy and rejects wider merge methods`, () => {
+    const fixture = createPolicyGateFixture();
+    try {
+      fixture.writeEvidence(fixture.detail, fixture.effective);
+      fixture.execute(gate);
+      for (const addedMethod of ["merge", "rebase"]) {
+        const detail = cloneJson(fixture.detail);
+        const effective = cloneJson(fixture.effective);
+        for (const rules of [detail.rules, effective]) {
+          rules.find(rule => rule.type === "pull_request")
+            .parameters.allowed_merge_methods.push(addedMethod);
+        }
+        fixture.writeEvidence(detail, effective);
+        assert.throws(() => fixture.execute(gate),
+          `the ${gateName} gate must reject enabling ${addedMethod}`);
+      }
+    } finally {
+      rmSync(fixture.root, { recursive: true, force: true });
+    }
+  });
+}
 
 test("Pages assembly produces a verifiable non-hidden payload manifest and carrier", () => {
   const assemble = pagesWorkflow.jobs.build.steps.find(
@@ -308,7 +332,7 @@ function createPolicyGateFixture() {
       {
         type: "pull_request",
         parameters: {
-          allowed_merge_methods: ["merge", "squash", "rebase"],
+          allowed_merge_methods: ["squash"],
           dismiss_stale_reviews_on_push: false, require_code_owner_review: false,
           require_extra_approval_for_unattributed_changes: true,
           require_last_push_approval: false, required_approving_review_count: 0,
@@ -367,9 +391,7 @@ esac
     DISPATCH_REF: "refs/heads/main", DISPATCH_REF_PROTECTED: "true", DISPATCH_SHA: candidateSha,
     EFFECTIVE_RULES_PATH: effectivePath, EXPECTED_CHECK_APP_ID: "15368",
     EXPECTED_PAGE_URL: "https://huijoohwee.github.io/",
-    EXPECTED_POLICY_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede",
-    EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede",
-    EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799",
+    EXPECTED_POLICY_DIGEST: "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d",
     GH_TOKEN: "fixture-token", GITHUB_OUTPUT: output,
     GITHUB_REPOSITORY: repository, GITHUB_STEP_SUMMARY: summary,
     PAGES_CONFIG_PATH: pagesConfigPath, PATH: `${fakeBin}:${process.env.PATH}`,
@@ -386,7 +408,13 @@ esac
     execute(step) {
       const renderedRun = step.run.replaceAll("${{ github.actor_id }}", "1234");
       execFileSync("/bin/bash", ["-e", "-u", "-o", "pipefail", "-c", renderedRun], {
-        cwd: root, env: environment, stdio: "pipe",
+        cwd: root,
+        env: {
+          ...environment,
+          EXPECTED_RULESET_ATTESTATION_DIGEST: step.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
+          EXPECTED_RULESET_SEMANTIC_DIGEST: step.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
+        },
+        stdio: "pipe",
       });
     },
   };

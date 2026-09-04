@@ -106,9 +106,9 @@ test("Pages delivery authenticates one exact protected candidate and attests pol
   assert.equal(canonical.env.EXPECTED_RULESET_UPDATED_AT, undefined);
   assert.equal(canonical.env.EXPECTED_RULESET_STATE_DIGEST, undefined);
   assert.equal(canonical.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
-    "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799");
+    "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0");
   assert.equal(canonical.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
-    "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede");
+    "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d");
   assert.match(canonical.run, /git\/ref\/heads\/main/u);
   assert.match(canonical.run, /test "\$canonical_sha" = "\$CANDIDATE_SHA"/u);
   assert.match(canonical.run, /rules\/branches\/main\?per_page=100/u);
@@ -170,9 +170,9 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   const preflight = deploy.steps[preflightIndex];
   assert.equal(preflight.env.EXPECTED_PAGE_URL, "https://huijoohwee.github.io/");
   assert.equal(preflight.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
-    "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799");
+    "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0");
   assert.equal(preflight.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
-    "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede");
+    "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d");
   assert.match(preflight.run, /gh api "repos\/\$GITHUB_REPOSITORY\/pages"/u);
   assert.match(preflight.run, /\.build_type == "workflow"/u);
   assert.match(preflight.run, /\.html_url == \$page_url/u);

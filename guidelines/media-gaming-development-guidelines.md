@@ -51,7 +51,7 @@ lifecycle_status: "proposed"
 
 ## Boundary with the Companion Sets
 
-Three sets meet at two seams. **Authoring** (what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme) is owned by the **PRD, TAD & ADR Guidelines** companion set. **Execution** (task decomposition, agent roles, tool blast radius, per-task budgets, run state) is owned by the **Agentic SDLC Guidelines** companion set. This set does not restate either; it specializes the first for rich-media and game content, and consumes the second unchanged for anything that runs as a task.
+Three sets meet at two seams. **Authoring** (what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme) is owned by the **PRD, TAD & ADR Guidelines** companion set. **Execution** (task decomposition, agent roles, tool blast radius, per-task budgets, run state) is owned by the **ADLC Guidelines** companion set. This set does not restate either; it specializes the first for rich-media and game content, and consumes the second unchanged for anything that runs as a task.
 
 | Concern | Owner | This set's relationship |
 |---|---|---|

@@ -77,10 +77,11 @@ test("named-owner severities make scope and concurrency redefinitions observable
   const repository = new URL("../..", import.meta.url);
   const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", import.meta.url), "utf8");
   const owners = Object.fromEntries([
-    "guidelines/agentic-sdlc-guidelines.md",
+    "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/agentic-sdlc-cloud-collaboration.md",
-    "guidelines/agentic-sdlc-scoped-lane-admission.md",
+    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/adlc-cloud-collaboration.md",
+    "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
   ].map(relative => [relative, readFileSync(new URL(relative, repository), "utf8")]));
   const repaired = setFindingSeverity(setFindingSeverity(source, "out-of-scope-write", "major"), "concurrent-write-conflict", "major");
@@ -107,10 +108,11 @@ test("exact lane-class tokens ignore prose capitalization but reject code-token 
   const repository = new URL("../..", import.meta.url);
   const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", import.meta.url), "utf8");
   const owners = Object.fromEntries([
-    "guidelines/agentic-sdlc-guidelines.md",
+    "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/agentic-sdlc-cloud-collaboration.md",
-    "guidelines/agentic-sdlc-scoped-lane-admission.md",
+    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/adlc-cloud-collaboration.md",
+    "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
   ].map(relative => [relative, readFileSync(new URL(relative, repository), "utf8")]));
   const current = checkDivergence(parseDocument(source), owners);

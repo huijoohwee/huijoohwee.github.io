@@ -1,19 +1,25 @@
 ---
-title: "Agentic SDLC Scoped Concurrent Lane Admission"
+title: "ADLC Scoped Concurrent Lane Admission"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-07-30"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 schema: "agentic-scoped-lane-admission/v1"
 collaboration_schema: "agentic-cloud-collaboration/v1"
 status: "spec-complete"
 authority: "provider-neutral additive mutation-lane admission"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 mutation_policy: "preserve every pre-existing lane and mutate only one admitted candidate"
+frontmatter_contract: "required"
+owner: "Lane admission evaluator function"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC Scoped Concurrent Lane Admission
+# ADLC Scoped Concurrent Lane Admission
 
 ## Purpose
 

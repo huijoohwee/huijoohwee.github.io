@@ -21,7 +21,7 @@ const CONFORMANCE = Object.freeze({
 });
 
 const OPTIONAL = Object.freeze({
-  companion_of: domain('the scalar "guidelines/agentic-sdlc-guidelines.md"', value => value === "guidelines/agentic-sdlc-guidelines.md", true),
+  companion_of: domain('the scalar "guidelines/adlc-guidelines.md"', value => value === "guidelines/adlc-guidelines.md", true),
   invocation_token: domain('the scalar "/git.guidelines"', value => value === "/git.guidelines", true),
   semantic_filters: domain('the scalar sequence ["#git-collaboration"]', value => sameArray(value, ["#git-collaboration"]), true),
   bindings: domain('the scalar sequence ["@git-guidelines"]', value => sameArray(value, ["@git-guidelines"]), true),
@@ -124,17 +124,17 @@ function domain(expected, validate, requiredInDocument = false) {
   return Object.freeze({ expected, validate, requiredInDocument });
 }
 
-function isBoundedString(value, maximum) {
+export function isBoundedString(value, maximum) {
   return typeof value === "string" && value.trim().length > 0 && value.length <= maximum;
 }
 
-function isCalendarDate(value) {
+export function isCalendarDate(value) {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/u.test(value)) return false;
   const parsed = new Date(`${value}T00:00:00.000Z`);
   return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
 }
 
-function isReadinessRung(value) {
+export function isReadinessRung(value) {
   return typeof value === "string" && READINESS_RUNGS.has(value);
 }
 

@@ -1,25 +1,26 @@
 ---
-title: "Agentic SDLC Dependency-Ordered Integration Module"
+title: "ADLC Dependency-Ordered Integration Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-08-30"
+version: "1.1.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Integration orchestrator function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 lifecycle_status: "proposed"
+runtime_readiness_policy: "fail-closed"
 ---
 
-# Agentic SDLC Dependency-Ordered Integration Module
+# ADLC Dependency-Ordered Integration Module
 
 ## Scope and Ownership
 
 This module is universal, neutral, implementation-agnostic, and independently loadable. It defines how separately verified changes converge into canonical source and one release frontier. It does not define a source-control product, branch name, file layout, build system, approval product, hosting provider, or deployment adapter.
 
-The main Agentic SDLC Guidelines own task execution and the release receipt chain. This module owns integration-unit identity, dependency order, canonical-frontier advancement, duplicate and supersession handling, exact-canonical proof, and release-frontier sealing.
+The main ADLC Guidelines own task execution and the release receipt chain. This module owns integration-unit identity, dependency order, canonical-frontier advancement, duplicate and supersession handling, exact-canonical proof, and release-frontier sealing.
 
 ## Integration Unit Contract
 

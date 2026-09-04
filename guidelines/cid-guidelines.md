@@ -1,291 +1,132 @@
-# CID Guidelines – Universal Template & Implementation
-
-## Overview
-
-- **Context**: Focus domain of concern (the "what" or "where")
-- **Intent**: Desired principle or guiding goal (the "why" or "how")
-- **Directive**: Explicit prohibition or required safeguard (the "must not" or "must do")
-- **Sorting**: Each line/column is organized alphabetically (A→Z) for clarity and neutrality
-- **Purpose**: Provides a reusable template for creating Context—Intent—Directive guidelines across any domain
-
+---
+title: "Shared CID, RAO and SVO Contract"
+doc_type: "Guidelines Module"
+version: "2.0.0"
+date: "2026-09-05"
+lang: "en-US"
+frontmatter_contract: "required"
+owner: "Directive contract"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: true
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
-## Meta-Guidelines
+# Shared CID, RAO and SVO Contract
 
-### Context
-- **Documentation systems**: establish structured rules to ensure order, define clear responsibilities to preserve accountability, align workflows to maintain cohesion, empower teams to guarantee ownership, and set unambiguous guidelines to secure clarity.
+## Scope and Ownership
 
-### Intent
-- **Meta-guideline intent**: structure with CID to ensure coherence, enforce SRP to preserve modularity, chain RAO to maintain resilience, clarify with SVO to guarantee transparency, and trace operations to secure accountability.
+This is the shared semantic contract for PRD, TAD, ADR and ADLC dispatch. It applies across products,
+languages, runtimes, models, devices and collaboration transports. It prescribes meanings and joins,
+not a provider, directory layout, message serialization or separate document per decision.
 
-### Core Directives (SVO Format)
+[PRD, TAD and ADR](./prd-tad-adr-guidelines.md) own requirements, design and decision records.
+[ADLC](./adlc-guidelines.md) owns execution obligations; [Artifact Continuity](./adlc-artifact-continuity.md)
+owns revision and evidence joins. Consumers reference this field contract instead of forking it.
 
-- **CID Guidelines structures documentation into three-part compositions**
-  - Context establishes environmental conditions and problem scope
-  - Intent declares purpose and desired outcomes
-  - Directives prescribe actionable rules in SVO format
+## Shared Field Contract
 
-- **SRP enforces focused responsibility boundaries**
-  - Components handle single concerns
-  - Modules avoid overlapping responsibilities
-  - Systems compose focused units into complex behaviors
+| Field | Meaning | Required consistency |
+|---|---|---|
+| `context` | Current conditions, evidence, constraints and bounded scope | Cite inspectable source/revision or mark the assumption unverified |
+| `intent` | Desired value or future state | Distinguish intended value from an observed result |
+| `directive` | Required action, constraint or safeguard | Trace to intent; do not smuggle in scope or authority |
+| `role` | Accountable function performing the work | Name a responsibility, not a brand or personality |
+| `action` | One independently verifiable transformation | Name inputs and operation; split independently closable outcomes |
+| `outcome` | Observable state produced by the action | State its acceptance check; do not substitute a self-issued verdict |
+| `subject` | Functional actor performing the action | Resolve to the same accountable role |
+| `verb` | Operation expressed by the action | Prefer one precise transitive verb |
+| `object` | Target transformed or inspected | Resolve to the same scoped input or artifact |
 
-- **RAO defines accountability chains**
-  - Roles identify responsible agents
-  - Actions specify transformative operations
-  - Outcomes declare measurable results
+CID expresses context, purpose and obligation. RAO expresses accountability, transformation and result.
+SVO compresses the same action. None introduces a second instruction or supplies missing authorization.
+A human, agent or component may be the subject; no literal actor name is universally required.
 
-- **SVO clarifies operational semantics**
-  - Subjects identify actors or components
-  - Verbs specify concrete actions
-  - Objects define targets and artifacts
+### Composition Rule
 
----
+- Every RAO action implements its referenced directive, and its outcome can be checked against intent.
+- Derive SVO from RAO; do not author an unrelated command merely to fill three fields.
+- Inherit stable context, scope and role by an explicit reference. Expand only changed or ambiguous fields.
+- A concise sentence, table row or structured record is valid when the same semantics can be recovered.
+  Machine interfaces declare the serialization they accept. Ordinary progress messages need no nine-field wrapper.
+- Record stable IDs and exact revisions at handoff boundaries. Paths locate content; they do not prove identity.
 
-## Usage Instructions
+### Reference serialization
 
-### When to Create CID Guidelines
+This YAML is one portable representation, not an additional schema or mandatory message wrapper:
 
-- **Create CID guidelines when you need to**:
-  - Establish consistent standards across a domain (codebase, project, documentation, system design)
-  - Define clear principles with explicit boundaries
-  - Enable team alignment through structured, searchable mantras
-  - Prevent common anti-patterns through explicit prohibitions
-  - Maintain neutrality and avoid project-specific assumptions
-
-### How to Populate This Template
-
-1. **Identify your domain**: What area needs guidelines? (e.g., neutrality, maintainability, project rules, documentation, system design)
-2. **Extract contexts**: List all relevant focus areas alphabetically (e.g., Adaptability, Architecture, Caching)
-3. **Define intents**: For each context, specify the desired principle or goal
-4. **State directives**: Explicitly prohibit anti-patterns or require safeguards using checkboxes `- [ ]`
-5. **Maintain neutrality**: Avoid project names, dataset references, or domain-specific examples
-6. **Sort alphabetically**: Keep all contexts in A→Z order for easy navigation and reference
-
-### Template Structure
-
-This template provides two formats:
-1. **Slogan-style mantras**: Concise three-beat format for quick reference and memorization
-2. **Detailed table**: Comprehensive format with full context, intent, and directive specifications
-
----
-
-## Slogan-style, three-beat mantra form
-
-- Each line is a three-beat `Context; Intent; Directive` mantra:
-
-```
-- [ ] [Context A]; [intent/principle]; forbid [anti-pattern/violation]
-- [ ] [Context B]; [intent/principle]; forbid [anti-pattern/violation]
-- [ ] [Context C]; [intent/principle]; forbid [anti-pattern/violation]
+```yaml
+context: "Criterion C1 at revision r2 needs a result; input I1 is verified."
+intent: "A caller receives the requested valid result."
+directive: "Implement C1 within the accepted scope and resource limits."
+role: "Implementer"
+action: "Implement result validation for C1."
+outcome: "Named check V1 passes for valid input and rejects invalid input."
+subject: "Implementer"
+verb: "implement"
+object: "result validation for C1"
 ```
 
-- **Example from Neutrality Guidelines**:
-```
-- [ ] Adaptability; enable customization; forbid hardcoded behavior
-- [ ] Algorithms; apply general-purpose logic; forbid dataset dependencies
-- [ ] Configuration; externalize parameters; forbid embedded settings
-- [ ] Domains; operate across sectors; forbid sector-specific assumptions
-```
+## PRD, TAD and ADR Alignment
 
----
+| Artifact role | Consumes | Produces |
+|---|---|---|
+| PRD | Grounded pain, WTP evidence, constraints and current capabilities | Intent, scope, requirements and verifiable acceptance criteria |
+| TAD | The exact accepted PRD revision | Component owners, contracts and designs covering those criteria |
+| ADR | A material design choice and its supporting/attacking evidence | Decision, rejected alternatives, consequences and relevant recovery condition |
+| ADLC task | Joined criteria, design, applicable decisions and authority | Scoped RAO work, recorded results and independent evaluation |
 
-## Context—Intent—Directive Table
+A combined artifact may contain all roles. Split only for a real ownership, review or size constraint.
+Maintain requirement → design → task → evidence joins; a merged file does not erase those obligations.
+Update the owning requirement or design before dependent implementation when grounding changes a premise.
+A reserved product choice still needs the operator; routine in-scope correction uses existing authorization.
 
-- Each row is a universal, neutral, project-agnostic one-liner mantra: `Context (focus domain) | Intent (desired principle) | Directive (explicit prohibition)`
+## Grounding and Clarification
 
-```
-| Context             | Intent                              | Directive                                                                                      |
-|---------------------|-------------------------------------|------------------------------------------------------------------------------------------------|
-| [Context A]         | [Intended principle or goal]        | - [ ] [Action verb] [object]; [intended outcome]; forbid [anti-pattern or violation]         |
-| [Context B]         | [Intended principle or goal]        | - [ ] [Action verb] [object]; [intended outcome]; forbid [anti-pattern or violation]         |
-| [Context C]         | [Intended principle or goal]        | - [ ] [Action verb] [object]; [intended outcome]; forbid [anti-pattern or violation]         |
-```
+- Inspect the current inputs that materially justify reuse, ownership, feasibility or readiness.
+  Cross-agent output is an input to verify, not implementation evidence by provenance alone.
+- Separate confirmed facts, contradicted claims, absent capabilities and unverified assumptions.
+  Research, source inspection, tests and deployed observations prove different things.
+- Repair mechanical gaps within the authorized scope and recheck affected joins. Continue disjoint safe work.
+- Ask only for a decision that cannot be derived from current evidence and authorization; explain the actual
+  scope, consequence or authority gap. Present a concrete recommendation when useful; do not require a
+  binary reply or invented confirmation token.
+- Preserve valid authorization for unchanged effects. A transport failure or new digest does not create
+  a new product choice; a material effect or target change must be re-evaluated.
 
-**Example from Maintainability Guidelines**:
-```
-| Context             | Intent                              | Directive                                                                                      |
-|---------------------|-------------------------------------|------------------------------------------------------------------------------------------------|
-| Caching             | Optimize data retrieval             | - [ ] Implement caching; optimize retrieval; forbid redundant fetches                         |
-| Centralization      | Establish single source of truth    | - [ ] Centralize copy; establish single source; forbid duplicate strings                      |
-| Chunks              | Constrain bundle sizes              | - [ ] Limit chunks to <500kB; constrain sizes; forbid oversized bundles                       |
-| Classes             | Maintain single responsibility      | - [ ] Scope classes; maintain single responsibility; forbid multi-concern classes             |
-```
+## Minimal Task and Budget Contract
 
----
+A task references its criterion/design, accountable role, scoped action, observable outcome, named check,
+permissions, dependencies and applicable resource bounds. Reuse run-level bounds rather than repeating
+identical tables. Decompose only where independent outcomes, ownership or the budget require it.
 
-## Directive Pattern Guidelines
+- State elapsed-time and resource bounds; record measured use where available and label estimates honestly.
+- Keep authored files below 600 lines and chunks below 500 kB in profiles adopting these repository limits.
+- Do not create an agent, worktree, schema or artifact unless it reduces an evidenced coordination or
+  verification cost. One lane may contain disjoint agent work; every writable path still has one owner.
+- On repeated deterministic failure, change approach from the cause. Use bounded retries for contention.
+  External waits name a condition and recheck trigger, not an invented completion ETA.
 
-### Standard Directive Format
+## Preservation and Interoperability
 
-```
-- [ ] [Action verb] [object/target]; [intended state/outcome]; forbid [specific anti-pattern]
-```
+- Preserve owner-authored work and reconstructable history. Intentional deletion or replacement belongs
+  in the reviewed diff; losslessness does not require retaining obsolete text in every successor.
+- Never overwrite concurrent work, invent evidence, transfer ownership by copying bytes, or force a
+  successful result by editing a receipt or projection.
+- Keep wire identities and accepted versions stable until an explicit compatibility migration exists.
+  Human-readable names may change without renaming unrelated protocol fields or historical receipts.
+- Use stable content identity and revision joins for portable handoffs. Follow the repository's naming
+  convention; do not require a timestamp, alphabetic ordering or one new file for every message.
 
-### Common Action Verbs (alphabetically)
+## Density and Verification
 
-> Apply, Assign, Avoid, Build, Cache, Centralize, Configure, Define, Design, Document, Enable, Enforce, Ensure, Establish, Externalize, Implement, Maintain, Maximize, Minimize, Monitor, Preserve, Prevent, Provide, Scope, Secure, Separate, Specify, Standardize, Track, Use, Validate
+A contract is sufficient when its reader can identify the obligation, owner, scope, check and authority.
+Remove duplicated prose, unexplained fields and ceremony that protects no observed failure mode.
+Prefer one cited record with multiple views over copies that can drift.
 
-### Common Prohibition Verbs (after "forbid")
-
-> Forbid [noun/gerund]: embedded logic, hardcoded values, duplicate code, unclear intent, unmeasured metrics, undocumented behavior, single points of failure, unbounded resources
-
-### Directive Quality Checklist
-
-- A well-formed directive should:
-  - [ ] Start with an action verb in present tense
-  - [ ] Specify a clear object or target
-  - [ ] State the intended outcome or principle
-  - [ ] Explicitly prohibit a specific anti-pattern
-  - [ ] Be measurable or verifiable
-  - [ ] Remain domain-agnostic (no project/dataset names)
-  - [ ] Use neutral, universal terminology
-
----
-
-## Integration with Other Frameworks
-
-### CID + SRP (Single Responsibility Principle)
-
-- **CID**: Defines what contexts need guidelines and what's prohibited
-- **SRP**: Ensures each module/component/class handles one concern
-- **Together**: CID frames the rules; SRP isolates the implementation
-
-### CID + RAO (Role—Action—Outcome)
-
-- **CID**: Establishes standards and prohibitions
-- **RAO**: Assigns responsibilities to roles for implementing those standards
-- **Together**: CID defines what; RAO defines who does what
-
-### CID + SVO (Subject—Verb—Object)
-
-- **CID**: Provides the governance framework
-- **SVO**: Expresses operations with grammatical precision
-- **Together**: CID frames rules; SVO clarifies execution semantics
-
----
-
-## Role—Action—Outcome
-
-- **Role: Guideline Designer**  
--> Action: defines CID structure, SRP boundaries, RAO chains, SVO patterns as reusable templates  
--> Outcome: produces meta-guideline enabling consistent documentation across domains
-
-- **Role: Documentation Author**  
--> Action: applies CID structure, decomposes systems via SRP, maps workflows to RAO, expresses rules as SVO  
--> Outcome: generates clear, focused, accountable specifications
-
-- **Role: System Architect**  
--> Action: consumes CID-structured guidelines, enforces SRP separation, traces RAO chains, validates SVO clarity  
--> Outcome: builds systems with verifiable alignment to documented intent
-
-- **Role: Validator**  
--> Action: checks Context completeness, verifies Intent alignment, audits Directive actionability, confirms RAO traceability  
--> Outcome: ensures guideline adherence and documentation quality
-
----
-
-## Mantra Application
-
-> **"CID frames, SRP focuses, RAO aligns, SVO clarifies"**
-
-- **CID frames**: Establishes scope, purpose, rules as structured triplet
-- **SRP focuses**: Ensures each component owns single concern
-- **RAO aligns**: Maps responsibilities to actions to outcomes
-- **SVO clarifies**: Expresses operations with grammatical precision
-
-### Extended Template
-
-> **"CID frames [domain] standards, SRP isolates [component] concerns, RAO aligns [role] responsibilities, SVO clarifies [operation] semantics"**
-
-- **CID frames**: Establishes scope ([domain area]), purpose ([key goals]), rules ([core principles + prohibitions])
-- **SRP isolates**: Ensures each [module/component/class] handles [single concern], each [unit] owns [focused responsibility]
-- **RAO aligns**: Maps [role 1], [role 2], [role 3], [role N] to their [domain-specific] deliverables
-- **SVO clarifies**: Expresses all operations ([examples of subject-verb-object statements]) with grammatical precision enabling [accountability/clarity/traceability]
-
----
-
-## Anti-Pattern Guards
-
-❌ Vague context statements -> ✅ Specific environmental conditions  
-❌ Multiple intents per guideline -> ✅ Single focused purpose  
-❌ Imperative commands without subjects -> ✅ SVO-structured directives  
-❌ Ambiguous responsibilities -> ✅ Explicit Role—Action—Outcome chains
-
----
-
-## Example CID Guidelines by Domain
-
-### Codebase Neutrality
-- Context: Adaptability, Configuration, Domains, Flexibility
-- Intent: Enable cross-domain deployment, support customization
-- Directive: Forbid hardcoded assumptions, dataset dependencies
-
-### Maintainability
-- Context: Boundaries, Centralization, Duplication, Size
-- Intent: Maintain clarity, ensure consistency, reduce technical debt
-- Directive: Forbid oversized modules, duplicate code, stale references
-
-### Project Rules
-- Context: Agility, Alignment, Feedback, Resilience
-- Intent: Accelerate learning, align progress, sustain longevity
-- Directive: Forbid slow validation, unmeasured objectives, technical debt
-
-### Documentation
-- Context: Clarity, Neutrality, Traceability, Transparency
-- Intent: Enable adaptation, preserve provenance, ensure reproducibility
-- Directive: Forbid hardcoded examples, undocumented APIs, opaque specifications
-
-### System Design
-- Context: Resilience, Scalability, Security, Observability
-- Intent: Maximize availability, ensure reliability, protect integrity
-- Directive: Forbid single points of failure, unbounded resources, unmonitored systems
-
----
-
-## Complete Example
-
-```
-- Mantra: "CID frames, SRP focuses, RAO aligns, SVO clarifies."
-- Directive: Use the CID (Context—Intent—Directives) guideline together with SRP (Single Responsibility Principle) and RAO (Role—Action—Outcome) to organize rules into SVO (Subject—Verb—Object) statements, ensuring clarity, focus, accountability, and purpose.
-- Example:  
-  Context: Exploratory Data Analysis (EDA) and Model Lifecycle Planning (MLP) in Agentic GraphRAG  
-  Intent: Ensure reproducible workflows and prevent ad-hoc coupling between analysis and lifecycle stages  
-  Directive (SVO): Analysts define data exploration steps, models record lifecycle states, systems enforce separation  
-  Role—Action—Outcome:  
-    - Role: Analyst -> Action: explores representative datasets -> Outcome: produces reproducible insights  
-    - Role: Model steward -> Action: tracks lifecycle transitions -> Outcome: ensures accountability and auditability  
-    - Role: System -> Action: enforces modular boundaries -> Outcome: maintains clarity and prevents duplication
-```
-
----
-
-## Quick Start Checklist
-
-To create new CID guidelines using this template:
-
-```
-- [ ] Identify the domain requiring guidelines
-- [ ] List 20–100 relevant contexts alphabetically
-- [ ] For each context, define the intended principle
-- [ ] For each context, specify explicit prohibitions
-- [ ] Verify all entries use domain-agnostic language
-- [ ] Sort all contexts alphabetically (A→Z)
-- [ ] Create both slogan-style and table formats
-- [ ] Add domain-specific mantra application
-- [ ] Review for neutrality and completeness
-- [ ] Validate directives are measurable and actionable
-```
-
----
-
-## Notes
-
-- **Neutrality**: All contexts, intents, and directives must remain project-agnostic, dataset-agnostic, and domain-agnostic
-- **Universality**: Guidelines should apply across teams, codebases, and organizational contexts
-- **Clarity**: Each directive should be unambiguous and actionable
-- **Completeness**: Cover all relevant contexts within the domain
-- **Maintainability**: Keep guidelines up-to-date as domain evolves
-- **Searchability**: Alphabetical sorting enables quick reference and lookup
-- **Traceability**: RAO chains ensure accountability from role through action to outcome
-- **Precision**: SVO format guarantees grammatical clarity in all operational statements
+An independent check verifies that CID, RAO and SVO converge, each task covers a criterion, each observed
+outcome has evidence, and unsupported assumptions cannot become readiness or revenue claims. Reuse the
+finding vocabulary in the [authoring set](./prd-tad-adr-guidelines.md) and
+[ADLC set](./adlc-guidelines.md); this module introduces no parallel finding taxonomy.

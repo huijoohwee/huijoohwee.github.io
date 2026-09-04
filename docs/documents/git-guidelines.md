@@ -9,7 +9,7 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-companion_of: "guidelines/agentic-sdlc-guidelines.md"
+companion_of: "guidelines/adlc-guidelines.md"
 invocation_token: "/git.guidelines"
 semantic_filters: ["#git-collaboration"]
 bindings: ["@git-guidelines"]
@@ -23,14 +23,14 @@ This git-layer companion projects the execution set into byte-preserving, provid
 
 | ID | Rule family | Disposition | Owner | Class |
 |---|---|---|---|---|
-| C1 | claim identity | consumes | [Collaboration Module](../../guidelines/agentic-sdlc-cloud-collaboration.md) | advisory |
-| C2 | authority order | consumes | [Collaboration Module](../../guidelines/agentic-sdlc-cloud-collaboration.md) | advisory |
-| C3 | write-scope comparison | consumes | [Collaboration Module](../../guidelines/agentic-sdlc-cloud-collaboration.md) | advisory |
-| C4 | fence meaning | consumes | [Collaboration Module](../../guidelines/agentic-sdlc-cloud-collaboration.md) | advisory |
-| C5 | handoff semantics | consumes | [Collaboration Module](../../guidelines/agentic-sdlc-cloud-collaboration.md) | advisory |
-| C6 | additive lane admission and preservation proof | consumes | [Lane Admission Module](../../guidelines/agentic-sdlc-scoped-lane-admission.md) | advisory |
+| C1 | claim identity | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
+| C2 | authority order | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
+| C3 | write-scope comparison | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
+| C4 | fence meaning | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
+| C5 | handoff semantics | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
+| C6 | additive lane admission and preservation proof | consumes | [Lane Admission Module](../../guidelines/adlc-scoped-lane-admission.md) | advisory |
 | C7 | frontmatter, Rule_ID, findings, and readiness rungs | consumes | [Authoring Authority](../../guidelines/prd-tad-adr-guidelines.md) | advisory |
-| C8 | task model, roles, independence, blast radius, and budgets | consumes | [Execution Companion](../../guidelines/agentic-sdlc-guidelines.md) | advisory |
+| C8 | task model, roles, independence, blast radius, and budgets | consumes | [Execution Companion](../../guidelines/adlc-guidelines.md) | advisory |
 | C9 | commit, push, and deploy command sequences | consumes | [Delivery Guidelines](../../guidelines/commit-push-deploy-guidelines.md) | advisory |
 | O1 | git lane projection and branch naming | owns | — | advisory |
 | O2 | coordination artifact layout and schemas | owns | — | advisory |

@@ -1,17 +1,19 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "1.9.0"
+parent_version: "2.4.0"
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
 # PRD, TAD & ADR Verification & Conformance Module
@@ -241,7 +243,7 @@ Every finding carries exactly six fields:
 
 ### Directives
 
-- Treat this enumeration as the single source of truth for **authoring-domain** finding names; execution-domain findings (task, agent, and tool-permission violations) are owned by the Agentic SDLC Guidelines companion set, and the conformance vocabulary is the union of the two. Forbid either set redefining a type the other owns
+- Treat this enumeration as the single source of truth for **authoring-domain** finding names; execution-domain findings (task, agent, and tool-permission violations) are owned by the ADLC Guidelines companion set, and the conformance vocabulary is the union of the two. Forbid either set redefining a type the other owns
 - A check that invents a type string cannot be compared against a prior run
 - Where a rule states a severity inline, that stated severity governs over the table default
 - Deduplicate on the triple `(Finding Type, Rule ID, artifact reference)`; one violation is one finding no matter how many passes observe it, and Rule ID granularity keeps two distinct violations in one section distinct
@@ -338,7 +340,7 @@ The regression comparison above is meaningless unless two runs over the same inp
 - [ ] **Check determinism satisfied**: deterministic, order-independent, additive, bounded, comparable, and complete on degraded input
 - [ ] **Evaluator is a distinct mechanism** from the implementer; role collapse does not extend to the Evaluator
 - [ ] **Guideline load budget respected**: sections loaded per phase; guideline load cost recorded in the authoring loop's token budget
-- [ ] **Execution-domain conformance discharged** against the Agentic SDLC Guidelines companion set; a runtime-readiness claim sourced from this document alone is incomplete
+- [ ] **Execution-domain conformance discharged** against the ADLC Guidelines companion set; a runtime-readiness claim sourced from this document alone is incomplete
 - [ ] **Diagram-domain and canvas-domain conformance discharged** against the diagram companion modules; the finding set is reported as the union of all four domain enumerations, and a canvas-renderability claim sourced from this document alone is incomplete
 - [ ] **Zero `blocker` findings** before baseline sign-off; `major` and `minor` findings resolved or formally tracked with an owner
 - [ ] **Finding set compared** against the prior run; any new `blocker` treated as a regression

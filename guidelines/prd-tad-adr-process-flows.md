@@ -1,17 +1,19 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.1.0"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "1.9.0"
+parent_version: "2.4.0"
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
 # PRD, TAD & ADR Process & Flow Patterns Module
@@ -26,10 +28,13 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 
 ## From 0 to 1: PRD & TAD Creation Process
 
-A sequential, phase-gated process for producing aligned PRD and TAD from scratch.
+These are artifact roles and evidence seams, not mandatory meetings or separate files. Existing explicit
+objective/scope authorization covers reversible in-scope authoring and execution after the relevant checks.
+Re-enter only the affected seam when evidence changes; new product choices and production effects retain
+their authority boundary under [ADLC autonomous continuation](./adlc-autonomous-continuation.md).
 
 ### Phase 0 — Problem Discovery
-**Before writing any document, validate the problem exists.**
+**Start with a falsifiable pain hypothesis; validate it before claiming demand.**
 
 1. Identify target personas and their pain points via research
 2. Quantify problem impact with observable metrics
@@ -40,7 +45,9 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 7. Identify whether the solution requires an AI harness, FOSS tools, or proprietary APIs — flag any dependency with non-zero egress or token cost
 8. Estimate **time-to-value (TTV)**: count the minimum steps a target persona must complete from zero state (prerequisites installed, no configuration done) to first successful outcome; set an acceptable TTV ceiling before Phase 1 begins; flag if TTV exceeds threshold
 
-**Gate**: proceed only when problem is validated, scoped, ROI-positive at estimated TCO, and TTV is within acceptable ceiling.
+**Gate**: record pain/WTP evidence or label the hypothesis unvalidated, scope the next learning or delivery
+outcome, and compare expected value, TCO and TTV with explicit assumptions. A bounded discovery sprint
+may gather missing evidence; it cannot claim demand, revenue or production readiness without proof.
 
 ### Phase 1 — PRD Authoring
 **Translate validated problems into structured requirements.**
@@ -56,7 +63,8 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 9. Log open questions and unresolved assumptions
 10. Flag every dependency: FOSS, zero-TCO, or justify proprietary selection inline
 
-**Gate**: architects review PRD for technical feasibility **and TCO/token-budget alignment** before Phase 2.
+**Gate**: verify PRD feasibility and TCO/token-budget alignment before dependent design. A named check
+or independent reviewer supplies the verdict; a separate architect role or meeting is not required.
 
 ### Phase 2 — TAD Authoring
 **Translate PRD requirements into verifiable architecture.**
@@ -76,10 +84,11 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 13. Render architecture diagrams in the mandated notation; compile the component inventory table and the Diagram Register
 14. Derive Verifiable Completion Conditions (VCCs) from acceptance criteria — each criterion must be expressible as a condition an autonomous agent can evaluate from its own surfaced output
 
-**Gate**: product manager validates TAD preserves user value **and** ROI/TCO envelope before Phase 3.
+**Gate**: independently verify that TAD preserves user value and the accepted ROI/TCO envelope.
+Reuse the current scope decision; ask only when a material choice remains unresolved.
 
 ### Phase 3 — Alignment & Review
-**Verify PRD ↔ TAD coherence and stakeholder sign-off.**
+**Verify PRD ↔ TAD coherence and applicable authorization.**
 
 1. Establish bidirectional traceability: `PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface]`
 2. Confirm no implementation detail in PRD; no business logic in TAD
@@ -93,7 +102,9 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 10. Confirm every lane and Deploy Boundary is documented and that every boundary reads `closed` absent a referenced operator instruction
 11. Resolve or formally track all open questions
 
-**Gate**: both documents version-stamped and baselined, and the alignment check reporting zero `blocker` findings, before implementation begins.
+**Gate**: referenced artifact revisions and affected alignment checks must support dependent implementation.
+Correct in-scope grounding defects in the owning artifact, then recheck; continue dependency-disjoint work.
+Do not request a new approval for a reversible seam already covered by the recorded objective and scope.
 
 ### Phase 4 — Living Documents
 **Iterate documents as product and architecture evolve.**
@@ -101,7 +112,7 @@ A sequential, phase-gated process for producing aligned PRD and TAD from scratch
 - Apply semantic versioning to every change
 - Update PRD and TAD together whenever requirements shift
 - Re-run relevant gate reviews for breaking changes
-- Archive superseded ADRs; do not delete
+- Preserve superseded ADR decisions through a stable successor link and retrievable revision history; reviewed cleanup may remove obsolete projections
 - Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
 - **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
 - **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note

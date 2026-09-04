@@ -4,14 +4,14 @@ import { finding, sectionByAnchor, tableRows } from "./content.mjs";
 const CONSUMED = Object.freeze(["claim identity", "authority order", "write-scope comparison", "fence meaning", "handoff semantics", "additive lane admission and preservation proof", "frontmatter, Rule_ID, findings, and readiness rungs", "task model, roles, independence, blast radius, and budgets", "commit, push, and deploy command sequences"]);
 const OWNED = Object.freeze(["git lane projection and branch naming", "coordination artifact layout and schemas", "commit attribution trailers", "preservation, backup, and recovery handles", "conflict placement and serialization order", "promotion chain gates", "validation gates and conformance checker"]);
 const OWNER_PATHS = Object.freeze([
-  "../../guidelines/agentic-sdlc-cloud-collaboration.md",
-  "../../guidelines/agentic-sdlc-cloud-collaboration.md",
-  "../../guidelines/agentic-sdlc-cloud-collaboration.md",
-  "../../guidelines/agentic-sdlc-cloud-collaboration.md",
-  "../../guidelines/agentic-sdlc-cloud-collaboration.md",
-  "../../guidelines/agentic-sdlc-scoped-lane-admission.md",
+  "../../guidelines/adlc-cloud-collaboration.md",
+  "../../guidelines/adlc-cloud-collaboration.md",
+  "../../guidelines/adlc-cloud-collaboration.md",
+  "../../guidelines/adlc-cloud-collaboration.md",
+  "../../guidelines/adlc-cloud-collaboration.md",
+  "../../guidelines/adlc-scoped-lane-admission.md",
   "../../guidelines/prd-tad-adr-guidelines.md",
-  "../../guidelines/agentic-sdlc-guidelines.md",
+  "../../guidelines/adlc-guidelines.md",
   "../../guidelines/commit-push-deploy-guidelines.md",
 ]);
 

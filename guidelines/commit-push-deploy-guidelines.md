@@ -1,8 +1,8 @@
 ---
 title: "Commit, Push, Integrate, and Deploy Guidelines"
 doc_type: "Delivery and Release Control Guideline"
-version: "2.0.0"
-date: "2026-08-26"
+version: "2.1.0"
+date: "2026-09-05"
 lang: "en-US"
 owner: "Delivery policy"
 local_rung: "runtime-ready"
@@ -47,11 +47,16 @@ of repository, workspace topology, integration method, and one or more exact
 required-check names. Direct canonical writes are forbidden.
 Dirty, unversioned, or local-checkout deployment is forbidden.
 
-The [Agentic SDLC Guidelines](./agentic-sdlc-guidelines.md) own universal task,
-authority, verification, and release-control rules. The Agentic Canvas OS
-`START-WORKFLOW.md` and `RELEASE-WORKFLOW.md` are the executable reference
-contracts. This document owns the commit, push, protected-integration, and
-delivery sequence.
+The [ADLC Guidelines](./adlc-guidelines.md) own universal task,
+authority, verification, and release-control rules.
+
+### Reference implementation — Agentic OS
+
+The pinned `agentic-os` package owns `docs/START-WORKFLOW.md`, `docs/RELEASE-WORKFLOW.md`
+and the executable lifecycle controller. Consumers invoke those assets instead of copying them.
+This document supplies repository-specific delivery policy, not a second controller.
+The required-check context `agentic-sdlc-policy-contract` remains a provider compatibility name;
+changing it requires an exact ruleset/workflow migration, not a documentation rename.
 
 ## Identity and repository profile
 

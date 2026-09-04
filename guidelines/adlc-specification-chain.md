@@ -1,19 +1,20 @@
 ---
-title: "Agentic SDLC Specification Chain Module"
+title: "ADLC Specification Chain Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-13"
+version: "1.1.0"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 lifecycle_status: "proposed"
+runtime_readiness_policy: "fail-closed"
 ---
 
-# Agentic SDLC Specification Chain Module
+# ADLC Specification Chain Module
 
 ## Scope and Ownership
 
@@ -22,7 +23,7 @@ specification travels from stated intent to executable work across three artifac
 them. It does not define a document product, file name, directory layout, editor, template engine, agent product, or
 storage format.
 
-The main Agentic SDLC Guidelines own task identity, state, budgets, roles, and the condition-to-task bridge. The
+The main ADLC Guidelines own task identity, state, budgets, roles, and the condition-to-task bridge. The
 PRD, TAD & ADR authoring set owns document contents, the Readiness Ladder, the Rule ID scheme, and the
 authoring-domain finding vocabulary. This module owns only the chain: artifact-role identity, the two coverage
 seams, the re-derivation cascade, phase-advance authority, and the adaptation rules that let the chain shrink or
@@ -86,13 +87,13 @@ An upstream edit invalidates downstream coverage whether or not the downstream a
 
 ## Phase Advance Authority
 
-Each seam is crossed by decision, not by elapsed effort or apparent completeness.
+Each seam consumes recorded authority and independent coverage evidence, not elapsed effort or apparent completeness.
 
 **Directives**:
-- Require a recorded Operator decision to cross each seam; crossing on an agent's own assessment is a `phase-advanced-without-approval` at `blocker` severity
-- Treat an absent decision as a `blocked` state, never an assumed yes; an inferred, defaulted, scheduled, or simulated approval is not an approval
-- Record the decision reference on the artifact revision it authorises, so the authorisation remains auditable after the artifact advances
-- Forbid an agent that authored an artifact from also recording the decision that advances it; the independence rule applies to phase advance exactly as it applies to task verdicts
+- Bind each crossing to an explicit Operator decision covering its objective, scope, bounds, and effects; reuse that decision for reversible authoring, re-grounding, and execution transitions within those terms after independent seam checks pass
+- Require a new decision only for an uncovered product choice, scope, authority, irreversible effect, or promotion; absence blocks that transition while authorized dependency-disjoint work continues. Never infer a decision from silence or apparent readiness
+- Record the existing decision reference and current artifact revision on each transition; refreshing a revision after an authorized correction is not a new product decision, but effect-bound authorization must be revalidated under the lifecycle contract
+- The author may record the reference but cannot fabricate the Operator decision or adjudicate their own seam verdict; the Evaluator remains an independent mechanism
 
 ## Adaptivity
 
@@ -117,7 +118,7 @@ unchanged.
 | `ungrounded-design-element` | `minor` | A design element cites no criterion |
 | `requirement-introduced-downstream` | `blocker` | Normative behaviour or a correctness property first appears in the design artifact or task list |
 | `stale-downstream-artifact` | `major` | An upstream artifact changed and a downstream artifact was not re-derived |
-| `phase-advanced-without-approval` | `blocker` | A seam was crossed with no recorded Operator decision |
+| `phase-advanced-without-approval` | `blocker` | A seam was crossed without a recorded Operator decision covering its scope and effects |
 | `seam-elided` | `blocker` | A seam's coverage obligation is absent rather than satisfied |
 
 ## Module Load Budget
@@ -143,7 +144,7 @@ unchanged.
 - [ ] **No downstream behaviour**: no normative behaviour or correctness property originates in design or tasks
 - [ ] **Seam 2 closed**: every task cites its criterion, condition, and design element joins
 - [ ] **Cascade current**: each downstream artifact records the upstream revision it was derived from, and that revision is current
-- [ ] **Advance authorised**: each seam crossing carries an Operator decision reference recorded by a party that did not author the artifact
+- [ ] **Advance authorised**: each crossing joins current coverage evidence, an independent verdict, and the recorded Operator decision covering its scope and effects
 - [ ] **Adaptation seam-preserving**: any collapsed or reordered chain still satisfies both seams
 
 ## Mantra Application

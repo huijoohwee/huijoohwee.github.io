@@ -141,7 +141,7 @@ function validFrontmatter(overrides = {}) {
     delivered_rung: "undocumented",
     lane: "authoring",
     universal_scope: false,
-    companion_of: "guidelines/agentic-sdlc-guidelines.md",
+    companion_of: "guidelines/adlc-guidelines.md",
     invocation_token: "/git.guidelines",
     semantic_filters: ["#git-collaboration"],
     bindings: ["@git-guidelines"],

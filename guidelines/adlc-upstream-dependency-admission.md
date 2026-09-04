@@ -1,18 +1,24 @@
 ---
-title: "Agentic SDLC Upstream Dependency Admission"
+title: "ADLC Upstream Dependency Admission"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-07-30"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 schema: "agentic-upstream-dependency-admission/v1"
 status: "spec-complete"
 authority: "provider-neutral upstream dependency admission"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 mutation_policy: "no source adoption or projection before protected admission"
+frontmatter_contract: "required"
+owner: "Upstream admission evaluator function"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC Upstream Dependency Admission
+# ADLC Upstream Dependency Admission
 
 ## Purpose
 

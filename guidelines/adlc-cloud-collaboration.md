@@ -1,18 +1,24 @@
 ---
-title: "Agentic SDLC Cloud-Authoritative Collaboration"
+title: "ADLC Cloud-Authoritative Collaboration"
 doc_type: "Guideline Module"
-version: "1.2.0"
-date: "2026-08-28"
+version: "1.2.1"
+date: "2026-09-05"
 lang: "en-US"
 schema: "agentic-cloud-collaboration/v1"
 status: "spec-complete"
 authority: "provider-neutral protected remote collaboration ledger"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 mutation_policy: "remote claim before shared mutation"
+frontmatter_contract: "required"
+owner: "Collaboration controller function"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC Cloud-Authoritative Collaboration
+# ADLC Cloud-Authoritative Collaboration
 
 ## Purpose
 

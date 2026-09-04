@@ -142,6 +142,6 @@ jobs:
       # candidate contracts without projecting a false reviewed authority.
       - name: Verify deterministic candidate contracts
         run: |
-          npm run agentic-sdlc:policy:check
+          npm run adlc:policy:check
           npm run agenticrag:guidelines-map:check
           npm run git-guidelines:test

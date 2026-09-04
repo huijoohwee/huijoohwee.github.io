@@ -21,7 +21,7 @@ research_input_digest: "sha256:5fb8f9f4a0c4bc6d7e96866ff5224cbb46f937368f8f22bb9
 
 # Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD/TAD/ADR
 
-Governed by PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). The Agentic SDLC Guidelines separately own task decomposition, tool blast radius, verification, integration, and release.
+Governed by PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). The ADLC Guidelines separately own task decomposition, tool blast radius, verification, integration, and release.
 
 Status boundary: this is a spec-complete source contract. It is not an implementation receipt, protected integration result, browser result, Xcode or Simulator result, physical-device result, Production authorization, or Cloudflare deployment result. Present-tense criteria describe required behavior, not observed behavior. Every Evidence Reference remains none recorded.
 

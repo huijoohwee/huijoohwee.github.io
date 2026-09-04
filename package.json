@@ -9,15 +9,22 @@
   "scripts": {
     "agentic-naming:check": "node scripts/check-agentic-naming.mjs",
     "check": "npm run agentic-naming:check && python3 schema/AgenticRAG/sync_map.py --mode check",
-    "agentic-sdlc:policy:check": "node scripts/check-agentic-sdlc-guideline.mjs",
+    "adlc:policy:check": "node scripts/check-adlc-guideline.mjs",
+    "adlc:contract:test": "node --test scripts/__tests__/adlc-migration-contract.test.mjs",
+    "evals": "npm --prefix node_modules/agentic-os run evals",
     "agenticrag:guidelines-map:check": "node scripts/check-agenticrag-guidelines-map.mjs",
     "git-guidelines:check": "node scripts/check-git-guidelines.mjs",
     "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
-    "guideline:check": "npm run guideline:budget:check && npm run agentic-sdlc:policy:check && npm run prd-tad-adr:policy:check && npm run diagram:canvas:check",
-    "test": "npm run agentic-sdlc:policy:check && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check",
+    "guideline:check": "npm run guideline:budget:check && npm run adlc:policy:check && npm run prd-tad-adr:policy:check && npm run diagram:canvas:check",
+    "test": "npm run adlc:policy:check && npm run adlc:contract:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
     "diagram:canvas:check": "node scripts/check-diagram-canvas-render.mjs guidelines",
     "prd-tad-adr:policy:check": "node scripts/check-prd-tad-adr-guideline.mjs",
-    "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs"
+    "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs",
+    "doctor": "agentic-os doctor",
+    "lane": "agentic-os start",
+    "land": "agentic-os land",
+    "status": "agentic-os status",
+    "reap": "agentic-os reap"
   },
   "repository": {
     "type": "git",
@@ -33,6 +40,7 @@
   "homepage": "https://github.com/huijoohwee/huijoohwee.github.io#readme",
   "devDependencies": {
     "fast-check": "3.23.2",
-    "js-yaml": "4.3.1"
+    "js-yaml": "4.3.1",
+    "agentic-os": "github:huijoohwee/agentic-os#30118a76856c6d0535037a61b7a0f7d9e8e92af5"
   }
 }

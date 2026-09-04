@@ -175,6 +175,15 @@ Every finding carries exactly six fields:
 |---|---|---|
 | Frontmatter | `missing-frontmatter-key` | `minor` |
 | Frontmatter | `malformed-document` | `major` |
+| Directive Grammar (CID) | `cid-schema-noncompliant` | `minor` |
+| Directive Grammar (CID) | `cid-context-uncited` | `major` |
+| Directive Grammar (CID) | `cid-grounding-unverified` | `blocker` |
+| Directive Grammar (CID) | `cid-clarification-malformed` | `minor` |
+| Directive Grammar (CID) | `cid-composition-divergence` | `major` |
+| Directive Grammar (CID) | `cid-density-violation` | `minor` |
+| Directive Grammar (CID) | `cid-decomposition-missing` | `major` |
+| Directive Grammar (CID) | `cid-budget-exceeded` | `major` |
+| Directive Grammar (CID) | `cid-naming-noncompliant` | `minor` |
 | Readiness Ladder | `unknown-status` | `minor` |
 | Readiness Ladder | `unproven-claim` | `blocker` |
 | Readiness Ladder | `blended-status` | `minor` |
@@ -183,6 +192,7 @@ Every finding carries exactly six fields:
 | Traceability closure | `unresolvable-reference` | `major` |
 | Traceability closure | `stale-evidence` | `major` |
 | Traceability closure | `missing-companion` | `major` |
+| Traceability closure | `artifact-naming-noncompliant` | `minor` |
 | Ownership | `duplicate-owner` | `major` |
 | Ownership | `status-conflict` | `major` |
 | Phase gates | `gate-order-drift` | `major` |
@@ -190,6 +200,7 @@ Every finding carries exactly six fields:
 | Scope & neutrality | `vendor-coupling` | `major` |
 | Scope & neutrality | `path-derived-claim` | `major` |
 | Scope & neutrality | `non-modular-section` | `minor` |
+| Scope & neutrality | `human-gate-unstated` | `major` |
 | Economics | `missing-economics-metric` | `major` |
 | Economics | `blended-deployment-tco` | `major` |
 | Economics | `missing-foss-comparison` | `major` |
@@ -205,6 +216,28 @@ Every finding carries exactly six fields:
 | Lane topology | `deploy-boundary-breach` | `blocker` |
 | Lane topology | `ungated-promotion` | `blocker` |
 | Topology | `incomplete-topology-node` | `major` |
+| Product-Market Fit | `pain-point-not-validated` | `major` |
+| Demonstration | `missing-demo-beat` | `minor` |
+| Domain-Object Rubric | `overclaimed-rubric-level` | `major` |
+| Domain-Object Rubric | `unresolved-rubric-gap` | `minor` |
+| Roadmap | `roadmap-reuse-unstated` | `major` |
+| Roadmap | `roadmap-order-unexplained` | `minor` |
+| Roadmap | `roadmap-scope-silently-dropped` | `minor` |
+| Platform Selection | `vendor-preference-unscored` | `major` |
+| Platform Selection | `constraint-gate-skipped` | `major` |
+| Platform Selection | `outranking-relation-unstated` | `minor` |
+| Platform Selection | `outranking-incomparability-collapsed` | `minor` |
+| Platform Selection | `argumentation-graph-missing` | `major` |
+| Platform Selection | `argumentation-self-graded` | `blocker` |
+| Monetization | `monetization-demand-unvalidated` | `major` |
+| Division of Work | `duplicate-capability-owner` | `major` |
+| Division of Work | `component-origin-unstated` | `minor` |
+| Division of Work | `unjustified-storage-duplication` | `major` |
+| Concurrent Collaboration | `worktree-provenance-missing` | `minor` |
+| Concurrent Collaboration | `merge-non-idempotent` | `major` |
+| Concurrent Collaboration | `merge-lossy` | `major` |
+| Concurrent Collaboration | `deadlock-unbounded-wait` | `blocker` |
+| Concurrent Collaboration | `work-tree-sprawl` | `minor` |
 
 ### Directives
 

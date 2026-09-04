@@ -60,8 +60,8 @@ jobs:
         env:
           CANDIDATE_SHA: ${{ inputs.candidate_sha }}
           EXPECTED_CHECK_APP_ID: "15368"
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7"
           GH_TOKEN: ${{ github.token }}
         run: |
           canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
@@ -99,7 +99,7 @@ jobs:
                 == {
                   strict_required_status_checks_policy: true,
                   do_not_enforce_on_create: false,
-                  required_status_checks: [{context: "agentic-sdlc-policy-contract", integration_id: $app_id}]
+                  required_status_checks: [{context: "adlc-policy-contract", integration_id: $app_id}]
                 })
             ' <<< "$ruleset_json" > /dev/null
 
@@ -138,7 +138,7 @@ jobs:
           check_json="$(
             gh api --method GET "repos/$GITHUB_REPOSITORY/commits/$CANDIDATE_SHA/check-runs" \
               -f filter=all -f per_page=100 \
-              --jq '[.check_runs[] | select(.name == "agentic-sdlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
+              --jq '[.check_runs[] | select(.name == "adlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
           )"
           test "$(jq -r '.status // ""' <<< "$check_json")" = "completed"
           test "$(jq -r '.conclusion // ""' <<< "$check_json")" = "success"
@@ -369,8 +369,8 @@ jobs:
           EXPECTED_CHECK_APP_ID: "15368"
           EXPECTED_PAGE_URL: https://huijoohwee.github.io/
           EXPECTED_POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7"
           PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
           PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
           WORKFLOW_SHA: ${{ github.workflow_sha }}
@@ -427,7 +427,7 @@ jobs:
                 == {
                   strict_required_status_checks_policy: true,
                   do_not_enforce_on_create: false,
-                  required_status_checks: [{context: "agentic-sdlc-policy-contract", integration_id: $app_id}]
+                  required_status_checks: [{context: "adlc-policy-contract", integration_id: $app_id}]
                 })
             ' <<< "$ruleset_json" > /dev/null
 
@@ -466,7 +466,7 @@ jobs:
           check_json="$(
             gh api --method GET "repos/$GITHUB_REPOSITORY/commits/$CANDIDATE_SHA/check-runs" \
               -f filter=all -f per_page=100 \
-              --jq '[.check_runs[] | select(.name == "agentic-sdlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
+              --jq '[.check_runs[] | select(.name == "adlc-policy-contract" and .app.slug == "github-actions")] | sort_by(.id) | last // {}'
           )"
           test "$(jq -r '.status // ""' <<< "$check_json")" = "completed"
           test "$(jq -r '.conclusion // ""' <<< "$check_json")" = "success"

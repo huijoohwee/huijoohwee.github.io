@@ -9,7 +9,7 @@ import { isBoundedString, isCalendarDate, isReadinessRung } from "./git-guidelin
 
 const DEFAULT_ROOT = fileURLToPath(new URL("../../", import.meta.url));
 const MAX_BYTES = 500_000;
-const REQUIRED_CONTEXT = "agentic-sdlc-policy-contract";
+const REQUIRED_CONTEXT = "adlc-policy-contract";
 const MODULES = Object.freeze({
   source: "adlc-guidelines.md",
   productionReleaseLifecycle: "adlc-production-release-lifecycle.md",
@@ -136,13 +136,15 @@ export function checkAdlcMigration(files) {
   assert.ok(!Object.hasOwn(pkg.scripts, "agentic-sdlc:policy:check"), "legacy package command must be removed");
   assert.doesNotMatch(JSON.stringify(pkg.scripts), /agentic-sdlc:policy:check/);
 
-  // This name is an enrolled provider identity. Changing a label cannot migrate its ruleset.
+  // The native identity must agree across the profile and both validation workflows.
   const profile = JSON.parse(required(files, ".agentic-os.json"));
-  assert.ok(profile.requiredChecks.includes(REQUIRED_CONTEXT), "retain the enrolled CI compatibility context");
+  assert.deepEqual(profile.requiredChecks, [REQUIRED_CONTEXT], "require only the native CI context");
   for (const path of [".github/workflows/guideline-contract.yml", ".github/workflows/protected-head-refresh-ci.yml"]) {
     const workflow = yaml.load(required(files, path));
     assert.equal(Object.values(workflow.jobs).filter(job => job.name === REQUIRED_CONTEXT).length, 1,
-      `${path} must emit the enrolled CI compatibility context exactly once`);
+      `${path} must emit the native CI context exactly once`);
+    assert.ok(Object.values(workflow.jobs).every(job => !/^agentic-sdlc-/.test(job.name ?? "")),
+      `${path} must not emit legacy CI contexts`);
   }
   return Object.freeze({
     frontmatterCount: metadataByName.size,

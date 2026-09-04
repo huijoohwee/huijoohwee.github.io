@@ -1,7 +1,7 @@
 ---
 title: "Commit, Push, Integrate, and Deploy Guidelines"
 doc_type: "Delivery and Release Control Guideline"
-version: "2.1.0"
+version: "2.2.0"
 date: "2026-09-05"
 lang: "en-US"
 owner: "Delivery policy"
@@ -14,7 +14,7 @@ repository: "huijoohwee/huijoohwee.github.io"
 workspaceTopology: "isolated-worktree"
 integrationMethod: "squash"
 required_checks:
-  - "agentic-sdlc-policy-contract"
+  - "adlc-policy-contract"
 applies_to:
   - "huijoohwee/huijoohwee.github.io"
   - "huijoohwee/agentic-canvas-os"
@@ -22,7 +22,7 @@ applies_to:
   - "huijoohwee/GameXR"
   - "huijoohwee/huijoohwee"
 repository_profiles:
-  guideline_site: ["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]
+  guideline_site: ["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "adlc-policy-contract"]
   agentic_canvas_os: ["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]
   agentic_graph: ["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Integration Gate"]
   gamexr: ["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]
@@ -55,8 +55,8 @@ authority, verification, and release-control rules.
 The pinned `agentic-os` package owns `docs/START-WORKFLOW.md`, `docs/RELEASE-WORKFLOW.md`
 and the executable lifecycle controller. Consumers invoke those assets instead of copying them.
 This document supplies repository-specific delivery policy, not a second controller.
-The required-check context `agentic-sdlc-policy-contract` remains a provider compatibility name;
-changing it requires an exact ruleset/workflow migration, not a documentation rename.
+The required-check context `adlc-policy-contract` binds the exact native validation result;
+the repository profile, ruleset, workflows, and publication policy must agree on that identity.
 
 ## Identity and repository profile
 
@@ -218,7 +218,7 @@ never satisfies another repository's profile:
 
 | Repository | Workspace | Integration | Required checks |
 |---|---|---|---|
-| `huijoohwee/huijoohwee.github.io` | isolated worktree | squash | `agentic-sdlc-policy-contract` |
+| `huijoohwee/huijoohwee.github.io` | isolated worktree | squash | `adlc-policy-contract` |
 | `huijoohwee/agentic-canvas-os` | isolated worktree | squash | `test`, `build`, `docs-contract`, `collaboration-integration`, `cloud-collaboration` |
 | `huijoohwee/agentic-graph` | isolated worktree | squash | `Integration Gate` |
 | `huijoohwee/GameXR` | isolated worktree | squash | `Integration Gate` |

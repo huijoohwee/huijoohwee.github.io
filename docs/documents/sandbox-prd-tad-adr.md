@@ -15,7 +15,7 @@ universal_scope: "false"
 
 # Agentic Graph Sandbox Execution Layer — PRD/TAD/ADR
 
-**Governed by**: PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). **Companion set**: Agentic SDLC Guidelines owns execution-domain conformance (task decomposition, agent roles, tool blast radius); a runtime-readiness claim sourced from this document alone is incomplete.
+**Governed by**: PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). **Companion set**: ADLC Guidelines owns execution-domain conformance (task decomposition, agent roles, tool blast radius); a runtime-readiness claim sourced from this document alone is incomplete.
 
 ## Version History
 

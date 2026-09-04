@@ -42,7 +42,7 @@ const RETIRED_DELIVERY_PROSE_PATTERNS = Object.freeze([
 ]);
 const DELIVERY_AUTHORIZATION_CHALLENGE = "authorize agentic-graph-production-state-plan <planDigest> plan-run <planRunId> artifact <artifactId> sha256 <artifactDigest>";
 const DELIVERY_REPOSITORY_PROFILES = Object.freeze({
-  guideline_site: Object.freeze(["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "agentic-sdlc-policy-contract"]),
+  guideline_site: Object.freeze(["huijoohwee/huijoohwee.github.io", "isolated-worktree", "squash", "adlc-policy-contract"]),
   agentic_canvas_os: Object.freeze(["huijoohwee/agentic-canvas-os", "isolated-worktree", "squash", "test", "build", "docs-contract", "collaboration-integration", "cloud-collaboration"]),
   agentic_graph: Object.freeze(["huijoohwee/agentic-graph", "isolated-worktree", "squash", "Integration Gate"]),
   gamexr: Object.freeze(["huijoohwee/GameXR", "isolated-worktree", "squash", "Integration Gate"]),
@@ -298,7 +298,7 @@ function checkDeliveryOwnerProfile(document, ruleIndex, context, findings) {
   if (frontmatter.repository !== "huijoohwee/huijoohwee.github.io") profileErrors.push("current repository");
   if (frontmatter.workspaceTopology !== "isolated-worktree") profileErrors.push("workspaceTopology");
   if (frontmatter.integrationMethod !== "squash") profileErrors.push("integrationMethod");
-  if (!sameArray(frontmatter.required_checks, ["agentic-sdlc-policy-contract"])) profileErrors.push("required_checks");
+  if (!sameArray(frontmatter.required_checks, ["adlc-policy-contract"])) profileErrors.push("required_checks");
   if (!sameArray(frontmatter.applies_to, expectedRepositories)) profileErrors.push("applies_to");
   if (!frontmatter.repository_profiles || typeof frontmatter.repository_profiles !== "object"
     || Array.isArray(frontmatter.repository_profiles)) profileErrors.push("repository_profiles");

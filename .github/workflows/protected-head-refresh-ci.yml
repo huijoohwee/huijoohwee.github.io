@@ -35,7 +35,7 @@ concurrency:
 
 jobs:
   protected-head-refresh:
-    name: agentic-sdlc-policy-contract
+    name: adlc-policy-contract
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -145,16 +145,3 @@ jobs:
           npm run adlc:policy:check
           npm run agenticrag:guidelines-map:check
           npm run git-guidelines:test
-
-  # Migration bridge: reuse the authorized candidate's existing validation result.
-  adlc-policy-contract:
-    if: ${{ always() }}
-    needs: [protected-head-refresh]
-    name: adlc-policy-contract
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - name: Require the protected refresh contract check
-        env:
-          CONTRACT_RESULT: ${{ needs.protected-head-refresh.result }}
-        run: test "$CONTRACT_RESULT" = "success"

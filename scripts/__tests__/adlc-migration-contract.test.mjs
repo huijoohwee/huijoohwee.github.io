@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import yaml from "js-yaml";
 import { readAdlcFiles, checkAdlcMigration, loadAdlcSources } from "../lib/adlc-contract-input.mjs";
@@ -7,33 +10,61 @@ import { readAdlcFiles, checkAdlcMigration, loadAdlcSources } from "../lib/adlc-
 const files = readAdlcFiles();
 const legacyStem = ["agentic", "sdlc"].join("-");
 
-for (const [label, path, validationJob] of [
-  ["ordinary", ".github/workflows/guideline-contract.yml", "guideline-contract-check"],
-  ["protected refresh", ".github/workflows/protected-head-refresh-ci.yml", "protected-head-refresh"],
-]) {
-  test(`${label} native check reports the existing validation result without rerunning it`, () => {
-    const workflow = yaml.load(files.get(path));
-    const jobs = Object.values(workflow.jobs);
-    assert.equal(jobs.filter(job => job.name === `${legacyStem}-policy-contract`).length, 1,
-      "the enrolled legacy context remains available until exact native cutover");
-    const nativeJobs = jobs.filter(job => job.name === "adlc-policy-contract");
-    assert.equal(nativeJobs.length, 1, "emit exactly one native check");
-    const native = nativeJobs[0];
-    assert.deepEqual(native.needs, [validationJob]);
-    assert.equal(native.if, "${{ always() }}");
-    assert.equal(native.steps.length, 1, "the native check only reports the existing result");
-    const [step] = native.steps;
-    assert.equal(step.uses, undefined);
-    assert.deepEqual(step.env, { CONTRACT_RESULT: `\${{ needs.${validationJob}.result }}` });
-    for (const result of ["success", "failure", "cancelled", "skipped", ""]) {
-      const execution = spawnSync("/bin/sh", ["-eu", "-c", step.run], {
-        env: { CONTRACT_RESULT: result }, encoding: "utf8", timeout: 2_000,
+function nativeJob(workflow) {
+  const jobs = Object.values(workflow.jobs);
+  assert.equal(jobs.filter(job => job.name === `${legacyStem}-policy-contract`).length, 0,
+    "legacy check producers must be retired");
+  const nativeJobs = jobs.filter(job => job.name === "adlc-policy-contract");
+  assert.equal(nativeJobs.length, 1, "emit exactly one native check");
+  return nativeJobs[0];
+}
+
+test("ordinary native check fails closed without rerunning validation", () => {
+  const native = nativeJob(yaml.load(files.get(".github/workflows/guideline-contract.yml")));
+  assert.deepEqual(native.needs, ["guideline-contract-check"]);
+  assert.equal(native.if, "${{ always() }}");
+  assert.equal(native.steps.length, 1);
+  const [step] = native.steps;
+  assert.equal(step.uses, undefined);
+  assert.deepEqual(step.env, { CONTRACT_RESULT: "${{ needs.guideline-contract-check.result }}" });
+  for (const result of ["success", "failure", "cancelled", "skipped", ""]) {
+    const execution = spawnSync("/bin/sh", ["-eu", "-c", step.run], {
+      env: { CONTRACT_RESULT: result }, encoding: "utf8", timeout: 2_000,
+    });
+    assert.ifError(execution.error);
+    assert.equal(execution.status === 0, result === "success", `native result must fail closed for ${result || "absent"}`);
+  }
+});
+
+test("native refresh stops on each failed contract without a redundant rollup", () => {
+  const workflow = yaml.load(files.get(".github/workflows/protected-head-refresh-ci.yml"));
+  const native = nativeJob(workflow);
+  assert.equal(native, workflow.jobs["protected-head-refresh"]);
+  assert.equal(native.needs, undefined);
+  assert.equal(native.if, undefined);
+  assert.notEqual(native["continue-on-error"], true);
+  for (const step of native.steps) assert.notEqual(step["continue-on-error"], true);
+  const step = native.steps.find(candidate => candidate.name === "Verify deterministic candidate contracts");
+  assert.equal(step.if, undefined);
+  const commands = ["run adlc:policy:check", "run agenticrag:guidelines-map:check", "run git-guidelines:test"];
+  const directory = mkdtempSync(join(tmpdir(), "adlc-refresh-contract-"));
+  const log = join(directory, "commands.log");
+  try {
+    writeFileSync(join(directory, "npm"), '#!/bin/sh\nprintf "%s\\n" "$*" >> "$COMMAND_LOG"\n[ "$*" != "$FAIL_COMMAND" ]\n');
+    chmodSync(join(directory, "npm"), 0o755);
+    for (const failed of ["", ...commands]) {
+      writeFileSync(log, "");
+      const execution = spawnSync("/bin/bash", ["-e", "-o", "pipefail", "-c", step.run], {
+        env: { PATH: `${directory}:/usr/bin:/bin`, COMMAND_LOG: log, FAIL_COMMAND: failed },
+        encoding: "utf8", timeout: 2_000,
       });
       assert.ifError(execution.error);
-      assert.equal(execution.status === 0, result === "success", `native result must fail closed for ${result || "absent"}`);
+      assert.equal(execution.status === 0, failed === "");
+      assert.deepEqual(readFileSync(log, "utf8").trim().split("\n"),
+        failed ? commands.slice(0, commands.indexOf(failed) + 1) : commands);
     }
-  });
-}
+  } finally { rmSync(directory, { recursive: true, force: true }); }
+});
 
 function mutate(path, change) {
   const candidate = new Map(files);
@@ -41,7 +72,7 @@ function mutate(path, change) {
   return candidate;
 }
 
-test("canonical ADLC graph and enrolled CI context remain usable", () => {
+test("canonical ADLC graph and native CI context remain usable", () => {
   assert.doesNotThrow(() => checkAdlcMigration(files));
 });
 
@@ -75,19 +106,19 @@ test("consumer links cannot silently return to a removed path", () => {
   assert.throws(() => checkAdlcMigration(candidate), /index.html contains a legacy guideline path/);
 });
 
-test("renaming a workflow label cannot strand the enrolled required check", () => {
+test("a workflow cannot fall back to the retired required check", () => {
   const candidate = mutate(".github/workflows/guideline-contract.yml", source =>
-    source.replaceAll("name: agentic-sdlc-policy-contract", "name: adlc-policy-contract"));
-  assert.throws(() => checkAdlcMigration(candidate), /must emit the enrolled CI compatibility context exactly once/);
+    source.replaceAll("name: adlc-policy-contract", `name: ${legacyStem}-policy-contract`));
+  assert.throws(() => checkAdlcMigration(candidate), /must emit the native CI context exactly once/);
 });
 
-test("removing the enrolled repository context requires a separate migration", () => {
+test("the repository profile cannot retain a legacy required context", () => {
   const candidate = mutate(".agentic-os.json", source => {
     const profile = JSON.parse(source);
-    profile.requiredChecks = ["adlc-policy-contract"];
+    profile.requiredChecks.push(`${legacyStem}-policy-contract`);
     return JSON.stringify(profile);
   });
-  assert.throws(() => checkAdlcMigration(candidate), /retain the enrolled CI compatibility context/);
+  assert.throws(() => checkAdlcMigration(candidate), /require only the native CI context/);
 });
 
 test("the public command resolves the renamed checker", () => {

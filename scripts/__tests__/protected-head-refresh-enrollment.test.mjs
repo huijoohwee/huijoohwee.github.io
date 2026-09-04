@@ -110,11 +110,11 @@ test("the external controller pins authority and the ruleset-only repository pol
   assert.equal(run.env.AGENTIC_LEDGER_REPOSITORY, "huijoohwee/agentic-canvas-os");
   assert.equal(run.env.PROTECTED_HEAD_REFRESH_CI_WORKFLOW, "protected-head-refresh-ci.yml");
   assert.deepEqual(JSON.parse(run.env.PROTECTED_HEAD_REFRESH_REQUIRED_CI_CONTEXTS_JSON), [
-    "agentic-sdlc-policy-contract",
+    "adlc-policy-contract",
   ]);
   assert.deepEqual(JSON.parse(run.env.PROTECTED_HEAD_REFRESH_CLASSIC_REQUIRED_CHECKS_JSON), []);
   assert.deepEqual(JSON.parse(run.env.PROTECTED_HEAD_REFRESH_RULESET_REQUIRED_CHECKS_JSON), [
-    "agentic-sdlc-policy-contract",
+    "adlc-policy-contract",
   ]);
   assert.deepEqual(JSON.parse(run.env.PROTECTED_HEAD_REFRESH_AUDITED_WORKFLOWS_JSON), [
     "auto-delivery.yml",
@@ -162,7 +162,7 @@ test("the dispatched CI proves the immutable candidate and open same-repository 
   });
 
   const job = ci.jobs["protected-head-refresh"];
-  assert.equal(job.name, "agentic-sdlc-policy-contract");
+  assert.equal(job.name, "adlc-policy-contract");
   assert.equal(ci.concurrency["cancel-in-progress"], false);
   assertPinnedActions(job);
 

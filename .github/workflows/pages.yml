@@ -60,8 +60,8 @@ jobs:
         env:
           CANDIDATE_SHA: ${{ inputs.candidate_sha }}
           EXPECTED_CHECK_APP_ID: "15368"
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0"
           GH_TOKEN: ${{ github.token }}
         run: |
           canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
@@ -369,8 +369,8 @@ jobs:
           EXPECTED_CHECK_APP_ID: "15368"
           EXPECTED_PAGE_URL: https://huijoohwee.github.io/
           EXPECTED_POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "ce9da7e7880473426467b73e5bde916e9033545c78f3fc763eb86691bf894ede"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "60fc488c90cac661648ff73c8afe6a0f428d7bc69b74bf0dd6185934c4ca4799"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "8726fc90f3d3a02b7d1b5a6270271892535285511de627464c643d6e251e5f9d"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "3997410544f8e21ab120b482630b5248ecbe5c641fb16305715eebf962726bc0"
           PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
           PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
           WORKFLOW_SHA: ${{ github.workflow_sha }}

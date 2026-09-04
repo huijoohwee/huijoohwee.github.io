@@ -16,7 +16,7 @@
     }
   },
   "requiredChecks": [
-    "agentic-sdlc-policy-contract"
+    "adlc-policy-contract"
   ],
   "capabilities": [
     "integration-method:squash",
@@ -39,5 +39,5 @@
     "worktreeProjection": "retain",
     "worktreeRegistration": "retain"
   },
-  "profileDigest": "f24389df86c3929930935425f677628c1c3865c62f0f26a31b4aec22dfc84a3f"
+  "profileDigest": "75921e441ab23fd193e7ac21d5e225affe8e0ab939966e361058fcbc19f0953e"
 }

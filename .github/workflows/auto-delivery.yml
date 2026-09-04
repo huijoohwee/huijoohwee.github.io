@@ -70,9 +70,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
           PROTECTED_HEAD_REFRESH_CI_WORKFLOW: protected-head-refresh-ci.yml
-          PROTECTED_HEAD_REFRESH_REQUIRED_CI_CONTEXTS_JSON: '["agentic-sdlc-policy-contract"]'
+          PROTECTED_HEAD_REFRESH_REQUIRED_CI_CONTEXTS_JSON: '["adlc-policy-contract"]'
           PROTECTED_HEAD_REFRESH_CLASSIC_REQUIRED_CHECKS_JSON: '[]'
-          PROTECTED_HEAD_REFRESH_RULESET_REQUIRED_CHECKS_JSON: '["agentic-sdlc-policy-contract"]'
+          PROTECTED_HEAD_REFRESH_RULESET_REQUIRED_CHECKS_JSON: '["adlc-policy-contract"]'
           PROTECTED_HEAD_REFRESH_AUDITED_WORKFLOWS_JSON: '["auto-delivery.yml"]'
           PROTECTED_HEAD_REFRESH_OPERATION: ${{ inputs.operation == 'protected-head-refresh-recover-absent-merged-authorization' && 'protected-head-refresh' || inputs.operation }}
           PROTECTED_HEAD_REFRESH_PULL_REQUEST_NUMBER: ${{ inputs.pull_request_number }}

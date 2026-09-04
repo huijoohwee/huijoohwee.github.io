@@ -1,9 +1,39 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
+import yaml from "js-yaml";
 import { readAdlcFiles, checkAdlcMigration, loadAdlcSources } from "../lib/adlc-contract-input.mjs";
 
 const files = readAdlcFiles();
 const legacyStem = ["agentic", "sdlc"].join("-");
+
+for (const [label, path, validationJob] of [
+  ["ordinary", ".github/workflows/guideline-contract.yml", "guideline-contract-check"],
+  ["protected refresh", ".github/workflows/protected-head-refresh-ci.yml", "protected-head-refresh"],
+]) {
+  test(`${label} native check reports the existing validation result without rerunning it`, () => {
+    const workflow = yaml.load(files.get(path));
+    const jobs = Object.values(workflow.jobs);
+    assert.equal(jobs.filter(job => job.name === `${legacyStem}-policy-contract`).length, 1,
+      "the enrolled legacy context remains available until exact native cutover");
+    const nativeJobs = jobs.filter(job => job.name === "adlc-policy-contract");
+    assert.equal(nativeJobs.length, 1, "emit exactly one native check");
+    const native = nativeJobs[0];
+    assert.deepEqual(native.needs, [validationJob]);
+    assert.equal(native.if, "${{ always() }}");
+    assert.equal(native.steps.length, 1, "the native check only reports the existing result");
+    const [step] = native.steps;
+    assert.equal(step.uses, undefined);
+    assert.deepEqual(step.env, { CONTRACT_RESULT: `\${{ needs.${validationJob}.result }}` });
+    for (const result of ["success", "failure", "cancelled", "skipped", ""]) {
+      const execution = spawnSync("/bin/sh", ["-eu", "-c", step.run], {
+        env: { CONTRACT_RESULT: result }, encoding: "utf8", timeout: 2_000,
+      });
+      assert.ifError(execution.error);
+      assert.equal(execution.status === 0, result === "success", `native result must fail closed for ${result || "absent"}`);
+    }
+  });
+}
 
 function mutate(path, change) {
   const candidate = new Map(files);

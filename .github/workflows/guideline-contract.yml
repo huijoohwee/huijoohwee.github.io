@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
 
 jobs:
   guideline-contract-check:
@@ -31,73 +30,22 @@ jobs:
           test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
           git checkout -B "$REVIEW_BRANCH" "$REVIEW_SHA"
           test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
-      - name: Checkout Agentic Canvas OS registrations
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: huijoohwee/agentic-canvas-os
-          # Pin the protected controller revision used by this contract.
-          ref: afe785e88ca88659d8763a3dc9b5007990c7f159
-          path: agentic-canvas-os
-          persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
-      - name: Materialize required Task 19 workspace references
+      # Agentic OS owns lane and release authority outside candidate-run CI.
+      # This job validates only the site's deterministic content contracts.
+      - name: Materialize deterministic workspace references
         run: |
-          printf '%s\n' 'node_modules/' 'agentic-canvas-os/' >> .git/info/exclude
+          printf '%s\n' 'node_modules/' >> .git/info/exclude
           mkdir -p "${GITHUB_WORKSPACE}/../.coordination"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-cloud-request.json "${GITHUB_WORKSPACE}/../.coordination/"
           cp scripts/__tests__/fixtures/coordination/dev-source-resolver-write-scope.json "${GITHUB_WORKSPACE}/../.coordination/"
-      - name: Verify current pull-request review authority
-        if: github.event_name == 'pull_request'
-        env:
-          AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
-            --event-path="$GITHUB_EVENT_PATH" \
-            --json > "$RUNNER_TEMP/git-guidelines-review-authority.json"
-      - name: Materialize current pull-request review authority
-        if: github.event_name == 'pull_request'
-        run: |
-          node scripts/materialize-git-guidelines-review-authority.mjs \
-            --event-path="$GITHUB_EVENT_PATH" \
-            --verification-path="$RUNNER_TEMP/git-guidelines-review-authority.json" \
-            --ledger-repository="huijoohwee/agentic-canvas-os" \
-            --output-directory="${GITHUB_WORKSPACE}/../.coordination"
-      - name: Block merge-group checks without exact member claims
-        if: github.event_name == 'merge_group'
-        run: |
-          echo "Merge-group review authority is unavailable until every member claim can be joined." >&2
-          exit 1
       - run: npm ci
       - run: npm test
         env:
-          AGENTIC_CANVAS_OS_ROOT: ${{ github.workspace }}/agentic-canvas-os
           GIT_GUIDELINES_EXPECTED_PROTECTED_REVISION: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || '' }}
-      - name: Reverify terminal pull-request review authority
-        if: github.event_name == 'pull_request'
-        env:
-          AGENTIC_LEDGER_REPOSITORY: huijoohwee/agentic-canvas-os
-          # Reverify against the same protected controller revision.
-          AUTHORITY_SOURCE_SHA: afe785e88ca88659d8763a3dc9b5007990c7f159
-          GH_TOKEN: ${{ github.token }}
-          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
-          test -z "$(git status --porcelain=v1 --untracked-files=all)"
-          test "$(git -C agentic-canvas-os rev-parse HEAD)" = "$AUTHORITY_SOURCE_SHA"
-          test -z "$(git -C agentic-canvas-os status --porcelain=v1 --untracked-files=all)"
-          node agentic-canvas-os/scripts/cloud-collaboration.mjs verify-event \
-            --event-path="$GITHUB_EVENT_PATH" \
-            --json > "$RUNNER_TEMP/git-guidelines-terminal-review-authority.json"
-          node scripts/materialize-git-guidelines-review-authority.mjs \
-            --event-path="$GITHUB_EVENT_PATH" \
-            --verification-path="$RUNNER_TEMP/git-guidelines-terminal-review-authority.json" \
-            --ledger-repository="huijoohwee/agentic-canvas-os" \
-            --output-directory="${GITHUB_WORKSPACE}/../.coordination" \
-            --assert-existing
 
   agentic-sdlc-policy-contract:
     if: ${{ always() }}

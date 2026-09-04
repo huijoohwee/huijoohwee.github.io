@@ -1,24 +1,24 @@
 ---
-title: "Agentic SDLC Behavioral Conformance Runtime Module"
+title: "ADLC Behavioral Conformance Runtime Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-07-30"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Conformance evaluator function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC Behavioral Conformance Runtime Module
+# ADLC Behavioral Conformance Runtime Module
 
 ## Scope and Ownership
 
-This module is universal, neutral, implementation-agnostic, and independently loadable. The main Agentic SDLC Guidelines own behavioral rules and finding names. This module owns the machine boundary that joins operation-derived evidence to deterministic stage verdicts and digest-bound receipts.
+This module is universal, neutral, implementation-agnostic, and independently loadable. The main ADLC Guidelines own behavioral rules and finding names. This module owns the machine boundary that joins operation-derived evidence to deterministic stage verdicts and digest-bound receipts.
 
 The runtime evaluates evidence; it does not manufacture it. A schema-valid assertion, prose report, screenshot, mutable label, or Implementer verdict is not operation-derived evidence. Evidence producers remain responsible for observing the operation they describe and binding its exact input, output, mechanism, actor role, and result.
 

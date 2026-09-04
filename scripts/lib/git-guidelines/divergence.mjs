@@ -21,10 +21,10 @@ const TERMINOLOGY_ALIASES = Object.freeze({
   ambiguous: /`(?:ambig|unknown-lane|ambiguous-lane)`/giu,
 });
 const OWNER_FILES = Object.freeze({
-  "Execution Companion": "guidelines/agentic-sdlc-guidelines.md",
+  "Execution Companion": "guidelines/adlc-guidelines.md",
   "Authoring Authority": "guidelines/prd-tad-adr-guidelines.md",
-  "Collaboration Module": "guidelines/agentic-sdlc-cloud-collaboration.md",
-  "Lane Admission Module": "guidelines/agentic-sdlc-scoped-lane-admission.md",
+  "Collaboration Module": "guidelines/adlc-cloud-collaboration.md",
+  "Lane Admission Module": "guidelines/adlc-scoped-lane-admission.md",
   "Delivery Guidelines": "guidelines/commit-push-deploy-guidelines.md",
 });
 const RETIRED_DELIVERY_COMMAND_PATTERNS = Object.freeze([
@@ -144,7 +144,19 @@ function resolveConsumedContexts(document, owners, ruleIndex, findings) {
     const link = String(row?.cells[3] || "").match(/^\[([^\]]+)\]\(([^)]+)\)$/u);
     const namedOwner = link?.[1] || "missing owner";
     const ownerPath = link ? resolveOwnerPath(link[2], owners) : null;
-    const ownerText = ownerPath ? String(owners[ownerPath] || "") : "";
+    let ownerText = ownerPath ? String(owners[ownerPath] || "") : "";
+    if (contract.id === "C7" && namedOwner === contract.ownerName) {
+      const companion = "guidelines/prd-tad-adr-verification.md";
+      const link = ownerText.match(/\[Conformance Findings module\]\(([^)]+)\)/u)?.[1];
+      const linkedPath = link && ownerPath ? normalizedPath(path.posix.join(path.posix.dirname(ownerPath), link)) : null;
+      const companionPath = linkedPath ? resolveOwnerPath(linkedPath, owners) : null;
+      if (linkedPath !== companion || !companionPath || !String(owners[companionPath] || "").trim()) {
+        findings.push(issue(document, boundaryRule, "owner-divergence", contract, namedOwner,
+          "declared authoring verification companion is absent or does not resolve to its owner link.", row?.line));
+      } else {
+        ownerText += `\n${owners[companionPath]}`;
+      }
+    }
     const context = Object.freeze({ ...contract, row, boundaryRule, namedOwner, ownerPath, ownerText });
     contexts.set(contract.id, context);
     if (!row || row.cells[1] !== contract.family || row.cells[2] !== "consumes") {
@@ -216,8 +228,14 @@ function checkExactExecutionTerminology(document, ruleIndex, context, findings) 
       findings.push(issue(document, rule, "terminology-drift", context, context.namedOwner, `Alternative spelling ${variant} is forbidden; use ${canonical}.`, rule?.line || context.row?.line));
     }
   }
-  for (const phrase of ["unlimited concurrent current authorities for disjoint normalized write sets", "exactly one current write authority per overlapping declared write set", "non-writing waiting successor", "dormant-preserved"]) {
-    if (context.ownerText.includes(phrase)) continue;
+  for (const [phrase, pattern] of [
+    ["capacity-bounded disjoint concurrency", /Permit policy-unbounded concurrency for disjoint normalized write sets within declared resource, evaluator, and coordination capacity/u],
+    ["one writer per overlap", /exactly one current write authority owns an overlapping write set/u],
+    ["non-writing waiting successor", /an overlapping newcomer waits without writing/u],
+    ["ambiguous scope creates no authority", /ambiguous scope cannot create authority/u],
+    ["dormant-preserved", /dormant-preserved/u],
+  ]) {
+    if (pattern.test(context.ownerText)) continue;
     findings.push(issue(document, context.boundaryRule, "owner-divergence", context, context.namedOwner, `current owner lacks authority rule: ${phrase}.`, context.row?.line));
   }
 }
@@ -499,7 +517,7 @@ function ownerLaneClassDomain(text = "") {
   return tableLines(text).map(cells => cells[0]?.replaceAll("`", "")).filter(value => LANE_CLASSES.includes(value));
 }
 function executionLaneClassDomain(text = "") {
-  const sentence = text.match(/Classify each lane as ([^\n]+)/u)?.[1] || "";
+  const sentence = text.match(/Classify lanes as ([^\n]+)/u)?.[1] || "";
   return [...new Set([...sentence.matchAll(/`([^`]+)`/gu)].map(match => match[1]).filter(value => LANE_CLASSES.includes(value)))];
 }
 function rootOperationDomain(ruleIndex) {

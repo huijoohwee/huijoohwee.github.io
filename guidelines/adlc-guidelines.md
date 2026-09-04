@@ -1,59 +1,60 @@
 ---
-title: "Agentic SDLC Guidelines"
+title: "ADLC Guidelines"
 doc_type: "Guidelines"
-version: "1.24.0"
-date: "2026-08-30"
+version: "2.0.0"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 upstream_blocking_policy: "prevent-not-bypass"
 lifecycle_status: "proposed"
 ---
-# Agentic SDLC Guidelines
+# ADLC Guidelines
 ## Scope & Neutrality Contract
 - **Universal**: these guidelines apply to any product, domain, language, or runtime, and to any agent implementation; nothing here assumes a specific company, repository, file path, model, framework, or vendor.
 - **Neutral**: name agents, roles, and mechanisms by their function, never by a brand. Where a concrete tool is shown, it appears only under a heading or block whose own text contains the words "reference implementation", and may be swapped for any equivalent.
 - **Agnosticity**: every rule is evaluated from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
 - **Simple**: where two mechanisms discharge the same rule at equivalent rigor, the one with fewer moving parts, fewer new concepts, and fewer configurable knobs is conformant and the other is not required; a rule that a plain check can discharge must never be discharged by a bespoke framework instead.
-- **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
+- **Modular, reusable, interoperable, portable**: sections are addressable by stable anchors; share one CID/RAO/SVO contract and typed evidence joins across tools, devices, and runtimes. Adapt transports and providers without copying policy or introducing another controller.
 - **Enforceable**: every rule is written so a conformance check can record a typed finding against it (see Execution Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
 - **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
 - **Autonomous**: after the Operator supplies an objective, scope, bounds, and the capabilities needed to act, the Orchestrator continues through every safe, in-scope, dependency-ready step without requesting clerical confirmation. It derives and transports machine tokens, digests, commands, retries, and idempotent continuations internally. Autonomy never invents a missing product choice, widens scope or capability, crosses a promotion boundary, or authorizes a new irreversible effect.
+**Reference implementation**: [Agentic OS ADLC](https://github.com/huijoohwee/agentic-os/blob/main/docs/adlc-guidelines.md) owns its lifecycle controller; consumers retain product and target policy and reference its start/release workflows. This guideline defines contracts, not another controller.
 ## Module Index
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
 - `task-model` — task identity, minimum-resource core-value granularity, dependency graph, orchestration-reasoned completion-time estimation, and state vocabulary
-- [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
+- [Scoped Concurrent Lane Admission](./adlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
 - `tool-permission--blast-radius` — capability classes, escalation, and irreversibility rules
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
 - `verification-strategy` — test obligations, property-based testing, and evidence emission
 - `checkpoint--recovery` — resumability, compaction survival, and partial-failure handling
-- [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) — bounded autonomous progress, decision-versus-transport separation, and minimum necessary Operator interruption
+- [Autonomous Continuation & Interaction Economy](./adlc-autonomous-continuation.md) — bounded autonomous progress, decision-versus-transport separation, and minimum necessary Operator interruption
 - `human-in-the-loop-gates` — which decisions an agent must not make alone
 - `global-release-control-rule` — universal control boundary for every enrolled repository and deployment target
 - `dependency-ordered-integration` — canonical-frontier planning, no-op detection, dependency waves, and exact integration closure
 - `atomic-lane-convergence` — one externally simple controller for integration, preservation, recovery, retirement, and minimal active-lane closure through modular adapters
-- [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md) — least-powerful outcome selection, disjoint progress, exact evidence reuse, and retained cleanup
-- [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
+- [Proportionate Closeout](./adlc-proportionate-closeout.md) — least-powerful outcome selection, disjoint progress, exact evidence reuse, and retained cleanup
+- [End-to-End Production Release Lifecycle](./adlc-production-release-lifecycle.md) — provider-neutral release frontiers, adapter ports, joined receipts, exact authorization, state reconciliation, transport-separated verification, rollback, publication, and cleanup
 - `runtime-readiness-enforcement` — fail-closed derivation of layer-specific runtime claims from joined evidence, with the repository audit profile in the companion module
-- `upstream-dependency-admission` — companion module for early admission, bounded deferral, and disjoint-work continuation
+- [Upstream Dependency Admission](./adlc-upstream-dependency-admission.md) — early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
-- [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) — reference-implementation phase-collapse mapping for a declared, time-boxed sprint clock, and what a collapse may never elide
+- [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) — reference-implementation phase-collapse mapping for a declared, time-boxed sprint clock, and what a collapse may never elide
 - `validation-checklist` — pre-execution, per-task, and post-run gates
-- [Execution Anti-Pattern Guards](./agentic-sdlc-anti-pattern-guards.md) — prohibited execution patterns and their corrections
+- [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md) — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
-- [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
-- [Specification Chain](./agentic-sdlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./agentic-sdlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback
+- [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
+- [Specification Chain](./adlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./adlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback
 - `specification-chain-phases` — the mandatory execution seam over that chain
 ## Boundary with the Authoring Set
 The two sets meet at a single seam: **a baselined document pair with derived VCCs on one side, an executable task list with recorded Evidence References on the other.**
@@ -64,7 +65,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Rule ID scheme and artifact-bearing classification | Authoring set | Reuses unchanged for execution rules |
 | Finding recording contract, severities, determinism | Authoring set | Reuses unchanged; extends the type enumeration only |
 | VCC primitive and Evidence Reference shape | Authoring set | Produces Evidence References during execution |
-| Pain-point-to-monetization ranking of candidate VCCs (provable demand, solution, feature, time-to-first-dollar) | Authoring set | Consumes the resulting order; breaks ties among equally-ready candidates locally per Task Model's Granularity, with the reasoning trail recorded |
+| Pain-point-to-monetization ranking of candidate VCCs (validated pain, evidenced WTP, reusable solution, feature, time-to-first-dollar) | Authoring set | Consumes the resulting order; breaks ties among equally-ready candidates per Task Model's Granularity, with the reasoning trail recorded |
 | Diagram identity, class, notation, and canvas projection rules | Authoring set's diagram companion modules | Obeys; emits the projection check result as an Evidence Reference |
 | Lane topology and Deploy Boundary | Authoring set | Obeys; never promotes across a boundary |
 | CID-to-RAO artifact continuity | Shared continuity module | Verifies joined planning, authoring, execution, demonstration, and successor references |
@@ -76,11 +77,11 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
 | Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
 **Directives**:
-- Treat a baselined document pair with zero open `blocker` findings, including a current Codebase Grounding Record for every externally authored, generated, or imported specification input, as the entry precondition for execution; reject dispatch when a material current-state claim used to justify baseline, execution, or readiness is `contradicted`, `absent`, or `unverified`, and return the conflict to the authoring loop rather than repairing it downstream
+- Require a baselined document pair with zero open `blocker` findings and a current Codebase Grounding Record for each non-native specification input. A material claim marked `contradicted`, `absent`, or `unverified` blocks only dependent execution; return it to the authoring loop, correct and re-ground within existing authorized scope, and re-derive affected joins before dispatch. Escalate only a product, scope, or authority decision that remains unresolved; never present planned capabilities as existing ones
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
 - Forbid either set redefining a Finding Type the other owns; the conformance vocabulary is the union of the two enumerations
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
-- Apply the Artifact Continuity companion to every authoring-to-execution handoff; forbid dispatch from an unjoined or stale CID-to-RAO lineage
+- Apply the Artifact Continuity companion and shared [CID/RAO/SVO grammar](./cid-guidelines.md) to each authoring-to-execution handoff; forbid parallel schemas or dispatch from an unjoined or stale lineage
 - Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
 ## Agent Roles & Independence
 Four execution roles. Roles are **functions**, not people and not necessarily separate processes — except where the independence rule says otherwise.
@@ -95,20 +96,19 @@ Four execution roles. Roles are **functions**, not people and not necessarily se
 - Independence is **mechanical**, not organisational: a deterministic check, a hook, or a separate evaluating process satisfies it; a different job title applying the same judgement does not
 - A solo operator satisfies the rule by delegating the verdict to a check they do not adjudicate, and violates it by reading their own output and declaring it done
 - The Implementer may collapse into the Orchestrator only where the Orchestrator performs no judgement; forbid an Orchestrator that both implements and marks complete
-- The Operator never collapses into any other role, because an inferred approval is not an approval
 - A verdict produced by the Implementer about its own task is a `self-graded-verdict` finding at `blocker` severity, regardless of how convincing the output reads
 **Directives**:
 - Name the mechanism that discharges the Evaluator role before execution starts; forbid execution with an unnamed evaluator
 - Route every completion verdict through the Evaluator; forbid a task transitioning to a terminal success state on the Implementer's assertion alone
 - Record which role produced every state transition, so a self-graded verdict is detectable after the fact rather than only in the moment
 ## Specification Chain Phases
-The separately loadable [Specification Chain Module](./agentic-sdlc-specification-chain.md) owns the complete reusable protocol for the three artifact roles — requirements, design, task list — the two coverage seams between them, the re-derivation cascade, phase-advance authority, and seam-preserving adaptation. This section owns its mandatory execution seam.
+The separately loadable [Specification Chain Module](./adlc-specification-chain.md) owns the complete reusable protocol for the three artifact roles — requirements, design, task list — the two coverage seams between them, the re-derivation cascade, phase-advance authority, and seam-preserving adaptation. This section owns its mandatory execution seam.
 A specification reaches this set as a chain, not as a single document. Execution consumes the task list, but a task list is only trustworthy to the degree its upstream seams are closed.
 **Directives**:
 - Verify both chain seams are closed before dispatching any task derived from them; an uncovered criterion is an `undesigned-criterion` and an ungrounded design element is an `ungrounded-design-element`
 - Reject a task list whose upstream artifact revision no longer matches the artifact it was derived from; a stale downstream artifact is a `stale-downstream-artifact` and re-derivation precedes dispatch
 - Forbid an execution task deciding structure or introducing behaviour absent upstream; either is a `requirement-introduced-downstream` at `blocker` severity and returns to the owning phase
-- Require a recorded Operator decision for each seam crossing before execution starts; an unapproved crossing is a `phase-advanced-without-approval` and an absent decision is a `blocked` state
+- Bind each seam crossing to a recorded Operator decision covering its scope and effect, plus independent coverage checks; reuse that decision for authorized reversible transitions. An uncovered decision remains `phase-advanced-without-approval`; new scope, product choices, irreversible effects, or promotion require their own authority
 - Permit a collapsed or reordered chain only where both seams still carry joins; a missing coverage obligation is a `seam-elided` at `blocker` severity, however small the change
 ## Specification to Task Bridge
 The authoring set ends at a baselined pair with derived VCCs. Execution begins at a task list. The bridge is a **derivation**, not a fresh authoring act.
@@ -131,7 +131,7 @@ Task ID = [hierarchical ordinal within the task list, maximum two levels]
 - Limit hierarchy to two levels: a task and its sub-tasks; forbid a third level, which trades comprehensibility for the illusion of precision
 - Record the Task ID on every state transition, every Evidence Reference, and every finding raised during that task
 ### Collaboration Identity & Scoped Lane Admission
-Every writer is identified by the tuple; [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) owns protected remote claims, while [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md) owns the decision to add one isolated lane without touching existing lanes:
+Every writer is identified by the tuple; [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) owns protected remote claims, while [Scoped Concurrent Lane Admission](./adlc-scoped-lane-admission.md) owns the decision to add one isolated lane without touching existing lanes:
 ```
 Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease Epoch + Fence Revision
 ```
@@ -139,7 +139,7 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Expose exactly four provider-neutral root operations: `claim(scope)`, `continue(claim)`, `integrate(candidate)`, and `retire(claim)`; each emits a typed digest-bound receipt, and adapters must not add authority-bearing aliases or compatibility operations
 - Define a cross-repository coordination task as a dependency-ordered group of immutable per-repository work units; every unit retains its own repository, branch, worktree, semantic scope, claim, epoch, fence, PR/review identity, named checks, and handoff evidence
 - Treat dependency edges as the group's only ordering authority; a shared task identity or semantic label never creates a shared branch, worktree, lease, claim, fence, review identity, or handoff
-- Permit policy-unbounded but operationally bounded concurrent current authorities for disjoint normalized write sets, meaning unlimited concurrent current authorities for disjoint normalized write sets at the policy layer: each repository adapter declares and enforces its current resource, evaluator, and coordination capacity, and exactly one current write authority remains permitted per overlapping declared write set; equivalently, exactly one current write authority per overlapping declared write set. Authenticate each authority, while local worktrees, leases, PRs, processes, and provider metadata remain replaceable projections. Classify each lane as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous`, where an overlapping newcomer is a non-writing waiting successor and undeclared or unparseable future scope is `ambiguous` and cannot create authority
+- Permit policy-unbounded concurrency for disjoint normalized write sets within declared resource, evaluator, and coordination capacity; exactly one current write authority owns an overlapping write set. Authenticate each authority; worktrees, leases, PRs, processes, and provider metadata are replaceable projections. Classify lanes as `canonical`, `overlapping`, `disjoint-attributed`, or `ambiguous`; an overlapping newcomer waits without writing, and ambiguous scope cannot create authority
 - Separate the append-only ledger's physical audit head from the semantic claim-conflict fence: derive a bounded conflict-set digest from the immutable claim subject, normalized write scope, current policy and canonical evidence, and only overlapping, same-work-item, predecessor, or successor lineages. Exclude provider ordering, observation time, retry count, the global head itself, and unrelated disjoint transitions; global-head movement alone is never a claim conflict and claim admission never requires exact global-ledger parity or inactivity
 - Re-evaluate a claim dynamically after every compare-and-swap loss or authoritative refresh. Return an existing receipt for an exact idempotent replay; attempt or boundedly re-parent the same frozen transition when the conflict set is unchanged; apply current overlap policy to an unsealed request; and return a typed fail-closed conflict requiring replan when the relevant conflict set, immutable subject, policy, canonical evidence, ancestry, or scope becomes changed, missing, or ambiguous. Every outcome preserves existing lanes and bytes, and adapters may change transport but not this decision
 - `claim(scope)` admits only an exact clean canonical base, normalized declared scope, authenticated actor, no competing overlap, and a monotonic compare-and-swap transition; failure leaves every existing lane and the requester unchanged
@@ -159,14 +159,14 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Treat `origin/main` as the only shared canonical branch state; forbid treating a private branch or unpushed local `main` commit as published source of truth
 - Treat local `main` as the canonical synchronization lane, not the default long-lived authoring lane; normal task authoring belongs in an admitted temporary branch derived from a clean canonical base
 - If local authoring starts on `main`, preserve the exact authored bytes by moving them into one isolated lane before the next ordinary commit, review, or publication step, then restore local `main` to exact parity
-- Remove merged temporary task branches only after verified integration, canonical parity, and value-closure proof are all established
+- Retain or remove temporary branches according to the declared profile and exact authorized cleanup receipt; verified integration, canonical parity, and value closure establish eligibility, never implicit deletion authority
 ### Granularity
 A well-sized task follows the universal minimum-time-and-resource / maximum-core-value chain: `highest-ranked baselined core VCC (or coherent group) → smallest dependency-closed mandatory obligation set → narrowest sufficient mechanism → independent verification → stop or select the next ranked core VCC`, within one per-task budget.
 
-**What "highest-ranked" resolves against**: a VCC's core value traces back to a pain point → solution → feature → monetization chain — a pain point evidenced by provable demand (a named prospective payer, not a hypothesized one), the solution it justifies, the feature ranked by proximity to code already shipped (zero or minimal change outranks a rewrite of comparable scope), and the fastest path to a first real dollar. The authoring set fixes this order wherever it can; execution never re-derives it from scratch. Where a wave still admits more than one ready candidate for the same budget, break the tie locally and in this fixed sequence, never as three independent votes:
-1. **Constraint satisfaction** first removes any candidate that would violate a hard bound — a stated budget, a FOSS or platform gate, a Deploy Boundary — before ranking runs at all.
-2. **Outranking** then eliminates a surviving candidate that is no worse than another on every remaining criterion and strictly worse on at least one.
-3. **Argumentation** settles what outranking leaves tied, by weighing each surviving candidate's stated reason against its stated counter-reason and keeping the one whose reason survives attack.
+**What "highest-ranked" resolves against**: consume the authoring set's pain point → solution → feature → monetization order: validated pain and evidenced willingness-to-pay (WTP), the nearest reusable solution, and the shortest credible path to a first paid outcome. A prospective payer or price signal is not collected revenue. For equally-ready candidates, reuse its bounded **Constraints ↔ Argumentation ↔ Outranking** pipeline:
+1. **Constraints** exclude violations of stated hard bounds before comparison; arguments or scores cannot waive a failed bound.
+2. **Outranking** preserves partial orders and eliminates a dominated candidate when another is no worse on every relevant criterion and strictly better on at least one; other methods consume the authoring contract's recorded relation.
+3. **Argumentation** challenges supporting evidence, assumptions, and unresolved comparisons. Changed evidence reopens only affected constraints and comparisons within the existing budget; independent evaluation closes a supported choice or records the unresolved decision.
 | Signal | Too small | Right-sized | Too large |
 |---|---|---|---|
 | VCC coverage | Fraction of one VCC | One VCC, or a coherent group | Spans unrelated VCCs |
@@ -177,7 +177,7 @@ A well-sized task follows the universal minimum-time-and-resource / maximum-core
 - Before dispatch, record the selected core VCCs, mandatory obligations, named completion check, projected elapsed time and resource consumption, and any known conforming alternative; classify the selection as an `oversized-task` when an alternative delivers at least the same verified core value with no more time or resources and less of at least one
 - Split a task that exceeds its budget rather than raising the budget; a persistent overrun or Pareto-dominated path is a decomposition defect, and adaptation may collapse or reorder mechanisms but never elide a mandatory obligation
 - Forbid a task with no verifiable outcome and forbid over-investing in non-core periphery: defer work untraced to the selected core VCCs or a specification- or policy-required correctness, safety, security, privacy, accessibility, legal, operability, recovery, evidence, or gate obligation; unused budget never authorizes it, and it resumes only after the authoring loop baselines its marginal core value above projected time and resource cost. Documentation-only tasks state the artifact and conforming check
-- Record the tie-break trail wherever a wave admits more than one ready candidate for the same budget: which candidates constraint satisfaction removed, which outranking eliminated, and the argumentation exchange that settled the remainder; an unrecorded choice among competing ready candidates is a `ranking-rationale-absent` finding
+- Record one compact tie-break trail: failed constraints, pairwise relations, contested evidence, and the independent verdict. Reuse unchanged evidence; avoid duplicate worksheets or agents for a decided comparison. Missing rationale is `ranking-rationale-absent`; inconclusive reasoning stops at its bound while disjoint work continues
 #### Reference implementation — zero-infra tie-breaker profile
 Any repository profile may declare its own tie-breaker criteria in place of these; they are shown only as a concrete example, per the Scope & Neutrality Contract, and carry no universal authority.
 - Prefer the mechanism runnable in a browser or at the edge over one requiring dedicated infrastructure, and the offline-capable mechanism over one requiring a live connection
@@ -251,12 +251,12 @@ Capability is granted per task, not per session, and scales to reversibility.
 | **Local write** | Create or edit an artifact inside the task's declared scope | Granted per task with scope stated | Reversible via version control |
 | **Local execute** | Run a build, a test, a linter, a formatter | Granted per task | Reversible |
 | **Environment mutate** | Install a dependency, change configuration, alter shared local state | Granted per task with the change stated in advance | Recoverable with effort |
-| **Irreversible** | Delete beyond a single declared artifact, rewrite history, mass-modify, drop persistent state | **Requires an Operator decision per occurrence** | Not reversible |
+| **Irreversible** | Unrecoverable deletion, persistent-state destruction, irreversible external commitment | **Requires an Operator decision binding the exact effect envelope** | Not reversible |
 | **Boundary-crossing** | Anything that mutates a mirror or delivery surface, or transmits project content outward | **Forbidden during execution** | Out of scope |
 **Directives**:
 - Grant the narrowest class that completes the task; forbid granting a class the task does not name a use for
 - Forbid self-escalation: an Implementer that needs a wider class returns `blocked` with the reason, and the Orchestrator re-dispatches with a new grant. Widening a grant mid-task is a `self-escalated-capability` finding at `blocker` severity
-- Require an explicit Operator decision per irreversible operation; forbid a standing or session-scoped approval for irreversibility, because a standing approval is indistinguishable from no gate
+- Require an explicit Operator decision for each distinct irreversible effect envelope; propagate its receipt across unchanged idempotent continuations. A session or broad objective never authorizes unspecified irreversibility
 - Forbid boundary-crossing capability in any task; promotion is the Deploy Boundary's job, and a task that reaches a delivered surface is a `deploy-boundary-breach` under the authoring set's enumeration
 - Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission
 - State the declared write scope before dispatch; a write outside it is an `out-of-scope-write` finding
@@ -285,22 +285,22 @@ Execution produces the Evidence References the Readiness Ladder consumes. Weak v
 ### Obligations Per Task
 
 - Every task states its **named check** before dispatch, phrased as it is invocable
-- Every code-bearing task adds or extends automated tests covering the behaviour it introduces
-- Every bug-fixing task first adds a check that fails on the unfixed state; a fix with no failing-first check is a `fix-without-witness` finding
-- Every task runs the project's existing verification lane, not only its own new check; a task that passes its own check while breaking a neighbour's is a regression the Evaluator must see
+- Every behavior-changing task supplies a meaningful automated check; extend tests only where existing coverage cannot falsify the changed behavior. Prose, naming, or reversible refactoring may use existing focused conformance checks
+- Every bug fix records a reproducible behavioral witness and its corrected result, using an existing or new check as appropriate; a code defect without that witness is `fix-without-witness`. Do not add tests that merely restate a prose edit or implementation detail
+- Run the repository's required verification lane and checks for affected risks; reuse valid evidence for unchanged immutable inputs. Broaden testing only for a concrete remaining risk or required gate
 ### Property-Based Obligations
 
 Example-based tests confirm the cases an author imagined. Properties confirm the ones they did not.
 
 - Derive a property from every correctness property stated in the specification; a stated property with no executable test is an `unproven-property` finding
-- Pair every parser or serialiser with a round-trip property; forbid asserting round-trip fidelity by example alone
+- Where the specification claims parser or serialiser round-trip fidelity, prove that property over its declared input domain; a lossy transform must state its different invariant
 - Pair every ordering, dedup, or aggregation rule with an invariant or metamorphic property
 - State each property's class explicitly — round trip, invariant, metamorphic, idempotence, confluence, error condition — so coverage gaps are visible by class rather than by count
 - Set a minimum iteration count per property and keep shrinking enabled; a property run once is an example test wearing a costume
 ### Evidence Emission
 
 - Emit one Evidence Reference per satisfied VCC, carrying the named check, the recorded result, and the surface (always `authoring` during execution)
-- Forbid emitting an Evidence Reference for a check that was not run in this task
+- Emit evidence only for an observed check result; reuse it by exact input, policy, and revision reference when still valid, never by unverified recollection
 - Forbid an Evidence Reference whose recorded result is an assertion that a result exists
 - For a task that adds or changes a diagram, run the projection check named by the authoring set's canvas-render contract and surface its node, edge, and cluster counts plus zero cost fields; a visual confirmation is not a recorded result, and a non-projecting class records zero rather than omitting the counts
 ## Checkpoint & Recovery
@@ -317,7 +317,7 @@ Long runs outlive working context. A run that cannot resume is a run that must r
 
 ## Autonomous Continuation & Interaction Economy
 
-The canonical [Autonomous Continuation & Interaction Economy](./agentic-sdlc-autonomous-continuation.md) module owns bounded autonomous progress, decision-versus-transport separation, adapter behavior, findings, and verification. Execution consumes it by reference; this seam does not duplicate its rules.
+The canonical [Autonomous Continuation & Interaction Economy](./adlc-autonomous-continuation.md) module owns bounded autonomous progress, decision-versus-transport separation, adapter behavior, findings, and verification. Execution consumes it by reference; this seam does not duplicate its rules.
 
 ## Human-in-the-Loop Gates
 
@@ -329,8 +329,8 @@ Some decisions an agent must not make alone, regardless of confidence.
 | **Irreversible operation** | Any Irreversible capability class operation | Return `blocked` with the exact operation stated |
 | **Boundary promotion** | Any movement toward a mirror or delivery surface | Refuse inside execution; emit or consume the explicit lifecycle receipt at the release seam |
 | **Production authorization** | One immutable candidate and its controlled review surface still prove runtime readiness | Revalidate the exact source, dependency closure, probes, candidate, release-run reference, and review-surface locator before requiring an authenticated human to answer the exact candidate-and-target challenge |
-| **Specification defect** | A VCC is unsatisfiable, contradictory, or self-contradictory | Return `blocked` with the contradiction quoted |
-| **Budget re-authorisation** | A bound is exhausted and the work is genuinely larger than estimated | Return `failed` with consumption; re-decomposition or re-authorisation is an Operator decision |
+| **Specification defect** | A VCC is unsatisfiable or contradictory | Block the affected transition; repair and re-ground in the authorized authoring loop, or surface the exact unresolved product/scope decision |
+| **Budget re-authorisation** | A bound is exhausted and work remains | Record consumption; split or replan within unchanged run bounds autonomously. Raised bounds, new scope, or an uncovered effect require an Operator decision |
 | **Repeated failure** | The same approach failed twice | Diagnose, state the root cause, and switch approach; escalate on the third distinct failure rather than continuing to vary details |
 
 **Directives**:
@@ -357,7 +357,7 @@ Every repository and deployment target governed by this set is subject to one gl
 This rule is adaptive only in its adapter and evidence scale. It does not require a shared repository host, branch convention, deployment provider, or release cadence, and it never lets a smaller change bypass the control boundary.
 ## Dependency-Ordered Integration
 
-The separately loadable [Dependency-Ordered Integration Module](./agentic-sdlc-integration-order.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
+The separately loadable [Dependency-Ordered Integration Module](./adlc-integration-order.md) owns the complete reusable protocol. This section owns its mandatory execution seam.
 
 ```
 Integration Unit = immutable change identity + write scope + dependency set + named checks + runtime impact
@@ -381,7 +381,7 @@ Integration Frontier = exact canonical revisions + exact transitive dependency c
 - Seal one release frontier only after every unit is terminal and every dependency identity matches; a candidate from an earlier frontier is `stale-candidate-frontier`
 ## Atomic Lane Convergence
 
-One atomic top-level convergence controller owns a logical work unit from observed inventory to terminal closure. Its externally stable contract remains provider-, repository-, branch-, workspace-, and deployment-agnostic, with replaceable internal phase adapters that never become separately authorized top-level controllers. The separately loadable [Proportionate Closeout Module](./agentic-sdlc-proportionate-closeout.md) owns requested-outcome selection, the source-integrated fast path, immutable evidence reuse, and `integrated-retained`; this section retains convergence, preservation, authority, and no-discard invariants.
+One atomic top-level convergence controller owns a logical work unit from observed inventory to terminal closure. Its externally stable contract remains provider-, repository-, branch-, workspace-, and deployment-agnostic, with replaceable internal phase adapters that never become separately authorized top-level controllers. The separately loadable [Proportionate Closeout Module](./adlc-proportionate-closeout.md) owns requested-outcome selection, the source-integrated fast path, immutable evidence reuse, and `integrated-retained`; this section retains convergence, preservation, authority, and no-discard invariants.
 
 ```
 Convergence = stable plan identity + bounded effect authorization + atomic authority continuation + minimal active set + terminal receipt
@@ -401,7 +401,7 @@ Stable Plan Identity = intended effect class + exact subject set + immutable val
 - Emit one terminal receipt binding plan and authorization identities, canonical remote/local revisions, zero file delta, final minimal inventory, removed and retained projections, recovery locators, untouched out-of-scope work, and every adapter effect; closure requires the canonical local ref equals the canonical remote ref and no requested effect remains pending
 ## End-to-End Release Lifecycle Protocol
 
-The separately loadable [End-to-End Production Release Lifecycle Module](./agentic-sdlc-production-release-lifecycle.md) owns the complete reusable protocol only when sealed intent includes delivery or publication; source integration alone neither loads nor invokes it. This section owns its mandatory execution seam.
+The separately loadable [End-to-End Production Release Lifecycle Module](./adlc-production-release-lifecycle.md) owns the complete reusable protocol only when sealed intent includes delivery or publication; source integration alone neither loads nor invokes it. This section owns its mandatory execution seam.
 
 **Directives**:
 - Treat protected integration as Integration Receipt authority only; it never creates forward-deployment authority
@@ -413,7 +413,7 @@ The separately loadable [End-to-End Production Release Lifecycle Module](./agent
 - Publish mirrors only after the Live Verification Receipt exists; remove only clean, integrated, completion-proven task lanes, preserve unrelated work, and require the repository-owned deterministic evaluator to exit zero only for a joined terminal receipt chain
 ## Runtime Readiness Enforcement
 
-Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./agentic-sdlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract; the [Repository Runtime Readiness Module](./agentic-sdlc-repository-runtime-readiness.md) owns the bounded local-first repository audit profile.
+Runtime readiness is a derived claim over one immutable execution input and its joined evidence; never infer it from document status, source existence, review labels, or delivery state. The separately loadable [Behavioral Conformance Runtime Module](./adlc-conformance-runtime.md) owns the stage-gate evidence and receipt contract; the [Repository Runtime Readiness Module](./adlc-repository-runtime-readiness.md) owns the bounded local-first repository audit profile.
 
 - Require typed inputs and outputs, bounded orchestration, independent evaluation, named checks with recorded results, cost and fallback evidence, and closed mutation and deployment gates before deriving `runtime-ready`
 - Bind one immutable source revision and its complete dependency closure; drift invalidates the claim and returns the affected unit to `blocked`
@@ -504,16 +504,16 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 | Stage | Sections to load |
 |---|---|
 | Run start | `boundary-with-the-authoring-set`, `agent-roles--independence`, `specification-chain-phases`, `specification-to-task-bridge` |
-| Chain seam check | `specification-chain-phases`, [Specification Chain](./agentic-sdlc-specification-chain.md) |
+| Chain seam check | `specification-chain-phases`, [Specification Chain](./adlc-specification-chain.md) |
 | Task derivation | `specification-to-task-bridge`, `task-model` |
-| Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./agentic-sdlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./agentic-sdlc-cloud-collaboration.md) |
+| Lane admission | `task-model`, [Scoped Concurrent Lane Admission](./adlc-scoped-lane-admission.md), [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) |
 | Dispatch | `task-model`, `execution-contract`, `tool-permission--blast-radius`, `per-task-budgets`, `autonomous-continuation--interaction-economy` |
 | Implementation | `execution-contract`, `verification-strategy`, `tool-permission--blast-radius`, `autonomous-continuation--interaction-economy` |
 | Verification | `verification-strategy`, `execution-conformance-findings` |
 | Recovery | `checkpoint--recovery`, `autonomous-continuation--interaction-economy` |
 | Escalation | `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
-| Protected source integration | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
-| Production or publication handoff | [Proportionate Closeout](./agentic-sdlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Protected source integration | [Proportionate Closeout](./adlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
+| Production or publication handoff | [Proportionate Closeout](./adlc-proportionate-closeout.md), `dependency-ordered-integration`, `atomic-lane-convergence`, [End-to-End Production Release Lifecycle](./adlc-production-release-lifecycle.md), `autonomous-continuation--interaction-economy`, `human-in-the-loop-gates` |
 | Any stage | `scope--neutrality-contract`, `module-index` |
 
 **Directives**:
@@ -521,7 +521,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
 - Load `rapid-mvp-sprint-profile` at Run start alongside the roles and bridge sections whenever a Sprint Clock is declared; skip it entirely otherwise
 ## Rapid MVP Sprint Profile
-The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
+The optional [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
 ## Validation Checklist
 **Pre-Execution**:
 - [ ] **Frontmatter present** with baseline and conformance keys; `owner` declared; `local_rung` and `delivered_rung` separate
@@ -543,7 +543,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 
 **Per-Task**:
 - [ ] Named check run and its recorded result surfaced
-- [ ] Existing verification lane run, not only the task's own check
+- [ ] Required verification lane and affected behavior checks satisfied; reused evidence binds unchanged immutable inputs
 - [ ] Artifacts changed enumerated, including incidental changes
 - [ ] Budget consumption recorded against all four bounds
 - [ ] Verdict issued by the Evaluator, never the Implementer
@@ -565,14 +565,14 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 - [ ] **Integration order closed**: every unit is terminal, dependencies preceded consumers, no equivalent or superseded unit was re-merged, and exact-canonical checks advanced each frontier
 - [ ] **Protected review metadata exact**: the repository-owned review-request template is instantiated, the current canonical base revision is recorded, and the declared scope token equals the admitted semantic scope and any projected branch-scope segment
 - [ ] **Runtime and release frontiers agree**: every runtime-impacting unit converged before candidate sealing, and the candidate binds the final dependency closure
-- [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review-surface locator are revalidated from the current Runtime Review Receipt before the prompt is emitted; the prompt identifies its canonical portable formatter as `agentic-canvas-os/scripts/production-release-authorization-contract.mjs` and, directly after its loopback locator, prints the runtime-resolved local formatter source path
+- [ ] **Authorization prompt runtime-ready**: candidate, source, release run, and controlled review surface are revalidated from the current Runtime Review Receipt; the configured interaction adapter's identity, revision, and evidence are recorded, and the prompt presents the exact decision and consequence
 - [ ] **Canonical release owner stable**: from candidate sealing through authorization interaction, one canonical release-owner checkout stays on the exact protected revision used for review; any branch flip or local-ref drift retires or blocks the run until the owner is restored and the receipt chain is refreshed
 - [ ] **Receipt chain joined**: Integration, Runtime Review, Candidate, Authorization Interaction, Human Authorization, Deployment, State Reconciliation, Live Verification, Publication, and Rollback receipts join by exact digest where each stage applies
 - [ ] **Overlapping work preserved**: every pre-existing non-canonical work item is content-bound and accounted for; overlapping items remain retained with recovery handles, while any restored disjoint item matches its captured state exactly
 - [ ] **Atomic convergence closed**: one stable plan and bounded effect authorization own the exact keep / port / drop inventory; authority continuation is atomic, no coordination-only content revision or projection-only recovery blocker remains, and every adapter effect joins the terminal receipt
 - [ ] **When scoped lane admission applies, admission preservation closed**: the candidate leaves every existing lane untouched; each peer is unchanged or advances only through separately proven current disjoint authority and a joined typed peer-operation receipt
 - [ ] **Candidate closure exact**: canonical source, all transitive dependencies, policy, target, review, artifact, manifest, and candidate digests agree
-- [ ] **Human authorization exact**: the interaction receipt proves the configured transport, browser dependency, exact challenge response, and authenticated actor; the authority adapter records the same human decision for that candidate and target
+- [ ] **Human authorization exact**: the interaction receipt proves the configured transport, declared dependencies, exact challenge response, and authenticated actor; the authority adapter records the same human decision for that candidate and target
 - [ ] **Terminal prompt handshake exact**: terminal automation captures the printed exact reply, waits for the live prompt, and only then submits that reply; missing challenge capture, missing prompt readiness, or out-of-order input blocks authorization
 - [ ] **Controller singular and idempotent**: one target-scoped controller owns deployment; duplicate dispatch resolves to the same result or fails closed
 - [ ] **No drift or rebuild**: current evidence still matches the authorized candidate byte-for-byte; otherwise authorization is invalid and forward deployment remains blocked
@@ -583,7 +583,7 @@ The optional [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) modu
 - [ ] **Turn ends at canonical or parked state**: completed lane payload is absorbed into the protected canonical frontier and the canonical owner is cleanly parked there, or incomplete work is explicitly parked in its owned lane with canonical remaining clean
 ## Anti-Pattern Guards
 
-The canonical [Execution Anti-Pattern Guards](./agentic-sdlc-anti-pattern-guards.md) module owns the compact prohibited-pattern → required-correction map. This seam keeps the finding vocabulary in this execution owner while avoiding duplicate rule prose.
+The canonical [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md) module owns the compact prohibited-pattern → required-correction map. This seam keeps the finding vocabulary in this execution owner while avoiding duplicate rule prose.
 
 ## Mantra Application
 
@@ -592,7 +592,7 @@ The canonical [Execution Anti-Pattern Guards](./agentic-sdlc-anti-pattern-guards
 - **Specification grounds**: a task with no VCC behind it is work no rung will credit, so the bridge is a derivation and never a fresh authoring act
 - **Bounds make finite**: four bounds and a circuit-breaker per task, because an unbounded task is an unbounded loop wearing a checkbox
 - **Independence makes trustworthy**: the Evaluator is a mechanism the Implementer does not adjudicate; every other role may collapse, this one may not
-- **Grants make deliberate**: capability is scoped per task to the narrowest sufficient class, and irreversibility is gated per occurrence rather than per session
+- **Grants make deliberate**: capability is scoped to the task; exact irreversible effects need a recorded decision, whose receipt continues unchanged effects without session-wide authority
 - **Evidence earns**: execution's output is not code, it is the Evidence References that let the Readiness Ladder move; unsurfaced work raises nothing
 - **Persistence makes resumable**: state lives outside working context, so a long run survives compaction instead of re-spending its way back to where it was
 - **Autonomy carries**: once intent and authority are present, safe mechanics and idempotent continuation stay inside the controller instead of becoming repeated Operator work

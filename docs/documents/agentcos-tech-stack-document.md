@@ -44,7 +44,7 @@ traceability:
 # Agentic OS (agentcos) — Tech Stack Document
 
 **Context**: Solo-dev, AI-native startup. `agentcos` is the Agentic OS — the harness/orchestration plane that supervises, verifies, and delivers multiple target product repositories. First targets: `agntgrph` (knowledge-graph canvas product) and `gamexr` (game/XR product). Runtime topology: Dev (`GitHub/agntgrph`, `GitHub/gamexr`, `npm run dev`; Home Apex supervisor `npm run dev:apex`) → Prod mirrors (`GitHub/huijoohwee/content/agntgrph`, `GitHub/huijoohwee/content/gamexr`) → Delivery (`airvio.co`, `airvio.co/agntgrph`, `airvio.co/gamexr`).
-**Intent**: Provide the end-to-end reference for agentcos user flow, orchestration/harness flow, workflow, and data flow — evaluated through the four compounding lenses (min-viable-max-value, TCO-zero, token economics, harness-first) and the governing Agentic SDLC execution contract (roles, budgets, gates, receipts).
+**Intent**: Provide the end-to-end reference for agentcos user flow, orchestration/harness flow, workflow, and data flow — evaluated through the four compounding lenses (min-viable-max-value, TCO-zero, token economics, harness-first) and the governing ADLC execution contract (roles, budgets, gates, receipts).
 **Directive**: Treat `agentic-canvas-os/docs` (Git, frontmatter-first) as the invocation and contract SSOT. Resolve `/`, `#`, `@` only through the three invocation dictionaries. Every AI pipeline runs in a typed harness with a cost log; every loop carries a max-iteration bound and circuit-breaker; every verdict comes from an Evaluator mechanism distinct from the Implementer; every promotion toward a delivered surface passes a closed-by-default Deploy Boundary.
 
 ### Reference Implementation Note
@@ -280,7 +280,7 @@ flowchart TB
 | Memory log | `memory-log/v1` append-only shards | Durable agent history at $0 TCO | ✓ Git |
 | Planning records | `todo-context-record/v2` immutable per-task records | Cross-repo planning authority | ✓ Git |
 | Runtime-readiness validators | Deterministic receipt evaluators (exit-zero gates) | Fail-closed readiness derivation | ✓ Internal |
-| SDLC execution contract | Orchestrator/Implementer/Evaluator/Operator roles + four bounds | Self-grade-proof verdicts; finite tasks | ✓ Internal |
+| ADLC execution contract | Orchestrator/Implementer/Evaluator/Operator roles + four bounds | Self-grade-proof verdicts; finite tasks | ✓ Internal |
 
 ### Orchestration Runtime
 
@@ -500,4 +500,4 @@ Routes are **owned and declared** by the three invocation dictionaries in the in
 
 ---
 
-*Document created 2026-08-20. Adherent to [PRD, TAD & ADR Guidelines v1.7.0](../../guidelines/prd-tad-adr-guidelines.md) and [Agentic SDLC Guidelines v1.16.0](../../guidelines/agentic-sdlc-guidelines.md); session posture per `agentic-canvas-os/docs/START-WORKFLOW.md` (authoring lane, Dev-only, deploy boundaries closed).*
+*Document created 2026-08-20. Adherent to [PRD, TAD & ADR Guidelines v1.7.0](../../guidelines/prd-tad-adr-guidelines.md) and [ADLC Guidelines v1.16.0](../../guidelines/adlc-guidelines.md); session posture per `agentic-canvas-os/docs/START-WORKFLOW.md` (authoring lane, Dev-only, deploy boundaries closed).*

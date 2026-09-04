@@ -198,7 +198,7 @@ test("dispatch verification stays deterministic while the PR check owns live rev
   const job = ci.jobs["protected-head-refresh"];
   assert.match(stepWithName(job, "Install exact dependencies").run, /^npm ci(?:\s|$)/u);
   const contract = stepWithName(job, "Verify deterministic candidate contracts");
-  assert.match(contract.run, /npm run agentic-sdlc:policy:check/u);
+  assert.match(contract.run, /npm run adlc:policy:check/u);
   assert.match(contract.run, /npm run agenticrag:guidelines-map:check/u);
   assert.match(contract.run, /npm run git-guidelines:test/u);
   assert.doesNotMatch(contract.run, /npm test|npm run git-guidelines:check/u);

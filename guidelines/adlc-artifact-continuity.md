@@ -1,8 +1,8 @@
 ---
-title: "Agentic SDLC Artifact Continuity Module"
+title: "ADLC Artifact Continuity Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-22"
+version: "1.1.0"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -10,12 +10,12 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 schema: "agentic-artifact-continuity/v1"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC Artifact Continuity Module
+# ADLC Artifact Continuity Module
 
 ## Scope and Ownership
 
@@ -24,24 +24,20 @@ Context-Intent-Directives (CID) remain joined to Role-Action-Outcome (RAO) execu
 demonstration, and successor planning. It defines semantic roles and joins, never file names, directory layouts,
 document products, providers, tools, storage formats, or workflow transports.
 
-The main Agentic SDLC Guidelines own execution roles, task state, budgets, permissions, and evidence emission. The
+The main ADLC Guidelines own execution roles, task state, budgets, permissions, and evidence emission. The
 Specification Chain Module owns the requirements-design-tasks chain and its two coverage seams. This module owns
 only the continuity envelope around that chain: CID-to-RAO coverage, companion-artifact joins, outcome evidence,
 revision freshness, and feedback into a successor Context.
 
 ## Semantic Separation
 
-CID is the policy plane. RAO is the accountable transformation plane. Artifacts carry state. Evidence records an
-observation and verdict. None substitutes for another.
+The shared [CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract) owns message fields across PRD, TAD,
+ADR, and execution. This module adds joins, not another schema: CID frames intent and constraints, RAO assigns
+transformation, SVO expresses that same action. Artifacts carry state; evidence records observations and verdicts.
 
 | Concept | Owns | Must not own |
 |---|---|---|
-| **Context** | Applicability, conditions, and bounded scope | A solution, implementation mechanism, or completion claim |
-| **Intent** | One desired future state | An observed result or self-issued verdict |
-| **Directive** | One required constraint, safeguard, or prohibition | A provider, tool, file path, or hidden implementation choice |
-| **Role** | One accountable function | A person, product identity, or mutable session identity |
-| **Action** | One atomic transformation over declared inputs | Multiple independently closable transformations |
-| **Outcome** | One concrete, measurable result directly produced by the Action | The verdict that the result satisfies an Intent |
+| **CID/RAO/SVO fields** | Meanings owned by the shared field contract | Additional aliases or narrower local definitions |
 | **Artifact** | Versioned state consumed or produced by an Action | Authority, approval, or evidence by existence alone |
 | **Evidence** | A recorded observation, surface, check, result, and independent verdict | New behaviour, structure, or task scope |
 | **Successor Context** | Findings, changed conditions, and the next bounded Intent | Retrospective mutation of prior Context, Outcome, or Evidence |
@@ -92,6 +88,7 @@ which evidence supports its result.
 - Bind every consumed and produced artifact to an immutable revision or digest; forbid mutable labels as evidence of sameness
 - Record derivation revisions on consumers; forbid accepting a stale join because its prose still appears plausible
 - Preserve prior records and append a successor reference; forbid rewriting history to manufacture continuity
+- Preserve owner-authored bytes and reconstructable history through migration; a reviewed successor may remove or replace obsolete content with exact provenance. Lossless continuity forbids silent loss, not intentional scoped cleanup
 
 ## CID-to-RAO Coverage Seam
 
@@ -113,7 +110,7 @@ execution vocabulary rather than creating a parallel authority model.
 
 | Role | Atomic Action | Measurable Outcome |
 |---|---|---|
-| **Operator** | Authorizes one CID revision or phase transition | One exact decision reference bound to the authorized revision |
+| **Operator** | Authorizes a bounded objective or exact effect | Decision reference joined to each covered revision or phase transition; exact effect identities remain bound where required |
 | **Orchestrator** | Derives one bounded set of grounded RAO Steps | One acyclic graph with complete joins and declared bounds |
 | **Implementer** | Executes one declared Action | Enumerated produced artifacts and recorded results |
 | **Evaluator** | Evaluates one Outcome against named conditions | One independent verdict with Evidence References and findings |

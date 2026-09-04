@@ -9,8 +9,9 @@ import { byteCompare, deepFreeze, digestText, readRequired, recordProblem } from
 import { PROTECTED_REVIEW_VERIFICATION_MODE } from "./review-authority.mjs";
 
 const OWNER_PATHS = Object.freeze([
-  "guidelines/agentic-sdlc-guidelines.md", "guidelines/prd-tad-adr-guidelines.md",
-  "guidelines/agentic-sdlc-cloud-collaboration.md", "guidelines/agentic-sdlc-scoped-lane-admission.md",
+  "guidelines/adlc-guidelines.md", "guidelines/prd-tad-adr-guidelines.md",
+  "guidelines/prd-tad-adr-verification.md",
+  "guidelines/adlc-cloud-collaboration.md", "guidelines/adlc-scoped-lane-admission.md",
   "guidelines/commit-push-deploy-guidelines.md",
 ]);
 const REGISTRATION_PATHS = Object.freeze([

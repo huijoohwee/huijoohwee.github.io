@@ -1,17 +1,19 @@
 ---
 title: "PRD, TAD & ADR Diagram Canvas-Render Contract (Companion)"
 doc_type: "Guidelines Companion"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 parent: "PRD, TAD & ADR Diagram Guidelines (Companion)"
-parent_version: "1.1.0"
+parent_version: "1.1.1"
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
 # PRD, TAD & ADR Diagram Canvas-Render Contract (Companion)
@@ -25,7 +27,7 @@ A static notation renderer consumes the diagram source and emits a picture. A **
 | Concern | Owner |
 |---|---|
 | Document contents, Readiness Ladder, Rule ID scheme, authoring-domain findings | **PRD, TAD & ADR Guidelines** |
-| Task decomposition, agent roles, budgets, run state, Evidence References | **Agentic SDLC Guidelines** |
+| Task decomposition, agent roles, budgets, run state, Evidence References | **ADLC Guidelines** |
 | Diagram identity, class catalog, notation rules, labelling, complexity budget | **PRD, TAD & ADR Diagram Guidelines** companion |
 | Render-target declaration, ingest surfaces, graph element contract, visual property namespace, projection rules, canvas-domain findings | **This module** |
 

@@ -202,10 +202,11 @@ function createRepositoryFixture(commitMessage) {
   writeTask19Artifacts(workspaceRoot);
   const sourcePaths = [
     "docs/documents/git-guidelines.md",
-    "guidelines/agentic-sdlc-guidelines.md",
+    "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/agentic-sdlc-cloud-collaboration.md",
-    "guidelines/agentic-sdlc-scoped-lane-admission.md",
+    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/adlc-cloud-collaboration.md",
+    "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
   ];
   for (const relative of sourcePaths) {
@@ -235,10 +236,11 @@ function createRefreshRepositoryFixture({
   writeTask19Artifacts(workspaceRoot);
   for (const relative of [
     "docs/documents/git-guidelines.md",
-    "guidelines/agentic-sdlc-guidelines.md",
+    "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/agentic-sdlc-cloud-collaboration.md",
-    "guidelines/agentic-sdlc-scoped-lane-admission.md",
+    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/adlc-cloud-collaboration.md",
+    "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
   ]) {
     const destination = path.join(root, relative);

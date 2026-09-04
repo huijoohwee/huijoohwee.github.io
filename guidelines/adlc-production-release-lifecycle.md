@@ -1,20 +1,20 @@
 ---
-title: "Agentic SDLC End-to-End Production Release Lifecycle"
+title: "ADLC End-to-End Production Release Lifecycle"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-08-02"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Lifecycle controller function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "promotion"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
-# Agentic SDLC End-to-End Production Release Lifecycle
+# ADLC End-to-End Production Release Lifecycle
 
 ## Scope and Neutrality
 

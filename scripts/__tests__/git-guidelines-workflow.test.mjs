@@ -298,7 +298,7 @@ function createPolicyGateFixture() {
   const candidateSha = "b".repeat(40);
   const repository = "huijoohwee/huijoohwee.github.io";
   const detail = {
-    id: 20008203, name: "Agentic SDLC policy contract", target: "branch",
+    id: 20008203, name: "ADLC policy contract", target: "branch",
     source_type: "Repository", source: repository, enforcement: "active",
     conditions: { ref_name: { exclude: [], include: ["~DEFAULT_BRANCH"] } },
     rules: [

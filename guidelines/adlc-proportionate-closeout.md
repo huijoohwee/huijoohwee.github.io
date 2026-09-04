@@ -1,23 +1,23 @@
 ---
-title: "Agentic SDLC Proportionate Closeout"
+title: "ADLC Proportionate Closeout"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-08-29"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Convergence controller function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
-provider_neutral: "true"
+universal_scope: true
+provider_neutral: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
 # Proportionate Closeout
 
-This module selects the least-powerful closeout profile that fully satisfies sealed Operator intent. It scales applicable work, never the rigor of a triggered obligation. The main [Agentic SDLC Guidelines](./agentic-sdlc-guidelines.md) retain protected integration, atomic convergence, preservation, and finding authority; the [Production Release Lifecycle](./agentic-sdlc-production-release-lifecycle.md) retains delivery and publication authority; the [Rapid MVP Sprint Profile](./agentic-sdlc-rapid-mvp-sprint.md) may compress elapsed time but never these obligations.
+This module selects the least-powerful closeout profile that fully satisfies sealed Operator intent. It scales applicable work, never the rigor of a triggered obligation. The main [ADLC Guidelines](./adlc-guidelines.md) retain protected integration, atomic convergence, preservation, and finding authority; the [Production Release Lifecycle](./adlc-production-release-lifecycle.md) retains delivery and publication authority; the [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) may compress elapsed time but never these obligations.
 
 ```text
 Closeout Plan = sealed outcome + exact subject set + write scopes + applicable adapters + cleanup effects + evidence keys

@@ -1,17 +1,19 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "1.9.0"
+parent_version: "2.4.0"
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
 # PRD, TAD & ADR Core Templates Module

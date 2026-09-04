@@ -1,15 +1,15 @@
 ---
-title: "Agentic SDLC Repository Runtime Readiness"
+title: "ADLC Repository Runtime Readiness"
 doc_type: "Guideline Module"
-version: "1.0.0"
-date: "2026-07-30"
+version: "1.0.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Evaluator function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---

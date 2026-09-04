@@ -1,17 +1,19 @@
 ---
 title: "PRD, TAD & ADR Diagram Guidelines (Companion)"
 doc_type: "Guidelines Companion"
-version: "1.1.0"
-date: "2026-08-20"
+version: "1.1.1"
+date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "1.8.0"
+parent_version: "2.4.0"
+runtime_readiness_policy: "fail-closed"
+lifecycle_status: "proposed"
 ---
 
 # PRD, TAD & ADR Diagram Guidelines (Companion)
@@ -23,7 +25,7 @@ This companion expands one section of the parent set — `architecture-diagram-s
 | Concern | Owner |
 |---|---|
 | What a PRD, TAD, or ADR must contain; the Readiness Ladder; the Rule ID scheme; the authoring-domain finding vocabulary | Parent set — **PRD, TAD & ADR Guidelines** |
-| Task decomposition, agent roles, tool blast radius, per-task budgets, run state | **Agentic SDLC Guidelines** companion set |
+| Task decomposition, agent roles, tool blast radius, per-task budgets, run state | **ADLC Guidelines** companion set |
 | Diagram identity, class selection, notation rules, labelling contract, complexity budget, render reach, diagram drift, and the diagram-domain finding vocabulary | **This companion** |
 | Render-target declaration, ingest surfaces, graph element contract, projection rules, and the canvas-domain finding vocabulary | [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) |
 | Copy-ready template bodies for every diagram class | [Diagram Templates](./prd-tad-adr-diagram-templates.companion.md) |
@@ -433,7 +435,7 @@ The [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.compani
 
 ## Conformance Findings — Diagram Domain
 
-**Defines the typed vocabulary a conformance check records against this companion.** It is the diagram-domain member of the union described by the parent's Conformance Findings section: authoring-domain types stay in the parent, execution-domain types stay in the Agentic SDLC set, and no set redefines a type another owns.
+**Defines the typed vocabulary a conformance check records against this companion.** It is the diagram-domain member of the union described by the parent's Conformance Findings section: authoring-domain types stay in the parent, execution-domain types stay in the ADLC set, and no set redefines a type another owns.
 
 Findings here use the parent's six-field recording contract, the parent's three severities, the parent's deduplication triple `(Finding Type, Rule ID, artifact reference)`, and the parent's ordering rule. The artifact reference for a diagram finding is the **Diagram ID**.
 
@@ -467,7 +469,7 @@ Findings here use the parent's six-field recording contract, the parent's three 
 
 ### Directives
 
-- Treat this enumeration as the single source of truth for **diagram-domain** finding names; forbid this companion redefining a type the parent set, the Agentic SDLC set, or the Canvas-Render module owns
+- Treat this enumeration as the single source of truth for **diagram-domain** finding names; forbid this companion redefining a type the parent set, the ADLC set, or the Canvas-Render module owns
 - Raise a diagram-domain type where the defect is in the drawing and a canvas-domain type where the defect is in the projection; both may be raised for one diagram, and the conformance vocabulary is the union of all four domains
 - Raise the parent's type, not a diagram type, where the defect is in the specification rather than the rendering: an unbounded loop in the spec is `unbounded-loop`, an unbounded loop drawn without its bound is `unbounded-loop-unrendered`, and both may be raised for the same pipeline
 - Raise the parent's type where the diagram is the only place a status, residency, or lane claim appears: a rung visible only in a diagram is `unproven-claim`, a store with no residency is `incomplete-topology-node`, a missing lane is `missing-lane`, an open boundary with no operator instruction is `ungated-promotion`, and an authoring-to-delivery edge is `deploy-boundary-breach`

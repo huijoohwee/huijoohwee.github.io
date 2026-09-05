@@ -16,7 +16,7 @@
     "git-guidelines:check": "node scripts/check-git-guidelines.mjs",
     "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
     "guideline:check": "npm run guideline:budget:check && npm run adlc:policy:check && npm run prd-tad-adr:policy:check && npm run diagram:canvas:check",
-    "test": "npm run adlc:policy:check && npm run adlc:contract:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
+    "test": "npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
     "diagram:canvas:check": "node scripts/check-diagram-canvas-render.mjs guidelines",
     "prd-tad-adr:policy:check": "node scripts/check-prd-tad-adr-guideline.mjs",
     "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs",
@@ -41,6 +41,6 @@
   "devDependencies": {
     "fast-check": "3.23.2",
     "js-yaml": "4.3.1",
-    "agentic-os": "github:huijoohwee/agentic-os#8c2650cefac8ba37435832adfa2314846725f21a"
+    "agentic-os": "github:huijoohwee/agentic-os#8e50a7fd3e84e13403855715447e4daf2b6261da"
   }
 }

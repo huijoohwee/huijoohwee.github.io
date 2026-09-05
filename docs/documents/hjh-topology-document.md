@@ -80,7 +80,7 @@ The canonical Agentic Graph Dev working directory is `$GITHUB_ROOT/agentic-graph
 
 A registered `agent/<device>/<semantic-scope>` worktree may run `npm run dev` or `npm run dev:apex` as an isolated task preview. The guard selects task mode automatically, and that result is neither canonical Dev nor release proof. A separate clean linked `main` worktree may remain a bounded release or integration checkout, but it is not a substitute for the canonical Dev path.
 
-If `$GITHUB_ROOT/agentic-graph` is occupied by a task branch, or if `main` is registered elsewhere, report `blocked-canonical-path`, preserve every occupied lane, and reconcile ownership through the repository lifecycle workflow before claiming canonical Dev. The executable owner is `agentic-graph/scripts/dev-source-consistency.mjs`; the upstream operating contract remains `agentic-canvas-os/docs/START-WORKFLOW.md` and the local user entry points remain `agentic-graph/{AGENTS.md,README.md}`.
+If `$GITHUB_ROOT/agentic-graph` is occupied by a task branch, or if `main` is registered elsewhere, report `blocked-canonical-path`, preserve every occupied lane, and reconcile ownership through the repository lifecycle workflow before claiming canonical Dev. The executable owner is `agentic-graph/scripts/dev-source-consistency.mjs`; the upstream operating contract remains `agentic-os/docs/START-WORKFLOW.md` and the local user entry points remain `agentic-graph/{AGENTS.md,README.md}`.
 
 ### Agentic Graph root-launch E2E flow
 

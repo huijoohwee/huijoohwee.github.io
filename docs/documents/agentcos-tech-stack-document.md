@@ -500,4 +500,4 @@ Routes are **owned and declared** by the three invocation dictionaries in the in
 
 ---
 
-*Document created 2026-08-20. Adherent to [PRD, TAD & ADR Guidelines v1.7.0](../../guidelines/prd-tad-adr-guidelines.md) and [ADLC Guidelines v1.16.0](../../guidelines/adlc-guidelines.md); session posture per `agentic-canvas-os/docs/START-WORKFLOW.md` (authoring lane, Dev-only, deploy boundaries closed).*
+*Document created 2026-08-20. Adherent to [PRD, TAD & ADR Guidelines v1.7.0](../../guidelines/prd-tad-adr-guidelines.md) and [ADLC Guidelines v1.16.0](../../guidelines/adlc-guidelines.md); session posture per `agentic-os/docs/START-WORKFLOW.md` (authoring lane, Dev-only, deploy boundaries closed).*

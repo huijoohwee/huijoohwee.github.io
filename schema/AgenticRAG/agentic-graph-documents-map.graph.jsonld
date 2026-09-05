@@ -1650,19 +1650,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-deterministic-knowledge-graph-runtime",
+      "@id": "node:agentic-graph:doc:agentic-graph-deterministic-agent-graph-runtime",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-deterministic-knowledge-graph-runtime.md"
+        "agentic-graph-deterministic-agent-graph-runtime.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deterministic-knowledge-graph-runtime.md"
+        "relPath": "docs/documents/agentic-graph-deterministic-agent-graph-runtime.md"
       },
-      "documentPath": "docs/documents/agentic-graph-deterministic-knowledge-graph-runtime.md",
+      "documentPath": "docs/documents/agentic-graph-deterministic-agent-graph-runtime.md",
       "language": "en-us"
     },
     {
@@ -4162,6 +4162,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-xrpl-x402-paid-resource-prd-tad-adr",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-yaml-mermaid-gitgraph-frontmatter-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -4239,6 +4255,22 @@
         "relPath": "docs/documents/sme-care-agent-prd-tad.md"
       },
       "documentPath": "docs/documents/sme-care-agent-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:sme-care-agent-readiness-validation-companion",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "sme-care-agent-readiness-validation-companion.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/sme-care-agent-readiness-validation-companion.md"
+      },
+      "documentPath": "docs/documents/sme-care-agent-readiness-validation-companion.md",
       "language": "en-us"
     }
   ]

@@ -232,7 +232,7 @@ python3 schema/AgenticRAG/sync_map.py --mode check
 
 - Text/Image/Video widget pipelines must consume shared TS SSOT rows in runtime panels and generate static references from the same source scripts only.
 - MainPanel Integrations, Workflow Manager, and FloatingPanel Props Panel widget fields must stay schema-synchronized through shared field builders.
-- For directive updates, use one-row-one-directive wording (max 50 words per directive cell) in the active `agentic-canvas-os/todo/YYYY-MM.md` shard and `agentic-graph/docs/documents/agentic-graph-integrations-ssot-sync-directives.md`.
+- Record new planning directives once in immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records under `agentic-canvas-os/docs/TODO.md` (max 50 words per directive cell); monthly shards remain immutable history. Keep integration specifications in `agentic-graph/docs/documents/agentic-graph-integrations-ssot-sync-directives.md` aligned to the source-owned contract.
 - Oversized markdown docs must be sharded into companion files with continuation links; canonical originals stay under 600 lines.
 
 ## 🚀 Quick Start

@@ -217,7 +217,8 @@ If a repo still contains duplicated publish-side source, remove it from the publ
 
 ## Cross-References
 
-- Shared directive log: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`
+- Shared planning: [Agentic Canvas OS TODO contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md), with new immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records.
+- Historical directive log: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`; retained entries carry no current planning authority.
 - Agentic Graph canonical companion: `agentic-graph/docs/documents/agentic-graph-cross-repo-publish-topology.md`
 - Markdown discovery companion: `huijoohwee.github.io/docs/documents/markdown-convertible-agent-discovery-document.md`
 - Autonomous runtime readiness: `huijoohwee.github.io/docs/documents/agentic-canvas-os-autonomous-runtime-readiness.md`

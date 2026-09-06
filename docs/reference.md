@@ -79,7 +79,8 @@ frontmatter_contract: "required"
 ## Topology Contracts
 
 | [HJH Topology Document](./documents/hjh-topology-document.md) | Shared PRD/TAD-style cross-repo topology for `agentic-graph`, `singabldr`, `huijoohwee`, and Cloudflare Pages; defers Agentic Graph-specific release gates to the canonical source-owned publish-topology contract |
-| [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Commit-backed canonical shared directive log for cross-repo workspace tasks that do not belong to one app repo |
+| [Agentic Canvas OS TODO Contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md) | Sole live cross-repository planning owner; new tasks use immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records |
+| [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Historical cross-repo entries retained in place; current planning follows the Canvas TODO contract |
 
 ---
 

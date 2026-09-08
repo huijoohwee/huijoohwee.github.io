@@ -41,6 +41,6 @@
   "devDependencies": {
     "fast-check": "3.23.2",
     "js-yaml": "4.3.1",
-    "agentic-os": "github:huijoohwee/agentic-os#4b61b4ddcbc7b481e87bf96997bf5b991955c0dc"
+    "agentic-os": "github:huijoohwee/agentic-os#35b81bc19d3c39e87177f17c559f36c58340064f"
   }
 }

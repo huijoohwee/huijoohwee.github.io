@@ -12,7 +12,7 @@
     {
       "id": "agentic-os",
       "repository": "github.com/huijoohwee/agentic-os",
-      "revision": "e89e96089c3a75b99d30135bb2c6f5a3eccc8036",
+      "revision": "886990cbb7d78e673360bda70600cb49616b4b7b",
       "owns": "Repository lifecycle, bounded ranking, cross-repository source observation",
       "artifacts": [
         {
@@ -30,6 +30,14 @@
         {
           "path": "catalog/composition-source-lock.json",
           "sha256": "99125f2a3fc42bffd90b79a9c4a0798dc1128fa605bff14df869a75f7b262b59"
+        },
+        {
+          "path": "guides/COMPOSITION-ARCHITECTURE.md",
+          "sha256": "2b7663c3d519affe3c204c94232e46c2bdde55236d3e634eadb31278855786ab"
+        },
+        {
+          "path": "guides/LIFECYCLE-FLIGHT.md",
+          "sha256": "c0a67f11013070690c5a348048c17bab520175bea85f77461466e678a021ea96"
         }
       ],
       "checks": [
@@ -41,12 +49,12 @@
     {
       "id": "huijoohwee.github.io",
       "repository": "github.com/huijoohwee/huijoohwee.github.io",
-      "revision": "95ed40c3605feab075fd5da7182c29b892dd9dd5",
+      "revision": "d0b0fdf0a63c6bd94dda2cc7ac87f7e200059138",
       "owns": "Shared authoring semantics and reference schema projections",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "de4012dc485bfc2b9d334e312d642f7dc052f3130d0fa02a37cfe8cb85133f52"
+          "sha256": "0e44271f531aac956d860563afa2b14f3ac91783e013e560db1c37b3ad373ed8"
         },
         {
           "path": "guidelines/cid-guidelines.md",
@@ -54,11 +62,11 @@
         },
         {
           "path": "guidelines/prd-tad-adr-guidelines.md",
-          "sha256": "00ef69c328c5cda38331214843031f63560e4670c3eccfedbe7dd60bc69f5248"
+          "sha256": "0291a4c6a0e519acb96b406a47c1653b3bed958b19c2b49150a9e441ac076c3e"
         },
         {
           "path": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld",
-          "sha256": "590413a7491e576a744dbb906686a7080713140e2c9d4a6eeb92de69e7e7fbf6"
+          "sha256": "77d08db9dff8209bb1fbfe92e077c8129a44d445efe4fdd76ab7c46302cd4ab0"
         }
       ],
       "checks": [
@@ -99,7 +107,7 @@
     {
       "id": "agentic-canvas-os",
       "repository": "github.com/huijoohwee/agentic-canvas-os",
-      "revision": "efd892678083302d46e9a8205bc02b8b39c46c1a",
+      "revision": "954de91689abc1ab99a783e54f5ca7ac61387449",
       "owns": "Application agent runtime, admission provider and deferred tool discovery",
       "artifacts": [
         {
@@ -116,7 +124,7 @@
         },
         {
           "path": "docs/PRD-TAD.md",
-          "sha256": "1d174945c5e824f887631faaf3994071370132ad18205ac2243d3959f0a40e27"
+          "sha256": "2b0bc00023353d94405d216945e4208ef25b990cb8823f4710af4c26079e6a79"
         }
       ],
       "checks": [
@@ -152,7 +160,7 @@
     {
       "id": "agentic-graph",
       "repository": "github.com/huijoohwee/agentic-graph",
-      "revision": "ac194fbd0c33a1899399ba9afbfa1bb7a886cf23",
+      "revision": "eb19100b4604e4d296bf6094f183f255ef0b20a6",
       "owns": "Canvas/browser authoring runtime and Graph production release",
       "artifacts": [
         {
@@ -169,13 +177,13 @@
         },
         {
           "path": "docs/runtime-readiness-contract.md",
-          "sha256": "09f6d84a59496f43fff6d58d6329243796bc03f91507093005e419f590e2a50f"
+          "sha256": "96399a9fcbb7af145ed9bebfa6d9ff3fe4f9f0f71dcaac23454f8bd2f7e62f23"
         }
       ],
       "checks": [
-        "dev:apex",
-        "dev",
-        "runtime:check",
+        "runtime:test",
+        "check",
+        "test",
         "test:publish-sync:contract"
       ]
     },
@@ -227,21 +235,21 @@
     },
     {
       "id": "rao-object",
-      "disposition": "contradicted",
-      "claim": "The canonical RAO projection equates SVO object with outcome.",
+      "disposition": "confirmed",
+      "claim": "The canonical RAO V3 projection distinguishes the SVO object from the observed outcome.",
       "evidence": [
         "huijoohwee.github.io"
       ],
-      "limit": "The shared semantic contract distinguishes the target from the observed result. Existing PR #197 carries the schema correction; it remains a separate integration dependency."
+      "limit": "Integrated source separates the scoped target from the result and requires explicit re-grounding of V2 records. Schema correction does not migrate existing runtime records or prove execution."
     },
     {
       "id": "canvas-readiness",
-      "disposition": "contradicted",
-      "claim": "The combined Canvas specification establishes complete runtime readiness.",
+      "disposition": "confirmed",
+      "claim": "The Canvas combined specification declares spec-complete and keeps runtime-ready as a target.",
       "evidence": [
         "agentic-canvas-os"
       ],
-      "limit": "The observed document labels runtime-ready while external runtime proof remains gated; this documentation candidate narrows that claim."
+      "limit": "The integrated document routes proof to individual owners. Neither the document status nor source checks establish live-provider or production readiness."
     },
     {
       "id": "podman-scope",
@@ -251,6 +259,15 @@
         "agentic-commerce-os"
       ],
       "limit": "Independent source/unit/Worker checks do not need that runtime and do not substitute for paid-loop coverage."
+    },
+    {
+      "id": "flight-operation-scope",
+      "disposition": "confirmed",
+      "claim": "Agentic OS declares operation-scoped flight V2 alongside compatible V1 requirements.",
+      "evidence": [
+        "agentic-os"
+      ],
+      "limit": "The capability is integrated upstream. Each consumer still needs an exact reviewed package pin and its own operation requirements; availability does not authorize effects or make external prerequisites optional."
     },
     {
       "id": "deployment",

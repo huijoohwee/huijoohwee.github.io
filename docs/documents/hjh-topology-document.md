@@ -1,226 +1,221 @@
 ---
 title: "HJH Topology Document"
-doc_type: "PRD + TAD"
-version: "1.2.0"
-status: "active"
-date: "2026-08-13"
+doc_type: "PRD + TAD + ADR"
+version: "2.0.0"
+status: "spec-complete"
+date: "2026-09-09"
 lang: "en-US"
 owners:
   - "cross-repo topology docs"
 frontmatter_contract: "required"
+load_policy: "on-demand"
+verification_scope: "source declarations and static owner joins; no live deployment proof"
+source_snapshot:
+  agentic-os: "e89e96089c3a75b99d30135bb2c6f5a3eccc8036"
+  huijoohwee.github.io: "95ed40c3605feab075fd5da7182c29b892dd9dd5"
+  agentic-commerce-os: "50d0047fe140595c7086e1a122ffa76ab20a29bd"
+  agentic-canvas-os: "efd892678083302d46e9a8205bc02b8b39c46c1a"
+  huijoohwee: "b7b6c39ce0b5844a43042026a910f7552477c8ff"
+  agentic-graph: "ac194fbd0c33a1899399ba9afbfa1bb7a886cf23"
+  GameXR: "718298dec9928f30bd24e349a7527aba2c85bfb1"
 ---
 
 # HJH Topology Document
 
-> **Remote MCP onboarding note**: this is a shared topology document, not the
-> canonical MCP setup contract. For current Agentic Graph remote MCP onboarding,
-> start with `docs/documents/agentic-graph-mcp-onboarding-index.md`, then use
-> `docs/documents/agentic-graph-mcp-install-contract.md` for the explicit
-> `https://airvio.co/agentic-graph/mcp` vs
-> `https://airvio.co/agentic-graph/control-plane/mcp` boundary.
+## Scope and Evidence
+
+This document maps seven repositories' source ownership, declared runtime interfaces, mirror state
+and release boundaries. The snapshot records inspected canonical checkout revisions on 2026-09-09;
+the website revision is the base before this document update. Pending PRs are not integrated source.
+Source declarations establish intended behavior, not a deployed route, enabled provider or paid loop.
+Revalidate affected rows when an owner revision changes. Load the linked detail only when needed.
+
+Links to sibling repositories resolve from the canonical workspace layout. In isolated worktrees or
+hosted viewers, resolve the named repository and path from `source_snapshot`; do not treat a broken
+relative link as proof that its source is absent. This document creates no lifecycle controller.
 
 ## Markdown YAML Frontmatter Contract
 
-- The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this topology PRD/TAD.
-- This document is a canonical authored topology contract, not a typed validation fixture or generated registry surface.
-- Frontmatter stays in plain YAML so the file demonstrates the default authoring path for cross-repo topology, deployment, and ownership docs.
-- If typed `{key, type, value}` envelopes are needed for ingest -> parse -> render validation, that coverage should live in a dedicated fixture doc rather than replacing canonical topology prose.
-- Cross-repo topology and publish-boundary decisions must be derived from parsed frontmatter and document content only, never from file path assumptions or downstream mirrors.
+Opening plain YAML owns this document's identity and source snapshot. The
+[shared CID, RAO and SVO contract](../../guidelines/cid-guidelines.md) owns traceability meanings;
+[PRD/TAD/ADR guidance](../../guidelines/prd-tad-adr-guidelines.md) owns document composition.
+Neither a topology row nor `spec-complete` grants integration, deployment or runtime authority.
 
 ## Feature: Cross-Repo Dev, Publish, and Cloudflare Topology
 
 ### Problem Statement
 
-Agentic Graph and Singabldr need one deploy topology that preserves separate Dev SSOT repos, keeps `huijoohwee` artifact-only, and prevents route, source, or publish-flow drift across `airvio.co`, `airvio.co/agentic-graph`, and `airvio.co/singabldr`.
+A solo operator needs a small complete product loop without copying source, competing deployment
+controllers or starting services merely because they appear in the architecture. Distinguish the
+source owner, consumer, generated projection and evidence required at every boundary.
 
 ### User Stories
 
-**As a** maintainer
-**I want** each app to keep its own Dev SSOT and publish only generated surfaces
-**So that** releases stay reviewable, drift stays bounded, and Cloudflare routing remains isolated per app
+As a maintainer, I want each repository to expose its actual contracts and release owner so that
+changes remain reusable, independently verifiable and safe to promote across the workspace.
 
 ### Acceptance Criteria
 
-**Given** `agentic-graph`, local checkout `singabldr` backed by `huijoohwee/singabldr`, and `huijoohwee` repos
-**When** topology docs and release flows are reviewed
-**Then** each app owns its own source/build logic, `huijoohwee` owns only publish/config surfaces, and each public route stays app-isolated. `airvio.co` must load the published Agentic Graph React shell with its source-backed Live Canvas Hero; its entry action must resolve to `airvio.co/agentic-graph/`.
-
-### Success Metrics
-
-- Metric: topology drift incidents | Baseline: ad-hoc | Target: zero active cross-app route/source drift | Timeline: ongoing
-- Metric: publish-source duplication | Baseline: manual cleanup needed | Target: one SSOT repo per app | Timeline: ongoing
+- Each of the seven repositories has one bounded responsibility and inspectable source references.
+- Commands and service bindings resolve in the named owner's inspected revision.
+- Intended routes, observed mirror artifacts and live provider evidence remain separate claims.
+- No shared-project release proceeds on an unresolved deployment-owner conflict.
+- Check and resource selection follows the changed boundary; documentation validation starts no
+  browser, Worker, Podman VM or model process unless its selected check requires one.
 
 ### Out of Scope
 
-- Merging Agentic Graph and Singabldr source into one repo
-- Replacing Cloudflare Pages with a different hosting stack
-- Defining per-feature runtime behavior inside either app
+Product feature design, new infrastructure, source migrations, mirror repair and deployment are
+separate work. Singabldr remains an adjacent route in the mirror, but its source repository is
+outside this seven-repository audit; no current release command is asserted for it here.
 
-### Dependencies
-
-- `agentic-graph/docs/documents/agentic-graph-cross-repo-publish-topology.md`
-- `singabldr/docs/documents/singabldr-cross-repo-publish-topology.md`
-- `huijoohwee/_redirects`
-- per-app `sync:pages` and `release:pages` pipelines
-
-### Open Questions
-
-- Should publish updates be committed manually or by CI-generated pull requests
-- Should a shared CODEOWNERS rule set be added for both app publish surfaces
-
-## Architecture: Shared Pages Publish Topology
-
-### Architecture Overview
-
-**From app-owned source to public routes**: `agentic-graph` or `singabldr` → app build and validation → sync generated surfaces into `huijoohwee` → Cloudflare Pages serves isolated routes under `airvio.co`.
-
-### Canonical local Dev boundary
-
-The canonical Agentic Graph Dev working directory is `$GITHUB_ROOT/agentic-graph` (normally `GitHub/agentic-graph`). It is canonical only while that primary checkout uniquely owns a clean `main` whose `HEAD` equals fetched `origin/main`. Run `npm run dev` or `npm run dev:apex` there; run `npm run dev:latest` there only for the repository-owned clean fast-forward flow.
-
-A registered `agent/<device>/<semantic-scope>` worktree may run `npm run dev` or `npm run dev:apex` as an isolated task preview. The guard selects task mode automatically, and that result is neither canonical Dev nor release proof. A separate clean linked `main` worktree may remain a bounded release or integration checkout, but it is not a substitute for the canonical Dev path.
-
-If `$GITHUB_ROOT/agentic-graph` is occupied by a task branch, or if `main` is registered elsewhere, report `blocked-canonical-path`, preserve every occupied lane, and reconcile ownership through the repository lifecycle workflow before claiming canonical Dev. The executable owner is `agentic-graph/scripts/dev-source-consistency.mjs`; the upstream operating contract remains `agentic-os/docs/START-WORKFLOW.md` and the local user entry points remain `agentic-graph/{AGENTS.md,README.md}`.
-
-### Agentic Graph root-launch E2E flow
-
-```text
-agentic-graph Dev SSOT
-  docs/workspace-readme.md + React/FlowCanvas owners
-    -> pages:build-sync (Vite base path: /agentic-graph/)
-    -> pages:functions:build
-huijoohwee publish surfaces
-  content/agentic-graph/        generated artifact mirror
-  agentic-graph/                managed public-route shell/assets
-  _worker.js               generated Pages Functions bundle
-    -> Cloudflare Pages project: joohwee
-Public runtime
-  airvio.co                published React app shell + root-alias metadata
-    -> source-backed interactive Live Canvas Hero
-    -> Enter Agentic Graph
-    -> airvio.co/agentic-graph/
-```
-
-The root route is not a separately maintained landing page and the hero is not a bitmap or duplicated static shell. The root Pages handler retrieves the published Agentic Graph app shell, injects the `/agentic-graph/` runtime alias marker, and lets the same React application render the interactive `workspace-readme.md` canvas. If persisted state has not materialized that source, the root hook retrieves the canonical `/docs/workspace-readme.md` text and parses the identical FlowCanvas projection; a Mermaid/timeline workspace must not take root-route ownership. Explorer → Source Files → **Share canvas embed** immediately replaces the hero canvas with the selected source's same-origin interactive `kgDoc` runtime. A later published URL may upgrade that runtime only when same-origin; this keeps localhost source previews functional under the production frame-ancestor policy. A minimal fallback may exist only when that app shell cannot be retrieved; it is not the normal delivery path.
-
-For the detailed source-backed Markdown discovery contract behind that hero, use `docs/documents/markdown-convertible-agent-discovery-document.md`.
-
-**Runtime boundary note (`agentic-graph` / `agentic-canvas-os`)**: this document is
-the shared **publish topology** contract, not the full runtime topology for the
-Agentic Graph video-remix product split. For that product specifically:
-
-- `agentic-graph` remains the control-plane + contract SSOT and publishes the
-  Cloudflare surfaces under `airvio.co/agentic-graph`.
-- `agentic-canvas-os` is the realized split product repo for the user-facing
-  runtime shell.
-- The product runtime path is Vercel web + same-origin Vercel Agent-API as the
-  **primary/default** browser path, with AWS Agent-API as the **fallback/proof**
-  path.
-- For the current autonomous agentic runtime readiness status of
-  `agentic-canvas-os` (contract-ready and provider-capable, but not autonomous
-  by default), see
-  `docs/documents/agentic-canvas-os-autonomous-runtime-readiness.md`. That
-  record is docs-only and does not assert that autonomy is enabled on the
-  shipped default Worker.
-- The live canvas is consumed through the run-scoped Agentic Graph `doc-view` iframe
-  surface; MCP is the orchestration/control-plane transport, not the browser
-  canvas-render transport.
-- For current remote MCP onboarding and the canonical public-discovery vs
-  control-plane endpoint boundary, start with
-  `docs/documents/agentic-graph-mcp-onboarding-index.md` and
-  `docs/documents/agentic-graph-mcp-install-contract.md`.
-
-**Agentic Graph release-gate handoff**: keep Agentic Graph-specific pre-deploy blockers
-owned upstream in
-`agentic-graph/docs/documents/agentic-graph-cross-repo-publish-topology.md` rather than
-duplicating them here. The shared topology contract assumes three current
-proof lanes remain source-owned there:
-
-- responsive parity stays blocked on the mobile keyboard browser smoke,
-  `pages:check-sync`, and the route-and-action matrix review before
-  `pages:deploy-cloudflare`
-- collaboration changes stay blocked on `npm run collaboration:release:check`
-  plus publish-sync proof
-- storage-route claims stay blocked on direct live proof such as
-  `https://airvio.co/api/storage/*` and the storage worker origin checks before
-  they are treated as publish-ready evidence
+## Architecture: Source and Runtime Ownership
 
 ### Component Specifications
 
-**Component**: `agentic-graph`
-**Responsibility**: Own Agentic Graph source, build rules, docs, and release validation
-**Interfaces**: `sync:pages`, `release:pages`, canonical docs
-**Dependencies**: `huijoohwee` publish repo, Cloudflare Pages
-**Configuration**: app-local publish path resolution and route contract
+| Repository | Owned responsibility | Source of truth |
+|---|---|---|
+| `agentic-os` | Repository lifecycle, source locks, admission vocabulary and static composition observation; no product payment or renderer runtime | [Composition architecture](../../../agentic-os/guides/COMPOSITION-ARCHITECTURE.md), [agent instructions](../../../agentic-os/AGENTS.md) |
+| `huijoohwee.github.io` | Shared guidelines, schema vocabulary and topology documentation; no product execution or deployment controller | [Shared semantic contract](../../guidelines/cid-guidelines.md), [schema index](../../schema/AgenticRAG/README.md) |
+| `agentic-commerce-os` | Edge/core coordination, admission-receipt validation, provider routing, derived markup and evidence gates; provider owners retain money movement and settlement | [Package entry points](../../../agentic-commerce-os/package.json), [core bindings](../../../agentic-commerce-os/wrangler.core.jsonc), [edge routes](../../../agentic-commerce-os/wrangler.edge.jsonc) |
+| `agentic-canvas-os` | Shared invocation/safety contracts, agent facade, Worker API/assets and its declared durable state; Graph retains its domain execution and live Canvas owners | [Product contract](../../../agentic-canvas-os/docs/PRD-TAD.md), [Worker configuration](../../../agentic-canvas-os/wrangler.jsonc) |
+| `agentic-graph` | Canvas and domain execution, repository collaboration grammar, control-plane MCP, provider-backed commerce capabilities and its protected production release workflow | [Package entry points](../../../agentic-graph/package.json), [release workflow](../../../agentic-graph/.github/workflows/release.yml) |
+| `huijoohwee` | Generated production artifacts plus repository-owned projection policy, validation, headers and redirects; generated Graph assets are not authored here | [Mirror instructions](../../../huijoohwee/AGENTS.md), [route projection](../../../huijoohwee/_redirects), [validation commands](../../../huijoohwee/package.json) |
+| `GameXR` | Browser-local spatial flight and native visionOS host, configuration and build artifacts; consumes packaged Graph spatial-input/shared code | [Package dependencies](../../../GameXR/package.json), [build modes](../../../GameXR/vite.config.ts), [release contract](../../../GameXR/docs/RELEASE.md) |
 
-**Component**: `singabldr`
-**Responsibility**: Own Singabldr source, shell assets, build rules, and release validation through the local `singabldr` checkout backed by `huijoohwee/singabldr`
-**Interfaces**: `sync:pages`, `release:pages`, canonical docs
-**Dependencies**: `huijoohwee` publish repo, Cloudflare Pages
-**Configuration**: app-local publish path resolution and route contract
+### Canonical local Dev boundary
 
-**Component**: `huijoohwee`
-**Responsibility**: Own shared publish surfaces, redirects, headers, generated Pages Functions, and Cloudflare-facing repo content
-**Interfaces**: `_redirects`, `_headers`, `_worker.js`, Pages Functions, app publish targets
-**Dependencies**: synced app artifacts from `agentic-graph` and `singabldr`
-**Configuration**: Cloudflare Pages project settings and route rewrites
+The canonical Graph checkout is `$GITHUB_ROOT/agentic-graph` only while it uniquely owns clean
+`main` at the fetched canonical revision. Its actual commands are `npm run dev`, `npm run dev:apex`
+and the guarded `npm run dev:latest`. The Apex command selects `/` as the Vite base; it does not
+change public route ownership. Admitted `agent/<device>/<semantic-scope>` worktrees may run isolated
+previews. A task preview or a separate linked `main` checkout is not canonical Dev proof.
 
-**Component**: Agentic Graph root app-shell handler
-**Responsibility**: Serve the canonical published Agentic Graph app shell at `airvio.co`, inject the `/agentic-graph/` runtime alias, and preserve normal SPA asset resolution
-**Interfaces**: root request → published `/agentic-graph/` assets + alias metadata
-**Dependencies**: generated `cloudflare/pages/root-agent-ready-index.mjs` copied through the Agentic Graph publish sync
-**Configuration**: `x-agentic-graph-root-alias=/agentic-graph/`
+The executable owner is [dev-source-consistency.mjs](../../../agentic-graph/scripts/dev-source-consistency.mjs).
+A canonical-path conflict must preserve occupied work and return to the installed lifecycle owner.
+Consumers follow their pinned `node_modules/agentic-os` workflows and committed repository profile;
+this document neither upgrades those pins nor substitutes the latest sibling checkout for them.
 
-### Integration Contracts
+Commerce separately exposes `dev`, `dev:apex` and offline Worker tests. GameXR separately exposes
+`dev`, `dev:apex`, `build` and `build:apex`; its default artifact is scoped to `/gamexr/`, while Apex
+mode disables service-worker registration at shared root scope. Identically named npm scripts do
+not establish identical runtimes or permission to start them all.
 
-**Interface**: Dev-to-publish sync
-**Protocol**: local file sync plus Git commit
-**Data Format**: generated static assets, manifests, docs, and route files
-**Error Handling**: fail sync/release on missing artifacts, forbidden terms, or route drift
+### Runtime interfaces and provider bindings
 
-**Interface**: Publish-to-Cloudflare delivery
-**Protocol**: Cloudflare Pages deployment from an exact `huijoohwee` commit or clean archive of that commit
-**Data Format**: static repo contents from `huijoohwee`
-**Error Handling**: keep route ownership explicit in `_redirects`; never patch routes downstream in generated app files. Verify both `airvio.co/` and `airvio.co/agentic-graph/` after the custom domain observes the deployed asset hash.
+| Surface | Inspected declaration | Boundary |
+|---|---|---|
+| Graph app and root alias | `APP_BASE_PATH=/agentic-graph`; root handler injects the same React app's alias metadata | [Shared constants](../../../agentic-graph/cloudflare/pages/agentic-graph-agent-ready-shared.mjs), [root handler](../../../agentic-graph/cloudflare/pages/root-agent-ready-index.mjs) |
+| Public MCP discovery | `/agentic-graph/mcp` Pages surface | Public discovery/read-only surface; not the control-plane Worker |
+| Control-plane MCP | `/agentic-os/control-plane/mcp` and child routes | [Graph Worker route](../../../agentic-graph/cloudflare/workers/agentic-graph-mcp/wrangler.toml); Canvas's `AGENTIC_OS_MCP_ENDPOINT` agrees |
+| Canvas facade | `worker/index.js`, `web/dist` assets, `CANVAS_ROOM` and `AGENT_STATE` Durable Objects | [Canvas configuration](../../../agentic-canvas-os/wrangler.jsonc); configuration alone proves no live public production URL |
+| Commerce edge | Production route pattern `airvio.co/agentic-commerce-os*`, binding `COMMERCE_CORE` | [Edge configuration](../../../agentic-commerce-os/wrangler.edge.jsonc); production identity and external authority remain required |
+| Commerce sandbox | Separate Sandbox Worker/container declaration | [Sandbox configuration](../../../agentic-commerce-os/wrangler.sandbox.jsonc); not an always-on prerequisite for other operations |
+| GameXR | `/gamexr/` build and root-mode alternative | [GameXR build configuration](../../../GameXR/vite.config.ts); root publication needs a separate routing decision |
+
+The [Commerce production service manifest](../../../agentic-commerce-os/config/production-core-services.json)
+and [core configuration](../../../agentic-commerce-os/wrangler.core.jsonc) bind:
+
+| Binding | Provider service | Provider source owner |
+|---|---|---|
+| `ACOS_ADMISSION` | `agentic-canvas-os` | Canvas |
+| `CHECKOUT_PROVIDER` | `agentic-travel-commerce-production` | Graph |
+| `COMMERCE_SANDBOX` | `agentic-commerce-sandbox-production` | Commerce |
+| `DOCS_MCP` | `agentic-mcp` | Graph |
+| `MARKETPLACE_PROVIDER` | `agentic-marketplace-production` | Graph |
+
+The source-owned `inspectCompositionDeploymentTopology` export in
+[composition-deployment-topology.mjs](../../../agentic-os/bin/composition-deployment-topology.mjs)
+passed against the four runtime/lifecycle repository roots at the recorded revisions: five expected,
+configured and release-manifest targets agree, with zero findings and no sibling candidate execution.
+Manifest digest: `fbd529714b6d236aa85a0f12fffd3a71c19eefbb83850c5a4e34dc6fda3ff9c4`.
+This is static declaration consistency, not admission, settlement, provider or deployment proof.
+
+### Agentic Graph root-launch E2E flow
+
+The intended source flow remains one React shell with the root alias and source-backed interactive
+Canvas. [Root source](../../../agentic-graph/cloudflare/pages/root-agent-ready-index.mjs) owns shell
+retrieval and alias injection; [Markdown discovery](./markdown-convertible-agent-discovery-document.md)
+owns the detailed discovery/hero contract. Renderer, embed and mobile behavior must be tested through
+their runtime owners before a release claim; this source audit did not execute browser verification.
+MCP controls orchestration and does not become the browser Canvas-render transport.
+
+### Observed mirror state
+
+At mirror revision `b7b6c39ce0b5844a43042026a910f7552477c8ff`, `_redirects` and the tracked app directories
+still use the retired unhyphenated Graph namespace. The Graph source constants and mirror policy
+instead select `/agentic-graph/` and `content/agentic-graph`. This is an observed source-to-mirror gap,
+not evidence that the desired route has been deployed. Legacy names must remain only where the
+source-owned compatibility policy explicitly permits them; do not repair generated assets by hand.
+
+The mirror also declares `/gamexr/` and `/singabldr` routes. File presence or an old release note
+cannot establish the currently deployed project configuration, route response or artifact digest.
+
+## Integration Contracts and Deployment Strategy
+
+### Agentic Graph release owner
+
+The inspected [production workflow](../../../agentic-graph/.github/workflows/release.yml) requires an
+exact protected Graph source revision, local-review candidate and release evidence. It resolves a
+pinned Canvas docs revision, checks out the schema/mirror repositories, validates and builds the
+candidate, then enters the protected production environment for exact-candidate authorization.
+Its declared ordering is:
+
+```text
+source + exact dependencies -> validation and generated mirror candidate
+  -> production authorization -> Wrangler Pages deployment
+  -> immutable/stable/public runtime and browser verification
+  -> verified mirror publication -> final release evidence
+```
+
+The actual build interfaces are `pages:build-sync`, `pages:sync`, `pages:functions:build` and
+`pages:check-sync`. The historical `sync:pages` and `release:pages` names are not Graph package scripts.
+Although `pages:deploy-cloudflare` still exists as a package script, its existence is not authority
+to bypass the protected release controller or to deploy from an arbitrary local checkout.
+
+### GameXR release owner and unresolved shared-project conflict
+
+[GameXR's release contract](../../../GameXR/docs/RELEASE.md) specifies a different sequence: build
+from exact source, project only its scoped artifact through a mirror PR, use the Git-connected
+`joohwee` Pages preview, obtain exact authorization, merge, then verify production and rollback if needed.
+It names Git integration as the sole forward deployment owner. Graph's workflow instead executes
+Wrangler deployment before mirror publication; [mirror policy](../../../huijoohwee/AGENTS.md) assigns
+Graph's workflow deployment ownership.
+
+These declarations do not yet form one coherent shared-project deployment policy. Do not infer that
+both controllers may independently publish the whole project. The next affected release needs a
+source-owned decision reconciling controller ownership, project/route scope, preserved sibling
+artifacts, serialization, authorization and rollback, supported by actual provider configuration.
+This document records the conflict; it does not choose a new controller or authorize either path.
 
 ### Architectural Decisions
 
-**Decision**: Keep one Dev SSOT repo per app and one shared publish repo
-**Rationale**: preserves source ownership, reduces drift, and keeps Cloudflare delivery reviewable
-**Alternatives Considered**: store app source directly in `huijoohwee`; merge both apps into one repo
-**Trade-offs**: adds sync/release discipline but removes publish-repo source duplication and cross-app leakage
-
-### Quality Attributes
-
-- Performance: publish only generated app surfaces and avoid duplicate rebuild paths
-- Scalability: allow more app routes later without turning the publish repo into source
-- Security: keep public route ownership isolated and publish boundaries explicit
-- Observability: keep release validation in app-owned pipelines and route config in one publish repo
-
-### Deployment Strategy
-
-Cloudflare Pages deploys from `huijoohwee`; `agentic-graph` publishes `airvio.co/agentic-graph` and the root Agentic Graph launch alias at `airvio.co`; the local `singabldr` checkout backed by `huijoohwee/singabldr` publishes `airvio.co/singabldr`; app repos never deploy directly to Pages without syncing their generated outputs first.
-
-For a root-launch release, validate the same React-owned surfaces in Dev and Prod: the Live Canvas Hero region, the interactive `workspace-readme.md` FlowCanvas, and the hero's visible **Share canvas embed** action copying a `kgPreview=1&kgLiveHero=1` URL. Open that URL and prove the dedicated embedded-preview owner (`data-kg-live-canvas-hero-embed-preview=true`) contains the real interactive Flow canvas with the source-derived node and edge counts. Then invoke Explorer → Source Files → **Share canvas embed** for a different source and verify the hero immediately mounts `data-kg-live-canvas-hero-selected-embed=true` at a same-origin URL with interactive controls and canvas surfaces. On the apex and selected embed, verify zero visible Canvas toolbars, editor shells, Mermaid SVGs, timelines, and minimaps; persisted workspace renderer state must not seep into or mutate the hero. Also verify the visible `/`, `#`, and `@` invocation controls, exactly one `Enter Agentic Graph` link, and no normal-path static launch overlay. Keep the Dev instance running beside the production page during visual verification.
-
-For the Agentic Graph product split, keep this distinction explicit:
-
-- **Publish topology**: `agentic-graph` -> `huijoohwee` -> Cloudflare Pages for the
-  public `airvio.co/agentic-graph` surfaces.
-- **Runtime topology**: `agentic-canvas-os` deploys its Vercel primary path and
-  AWS fallback path outside the Pages publish repo; `huijoohwee` does not own
-  those runtime app sources.
+| Decision | Rationale and consequence |
+|---|---|
+| Retain distinct lifecycle, contract, runtime and generated-mirror owners | Reuse existing code and interfaces; a mirror does not become a second app source |
+| Treat Vercel/AWS topology as historical | [Canvas's active contract](../../../agentic-canvas-os/docs/PRD-TAD.md) excludes the old tier split; [Graph's archived decision](../../../agentic-graph/docs/agentic-graph-acos-topology-decision.md) marks it superseded |
+| Preserve separate source, mirror and deployment observations | A source migration can be complete while mirror convergence and live release remain unverified |
+| Resolve shared-project release authority upstream | Prevent competing forward deployments and accidental replacement of another product's artifacts |
 
 ### Migration Path
 
-If a repo still contains duplicated publish-side source, remove it from the publish repo, move ownership back to the app SSOT repo, and re-establish release flow through the app-owned sync and validation scripts.
+Update the affected source owner first; validate its exact candidate and regenerate projections
+through the authorized release owner. Mirror reconciliation, live route proof and deployment-owner
+reconciliation remain separate follow-up work, not side effects of synchronizing this document.
 
-## Cross-References
+## Verification and Cross-References
 
-- Shared planning: [Agentic Canvas OS TODO contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md), with new immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records.
-- Historical directive log: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`; retained entries carry no current planning authority.
-- Agentic Graph canonical companion: `agentic-graph/docs/documents/agentic-graph-cross-repo-publish-topology.md`
-- Markdown discovery companion: `huijoohwee.github.io/docs/documents/markdown-convertible-agent-discovery-document.md`
-- Autonomous runtime readiness: `huijoohwee.github.io/docs/documents/agentic-canvas-os-autonomous-runtime-readiness.md`
-- Singabldr canonical companion: `singabldr/docs/documents/singabldr-cross-repo-publish-topology.md`
-- Shared schema guidance: `huijoohwee.github.io/schema/AgenticRAG/{README.md,documentation.jsonld}`
+- Source audit: all seven recorded heads, package entry points, configuration and release owners were inspected.
+- Static topology: five Commerce service joins passed the existing source-owned inspector.
+- Document checks: validate opening YAML, resolve cited repository paths, and run this site's `npm test`
+  and `npm run check`. Recheck source revisions before relying on this snapshot for a later change.
+- Live/runtime evidence: not established here. Keep provider configuration, exact deployment identities,
+  browser/device behavior and funded payment evidence with their existing owners.
+- Detailed Graph publishing: [cross-repo publish topology](../../../agentic-graph/docs/documents/agentic-graph-cross-repo-publish-topology.md).
+- MCP onboarding: [index](../../../agentic-graph/docs/documents/agentic-graph-mcp-onboarding-index.md)
+  and [install contract](../../../agentic-graph/docs/documents/agentic-graph-mcp-install-contract.md);
+  source Worker routes remain the authority for endpoint declarations.
+- Product readiness: [Canvas runtime readiness](../../../agentic-canvas-os/docs/RUNTIME-READINESS.md)
+  and [GameXR release evidence requirements](../../../GameXR/docs/RELEASE.md).
+- Shared planning: [Canvas TODO](../../../agentic-canvas-os/docs/TODO.md); new planning records follow
+  its owner contract and do not alter this source snapshot automatically.

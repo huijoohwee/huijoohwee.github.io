@@ -1,12 +1,21 @@
 ---
 title: "Parser Guidelines"
 doc_type: "Guidelines"
-date: "2026-05-27"
+version: "1.0.0"
+date: "2026-09-09"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
 
 # Parser Guidelines
+
+## Scope and Ownership
+
+This module owns extraction, structure detection, chunking and source provenance.
+[Orchestrator Guidelines](./orchestrator-guidelines.md) coordinate operations over those outputs.
+The [parser schema](../schema/AgenticRAG/parser.jsonld) describes optional parser configuration;
+its presence does not require a model, worker, cache or particular extraction format.
+Pseudocode below is illustrative; the implementing repository owns executable behavior and checks.
 
 ## Core Principles
 

@@ -4,6 +4,7 @@ doc_type: "Guidelines"
 date: "2026-05-27"
 lang: "en-US"
 frontmatter_contract: "required"
+version: "1.0.0"
 ---
 
 # Schema Guidelines

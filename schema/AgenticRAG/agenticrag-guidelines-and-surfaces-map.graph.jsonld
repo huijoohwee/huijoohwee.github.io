@@ -2,8 +2,14 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@type": "kg:Graph",
   "rdfs:label": [
-    { "@value": "AgenticRAG sync map (guidelines + schema surfaces)", "@language": "en-us" },
-    { "@value": "AgenticRAG 同步映射（指南 + 模式表面）", "@language": "zh-cn" }
+    {
+      "@value": "AgenticRAG sync map (guidelines + schema surfaces)",
+      "@language": "en-us"
+    },
+    {
+      "@value": "AgenticRAG 同步映射（指南 + 模式表面）",
+      "@language": "zh-cn"
+    }
   ],
   "rdfs:comment": [
     {
@@ -16,20 +22,37 @@
     }
   ],
   "metadata": {
-    "schemaVersion": "1.0.0",
+    "schemaVersion": "1.1.0",
     "source": "system:sync",
     "inputs": [
-      { "repo": "joohwee", "relDir": "guidelines-archive" },
-      { "repo": "huijoohwee.github.io", "relDir": "schema/AgenticRAG" },
-      { "repo": "agentic-graph", "relDir": "docs/documents" }
+      {
+        "repo": "huijoohwee.github.io",
+        "relDir": "guidelines"
+      },
+      {
+        "repo": "joohwee",
+        "relDir": "guidelines-archive"
+      },
+      {
+        "repo": "huijoohwee.github.io",
+        "relDir": "schema/AgenticRAG"
+      },
+      {
+        "repo": "agentic-graph",
+        "relDir": "docs/documents"
+      }
     ]
   },
   "@graph": [
     {
       "@id": "node:joohwee:guidelines-archive:index",
       "@type": "kg:Node",
-      "labels": ["GuidelinesIndex"],
-      "name": ["joohwee/guidelines-archive"],
+      "labels": [
+        "GuidelinesIndex"
+      ],
+      "name": [
+        "joohwee/guidelines-archive"
+      ],
       "properties": {
         "repo": "joohwee",
         "relDir": "guidelines-archive",
@@ -50,49 +73,216 @@
       "chunk_text": "Index of workspace guideline files used to keep AgenticRAG schema wording and constraints aligned."
     },
     {
+      "@id": "node:site:guidelines:index",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelinesIndex"
+      ],
+      "name": [
+        "Active site guidelines"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relDir": "guidelines",
+        "inventoryPattern": "*.md",
+        "loadPolicy": "on-demand"
+      },
+      "chunk_text": "Active authored guidelines. Resolve the local inventory at validation time; load only the concern owner needed for the task. Archive nodes remain historical references."
+    },
+    {
       "@id": "node:schema:agenticrag:action-verbs",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["action-verbs.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/action-verbs.jsonld", "surface": "action-verbs" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "action-verbs.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/action-verbs.jsonld",
+        "surface": "action-verbs"
+      }
     },
     {
       "@id": "node:schema:agenticrag:ast-traversal",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["ast-traversal.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/ast-traversal.jsonld", "surface": "ast-traversal" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "ast-traversal.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/ast-traversal.jsonld",
+        "surface": "ast-traversal"
+      }
     },
     {
       "@id": "node:schema:agenticrag:aie-snippets",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["aie-book-chapter-snippets.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/aie-book-chapter-snippets.jsonld", "surface": "aie-snippets" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "aie-book-chapter-snippets.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/aie-book-chapter-snippets.jsonld",
+        "surface": "aie-snippets"
+      }
     },
     {
       "@id": "node:schema:agenticrag:settings-flow",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["settings-flow.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/settings-flow.jsonld", "surface": "settings-flow" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "settings-flow.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/settings-flow.jsonld",
+        "surface": "settings-flow"
+      }
     },
     {
       "@id": "node:schema:agenticrag:example-graph",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["example-graph.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/example-graph.jsonld", "surface": "example-graph" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "example-graph.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/example-graph.jsonld",
+        "surface": "example-graph"
+      }
     },
     {
       "@id": "node:schema:agenticrag:example-lean-startup-layer-modes",
       "@type": "kg:Node",
-      "labels": ["SchemaSurface"],
-      "name": ["example-lean-startup-layer-modes.jsonld"],
-      "properties": { "repo": "huijoohwee.github.io", "relPath": "schema/AgenticRAG/example-lean-startup-layer-modes.jsonld", "surface": "example-lean-startup-layer-modes" }
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "example-lean-startup-layer-modes.jsonld"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/example-lean-startup-layer-modes.jsonld",
+        "surface": "example-lean-startup-layer-modes"
+      }
     },
-    { "@id": "edge:guidelines:verb-cheatsheet->action-verbs", "@type": "kg:Edge", "source": "node:joohwee:guidelines-archive:index", "target": "node:schema:agenticrag:action-verbs", "label": "informs" },
-    { "@id": "edge:guidelines:schema-guidelines->ast-traversal", "@type": "kg:Edge", "source": "node:joohwee:guidelines-archive:index", "target": "node:schema:agenticrag:ast-traversal", "label": "informs" },
-    { "@id": "edge:guidelines:project-rules->settings-flow", "@type": "kg:Edge", "source": "node:joohwee:guidelines-archive:index", "target": "node:schema:agenticrag:settings-flow", "label": "informs" }
+    {
+      "@id": "edge:guidelines:verb-cheatsheet->action-verbs",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:verb-cheatsheet",
+      "target": "node:schema:agenticrag:action-verbs",
+      "label": "informs"
+    },
+    {
+      "@id": "edge:guidelines:schema-guidelines->ast-traversal",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:schema-guidelines",
+      "target": "node:schema:agenticrag:ast-traversal",
+      "label": "informs"
+    },
+    {
+      "@id": "edge:guidelines:project-rules->settings-flow",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:project-rules",
+      "target": "node:schema:agenticrag:settings-flow",
+      "label": "informs"
+    },
+    {
+      "@id": "node:site:guidelines:shared-contract",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelineOwner"
+      ],
+      "name": [
+        "cid-guidelines.md"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "guidelines/cid-guidelines.md"
+      }
+    },
+    {
+      "@id": "edge:site:guidelines:index->shared-contract",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:index",
+      "target": "node:site:guidelines:shared-contract",
+      "label": "indexes"
+    },
+    {
+      "@id": "node:site:guidelines:verb-cheatsheet",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelineOwner"
+      ],
+      "name": [
+        "verb-selection-cheat-sheet.md"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "guidelines/verb-selection-cheat-sheet.md"
+      }
+    },
+    {
+      "@id": "edge:site:guidelines:index->verb-cheatsheet",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:index",
+      "target": "node:site:guidelines:verb-cheatsheet",
+      "label": "indexes"
+    },
+    {
+      "@id": "node:site:guidelines:schema-guidelines",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelineOwner"
+      ],
+      "name": [
+        "schema-guidelines.md"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "guidelines/schema-guidelines.md"
+      }
+    },
+    {
+      "@id": "edge:site:guidelines:index->schema-guidelines",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:index",
+      "target": "node:site:guidelines:schema-guidelines",
+      "label": "indexes"
+    },
+    {
+      "@id": "node:site:guidelines:project-rules",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelineOwner"
+      ],
+      "name": [
+        "project-rules.md"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "guidelines/project-rules.md"
+      }
+    },
+    {
+      "@id": "edge:site:guidelines:index->project-rules",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:index",
+      "target": "node:site:guidelines:project-rules",
+      "label": "indexes"
+    }
   ]
 }

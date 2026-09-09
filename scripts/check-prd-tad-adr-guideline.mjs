@@ -9,6 +9,10 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { isAbsolute, resolve } from "node:path";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import { readFrontmatter } from "./lib/git-guidelines/fm-reader.mjs";
 
 const dir = "guidelines";
 const read = (name) => readFileSync(join(dir, name), "utf8");
@@ -16,6 +20,7 @@ const read = (name) => readFileSync(join(dir, name), "utf8");
 const INDEX = "prd-tad-adr-guidelines.md";
 
 const MODULES = [
+  "prd-tad-adr-codebase-grounding.md",
   "prd-tad-adr-economics.md",
   "prd-tad-adr-process-flows.md",
   "prd-tad-adr-readiness.md",
@@ -84,7 +89,6 @@ for (const name of files) {
   assert.ok(text.startsWith("---\n"), `${name}: frontmatter must be the first block`);
   const fm = /^---\n([\s\S]*?)\n---\n/.exec(text);
   assert.ok(fm, `${name}: frontmatter must terminate`);
-  assert.ok(!/\n---\n[\s\S]*?\n---\n/.test(text.slice(0, fm[0].length + 4)) || true, `${name}: frontmatter sanity`);
   for (const key of REQUIRED_KEYS) {
     assert.match(fm[1], new RegExp(`^${key}:`, "m"), `${name}: frontmatter must declare ${key}`);
   }
@@ -123,4 +127,61 @@ for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
   assert.ok(body.includes(`./${mod}`), `${INDEX}: section #${anchor} must delegate to ${mod}`);
 }
 
+const recordPath = "schema/AgenticRAG/prd-tad-adr-grounding.json";
+const recordBytes = readFileSync(recordPath);
+assert.ok(recordBytes.length < 65_536, "grounding record exceeds 64 KiB");
+const grounding = JSON.parse(recordBytes.toString("utf8"));
+const meta = readFrontmatter(read("prd-tad-adr-codebase-grounding.md")).data;
+assert.equal(meta.schema, "prd-tad-adr-codebase-grounding/v1");
+assert.equal(meta.parent, "PRD, TAD & ADR Guidelines");
+assert.ok(read("prd-tad-adr-codebase-grounding.md").includes("../" + recordPath));
+assert.equal(grounding.schema, "prd-tad-adr-codebase-grounding/v1");
+assert.equal(grounding.semantic_owner, "../../guidelines/cid-guidelines.md#shared-field-contract");
+assert.equal(grounding.continuity_owner, "../../guidelines/adlc-artifact-continuity.md");
+assert.equal(grounding.load_policy, "on-demand");
+assert.equal(grounding.production_ready, false);
+const repoIds = ["agentic-os", "huijoohwee.github.io", "agentic-commerce-os", "agentic-canvas-os",
+  "huijoohwee", "agentic-graph", "GameXR"];
+assert.deepEqual(grounding.repositories.map(row => row.id).sort(), [...repoIds].sort());
+const args = process.argv.slice(2);
+assert.ok(args.length <= 1 && (!args.length || args[0].startsWith("--codebase-root=")),
+  "only --codebase-root=/absolute/workspace is supported");
+const codebaseRoot = args.length ? args[0].slice("--codebase-root=".length) : null;
+if (codebaseRoot !== null) assert.ok(isAbsolute(codebaseRoot), "codebase root must be absolute");
+let artifacts = 0;
+for (const row of grounding.repositories) {
+  assert.equal(row.repository, "github.com/huijoohwee/" + row.id);
+  assert.match(row.revision, /^[0-9a-f]{40}$/u);
+  assert.ok(typeof row.owns === "string" && row.owns.length > 0);
+  assert.ok(Array.isArray(row.artifacts) && row.artifacts.length > 0 && row.artifacts.length <= 8);
+  assert.equal(new Set(row.artifacts.map(item => item.path)).size, row.artifacts.length);
+  assert.ok(Array.isArray(row.checks) && row.checks.length > 0 && row.checks.length <= 16);
+  for (const script of row.checks) assert.match(script, /^[A-Za-z0-9:_-]+$/u);
+  let pkg;
+  for (const item of row.artifacts) {
+    assert.match(item.path, /^[A-Za-z0-9_.\/-]+$/u);
+    assert.ok(!isAbsolute(item.path) && !item.path.split("/").some(part => !part || part === ".." || part === "."));
+    assert.match(item.sha256, /^[0-9a-f]{64}$/u);
+    artifacts++;
+    if (codebaseRoot === null) continue;
+    const bytes = execFileSync("git", ["-C", resolve(codebaseRoot, row.id), "cat-file", "blob",
+      row.revision + ":" + item.path], { timeout: 5000, maxBuffer: 500_000 });
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), item.sha256,
+      row.id + "/" + item.path + ": source digest mismatch");
+    if (item.path === "package.json") pkg = JSON.parse(bytes.toString("utf8"));
+  }
+  assert.ok(row.artifacts.some(item => item.path === "package.json"));
+  if (codebaseRoot !== null) for (const script of row.checks)
+    assert.ok(typeof pkg.scripts?.[script] === "string", row.id + ": missing owner check " + script);
+}
+assert.ok(Array.isArray(grounding.findings) && grounding.findings.length > 0 && grounding.findings.length <= 64);
+assert.equal(new Set(grounding.findings.map(row => row.id)).size, grounding.findings.length);
+for (const row of grounding.findings) {
+  assert.ok(["confirmed", "contradicted", "absent", "unverified"].includes(row.disposition));
+  for (const key of ["id", "claim", "limit"]) assert.ok(typeof row[key] === "string" && row[key].length > 0);
+  assert.ok(Array.isArray(row.evidence) && row.evidence.length > 0
+    && row.evidence.every(id => repoIds.includes(id)));
+}
 console.log(`PRD/TAD/ADR guideline contract ok (${files.length} files; ${report.join("; ")})`);
+console.log(`Grounding: ${repoIds.length} repositories, ${artifacts} artifacts; ${codebaseRoot === null
+  ? "structure checked; source bytes not read" : "exact historical source bytes and declared check names verified"}; no runtime or deployment verdict`);

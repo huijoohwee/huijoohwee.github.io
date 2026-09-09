@@ -1,3 +1,12 @@
+---
+title: "Color Palette"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 Reusable JSON-LD Schema Pattern for Synonym Clustering
 
 This template provides a consistent way to represent and cluster synonyms across automation flows using JSON-LD. It leverages SKOS for internal synonym management and sameAs for external equivalence.

@@ -1,3 +1,12 @@
+---
+title: "Codebase Neutrality Guidelines"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Codebase Neutrality Guidelines
 
 ## Overview

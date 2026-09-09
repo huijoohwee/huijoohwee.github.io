@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "2.4.0"
+version: "2.5.0"
 date: "2026-09-09"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -38,9 +38,9 @@ lifecycle_status: "proposed"
 - `rule-identity--classification` — stable rule addressing and the artifact-bearing vs advisory split
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT, including concurrency provenance keys
 - `overview` — what PRD/TAD are, the governing standards, and the ADLC/MCP-/WebMCP-native operating posture
-- `solo-operator-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
+- `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
 - `directive-grammar-cid` — shared CID/RAO/SVO message fields, decomposition, grounding, and budgets -> [CID Guidelines](./cid-guidelines.md#shared-field-contract)
-- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, and execution handoff
+- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, execution handoff, and the pipeline SSOT precedence rule
 - [Codebase Grounding — reference implementation](./prd-tad-adr-codebase-grounding.md) — revision-bound ownership, schema seams, resource demand, checks and unresolved claims; load only for this implementation
 - `concurrent-collaboration--work-tree-integrity` — multi-device, multi-LLM, multi-agent, multi-work-tree obligations -> [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md)
 - `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
@@ -216,6 +216,7 @@ The [codebase-grounding reference implementation](./prd-tad-adr-codebase-groundi
 - Re-run Directive-to-RAO coverage and affected re-derivation after any upstream revision, including one that arrived from a different work tree
 - Require joined independent evidence before satisfaction or readiness advances; forbid narrative or self-graded completion
 - Reuse the Artifact Continuity Module's findings and reference projections; forbid a parallel continuity vocabulary
+- Treat the joined PRD-TAD-ADR — one continuity ID at one exact revision — as the sole governing SSOT for every from-0-to-1 pipeline transition: scope, candidate, integration, release, and runtime evidence each consume one criterion, design element, and decision from it. On conflict, precedence is PRD-TAD-ADR → its named architecture or composition owner → derived indexes → navigation, workflow, and runtime command documents; a README, workflow, runbook, or runtime document that states a requirement, design, or decision absent from the joined artifact is a `duplicate-owner` finding, and a stale join blocks only the affected transition, never disjoint work
 
 **Authoring-to-execution gate**: advance only with current Codebase Grounding Records, complete PRD-to-TAD and Directive-to-RAO coverage, grounded design and RAO steps, independent checks, and a recorded decision covering the scope. Correct and re-ground in the authorized authoring loop without clerical reconfirmation; unresolved product, scope, or authority choices block the affected transition. A confirmed capability gap may become planned work within that scope; it never becomes evidence of an existing capability.
 
@@ -281,13 +282,7 @@ Strictly ordered, lowest to highest:
 undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-verified
 ```
 
-| Rung | Earned when |
-|---|---|
-| `undocumented` | No VCC and no Evidence Reference exists |
-| `spec-complete` | At least one VCC is stated, none yet satisfied |
-| `dev-proven` | At least one VCC is satisfied by a reproducible local check with a recorded result |
-| `runtime-ready` | Every VCC carries a satisfying Evidence Reference |
-| `production-verified` | `runtime-ready` plus a recorded delivery-surface result and a referenced operator promotion instruction |
+What earns each rung is defined once in the [Readiness Ladder module](./prd-tad-adr-readiness.md); this index does not restate it.
 
 **Directives**:
 - Draw every status value from that ladder and no other vocabulary; an unrecognised value is an `unknown-status` finding

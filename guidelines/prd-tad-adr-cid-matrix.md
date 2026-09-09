@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
+version: "1.0.2"
 date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.4.0"
+parent_version: "2.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -113,6 +113,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Separation      | Maintain concern boundaries          | - [ ] Keep PRD/TAD separate; maintain boundaries; forbid mixed responsibilities               |
 | Sequencing      | Order feature delivery               | - [ ] Plan release sequence using agent-platform execution order (Must OS → discovery → federation → spend safety → live proof → operator UI); forbid dependency-blind scheduling and parallel surface drift before gateway contract freeze |
 | Simplicity      | Prefer minimal solutions             | - [ ] Choose simple approaches; prefer minimalism; forbid over-engineering                    |
+| SSOT precedence | Govern the pipeline from one artifact | - [ ] Consume one PRD-TAD-ADR continuity ID at one exact revision per transition; rank it above architecture owners, derived indexes, and workflow docs on conflict; forbid restating requirements, designs, or decisions elsewhere (`duplicate-owner`) |
 | Stories         | Write user narratives                | - [ ] Use "As a…I want…So that"; write narratives; forbid technical task lists                |
 | Success         | Define completion criteria           | - [ ] Specify done conditions as observable, evaluator-verifiable states; define success; forbid ambiguous done states |
 | TCO             | Make total cost of ownership explicit | - [ ] Estimate 12-month TCO for every dependency (infra + API + egress + token spend) across each deployment model it offers (managed/serverless, provisioned/self-managed, hybrid/consolidated); document in ADR; forbid uncosted architectural decisions and forbid blending deployment-model variants into one figure |

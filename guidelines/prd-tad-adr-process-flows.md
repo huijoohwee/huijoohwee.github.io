@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
+version: "1.1.1"
 date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.4.0"
+parent_version: "2.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -116,7 +116,7 @@ Do not request a new approval for a reversible seam already covered by the recor
 - Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
 - **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
 - **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note
-- **Bound the iteration**: each Phase 4 revision cycle carries a max-iteration bound and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
+- **Bound the iteration**: each Phase 4 revision cycle carries the max-iteration bound owned by the parent's PRD ↔ TAD Integration section and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
 - **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
 - **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
 

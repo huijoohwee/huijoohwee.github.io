@@ -12,7 +12,7 @@ product: "agentic-canvas-os"
 frontmatter_contract: "required"
 domain: "agentic-graph"
 related:
-  - "https://github.com/huijoohwee/agentic-os/blob/main/guides/COMPOSITION-ARCHITECTURE.md"
+  - "https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md"
   - "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md"
   - "docs/documents/agentic-graph-mcp-onboarding-index.md"
   - "docs/documents/agentic-graph-mcp-install-contract.md"
@@ -101,7 +101,7 @@ Enabling autonomy is an explicit operator action, not a code change to the shipp
 
 ## Cross-References
 
-- Shared topology contract: [Composition architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/COMPOSITION-ARCHITECTURE.md)
+- Shared topology contract: [Composition architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md)
 - Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md`
 - Remote MCP onboarding index: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-onboarding-index.md`
 - Canonical MCP install boundary: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-install-contract.md`

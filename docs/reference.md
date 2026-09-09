@@ -76,9 +76,9 @@ frontmatter_contract: "required"
 
 ---
 
-## Topology Contracts
+## Technology and Topology Contracts
 
-| [Composition Architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/COMPOSITION-ARCHITECTURE.md) | Canonical combined PRD/TAD/ADR for seven-repository ownership, runtime topology and release boundaries; Agentic OS owns composition, and product repositories retain execution/release authority |
+| [Technology Stack and Composition Architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md) | Canonical combined PRD/TAD/ADR for source-grounded technology selection, Free/FOSS constraints, seven-repository ownership, runtime topology and release boundaries; product repositories retain execution/release authority |
 | [Agentic Canvas OS TODO Contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md) | Sole live cross-repository planning owner; new tasks use immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records |
 | [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Historical cross-repo entries retained in place; current planning follows the Canvas TODO contract |
 

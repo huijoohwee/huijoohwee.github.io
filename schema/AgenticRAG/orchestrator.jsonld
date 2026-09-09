@@ -2,10 +2,16 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Orchestrator",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.0.1",
   "rdfs:label": [
-    { "@value": "Orchestrator", "@language": "en-us" },
-    { "@value": "编排器", "@language": "zh-cn" }
+    {
+      "@value": "Orchestrator",
+      "@language": "en-us"
+    },
+    {
+      "@value": "编排器",
+      "@language": "zh-cn"
+    }
   ],
   "rdfs:comment": [
     {
@@ -54,5 +60,8 @@
         "max_feedback_iterations"
       ]
     }
-  }
+  },
+  "documentation_paths": [
+    "guidelines/orchestrator-guidelines.md"
+  ]
 }

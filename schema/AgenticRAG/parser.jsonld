@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@id": "rag:Parser",
   "@type": "rdfs:Class",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "rdfs:comment": [
     {
       "@value": "Parser surface for token linking and edge elevation. Extracts phrase boundaries, entity spans, and relationships; attaches confidence and provenance while remaining domain-agnostic and configuration-driven. Implementations are encouraged to keep parsing bounded and responsive via off-main-thread workers, bounded caches, and optional inspection-only metrics stored in graph metadata.",
@@ -14,8 +14,14 @@
     }
   ],
   "rdfs:label": [
-    { "@value": "Parser", "@language": "en-us" },
-    { "@value": "解析器", "@language": "zh-cn" }
+    {
+      "@value": "Parser",
+      "@language": "en-us"
+    },
+    {
+      "@value": "解析器",
+      "@language": "zh-cn"
+    }
   ],
   "propertyDefinitions": {
     "tokenLinkingConfig": {
@@ -36,5 +42,8 @@
         "temporal_marker_boost"
       ]
     }
-  }
+  },
+  "documentation_paths": [
+    "guidelines/parser-guidelines.md"
+  ]
 }

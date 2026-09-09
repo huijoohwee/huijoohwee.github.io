@@ -1,0 +1,30 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
+  "@id": "https://huijoohwee.github.io/schema/AgenticRAG/evals.jsonld",
+  "@type": "rdfs:Resource",
+  "schemaVersion": "1.0.0",
+  "status": "reference-only",
+  "rdfs:label": [
+    {
+      "@value": "Evaluation owners",
+      "@language": "en-us"
+    },
+    {
+      "@value": "评估责任源",
+      "@language": "zh-cn"
+    }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Reference entry for existing verification guidance and optional stage metrics. This resource defines no executable harness, acceptance threshold, production proof, or second metrics schema. Select checks in the implementing repository from the scoped acceptance criteria.",
+      "@language": "en-us"
+    }
+  ],
+  "rdfs:seeAlso": [
+    "https://huijoohwee.github.io/schema/AgenticRAG/stage-metrics.jsonld",
+    "https://huijoohwee.github.io/guidelines/testing-guidelines.md"
+  ],
+  "documentation_paths": [
+    "guidelines/testing-guidelines.md"
+  ]
+}

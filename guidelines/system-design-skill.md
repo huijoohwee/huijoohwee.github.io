@@ -1,6 +1,12 @@
 ---
 name: system-design-skill
 description: Distributed system architecture principles (CID framework). Use when designing/reviewing distributed systems, APIs, microservices, data architecture, or security layers.
+title: "System Design Skill"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
 ---
 
 # System Design Guidelines

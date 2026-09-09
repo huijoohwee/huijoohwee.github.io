@@ -2,7 +2,7 @@
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
 version: "2.4.0"
-date: "2026-09-05"
+date: "2026-09-09"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -41,6 +41,7 @@ lifecycle_status: "proposed"
 - `solo-operator-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
 - `directive-grammar-cid` — shared CID/RAO/SVO message fields, decomposition, grounding, and budgets -> [CID Guidelines](./cid-guidelines.md#shared-field-contract)
 - `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, and execution handoff
+- [Codebase Grounding — reference implementation](./prd-tad-adr-codebase-grounding.md) — revision-bound ownership, schema seams, resource demand, checks and unresolved claims; load only for this implementation
 - `concurrent-collaboration--work-tree-integrity` — multi-device, multi-LLM, multi-agent, multi-work-tree obligations -> [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md)
 - `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
 - `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
@@ -202,6 +203,8 @@ Each `CID Directive Matrix` entry is organized alphabetically (A→Z) for clarit
 ## Artifact Continuity Authoring Seam
 
 The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and validation. PRD owns product intent, scope, criteria, and VCCs; TAD consumes that exact revision and owns structure; ADR records material decisions, alternatives, consequences, and relevant recovery. Execution consumes their joined projection as bounded RAO Steps under the shared CID contract. Decompose independently closable outcomes, not phase labels; concurrent revisions also satisfy the collaboration seam before baseline.
+
+The [codebase-grounding reference implementation](./prd-tad-adr-codebase-grounding.md) supplies one bounded, machine-readable ownership snapshot across source, schema, application and publication repositories. It introduces no competing CID/RAO/SVO fields or universal topology. Source-confirmed ownership, candidate corrections, runtime proof and deployed state remain separate.
 
 **Directives**:
 - Declare stable continuity IDs and exact revisions across PRD, TAD, and ADR; forbid prose, filename, or co-location joins

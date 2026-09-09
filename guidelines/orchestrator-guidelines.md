@@ -1,152 +1,61 @@
-# Parser Guidelines
-
-## Core Principles
-
-**Structure-Aware Extraction**: Parser detects document structure -> preserves provenance -> segments into semantic units | Format-agnostic interfaces | Configuration-driven chunking | Zero format assumptions
-
-**Provenance Primacy**: All extracted units track source location, block type, parent hierarchy | Bidirectional links between semantics and source structure
-
 ---
+title: "Orchestrator Guidelines"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+owner: "Orchestration contract"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+universal_scope: true
+runtime_readiness_policy: "fail-closed"
+---
+
+# Orchestrator Guidelines
+
+## Scope and Ownership
+
+Orchestration coordinates existing operations over parsed inputs. [Parser Guidelines](./parser-guidelines.md)
+own extraction, structure detection, chunking and source provenance. Reuse that owner instead of copying
+parser algorithms into orchestration. [Shared CID, RAO and SVO](./cid-guidelines.md) define the meanings
+used to join requested work, accountable functions and evidence.
+
+The [orchestrator schema](../schema/AgenticRAG/orchestrator.jsonld) describes optional corpus unification,
+reasoning and feedback configuration. It is a vocabulary surface, not an executable controller.
+Repository lifecycle belongs to the pinned `agentic-os` owner; product runtimes own their execution state.
+
+## Plan and Select
+
+1. Resolve scoped inputs, constraints, acceptance criteria, authority and budgets.
+2. Compare arguments for feasible approaches and outrank them by expected value, cost and reliability.
+3. Select the smallest operation graph that satisfies the task. Preserve dependency order and bound
+   concurrency; multiple roles do not imply multiple agents, processes or model calls.
+4. Record the selected source revisions and outcome checks. Replan when material constraints change.
+
+## Execute on Demand
+
+Acquire only capabilities required by the selected operation. Parsing, retrieval, model inference,
+containers, browsers and telemetry are independent capabilities; an orchestration request does not
+require all of them. Reuse available suitable resources and release only task-owned resources.
+
+Registered tools and skills expose their input, output and authorization contracts before execution.
+Keep provider adaptation in the existing boundary. A missing required prerequisite blocks the dependent
+operation; an optional omission is recorded without hiding a failed required check.
 
 ## Long-Horizon SuperAgent Orchestration
 
-- Orchestrators must accept durable objectives through one message gateway and write run state, trace, memory observations, and artifacts through one native owner.
-- Role-scoped agents may plan, research, code, create, verify, and synthesize, but they must share bounded budgets and explicit stop conditions.
-- Tools and skills must be registered by contract before execution. Provider-specific tool calls must remain upstream of parser, GraphData, Storyboard Widget, and Rich Media Panel ownership.
-- MCP-structured AI responses must land through the shared FloatingPanel Chat submit validation and structured-content projection path. Do not retry a renderable literal MCP result for legacy AGENTIC_OS, synthesize AGENTIC_OS text, or patch Canvas graph state downstream.
-- DeerFlow may be referenced only for conceptual long-horizon patterns or optional local gateway use. Do not copy DeerFlow code, prompts, topology, skill packs, or memory/sandbox layout.
-- Harness metadata in Markdown is orchestration context; graph topology is authored only through `flow:` and rendered through the shared pipeline.
+Durable objectives use the existing message gateway and native run-state, trace, memory and artifact
+owners. Role-scoped agents may plan, research, code, create, verify and synthesize within shared budgets
+and explicit stop conditions. Durable checkpoints and review interrupts are required when the selected
+operation needs recovery or external approval; a role label or checkpoint cannot grant authority.
 
----
+## Feedback and Outcomes
 
-## Document Parsing
+Enable corpus unification, threshold tuning or feedback only for a demonstrated need and declared
+configuration. Preserve source provenance through every transformation. Bound iterations and retries;
+stop when the acceptance check is met, resources are exhausted, or an unresolved prerequisite blocks work.
 
-### Component: DocumentParser
-
-**From raw files to structured units**: DocumentParser -> detects file format via config -> extracts text with layout preservation -> identifies block types -> annotates provenance metadata -> delivers structured document tree.
-
-```
-FUNCTION DocumentParser.parse_document({ file_path, config }) -> { document }
-  // DocumentParser extracts structured content via format handlers
-  
-  format <- detect_format(file_path, config.format_handlers)
-  handler <- config.format_handlers[format]
-  
-  raw_content <- handler.extract(file_path)
-  
-  blocks <- []
-  FOR EACH segment IN raw_content.segments:
-    block <- {
-      type: classify_block_type(segment, config.block_classifiers),
-      content: segment.text,
-      provenance: {
-        source: file_path,
-        line_range: [segment.start_line, segment.end_line],
-        block_type: segment.type,  // Paragraph, Section, CodeBlock, Table, List
-        parent_id: segment.parent_ref
-      }
-    }
-    blocks.append(block)
-  
-  RETURN { blocks: blocks, metadata: raw_content.metadata }
-END
-```
-
-| Module | Class/Object | Function/Method | Responsibility (S-V-O) | Dependencies | Artifacts/Outputs |
-|--------|--------------|-----------------|------------------------|--------------|-------------------|
-| `parse/document.ext` | `DocumentParser` | `parse_document` | DocumentParser extracts structured content via format handlers | `config.format_handlers` | `Document{}` |
-
----
-
-## Structure Detection
-
-### Component: StructureClassifier
-
-**From flat text to hierarchical structure**: StructureClassifier -> analyzes layout patterns -> detects boundaries via heuristics -> builds parent-child relationships -> assigns block types from schema -> delivers nested document structure.
-
-```
-FUNCTION StructureClassifier.classify_blocks({ raw_blocks, config }) -> { classified }
-  // StructureClassifier assigns block types via pattern matching
-  
-  classified <- []
-  
-  FOR EACH block IN raw_blocks:
-    features <- extract_structural_features(block, config.feature_extractors)
-    
-    block_type <- None
-    max_confidence <- 0
-    
-    FOR EACH classifier IN config.block_classifiers:
-      score <- classifier.predict(features)
-      IF score > max_confidence AND score >= config.classification_threshold:
-        block_type <- classifier.type
-        max_confidence <- score
-    
-    classified.append({
-      block: block,
-      type: block_type OR "Paragraph",  // Default fallback
-      confidence: max_confidence,
-      provenance: merge_provenance(block.provenance, { classifier: classifier.id })
-    })
-  
-  RETURN build_hierarchy(classified, config.hierarchy_rules)
-END
-```
-
-| Module | Class/Object | Function/Method | Responsibility (S-V-O) | Dependencies | Artifacts/Outputs |
-|--------|--------------|-----------------|------------------------|--------------|-------------------|
-| `parse/structure.ext` | `StructureClassifier` | `classify_blocks` | StructureClassifier assigns block types via pattern matching | `config.block_classifiers` | `ClassifiedBlock[]` |
-
----
-
-## Chunking Strategy
-
-### Component: SemanticChunker
-
-**From blocks to semantic chunks**: SemanticChunker -> aggregates blocks by coherence -> respects token limits -> preserves provenance chains -> splits on natural boundaries -> delivers context-aware chunks for downstream processing.
-
-```
-FUNCTION SemanticChunker.create_chunks({ blocks, config }) -> { chunks }
-  // SemanticChunker segments blocks into token-bounded coherent units
-  
-  chunks <- []
-  current_chunk <- []
-  current_tokens <- 0
-  
-  FOR EACH block IN blocks:
-    block_tokens <- estimate_tokens(block.content, config.tokenizer)
-    coherence <- compute_coherence(current_chunk, block, config.coherence_metric)
-    
-    IF current_tokens + block_tokens > config.chunk_token_limit OR coherence < config.min_coherence:
-      IF NOT is_empty(current_chunk):
-        chunks.append(finalize_chunk(current_chunk, config))
-        current_chunk <- []
-        current_tokens <- 0
-    
-    current_chunk.append(block)
-    current_tokens += block_tokens
-  
-  RETURN { chunks: chunks, avg_tokens: mean(chunk.token_count FOR chunk IN chunks) }
-END
-```
-
-| Module | Class/Object | Function/Method | Responsibility (S-V-O) | Dependencies | Artifacts/Outputs |
-|--------|--------------|-----------------|------------------------|--------------|-------------------|
-| `parse/chunker.ext` | `SemanticChunker` | `create_chunks` | SemanticChunker segments blocks into token-bounded coherent units | `config.chunk_token_limit`, `config.tokenizer` | `Chunk[]` |
-
----
-
-## Configuration Schema
-
-**format_handlers**: `{ pdf, docx, html, markdown }` - Format-specific extractors  
-**block_classifiers**: `{ Section, Paragraph, CodeBlock, Table, List, ListItem }` - Structure detectors  
-**chunk_token_limit**: Token budget per chunk  
-**coherence_metric**: `{ embedding_similarity, lexical_overlap }` - Boundary detection method
-
----
-
-## Quality Metrics
-
-**Structure Coverage**: Classified blocks / Total blocks  
-**Provenance Completeness**: Blocks with line ranges / Total blocks  
-**Chunk Coherence**: Mean intra-chunk similarity scores
+Use [stage metrics](../schema/AgenticRAG/stage-metrics.jsonld) for optional inspection data and
+[evaluation references](../schema/AgenticRAG/evals.jsonld) to find the existing verification owners.
+Metrics describe observations; they do not replace acceptance criteria or establish runtime readiness.

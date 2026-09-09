@@ -1,267 +1,87 @@
+---
+title: "Project Rules"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+owner: "Technical Writer function"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: true
+runtime_readiness_policy: "fail-closed"
+---
+
 # Project Rules
 
-## Overview
+## Scope and Ownership
 
-**Software projects**: design domain-neutral systems to preserve adaptability, run rapid validation cycles to accelerate learning, architect coherently to maintain clarity, automate quality checks to enforce reliability, deliver accountably to guarantee ownership, and practice debt-free development to sustain longevity.
+This entry routes project-wide concerns to their existing owners. Load only the module needed for
+the current task. Product-specific requirements and budgets belong in the product's PRD/TAD/ADR;
+these guidelines do not establish production readiness or deployment authority.
 
-**Team guidelines**: act with agility and rigor to balance speed and discipline, separate concerns to uphold modularity, forbid hardcoding to avoid rigidity, eliminate duplicated logic to ensure efficiency, and apply sustainable rules to secure resilience.
-
-**Project-wide standards**: design domain-agnostic systems to preserve adaptability, architect with configuration-driven patterns to enable flexibility, run rapid learning cycles to accelerate discovery, apply Lean Startup with OKRs to align progress, enforce MCP and GraphRAG consistency to secure coherence, define code quality boundaries to uphold reliability, and sustain continuous validation loops to guarantee resilience.
-
----
-
-## Context—Intent—Directive (CID) Framework
-
-### Definition
-- **Context**: focus domain of concern
-- **Intent**: desired principle or guiding goal
-- **Directive**: explicit prohibition or required safeguard
-
-### Sorting
-Each line/column is organized alphabetically (A→Z) for clarity and neutrality.
-
----
-
-## Three-Beat Mantra Form
-
-Owned by [Project Rules Mantras Module](./project-rules-mantras.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
-
-## Context—Intent—Directive Table
-
-Owned by [Project Rules CID Table Module](./project-rules-cid-table.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
-
-## Core Directives
-
-### Core Principles
-
-**Systems maintain domain neutrality through configuration-driven design**
-- Code remains neutral, project-agnostic, dataset-agnostic, metadata-driven
-- Systems eliminate hardcoded domain entities
-- Systems adapt via configuration only
-
-**Components enforce configuration-driven orchestration**
-- Systems orchestrate through external config
-- Components implement single-responsibility patterns
-- Systems separate structure from semantics
-- Systems track provenance bidirectionally
-
-**Architects maintain single source of truth**
-- Schema aligns semantics across system
-- Centralized constants prevent duplication
-- Reusable primitives enable composition
-- Performance defaults guide optimization
-
----
+| Concern | Single normative owner | Load when |
+|---|---|---|
+| Shared CID, RAO and SVO meanings | [Shared contract](./cid-guidelines.md) | Joining requirements, actions and evidence |
+| Buyer problem, scope and design decisions | [PRD/TAD/ADR](./prd-tad-adr-guidelines.md) | Defining or changing a product contract |
+| Lifecycle, execution and release evidence | [ADLC](./adlc-guidelines.md) | Starting, validating or handing off work |
+| Resource selection and cost | [Token and performance economics](./token-performance-economics-guidelines.md) | Choosing checks, tools or runtime resources |
+| Reusable implementation boundaries | [Codebase maintainability](./codebase-maintainability-guidelines.md) | Changing source modules |
+| Schema representation | [Schema guidelines](./schema-guidelines.md) | Changing serialized data contracts |
+| Human/agent interaction | [User rules](./user-rules.md) | Clarifying intent or reporting results |
 
 ## Development Methodology Directives
 
-### Lean Startup Cycle
+Prioritize evidenced buyer pain and willingness to pay, then the smallest complete user journey
+that can test the value hypothesis. Apply constraints, compare arguments and outrank feasible
+options by expected value and implementation cost. Record assumptions separately from observations.
+Reuse existing source and validators before introducing abstractions or dependencies.
 
-**Teams execute Build-Measure-Learn iterations**
-- Teams build MVPs validating hypotheses
-- Teams collect metrics through instrumentation
-- Teams validate hypotheses via statistical analysis
-- Teams iterate based on threshold comparisons
-
-**From hypothesis to production**: Team → defines minimal feature set via user stories → implements configuration-driven core → deploys instrumented version with telemetry → collects metrics through analytics pipeline → validates hypotheses via statistical analysis → pivots or perseveres based on thresholds.
-
-### MVP Standards
-
-**Product managers define Minimum Viable Products**
-- Managers identify smallest feature set validating core hypothesis
-- Managers ensure MVP delivers user value
-- Managers enable learning through instrumentation
-
-**Teams satisfy MVP requirements**:
-- [X] Teams implement single critical user journey
-- [X] Teams configure behavior (no hardcoding)
-- [X] Teams produce schema-compliant outputs
-- [X] Teams enable provenance tracking
-- [X] Teams activate metrics instrumentation
-
-### OKR Framework
-
-**Leaders establish objectives with measurable key results**
-- Leaders define strategic goals
-- Leaders specify 3-5 measurable key results
-- Leaders track quarterly progress
-- Leaders conduct retrospective analysis
-
-**Teams structure key results with quantifiable metrics**:
-```yaml
-metric: [quantifiable_measure]
-baseline: [current_value]
-target: [desired_value]
-deadline: [timeframe]
-measurement: [data_source]
-threshold: 0.8
-```
-
----
-
-## Architecture Standards Directives
-
-### Model Context Protocol (MCP)
-
-**From isolated tools to integrated ecosystem**: MCP → standardizes interfaces via protocol spec → enables context sharing through structured messaging → orchestrates workflows using declarative pipelines → maintains state with provenance.
-
-**Developers implement MCP-compliant components**:
-- [X] Tools expose MCP-compliant interfaces
-- [X] Systems propagate context with metadata
-- [X] Systems cascade errors with traceability
-- [X] Components follow semantic versioning rules
-
-### Agentic GraphRAG Pattern
-
-**From queries to knowledge synthesis**: Agentic GraphRAG → decomposes query via intent parsing → retrieves subgraphs using traversal algorithms → reasons over connections through multi-hop inference → synthesizes response with citation chains → delivers grounded output with provenance links.
-
-**Systems compose GraphRAG components**:
-- Query decomposer parses intent into subqueries
-- Graph traverser retrieves relevant subgraphs via embeddings
-- Reasoning engine performs multi-hop inference with confidence decay
-- Response synthesizer generates output with provenance
-
-### EDA to LLM Ops Pipeline
-
-**Pipeline orchestrates feedback loop architecture**:
-```
-[Ingestion] → [EDA] → [Feature Engineering] → [Training]
-     ↑                                            ↓
-[Monitor] ← [Deploy] ← [Evaluate] ← [Validate]
-```
-
-**From exploration to production**: Pipeline → ingests data via schema validators → profiles statistics through EDA → engineers features using transformation DAGs → trains models with hyperparameter tuning → validates against quality gates → deploys versioned artifacts → monitors real-time performance → feeds insights back to EDA.
-
-**Systems enforce quality gates**:
-- Data drift: KL divergence < 0.15
-- Model performance: F1 > baseline + 5%
-- Latency: p99 < 500ms
-- Schema compliance: 100%
-
----
-
-## Code Organization Directives
-
-### Module Boundaries
-
-**Developers respect module size constraints**
-- Developers limit files to <600 lines
-- Developers keep chunks <500kB post-minification
-
-**Developers define module scope**
-- Developers build feature-scoped utilities
-- Developers implement single-responsibility classes
-- Developers expose configuration-driven behavior
-
-**Module Pattern Template**:
-
-**From [input_state] to [output_state]**: Module → [processes/transforms/aggregates] [data_type] via [method] → delivers [artifacts] for [downstream_component].
-
-### Responsibility Flow (S-V-O)
-
-**Developers document component responsibilities**
-- Developers map one responsibility per table row
-- Developers express responsibilities as Subject—Verb—Object statements
-
-| Stage | Module | Class/Object | Function/Method | Responsibility (S-V-O) | Dependencies | Artifacts/Outputs | Lines |
-|-------|--------|--------------|-----------------|------------------------|--------------|-------------------|-------|
-| [Name] | `path/module.ext` | `ClassName` | `method_name` | [subject verbs object] | `pkg1`, `pkg2` | [output] | N–M |
-
----
-
-## Semantic Consistency Directives
-
-**Developers maintain schema alignment across system boundaries**
-- Developers synchronize with `/schema/AgenticRAG`
-- Developers align API identifiers, catalogs, components
-- Developers standardize file names, handlers, hooks
-- Developers unify LocalStorage keys (`LS_KEY_*`)
-- Developers coordinate settings, state fields, store selectors
-
-**Developers centralize repeated copy**
-- Developers extract repeated phrases to copy helpers (`COPY_*`)
-- Developers maintain single source of truth
-- Developers standardize error/empty states
-
----
+An MVP still handles failures that threaten its accepted journey, security, data integrity or
+payment correctness. Its scope may be small; its acceptance criteria must be explicit.
 
 ## Performance & Quality Directives
 
-**Developers optimize through standard techniques**
-- Developers implement batching, caching, chunking
-- Developers apply memoization, sharding, virtualization
+Select resources from the requested operation and its actual prerequisites. Containers, VMs,
+browsers, network tools, telemetry and model calls are conditional capabilities. Start them only
+when a selected check needs them; reuse suitable running resources and release only resources
+owned by the task. A missing required capability blocks that check; it does not turn it into a pass.
 
-**Systems measure quality through defined metrics**
-- Systems track precision, recall, coverage
-- Systems monitor processing_time, resource_utilization
-
-**Systems trigger corrective actions based on thresholds**
-- Pattern: [metric < threshold] → [reprocess | review | retrain]
-
----
+Use caching, batching, memoization, sharding or virtualization when measured workload and freshness
+requirements justify them. Dependent operations remain ordered. Define thresholds with units,
+baselines and an acceptance check in the owning product contract; ML metrics and latency examples
+are not universal gates. Evidence of a local check is separate from production runtime proof.
 
 ## Anti-Pattern Guards
 
-**Developers avoid prohibited patterns**:
+Keep shared semantics and reusable contracts central; keep domain behavior in the owning product.
+Configuration is useful where variability exists, and does not require making every behavior
+runtime-configurable. MCP, graph processing, distributed tracing and a particular UI framework
+apply only to surfaces that use them.
 
-❌ Hardcoded domain assumptions, project-specific presets, dataset paths → ✅ Configuration-driven parameters  
-❌ Duplicate/stale/unreferenced code, memory leaks, race conditions, ingestion-affecting view toggles → ✅ Single source of truth, proper cleanup, view-only UI switches over stable ingestion  
-❌ Multiple responsibilities per component, unidirectional provenance → ✅ SRP modules, bidirectional links  
-❌ Files >600 lines, chunks >500kB, non-configurable thresholds → ✅ Modular boundaries, externalized config  
+Preserve authored work and exact revisions. Eliminate replaced duplicate sources after resolving
+references. Respect module/chunk budgets, bound retries and concurrency, and make invalid input
+or incomplete evidence visible at the relevant boundary.
 
----
+## Three-Beat Mantra Form
 
-## Validation Checklist
+[Mantra projection](./project-rules-mantras.md) describes a compact presentation of the shared
+contract. It introduces no additional directives.
 
-**Teams execute pre-deployment validation**:
-- [ ] Validators confirm zero hardcoded domain entities
-- [ ] Product managers verify MVP criteria satisfied, OKRs defined
-- [ ] Architects validate MCP interfaces implemented
-- [ ] Engineers ensure provenance links bidirectional
-- [ ] Engineers confirm feedback loops instrumented
-- [ ] Developers verify lint + typecheck passed
-- [ ] Validators confirm schema compliance
+## Context—Intent—Directive Table
 
-**Teams execute continuous post-deployment monitoring**:
-- [ ] Managers monitor OKRs weekly
-- [ ] Engineers review pipeline metrics daily
-- [ ] Teams iterate via Lean Startup cycle
-
----
+[CID application](./project-rules-cid-table.md) shows how to apply the shared fields without
+maintaining another alphabetical policy catalog.
 
 ## Role—Action—Outcome
 
-**Role: Product Manager**  
-→ Action: defines MVP scope, establishes OKRs, validates hypotheses, prioritizes iterations  
-→ Outcome: delivers learning-optimized product increments validating strategic hypotheses
+Use the [shared field contract](./cid-guidelines.md#shared-field-contract) for accountable function,
+transformation and observable result. One person or agent may perform several functions; a role
+list does not require a team, parallel agents or separate documents.
 
-**Role: System Architect**  
-→ Action: designs MCP interfaces, structures GraphRAG pipelines, enforces domain neutrality, maintains schema alignment  
-→ Outcome: establishes coherent architecture enabling composition and integration
+## Validation Checklist
 
-**Role: Developer**  
-→ Action: implements single-responsibility components, exposes configuration parameters, documents responsibilities via SVO, respects module boundaries  
-→ Outcome: produces maintainable, testable code enabling rapid iteration
-
-**Role: Data Engineer**  
-→ Action: builds EDA-to-production pipelines, instruments feedback loops, enforces quality gates, monitors drift metrics  
-→ Outcome: maintains reliable data flows enabling model performance
-
-**Role: Quality Validator**  
-→ Action: executes pre-deployment checklists, monitors post-deployment metrics, triggers corrective actions, audits schema compliance  
-→ Outcome: ensures project quality standards and prevents technical debt
-
-**Role: DevOps Engineer**  
-→ Action: deploys versioned artifacts, monitors real-time performance, maintains telemetry infrastructure, enables rollback procedures  
-→ Outcome: ensures system reliability and observability
-
----
-
-## Mantra Application
-
-**"CID frames project standards, SRP isolates component concerns, RAO aligns team responsibilities, SVO clarifies operational semantics"**
-
-- **CID frames**: Establishes scope (project-wide standards), purpose (quality + agility), rules (domain neutrality + iterative methodology)
-- **SRP isolates**: Ensures each module handles single transformation, each component owns focused responsibility
-- **RAO aligns**: Maps product managers, architects, developers, data engineers, validators, DevOps to their deliverables
-- **SVO clarifies**: Expresses all operations (teams build MVPs, systems track metrics, developers document responsibilities) with grammatical precision enabling accountability and preventing ambiguity
+Run the owning repository's applicable checks. For this corpus, `npm test` includes the guideline
+and schema-link contract; `npm run check` additionally checks the source-owned document map.
+Report passed, failed and blocked boundaries separately with the exact candidate revision.

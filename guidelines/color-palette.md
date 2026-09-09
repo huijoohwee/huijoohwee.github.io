@@ -1,3 +1,12 @@
+---
+title: "Color Palette"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 | Color       | Hex Code   | Node Type                          | Description                                                                 | Examples                                      |
 |-------------|------------|------------------------------------|-----------------------------------------------------------------------------|-----------------------------------------------|
 | Blue        | #007BFF   | Core ideas                        | Represents foundational elements like problem/solution hypotheses or market needs. Evokes trust and potential. | Problem/solution hypotheses, market needs.   |

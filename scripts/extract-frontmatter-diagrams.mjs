@@ -25,13 +25,6 @@ const TARGETS = [
     caption:
       "The seven implementation phases as a step-numbered graph: each phase is a boundary and each edge names the transition between numbered steps.",
   },
-  {
-    entry: "scaffolding-implementation-guidelines-md-slide-demo.md",
-    diagram: "scaffolding-implementation-slide-diagram.md",
-    title: "Scaffold-to-Production Slide Deck Diagram",
-    caption:
-      "The slide-deck rendering of the seven implementation phases, carrying the same phase boundaries and step transitions as the guideline diagram.",
-  },
 ];
 
 for (const t of TARGETS) {
@@ -67,7 +60,7 @@ for (const t of TARGETS) {
     'local_rung: "spec-complete"',
     'delivered_rung: "undocumented"',
     'lane: "authoring"',
-    'universal_scope: "true"',
+    'universal_scope: true',
     `parent: ${JSON.stringify(t.entry)}`,
     'agenticOsCanvasRenderMode: "2d"',
     'agenticOsCanvas2dRenderer: "d3"',

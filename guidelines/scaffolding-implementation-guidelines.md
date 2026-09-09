@@ -1,8 +1,16 @@
 ---
 title: "scaffolding-implementation-guidelines"
-author: "joohwee"
-tags: [EDA, MLP, Test]
-date: 2026-01-13
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+owner: "Technical Writer function"
+local_rung: "spec-complete"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: true
+runtime_readiness_policy: "fail-closed"
 ---
 
 > **Diagram**: this guideline's phase diagram is owned by [Scaffold-to-Production Implementation Diagram](./scaffolding-implementation-diagram.md). It is kept in its own document so the diagram payload does not load with every read of this guideline.
@@ -12,7 +20,7 @@ date: 2026-01-13
 
 **Purpose**: Step-by-step implementation roadmap with LOD patterns for zero-experience candidates  
 **Format**: Hierarchical tasks (m.n.o) with reasoning, outcomes, and excellent practices  
-**Context**: Last-shot to make it production-ready
+**Applicability**: Select steps needed by the scoped implementation. Phase timings and techniques are examples, not universal gates. Production readiness requires the owning runtime evidence.
 
 ---
 
@@ -29,7 +37,7 @@ date: 2026-01-13
 - 🟢 **MEDIUM**: Improves quality and maintainability
 - ⚪ **LOW**: Nice to have; optimize later
 
-**Work in Order**: Complete each phase before moving to next. Don't skip steps.
+**Dependency Order**: Keep dependent steps ordered. Reuse verified existing implementations and omit inapplicable steps with a stated reason.
 
 ---
 
@@ -44,7 +52,7 @@ date: 2026-01-13
 | 1.1.3 | Verify file creation | Confirm file exists and is accessible to import system | File can be imported without errors | **DO**: Try importing immediately: `import module.file`<br>**DON'T**: Assume file is accessible | 🔴 |
 | 1.2.0 | Add essential imports | Import only libraries needed for core functionality; avoid premature imports | Import statements at top of file | **DO**: Group imports by type (stdlib, third-party, local)<br>**DON'T**: Import unused libraries | 🔴 |
 | 1.2.1 | Import standard library | Add language built-in libraries needed (e.g., `import os`, `import json`) | Standard library imports present | **DO**: Import specific functions if needed: `from os import path`<br>**DON'T**: Use `from module import *` | 🟡 |
-| 1.2.2 | Import third-party dependencies | Add external libraries (e.g., `import pandas`, `import torch`) | Third-party imports present | **DO**: Verify library is installed: `pip list | grep pandas`<br>**DON'T**: Import without checking installation | 🔴 |
+| 1.2.2 | Import third-party dependencies | Add external libraries (e.g., `import pandas`, `import torch`) | Third-party imports present | **DO**: Verify library is installed: `pip list \| grep pandas`<br>**DON'T**: Import without checking installation | 🔴 |
 | 1.2.3 | Import configuration manager | Add config handling library or module | Configuration accessible in module | **DO**: Use project-standard config approach<br>**DON'T**: Hardcode config in imports | 🟡 |
 | 1.3.0 | Validate imports | Ensure all imports resolve without errors | Module runs without ImportError | **DO**: Run linter or type checker<br>**DON'T**: Skip validation step | 🔴 |
 | 1.3.1 | Run syntax check | Execute `python -m py_compile module/file.py` or equivalent | No syntax errors reported | **DO**: Fix errors immediately<br>**DON'T**: Proceed with syntax errors | 🔴 |
@@ -221,7 +229,7 @@ date: 2026-01-13
 | 7.1.0 | Update function docstrings | Refine docstrings to reflect final implementation | Docstrings accurate and complete | **DO**: Update after implementation changes<br>**DON'T**: Leave outdated documentation | 🟡 |
 | 7.1.1 | Verify summary accuracy | Check one-line summary matches actual behavior | Summary reflects implementation | **DO**: Update if function behavior changed during development<br>**DON'T**: Keep original stub description if behavior evolved | 🟡 |
 | 7.1.2 | Expand detailed description | Add implementation details, algorithms used, performance characteristics | Description comprehensive | **DO**: "Uses binary search O(log n); requires sorted input"<br>**DON'T**: Repeat parameter descriptions in detail section | 🟢 |
-| 7.1.3 | Document configuration options | List all configuration parameters and their effects | Configuration fully documented | **DO**: Include valid values: "transformation_type: 'standard' | 'normalized' | 'encoded'"<br>**DON'T**: Say "see config object" | 🟡 |
+| 7.1.3 | Document configuration options | List all configuration parameters and their effects | Configuration fully documented | **DO**: Include valid values: "transformation_type: 'standard' \| 'normalized' \| 'encoded'"<br>**DON'T**: Say "see config object" | 🟡 |
 | 7.1.4 | Update Raises section | Add all new exceptions from validation and error handling | All exceptions documented | **DO**: Include conditions: "SchemaError: if input columns != expected_schema"<br>**DON'T**: Miss exceptions added in Phase 5-6 | 🟡 |
 | 7.1.5 | Add performance notes | Document time/space complexity, performance considerations | Performance characteristics documented | **DO**: "O(n log n) time, O(n) space"<br>**DON'T**: Claim performance without measurement | 🟢 |
 | 7.1.6 | Add thread-safety notes | Document whether function is thread-safe | Concurrency behavior documented | **DO**: "Not thread-safe: uses shared state"<br>**DON'T**: Leave concurrency behavior unclear | 🟢 |
@@ -363,7 +371,7 @@ generate `scaffolding-implementation-guide.md`
 
 **Purpose**: Step-by-step implementation roadmap with LOD patterns for zero-experience candidates  
 **Format**: Hierarchical tasks (m.n.o) with reasoning, outcomes, and excellent practices  
-**Context**: Last-shot to make it production-ready
+**Applicability**: Select steps needed by the scoped implementation. Phase timings and techniques are examples, not universal gates. Production readiness requires the owning runtime evidence.
 
 ---
 
@@ -380,7 +388,7 @@ generate `scaffolding-implementation-guide.md`
 - 🟢 **MEDIUM**: ...
 - ⚪ **LOW**: Nice to have ...
 
-**Work in Order**: Complete each phase before moving to next. Don't skip steps.
+**Dependency Order**: Keep dependent steps ordered. Reuse verified existing implementations and omit inapplicable steps with a stated reason.
 
 ---
 

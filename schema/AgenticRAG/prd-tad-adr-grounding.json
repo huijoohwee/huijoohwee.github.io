@@ -1,0 +1,276 @@
+{
+  "schema": "prd-tad-adr-codebase-grounding/v1",
+  "owner": "huijoohwee.github.io",
+  "observed_on": "2026-09-09",
+  "load_policy": "on-demand",
+  "scope": "Repository ownership and specification-to-runtime seams; not exhaustive feature or production certification.",
+  "semantic_owner": "../../guidelines/cid-guidelines.md#shared-field-contract",
+  "continuity_owner": "../../guidelines/adlc-artifact-continuity.md",
+  "guide": "../../guidelines/prd-tad-adr-codebase-grounding.md",
+  "production_ready": false,
+  "repositories": [
+    {
+      "id": "agentic-os",
+      "repository": "github.com/huijoohwee/agentic-os",
+      "revision": "e89e96089c3a75b99d30135bb2c6f5a3eccc8036",
+      "owns": "Repository lifecycle, bounded ranking, cross-repository source observation",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "591b2d3adf155091b9989fab0611451e396f15155be69c694be2e7b42c1b49c2"
+        },
+        {
+          "path": "src/rank.mjs",
+          "sha256": "bd04a8c0f51641ba20f4e1d71960d88bf5b078a35400b0eb9a66e8eee71da9b5"
+        },
+        {
+          "path": "bin/agentic-os.mjs",
+          "sha256": "1c07f1d8c1e4f968f90c6a10760961d4c357b5688f06b1063b2e346d4f9daa56"
+        },
+        {
+          "path": "catalog/composition-source-lock.json",
+          "sha256": "99125f2a3fc42bffd90b79a9c4a0798dc1128fa605bff14df869a75f7b262b59"
+        }
+      ],
+      "checks": [
+        "check",
+        "feature:rank",
+        "composition:runtime:check"
+      ]
+    },
+    {
+      "id": "huijoohwee.github.io",
+      "repository": "github.com/huijoohwee/huijoohwee.github.io",
+      "revision": "95ed40c3605feab075fd5da7182c29b892dd9dd5",
+      "owns": "Shared authoring semantics and reference schema projections",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "de4012dc485bfc2b9d334e312d642f7dc052f3130d0fa02a37cfe8cb85133f52"
+        },
+        {
+          "path": "guidelines/cid-guidelines.md",
+          "sha256": "23fefca1c4921852ed090fb1203ced6ce54a7577b97b0af37b850f271ab64f4e"
+        },
+        {
+          "path": "guidelines/prd-tad-adr-guidelines.md",
+          "sha256": "00ef69c328c5cda38331214843031f63560e4670c3eccfedbe7dd60bc69f5248"
+        },
+        {
+          "path": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld",
+          "sha256": "590413a7491e576a744dbb906686a7080713140e2c9d4a6eeb92de69e7e7fbf6"
+        }
+      ],
+      "checks": [
+        "guideline:check",
+        "test",
+        "check"
+      ]
+    },
+    {
+      "id": "agentic-commerce-os",
+      "repository": "github.com/huijoohwee/agentic-commerce-os",
+      "revision": "50d0047fe140595c7086e1a122ffa76ab20a29bd",
+      "owns": "Commerce checkout, admission consumption and paid-loop runner",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "0609e6f819632abcf7d7a624bc9fa9a92858bff5aa8fa61a9f6afd522317ec74"
+        },
+        {
+          "path": "src/core/acos-admission.ts",
+          "sha256": "c8fb93488e4b0983b71901729886869c1aee46ed375c8b9478ddec6069306ae0"
+        },
+        {
+          "path": "src/core/checkout-finalization.ts",
+          "sha256": "670756a0ba01d6cadd3a6c010bc1ea2c435bb5367bcbebf63827d9d0bf077f96"
+        },
+        {
+          "path": "scripts/checks/browser.ts",
+          "sha256": "8fdbe1c7242bc777e020b2dd13f75f1f973931e0d83990819a740db4db472b0d"
+        }
+      ],
+      "checks": [
+        "test",
+        "test:workers",
+        "test:e2e:dev"
+      ]
+    },
+    {
+      "id": "agentic-canvas-os",
+      "repository": "github.com/huijoohwee/agentic-canvas-os",
+      "revision": "efd892678083302d46e9a8205bc02b8b39c46c1a",
+      "owns": "Application agent runtime, admission provider and deferred tool discovery",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "4900b4c082eb878944f1e83e80234856e884d21fb5a6e9b8c83e485e00caa763"
+        },
+        {
+          "path": "agent-api/src/commerce-admission-contract.js",
+          "sha256": "42877e87ebae218e9521eb805d7a86d85a664b532576be8751ccd547b9b1b856"
+        },
+        {
+          "path": "agent-api/src/tool-search.js",
+          "sha256": "d2db14bc67a299105f23ecc508338f5fe7dc89d918007f1c0f18d84d4910cefb"
+        },
+        {
+          "path": "docs/PRD-TAD.md",
+          "sha256": "1d174945c5e824f887631faaf3994071370132ad18205ac2243d3959f0a40e27"
+        }
+      ],
+      "checks": [
+        "docs:check",
+        "test",
+        "check"
+      ]
+    },
+    {
+      "id": "huijoohwee",
+      "repository": "github.com/huijoohwee/huijoohwee",
+      "revision": "b7b6c39ce0b5844a43042026a910f7552477c8ff",
+      "owns": "Generated production artifacts and projection validation",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "cfe023e6ff8db1b9d61d5e0671847ad278dabeb982089300f3ecef9521e086fd"
+        },
+        {
+          "path": "scripts/check-runtime-readiness.mjs",
+          "sha256": "ff4175cb607fb968ab748110f8d0dd499958f3edec8ef0f49c87954f9ba76720"
+        },
+        {
+          "path": "scripts/check-gamexr-public.mjs",
+          "sha256": "18515058917ed9e28c4137d74d9a3d4f564e7088dc068d3423bdd9a5d6c763b9"
+        }
+      ],
+      "checks": [
+        "runtime:test",
+        "runtime:check"
+      ]
+    },
+    {
+      "id": "agentic-graph",
+      "repository": "github.com/huijoohwee/agentic-graph",
+      "revision": "ac194fbd0c33a1899399ba9afbfa1bb7a886cf23",
+      "owns": "Canvas/browser authoring runtime and Graph production release",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "2cff4bf86caeaf1fbcab114cdb3432cb2401b3f49687688ab9f046d9383d9b7f"
+        },
+        {
+          "path": "canvas/src/lib/markdown/invocationTokens.ts",
+          "sha256": "3bb5d3b685c2cbdef86b14024f2df93c053d1bcd9c052eb836e6bf9a4e4919a2"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "sha256": "fa9f3cd13e6dd46f8c38d1d8e5dbb075f4c632efc3f84d63bd3ec09d765dceaf"
+        },
+        {
+          "path": "docs/runtime-readiness-contract.md",
+          "sha256": "09f6d84a59496f43fff6d58d6329243796bc03f91507093005e419f590e2a50f"
+        }
+      ],
+      "checks": [
+        "dev:apex",
+        "dev",
+        "runtime:check",
+        "test:publish-sync:contract"
+      ]
+    },
+    {
+      "id": "GameXR",
+      "repository": "github.com/huijoohwee/GameXR",
+      "revision": "718298dec9928f30bd24e349a7527aba2c85bfb1",
+      "owns": "Spatial runtime consuming shared archives with its own release checks",
+      "artifacts": [
+        {
+          "path": "package.json",
+          "sha256": "69dbdad6c2917a5d9287af4dae865de50990e5ad8449384bca2b31177e5e7485"
+        },
+        {
+          "path": "src/runtime/GameRuntime.ts",
+          "sha256": "8a4e7d2762e6041d3ebc2a83faf0ad7c484692655144639d52cdf7412bfa2ccd"
+        },
+        {
+          "path": "tests/vendor-archives.test.ts",
+          "sha256": "b1a88cd5c556f5734bef386e5a5e3ba5875eb30564b272a0e4f71b30290000de"
+        },
+        {
+          "path": "scripts/check-release.mjs",
+          "sha256": "a3c492615a11e46372ff0c46a5e9354712383c1c69c55a490496bf722614ba4d"
+        }
+      ],
+      "checks": [
+        "check",
+        "test:webkit",
+        "release:check"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "ownership",
+      "disposition": "confirmed",
+      "claim": "Each listed repository has the named source responsibilities.",
+      "evidence": [
+        "agentic-os",
+        "huijoohwee.github.io",
+        "agentic-commerce-os",
+        "agentic-canvas-os",
+        "huijoohwee",
+        "agentic-graph",
+        "GameXR"
+      ],
+      "limit": "Source presence and declared checks do not prove all behaviors or current deployment."
+    },
+    {
+      "id": "rao-object",
+      "disposition": "contradicted",
+      "claim": "The canonical RAO projection equates SVO object with outcome.",
+      "evidence": [
+        "huijoohwee.github.io"
+      ],
+      "limit": "The shared semantic contract distinguishes the target from the observed result. Existing PR #197 carries the schema correction; it remains a separate integration dependency."
+    },
+    {
+      "id": "canvas-readiness",
+      "disposition": "contradicted",
+      "claim": "The combined Canvas specification establishes complete runtime readiness.",
+      "evidence": [
+        "agentic-canvas-os"
+      ],
+      "limit": "The observed document labels runtime-ready while external runtime proof remains gated; this documentation candidate narrows that claim."
+    },
+    {
+      "id": "podman-scope",
+      "disposition": "confirmed",
+      "claim": "The Commerce full paid-loop runner initializes the sandbox environment; --dev-only does not remove that runtime.",
+      "evidence": [
+        "agentic-commerce-os"
+      ],
+      "limit": "Independent source/unit/Worker checks do not need that runtime and do not substitute for paid-loop coverage."
+    },
+    {
+      "id": "deployment",
+      "disposition": "unverified",
+      "claim": "Dev source, the generated production mirror and requested public routes are aligned at one release.",
+      "evidence": [
+        "agentic-graph",
+        "huijoohwee"
+      ],
+      "limit": "Source release workflow names agentic-graph paths; the mirror also contains agenticgraph artifacts. No live deployment or route-equivalence proof was acquired."
+    },
+    {
+      "id": "demand",
+      "disposition": "unverified",
+      "claim": "The selected commerce MVP has validated willingness to pay and positive unit economics.",
+      "evidence": [
+        "agentic-os",
+        "agentic-commerce-os"
+      ],
+      "limit": "Ranking logic and checkout code do not establish buyer interviews, paid pilots, settlement or margin."
+    }
+  ]
+}

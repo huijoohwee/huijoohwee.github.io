@@ -1,8 +1,12 @@
 ---
-title: "scaffolding-pattern-guidelines"
+title: "Scaffolding Pattern Guidelines"
 author: "joohwee"
 tags: [EDA, MLP, Test]
 date: 2026-01-13
+doc_type: "Guidelines"
+version: "1.0.0"
+lang: "en-US"
+frontmatter_contract: "required"
 ---
 
 > **Diagram**: this guideline's phase diagram is owned by [Scaffolding Pattern Progression Diagram](./scaffolding-pattern-diagram.md). It is kept in its own document so the diagram payload does not load with every read of this guideline.

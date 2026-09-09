@@ -1,3 +1,12 @@
+---
+title: "Skill Guidelines: Multi-Repo Orchestration with System Design Principles"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Skill Guidelines: Multi-Repo Orchestration with System Design Principles
 
 ## Overview

@@ -12,6 +12,8 @@ agenticOsDocumentSemanticMode: "document"
 agenticOsFrontmatterModeEnabled: true
 agenticOsMultiDimTableModeEnabled: false
 agenticOsDocumentStructureBaselineLock: false
+version: "1.0.0"
+frontmatter_contract: "required"
 ---
 
 # YAML Frontmatter Guidelines for Canvas View Switching

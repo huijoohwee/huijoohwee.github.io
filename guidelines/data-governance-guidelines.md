@@ -1,3 +1,12 @@
+---
+title: "Data Governance Guidelines"
+doc_type: "Guidelines"
+version: "1.0.0"
+date: "2026-09-09"
+lang: "en-US"
+frontmatter_contract: "required"
+---
+
 # Data Governance Guidelines
 
 ## Context

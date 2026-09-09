@@ -12,7 +12,7 @@
     {
       "id": "agentic-os",
       "repository": "github.com/huijoohwee/agentic-os",
-      "revision": "886990cbb7d78e673360bda70600cb49616b4b7b",
+      "revision": "46c14586282a952d4af76e9f61e3b53f9e32dfab",
       "owns": "Repository lifecycle, bounded ranking, cross-repository source observation",
       "artifacts": [
         {
@@ -25,15 +25,15 @@
         },
         {
           "path": "bin/agentic-os.mjs",
-          "sha256": "1c07f1d8c1e4f968f90c6a10760961d4c357b5688f06b1063b2e346d4f9daa56"
+          "sha256": "9d7fa9765267e00fe4a3f25d8e6b0294c8bb0941e32f9aab7bd62a7876901201"
         },
         {
           "path": "catalog/composition-source-lock.json",
-          "sha256": "99125f2a3fc42bffd90b79a9c4a0798dc1128fa605bff14df869a75f7b262b59"
+          "sha256": "53a850b1e38ebfdbfb8a8a598e69ffc8326875fe9d3799aa299db372e8b01f45"
         },
         {
-          "path": "guides/COMPOSITION-ARCHITECTURE.md",
-          "sha256": "2b7663c3d519affe3c204c94232e46c2bdde55236d3e634eadb31278855786ab"
+          "path": "guides/TECH-STACK.md",
+          "sha256": "37972ec12a75635f84e2d689b2946d078cf47be464c62224bb3601ca72a59985"
         },
         {
           "path": "guides/LIFECYCLE-FLIGHT.md",

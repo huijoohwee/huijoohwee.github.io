@@ -28,7 +28,7 @@ into consumer documents. This guide and the snapshot load only for affected auth
 
 ## Ownership - reference implementation
 
-The upstream [composition guide](https://github.com/huijoohwee/agentic-os/blob/main/guides/COMPOSITION-ARCHITECTURE.md#division-of-work)
+The upstream [composition guide](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md#division-of-work)
 owns the seven-repository capability partition, topology and deployment boundaries. Its exact revision
 and bytes are recorded in the snapshot. Use that source revision when verifying an older snapshot;
 the navigation link follows current upstream. The snapshot's `owns` fields describe the bounded source

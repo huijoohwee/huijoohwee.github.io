@@ -3,6 +3,8 @@ import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { validateGuidelinesMap } from "./lib/guidelines-map-contract.mjs";
+
 const expectedArchiveFiles = [
   "guidelines-archive/eda-guidelines.md",
   "guidelines-archive/eda-mlp-cid-implementation-guidelines.md",
@@ -48,6 +50,9 @@ assert.deepEqual(
     ? "AgenticRAG guideline index must match the sorted joohwee/guidelines-archive/*.md inventory"
     : "AgenticRAG guideline index must match the pinned joohwee/guidelines-archive file contract",
 );
+
+const active = await validateGuidelinesMap(map, repositoryRoot);
+console.log(`Active guideline/schema links ok (${active.files} guidelines; ${active.references} references)`);
 
 console.log(
   `AgenticRAG guideline map parity ok (${expectedFiles.length} files${guidelinesDirectory ? "" : "; pinned contract"})`,

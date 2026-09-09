@@ -1,16 +1,22 @@
 ---
 title: "HJH Workspace Todo Log"
-doc_type: "Cross-Repo Planning Ledger"
+doc_type: "Historical Cross-Repo Work Log"
 version: "1.0.1"
-status: "active"
+status: "historical"
 date: "2026-06-10"
 lang: "en-US"
 owners:
-  - "Cross-repo shared directives"
+  - "Historical cross-repo records"
 frontmatter_contract: "required"
 ---
 
 # HJH Workspace Todo Log
+
+## Current Planning Route
+
+New planning belongs only to the [Agentic Canvas OS TODO contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md) and one immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` record per task. Load that index and the exact Context record; monthly `todo/YYYY-MM.md` shards are immutable history.
+
+This file preserves historical entries in place. Do not append tasks here or treat historical directives, next steps, or release statements as current planning, approval, or deployment authority.
 
 ## 2026-07-23
 
@@ -18,7 +24,9 @@ frontmatter_contract: "required"
 |--------|--------|-----------|--------|-----------------|-------|--------|----------------|--------------------------|--------------------------|--------------|
 | Agentic Canvas OS autonomous runtime readiness sync | Record the true autonomous-runtime state without editing runtime code | Author a docs-only readiness record stating that `agentic-canvas-os` is contract-ready and provider-capable but not autonomous by default, list the four wiring gaps and the operator-gated enablement path, and cross-reference it from the shared topology doc. | `huijoohwee.github.io/docs/documents/{agentic-canvas-os-autonomous-runtime-readiness.md,hjh-topology-document.md,hjh-workspace-todo-log.md}` | Runtime readiness status contract | source audit, readiness matrix authoring, cross-reference wiring | Source audit of `agentic-canvas-os` plus 452 passing offline tests | New readiness doc, topology runtime-note, and ledger row aligned to one fail-closed story | Readiness prose must reflect observed `configured:false` / `providerExecutionStatus:"unverified"` defaults and treat autonomy as operator-gated, never asserted from docs; runtime code stays untouched. | Re-check the readiness matrix whenever the default Worker wires an execution adapter, registers a default agent, or exposes an autonomous-run route. | 2026-07-23 |
 
-## Planning Ledger Contract
+## Former Planning Ledger Contract (Historical)
+
+The former contract below is retained as historical context; its local planning directions are superseded by the Canvas route above.
 
 - The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this cross-repo planning ledger.
 - This document is a canonical authored shared todo/workspace log, not a typed validation fixture or generated registry surface.

@@ -260,7 +260,7 @@
         "agentic-graph",
         "huijoohwee"
       ],
-      "limit": "Source release workflow names agentic-graph paths; the mirror also contains agenticgraph artifacts. No live deployment or route-equivalence proof was acquired."
+      "limit": "Source release workflow names agentic-graph paths; the mirror also contains historical app artifacts. No live deployment or route-equivalence proof was acquired."
     },
     {
       "id": "demand",

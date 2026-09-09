@@ -88,7 +88,7 @@ It is not an exhaustive guideline conformance ratio or a production verdict.
 - The observed Canvas combined specification overstates whole-document readiness. Its companion
   candidate narrows the status to `spec-complete` and routes proof to individual owners.
 - Graph's release workflow names `agentic-graph` paths; the production mirror also contains
-  `agenticgraph` artifacts. Treat requested `/`, `/knowgrph` and mirror-route equivalence as unverified
+  historical app artifacts. Treat requested public routes and mirror-route equivalence as unverified
   until the source release owner produces exact deployment evidence. Do not rename or patch generated
   assets from this documentation record.
 - Buyer willingness to pay, settlement, repeat use and contribution margin remain unverified here.

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
+version: "1.0.2"
 date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.4.0"
+parent_version: "2.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -272,6 +272,7 @@ The regression comparison above is meaningless unless two runs over the same inp
 
 **Pre-Implementation**:
 - [ ] **Frontmatter present** as the first block in every canonical PRD/TAD/ADR doc; scalars with reserved punctuation quoted; no typed wrappers outside validation fixtures
+- [ ] **Pipeline SSOT held**: every planned transition names the PRD-TAD-ADR continuity ID and exact revision it consumes; no README, workflow, runbook, or runtime document states a requirement, design, or decision absent from it (`duplicate-owner`)
 - [ ] User journey mapped before stories written; every story anchored to a journey stage
 - [ ] Workflows defined with trigger, happy path, alternate paths, error paths, and postconditions
 - [ ] Data flows typed at every stage boundary with persistence and error handling documented

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Economics & Time-to-Value Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
+version: "1.0.2"
 date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.4.0"
+parent_version: "2.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -28,7 +28,7 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 
 ## Solo-Dev AI-Native Orientation
 
-### Four Compounding Lenses
+### Five Compounding Lenses
 
 | Lens | Definition | Applied In |
 |---|---|---|
@@ -36,6 +36,7 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 | **TCO-Zero** | Total cost of ownership defaults to zero; every paid dependency requires explicit justification against a FOSS alternative | Phase 0 gate, ADR, Quality Attributes |
 | **Token Economics** | LLM token consumption (input + output + cache hit rate) is a measurable system metric, not an afterthought | Data flows, Component specs, Quality Attributes |
 | **Harness-First** | AI capabilities are accessed through structured, observable harnesses (typed inputs → typed outputs → logged decisions) rather than raw prompt calls | TAD components, Integration contracts, orchestration diagrams |
+| **Concurrency-Safe** | Every artifact, directive, and merge holds under multiple simultaneous work trees, devices, and agents without deadlock, corruption, or hallucinated state | Concurrent Collaboration & Work-Tree Integrity, Division of Work, merge and lane rules |
 
 ### Guideline Load Budget
 

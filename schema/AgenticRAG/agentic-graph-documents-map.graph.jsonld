@@ -3810,6 +3810,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-adr-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-adr-validation.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-adr-validation.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-adr-validation.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-strytree-prd-tad",
       "@type": "kg:Node",
       "labels": [
@@ -3823,6 +3839,54 @@
         "relPath": "docs/documents/agentic-graph-strytree-prd-tad.md"
       },
       "documentPath": "docs/documents/agentic-graph-strytree-prd-tad.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-architecture",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-tad-architecture.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-tad-architecture.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-tad-architecture.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-runtime-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-tad-runtime-validation.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-tad-runtime-validation.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-tad-runtime-validation.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-workflows-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-tad-workflows-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-tad-workflows-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-tad-workflows-api.md",
       "language": "en-us"
     },
     {

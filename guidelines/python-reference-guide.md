@@ -1,9 +1,12 @@
 ---
-title: "Python Reference Guide for EDA-MLP Implementation"
+title: "Python Reference Guide"
 author: "ML Engineering Team"
 tags: [Python, Reference, EDA, MLP, Implementation]
 date: 2026-01-16
-version: 1.0
+version: "1.0.0"
+doc_type: "Guidelines"
+lang: "en-US"
+frontmatter_contract: "required"
 ---
 
 # Python Reference Guide for EDA-MLP Implementation

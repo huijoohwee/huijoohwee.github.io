@@ -18,6 +18,9 @@ url: "https://huijoohwee.github.io"
 mermaid: |
   graph LR
     A[Start] --> B[End]
+doc_type: "Guidelines"
+version: "1.0.0"
+frontmatter_contract: "required"
 ---
 
 # Markdown Slide Styling Guidelines

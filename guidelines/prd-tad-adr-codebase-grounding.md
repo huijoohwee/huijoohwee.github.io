@@ -1,7 +1,7 @@
 ---
 title: "PRD/TAD/ADR Codebase Grounding - Reference Implementation"
 doc_type: "Guidelines Companion"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-09"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -28,15 +28,11 @@ into consumer documents. This guide and the snapshot load only for affected auth
 
 ## Ownership - reference implementation
 
-| Repository | Sole responsibility in this mapping | Consumes rather than owns |
-|---|---|---|
-| `agentic-os` | ADLC lifecycle, bounded feature ranking, source-composition observation | Product acceptance, provider execution and release evidence |
-| `huijoohwee.github.io` | Shared authoring semantics and reference schema projections | Application runtime and deployed-state claims |
-| `agentic-canvas-os` | Agent application runtime, admission provider, progressive tool discovery | ADLC lifecycle and Graph browser/rendering implementation |
-| `agentic-commerce-os` | Checkout, Commerce admission consumption and paid-loop validation | Admission-provider implementation and Graph provider contracts |
-| `agentic-graph` | Canvas/browser source and Graph production build/release | Shared authoring semantics, pinned Canvas docs and ADLC |
-| `huijoohwee` | Generated production artifacts and projection checks | Source authoring, architecture decisions and deployment authority |
-| `GameXR` | Spatial runtime and its release validation | Reviewed shared archives; no duplicate shared input or physics owner |
+The upstream [composition guide](https://github.com/huijoohwee/agentic-os/blob/main/guides/COMPOSITION-ARCHITECTURE.md#division-of-work)
+owns the seven-repository capability partition, topology and deployment boundaries. Its exact revision
+and bytes are recorded in the snapshot. Use that source revision when verifying an older snapshot;
+the navigation link follows current upstream. The snapshot's `owns` fields describe the bounded source
+scope inspected here; this guide does not maintain a second topology table.
 
 This is a responsibility partition, not a claim that repository dependencies form a DAG. Service
 request/reply relationships may be bidirectional; keep the build/release order explicit and acyclic.
@@ -67,10 +63,16 @@ browser suite cannot earn its acceptance criterion. Record command, revision, sc
 outcome and elapsed time. Reuse unchanged evidence only within its declared validity.
 
 Canvas's `agent-api/src/tool-search.js` already owns bounded session-scoped tool disclosure. ADLC's
-existing lifecycle-flight observations own prerequisite checks. Operation-scoped flight V2 is an
-unmerged upstream candidate (PR #81), not an installed capability of every consumer. Adopt exact reviewed
-pins and owner declarations before using it; do not make containers, browsers, model endpoints or
-accelerators mandatory for unrelated checks.
+existing lifecycle-flight observations own prerequisite checks. Operation-scoped flight V2 is integrated
+upstream and documented in the snapshot-bound `agentic-os/guides/LIFECYCLE-FLIGHT.md`. Consumer availability
+still depends on its exact reviewed package pin and operation declarations. Select the actual runner's
+coverage; do not make containers, browsers, model endpoints or accelerators mandatory for unrelated checks.
+
+Discover owner suites through `agentic-os/test/repositories.json` and `observe --checks`; execute intact
+umbrella commands using its advisory validation plan. Omit a repeated child suite only when exact source
+and complete successful execution establish coverage. Missing profiles, dependencies or failed runs retain
+unverified coverage. GameXR's observed source lacks `.agentic-os.json`, so shared harness discovery cannot
+bind its checks; this snapshot records its package scripts without inventing a profile or authority.
 
 Apply Constraints -> Argumentation -> Outranking with the existing `agentic-os/src/rank.mjs` owner:
 reject infeasible options, compare grounded tradeoffs and prioritize verified buyer pain plus the
@@ -80,13 +82,14 @@ No monetary savings, demand or production claim follows merely from a ranking or
 
 ## Findings and integration - reference implementation
 
-The snapshot records six bounded claims: two confirmed, two contradicted and two unverified.
-It is not an exhaustive guideline conformance ratio or a production verdict.
+The snapshot records bounded source claims and unresolved delivery/demand claims. Their dispositions
+apply to its exact revisions, not future HEADs. It is not an exhaustive guideline conformance ratio or
+a production verdict. Git history retains the preceding snapshot and its then-unresolved corrections.
 
-- Canonical RAO V2 still equates object and outcome. Site PR #197 contains the already-reviewed
-  candidate correction; preserve that lane and integrate its exact candidate separately.
-- The observed Canvas combined specification overstates whole-document readiness. Its companion
-  candidate narrows the status to `spec-complete` and routes proof to individual owners.
+- Canonical RAO V3 separates the SVO target from the observed outcome and requires explicit re-grounding
+  of older records. Source integration does not silently migrate V2 data or prove runtime semantics.
+- The integrated Canvas combined specification declares `spec-complete`, retains `runtime-ready` as a
+  target and routes evidence to individual owners; whole-document runtime readiness remains unproved.
 - Graph's release workflow names `agentic-graph` paths; the production mirror also contains
   historical app artifacts. Treat requested public routes and mirror-route equivalence as unverified
   until the source release owner produces exact deployment evidence. Do not rename or patch generated
@@ -94,8 +97,8 @@ It is not an exhaustive guideline conformance ratio or a production verdict.
 - Buyer willingness to pay, settlement, repeat use and contribution margin remain unverified here.
   Use the existing Commerce demand/economics work, not invented savings or a new roadmap.
 
-Review the schema correction and this grounding record before consumers advance their baselines.
-Refresh affected joins after integration; capture a new snapshot only when its source scope changes.
+Verify each consumer's exact source pin before advancing its baseline. Refresh affected joins after
+integration; capture a new snapshot when its referenced source or claim disposition changes.
 Green documentation checks prove these documents' bounded contracts, not the complete commerce loop.
 
 ## Verification

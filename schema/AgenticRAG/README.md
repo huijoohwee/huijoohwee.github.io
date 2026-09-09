@@ -4,11 +4,20 @@ doc_type: "Schema Index"
 status: "active"
 lang: "en-US"
 frontmatter_contract: "required"
+load_policy: "on-demand"
+semantic_owner: "../../guidelines/cid-guidelines.md#shared-field-contract"
+grounding_record: "prd-tad-adr-grounding.json"
 ---
 
 # Knowledge Graph JSON-LD Schema v1.0.0
 
 ## Markdown YAML Frontmatter Contract
+
+The [codebase grounding record](../../guidelines/prd-tad-adr-codebase-grounding.md) joins this projection
+index to exact source revisions in [one bounded snapshot](./prd-tad-adr-grounding.json). CID/RAO/SVO
+meaning stays in the declared semantic owner; JSON-LD is a consumer projection, not a second grammar.
+The snapshot records unresolved schema and release claims explicitly. Its artifact hashes establish
+source identity only, never runtime readiness or deployed-route equivalence.
 
 - The opening YAML frontmatter block remains the first block and canonical metadata SSOT for this schema index.
 - This document is a canonical authored schema README, not a typed validation fixture or generated registry surface.

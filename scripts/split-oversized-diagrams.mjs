@@ -13,9 +13,8 @@ import { join } from "node:path";
 const dir = "guidelines";
 
 const TARGETS = [
-  { entry: "scaffolding-implementation-diagram.md", stem: "scaffolding-implementation-diagram", title: "Scaffold-to-Production Implementation Diagram" },
-  { entry: "scaffolding-implementation-slide-diagram.md", stem: "scaffolding-implementation-slide-diagram", title: "Scaffold-to-Production Slide Deck Diagram" },
-  { entry: "scaffolding-pattern-diagram.md", stem: "scaffolding-pattern-diagram", title: "Scaffolding Pattern Progression Diagram" },
+  { entry: "scaffolding-implementation-diagram.md", stem: "scaffolding-implementation-diagram", parent: "scaffolding-implementation-guidelines.md", title: "Scaffold-to-Production Implementation Diagram" },
+  { entry: "scaffolding-pattern-diagram.md", stem: "scaffolding-pattern-diagram", parent: "scaffolding-pattern-guidelines.md", title: "Scaffolding Pattern Progression Diagram" },
 ];
 
 // Every edge in these diagrams is one of two relations. Naming them is what makes the
@@ -89,7 +88,7 @@ const FM = (title, parent, extra = []) =>
     'local_rung: "spec-complete"',
     'delivered_rung: "undocumented"',
     'lane: "authoring"',
-    'universal_scope: "true"',
+    'universal_scope: true',
     `parent: ${JSON.stringify(parent)}`,
     'agenticOsCanvasRenderMode: "2d"',
     'agenticOsCanvas2dRenderer: "d3"',
@@ -155,7 +154,7 @@ for (const t of TARGETS) {
 
   const mermaid = ["mermaid: |", "  flowchart TB", ...overviewNodes, ...overviewEdges, ...entryEdges];
   const overview =
-    FM(t.title, t.entry, mermaid) +
+    FM(t.title, t.parent, mermaid) +
     [
       `# ${t.title}`,
       "",

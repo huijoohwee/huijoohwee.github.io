@@ -9,8 +9,8 @@ owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
-parent: "scaffolding-implementation-diagram.md"
+universal_scope: true
+parent: "scaffolding-implementation-guidelines.md"
 agenticOsCanvasRenderMode: "2d"
 agenticOsCanvas2dRenderer: "d3"
 surfaces:

@@ -1,8 +1,8 @@
 ---
 title: "ADLC Rapid MVP Sprint Profile"
 doc_type: "Guideline Module"
-version: "1.1.0"
-date: "2026-09-05"
+version: "1.2.0"
+date: "2026-09-09"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -63,3 +63,30 @@ Record only failure modes material to the slice, with their prevention check and
 ## Completion-Time Forecast
 
 The ordinary orchestration-reasoned WBS still applies. Use the smallest dependency-closed outcome WBS that can expose the critical path, evidenced concurrency, waits, verification, expected rework, and confidence inside the Sprint Clock. Reforecast at the midpoint and whenever evidence changes the critical path.
+
+## Commerce Completion Criteria
+
+This optional instantiation consumes the loop above; it introduces no second
+lifecycle controller, payment schema or mandatory provider. Keep one acceptance
+record joined to the existing PRD/TAD/ADR revisions and shared CID/RAO/SVO fields.
+
+| Boundary | Evidence needed to close it |
+|---|---|
+| Demand | Named buyer or inspectable segment evidence, current workaround/cost, acceptance criterion and WTP signal; a proposed price remains a hypothesis |
+| Offer | One useful near-built capability, its owner, current price/expiry, delivery terms and a reproducible accepted result |
+| Transaction | Authenticated actor, exact confirmed intent, effect-owner idempotency, reconciliation after timeout and receipt readback; test money is labelled |
+| Fulfillment | Buyer receives the promised result; failed delivery has a named recovery/refund owner and observable status |
+| Runtime | Exact source/configuration/deployment joins plus mobile-browser, denied-authorization, duplicate-submit, restart and network-loss checks |
+| Economics | Collected revenue and fees/refunds, usage cost, elapsed time and buyer acceptance tied to that transaction |
+
+Offline operation may preserve a draft or show a labelled cached receipt; it must
+not claim a new settlement. MCP, WebMCP and browser routes call the same capability
+owner through their versioned contracts. Credentials and payment authority stay
+at the effect boundary. Follow the [economics measurement contract](./token-performance-economics-guidelines.md)
+for budgets and comparisons instead of inventing per-phase performance claims.
+
+The [commerce-agents reference](https://github.com/anthropics/commerce-agents)
+illustrates separate shopping and merchant roles over shared contracts. Its demo
+checkout renders a cart for the host, and merchant writes are staged; it does not
+establish a paid production loop. Use that separation as design grounding only;
+copy no source, prompts, schemas, fixtures or dependencies.

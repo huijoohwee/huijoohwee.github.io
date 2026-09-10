@@ -546,19 +546,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-agentic-commerce-platform-prd-tad-adr-mvp-gtm",
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-commerce-platform-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-agentic-commerce-platform-prd-tad-adr-mvp-gtm.md"
+        "agentic-graph-agentic-commerce-platform-prd-tad-adr.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr-mvp-gtm.md"
+        "relPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr.md"
       },
-      "documentPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr-mvp-gtm.md",
+      "documentPath": "docs/documents/agentic-graph-agentic-commerce-platform-prd-tad-adr.md",
       "language": "en-us"
     },
     {
@@ -642,19 +642,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-agentic-travel-agencies-prd-tad-adr-mvp-gtm",
+      "@id": "node:agentic-graph:doc:agentic-graph-agentic-travel-agencies-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-agentic-travel-agencies-prd-tad-adr-mvp-gtm.md"
+        "agentic-graph-agentic-travel-agencies-prd-tad-adr.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr-mvp-gtm.md"
+        "relPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr.md"
       },
-      "documentPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr-mvp-gtm.md",
+      "documentPath": "docs/documents/agentic-graph-agentic-travel-agencies-prd-tad-adr.md",
       "language": "en-us"
     },
     {
@@ -1106,19 +1106,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-ar-vr-xr-prd-tad-adr-mvp-gtm",
+      "@id": "node:agentic-graph:doc:agentic-graph-ar-vr-xr-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-ar-vr-xr-prd-tad-adr-mvp-gtm.md"
+        "agentic-graph-ar-vr-xr-prd-tad-adr.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr-mvp-gtm.md"
+        "relPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr.md"
       },
-      "documentPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr-mvp-gtm.md",
+      "documentPath": "docs/documents/agentic-graph-ar-vr-xr-prd-tad-adr.md",
       "language": "en-us"
     },
     {
@@ -3330,19 +3330,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-prd-tad-adr-mvp-gtm-conformance-report",
+      "@id": "node:agentic-graph:doc:agentic-graph-prd-tad-adr-conformance-report",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-prd-tad-adr-mvp-gtm-conformance-report.md"
+        "agentic-graph-prd-tad-adr-conformance-report.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-conformance-report.md"
+        "relPath": "docs/documents/agentic-graph-prd-tad-adr-conformance-report.md"
       },
-      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-conformance-report.md",
+      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-conformance-report.md",
       "language": "en-us"
     },
     {
@@ -3746,19 +3746,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-prd-tad-adr-mvp-gtm",
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md"
+        "agentic-graph-storage-sync-prd-tad-adr.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md"
+        "relPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr.md"
       },
-      "documentPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md",
+      "documentPath": "docs/documents/agentic-graph-storage-sync-prd-tad-adr.md",
       "language": "en-us"
     },
     {
@@ -4226,19 +4226,19 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-xrpl-x402-paid-resource-prd-tad-adr-mvp-gtm",
+      "@id": "node:agentic-graph:doc:agentic-graph-xrpl-x402-paid-resource-prd-tad-adr",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-xrpl-x402-paid-resource-prd-tad-adr-mvp-gtm.md"
+        "agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr-mvp-gtm.md"
+        "relPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md"
       },
-      "documentPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr-mvp-gtm.md",
+      "documentPath": "docs/documents/agentic-graph-xrpl-x402-paid-resource-prd-tad-adr.md",
       "language": "en-us"
     },
     {

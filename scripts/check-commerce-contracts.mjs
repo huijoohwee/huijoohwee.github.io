@@ -47,7 +47,9 @@ export function validateProjection(record) {
     if (!owner || extra.length || (nested && !owner.properties?.[nested])) failures.push(`unresolved projection field ${target}`);
   }
   if (mapping.object !== 'svo_pattern.object' || mapping.outcome !== 'outcome') failures.push('scoped object and observable outcome need distinct bindings');
-  if (record.schemaVersion !== '3.0.0' || !contract.migration) failures.push('semantic correction requires versioned migration');
+  // The object-to-outcome correction landed in 3.0.0; later additive minors keep its migration note.
+  const [major] = String(record.schemaVersion ?? '').split('.').map(Number);
+  if (!(major >= 3) || !contract.migration) failures.push('semantic correction requires versioned migration');
   return failures;
 }
 

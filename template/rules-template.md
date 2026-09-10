@@ -29,7 +29,7 @@ VALIDATION
 
 POST-TASK
 - Update cross-repo + API docs
-- Plan next under `/GitHub/.todo/docs/TODO.md` in one immutable `/GitHub/.todo/todo/YYYY-MM/<context>.md` record; consult `/GitHub/agentic-graph/docs/` and `/GitHub/huijoohwee.github.io/schema/AgenticRAG` for source context.
+- Plan next under `/GitHub/.workspace/.todo/docs/TODO.md` in one immutable `/GitHub/.workspace/.todo/todo/YYYY-MM/<context>.md` record; consult `/GitHub/agentic-graph/docs/` and `/GitHub/huijoohwee.github.io/schema/AgenticRAG` for source context.
 ```
 
 ```
@@ -43,7 +43,7 @@ POST-TASK
 - USE appropriate data structures, algorithms, concurrency controls; ENSURE thread safety
 - FORBID hardcoded domains, duplication, circular deps, race conditions, silent failures, stale code, unnecessary sync
 - TEST/VERIFY focused diffs only; AVOID indefinite full-codebase runs
-- AFTER: UPDATE cross-repo docs, API docs; PLAN next under `/GitHub/.todo/docs/TODO.md` in one immutable `/GitHub/.todo/todo/YYYY-MM/<context>.md` record; consult `/GitHub/agentic-graph/docs/documents` and `/GitHub/huijoohwee.github.io/schema/AgenticRAG` for source context.
+- AFTER: UPDATE cross-repo docs, API docs; PLAN next under `/GitHub/.workspace/.todo/docs/TODO.md` in one immutable `/GitHub/.workspace/.todo/todo/YYYY-MM/<context>.md` record; consult `/GitHub/agentic-graph/docs/documents` and `/GitHub/huijoohwee.github.io/schema/AgenticRAG` for source context.
 ```
 
 ## native development skills

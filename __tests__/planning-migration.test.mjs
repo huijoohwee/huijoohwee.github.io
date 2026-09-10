@@ -5,8 +5,8 @@ test('public planning routes select one private owner without retaining a writab
   assert.equal(existsSync(new URL('../todo', import.meta.url)), false);
   for (const file of ['TODO.md', 'kanban.md']) {
     const text = readFileSync(new URL(`../docs/${file}`, import.meta.url), 'utf8');
-    assert.match(text, /source_owner: "huijoohwee\/\.todo"/u);
-    assert.ok(text.includes(`https://github.com/huijoohwee/.todo/blob/main/docs/${file}`));
+    assert.match(text, /source_owner: "huijoohwee\/\.workspace"/u);
+    assert.ok(text.includes(`https://github.com/huijoohwee/.workspace/blob/main/.todo/docs/${file}`));
     assert.match(text, /status: "retired"/u);
   }
   const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));

@@ -1,7 +1,7 @@
 ---
 title: "Documentation Guidelines"
 doc_type: "Guidelines"
-version: "2.1.0"
+version: "2.2.0"
 date: "2026-09-10"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -78,6 +78,8 @@ choices are an example, not a requirement of this universal guideline.
 
 ## Markdown YAML Frontmatter Enforcement
 
+Use [conventions and syntax](conventions-and-syntax-guidelines.md) to select the
+applicable language, namespace and product profile without duplicating its rules.
 Apply the [shared runtime frontmatter contract](runtime-frontmatter-guidelines.md)
 for YAML syntax, metadata ownership, provenance and validation boundaries.
 Local documentation and schema profiles declare their additional fields below.

@@ -1,8 +1,8 @@
 ---
 title: "Project Rules"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "1.1.0"
+date: "2026-09-10"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -23,6 +23,7 @@ these guidelines do not establish production readiness or deployment authority.
 
 | Concern | Single normative owner | Load when |
 |---|---|---|
+| Convention selection and syntax boundaries | [Conventions and syntax](./conventions-and-syntax-guidelines.md) | Choosing naming, formatting, token or serialization profiles |
 | Shared CID, RAO and SVO meanings | [Shared contract](./cid-guidelines.md) | Joining requirements, actions and evidence |
 | Buyer problem, scope and design decisions | [PRD/TAD/ADR](./prd-tad-adr-guidelines.md) | Defining or changing a product contract |
 | Lifecycle, execution and release evidence | [ADLC](./adlc-guidelines.md) | Starting, validating or handing off work |

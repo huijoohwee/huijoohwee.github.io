@@ -1,47 +1,42 @@
 ---
-title: Markdown Syntax Guidelines (SSOT)
-product: Agentic Graph Canvas
-status: canonical
+title: "Graph Markdown Syntax Profile Reference"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "2.0.0"
+date: "2026-09-10"
 lang: "en-US"
+owner: "agentic-graph"
 frontmatter_contract: "required"
+load_policy: "on-demand"
 ---
 
 # Markdown Syntax Guidelines
 
-## Purpose
-Provide a strict, renderer-safe Markdown contract for {{product}} Chat output that can be ingested and rendered across Infinite Canvas, Workspace Editor, Multi-dimensional Table, and Kanban.
+The [Graph Markdown profile][profile] owns renderer variables, annotation syntax,
+output shape, table persistence and retry rules. Its [validator][validator] and
+[specification constants][constants] own executable checks. Load those sources
+when producing Graph documents; their rules do not apply to every Markdown response.
 
-## Core Rules
-- Respond with Markdown only. No preamble. No explanation.
-- Variables use `{{key}}`, optional `{{key:value}}`, optional `{{key|fallback}}`.
-- For chatAgentic Graph AGENTIC_OS output, include YAML frontmatter first, then a non-empty markdown body that references declared frontmatter variables via `{{}}`.
-- For multi-part or complex chatAgentic Graph requests, `solution_md` must contain the substantive answer content, not a thin one-line summary.
-- Never include fenced code blocks or chat-history trailers inside the canonical `agentic-os` document.
-- The markdown body itself must carry the real answer content; do not rely on a `{{solution_md}}` shell as the body.
-- Annotation sigils use inline code only: `#HEX:text`, `bg#HEX:text`, or `#HEX|bg#HEX:text` where HEX is exactly 6 uppercase digits.
-- Prefer frontmatter `flow:` YAML for flow graphs; keep schema stable and parseable.
-- Keep one opening YAML frontmatter block as the machine SSOT. Body Markdown is the human projection and must not contain a second metadata block, body `flow:` mirror, `## AGENTIC_OS Reading Layer`, or line-start `@node:` / `@edge:` declarations for Storyboard Widget topology.
-- Canonical authored Markdown and reusable templates must keep `flow:` in plain YAML scalars, arrays, and objects.
-- Normalized `{key, type, value}` wrappers are reserved for E2E ingestion/parsing/rendering fixtures after parsing; do not mix them into ordinary authored docs or templates.
-- In normalized fixtures, reusable AGENTIC_OS-readable node summaries belong on the owning frontmatter node record, commonly as `agentic-os:readingSummary`.
-- Switch-sensitive frontmatter-first docs must declare the full Canvas View preset explicitly so file switching stays deterministic: `agenticOsCanvasSurfaceMode`, `agenticOsCanvasRenderMode` when applicable, target renderer/mode key, `agenticOsDocumentSemanticMode`, `agenticOsFrontmatterModeEnabled`, `agenticOsMultiDimTableModeEnabled`, and `agenticOsDocumentStructureBaselineLock`.
+For common authoring, use [conventions and syntax](conventions-and-syntax-guidelines.md)
+and [runtime frontmatter](runtime-frontmatter-guidelines.md). The
+[Canvas view profile](yaml-frontmatter-guidelines.md) remains a separate local profile.
+This page retains the published website path; it no longer authors a second Graph rule table.
 
-## Syntax Validation Rules
+## Compatibility excerpts
 
-| Rule id | Check | Pattern | Pass condition |
-|---|---|---|---|
-| `V-01` | Color sigil HEX format | `` `#HEX:text` `` | HEX is exactly 6 uppercase digits |
-| `V-02` | Long quote guard | prose | no quoted span ≥ 15 words |
-| `V-03` | Variable references resolvable | `{{key}}` | all keys present in frontmatter or inline `{{key:value}}` |
-| `V-04` | Multi-select arrays valid JSON | `` `["A","B"]` `` | `JSON.parse` succeeds after backtick strip |
-| `V-05` | `compute:` function is pure | `compute: \|` block | no `fetch`, `document`, `window` in function body |
-| `V-06` | No manual truncation ellipsis | `...` in headings | no `...` at end of H1–H4 labels |
-| `V-07` | Confidence enum constrained | `confidence:` fields | values are exactly `low`, `medium`, or `high` |
-| `V-08` | Single frontmatter authority | `---` blocks | exactly one opening YAML frontmatter block before body |
-| `V-09` | No parallel Flow/AGENTIC_OS body layer | body text | no body `flow:`, `## AGENTIC_OS Reading Layer`, or line-start `@node:` / `@edge:` mirrors |
+The existing Graph [frontmatter documentation check][consumer] reads this path and
+requires these two source sentences. They are verbatim excerpts from the
+[pinned Graph profile][baseline], not independently editable rules:
 
-## Retry Contract
-On first failure, inject `@flag:correction` with `failed_rule: V-0x` into the next AI call. Max retry: `3`. After 3 failures surface `@flag:validation-failed`.
+> Canonical authored Markdown and reusable templates must keep `flow:` in plain YAML scalars, arrays, and objects.
+> Normalized `{key, type, value}` wrappers are reserved for E2E ingestion/parsing/rendering fixtures after parsing; do not mix them into ordinary authored docs or templates.
+
+Retire these excerpts when that source-owned check reads its local profile directly.
+A future change must update the owning contract and its consumer together; do not
+change only this reference to hide a mismatch. The source revision identifies the
+excerpts, not current runtime readiness. Mutable links below are discovery only.
+
+[profile]: https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/markdown-syntax-guidelines.md
+[validator]: https://github.com/huijoohwee/agentic-graph/blob/main/canvas/src/features/chat/chatMarkdownValidation.ts
+[constants]: https://github.com/huijoohwee/agentic-graph/blob/main/canvas/src/features/chat/chatAiMarkdownSpec.ts
+[consumer]: https://github.com/huijoohwee/agentic-graph/blob/main/canvas/src/__tests__/docsFrontmatterE2EContract.test.ts
+[baseline]: https://github.com/huijoohwee/agentic-graph/blob/32836542f5a401e276504a28e72fd6b17b09f006/docs/documents/markdown-syntax-guidelines.md

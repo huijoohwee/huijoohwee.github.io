@@ -27,6 +27,7 @@ const MODULES = [
   "prd-tad-adr-mvp-gtm-verification.md",
   "prd-tad-adr-mvp-gtm-templates.md",
   "prd-tad-adr-mvp-gtm-cid-matrix.md",
+  "prd-tad-adr-mvp-gtm-planning-record.md",
   "prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
@@ -50,6 +51,7 @@ const PUBLISHED_ANCHORS = [
   "autonomous-implementation-verification",
   "cid-directive-matrix",
   "core-templates",
+  "prd-tad-adr-mvp-gtm-planning-record",
   "architecture-diagram-standards",
   "prd--tad-integration",
   "anti-pattern-guards",
@@ -119,6 +121,7 @@ const DELEGATIONS = {
   "autonomous-implementation-verification": "prd-tad-adr-mvp-gtm-verification.md",
   "core-templates": "prd-tad-adr-mvp-gtm-templates.md",
   "cid-directive-matrix": "prd-tad-adr-mvp-gtm-cid-matrix.md",
+  "prd-tad-adr-mvp-gtm-planning-record": "prd-tad-adr-mvp-gtm-planning-record.md",
 };
 const sections = indexText.split(/^## /m);
 for (const [anchor, mod] of Object.entries(DELEGATIONS)) {

@@ -87,6 +87,19 @@ test("cells map to the recorded Output, Decision Logic, and Next Step columns", 
   assert.equal(row.context_refs, "`todo/2026-08/sample-context.md`");
 });
 
+test("v3 records project the outcome with its check, the artifact reference, and the directive", async (t) => {
+  const fixture = await createFixture(t, ["alpha-task"]);
+  await writeContextRecordV3(fixture.repository, "joined-task", "2026-09-04");
+  const { rows, failures } = collectProjectedRows({ repository: fixture.repository });
+  assert.deepEqual(failures, []);
+  const row = rows.find(({ id }) => id === "joined-task");
+  assert.equal(row.acceptance, "one validated record (check: npm run planning:check)");
+  assert.equal(row.evidence, "`PRD-TAD-ADR-EXAMPLE-001@1.0.0`");
+  assert.equal(row.next_action, "Author one v3 record joined to the artifact.");
+  assert.equal(row.context_refs, "`todo/2026-09/joined-task.md`");
+  assert.equal(row.status, PROJECTED_STATUS);
+});
+
 test("the rendered block is fenced, digest-stamped, and priority-aligned", () => {
   const { block, digest } = renderProjection({
     rows: [projectLedgerRow({
@@ -196,6 +209,22 @@ async function createFixture(t, contexts = ["beta-task", "alpha-task"]) {
   const documents = new Map([[KANBAN_DOCS_PATH, text]]);
   assert.deepEqual(validateKanbanProjection(documents, { repository }), []);
   return { repository, text, documents };
+}
+
+async function writeContextRecordV3(repository, context, date) {
+  const period = date.slice(0, 7);
+  const directory = path.join(repository, "todo", period);
+  await mkdir(directory, { recursive: true });
+  await writeFile(path.join(directory, `${context}.md`), [
+    "---", 'schema: "todo-context-record/v3"', `period: "${period}"`,
+    `context: "${context}"`, 'scope: "cross-repository"', 'status: "immutable"',
+    'record_policy: "immutable"', 'source_contract: "../../docs/TODO.md"',
+    `updated_date: "${date}"`, "---", "", `# ${context}`, "", `## ${date}`, "",
+    "| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |",
+    "|---|---|---|---|",
+    "| `PRD-TAD-ADR-EXAMPLE-001@1.0.0` | C: fixture at base r1 · I: one joined planning record · D: Author one v3 record joined to the artifact. "
+      + `| R: Implementer · A: Implementer writes one record · O: one validated record · check: npm run planning:check | ${date} |`, "",
+  ].join("\n"));
 }
 
 async function writeContextRecord(repository, context, date) {

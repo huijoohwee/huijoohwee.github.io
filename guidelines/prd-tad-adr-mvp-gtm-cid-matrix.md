@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.0.2"
-date: "2026-09-05"
+version: "1.0.3"
+date: "2026-09-10"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.5.0"
+parent_version: "2.6.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -94,6 +94,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Patterns        | Apply proven solutions               | - [ ] Use established patterns; apply solutions; forbid anti-patterns                         |
 | Performance     | Specify response requirements        | - [ ] Define latency/throughput; specify performance; forbid unspecified latency              |
 | Personas        | Define user archetypes               | - [ ] Create user personas; define archetypes; forbid generic user assumptions                |
+| Planning record | Join bounded work to one artifact    | - [ ] Record `continuity_id@revision`, CID, RAO with a named check, and date; forbid path-only or random identifiers, restated decisions, and rewritten records |
 | Prioritization  | Rank systematically                  | - [ ] Use value/effort matrix; rank systematically; forbid first-come ordering                |
 | Problems        | Define user pain points              | - [ ] Identify user problems; define pain points; forbid solution-first thinking              |
 | Protocols       | Specify communication standards      | - [ ] Define message formats; specify protocols; forbid proprietary interfaces                |

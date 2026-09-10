@@ -12,7 +12,10 @@
 //   - it reuses the existing planning contract as the single ledger parser,
 //   - it renders only the active period, because the legacy shards hold ~601
 //     rows and would breach the board's own <600 line budget,
-//   - it derives every cell from a recorded cell or marks the field absent.
+//   - it derives every cell from a recorded cell or marks the field absent:
+//     acceptance <- Output (v2) or `O:` plus its named check (v3),
+//     evidence   <- Decision Logic (v2) or the PRD-TAD-ADR-MVP-GTM reference (v3),
+//     next_action <- Next Step Recommendation (v2) or `D:` (v3).
 //
 // Deliberately NOT derived: priority, owner_profile, worker_process, and
 // target_profile. The ledger records none of them, so the projection emits the
@@ -46,12 +49,19 @@ export const BOARD_COLUMNS = Object.freeze([
   "target_profile", "context_refs", "acceptance", "evidence", "next_action",
 ]);
 
-// Ledger cell offsets in the canonical 11-column planning row.
+// Ledger cell offsets in the legacy 11-column planning row. The contract supplies
+// normalized `fields` for both row schemas; the offsets remain for callers that
+// still pass raw legacy cells.
 const LEDGER_OUTPUT = 7;
 const LEDGER_DECISION_LOGIC = 8;
 const LEDGER_NEXT_STEP = 9;
 
-export function projectLedgerRow({ context, source, cells }) {
+export function projectLedgerRow({ context, source, cells, fields }) {
+  const recorded = fields ?? {
+    outcome: cells[LEDGER_OUTPUT],
+    decision: cells[LEDGER_DECISION_LOGIC],
+    next: cells[LEDGER_NEXT_STEP],
+  };
   return Object.freeze({
     id: context,
     type: PROJECTED_TYPE,
@@ -61,9 +71,9 @@ export function projectLedgerRow({ context, source, cells }) {
     worker_process: ABSENT_FIELD,
     target_profile: ABSENT_FIELD,
     context_refs: `\`${source}\``,
-    acceptance: cells[LEDGER_OUTPUT],
-    evidence: cells[LEDGER_DECISION_LOGIC],
-    next_action: cells[LEDGER_NEXT_STEP],
+    acceptance: recorded.outcome,
+    evidence: recorded.decision,
+    next_action: recorded.next,
   });
 }
 

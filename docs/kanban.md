@@ -27,8 +27,8 @@ kanban_contract:
 projection_owner: "scripts/kanban-projection.mjs"
 projection_source: "../todo"
 projection_period: "2026-09"
-projection_row_count: 1
-projection_digest: "2ca81beceebed96d3d052312db92485780a84b21cc4b6e092f4650548f076494"
+projection_row_count: 2
+projection_digest: "cab3ea94b349ec2195ec01db9cf3331c8f13d853dcc1ea678acae88ee70f83bd"
 projection_status: "review"
 projection_absent_fields: ["priority", "owner_profile", "worker_process", "target_profile"]
 ---
@@ -70,12 +70,13 @@ Board status and device labels never authenticate a remote claim or authorize an
 
 ## Ledger Projection
 
-Generated from `todo/<active_period>/<context>.md` by `scripts/kanban-projection.mjs`. Do not hand edit; `npm run planning:check` fails on any drift. `id` is the ledger Context key and resolves one-to-one with its record path in `context_refs`. `acceptance` projects Output, `evidence` projects Decision Logic, and `next_action` projects Next Step Recommendation. `priority`, `owner_profile`, `worker_process`, and `target_profile` are absent from the ledger and carry declared absent values rather than a guess.
+Generated from `todo/<active_period>/<context>.md` by `scripts/kanban-projection.mjs`. Do not hand edit; `npm run planning:check` fails on any drift. `id` is the ledger Context key and resolves one-to-one with its record path in `context_refs`. `acceptance` projects Output (v2) or `O:` with its named check (v3), `evidence` projects Decision Logic (v2) or the `PRD-TAD-ADR-MVP-GTM` reference (v3), and `next_action` projects Next Step Recommendation (v2) or `D:` (v3). `priority`, `owner_profile`, `worker_process`, and `target_profile` are absent from the ledger and carry declared absent values rather than a guess.
 
-<!-- kanban-projection:begin period=2026-09 rows=1 digest=2ca81beceebed96d3d052312db92485780a84b21cc4b6e092f4650548f076494 -->
+<!-- kanban-projection:begin period=2026-09 rows=2 digest=cab3ea94b349ec2195ec01db9cf3331c8f13d853dcc1ea678acae88ee70f83bd -->
 | id | type | status | priority | owner_profile | worker_process | target_profile | context_refs | acceptance | evidence | next_action |
 |---|---|---|---:|---|---|---|---|---|---|---|
 | centralized-workspace-planning | task | review | 0 | none | none | none | `todo/2026-09/centralized-workspace-planning.md` | One central live planning owner, source-bound migration inventory, compatible old URLs and bounded allocation checking | MECE assigns one accountable task per criterion; SRP separates planning, current board state, allocation checking and authenticated effect authority; relocation preserves every imported record byte | Integrate destination before Canvas retirement and upstream routing; connect shared claim verification separately before claiming automated cross-device exclusion |
+| prd-tad-adr-mvp-gtm-planning-record | task | review | 0 | none | none | none | `todo/2026-09/prd-tad-adr-mvp-gtm-planning-record.md` | module linked from the authoring index; contract, projector and tests accept v3 rows and close v2 after the adoption date (check: npm run planning:check) | `PRD-TAD-ADR-ADLC-PIPELINE-001@1.1.0` [guide](https://github.com/huijoohwee/agentic-os/blob/main/guides/PRD-TAD-ADR-MVP-GTM.md) | Adopt `todo-context-record/v3` with the row `PRD-TAD-ADR-MVP-GTM, CID, RAO, Updated Date` for records dated after 2026-09-10; keep v2 records and monthly shards immutable; own the grammar and the five section roles in the planning record module. |
 <!-- kanban-projection:end -->
 
 ## Handoff Contract

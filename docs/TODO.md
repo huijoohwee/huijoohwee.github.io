@@ -2,7 +2,7 @@
 title: "Workspace Todo Contract"
 graphId: "md:agentic-canvas-os-todo-contract"
 doc_type: "Planning Ledger Contract"
-date: "2026-08-01"
+date: "2026-09-10"
 lang: "en-US"
 schema: "todo-index/v3"
 frontmatter_contract: "required"
@@ -14,6 +14,9 @@ legacy_shard_pattern: "../todo/YYYY-MM.md"
 context_record_pattern: "../todo/YYYY-MM/<context>.md"
 legacy_policy: "immutable"
 record_policy: "immutable"
+record_schema: "todo-context-record/v3"
+record_schema_adoption_date: "2026-09-10"
+record_schema_owner: "../guidelines/prd-tad-adr-mvp-gtm-planning-record.md"
 size_limit_bytes: 500000
 line_limit: 599
 adoption_date: "2026-07-14"
@@ -57,7 +60,7 @@ Every new record starts with plain YAML using this contract:
 
 ```yaml
 ---
-schema: "todo-context-record/v2"
+schema: "todo-context-record/v3"
 period: "YYYY-MM"
 context: "stable-kebab-case-context"
 scope: "cross-repository"
@@ -72,22 +75,23 @@ updated_date: "YYYY-MM-DD"
 
 ## Row Contract
 
-Each record has exactly one dated section and one canonical 11-column row:
+The row grammar is owned by the [MVP→GTM Planning Record module](../guidelines/prd-tad-adr-mvp-gtm-planning-record.md#planning-record-row-contract); this index binds it to this repository. Each record has exactly one dated section and one canonical 4-column row:
 
-| Context | Intent | Directive | Module | Class/Object | Function/Method | Input | Output | Decision Logic | Next Step Recommendation | Updated Date |
-|---|---|---|---|---|---|---|---|---|---|---|
+| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
+|---|---|---|---|
+| `` `CONTINUITY-ID@revision` `` | C: … · I: … · D: … | R: … · A: … · O: … · check: … | YYYY-MM-DD |
 
-For every `todo-context-record/v2` record:
+For every `todo-context-record/v3` record:
 
 - create one complete row under an exact `## YYYY-MM-DD` UTC heading;
+- reference the governing artifact as `` `continuity_id@revision` `` (frontmatter `continuity_id` plus its exact PRD/TAD/ADR revision or immutable digest), optionally followed by one locator link; a path alone or a free-standing identifier is rejected;
+- carry `C:`, `I:`, `D:` in order, separated by ` · `; keep `D` at 50 words or fewer;
+- carry `R:`, `A:`, `O:`, `check:` in order; `A` is one subject-verb-object action, `check` names the mechanism that judges `O`;
 - keep the heading and `Updated Date` equal to frontmatter `updated_date`;
-- fill all 11 cells; forbid empty cells and placeholder `-` values;
-- keep `Directive` at 50 words or fewer;
-- set `Updated Date` equal to the enclosing dated heading;
-- name the affected source in `Module` and use a stable, unique `Context`;
-- bind the row Context to both filename and frontmatter, then never rewrite the record.
+- forbid empty cells and placeholder `-` values;
+- bind the record key to both filename and frontmatter `context`; the key is not a table column, and the record is never rewritten. A next step is a new record under a new key.
 
-Legacy `todo-log/v1` monthly shards are immutable, byte-preserved historical evidence. They are parsed only for deterministic projection and duplicate-Context detection, not retroactively normalized.
+`todo-context-record/v2` (the former 11-column `Context … Next Step Recommendation` row) is closed for records dated after `record_schema_adoption_date`. Committed v2 records and `todo-log/v1` monthly shards are immutable, byte-preserved historical evidence, parsed only for deterministic projection and duplicate-key detection, never retroactively normalized.
 
 ## Append And Merge Rules
 

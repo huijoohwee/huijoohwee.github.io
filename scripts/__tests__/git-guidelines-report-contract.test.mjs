@@ -79,7 +79,7 @@ test("named-owner severities make scope and concurrency redefinitions observable
   const owners = Object.fromEntries([
     "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
-    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/prd-tad-adr-mvp-gtm-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
@@ -110,7 +110,7 @@ test("exact lane-class tokens ignore prose capitalization but reject code-token 
   const owners = Object.fromEntries([
     "guidelines/adlc-guidelines.md",
     "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
-    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/prd-tad-adr-mvp-gtm-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",

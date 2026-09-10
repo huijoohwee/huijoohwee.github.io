@@ -96,7 +96,7 @@ export function checkAdlcMigration(files) {
     assert.ok(logicalLines(source) < 600, `${name} must remain below 600 lines`);
     assert.ok(Buffer.byteLength(source) < MAX_BYTES, `${name} must remain below ${MAX_BYTES} bytes`);
   }
-  const companionPaths = [...files.keys()].filter(path => /^guidelines\/prd-tad-adr-.+\.md$/.test(path));
+  const companionPaths = [...files.keys()].filter(path => /^guidelines\/prd-tad-adr-mvp-gtm-.+\.md$/.test(path));
   for (const path of new Set(["guidelines/cid-guidelines.md", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md", ...companionPaths])) {
     metadataByName.set(path.slice("guidelines/".length), checkGuidelineFrontmatter(required(files, path), path));
   }

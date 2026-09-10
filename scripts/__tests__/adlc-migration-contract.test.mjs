@@ -175,7 +175,7 @@ for (const [name, before, after, expected] of [
 }
 
 test("companion metadata cannot silently reference an obsolete parent revision", () => {
-  const candidate = mutate("guidelines/prd-tad-adr-diagram-canvas-render.companion.md", source =>
+  const candidate = mutate("guidelines/prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md", source =>
     source.replace(/^parent_version: .*$/m, 'parent_version: "0.0.0"'));
   assert.throws(() => checkAdlcMigration(candidate), /parent_version must match the current owning document/);
 });

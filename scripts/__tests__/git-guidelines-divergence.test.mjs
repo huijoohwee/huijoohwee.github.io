@@ -11,7 +11,7 @@ const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", im
 const ownerPaths = Object.freeze([
   "guidelines/adlc-guidelines.md",
   "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
-  "guidelines/prd-tad-adr-verification.md",
+  "guidelines/prd-tad-adr-mvp-gtm-verification.md",
   "guidelines/adlc-cloud-collaboration.md",
   "guidelines/adlc-scoped-lane-admission.md",
   "guidelines/commit-push-deploy-guidelines.md",
@@ -29,12 +29,12 @@ test("real current-owner domains are conformant and inputs remain unchanged", ()
 
 test("authoring findings require the declared companion and its unchanged semantic contract", () => {
   const authoringPath = "guidelines/prd-tad-adr-mvp-gtm-guidelines.md";
-  const verificationPath = "guidelines/prd-tad-adr-verification.md";
+  const verificationPath = "guidelines/prd-tad-adr-mvp-gtm-verification.md";
   const missing = { ...owners };
   delete missing[verificationPath];
   assert.ok(run(source, missing).some(item => item.message.includes("verification companion is absent")));
   const unlinked = { ...owners, [authoringPath]: owners[authoringPath].replace(
-    "[Conformance Findings module](./prd-tad-adr-verification.md)", "[Conformance Findings module](./unrelated.md)") };
+    "[Conformance Findings module](./prd-tad-adr-mvp-gtm-verification.md)", "[Conformance Findings module](./unrelated.md)") };
   assert.ok(run(source, unlinked).some(item => item.message.includes("verification companion is absent")));
   for (const [before, after] of [
     ["Report a zero count for every type with no finding", "Omit every type with no finding"],

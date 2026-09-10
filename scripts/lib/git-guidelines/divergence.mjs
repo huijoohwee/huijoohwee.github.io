@@ -146,7 +146,7 @@ function resolveConsumedContexts(document, owners, ruleIndex, findings) {
     const ownerPath = link ? resolveOwnerPath(link[2], owners) : null;
     let ownerText = ownerPath ? String(owners[ownerPath] || "") : "";
     if (contract.id === "C7" && namedOwner === contract.ownerName) {
-      const companion = "guidelines/prd-tad-adr-verification.md";
+      const companion = "guidelines/prd-tad-adr-mvp-gtm-verification.md";
       const link = ownerText.match(/\[Conformance Findings module\]\(([^)]+)\)/u)?.[1];
       const linkedPath = link && ownerPath ? normalizedPath(path.posix.join(path.posix.dirname(ownerPath), link)) : null;
       const companionPath = linkedPath ? resolveOwnerPath(linkedPath, owners) : null;

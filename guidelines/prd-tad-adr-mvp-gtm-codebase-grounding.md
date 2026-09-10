@@ -22,7 +22,7 @@ Ground specifications in exact source evidence, keep one owner per concern and d
 verification from runtime proof. This reusable procedure adds no semantic fields or universal topology.
 The reference implementation connects the [authoring guideline](./prd-tad-adr-mvp-gtm-guidelines.md) to seven
 named repositories. It covers ownership and integration seams, not every feature in their specifications.
-The [machine-readable snapshot](../schema/AgenticRAG/prd-tad-adr-grounding.json) owns exact source
+The [machine-readable snapshot](../schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json) owns exact source
 revisions, artifact SHA-256 values, named checks and claim dispositions. Do not copy that inventory
 into consumer documents. This guide and the snapshot load only for affected authoring or integration work.
 
@@ -103,8 +103,8 @@ Green documentation checks prove these documents' bounded contracts, not the com
 
 ## Verification
 
-`npm run prd-tad-adr:policy:check` validates the local guideline structure and grounding record shape.
-For available local clones, `node scripts/check-prd-tad-adr-guideline.mjs --codebase-root=/absolute/workspace`
+`npm run prd-tad-adr-mvp-gtm:policy:check` validates the local guideline structure and grounding record shape.
+For available local clones, `node scripts/check-prd-tad-adr-mvp-gtm-guideline.mjs --codebase-root=/absolute/workspace`
 also verifies all recorded artifacts against the exact Git revisions, without executing their code,
 fetching remotes, starting services or altering worktrees. Historical revision verification does not
 establish current HEAD or deployment freshness; reacquire those at the consuming transition.

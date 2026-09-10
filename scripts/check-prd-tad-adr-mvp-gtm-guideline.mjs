@@ -20,16 +20,16 @@ const read = (name) => readFileSync(join(dir, name), "utf8");
 const INDEX = "prd-tad-adr-mvp-gtm-guidelines.md";
 
 const MODULES = [
-  "prd-tad-adr-codebase-grounding.md",
-  "prd-tad-adr-economics.md",
-  "prd-tad-adr-process-flows.md",
-  "prd-tad-adr-readiness.md",
-  "prd-tad-adr-verification.md",
-  "prd-tad-adr-templates.md",
-  "prd-tad-adr-cid-matrix.md",
-  "prd-tad-adr-diagram-guidelines.companion.md",
-  "prd-tad-adr-diagram-canvas-render.companion.md",
-  "prd-tad-adr-diagram-templates.companion.md",
+  "prd-tad-adr-mvp-gtm-codebase-grounding.md",
+  "prd-tad-adr-mvp-gtm-economics.md",
+  "prd-tad-adr-mvp-gtm-process-flows.md",
+  "prd-tad-adr-mvp-gtm-readiness.md",
+  "prd-tad-adr-mvp-gtm-verification.md",
+  "prd-tad-adr-mvp-gtm-templates.md",
+  "prd-tad-adr-mvp-gtm-cid-matrix.md",
+  "prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md",
+  "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
+  "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
 ];
 
 // Anchors the set publishes. Inbound references rely on these resolving in the index.
@@ -113,12 +113,12 @@ for (const name of MODULES) {
 
 // Delegating sections must name their module rather than restating it.
 const DELEGATIONS = {
-  "solo-dev-ai-native-orientation": "prd-tad-adr-economics.md",
-  "from-0-to-1-prd--tad-creation-process": "prd-tad-adr-process-flows.md",
-  "readiness-ladder": "prd-tad-adr-readiness.md",
-  "autonomous-implementation-verification": "prd-tad-adr-verification.md",
-  "core-templates": "prd-tad-adr-templates.md",
-  "cid-directive-matrix": "prd-tad-adr-cid-matrix.md",
+  "solo-dev-ai-native-orientation": "prd-tad-adr-mvp-gtm-economics.md",
+  "from-0-to-1-prd--tad-creation-process": "prd-tad-adr-mvp-gtm-process-flows.md",
+  "readiness-ladder": "prd-tad-adr-mvp-gtm-readiness.md",
+  "autonomous-implementation-verification": "prd-tad-adr-mvp-gtm-verification.md",
+  "core-templates": "prd-tad-adr-mvp-gtm-templates.md",
+  "cid-directive-matrix": "prd-tad-adr-mvp-gtm-cid-matrix.md",
 };
 const sections = indexText.split(/^## /m);
 for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
@@ -127,14 +127,14 @@ for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
   assert.ok(body.includes(`./${mod}`), `${INDEX}: section #${anchor} must delegate to ${mod}`);
 }
 
-const recordPath = "schema/AgenticRAG/prd-tad-adr-grounding.json";
+const recordPath = "schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json";
 const recordBytes = readFileSync(recordPath);
 assert.ok(recordBytes.length < 65_536, "grounding record exceeds 64 KiB");
 const grounding = JSON.parse(recordBytes.toString("utf8"));
-const meta = readFrontmatter(read("prd-tad-adr-codebase-grounding.md")).data;
+const meta = readFrontmatter(read("prd-tad-adr-mvp-gtm-codebase-grounding.md")).data;
 assert.equal(meta.schema, "prd-tad-adr-codebase-grounding/v1");
 assert.equal(meta.parent, "PRD, TAD & ADR Guidelines");
-assert.ok(read("prd-tad-adr-codebase-grounding.md").includes("../" + recordPath));
+assert.ok(read("prd-tad-adr-mvp-gtm-codebase-grounding.md").includes("../" + recordPath));
 assert.equal(grounding.schema, "prd-tad-adr-codebase-grounding/v1");
 assert.equal(grounding.semantic_owner, "../../guidelines/cid-guidelines.md#shared-field-contract");
 assert.equal(grounding.continuity_owner, "../../guidelines/adlc-artifact-continuity.md");

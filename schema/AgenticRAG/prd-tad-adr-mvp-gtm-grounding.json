@@ -6,7 +6,7 @@
   "scope": "Repository ownership and specification-to-runtime seams; not exhaustive feature or production certification.",
   "semantic_owner": "../../guidelines/cid-guidelines.md#shared-field-contract",
   "continuity_owner": "../../guidelines/adlc-artifact-continuity.md",
-  "guide": "../../guidelines/prd-tad-adr-codebase-grounding.md",
+  "guide": "../../guidelines/prd-tad-adr-mvp-gtm-codebase-grounding.md",
   "production_ready": false,
   "repositories": [
     {
@@ -61,7 +61,7 @@
           "sha256": "23fefca1c4921852ed090fb1203ced6ce54a7577b97b0af37b850f271ab64f4e"
         },
         {
-          "path": "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
+          "path": "guidelines/prd-tad-adr-guidelines.md",
           "sha256": "0291a4c6a0e519acb96b406a47c1653b3bed958b19c2b49150a9e441ac076c3e"
         },
         {

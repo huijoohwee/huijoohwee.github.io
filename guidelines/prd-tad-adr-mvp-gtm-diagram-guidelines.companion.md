@@ -27,8 +27,8 @@ This companion expands one section of the parent set — `architecture-diagram-s
 | What a PRD, TAD, or ADR must contain; the Readiness Ladder; the Rule ID scheme; the authoring-domain finding vocabulary | Parent set — **PRD, TAD & ADR Guidelines** |
 | Task decomposition, agent roles, tool blast radius, per-task budgets, run state | **ADLC Guidelines** companion set |
 | Diagram identity, class selection, notation rules, labelling contract, complexity budget, render reach, diagram drift, and the diagram-domain finding vocabulary | **This companion** |
-| Render-target declaration, ingest surfaces, graph element contract, projection rules, and the canvas-domain finding vocabulary | [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) |
-| Copy-ready template bodies for every diagram class | [Diagram Templates](./prd-tad-adr-diagram-templates.companion.md) |
+| Render-target declaration, ingest surfaces, graph element contract, projection rules, and the canvas-domain finding vocabulary | [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) |
+| Copy-ready template bodies for every diagram class | [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) |
 
 Neither set restates the other. Where a rule crosses the boundary, this companion names the owning set and defers. A conformance claim sourced from this document alone is complete for the diagram domain and incomplete for every other domain.
 
@@ -53,8 +53,8 @@ Neither set restates the other. Where a rule crosses the boundary, this companio
 - `render-reach--accessibility` — caption, alt text, mobile and offline reach
 - `versioning--drift` — version notes, archival, diagram/spec agreement
 - `canvas-render-binding` — when a diagram must also project onto a graph canvas surface
-- [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas findings
-- [Diagram Templates](./prd-tad-adr-diagram-templates.companion.md) — copy-ready, portable-intersection templates per class
+- [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas findings
+- [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) — copy-ready, portable-intersection templates per class
 - `anti-pattern-guards-diagrams` — prohibited diagram patterns and corrections
 - `conformance-findings--diagram-domain` — the typed diagram finding vocabulary
 - `validation-checklist-diagrams` — pre-implementation, review, and gate items
@@ -376,7 +376,7 @@ A diagram that only renders in one viewer has not communicated. The parent's Del
 
 A static notation renderer consumes a diagram and emits a picture. A **graph canvas surface** consumes the same diagram, projects it into a node-link graph, and then lays it out, queries it, and inspects it. The second consumer needs strictly more from the author, and the difference is not stylistic: a diagram can render perfectly as a picture and project into an empty graph.
 
-The [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) owns that contract in full — surface declaration, the three ingest surfaces, the graph element contract, the convertibility rule, the presentation namespace, projection rules, and the canvas-domain finding vocabulary. This section owns only the binding: when the contract applies, and what this companion's rules must not contradict.
+The [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) owns that contract in full — surface declaration, the three ingest surfaces, the graph element contract, the convertibility rule, the presentation namespace, projection rules, and the canvas-domain finding vocabulary. This section owns only the binding: when the contract applies, and what this companion's rules must not contradict.
 
 **Directives**:
 - Apply the canvas-render contract to every diagram in a document that declares a graph canvas surface; a diagram in such a document that satisfies only the static renderer is `unsupported-ingest-surface` or `non-projecting-diagram-kind` under that contract

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "2.5.0"
-date: "2026-09-09"
+version: "2.6.0"
+date: "2026-09-10"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -58,6 +58,7 @@ lifecycle_status: "proposed"
 - [Domain-Object Rubric](#domain-object-rubric-assessment) — evidence-based capability assessment
 - [Roadmap](#roadmap) — phased reuse and delta sequencing
 - [Monetization](#monetization) — payer validation and revenue evidence
+- `prd-tad-adr-mvp-gtm-planning-record` — binding MVP/GTM section roles and the four-column task record -> [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md)
 - `architecture-diagram-standards` — diagram format obligations, and the seam to the diagram companion set
 - [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
 - [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
@@ -445,6 +446,16 @@ This section owns monetization evidence and stream selection; reference observed
 - Order every viable stream by its distance to a real first dollar — the fewest unvalidated assumptions and the least unbuilt infrastructure between today and one paying transaction — and state that ordering explicitly; a monetization section that proposes multiple streams without ranking them by time-to-first-dollar is a `monetization-demand-unvalidated` finding
 - Require the result of a validation action — a priced customer conversation, pilot commitment, or payment — before using `demand-validated`; a planned action or unpriced signup alone is not WTP evidence
 - Forbid deferring a monetization decision without stating the deferral explicitly; an undocumented default-to-free stance forecloses the test of whether a real payer exists
+
+---
+
+## PRD-TAD-ADR-MVP-GTM Planning Record
+
+The separately loadable [MVP→GTM Planning Record module](./prd-tad-adr-mvp-gtm-planning-record.md) owns the five section roles of the joined artifact — PRD, TAD, ADR, MVP, GTM — and the four-column task record `PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date` that joins bounded work to it. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+
+**Directives**:
+- Treat `MVP` and `GTM` as consumers of PRD criteria, TAD elements, and ADR decisions under one continuity ID and exact revision; a requirement, design, or decision first stated there is a `duplicate-owner` finding
+- Join every planning record to the artifact by `continuity_id@revision`, never by path or a free-standing identifier; an unjoined record is `artifact-naming-noncompliant`
 
 ---
 

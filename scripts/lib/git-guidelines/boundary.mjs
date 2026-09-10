@@ -10,7 +10,7 @@ const OWNER_PATHS = Object.freeze([
   "../../guidelines/adlc-cloud-collaboration.md",
   "../../guidelines/adlc-cloud-collaboration.md",
   "../../guidelines/adlc-scoped-lane-admission.md",
-  "../../guidelines/prd-tad-adr-guidelines.md",
+  "../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
   "../../guidelines/adlc-guidelines.md",
   "../../guidelines/commit-push-deploy-guidelines.md",
 ]);

@@ -203,7 +203,7 @@ function createRepositoryFixture(commitMessage) {
   const sourcePaths = [
     "docs/documents/git-guidelines.md",
     "guidelines/adlc-guidelines.md",
-    "guidelines/prd-tad-adr-guidelines.md",
+    "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
     "guidelines/prd-tad-adr-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",
@@ -237,7 +237,7 @@ function createRefreshRepositoryFixture({
   for (const relative of [
     "docs/documents/git-guidelines.md",
     "guidelines/adlc-guidelines.md",
-    "guidelines/prd-tad-adr-guidelines.md",
+    "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
     "guidelines/prd-tad-adr-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",

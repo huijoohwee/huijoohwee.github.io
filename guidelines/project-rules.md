@@ -25,7 +25,7 @@ these guidelines do not establish production readiness or deployment authority.
 |---|---|---|
 | Convention selection and syntax boundaries | [Conventions and syntax](./conventions-and-syntax-guidelines.md) | Choosing naming, formatting, token or serialization profiles |
 | Shared CID, RAO and SVO meanings | [Shared contract](./cid-guidelines.md) | Joining requirements, actions and evidence |
-| Buyer problem, scope and design decisions | [PRD/TAD/ADR](./prd-tad-adr-guidelines.md) | Defining or changing a product contract |
+| Buyer problem, scope and design decisions | [PRD/TAD/ADR](./prd-tad-adr-mvp-gtm-guidelines.md) | Defining or changing a product contract |
 | Lifecycle, execution and release evidence | [ADLC](./adlc-guidelines.md) | Starting, validating or handing off work |
 | Resource selection and cost | [Token and performance economics](./token-performance-economics-guidelines.md) | Choosing checks, tools or runtime resources |
 | Reusable implementation boundaries | [Codebase maintainability](./codebase-maintainability-guidelines.md) | Changing source modules |

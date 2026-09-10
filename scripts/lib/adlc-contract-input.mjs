@@ -97,7 +97,7 @@ export function checkAdlcMigration(files) {
     assert.ok(Buffer.byteLength(source) < MAX_BYTES, `${name} must remain below ${MAX_BYTES} bytes`);
   }
   const companionPaths = [...files.keys()].filter(path => /^guidelines\/prd-tad-adr-.+\.md$/.test(path));
-  for (const path of new Set(["guidelines/cid-guidelines.md", "guidelines/prd-tad-adr-guidelines.md", ...companionPaths])) {
+  for (const path of new Set(["guidelines/cid-guidelines.md", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md", ...companionPaths])) {
     metadataByName.set(path.slice("guidelines/".length), checkGuidelineFrontmatter(required(files, path), path));
   }
   const metadataByTitle = new Map([...metadataByName.values()].map(data => [data.title, data]));
@@ -156,7 +156,7 @@ export function checkAdlcMigration(files) {
 export function loadAdlcSources(files) {
   const sources = Object.fromEntries(Object.entries(MODULES)
     .map(([key, name]) => [key, required(files, `guidelines/${name}`)]));
-  sources.authoringGuideline = required(files, "guidelines/prd-tad-adr-guidelines.md");
+  sources.authoringGuideline = required(files, "guidelines/prd-tad-adr-mvp-gtm-guidelines.md");
   checkGuidelineFrontmatter(sources.authoringGuideline, "authoring guideline");
   for (const [key, value] of Object.entries(sources)) sources[`${key}Lines`] = value.split("\n");
   sources.guidelineLogicalLineCount = logicalLines(sources.source);

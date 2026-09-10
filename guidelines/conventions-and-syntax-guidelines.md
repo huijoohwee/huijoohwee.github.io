@@ -55,7 +55,7 @@ adding both `CONVENTIONS.md` and `SYNTAX.md` is useful only when their responsib
 | Markdown metadata, YAML syntax boundary and local dialects | [Runtime frontmatter](runtime-frontmatter-guidelines.md) |
 | Schema representation and extension policy | [Schema guidelines](schema-guidelines.md) |
 | CID, RAO and SVO field meanings | [Shared field contract](cid-guidelines.md#shared-field-contract) |
-| PRD, TAD and ADR joins and revision conventions | [Specification guidelines](prd-tad-adr-guidelines.md) |
+| PRD, TAD and ADR joins and revision conventions | [Specification guidelines](prd-tad-adr-mvp-gtm-guidelines.md) |
 | Source structure, names and reusable boundaries | [Maintainability](codebase-maintainability-guidelines.md), [neutrality](codebase-neutrality-guidelines.md) |
 | Extraction, parse diagnostics and provenance | [Parser guidelines](parser-guidelines.md) |
 | MCP capability/schema boundaries | [MCP contracts](mcp-contracts.md) |

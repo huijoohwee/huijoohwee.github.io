@@ -17,7 +17,7 @@ import { readFrontmatter } from "./lib/git-guidelines/fm-reader.mjs";
 const dir = "guidelines";
 const read = (name) => readFileSync(join(dir, name), "utf8");
 
-const INDEX = "prd-tad-adr-guidelines.md";
+const INDEX = "prd-tad-adr-mvp-gtm-guidelines.md";
 
 const MODULES = [
   "prd-tad-adr-codebase-grounding.md",

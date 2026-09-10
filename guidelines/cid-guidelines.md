@@ -22,7 +22,7 @@ This is the shared semantic contract for PRD, TAD, ADR and ADLC dispatch. It app
 languages, runtimes, models, devices and collaboration transports. It prescribes meanings and joins,
 not a provider, directory layout, message serialization or separate document per decision.
 
-[PRD, TAD and ADR](./prd-tad-adr-guidelines.md) own requirements, design and decision records.
+[PRD, TAD and ADR](./prd-tad-adr-mvp-gtm-guidelines.md) own requirements, design and decision records.
 [ADLC](./adlc-guidelines.md) owns execution obligations; [Artifact Continuity](./adlc-artifact-continuity.md)
 owns revision and evidence joins. Consumers reference this field contract instead of forking it.
 
@@ -128,5 +128,5 @@ Prefer one cited record with multiple views over copies that can drift.
 
 An independent check verifies that CID, RAO and SVO converge, each task covers a criterion, each observed
 outcome has evidence, and unsupported assumptions cannot become readiness or revenue claims. Reuse the
-finding vocabulary in the [authoring set](./prd-tad-adr-guidelines.md) and
+finding vocabulary in the [authoring set](./prd-tad-adr-mvp-gtm-guidelines.md) and
 [ADLC set](./adlc-guidelines.md); this module introduces no parallel finding taxonomy.

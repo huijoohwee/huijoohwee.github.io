@@ -22,7 +22,7 @@ const TERMINOLOGY_ALIASES = Object.freeze({
 });
 const OWNER_FILES = Object.freeze({
   "Execution Companion": "guidelines/adlc-guidelines.md",
-  "Authoring Authority": "guidelines/prd-tad-adr-guidelines.md",
+  "Authoring Authority": "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
   "Collaboration Module": "guidelines/adlc-cloud-collaboration.md",
   "Lane Admission Module": "guidelines/adlc-scoped-lane-admission.md",
   "Delivery Guidelines": "guidelines/commit-push-deploy-guidelines.md",

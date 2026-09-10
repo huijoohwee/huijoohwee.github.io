@@ -29,7 +29,7 @@ This git-layer companion projects the execution set into byte-preserving, provid
 | C4 | fence meaning | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
 | C5 | handoff semantics | consumes | [Collaboration Module](../../guidelines/adlc-cloud-collaboration.md) | advisory |
 | C6 | additive lane admission and preservation proof | consumes | [Lane Admission Module](../../guidelines/adlc-scoped-lane-admission.md) | advisory |
-| C7 | frontmatter, Rule_ID, findings, and readiness rungs | consumes | [Authoring Authority](../../guidelines/prd-tad-adr-guidelines.md) | advisory |
+| C7 | frontmatter, Rule_ID, findings, and readiness rungs | consumes | [Authoring Authority](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) | advisory |
 | C8 | task model, roles, independence, blast radius, and budgets | consumes | [Execution Companion](../../guidelines/adlc-guidelines.md) | advisory |
 | C9 | commit, push, and deploy command sequences | consumes | [Delivery Guidelines](../../guidelines/commit-push-deploy-guidelines.md) | advisory |
 | O1 | git lane projection and branch naming | owns | — | advisory |

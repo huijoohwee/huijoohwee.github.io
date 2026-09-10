@@ -20,7 +20,7 @@ parent_version: "2.5.0"
 
 Ground specifications in exact source evidence, keep one owner per concern and distinguish source
 verification from runtime proof. This reusable procedure adds no semantic fields or universal topology.
-The reference implementation connects the [authoring guideline](./prd-tad-adr-guidelines.md) to seven
+The reference implementation connects the [authoring guideline](./prd-tad-adr-mvp-gtm-guidelines.md) to seven
 named repositories. It covers ownership and integration seams, not every feature in their specifications.
 The [machine-readable snapshot](../schema/AgenticRAG/prd-tad-adr-grounding.json) owns exact source
 revisions, artifact SHA-256 values, named checks and claim dispositions. Do not copy that inventory

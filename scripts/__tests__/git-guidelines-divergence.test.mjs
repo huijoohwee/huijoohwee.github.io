@@ -10,7 +10,7 @@ const repository = new URL("../..", import.meta.url);
 const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", import.meta.url), "utf8");
 const ownerPaths = Object.freeze([
   "guidelines/adlc-guidelines.md",
-  "guidelines/prd-tad-adr-guidelines.md",
+  "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
   "guidelines/prd-tad-adr-verification.md",
   "guidelines/adlc-cloud-collaboration.md",
   "guidelines/adlc-scoped-lane-admission.md",
@@ -28,7 +28,7 @@ test("real current-owner domains are conformant and inputs remain unchanged", ()
 });
 
 test("authoring findings require the declared companion and its unchanged semantic contract", () => {
-  const authoringPath = "guidelines/prd-tad-adr-guidelines.md";
+  const authoringPath = "guidelines/prd-tad-adr-mvp-gtm-guidelines.md";
   const verificationPath = "guidelines/prd-tad-adr-verification.md";
   const missing = { ...owners };
   delete missing[verificationPath];
@@ -72,7 +72,7 @@ test("every C1-C9 family fails closed when its named owner evidence changes", ()
     ["C4", "Collaboration Module", "guidelines/adlc-cloud-collaboration.md", "rejects stale fences", "accepts stale fences"],
     ["C5", "Collaboration Module", "guidelines/adlc-cloud-collaboration.md", "Admit a successor only after", "Admit a successor before"],
     ["C6", "Lane Admission Module", "guidelines/adlc-scoped-lane-admission.md", "Blocks before candidate creation or claim use.", "Allows candidate creation before claim use."],
-    ["C7", "Authoring Authority", "guidelines/prd-tad-adr-guidelines.md", "owning section anchor", "source file path"],
+    ["C7", "Authoring Authority", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md", "owning section anchor", "source file path"],
     ["C8", "Execution Companion", "guidelines/adlc-guidelines.md", "Evaluator must be a different mechanism from the Implementer", "Evaluator may be the same mechanism as the Implementer"],
     ["C9", "Delivery Guidelines", "guidelines/commit-push-deploy-guidelines.md", "## Phase 2: Push", "## Phase 2: Share"],
   ];

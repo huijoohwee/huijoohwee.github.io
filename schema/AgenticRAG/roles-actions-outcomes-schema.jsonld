@@ -26,7 +26,7 @@
     }
   ],
 
-  "schemaVersion": "3.0.0",
+  "schemaVersion": "3.1.0",
   "extends": "rag:RoleActionOutcome/v1",
   "semanticAuthority": "../../guidelines/cid-guidelines.md#shared-field-contract",
   "continuityAuthority": "../../guidelines/adlc-artifact-continuity.md#reference-implementation-projection",
@@ -46,6 +46,11 @@
     "actionComposition": "Ordered decomposition of one directive toward one independently checked outcome; split independently closable outcomes into separate records.",
     "contextBinding": "Context, intent and directive resolve from an exact referenced CID revision; this projection does not redefine them.",
     "objectBinding": "The scoped target of the action; it is not inferred from the outcome.",
+    "tabularSerialization": {
+      "owner": "../../guidelines/prd-tad-adr-mvp-gtm-planning-record.md#planning-record-row-contract",
+      "cell": "R: [role] · A: [subject verb object] · O: [outcome] · check: [named check]",
+      "note": "The planning record RAO cell is the same projection in one table cell; `check` names the outcome's acceptance check and adds no field to the shared contract."
+    },
     "migration": "Version 3 corrects the former object-to-outcome mapping. Re-ground existing records against their directive; do not silently reinterpret them. Wire field names remain unchanged."
   },
 
@@ -427,6 +432,13 @@
   ],
 
   "changeLog": [
+    {
+      "version": "3.1.0",
+      "date": "2026-09-10",
+      "changes": [
+        "Name the PRD-TAD-ADR-MVP-GTM planning record RAO cell as the tabular serialization of this projection"
+      ]
+    },
     {
       "version": "3.0.0",
       "date": "2026-09-09",

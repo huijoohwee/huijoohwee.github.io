@@ -7,18 +7,18 @@ lang: "en-US"
 frontmatter_contract: "required"
 status: "retired"
 load_policy: "on-demand"
-source_owner: "huijoohwee/.todo"
-source_contract: "https://github.com/huijoohwee/.todo/blob/main/docs/kanban.md"
+source_owner: "huijoohwee/.workspace"
+source_contract: "https://github.com/huijoohwee/.workspace/blob/main/.todo/docs/kanban.md"
 ---
 
 # Workspace Kanban Route
 
-Shared planning moved to private [`huijoohwee/.todo`](https://github.com/huijoohwee/.todo/blob/main/docs/kanban.md).
-Clone it as `$GITHUB_ROOT/.todo`; the TODO contract, current Kanban board and immutable
+Shared planning moved to private [`huijoohwee/.workspace/.todo`](https://github.com/huijoohwee/.workspace/blob/main/.todo/docs/kanban.md).
+Clone the repository as `$GITHUB_ROOT/.workspace`; its `.todo` folder holds the TODO contract, current Kanban board and immutable
 `todo/YYYY-MM/<context>.md` records are owned there. This page is a compatibility route.
 
 All 33 imported files retain their source bytes, Git blobs and hashes in the
-[website migration manifest](https://github.com/huijoohwee/.todo/blob/main/migration-from-website.json).
+[website migration manifest](https://github.com/huijoohwee/.workspace/blob/main/.todo/migration-from-website.json).
 The source snapshot is website revision `363e72ada01b83291d1dc26c89e0ee8af8e70d77`.
 The old Canvas manifest remains historical provenance inside the private repository.
 

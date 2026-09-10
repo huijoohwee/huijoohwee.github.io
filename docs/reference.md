@@ -79,7 +79,7 @@ frontmatter_contract: "required"
 ## Technology and Topology Contracts
 
 | [Technology Stack and Composition Architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md) | Canonical combined PRD/TAD/ADR for source-grounded technology selection, Free/FOSS constraints, seven-repository ownership, runtime topology and release boundaries; product repositories retain execution/release authority |
-| [Workspace TODO Contract](https://github.com/huijoohwee/.todo/blob/main/docs/TODO.md) | Sole live cross-repository planning owner in private `.todo`; new tasks use immutable `.todo/todo/YYYY-MM/<context>.md` records |
+| [Workspace TODO Contract](https://github.com/huijoohwee/.workspace/blob/main/.todo/docs/TODO.md) | Sole live cross-repository planning owner in private `.todo`; new tasks use immutable `.todo/todo/YYYY-MM/<context>.md` records |
 | [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Historical cross-repo entries retained in place; current planning follows the private `.todo` contract |
 
 ---

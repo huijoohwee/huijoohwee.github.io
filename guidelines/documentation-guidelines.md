@@ -1,8 +1,8 @@
 ---
 title: "Documentation Guidelines"
 doc_type: "Guidelines"
-version: "2.0.0"
-date: "2026-06-25"
+version: "2.1.0"
+date: "2026-09-10"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -19,6 +19,7 @@ frontmatter_contract: "required"
 ## Module Index
 
 - `scope--neutrality-contract` — universality, neutrality, agnosticism, modularity rules
+- `document-routing-and-ownership` — one routing entry point, concern owners and local indexes
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT
 - `overview` — what documentation guidelines govern and the ruling standards
 - `directive-grammar-cid` — Context/Intent/Directive grammar and sorting
@@ -34,6 +35,44 @@ frontmatter_contract: "required"
 - `documentation-validation-checklist` — pre-commit, review, and post-documentation gates
 - `role-action-outcome` — role-to-deliverable mapping
 - `mantra-application` — the framing mantra
+
+---
+
+## Document Routing and Ownership
+
+An index routes readers; a dictionary defines terms; a guideline defines common
+authoring rules; a product contract defines local behavior and validation.
+Assign each concern one authoritative owner. References may cross repositories;
+copied editable definitions must not become competing authorities.
+
+Maintain one workspace routing entry point and reuse existing local indexes.
+Choose its filename for the repository's conventions; names such as `DOCUMENTS.md`
+or `INDEX.md` do not determine authority. Declare scope and owner in the content.
+Do not create both for the same audience and inventory. A local README may link
+to the workspace entry and enumerate only its own product documents.
+
+Keep complete inventories, schema meanings, version pins and check commands at
+their existing registry owners. The routing page links those registries instead
+of copying their rows. Resolve directory inventories on demand; do not add a
+recursive workspace scan or load the full corpus into every agent session.
+
+Shared dictionaries retain one editable source. Compatibility projections require
+the [shared frontmatter guideline's distribution contract](runtime-frontmatter-guidelines.md#validation-and-distribution).
+Local terminology and product schemas stay with their behavior owner. Common
+semantic fields reuse their shared definitions; local profiles may narrow them.
+
+Use explicit repository/path links for discovery. Mutable branch links are not
+revision evidence: validation records bind the selected source revision separately.
+Offline resolution uses explicitly selected local sources or locked assets;
+missing sources remain unavailable. Index entries never confer runtime authority.
+When moving a source, repair inbound links and remove replaced definitions in
+the owning migration; preserve only required, validated compatibility surfaces.
+
+Reference implementation: the [workspace document owners][workspace-document-owners]
+page routes seven repositories to their existing concern owners. Its repository
+choices are an example, not a requirement of this universal guideline.
+
+[workspace-document-owners]: https://github.com/huijoohwee/agentic-os/blob/main/DOCUMENTS.md
 
 ---
 

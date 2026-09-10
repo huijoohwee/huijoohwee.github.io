@@ -105,5 +105,5 @@ Enabling autonomy is an explicit operator action, not a code change to the shipp
 - Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md`
 - Remote MCP onboarding index: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-onboarding-index.md`
 - Canonical MCP install boundary: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-install-contract.md`
-- Shared planning: [Agentic Canvas OS TODO contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md), with new immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records.
+- Shared planning: [Workspace TODO contract](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/docs/TODO.md), with new immutable `huijoohwee.github.io/todo/YYYY-MM/<context>.md` records.
 - Historical directive ledger: `huijoohwee.github.io/docs/documents/hjh-workspace-todo-log.md`; retained entries carry no current planning authority.

@@ -14,9 +14,12 @@ frontmatter_contract: "required"
 
 ## Current Planning Route
 
-New planning belongs only to the [Agentic Canvas OS TODO contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md) and one immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` record per task. Load that index and the exact Context record; monthly `todo/YYYY-MM.md` shards are immutable history.
-
-This file preserves historical entries in place. Do not append tasks here or treat historical directives, next steps, or release statements as current planning, approval, or deployment authority.
+New planning belongs only to the [Workspace TODO contract](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/docs/TODO.md)
+and immutable `huijoohwee.github.io/todo/YYYY-MM/<context>.md` records. Current task state lives in the
+[Workspace Kanban board](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/docs/kanban.md).
+This file preserves historical entries only. Do not append new tasks here. The central
+[migration manifest](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/todo/migration-agentic-canvas-os.json)
+records the exact Canvas source revision and imported record hashes.
 
 ## 2026-07-23
 

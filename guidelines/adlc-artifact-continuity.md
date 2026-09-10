@@ -241,7 +241,7 @@ facts, not semantic identities and not requirements on another implementation.
 
 | Universal role | Reference artifact projection |
 |---|---|
-| Planning context | `$GITHUB_ROOT/agentic-canvas-os/todo/YYYY-MM/<context>.md` under its immutable planning contract |
+| Planning context | `$GITHUB_ROOT/huijoohwee.github.io/todo/YYYY-MM/<context>.md` under its immutable planning contract |
 | Requirements artifact | `requirements.md` carrying Continuity, Context, Intent, Directive, criterion, and VCC IDs |
 | Design artifact | `design.md` carrying exact requirements revision plus Directive, criterion, VCC, design-element, and ADR joins |
 | Task list | `tasks.md` carrying RAO Step IDs, dependencies, Outcomes, named checks, and exact upstream revisions |

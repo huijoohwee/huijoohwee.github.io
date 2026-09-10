@@ -117,7 +117,7 @@ export function checkAuthoringContract({
     "design.md",
     "tasks.md",
     "demo.md",
-    "$GITHUB_ROOT/agentic-canvas-os/todo/YYYY-MM/<context>.md",
+    "$GITHUB_ROOT/huijoohwee.github.io/todo/YYYY-MM/<context>.md",
   ]) {
     assert.match(
       artifactContinuity,

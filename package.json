@@ -17,7 +17,7 @@
     "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
     "commerce:contract:check": "node scripts/check-commerce-contracts.mjs",
     "guideline:check": "npm run commerce:contract:check && npm run guideline:budget:check && npm run adlc:policy:check && npm run prd-tad-adr:policy:check && npm run diagram:canvas:check",
-    "test": "npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
+    "test": "npm run planning:check && npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
     "diagram:canvas:check": "node scripts/check-diagram-canvas-render.mjs guidelines",
     "prd-tad-adr:policy:check": "node scripts/check-prd-tad-adr-guideline.mjs",
     "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs",
@@ -25,7 +25,9 @@
     "lane": "agentic-os start",
     "land": "agentic-os land",
     "status": "agentic-os status",
-    "reap": "agentic-os reap"
+    "reap": "agentic-os reap",
+    "planning:check": "node --test __tests__/planning-context-record-contract.test.mjs __tests__/kanban-projection.test.mjs __tests__/planning-migration.test.mjs && node scripts/planning-context-record-contract.mjs check && node scripts/kanban-projection.mjs && node scripts/planning-migration.mjs",
+    "kanban:project": "node scripts/kanban-projection.mjs --write"
   },
   "repository": {
     "type": "git",

@@ -79,7 +79,7 @@ frontmatter_contract: "required"
 ## Technology and Topology Contracts
 
 | [Technology Stack and Composition Architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md) | Canonical combined PRD/TAD/ADR for source-grounded technology selection, Free/FOSS constraints, seven-repository ownership, runtime topology and release boundaries; product repositories retain execution/release authority |
-| [Agentic Canvas OS TODO Contract](https://github.com/huijoohwee/agentic-canvas-os/blob/main/docs/TODO.md) | Sole live cross-repository planning owner; new tasks use immutable `agentic-canvas-os/todo/YYYY-MM/<context>.md` records |
+| [Workspace TODO Contract](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/docs/TODO.md) | Sole live cross-repository planning owner in this repository; new tasks use immutable `huijoohwee.github.io/todo/YYYY-MM/<context>.md` records |
 | [HJH Workspace Todo Log](./documents/hjh-workspace-todo-log.md) | Historical cross-repo entries retained in place; current planning follows the Canvas TODO contract |
 
 ---
@@ -160,3 +160,5 @@ https://github.com/valuemunch/demo
 
 | [IMDA/TechSkills Accelerator (TeSA)](https://www.imda.gov.sg/how-we-can-help/techskills-accelerator-tesa) |
 | Budget 2026: 6 months’ free access to premium AI tools for S’poreans who take up selected training courses | The Straits Times](https://www.straitstimes.com/singapore/budget-2026-workers-to-get-help-building-practical-ai-capabilities-starting-with-accountancy-and-law)
+
+Current task state: [Workspace Kanban](kanban.md). Fleet allocation: [agentic-os/FLEET.md](https://github.com/huijoohwee/agentic-os/blob/main/FLEET.md).

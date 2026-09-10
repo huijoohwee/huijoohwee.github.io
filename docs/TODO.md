@@ -1,132 +1,28 @@
 ---
-title: "Workspace Todo Contract"
+title: "Workspace Todo Route"
 graphId: "md:agentic-canvas-os-todo-contract"
-doc_type: "Planning Ledger Contract"
+doc_type: "Migration Route"
 date: "2026-09-10"
 lang: "en-US"
-schema: "todo-index/v3"
 frontmatter_contract: "required"
-status: "runtime-ready"
-authority: "huijoohwee.github.io cross-repository planning index and context-record contract"
-todo_root: "../todo"
-active_period: "2026-09"
-legacy_shard_pattern: "../todo/YYYY-MM.md"
-context_record_pattern: "../todo/YYYY-MM/<context>.md"
-legacy_policy: "immutable"
-record_policy: "immutable"
-record_schema: "todo-context-record/v3"
-record_schema_adoption_date: "2026-09-10"
-record_schema_owner: "../guidelines/prd-tad-adr-mvp-gtm-planning-record.md"
-size_limit_bytes: 500000
-line_limit: 599
-adoption_date: "2026-07-14"
-publish_policy: "Dev-only; no Prod mirror or Cloudflare authority"
-runtime_scope: "bounded planning retrieval, independently owned immutable task capture, and release compliance"
-runtime_claim: "source contract and index only; reading this document performs no task mutation or deployment"
-runtime_proof: "../scripts/planning-migration.mjs"
+status: "retired"
+load_policy: "on-demand"
+source_owner: "huijoohwee/.todo"
+source_contract: "https://github.com/huijoohwee/.todo/blob/main/docs/TODO.md"
 ---
 
-# Workspace Todo Contract
+# Workspace Todo Route
 
-## Owner Migration
+Shared planning moved to private [`huijoohwee/.todo`](https://github.com/huijoohwee/.todo/blob/main/docs/TODO.md).
+Clone it as `$GITHUB_ROOT/.todo`; the TODO contract, current Kanban board and immutable
+`todo/YYYY-MM/<context>.md` records are owned there. This page is a compatibility route.
 
-The operator moved the planning owner from `agentic-canvas-os` on 2026-09-10.
-The [migration manifest](../todo/migration-agentic-canvas-os.json) records every imported path,
-source Git blob, SHA-256 digest and byte count at the exact source revision. Imported task records
-remain byte-identical; their relative `source_contract` paths resolve to this successor contract.
-Canvas retains routing documents only. Existing website todo logs remain immutable history.
-Run `npm run planning:check` here; planning validation and projection are owned here.
-Fleet division and claim boundaries remain in [agentic-os/FLEET.md](https://github.com/huijoohwee/agentic-os/blob/main/FLEET.md).
+All 33 imported files retain their source bytes, Git blobs and hashes in the
+[website migration manifest](https://github.com/huijoohwee/.todo/blob/main/migration-from-website.json).
+The source snapshot is website revision `363e72ada01b83291d1dc26c89e0ee8af8e70d77`.
+The old Canvas manifest remains historical provenance inside the private repository.
 
-## Authority And Boundaries
-
-`TODO.md` is the bounded, always-loadable planning index and schema owner. New planning records live only in `../todo/YYYY-MM/<context>.md`; do not rebuild a monolithic table in this file.
-
-The legacy monthly shards are immutable history. Each new task uses one stable kebab-case Context as its filename beneath the active UTC month. Independent tasks therefore claim only its exact context record path and never contend on a shared writable index or monthly file.
-
-huijoohwee.github.io is the sole live planning owner for participating repositories. Repository-local todo files are forbidden because they duplicate authority and drift from immutable Context records. Committed historical rows may retain retired paths as immutable provenance, never as current routing instructions.
-
-## Source Layout
-
-| Source | Responsibility | Load policy |
-|---|---|---|
-| `TODO.md` | Schema, shard routing, lifecycle, retrieval, validation, and escalation. | Load at workflow start. |
-| `../todo/YYYY-MM.md` | Immutable legacy `todo-log/v1` history. | Search only when exact record lookup is empty or history is requested. |
-| `../todo/YYYY-MM/<context>.md` | One immutable `todo-context-record/v2` task record. | Load the exact Context; enumerate and sort only for a derived monthly view. |
-
-## Context Record Frontmatter
-
-Every new record starts with plain YAML using this contract:
-
-```yaml
----
-schema: "todo-context-record/v3"
-period: "YYYY-MM"
-context: "stable-kebab-case-context"
-scope: "cross-repository"
-status: "immutable"
-record_policy: "immutable"
-source_contract: "../../docs/TODO.md"
-updated_date: "YYYY-MM-DD"
----
-```
-
-`period` must equal the parent directory, `context` must equal the filename, and `updated_date` must be inside the period. Status and record policy remain `immutable`. At UTC month rollover, update `active_period`; prior records and all legacy monthly shards remain byte-immutable.
-
-## Row Contract
-
-The row grammar is owned by the [MVP→GTM Planning Record module](../guidelines/prd-tad-adr-mvp-gtm-planning-record.md#planning-record-row-contract); this index binds it to this repository. Each record has exactly one dated section and one canonical 4-column row:
-
-| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
-|---|---|---|---|
-| `` `CONTINUITY-ID@revision` `` | C: … · I: … · D: … | R: … · A: … · O: … · check: … | YYYY-MM-DD |
-
-For every `todo-context-record/v3` record:
-
-- create one complete row under an exact `## YYYY-MM-DD` UTC heading;
-- reference the governing artifact as `` `continuity_id@revision` `` (frontmatter `continuity_id` plus its exact PRD/TAD/ADR revision or immutable digest), optionally followed by one locator link; a path alone or a free-standing identifier is rejected;
-- carry `C:`, `I:`, `D:` in order, separated by ` · `; keep `D` at 50 words or fewer;
-- carry `R:`, `A:`, `O:`, `check:` in order; `A` is one subject-verb-object action, `check` names the mechanism that judges `O`;
-- keep the heading and `Updated Date` equal to frontmatter `updated_date`;
-- forbid empty cells and placeholder `-` values;
-- bind the record key to both filename and frontmatter `context`; the key is not a table column, and the record is never rewritten. A next step is a new record under a new key.
-
-`todo-context-record/v2` (the former 11-column `Context … Next Step Recommendation` row) is closed for records dated after `record_schema_adoption_date`. Committed v2 records and `todo-log/v1` monthly shards are immutable, byte-preserved historical evidence, parsed only for deterministic projection and duplicate-key detection, never retroactively normalized.
-
-## Append And Merge Rules
-
-- Record the exact huijoohwee.github.io base ref before the first task write.
-- Claim only `todo/YYYY-MM/<context>.md` plus the semantic Context; shared planning files are not task write targets.
-- Release requires the record to be absent at base and exactly one new record path for the declared Context.
-- A monthly view is derived deterministically from legacy rows and context records ordered by date, Context, then source path.
-- Changing a committed record, any legacy shard, or index identity requires a new contract version and migration proof.
-
-## Retrieval And Token Economics
-
-1. Load `TODO.md` plus the exact Context record by default.
-2. Resolve an exact month or Context with `rg` before loading more files.
-3. Search legacy and adjacent periods only when exact lookup is empty.
-4. Add local BM25 ranking only after exact search becomes noisy.
-5. Add embeddings only after measured keyword-retrieval failure and approved TCO review.
-
-This keeps routine planning context bounded to one small index and one exact Context record instead of sending the full history to every model call.
-
-## Size And Rollover
-
-- Each context record stays below 500,000 bytes and 600 lines.
-- Month rollover updates only `active_period`; it does not create a shared writable shard.
-- Never split or rewrite committed records or legacy shards. A migration requires preserved source hashes, a mapping ledger, and explicit operator approval.
-
-## Compliance Gates
-
-Startup validates the index, immutable legacy identities, every context record, path/frontmatter identity, unique Context ownership, the one-row schema, date boundary, and size budget. Release additionally proves legacy shards unchanged, the declared record absent at base, and exactly one new Context record.
-
-Any malformed record, legacy rewrite, missing declared Context, duplicate task Context, overlong directive, empty cell, wrong-month heading, wrong Updated Date, or extra planning path blocks the next workflow stage.
-
-`active_period` records also project read-only into the `## Ledger Projection` table of `kanban.md` through `scripts/kanban-projection.mjs`. The projection is a consumer, never an authority: it adds no status, owner, or priority to a record, and board edits cannot write back here. Adding or changing a record shifts the projection, so regenerate with `npm run kanban:project` in the same change.
-
-## Completion VCC
-
-Given the Todo index and planning root, when compliance runs, then every new record resolves to one Context/month, legacy history remains immutable, and concurrent tasks own disjoint complete records.
-
-VCC: verify frontmatter and path identity, unique Context ownership, deterministic projection, legacy immutability, and one new strict Context record relative to the base; stop without provider, Prod, or Cloudflare mutation.
+Run `npm run planning:check` in `.todo` for actual shared-content validation.
+This website retains shared authoring guidelines and reusable validators;
+its `npm run planning:check` exercises synthetic records and migration routes.
+Private repository access is required; no private content is copied into public CI or the site.

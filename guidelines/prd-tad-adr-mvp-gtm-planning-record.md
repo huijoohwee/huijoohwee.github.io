@@ -177,7 +177,7 @@ Non-binding per Scope & Neutrality. The publishing repository binds this contrac
   date identity, unique record keys, immutable legacy shards, and the adoption rule that forbids a legacy
   eleven-column record dated after adoption
 - `scripts/kanban-projection.mjs` renders the Projection Contract into a digest-fenced board block
-- `npm run planning:check` runs both with their tests; a failing check blocks the next workflow stage
+- `npm run planning:check` in the private `.todo` owner validates shared records and the board; this website tests the reusable validators with synthetic records
 
 Legacy `todo-context-record/v2` and `todo-log/v1` files are byte-immutable and stay valid; only their
 authoring is closed.

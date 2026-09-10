@@ -4,20 +4,20 @@ import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
 
 import {
   validatePlanningContextRecordContract,
   validatePlanningContextRecordRelease,
 } from "../scripts/planning-context-record-contract.mjs";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("the repository satisfies the context-sharded planning contract", () => {
-  const result = validatePlanningContextRecordContract({ repository: root });
+test("a selected repository satisfies the context-sharded planning contract", () => {
+  const fixture = createFixture();
+  writeRecord(fixture, "fixture-task", "2026-08-12");
+  const result = validatePlanningContextRecordContract({ repository: fixture });
   assert.deepEqual(result.failures, []);
   assert.equal(result.ok, true);
-  assert.ok(result.recordPaths.includes("todo/2026-08/context-sharded-planning-authority.md"));
+  assert.ok(result.recordPaths.includes("todo/2026-08/fixture-task.md"));
 });
 
 test("independent context records produce one deterministic order", () => {

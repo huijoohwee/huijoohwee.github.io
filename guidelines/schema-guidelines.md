@@ -11,12 +11,9 @@ version: "1.0.0"
 
 ## Markdown YAML Frontmatter Enforcement
 
-- Canonical schema docs, type-system specs, migration guides, and runtime-ready Markdown artifacts must start with a valid YAML frontmatter block as the first block in the file.
-- Frontmatter is the SSOT for schema metadata, version intent, compatibility state, and reusable configuration keys referenced elsewhere in the document.
-- Canonical authored schema docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with normalized typed wrappers.
-- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> validate or ingest -> parse -> render fidelity.
-- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read schema metadata deterministically.
-- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
+Apply the [shared runtime frontmatter contract](runtime-frontmatter-guidelines.md)
+for YAML syntax, metadata ownership, provenance and validation boundaries.
+Local documentation and schema profiles declare their additional fields below.
 
 ## Core Principles
 

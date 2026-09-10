@@ -26,7 +26,7 @@
     "land": "agentic-os land",
     "status": "agentic-os status",
     "reap": "agentic-os reap",
-    "planning:check": "node --test __tests__/planning-context-record-contract.test.mjs __tests__/kanban-projection.test.mjs __tests__/planning-migration.test.mjs && node scripts/planning-context-record-contract.mjs check && node scripts/kanban-projection.mjs && node scripts/planning-migration.mjs",
+    "planning:check": "node --test __tests__/planning-context-record-contract.test.mjs __tests__/kanban-projection.test.mjs __tests__/planning-migration.test.mjs __tests__/planning-naming.test.mjs && node scripts/planning-context-record-contract.mjs check && node scripts/kanban-projection.mjs && node scripts/planning-migration.mjs",
     "kanban:project": "node scripts/kanban-projection.mjs --write"
   },
   "repository": {

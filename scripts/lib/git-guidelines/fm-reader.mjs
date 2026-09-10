@@ -1,3 +1,5 @@
+import { FRONTMATTER_LIMITS, snapshotFrontmatter, JsonSnapshotError } from "agentic-os/frontmatter";
+
 const KEY_PATTERN = /^[A-Za-z][A-Za-z0-9_-]*$/u;
 const ENTRY_PATTERN = /^([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.*)$/u;
 const DECIMAL_PATTERN = /^-?(?:0|[1-9]\d*)(?:\.\d+)?$/u;
@@ -13,6 +15,10 @@ export class FrontmatterError extends Error {
 }
 
 export function readFrontmatter(text) {
+  if (typeof text !== "string" || text.length > FRONTMATTER_LIMITS.documentBytes
+    || Buffer.byteLength(text, "utf8") > FRONTMATTER_LIMITS.documentBytes) {
+    fail("Frontmatter document exceeds the shared byte budget or is not text.", 1);
+  }
   const source = String(text).replace(/\r\n?/gu, "\n");
   if (!source.startsWith("---\n")) fail("Frontmatter must be the first block with zero preceding bytes.", 1);
 
@@ -25,11 +31,19 @@ export function readFrontmatter(text) {
   if (state.index !== closingIndex) fail("Frontmatter entry is outside the bounded YAML subset.", state.index + 1);
 
   return Object.freeze({
-    data: deepFreeze(data),
+    data: snapshotMetadata(data),
     keyLines: deepFreeze(state.keyLines),
     raw: lines.slice(0, closingIndex + 1).join("\n"),
     endLine: closingIndex + 1,
   });
+}
+
+function snapshotMetadata(data) {
+  try { return snapshotFrontmatter(data); }
+  catch (error) {
+    if (!(error instanceof JsonSnapshotError)) throw error;
+    fail(`Frontmatter violates the shared metadata envelope: ${error.code}.`, 1);
+  }
 }
 
 function parseRootMapping(state) {

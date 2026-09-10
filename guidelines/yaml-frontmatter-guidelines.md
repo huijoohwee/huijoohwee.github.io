@@ -26,11 +26,9 @@ Switch-sensitive `*.md` files should be authored as directly runnable canonical 
 
 ## Enforcement Rules
 
-- The YAML frontmatter block must be the first block in the Markdown file; do not place prose, comments, HTML, or code fences before it.
-- Canonical authored docs use plain YAML for frontmatter keys, `flow:`, `timeline.*`, and related schema-bearing sections.
-- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test E2E ingest -> parse -> render behavior.
-- Scalars that contain reserved punctuation, including inline values with `:`, must be quoted so the frontmatter remains valid YAML under strict parsers.
-- Parser repair or warning paths are safety nets, not authoring targets; malformed YAML frontmatter must be treated as invalid source that needs correction upstream.
+Apply the [shared runtime frontmatter contract](runtime-frontmatter-guidelines.md).
+The additional rules below define the Canvas view profile.
+
 - Do not split metadata ownership across duplicate blocks, renderer-only aliases, or body-only mirror declarations when the same value belongs in frontmatter.
 - Keep one frontmatter block per Markdown document. Do not close frontmatter, place metadata in the body, and reopen or mirror schema-bearing YAML later in the file.
 - Frontmatter-flow graph topology, node metadata, renderer presets, workflow sections, and AGENTIC_OS-readable node summaries live in frontmatter. The Markdown body may reference node ids in prose, tables, and checklists, but it must not re-declare nodes, edges, ports, or summaries as a parallel hand-maintained layer.

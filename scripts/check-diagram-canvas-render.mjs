@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Named check for the diagram + canvas-render contract.
 //
-// Owner: guidelines/prd-tad-adr-diagram-canvas-render.companion.md
+// Owner: guidelines/prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md
 // Raises the diagram-domain and canvas-domain finding types defined there and in
-// guidelines/prd-tad-adr-diagram-guidelines.companion.md. Parse-only: zero model calls.
+// guidelines/prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md. Parse-only: zero model calls.
 //
 // Usage: node scripts/check-diagram-canvas-render.mjs [path ...]
 //   A path may be a file or a directory; directories are scanned for *.md.

@@ -38,20 +38,20 @@ lifecycle_status: "proposed"
 - `rule-identity--classification` — stable rule addressing and the artifact-bearing vs advisory split
 - `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT, including concurrency provenance keys
 - `overview` — what PRD/TAD are, the governing standards, and the ADLC/MCP-/WebMCP-native operating posture
-- `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
+- `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md)
 - `directive-grammar-cid` — shared CID/RAO/SVO message fields, decomposition, grounding, and budgets -> [CID Guidelines](./cid-guidelines.md#shared-field-contract)
 - `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, execution handoff, and the pipeline SSOT precedence rule
-- [Codebase Grounding — reference implementation](./prd-tad-adr-codebase-grounding.md) — revision-bound ownership, schema seams, resource demand, checks and unresolved claims; load only for this implementation
+- [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) — revision-bound ownership, schema seams, resource demand, checks and unresolved claims; load only for this implementation
 - `concurrent-collaboration--work-tree-integrity` — multi-device, multi-LLM, multi-agent, multi-work-tree obligations -> [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md)
-- `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
-- `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-process-flows.md)
-- `time-to-value` — binding TTV metric obligation -> [Economics & Time-to-Value](./prd-tad-adr-economics.md)
-- `readiness-ladder` — binding status vocabulary -> [Readiness & Lane Topology](./prd-tad-adr-readiness.md)
-- `agent-platform-readiness` — binding dimension and route obligations -> [Readiness & Lane Topology](./prd-tad-adr-readiness.md)
-- `lane-topology--deploy-boundary` — binding closed-by-default rule -> [Readiness & Lane Topology](./prd-tad-adr-readiness.md)
-- `autonomous-implementation-verification` — binding VCC and Evidence obligations -> [Verification & Conformance](./prd-tad-adr-verification.md)
-- `cid-directive-matrix` — lookup surface -> [CID Directive Matrix](./prd-tad-adr-cid-matrix.md)
-- `core-templates` — binding template-field obligations -> [Core Templates](./prd-tad-adr-templates.md)
+- `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md)
+- `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md)
+- `time-to-value` — binding TTV metric obligation -> [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md)
+- `readiness-ladder` — binding status vocabulary -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
+- `agent-platform-readiness` — binding dimension and route obligations -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
+- `lane-topology--deploy-boundary` — binding closed-by-default rule -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
+- `autonomous-implementation-verification` — binding VCC and Evidence obligations -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
+- `cid-directive-matrix` — lookup surface -> [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md)
+- `core-templates` — binding template-field obligations -> [Core Templates](./prd-tad-adr-mvp-gtm-templates.md)
 - [Selection Criteria](#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) — bounded Constraints ↔ Argumentation ↔ Outranking for platform/vendor/provider choices
 - [Pain-Point Mapping](#pain-point-to-feature-mapping) — pain-point-to-feature traceability
 - [Demo Skeleton](#demo-skeleton) — bounded demonstration of the acceptance condition
@@ -59,13 +59,13 @@ lifecycle_status: "proposed"
 - [Roadmap](#roadmap) — phased reuse and delta sequencing
 - [Monetization](#monetization) — payer validation and revenue evidence
 - `architecture-diagram-standards` — diagram format obligations, and the seam to the diagram companion set
-- [Diagram Guidelines](./prd-tad-adr-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
-- [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
-- [Diagram Templates](./prd-tad-adr-diagram-templates.companion.md) — copy-ready, portable-intersection templates per class
+- [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
+- [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
+- [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) — copy-ready, portable-intersection templates per class
 - `prd--tad-integration` — separation of concerns, traceability, and closure rules
-- `anti-pattern-guards` — prohibited patterns -> [CID Directive Matrix](./prd-tad-adr-cid-matrix.md)
-- `conformance-findings` — binding recording contract -> [Verification & Conformance](./prd-tad-adr-verification.md)
-- `validation-checklist` — binding alignment gate -> [Verification & Conformance](./prd-tad-adr-verification.md)
+- `anti-pattern-guards` — prohibited patterns -> [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md)
+- `conformance-findings` — binding recording contract -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
+- `validation-checklist` — binding alignment gate -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
 - [Division of Work](#division-of-work) — one capability owner and reuse decisions across concurrent worktrees
 - `roleactionoutcome` — role-to-deliverable mapping
 - `mantra-application` — the framing mantra
@@ -164,7 +164,7 @@ Every rule is exactly one of two classes, and the class decides whether an unmet
 
 ## Solo Dev AI-Native Orientation
 
-The separately loadable [Solo-Operator AI-Native Orientation module](./prd-tad-adr-economics.md) owns the five compounding lenses, the guideline load budget, the AI-native harness pattern, orchestration topology, the ROI template, the FOSS-first rule, and deployment-model TCO variants. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Solo-Operator AI-Native Orientation module](./prd-tad-adr-mvp-gtm-economics.md) owns the five compounding lenses, the guideline load budget, the AI-native harness pattern, orchestration topology, the ROI template, the FOSS-first rule, and deployment-model TCO variants. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Evaluate every decision through the five lenses named in that module — min-viable-max-value, TCO-zero, token economics, harness-first, concurrency-safe; forbid a scope or architecture decision that names none of them
@@ -204,7 +204,7 @@ Each `CID Directive Matrix` entry is organized alphabetically (A→Z) for clarit
 
 The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and validation. PRD owns product intent, scope, criteria, and VCCs; TAD consumes that exact revision and owns structure; ADR records material decisions, alternatives, consequences, and relevant recovery. Execution consumes their joined projection as bounded RAO Steps under the shared CID contract. Decompose independently closable outcomes, not phase labels; concurrent revisions also satisfy the collaboration seam before baseline.
 
-The [codebase-grounding reference implementation](./prd-tad-adr-codebase-grounding.md) supplies one bounded, machine-readable ownership snapshot across source, schema, application and publication repositories. It introduces no competing CID/RAO/SVO fields or universal topology. Source-confirmed ownership, candidate corrections, runtime proof and deployed state remain separate.
+The [codebase-grounding reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) supplies one bounded, machine-readable ownership snapshot across source, schema, application and publication repositories. It introduces no competing CID/RAO/SVO fields or universal topology. Source-confirmed ownership, candidate corrections, runtime proof and deployed state remain separate.
 
 **Directives**:
 - Declare stable continuity IDs and exact revisions across PRD, TAD, and ADR; forbid prose, filename, or co-location joins
@@ -242,7 +242,7 @@ The [codebase-grounding reference implementation](./prd-tad-adr-codebase-groundi
 
 ## From 0 to 1: PRD & TAD Creation Process
 
-The separately loadable [From 0 to 1: PRD & TAD Creation Process module](./prd-tad-adr-process-flows.md) owns the five phases, their numbered steps, and the gate that closes each one. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [From 0 to 1: PRD & TAD Creation Process module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the five phases, their numbered steps, and the gate that closes each one. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Treat the phase order in that module as the canonical order; a documented stage order that contradicts it is a `gate-order-drift` finding, and a later gate passing while an earlier one fails is a `gate-sequence-violation`
@@ -253,7 +253,7 @@ The separately loadable [From 0 to 1: PRD & TAD Creation Process module](./prd-t
 
 ## Flow Patterns
 
-The separately loadable [Flow Patterns module](./prd-tad-adr-process-flows.md) owns the five canonical flow types — user journey, workflow, data flow, orchestration/harness flow, and topology — with a template and directives for each. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the five canonical flow types — user journey, workflow, data flow, orchestration/harness flow, and topology — with a template and directives for each. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Trace every feature through all five flow patterns; a feature that skips one is incompletely specified
@@ -264,7 +264,7 @@ The separately loadable [Flow Patterns module](./prd-tad-adr-process-flows.md) o
 
 ## Time-to-Value
 
-The separately loadable [Time-to-Value module](./prd-tad-adr-economics.md) owns the TTV definition, its metric template, and its validation method. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Time-to-Value module](./prd-tad-adr-mvp-gtm-economics.md) owns the TTV definition, its metric template, and its validation method. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Estimate TTV steps and elapsed time in Phase 0 and state TTV as a named row in PRD success metrics for every user-facing feature; an absent TTV is a `missing-economics-metric` finding
@@ -274,7 +274,7 @@ The separately loadable [Time-to-Value module](./prd-tad-adr-economics.md) owns 
 
 ## Readiness Ladder
 
-The separately loadable [Readiness Ladder module](./prd-tad-adr-readiness.md) owns what earns each rung and the evidence rule that governs it. This section publishes the **vocabulary**, because other documents consume it and a consumed interface belongs with the index rather than behind a load.
+The separately loadable [Readiness Ladder module](./prd-tad-adr-mvp-gtm-readiness.md) owns what earns each rung and the evidence rule that governs it. This section publishes the **vocabulary**, because other documents consume it and a consumed interface belongs with the index rather than behind a load.
 
 Strictly ordered, lowest to highest:
 
@@ -282,7 +282,7 @@ Strictly ordered, lowest to highest:
 undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-verified
 ```
 
-What earns each rung is defined once in the [Readiness Ladder module](./prd-tad-adr-readiness.md); this index does not restate it.
+What earns each rung is defined once in the [Readiness Ladder module](./prd-tad-adr-mvp-gtm-readiness.md); this index does not restate it.
 
 **Directives**:
 - Draw every status value from that ladder and no other vocabulary; an unrecognised value is an `unknown-status` finding
@@ -293,7 +293,7 @@ What earns each rung is defined once in the [Readiness Ladder module](./prd-tad-
 
 ## Agent-Platform Readiness
 
-The separately loadable [Agent-Platform Readiness module](./prd-tad-adr-readiness.md) owns the three readiness dimensions, their tiers, the execution order, the Invocation Surface Contract, the readiness gap matrix, and the follow-on document template. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Agent-Platform Readiness module](./prd-tad-adr-mvp-gtm-readiness.md) owns the three readiness dimensions, their tiers, the execution order, the Invocation Surface Contract, the readiness gap matrix, and the follow-on document template. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Name which dimensions are in scope; an unqualified "agent-ready" claim is unverifiable
@@ -305,7 +305,7 @@ The separately loadable [Agent-Platform Readiness module](./prd-tad-adr-readines
 
 ## Lane Topology & Deploy Boundary
 
-The separately loadable [Lane Topology & Deploy Boundary module](./prd-tad-adr-readiness.md) owns the canonical lane sequence, the four required parts of every boundary, and the closed-by-default promotion rule. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Lane Topology & Deploy Boundary module](./prd-tad-adr-mvp-gtm-readiness.md) owns the canonical lane sequence, the four required parts of every boundary, and the closed-by-default promotion rule. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Document all three lanes and every boundary before the first promotion; a missing lane is a `missing-lane` finding at `blocker` severity
@@ -316,7 +316,7 @@ The separately loadable [Lane Topology & Deploy Boundary module](./prd-tad-adr-r
 
 ## Autonomous Implementation Verification
 
-The separately loadable [Autonomous Implementation Verification module](./prd-tad-adr-verification.md) owns the VCC primitive, the criterion-to-condition pipeline, evaluator independence, the Evidence Reference, the traceability extension, and the closure rules. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Autonomous Implementation Verification module](./prd-tad-adr-mvp-gtm-verification.md) owns the VCC primitive, the criterion-to-condition pipeline, evaluator independence, the Evidence Reference, the traceability extension, and the closure rules. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Express every acceptance criterion as a VCC with one measurable end state, a stated check, and its constraints; a criterion that cannot be demonstrated from surfaced output is not testable
@@ -327,7 +327,7 @@ The separately loadable [Autonomous Implementation Verification module](./prd-ta
 
 ## CID Directive Matrix
 
-The separately loadable [CID Directive Matrix module](./prd-tad-adr-cid-matrix.md) owns the alphabetical Context/Intent/Directive mantras covering every concern in this set. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [CID Directive Matrix module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the alphabetical Context/Intent/Directive mantras covering every concern in this set. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Use the matrix as the lookup surface for a concern's directive; it summarises obligations owned by the sections named in the Module Index and adds none of its own
@@ -336,7 +336,7 @@ The separately loadable [CID Directive Matrix module](./prd-tad-adr-cid-matrix.m
 
 ## Core Templates
 
-The separately loadable [Core Templates module](./prd-tad-adr-templates.md) owns the copy-ready PRD, TAD, and ADR template bodies, including the component inventory, Diagram Register, and Deploy Boundary Register. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Core Templates module](./prd-tad-adr-mvp-gtm-templates.md) owns the copy-ready PRD, TAD, and ADR template bodies, including the component inventory, Diagram Register, and Deploy Boundary Register. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Instantiate the templates rather than reinventing their fields; a template field exists because a rule in this set requires the artifact it names
@@ -455,9 +455,9 @@ and diagram findings; canvas-render targets and projection; and portable templat
 
 | Module | Owns |
 |---|---|
-| [Diagram Guidelines](./prd-tad-adr-diagram-guidelines.companion.md) | Diagram identity, class selection, notation, labelling, complexity, render reach, versioning and drift |
-| [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) | Render target, ingest, graph elements, convertibility, projection, and canvas findings |
-| [Diagram Templates](./prd-tad-adr-diagram-templates.companion.md) | Copy-ready portable-intersection template bodies and reference examples |
+| [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) | Diagram identity, class selection, notation, labelling, complexity, render reach, versioning and drift |
+| [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) | Render target, ingest, graph elements, convertibility, projection, and canvas findings |
+| [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) | Copy-ready portable-intersection template bodies and reference examples |
 | Diagram identity, class, notation, and canvas projection rules | The companion modules above are the owning source |
 **Directives**:
 - Keep diagram source present in the mandated notation; the companion owns class, identity, and render details.
@@ -493,7 +493,7 @@ The chain is bidirectional and must close in both directions. A link that resolv
 
 ## Anti-Pattern Guards
 
-The separately loadable [Anti-Pattern Guards module](./prd-tad-adr-cid-matrix.md) owns the prohibited patterns and their corrections, stated as paired guards. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Anti-Pattern Guards module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the prohibited patterns and their corrections, stated as paired guards. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Read each guard as the prose form of a typed finding; a guard with no corresponding Finding Type cannot be recorded, compared, or regression-tracked
@@ -502,7 +502,7 @@ The separately loadable [Anti-Pattern Guards module](./prd-tad-adr-cid-matrix.md
 
 ## Conformance Findings
 
-The separately loadable [Conformance Findings module](./prd-tad-adr-verification.md) owns the recording contract,
+The separately loadable [Conformance Findings module](./prd-tad-adr-mvp-gtm-verification.md) owns the recording contract,
 severity assignment, authoring-domain vocabulary, and deterministic comparison. This section binds only the
 module interface used by PRD, TAD, and ADR checks.
 
@@ -513,7 +513,7 @@ module interface used by PRD, TAD, and ADR checks.
 
 ## Validation Checklist
 
-The separately loadable [Validation Checklist module](./prd-tad-adr-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists, each item mapped to a Finding Type. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The separately loadable [Validation Checklist module](./prd-tad-adr-mvp-gtm-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists, each item mapped to a Finding Type. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
 - Require current artifact continuity before baseline sign-off: Codebase Grounding Records for non-native inputs, CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module

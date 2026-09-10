@@ -137,7 +137,7 @@ test("a new valid version does not require checker source edits", () => {
 });
 
 test("malformed versions fail for both execution and authoring owners", () => {
-  for (const path of ["guidelines/adlc-guidelines.md", "guidelines/prd-tad-adr-guidelines.md"]) {
+  for (const path of ["guidelines/adlc-guidelines.md", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"]) {
     for (const version of ["next", "01.0.0", "1.0.0-01"]) {
       const candidate = mutate(path, source => source.replace(/^version: .*$/m, `version: "${version}"`));
       assert.throws(() => path.includes("prd-tad-adr") ? loadAdlcSources(candidate) : checkAdlcMigration(candidate),
@@ -175,7 +175,7 @@ for (const [name, before, after, expected] of [
 }
 
 test("companion metadata cannot silently reference an obsolete parent revision", () => {
-  const candidate = mutate("guidelines/prd-tad-adr-diagram-canvas-render.companion.md", source =>
+  const candidate = mutate("guidelines/prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md", source =>
     source.replace(/^parent_version: .*$/m, 'parent_version: "0.0.0"'));
   assert.throws(() => checkAdlcMigration(candidate), /parent_version must match the current owning document/);
 });

@@ -78,8 +78,8 @@ test("named-owner severities make scope and concurrency redefinitions observable
   const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", import.meta.url), "utf8");
   const owners = Object.fromEntries([
     "guidelines/adlc-guidelines.md",
-    "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
+    "guidelines/prd-tad-adr-mvp-gtm-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",
@@ -109,8 +109,8 @@ test("exact lane-class tokens ignore prose capitalization but reject code-token 
   const source = readFileSync(new URL("../../docs/documents/git-guidelines.md", import.meta.url), "utf8");
   const owners = Object.fromEntries([
     "guidelines/adlc-guidelines.md",
-    "guidelines/prd-tad-adr-guidelines.md",
-    "guidelines/prd-tad-adr-verification.md",
+    "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
+    "guidelines/prd-tad-adr-mvp-gtm-verification.md",
     "guidelines/adlc-cloud-collaboration.md",
     "guidelines/adlc-scoped-lane-admission.md",
     "guidelines/commit-push-deploy-guidelines.md",

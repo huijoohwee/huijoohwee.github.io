@@ -80,7 +80,7 @@ for (const t of TARGETS) {
     "",
     `This document carries one diagram and nothing else. It is the diagram owner for [${t.entry}](./${t.entry}), which keeps the prose guidance.`,
     "",
-    "The payload stays a frontmatter scalar because that is a declared canvas ingest surface; moving it into a fenced block would change how the surface reads it. See the [Diagram Canvas-Render Contract](./prd-tad-adr-diagram-canvas-render.companion.md) for the ingest-surface rules and the [Diagram Guidelines](./prd-tad-adr-diagram-guidelines.companion.md) for the identity and labelling rules.",
+    "The payload stays a frontmatter scalar because that is a declared canvas ingest surface; moving it into a fenced block would change how the surface reads it. See the [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) for the ingest-surface rules and the [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) for the identity and labelling rules.",
     "",
     "---",
     "",

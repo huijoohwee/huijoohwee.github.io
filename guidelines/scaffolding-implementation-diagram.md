@@ -50,7 +50,7 @@ mermaid: |
 
 This document owns the **overview** only: one node per phase boundary, with the transitions between them. Each boundary's numbered steps live in their own document, listed below.
 
-The combined diagram carried 200+ nodes in a single graph, roughly ten times the 20-node hard ceiling in the [Diagram Guidelines](./prd-tad-adr-diagram-guidelines.companion.md) complexity budget. That budget requires a parent overview plus per-boundary detail diagrams, which is the decomposition applied here.
+The combined diagram carried 200+ nodes in a single graph, roughly ten times the 20-node hard ceiling in the [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) complexity budget. That budget requires a parent overview plus per-boundary detail diagrams, which is the decomposition applied here.
 
 ---
 

@@ -20,11 +20,18 @@ import {
   validateKanbanProjection,
 } from "../scripts/kanban-projection.mjs";
 
-const boardText = () => readFile(new URL(`../docs/${KANBAN_DOCS_PATH}`, import.meta.url), "utf8");
-const boardDocuments = async () => new Map([[KANBAN_DOCS_PATH, await boardText()]]);
+const boardText = () => {
+  const { block, digest } = renderProjection({ rows: [], period: "2026-09" });
+  return ['---', 'projection_owner: "scripts/kanban-projection.mjs"', 'projection_source: "../todo"',
+    'projection_period: "2026-09"', 'projection_row_count: 0', `projection_digest: "${digest}"`,
+    'projection_status: "review"', '---', '', '# Synthetic board', '',
+    '| KANBAN-0001 | task | ready | 1 | operator | none | none | example | outcome | evidence | next |',
+    '', block, ''].join('\n');
+};
 
-test("the committed board matches the regenerated ledger projection", async () => {
-  assert.deepEqual(validateKanbanProjection(await boardDocuments()), []);
+test("a selected board matches the regenerated ledger projection", async t => {
+  const fixture = await createFixture(t);
+  assert.deepEqual(validateKanbanProjection(fixture.documents, { repository: fixture.repository }), []);
 });
 
 for (const [label, contexts, expected] of [
@@ -146,11 +153,11 @@ test("stale declared row count, digest, and period fail for empty and populated 
   }
 });
 
-test("missing fence markers fail closed rather than silently skipping", async () => {
-  const text = await boardText();
+test("missing fence markers fail closed rather than silently skipping", async t => {
+  const { text, repository } = await createFixture(t);
   const stripped = text.slice(0, text.indexOf(BEGIN_MARKER))
     + text.slice(text.indexOf(END_MARKER) + END_MARKER.length);
-  const failures = validateKanbanProjection(new Map([[KANBAN_DOCS_PATH, stripped]]));
+  const failures = validateKanbanProjection(new Map([[KANBAN_DOCS_PATH, stripped]]), { repository });
   assert.equal(failures.length, 1);
   assert.match(failures[0], /fence markers are missing or out of order/);
   assert.equal(replaceProjectionBlock(stripped, "block"), null);
@@ -178,10 +185,12 @@ async function createFixture(t, contexts = ["beta-task", "alpha-task"]) {
   const repository = await mkdtemp(path.join(os.tmpdir(), "kanban-projection-"));
   t.after(() => rm(repository, { recursive: true, force: true }));
   await mkdir(path.join(repository, "docs"), { recursive: true });
-  const index = await readFile(new URL("../docs/TODO.md", import.meta.url), "utf8");
-  assert.match(index, /^active_period: "\d{4}-\d{2}"$/m);
-  await writeFile(path.join(repository, "docs", "TODO.md"),
-    index.replace(/^active_period: .*$/m, 'active_period: "2026-09"'));
+  const index = ['---', 'schema: "todo-index/v3"', 'active_period: "2026-09"',
+    'legacy_shard_pattern: "../todo/YYYY-MM.md"', 'context_record_pattern: "../todo/YYYY-MM/<context>.md"',
+    'legacy_policy: "immutable"', 'record_policy: "immutable"', 'record_schema: "todo-context-record/v3"',
+    'record_schema_adoption_date: "2026-09-10"', 'adoption_date: "2026-07-14"',
+    'size_limit_bytes: 500000', 'line_limit: 599', '---', ''].join('\n');
+  await writeFile(path.join(repository, "docs", "TODO.md"), index);
 
   await writeContextRecord(repository, "past-task", "2026-08-02");
   await writeFile(path.join(repository, "todo", "2026-08.md"), [

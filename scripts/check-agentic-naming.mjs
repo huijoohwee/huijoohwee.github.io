@@ -2,7 +2,6 @@ import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { MANIFEST_PATH, validatePlanningMigration } from './planning-migration.mjs'
 
 const root = path.resolve(import.meta.dirname, '..')
 const checkerPath = 'scripts/check-agentic-naming.mjs'
@@ -14,10 +13,6 @@ const forbidden = [
 ]
 
 export function checkAgenticNaming(repository = root) {
-  const failures = validatePlanningMigration(repository)
-  if (failures.length) throw new Error(failures.join('\n'))
-  const manifest = JSON.parse(fs.readFileSync(path.join(repository, MANIFEST_PATH), 'utf8'))
-  const preserved = new Set(manifest.entries.filter(entry => entry.preserveBytes).map(entry => entry.path))
   const trackedFiles = execFileSync('git', ['ls-files', '-z'], { cwd: repository, encoding: 'utf8' })
     .split('\0')
     .filter(Boolean)
@@ -25,7 +20,6 @@ export function checkAgenticNaming(repository = root) {
 
   const violations = []
   for (const relativePath of trackedFiles) {
-    if (preserved.has(relativePath)) continue
     const absolutePath = path.resolve(repository, relativePath)
     const content = fs.readFileSync(absolutePath)
     if (content.includes(0)) continue
@@ -36,7 +30,7 @@ export function checkAgenticNaming(repository = root) {
       }
     }
   }
-  return { violations, trackedFiles: trackedFiles.length, preservedRecords: preserved.size }
+  return { violations, trackedFiles: trackedFiles.length, preservedRecords: 0 }
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

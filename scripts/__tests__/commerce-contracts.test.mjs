@@ -5,7 +5,7 @@ import { validateFrontmatter, validateProjection, checkCommerceContracts } from 
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const document = readFileSync(new URL('../../guidelines/adlc-rapid-mvp-sprint.md', import.meta.url), 'utf8');
+const document = readFileSync(new URL('../../guidelines/adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md', import.meta.url), 'utf8');
 const projection = JSON.parse(readFileSync(new URL('../../schema/AgenticRAG/roles-actions-outcomes-schema.jsonld', import.meta.url), 'utf8'));
 
 test('source contracts resolve shared authorities without runtime execution', () => {

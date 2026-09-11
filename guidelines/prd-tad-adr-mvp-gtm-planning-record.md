@@ -31,7 +31,7 @@ This module owns two seams and nothing else:
 It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivation, and finding recording
 contract without restating them. Field meanings stay in the [shared CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract);
 identity and revision joins stay in [Artifact Continuity](./adlc-artifact-continuity.md#continuity-identity-and-revision-contract);
-sprint compression stays in the [Rapid MVP Sprint profile](./adlc-rapid-mvp-sprint.md); pain, demo, roadmap and
+sprint compression stays in the [Rapid MVP Sprint profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); pain, demo, roadmap and
 monetization obligations stay in the parent index. A planning record that redefines any of those is a
 `duplicate-owner` finding.
 
@@ -48,7 +48,7 @@ for a human reader; the join is the continuity ID and exact revision carried in 
 | TAD | The exact accepted PRD revision | Component owners, contracts, flows, Deploy Boundary Register | [Flow Patterns](./prd-tad-adr-mvp-gtm-guidelines.md#flow-patterns), [Division of Work](./prd-tad-adr-mvp-gtm-guidelines.md#division-of-work) |
 | ADR | One material choice and its evidence | Decision, rejected alternatives, consequences, recovery condition | [Selection Criteria](./prd-tad-adr-mvp-gtm-guidelines.md#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) |
 | MVP | Accepted criteria, design elements, applicable decisions | One dependency-closed vertical slice: `Must` features, Evidence References, derived rung, Demo Skeleton | [Readiness Ladder](./prd-tad-adr-mvp-gtm-guidelines.md#readiness-ladder), [Verification](./prd-tad-adr-mvp-gtm-guidelines.md#autonomous-implementation-verification), [Demo Skeleton](./prd-tad-adr-mvp-gtm-guidelines.md#demo-skeleton) |
-| GTM | The MVP slice plus its pain and WTP evidence | Named payer segment, first-dollar path ranking, boundary evidence (demand, offer, transaction, fulfillment, runtime, economics), learn-loop measurements | [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap), [Lane Topology](./prd-tad-adr-mvp-gtm-guidelines.md#lane-topology--deploy-boundary), [Value-to-Revenue Loop](./adlc-rapid-mvp-sprint.md#value-to-revenue-loop) |
+| GTM | The MVP slice plus its pain and WTP evidence | Named payer segment, first-dollar path ranking, boundary evidence (demand, offer, transaction, fulfillment, runtime, economics), learn-loop measurements | [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap), [Lane Topology](./prd-tad-adr-mvp-gtm-guidelines.md#lane-topology--deploy-boundary), [Value-to-Revenue Loop](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md#value-to-revenue-loop) |
 
 **Directives**:
 - Bind all five section roles to one continuity ID at one exact revision, whether combined in one file or

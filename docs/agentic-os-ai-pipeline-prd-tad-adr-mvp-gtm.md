@@ -2,7 +2,7 @@
 # ── Tier A — DOCUMENT IDENTITY ────────────────────────────────────────────────
 title:       "Universal AI Pipeline — PRD-TAD-ADR-MVP-GTM"
 graphId:     "md:universal-ai-pipeline"
-doc_type:    "PRD-TAD-ADR-MVP-GTM"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 date:        "2026-04-19"
 ai_model:    "claude-sonnet-4-20250514"
 lang:        en-US

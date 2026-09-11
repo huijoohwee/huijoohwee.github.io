@@ -1122,22 +1122,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-architecture-decisions",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-architecture-decisions.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-architecture-decisions.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-architecture-decisions.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:agentic-graph:doc:agentic-graph-artifact-media-storage-architecture",
       "@type": "kg:Node",
       "labels": [
@@ -2722,38 +2706,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:agentic-graph:doc:agentic-graph-mcp--agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion",
       "@type": "kg:Node",
       "labels": [
@@ -3330,6 +3282,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-tad",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-prd-tad-adr-mvp-gtm-architecture.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-architecture.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-architecture.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-prd-tad-adr-mvp-gtm-conformance-report",
       "@type": "kg:Node",
       "labels": [
@@ -3346,19 +3314,35 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-adrs-document",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-prd-tad-adr-mvp-gtm-decisions.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-decisions.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-decisions.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-prd",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-prd.md"
+        "agentic-graph-prd-tad-adr-mvp-gtm-requirements.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-prd.md"
+        "relPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-requirements.md"
       },
-      "documentPath": "docs/documents/agentic-graph-prd.md",
+      "documentPath": "docs/documents/agentic-graph-prd-tad-adr-mvp-gtm-requirements.md",
       "language": "en-us"
     },
     {
@@ -3698,22 +3682,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-adrs-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-storage-sync-adrs-document.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-storage-sync-adrs-document.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-storage-sync-adrs-document.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-document.companion",
       "@type": "kg:Node",
       "labels": [
@@ -3727,22 +3695,6 @@
         "relPath": "docs/documents/agentic-graph-storage-sync-document.companion.md"
       },
       "documentPath": "docs/documents/agentic-graph-storage-sync-document.companion.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-storage-sync-document",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-storage-sync-document.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-storage-sync-document.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-storage-sync-document.md",
       "language": "en-us"
     },
     {
@@ -3810,19 +3762,67 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-architecture",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-prd-tad-adr-mvp-gtm-architecture.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-architecture.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-architecture.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-runtime-validation",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-prd-tad-adr-mvp-gtm-runtime-validation.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-runtime-validation.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-runtime-validation.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-strytree-adr-validation",
       "@type": "kg:Node",
       "labels": [
         "Document"
       ],
       "name": [
-        "agentic-graph-strytree-adr-validation.md"
+        "agentic-graph-strytree-prd-tad-adr-mvp-gtm-validation.md"
       ],
       "properties": {
         "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-strytree-adr-validation.md"
+        "relPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-validation.md"
       },
-      "documentPath": "docs/documents/agentic-graph-strytree-adr-validation.md",
+      "documentPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-validation.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-workflows-api",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-strytree-prd-tad-adr-mvp-gtm-workflows-api.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-workflows-api.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm-workflows-api.md",
       "language": "en-us"
     },
     {
@@ -3839,54 +3839,6 @@
         "relPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm.md"
       },
       "documentPath": "docs/documents/agentic-graph-strytree-prd-tad-adr-mvp-gtm.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-architecture",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-strytree-tad-architecture.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-strytree-tad-architecture.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-strytree-tad-architecture.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-runtime-validation",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-strytree-tad-runtime-validation.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-strytree-tad-runtime-validation.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-strytree-tad-runtime-validation.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-strytree-tad-workflows-api",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-strytree-tad-workflows-api.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-strytree-tad-workflows-api.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-strytree-tad-workflows-api.md",
       "language": "en-us"
     },
     {
@@ -3935,22 +3887,6 @@
         "relPath": "docs/documents/agentic-graph-swarm-prediction-engine-prd-tad-adr-mvp-gtm.md"
       },
       "documentPath": "docs/documents/agentic-graph-swarm-prediction-engine-prd-tad-adr-mvp-gtm.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-tad",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-tad.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-tad.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-tad.md",
       "language": "en-us"
     },
     {

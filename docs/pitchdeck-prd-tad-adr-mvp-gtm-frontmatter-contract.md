@@ -1,3 +1,18 @@
+---
+title: "Pitchdeck PRD TAD Frontmatter Contract"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
+version: "1.0.0"
+date: "2026-09-11"
+lang: "en-US"
+owner: "Documentation maintainers"
+local_rung: "undocumented"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: false
+worktree_id: "prd-tad-adr-mvp-gtm-alignment"
+agent_id: "codex"
+---
+
 # Pitchdeck PRD TAD Frontmatter Contract
 
 ## Purpose

@@ -46,7 +46,7 @@ export function checkAuthoringContract({
   for (const [moduleSource, moduleLink] of [
     [antiPatternGuards, "adlc-anti-pattern-guards.md"],
     [autonomousContinuation, "adlc-autonomous-continuation.md"],
-    [rapidMvpSprint, "adlc-rapid-mvp-sprint.md"],
+    [rapidMvpSprint, "adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md"],
   ]) {
     assert.ok(moduleSource.startsWith("---\n"), `${moduleLink} frontmatter must be present`);
     assert.match(moduleSource, /\ndoc_type: "Guideline Module"\n/);

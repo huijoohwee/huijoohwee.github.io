@@ -1,6 +1,6 @@
 ---
 title: "Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD-TAD-ADR-MVP-GTM"
-doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "1.1.0"
 date: "2026-08-08"
 updated: "2026-08-09"

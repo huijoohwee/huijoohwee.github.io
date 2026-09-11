@@ -1,7 +1,7 @@
 ---
 title: "{{template_inputs.project_name}}"
 graphId: "md:pitchdeck-prd-tad-template"
-doc_type: "PitchDeck PRD TAD Template"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 date: "{{template_inputs.date}}"
 lang: "{{template_inputs.language}}"
 

@@ -49,7 +49,7 @@ lifecycle_status: "proposed"
 - [Upstream Dependency Admission](./adlc-upstream-dependency-admission.md) — early admission, bounded deferral, and disjoint-work continuation
 - `execution-conformance-findings` — the execution-domain finding vocabulary and severities
 - `execution-load-budget` — phase-scoped loading of this set
-- [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) — reference-implementation phase-collapse mapping for a declared, time-boxed sprint clock, and what a collapse may never elide
+- [Rapid MVP Sprint Profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md) — reference-implementation phase-collapse mapping for a declared, time-boxed sprint clock, and what a collapse may never elide
 - `validation-checklist` — pre-execution, per-task, and post-run gates
 - [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md) — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
@@ -521,7 +521,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 - Record this set's load cost in the per-run token total alongside the authoring set's; the cost of governing the work is part of the cost of the work
 - Load `rapid-mvp-sprint-profile` at Run start alongside the roles and bridge sections whenever a Sprint Clock is declared; skip it entirely otherwise
 ## Rapid MVP Sprint Profile
-The optional [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
+The optional [Rapid MVP Sprint Profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md) module owns the provider-neutral compression map, Sprint Clock directives, and critical-path reforecast. It is a reference implementation, not universal authority; no phase collapse may elide an obligation.
 ## Validation Checklist
 **Pre-Execution**:
 - [ ] **Frontmatter present** with baseline and conformance keys; `owner` declared; `local_rung` and `delivered_rung` separate

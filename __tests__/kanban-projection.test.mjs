@@ -29,6 +29,11 @@ const boardText = () => {
     '', block, ''].join('\n');
 };
 
+test('projection refuses excessive row and byte growth before rendering a board', () => {
+  assert.throws(() => renderProjection({ rows: Array(401).fill({}), period: '2026-09' }), /row budget/);
+  assert.throws(() => renderProjection({ rows: [{ id: 'x'.repeat(400001) }], period: '2026-09' }), /byte budget/);
+});
+
 test("a selected board matches the regenerated ledger projection", async t => {
   const fixture = await createFixture(t);
   assert.deepEqual(validateKanbanProjection(fixture.documents, { repository: fixture.repository }), []);

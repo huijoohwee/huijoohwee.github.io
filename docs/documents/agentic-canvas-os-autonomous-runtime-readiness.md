@@ -13,7 +13,7 @@ frontmatter_contract: "required"
 domain: "agentic-graph"
 related:
   - "https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md"
-  - "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md"
+  - "docs/documents/agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md"
   - "docs/documents/agentic-graph-mcp-onboarding-index.md"
   - "docs/documents/agentic-graph-mcp-install-contract.md"
 evidence_basis: "source audit of agentic-canvas-os on 2026-07-23; 452 offline node --test cases passing"
@@ -102,7 +102,7 @@ Enabling autonomy is an explicit operator action, not a code change to the shipp
 ## Cross-References
 
 - Shared topology contract: [Composition architecture](https://github.com/huijoohwee/agentic-os/blob/main/guides/TECH-STACK.md)
-- Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/agentic-graph-agentic-os-follow-on-prd-tad.md`
+- Agentic OS follow-on tracks: `huijoohwee.github.io/docs/documents/agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md`
 - Remote MCP onboarding index: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-onboarding-index.md`
 - Canonical MCP install boundary: `huijoohwee.github.io/docs/documents/agentic-graph-mcp-install-contract.md`
 - Shared planning: [Workspace TODO contract](https://github.com/huijoohwee/huijoohwee.github.io/blob/main/docs/TODO.md), with new immutable `huijoohwee.github.io/todo/YYYY-MM/<context>.md` records.

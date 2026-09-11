@@ -1,6 +1,6 @@
 ---
-title: "Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD/TAD/ADR"
-doc_type: "Combined PRD/TAD/ADR"
+title: "Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD-TAD-ADR-MVP-GTM"
+doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
 version: "1.1.0"
 date: "2026-08-08"
 updated: "2026-08-09"
@@ -19,9 +19,9 @@ token_policy: "zero model calls on the deterministic play hot path"
 research_input_digest: "sha256:5fb8f9f4a0c4bc6d7e96866ff5224cbb46f937368f8f22bb9de49f8fc94e2309"
 ---
 
-# Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD/TAD/ADR
+# Agentic Game OS — Persistent Strategy and Shared-World Reopening — PRD-TAD-ADR-MVP-GTM
 
-Governed by PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). The ADLC Guidelines separately own task decomposition, tool blast radius, verification, integration, and release.
+Governed by [PRD, TAD & ADR Guidelines](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). The [ADLC Guidelines](../../guidelines/adlc-guidelines.md) separately own task decomposition, tool blast radius, verification, integration, and release.
 
 Status boundary: this is a spec-complete source contract. It is not an implementation receipt, protected integration result, browser result, Xcode or Simulator result, physical-device result, Production authorization, or Cloudflare deployment result. Present-tense criteria describe required behavior, not observed behavior. Every Evidence Reference remains none recorded.
 

@@ -1,19 +1,19 @@
 ---
-title: "Agentic Graph MCP Agentic Canvas OS - PRD/TAD Companion"
-doc_type: "PRD/TAD Companion"
+title: "Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion"
+doc_type: "PRD-TAD-ADR-MVP-GTM Companion"
 version: "0.3.1"
 status: "mirror-notice"
 date: "2026-07-11"
 lang: "en-US"
 frontmatter_contract: "required"
-canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md"
-parent: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.md"
+canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md"
+parent: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
 ---
 
-# Agentic Graph MCP Agentic Canvas OS - PRD/TAD Companion
+# Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion
 
 > **Mirror notice**: canonical SSOT lives in
-> [`agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md).
+> [`agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md).
 > Edit there first; this file exists as a stable publish-side entry in the
 > `huijoohwee.github.io` doc index.
 >

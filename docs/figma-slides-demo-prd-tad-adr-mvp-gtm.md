@@ -1,6 +1,6 @@
 ---
-title: "Figma Slides Demo Canvas - PRD + TAD"
-doc_type: "PRD + TAD"
+title: "Figma Slides Demo Canvas - PRD-TAD-ADR-MVP-GTM"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "0.1.0"
 status: "draft"
 date: "2026-05-16"
@@ -15,7 +15,7 @@ source_basis:
   - "Production stylesheet inspection: /assets/index-ByJ_i7IO.css"
 ---
 
-# Figma Slides Demo Canvas - PRD + TAD
+# Figma Slides Demo Canvas - PRD-TAD-ADR-MVP-GTM
 
 ## Markdown YAML Frontmatter Contract
 

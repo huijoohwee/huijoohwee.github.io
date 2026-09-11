@@ -23,7 +23,7 @@ related:
   - docs/documents/agentic-graph-next-step-priorities.md
   - docs/documents/agentic-graph-agent-ready-document.md
   - docs/documents/markdown-convertible-agent-discovery-document.md
-  - docs/documents/agentic-graph-mcp/agentic-graph-mcp.md
+  - huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md
   - docs/documents/agentic-graph-superagent-harness.md
   - docs/agentic-graph-acos-deploy-runbook.md
 ---

@@ -96,7 +96,7 @@ Current live examples:
 - Canonical agent-ready landing doc:
   `docs/documents/agentic-graph-agent-ready-document.md`
 - Canonical MCP overview:
-  `docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
+  `huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
 - Planning ledger:
   `todo-log.md`
 

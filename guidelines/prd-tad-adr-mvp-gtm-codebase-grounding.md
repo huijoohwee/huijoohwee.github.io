@@ -1,5 +1,5 @@
 ---
-title: "PRD/TAD/ADR Codebase Grounding - Reference Implementation"
+title: "PRD-TAD-ADR-MVP-GTM Codebase Grounding - Reference Implementation"
 doc_type: "Guidelines Companion"
 version: "1.1.0"
 date: "2026-09-09"

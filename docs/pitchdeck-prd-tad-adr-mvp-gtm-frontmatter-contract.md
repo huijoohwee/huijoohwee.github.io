@@ -10,8 +10,8 @@ It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph
 
 | Template | Role | Path |
 | --- | --- | --- |
-| Lite | Minimal reusable frontmatter-first pitchdeck template | `template/pitchdeck-prd-tad-template-lite.md` |
-| Full | Expanded reusable frontmatter-first pitchdeck template | `template/pitchdeck-prd-tad-template.md` |
+| Lite | Minimal reusable frontmatter-first pitchdeck template | `template/pitchdeck-prd-tad-adr-mvp-gtm-template-lite.md` |
+| Full | Expanded reusable frontmatter-first pitchdeck template | `template/pitchdeck-prd-tad-adr-mvp-gtm-template.md` |
 
 ## Core Contract
 
@@ -56,7 +56,7 @@ It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph
 
 | Reference | Purpose |
 | --- | --- |
-| `template/pitchdeck-prd-tad-template-lite.md` | Minimal template source |
-| `template/pitchdeck-prd-tad-template.md` | Full template source |
-| `docs/agentic-os-ai-pipeline-prd-tad.md` | Broader AGENTIC_OS pipeline contract reference |
+| `template/pitchdeck-prd-tad-adr-mvp-gtm-template-lite.md` | Minimal template source |
+| `template/pitchdeck-prd-tad-adr-mvp-gtm-template.md` | Full template source |
+| `docs/agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md` | Broader AGENTIC_OS pipeline contract reference |
 | `../agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |

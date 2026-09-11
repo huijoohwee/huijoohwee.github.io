@@ -1,12 +1,12 @@
 ---
 title: "Agentic Graph MCP Agentic Canvas OS"
-doc_type: "PRD + TAD"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "0.3.3"
 status: "superseded"
-superseded_by: "agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
+superseded_by: "agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md (v0.4.0 — Agentic OS + MCP Gateway native-in-repo)"
 superseded_publish_entry_points:
-  - "docs/documents/agentic-graph-mcp-service-prd-tad.md"
-  - "docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md"
+  - "docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md"
+  - "docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
   - "docs/documents/agentic-graph-mcp-onboarding-index.md"
 superseded_date: "2026-07-03"
 superseded_note: "The Vercel product tier, AWS Agent-API fallback, and AWS AgentCore wrapper lane described below are REMOVED from the runtime topology. Video_Remix Director connector content is consolidated into the Agentic OS PRD/TAD as a native-in-repo harness. MCP Gateway is discovery-first federation over four existing surfaces (ADR-4) — not a fifth proxy tier. This file is retained for historical reference only; do not derive runtime, deployment, or stack decisions from it."
@@ -15,7 +15,7 @@ lang: "en-US"
 owners:
   - "agentic-graph mcp agentic canvas os"
 product: "agentic-canvas-os"
-canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md"
+canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md"
 agent_ready_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agent-ready-document.md"
 topology: "agentic-graph = native-in-repo control plane + MCP Gateway federation; Vercel/AWS tiers removed (ADR-3)"
 repos:
@@ -49,14 +49,14 @@ frontmatter_contract: "required"
 # Agentic Graph MCP Agentic Canvas OS
 
 > **SUPERSEDED (2026-07-03)**: this document is consolidated into
-> [`agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md) **v0.4.0**
+> [`agentic-graph/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md) **v0.4.0**
 > and [`agentic-graph/docs/documents/agentic-graph-agent-ready-document.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agent-ready-document.md) **v1.2.0**.
 > The Vercel and AWS tiers described below are removed from the runtime topology; Supabase is permanently excluded.
 > Retained for historical reference only.
 >
 > For the current publish-side MCP contract pages, open
-> `docs/documents/agentic-graph-mcp-service-prd-tad.md` for the implemented MCP
-> baseline and `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md` for the
+> `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md` for the implemented MCP
+> baseline and `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md` for the
 > Agentic Canvas OS orchestration contract.
 >
 > For the current remote MCP onboarding path, start with
@@ -72,13 +72,13 @@ frontmatter_contract: "required"
 
 | Former content (this doc) | Current SSOT (native-in-repo) |
 |---|---|
-| Video_Remix Director + 5 stage harnesses | `agentic-graph-agentic-os-prd-tad.md` → Component: Video_Remix Director; `mcp/video-remix-runtime.js` |
+| Video_Remix Director + 5 stage harnesses | `agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md` → Component: Video_Remix Director; `mcp/video-remix-runtime.js` |
 | Vercel frontend + Agent-API primary | **Removed** (ADR-3) → CF Pages product frontend |
 | AWS Agent-API fallback + AgentCore | **Removed** (ADR-3) → Cloudflare `McpAgent` at `/agentic-graph/control-plane/mcp` |
 | Agent discovery + HTTP MCP | `agentic-graph-agent-ready-document.md` → Pages HTTP MCP `/agentic-graph/mcp` |
-| MCP Gateway (unified agent onboarding) | `agentic-graph-agentic-os-prd-tad.md` ADR-4 → four-surface federation + `agentic-graph.os.status` |
-| Agentic OS cross-harness visibility | `agentic-graph-agentic-os-prd-tad.md` → `agentic-graph.os.status` (5 read views) |
-| Agentic OS follow-on (HITL / live / dashboard) | [`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md): Tracks A/B/C |
+| MCP Gateway (unified agent onboarding) | `agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md` ADR-4 → four-surface federation + `agentic-graph.os.status` |
+| Agentic OS cross-harness visibility | `agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md` → `agentic-graph.os.status` (5 read views) |
+| Agentic OS follow-on (HITL / live / dashboard) | [`agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md`](agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md): Tracks A/B/C |
 | HITL approval gates | Unchanged in-repo → `contracts/approval.schema.js`, `mcp/video-remix/approval-token-issuer.js` (local **implemented**) |
 | Cloudflare AI Gateway model routing | Unchanged → Cloudflare Workers + AI Gateway binding |
 
@@ -88,8 +88,8 @@ Use these publish-side docs instead of this historical record for current MCP/ru
 
 - `docs/documents/agentic-graph-mcp-onboarding-index.md`
 - `docs/documents/agentic-graph-mcp-install-contract.md`
-- `docs/documents/agentic-graph-mcp-service-prd-tad.md`
-- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md`
 
 ## Markdown YAML Frontmatter Contract
 

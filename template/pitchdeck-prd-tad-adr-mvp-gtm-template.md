@@ -1,6 +1,6 @@
 ---
 title: "{{template_inputs.project_name}}"
-graphId: "md:pitchdeck-prd-tad-template-lite"
+graphId: "md:pitchdeck-prd-tad-template"
 doc_type: "PitchDeck PRD TAD Template"
 date: "{{template_inputs.date}}"
 lang: "{{template_inputs.language}}"
@@ -13,9 +13,14 @@ template_inputs:
   date: "[YYYY-MM-DD]"
   language: "en-US"
   version: "0.1.0"
+  owner: "[Owner]"
   audience: "[Audience]"
+  primary_user: "[Primary user]"
+  secondary_user: "[Secondary user]"
   problem_statement: "[Clear problem statement]"
+  opportunity_statement: "[Why now?]"
   solution_statement: "[Clear solution statement]"
+  core_metric: "[Primary success metric]"
   text_provider: "byteplus-modelark"
   text_auth_mode: "serverManaged"
   text_endpoint_url: "https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions"
@@ -24,10 +29,10 @@ template_inputs:
   video_model: "[Video model]"
   duration_seconds: 6
   aspect_ratio: "16:9"
-  text_prompt: "[Generate a structured outline, deck copy, and implementation brief.]"
-  image_prompt: "[Generate one canonical key visual for the story or product.]"
-  video_prompt: "[Generate one short motion cut using the key visual and text intent.]"
-  acceptance_checklist: "[What must be true for approval?]"
+  text_prompt: "[Generate a structured pitch outline, PRD summary, and TAD summary.]"
+  image_prompt: "[Generate one canonical key visual for the concept.]"
+  video_prompt: "[Generate one short motion cut that illustrates the concept.]"
+  acceptance_checklist: "[Approval checklist]"
   next_action: "[Ask / CTA]"
 
 spec:
@@ -57,7 +62,7 @@ widget_bundle:
 links:
   yaml_anchor: "#computing-flow-definition"
   body_anchor: "#flow-graph"
-  self_ref: "pitchdeck-prd-tad-template-lite.md"
+  self_ref: "pitchdeck-prd-tad-adr-mvp-gtm-template.md"
 
 canvas:
   auto_layout: true
@@ -124,7 +129,7 @@ runner:
       action: compile-compute
       input: "graph"
       output: "graph (compiled)"
-      description: "Compile flow.nodes[*] into runnable widget state; keep DAG-only execution."
+      description: "Compile flow.nodes[*] into runnable widget state; keep typed envelope fidelity."
     - seq: R05
       action: traverse
       input: "graph (compiled)"
@@ -134,7 +139,7 @@ runner:
       action: render
       input: "graph (executed) + mermaid + body"
       output: "rendered Knowledge Graph Canvas"
-      description: "Render Flow Graph + Pipeline table; Rich Media Panel is the canonical output surface."
+      description: "Render Flow Graph, Pipeline, PRD, and TAD with Rich Media Panel as the canonical output surface."
 
 pipeline:
   - seq: W01
@@ -315,28 +320,43 @@ flow:
 
 # {{template_inputs.project_name}}
 
+## Executive Summary
+
+**Subtitle:** `{{template_inputs.subtitle}}`
+
+**Audience:** `{{template_inputs.audience}}`
+
+**Primary user:** `{{template_inputs.primary_user}}`
+
+**Secondary user:** `{{template_inputs.secondary_user}}`
+
+**Problem:** `{{template_inputs.problem_statement}}`
+
+**Opportunity:** `{{template_inputs.opportunity_statement}}`
+
+**Solution:** `{{template_inputs.solution_statement}}`
+
+**Core metric:** `{{template_inputs.core_metric}}`
+
+**Ask:** `{{template_inputs.next_action}}`
+
 ## Template Inputs
 
-Edit only `template_inputs.*` unless you need a structural graph change.
+Edit `template_inputs.*` first.
 
-- `project_name`: `{{template_inputs.project_name}}`
-- `subtitle`: `{{template_inputs.subtitle}}`
-- `problem_statement`: `{{template_inputs.problem_statement}}`
-- `solution_statement`: `{{template_inputs.solution_statement}}`
-- `text_model`: `{{template_inputs.text_model}}`
-- `image_model`: `{{template_inputs.image_model}}`
-- `video_model`: `{{template_inputs.video_model}}`
-- `duration_seconds`: `{{template_inputs.duration_seconds}}`
-- `aspect_ratio`: `{{template_inputs.aspect_ratio}}`
-- `next_action`: `{{template_inputs.next_action}}`
+Keep frontmatter as the only source of truth for reusable template values.
+
+Avoid adding demo-only narrative, model IDs, or asset URLs into reusable structure.
 
 ## Computing Flow Definition
 
-This template stays frontmatter-first.
+This template follows the same machine contract as the validated YAML-frontmatter flow documents.
 
 YAML frontmatter is the machine-readable SSOT.
 
 Markdown body is the human-readable projection.
+
+`widget_bundle`, `pipeline`, `flow`, `mermaid`, and `runner` must describe the same graph.
 
 ## Flow Graph
 
@@ -346,11 +366,47 @@ Markdown body is the human-readable projection.
 
 ## Pipeline
 
-| seq | `@node:id` | step | user action | system event | data in | data out |
-|---|---|---|---|---|---|---|
-| `W01` | `@node:w-text-outline` | text generation | edit prompt and run | writes structured output | `properties.prompt` | `properties.output` |
-| `W02` | `@node:w-image-keyvisual` | image generation | edit prompt and run | writes `imageUrl` | `properties.prompt + properties.model + properties.reference_image` | `properties.imageUrl` |
-| `W03` | `@node:w-video-cut` | video generation | run after image exists | writes `videoUrl` | `properties.prompt + properties.model + properties.duration + properties.reference_image` | `properties.videoUrl` |
+| seq | `@node:id` | step | user action | system event | data in | data out | trigger |
+|---|---|---|---|---|---|---|---|
+| `W01` | `@node:w-text-outline` | text generation | edit prompt and run | writes structured output | `properties.prompt` | `properties.output` | `run` |
+| `W02` | `@node:w-image-keyvisual` | image generation | edit prompt and run | writes `imageUrl` | `properties.prompt + properties.model + properties.reference_image` | `properties.imageUrl` | `run` |
+| `W03` | `@node:w-video-cut` | video generation | run after image exists | writes `videoUrl` | `properties.prompt + properties.model + properties.duration + properties.reference_image` | `properties.videoUrl` | `run` |
+
+## Pitch Deck
+
+### Slide 1 - Problem
+
+Describe the user problem in one paragraph.
+
+Anchor the story to `template_inputs.problem_statement`.
+
+### Slide 2 - Solution
+
+Describe the solution in one paragraph.
+
+Anchor the story to `template_inputs.solution_statement`.
+
+### Slide 3 - Why Now
+
+Explain why the timing matters.
+
+Anchor the story to `template_inputs.opportunity_statement`.
+
+### Slide 4 - Product Motion
+
+Use the frontmatter graph to show how text, image, video, and Rich Media Panel surfaces connect.
+
+### Slide 5 - Metric
+
+State the primary success metric.
+
+Anchor it to `template_inputs.core_metric`.
+
+### Slide 6 - Ask
+
+State the next action or CTA.
+
+Anchor it to `template_inputs.next_action`.
 
 ## PRD
 
@@ -358,22 +414,31 @@ Markdown body is the human-readable projection.
 
 `{{template_inputs.problem_statement}}`
 
-### Solution
+### Users
 
-`{{template_inputs.solution_statement}}`
+| User | Need | Outcome |
+|---|---|---|
+| `{{template_inputs.primary_user}}` | `[Primary need]` | `[Desired outcome]` |
+| `{{template_inputs.secondary_user}}` | `[Secondary need]` | `[Desired outcome]` |
 
 ### Goals
 
-| id | Goal | Status |
-|---|---|---|
-| `G-01` | One frontmatter document drives text, image, video, and panel render flow. | TBD |
-| `G-02` | Widget outputs route into Rich Media Panel as the canonical render surface. | TBD |
-| `G-03` | Field names stay aligned with shared widget and integration registry SSOT. | TBD |
-| `G-04` | Re-runs stay idempotent and avoid duplicate stale surfaces. | TBD |
+| id | Goal | Maps to | Status |
+|---|---|---|---|
+| `G-01` | One frontmatter document drives text, image, video, and panel render flow. | `@node:w-text-outline` -> `@node:p-video-cut` | TBD |
+| `G-02` | Widget outputs route into Rich Media Panel as the canonical render surface. | `@node:p-text-outline`, `@node:p-image-keyvisual`, `@node:p-video-cut` | TBD |
+| `G-03` | Field names stay aligned with shared widget and integration registry SSOT. | `flow.nodes[*].properties.*` | TBD |
+| `G-04` | Re-runs stay idempotent and avoid duplicate stale surfaces. | `runner`, `pipeline`, `flow.edges` | TBD |
 
 ### Non-Goals
 
-Do not hardcode demo-only subjects, models, prompts, endpoints, assets, or validation script labels into reusable code or templates.
+Do not add validation-script-specific subject matter.
+
+Do not add local aliases for canonical field keys.
+
+Do not create duplicate render surfaces outside Rich Media Panel.
+
+Do not introduce backward-compat remaps for obsolete template shapes.
 
 ### Acceptance Criteria
 
@@ -383,6 +448,7 @@ Do not hardcode demo-only subjects, models, prompts, endpoints, assets, or valid
 | `AC-02` | Image Widget -> Rich Media Panel | Panel renders image through `properties.imageUrl`. |
 | `AC-03` | Image Widget -> Video Widget | Video widget receives `reference_image` from upstream edge. |
 | `AC-04` | Video Widget -> Rich Media Panel | Panel renders inline video through `properties.videoUrl`. |
+| `AC-05` | Frontmatter edit -> rerender | Graph stays DAG-safe and avoids stale duplicate cards. |
 
 ## TAD
 
@@ -390,10 +456,19 @@ Do not hardcode demo-only subjects, models, prompts, endpoints, assets, or valid
 
 | Surface | Canonical keys | Canonical handles | SSOT directive |
 |---|---|---|---|
-| Text Widget | `chatProvider`, `chatAuthMode`, `chatEndpointUrl`, `chatModel`, `prompt` | `prompt_in`, `text_out` | Reuse shared text widget registry and integration rows. |
+| Text Widget | `chatProvider`, `chatAuthMode`, `chatEndpointUrl`, `chatModel`, `prompt`, `chatThinkingType`, `chatReasoningEffort`, `chatStream` | `prompt_in`, `text_out` | Reuse shared text widget registry and integration rows. |
 | Image Widget | `model`, `prompt`, `size`, `output_format`, `response_format`, `optimize_prompt_options`, `aspect_ratio`, `stream`, `watermark`, `seed`, `guidance_scale`, `reference_image` | `reference_image`, `imageUrl` | Reuse shared image widget registry and integration rows. |
 | Video Widget | `model`, `prompt`, `content_json`, `resolution`, `ratio`, `duration`, `generate_audio`, `draft`, `camera_fixed`, `image_url_url`, `reference_image` | `reference_image`, `videoUrl` | Reuse shared video widget registry and integration rows. |
 | Rich Media Panel | `output`, `imageUrl`, `videoUrl`, `outputSrcDoc`, `media_interactive` | `output`, `imageUrl`, `videoUrl`, `outputSrcDoc` | Reuse canonical panel registry and writeback helpers. |
+
+### FloatingPanel And Integrations Reuse
+
+| Surface | Reuse rule |
+|---|---|
+| FloatingPanel Props Panel | Read and write the same canonical `properties.*` keys shown in `flow.nodes`. |
+| MainPanel Integrations | Reuse the same field names and semantic rows as the widget registry. |
+| Frontmatter KTV rows | Keep typed envelope `{key, type, value}` as the only serialized property shape. |
+| Rich Media Panel | Receive connected values through edges before any display-only filtering. |
 
 ### Writeback And State Sync
 
@@ -403,7 +478,28 @@ Do not hardcode demo-only subjects, models, prompts, endpoints, assets, or valid
 | `WT-02` | Props edits write back only to canonical `properties.*` keys. |
 | `WT-03` | Connected edge values apply before display filtering or dedupe. |
 | `WT-04` | Rich Media Panel remains the canonical output surface. |
-| `WT-05` | DAG traversal forbids feedback arcs and infinite loops. |
+| `WT-05` | Text edits write back through `properties.output` only. |
+| `WT-06` | Image and video outputs write back through `properties.imageUrl` and `properties.videoUrl` only. |
+| `WT-07` | DAG traversal forbids feedback arcs and infinite loops. |
+
+### Render Invariants
+
+| Rule | Check | Pass condition |
+|---|---|---|
+| `RM-01` | panel survival | Rich Media Panel remains in graph even when values arrive only by edges. |
+| `RM-02` | canonical field identity | No local aliases replace canonical widget property keys. |
+| `RM-03` | canonical output surface | Final render comes from Rich Media Panel, not duplicated source-widget previews. |
+| `RM-04` | idempotent rerun | Re-running the same inputs does not create duplicate stale surfaces. |
+
+### Extension Rules
+
+Add new nodes only through the same typed envelope pattern.
+
+Keep `flow:widgetFormId` canonical: `textGeneration`, `imageGeneration`, `videoGeneration`, `richMediaPanel`.
+
+Keep edges explicit and acyclic.
+
+Add new provider or model values through shared SSOT, not per-document ad hoc keys.
 
 ### Forbidden
 
@@ -414,13 +510,14 @@ Do not hardcode demo-only subjects, models, prompts, endpoints, assets, or valid
 | Duplicate renderers | Do not render source-widget media and panel media as separate final surfaces. |
 | Legacy shims | Do not add remapping layers for obsolete field names. |
 | Local patches | Do not fix SSOT drift in downstream presentation-only code. |
+| Recompute churn | Do not add loops, duplicate traversal, or repeated derived writeback. |
 
-## Authoring Notes
+## Review Checklist
 
-Use placeholders for project-specific content.
-
-Keep graph structure generic.
-
-Extend by adding new nodes and edges through the same typed-envelope pattern.
-
-Preserve canonical widget form IDs: `textGeneration`, `imageGeneration`, `videoGeneration`, `richMediaPanel`.
+| Check | Pass condition |
+|---|---|
+| Frontmatter fidelity | `widget_bundle`, `pipeline`, `flow`, `mermaid`, and `runner` describe the same graph. |
+| Registry fidelity | Text, image, video, and panel fields match canonical shared keys. |
+| Neutrality | All values remain placeholders or generic defaults. |
+| Reusability | No project-only story, provider lock, or demo asset sneaks into the template. |
+| Render contract | Rich Media Panel is the only canonical final render surface. |

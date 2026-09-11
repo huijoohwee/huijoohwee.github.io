@@ -1,5 +1,5 @@
 ---
-title: Agentic Graph Animatic — PRD + TAD
+title: Agentic Graph Animatic — PRD-TAD-ADR-MVP-GTM
 agenticOsDocumentSemanticMode: document
 agenticOsFrontmatterModeEnabled: true
 agenticOsDocumentStructureBaselineLock: false
@@ -8,14 +8,14 @@ tad_version: "1.1.0"
 status: Enhanced Baseline
 date: 2026-05-25
 source_validation_doc: agentic-graph-animatic-demo.md
-guidelines_ref: prd-tad-guidelines.md
+guidelines_ref: guidelines/prd-tad-adr-mvp-gtm-guidelines.md
 ---
 
-# Agentic Graph Animatic — PRD + TAD
+# Agentic Graph Animatic — PRD-TAD-ADR-MVP-GTM
 
 **PRD v1.1.0 · TAD v1.1.0 · Enhanced Baseline 2026-05-25**
 Source: `agentic-graph-animatic-demo.md § Validation Goals`
-Standard: `prd-tad-guidelines.md`
+Standard: `guidelines/prd-tad-adr-mvp-gtm-guidelines.md`
 
 ## Markdown YAML Frontmatter Contract
 

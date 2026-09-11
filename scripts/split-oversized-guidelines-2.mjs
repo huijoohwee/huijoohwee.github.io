@@ -8,7 +8,7 @@ const dir = "guidelines";
 const PLANS = [
   {
     dir: "docs/documents",
-    entry: "agentic-graph-animatic-prd-tad.md",
+    entry: "agentic-graph-animatic-prd-tad-adr-mvp-gtm.md",
     parentTitle: "Agentic Graph Animatic PRD/TAD",
     modules: [
       {

@@ -123,7 +123,7 @@
           "sha256": "d2db14bc67a299105f23ecc508338f5fe7dc89d918007f1c0f18d84d4910cefb"
         },
         {
-          "path": "docs/PRD-TAD.md",
+          "path": "docs/PRD-TAD-ADR-MVP-GTM.md",
           "sha256": "2b0bc00023353d94405d216945e4208ef25b990cb8823f4710af4c26079e6a79"
         }
       ],

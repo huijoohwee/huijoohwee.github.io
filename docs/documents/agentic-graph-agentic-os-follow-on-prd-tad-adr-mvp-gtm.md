@@ -1,22 +1,22 @@
 ---
-title: "Agentic Graph — Agentic OS Follow-On PRD/TAD"
+title: "Agentic Graph — Agentic OS Follow-On PRD-TAD-ADR-MVP-GTM"
 id: "md:agentic-graph-agentic-os-follow-on-prd-tad"
 author: "airvio / joohwee"
 date: "2026-07-03"
 updated: "2026-07-03"
 version: "1.0.0"
 status: "spec-complete to runtime-ready"
-doc_type: "Combined PRD/TAD"
+doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
 lang: "en-US"
 frontmatter_contract: "required"
 domain: "agentic-graph"
-parent: "docs/documents/agentic-graph-agentic-os-prd-tad.md"
+parent: "docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md"
 parent_version: "0.4.0"
 related:
-  - "docs/documents/agentic-graph-agentic-os-prd-tad.md"
+  - "docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md"
   - "docs/documents/agentic-graph-agent-ready-document.md"
-  - "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.md"
-  - "docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md"
+  - "docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
+  - "docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md"
 orientation:
   - "solo-dev"
   - "AI-native"
@@ -31,9 +31,9 @@ traceability:
   repo: "huijoohwee/agentic-graph"
 ---
 
-# Agentic Graph — Agentic OS Follow-On PRD/TAD
+# Agentic Graph — Agentic OS Follow-On PRD-TAD-ADR-MVP-GTM
 
-Parent SSOT: [`agentic-graph-agentic-os-prd-tad.md`](agentic-graph-agentic-os-prd-tad.md) v0.4.0 (Must-tier Agentic OS + MCP Gateway federation). This document closes the three **P1/P2 follow-on tracks** called out there: **HITL Gate Service completion**, **live stage harness wiring on the control plane**, and **Agentic Canvas OS dashboard UI lanes**.
+Parent SSOT: [`agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md`](agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md) v0.4.0 (Must-tier Agentic OS + MCP Gateway federation). This document closes the three **P1/P2 follow-on tracks** called out there: **HITL Gate Service completion**, **live stage harness wiring on the control plane**, and **Agentic Canvas OS dashboard UI lanes**.
 
 For current remote MCP onboarding, start with
 `docs/documents/agentic-graph-mcp-onboarding-index.md`, then use
@@ -239,7 +239,7 @@ flowchart TB
 
 **Component**: Agentic Canvas OS lanes (Market Radar, browser evidence, starter repo, learning loop)
 **Status**: P0 dry-run payloads per companion | **Gap**: live capture + Canvas lane nodes
-**Owner**: [`agentic-graph-mcp-agentic-os-prd-tad.companion.md`](agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad.companion.md)
+**Owner**: [`agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md`](agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md)
 
 ### ADR-FO-1: Worker KV for Approval_Token store (vs new DO class)
 
@@ -301,4 +301,4 @@ npm run runtime:test
 3. **Track B2** — Async render/commerce live clients (after harness async seam complete).
 4. **Track C** — Canvas dashboard render + lane inspector nodes from dry-run manifest.
 
-*Follows [PRD & TAD Guidelines v1.3.0](https://huijoohwee.github.io/guidelines/prd-tad-guidelines.md). Parent: [`agentic-graph-agentic-os-prd-tad.md`](agentic-graph-agentic-os-prd-tad.md) v0.4.0.*
+*Follows [PRD, TAD & ADR Guidelines](https://huijoohwee.github.io/guidelines/prd-tad-adr-mvp-gtm-guidelines.md). Parent: [`agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md`](agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md) v0.4.0.*

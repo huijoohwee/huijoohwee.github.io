@@ -21,6 +21,7 @@ export function checkAgenticNaming(repository = root) {
   const violations = []
   for (const relativePath of trackedFiles) {
     const absolutePath = path.resolve(repository, relativePath)
+    if (!fs.existsSync(absolutePath)) continue
     const content = fs.readFileSync(absolutePath)
     if (content.includes(0)) continue
     const text = content.toString('utf8')

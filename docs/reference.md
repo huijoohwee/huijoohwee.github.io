@@ -71,8 +71,16 @@ frontmatter_contract: "required"
 
 ## Template Contracts
 
-| [Pitchdeck PRD TAD Frontmatter Contract](./pitchdeck-prd-tad-frontmatter-contract.md) | Canonical author-facing contract for the frontmatter-first pitchdeck templates |
-| [AGENTIC_OS AI Pipeline PRD TAD](./agentic-os-ai-pipeline-prd-tad.md) | Broader `agentic-os-pipeline/v1` frontmatter-first pipeline contract |
+| [Pitchdeck PRD TAD Frontmatter Contract](./pitchdeck-prd-tad-adr-mvp-gtm-frontmatter-contract.md) | Canonical author-facing contract for the frontmatter-first pitchdeck templates |
+| [AGENTIC_OS AI Pipeline PRD TAD](./agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md) | Broader `agentic-os-pipeline/v1` frontmatter-first pipeline contract |
+
+---
+
+## Guideline Anchors
+
+| [ADLC Guidelines](../guidelines/adlc-guidelines.md) | Website execution-domain anchor for task, verification, and release-control references |
+| [PRD, TAD & ADR Guidelines](../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) | Website authoring-domain anchor for PRD/TAD/ADR scope, readiness, and conformance vocabulary |
+| [Agentic OS ADLC Guidelines](https://github.com/huijoohwee/agentic-os/blob/main/docs/adlc-guidelines.md) | Upstream execution SSOT consumed by the website anchor and repo workflow |
 
 ---
 
@@ -97,10 +105,10 @@ frontmatter_contract: "required"
 | [Agentic Graph MCP Onboarding Index](./documents/agentic-graph-mcp-onboarding-index.md) | Fastest public entry point for install, orchestration boundary, and proof path |
 | [Agentic Graph MCP Install Contract](./documents/agentic-graph-mcp-install-contract.md) | Canonical public-discovery vs control-plane install rule |
 | [Agentic Graph MCP Install Boundary Release Note 2026-07-10](./documents/agentic-graph-mcp-install-boundary-release-note-20260710.md) | Latest evidence-backed release-proof note for the public-discovery vs control-plane boundary |
-| [Agentic Graph MCP Service - PRD & TAD](./documents/agentic-graph-mcp-service-prd-tad.md) | Publish-side mirror notice for the implemented MCP baseline; points back to the canonical source-owned PRD/TAD |
-| [Agentic Graph MCP Agentic Canvas OS - PRD and TAD](./documents/agentic-graph-mcp-agentic-os-prd-tad.md) | Publish-side mirror notice for the Agentic Canvas OS orchestration contract |
-| [Agentic Graph MCP Service - PRD & TAD Companion](./documents/agentic-graph-mcp-service-prd-tad.companion.md) | Publish-side mirror notice for file-owner and readiness detail |
-| [Agentic Graph MCP Agentic Canvas OS - PRD/TAD Companion](./documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md) | Publish-side mirror notice for lane payloads and companion guardrails |
+| [Agentic Graph MCP Service - PRD & TAD](./documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md) | Publish-side mirror notice for the implemented MCP baseline; points back to the canonical source-owned PRD/TAD |
+| [Agentic Graph MCP Agentic Canvas OS - PRD and TAD](./documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md) | Publish-side mirror notice for the Agentic Canvas OS orchestration contract |
+| [Agentic Graph MCP Service - PRD & TAD Companion](./documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion.md) | Publish-side mirror notice for file-owner and readiness detail |
+| [Agentic Graph MCP Agentic Canvas OS - PRD/TAD Companion](./documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md) | Publish-side mirror notice for lane payloads and companion guardrails |
 
 ---
 

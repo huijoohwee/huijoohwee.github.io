@@ -24,11 +24,11 @@ related:
   - docs/documents/agentic-graph-agent-ready-document.md
   - docs/documents/markdown-convertible-agent-discovery-document.md
   - docs/documents/agentic-graph-superagent-harness.md
-  - docs/documents/agentic-graph-mcp/agentic-graph-mcp.md
-  - docs/documents/agentic-graph-mcp-service-prd-tad.md
-  - docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md
-  - docs/documents/agentic-graph-mcp-service-prd-tad.companion.md
-  - docs/documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md
+  - huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md
+  - docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md
+  - docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md
+  - docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion.md
+  - docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md
 ---
 
 # Agentic Graph MCP Onboarding Index
@@ -94,14 +94,14 @@ Concrete grammar examples:
    - Live Canvas Hero Markdown-discovery contract, publish route, and live proof
 5. `huijoohwee/agentic-graph` `README.md` or `docs/documents/agentic-graph-superagent-harness.md`
    - Lowest-cost local evaluation path before hosted setup
-6. `docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
+6. `huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
    - Full MCP topology, readiness scope, and current implementation truth
-7. `docs/documents/agentic-graph-mcp-service-prd-tad.md`
+7. `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md`
    - Publish-side mirror entry for the implemented MCP baseline and shipped-vs-planned boundary
-8. `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md`
+8. `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md`
    - Publish-side mirror entry for the Agentic Canvas OS dashboard and orchestration contract
-9. `docs/documents/agentic-graph-mcp-service-prd-tad.companion.md` or
-   `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md`
+9. `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion.md` or
+   `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md`
    - Publish-side mirror entries for file-owner detail, lane payloads, and companion guardrails
 10. `https://airvio.co/agentic-graph/.well-known/mcp/apps/agentic-graph-agent-ready.html`
    - Browser-published MCP Apps card for template-only `#promotion.retry <path...>` recovery semantics
@@ -116,10 +116,10 @@ Concrete grammar examples:
 | I want the larger discovery and readiness context | `docs/documents/agentic-graph-agent-ready-document.md` |
 | I want the Live Canvas Hero Markdown route and discovery contract | `docs/documents/markdown-convertible-agent-discovery-document.md` |
 | I want the cheapest evaluation path before hosted setup | `huijoohwee/agentic-graph` `README.md` or `docs/documents/agentic-graph-superagent-harness.md` |
-| I want the MCP-specific architecture and scope | `docs/documents/agentic-graph-mcp/agentic-graph-mcp.md` |
-| I want the implemented MCP baseline in the publish docs tree | `docs/documents/agentic-graph-mcp-service-prd-tad.md` |
-| I want the Agentic Canvas OS contract in the publish docs tree | `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md` |
-| I want the companion-level ownership or lane detail in the publish docs tree | `docs/documents/agentic-graph-mcp-service-prd-tad.companion.md` or `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md` |
+| I want the MCP-specific architecture and scope | `huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md` |
+| I want the implemented MCP baseline in the publish docs tree | `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md` |
+| I want the Agentic Canvas OS contract in the publish docs tree | `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md` |
+| I want the companion-level ownership or lane detail in the publish docs tree | `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion.md` or `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md` |
 | I want published promotion retry semantics without opening source docs | `https://airvio.co/agentic-graph/.well-known/mcp/apps/agentic-graph-agent-ready.html` |
 
 ## Canonical Endpoint Rule

@@ -10,7 +10,7 @@ excluded_vendors:
   - "Supabase (never in runtime stack; permanently excluded — Agentic OS ADR-3)"
   - "AWS (runtime tier removed — Agentic OS ADR-3; retained only as a TCO comparison column)"
 status: "current"
-doc_type: "Combined PRD/TAD"
+doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
 lang: "en-US"
 frontmatter_contract: "required"
 domain: "agentic-graph"
@@ -41,16 +41,16 @@ traceability:
 
 **Context**: Solo-dev, AI-native knowledge graph and media intelligence platform. Canonical source: `huijoohwee/agentic-graph`. Deployed at `airvio.co/agentic-graph` via Cloudflare Pages + Workers.
 **Intent**: Provide an end-to-end reference for the platform's user flow, orchestration/harness flow, workflow, and data flow — with a side-by-side infrastructure comparison across Cloudflare, Alibaba Cloud (Serverless App Engine / SAS), Alibaba Cloud (ECS), and AWS — evaluated through the four compounding lenses: min-viable-max-value, TCO-zero, token economics, and harness-first.
-**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `agentic-graph-agentic-os-prd-tad.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
+**Directive**: Treat GitHub `docs/**` as SSOT. Apply FOSS-first for every layer. Expose every AI pipeline through a typed harness. Cap all async loops with a circuit-breaker. Zero-egress infrastructure preferred by default. **Native-in-repo**: all runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack — Vercel, Supabase, and AWS are excluded from the runtime topology (per `agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md` ADR-3); AWS and Alibaba Cloud appear in this document only as TCO comparison columns, never as deploy targets.
 **MCP install note**: For remote MCP onboarding, treat `https://airvio.co/agentic-graph/mcp` as the canonical public install/discovery URL and `https://airvio.co/agentic-graph/control-plane/mcp` as the separate approval-gated grammar/orchestration surface. Live `/`, `#`, and `@` grammar executes through `agentic-graph.agentic_canvas_os.docs.invoke` on the control plane; current examples are `/mcp.capabilities`, `#mcp`, and `@mcp-gateway`. The operator-facing setup contract lives in `docs/documents/agentic-graph-mcp-install-contract.md` in the source repo and mirrored publish docs. The shortest guided path now starts at `docs/documents/agentic-graph-mcp-onboarding-index.md`. For the cheapest proof path before any hosted setup, use the source-side offline deterministic route in `huijoohwee/agentic-graph` `README.md` or `docs/documents/agentic-graph-superagent-harness.md`.
 
 **Published MCP entry points**:
 - `docs/documents/agentic-graph-mcp-onboarding-index.md`
 - `docs/documents/agentic-graph-mcp-install-contract.md`
-- `docs/documents/agentic-graph-mcp-service-prd-tad.md`
-- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.md`
-- `docs/documents/agentic-graph-mcp-service-prd-tad.companion.md`
-- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad.companion.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md`
+- `docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.companion.md`
+- `docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md`
 
 ---
 
@@ -576,9 +576,9 @@ browser smoke, `pages:check-sync`, and the route-and-action review in
 
 **Status**: Accepted | **Date**: 2026-07-02
 
-**Decision**: All runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack. The Vercel product tier and the AWS Agent-API / AgentCore lanes formerly documented in `agentic-graph-mcp-agentic-canvas-os-prd-tad.md` are removed from the runtime topology; Supabase is permanently excluded (it was never in the runtime stack — it appears in this document only as a rejected lean-startup comparison). AWS and Alibaba Cloud remain in this document strictly as TCO comparison columns.
+**Decision**: All runtime surfaces live in `huijoohwee/agentic-graph` on the Cloudflare + local stack. The Vercel product tier and the AWS Agent-API / AgentCore lanes formerly documented in `agentic-graph-mcp-agentic-canvas-os-prd-tad-adr-mvp-gtm.md` are removed from the runtime topology; Supabase is permanently excluded (it was never in the runtime stack — it appears in this document only as a rejected lean-startup comparison). AWS and Alibaba Cloud remain in this document strictly as TCO comparison columns.
 
-**Rationale and full TCO comparison**: see `agentic-graph-agentic-os-prd-tad.md` ADR-3 (the normative SSOT for this decision). Summary: the removed tiers held no model keys, ran no orchestration, and stored no source-of-truth state; removing them eliminates two deploy pipelines, two secret-audit surfaces, and the documented spec-vs-runtime drift, at zero build cost and up to ~$300/year avoided exposure.
+**Rationale and full TCO comparison**: see `agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md` ADR-3 (the normative SSOT for this decision). Summary: the removed tiers held no model keys, ran no orchestration, and stored no source-of-truth state; removing them eliminates two deploy pipelines, two secret-audit surfaces, and the documented spec-vs-runtime drift, at zero build cost and up to ~$300/year avoided exposure.
 
 **FOSS alternative**: self-hosted VPS shell (Provisioned/Self-Managed, ~$60–180/year + manual ops) — rejected; it re-adds a deploy pipeline and fixed cost to replace something being deleted, not relocated.
 
@@ -668,9 +668,9 @@ ROI Score = (User Impact × Reach) / (Build Hours/month + Monthly TCO + Token Co
 ## Agentic OS Follow-On Tracks
 
 Must-tier Agentic OS + MCP Gateway federation is documented in
-[`agentic-graph-agentic-os-prd-tad.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad.md)
+[`agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md)
 (v0.4.1). Remaining work is spec-complete in
-[`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md).
+[`agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md`](agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md).
 
 | Track | Stack touchpoint | Local status | Deploy exit |
 |---|---|---|---|
@@ -682,4 +682,4 @@ Validation (repo root): `npm run runtime:test` plus follow-on harness tests list
 
 ---
 
-*Document updated 2026-07-10. Adherent to [PRD & TAD Guidelines v1.3.0](../../guidelines/prd-tad-guidelines.md). Follow-on: [`agentic-graph-agentic-os-follow-on-prd-tad.md`](agentic-graph-agentic-os-follow-on-prd-tad.md).*
+*Document updated 2026-07-10. Adherent to [PRD, TAD & ADR Guidelines](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). Follow-on: [`agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md`](agentic-graph-agentic-os-follow-on-prd-tad-adr-mvp-gtm.md).*

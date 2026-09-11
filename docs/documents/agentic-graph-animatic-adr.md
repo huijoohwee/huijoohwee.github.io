@@ -20,7 +20,7 @@ parent_version: "1.0.0"
 
 Owns the architectural decision records, the quality attribute scenarios, and the deployment strategy.
 
-This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
+This module is loaded on demand from [Agentic Graph Animatic PRD/TAD](./agentic-graph-animatic-prd-tad-adr-mvp-gtm.md), which keeps the binding rules and the index. It carries one responsibility and stays under the 600-line file budget.
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 # ── Tier A — DOCUMENT IDENTITY ────────────────────────────────────────────────
-title:       "Universal AI Pipeline — PRD + TAD"
+title:       "Universal AI Pipeline — PRD-TAD-ADR-MVP-GTM"
 graphId:     "md:universal-ai-pipeline"
-doc_type:    "PRD + TAD"
+doc_type:    "PRD-TAD-ADR-MVP-GTM"
 date:        "2026-04-19"
 ai_model:    "claude-sonnet-4-20250514"
 lang:        en-US
@@ -117,7 +117,7 @@ links:
   # ↑ H2 anchor in body — first rendered diagram section; renderer jumps here
   #   after completing R06.
 
-  self_ref:    "agentic-os-ai-pipeline-prd-tad.md"
+  self_ref:    "agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md"
   # ↑ Canonical filename for cross-document @node: and @edge: references from
   #   sibling documents in the same Knowledge Graph Canvas workspace.
 
@@ -552,7 +552,7 @@ Bidirectional anchors between YAML frontmatter and body (`links:` frontmatter bl
 | YAML → body (entry view) | `links.body_anchor` | `#flow-graph` — rendered diagram |
 | YAML → body (docs) | `links.yaml_anchor` | `#computing-flow-definition` — this section |
 | Body → YAML | frontmatter `---` delimiter | Source of truth for all machine data |
-| Cross-document | `links.self_ref` | `agentic-os-ai-pipeline-prd-tad.md` — canonical filename |
+| Cross-document | `links.self_ref` | `agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md` — canonical filename |
 
 ---
 

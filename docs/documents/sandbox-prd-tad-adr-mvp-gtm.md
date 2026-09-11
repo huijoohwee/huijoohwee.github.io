@@ -1,6 +1,6 @@
 ---
-title: "Agentic Graph Sandbox Execution Layer — PRD/TAD/ADR"
-doc_type: "Combined PRD/TAD/ADR"
+title: "Agentic Graph Sandbox Execution Layer — PRD-TAD-ADR-MVP-GTM"
+doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
 version: "1.1.0"
 date: "2026-07-30"
 updated: "2026-07-30"
@@ -13,9 +13,9 @@ lane: "authoring"
 universal_scope: "false"
 ---
 
-# Agentic Graph Sandbox Execution Layer — PRD/TAD/ADR
+# Agentic Graph Sandbox Execution Layer — PRD-TAD-ADR-MVP-GTM
 
-**Governed by**: PRD, TAD & ADR Guidelines v1.7.0 (2026-07-28). **Companion set**: ADLC Guidelines owns execution-domain conformance (task decomposition, agent roles, tool blast radius); a runtime-readiness claim sourced from this document alone is incomplete.
+**Governed by**: [PRD, TAD & ADR Guidelines](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). **Companion set**: [ADLC Guidelines](../../guidelines/adlc-guidelines.md) own execution-domain conformance (task decomposition, agent roles, tool blast radius); a runtime-readiness claim sourced from this document alone is incomplete.
 
 ## Version History
 

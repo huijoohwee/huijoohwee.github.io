@@ -26,7 +26,8 @@
 // separate table with a separate owner.
 
 import { readFileSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeGeneratedFile } from "agentic-os/generation";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -93,6 +94,12 @@ export function collectProjectedRows({ repository = REPOSITORY_ROOT } = {}) {
 }
 
 export function renderProjection({ rows, period }) {
+  if (!Array.isArray(rows) || rows.length > 400) throw new Error('kanban projection row budget exceeded');
+  let bytes = 0;
+  for (const row of rows) for (const column of BOARD_COLUMNS) {
+    bytes += Buffer.byteLength(String(row[column] ?? ''), 'utf8');
+    if (bytes > 400000) throw new Error('kanban projection byte budget exceeded');
+  }
   const body = [
     `| ${BOARD_COLUMNS.join(" | ")} |`,
     `|${BOARD_COLUMNS.map((column) => column === "priority" ? "---:" : "---").join("|")}|`,
@@ -229,8 +236,8 @@ async function runCli() {
     .replace(/^projection_period: .*$/m, `projection_period: "${period}"`)
     .replace(/^projection_row_count: .*$/m, `projection_row_count: ${rows.length}`)
     .replace(/^projection_digest: .*$/m, `projection_digest: "${digest}"`);
-  await writeFile(boardPath, stamped, "utf8");
-  console.log(`kanban projection written: ${rows.length} rows for ${period}; digest ${digest}`);
+  const result = await writeGeneratedFile(boardPath, stamped);
+  console.log(`kanban projection ${result.written ? 'written' : 'unchanged'}: ${rows.length} rows for ${period}; digest ${digest}`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -103,6 +103,8 @@ for (const name of files) {
 
 // Every published anchor still resolves as a `##` heading in the index.
 const indexText = read(INDEX);
+assert.match(indexText, /^title: "PRD, TAD & ADR Guidelines"$/m);
+assert.ok(indexText.includes('`doc_type: "PRD-TAD-ADR-MVP-GTM"`'), "planning metadata must have one canonical document type");
 const headings = [...indexText.matchAll(/^## (.+)$/gm)].map((m) => slug(m[1]));
 for (const anchor of PUBLISHED_ANCHORS) {
   assert.ok(headings.includes(anchor), `${INDEX}: published anchor #${anchor} no longer resolves`);

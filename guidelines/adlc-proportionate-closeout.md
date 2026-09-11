@@ -17,7 +17,7 @@ lifecycle_status: "proposed"
 
 # Proportionate Closeout
 
-This module selects the least-powerful closeout profile that fully satisfies sealed Operator intent. It scales applicable work, never the rigor of a triggered obligation. The main [ADLC Guidelines](./adlc-guidelines.md) retain protected integration, atomic convergence, preservation, and finding authority; the [Production Release Lifecycle](./adlc-production-release-lifecycle.md) retains delivery and publication authority; the [Rapid MVP Sprint Profile](./adlc-rapid-mvp-sprint.md) may compress elapsed time but never these obligations.
+This module selects the least-powerful closeout profile that fully satisfies sealed Operator intent. It scales applicable work, never the rigor of a triggered obligation. The main [ADLC Guidelines](./adlc-guidelines.md) retain protected integration, atomic convergence, preservation, and finding authority; the [Production Release Lifecycle](./adlc-production-release-lifecycle.md) retains delivery and publication authority; the [Rapid MVP Sprint Profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md) may compress elapsed time but never these obligations.
 
 ```text
 Closeout Plan = sealed outcome + exact subject set + write scopes + applicable adapters + cleanup effects + evidence keys

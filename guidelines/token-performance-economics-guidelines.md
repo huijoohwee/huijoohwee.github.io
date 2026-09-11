@@ -21,7 +21,7 @@ semantic_authority: "cid-guidelines.md#shared-field-contract"
 Optimize cost and elapsed time per accepted user outcome. Use the shared
 [CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract),
 [artifact continuity](./adlc-artifact-continuity.md), and
-[rapid MVP loop](./adlc-rapid-mvp-sprint.md). Lifecycle budgets and execution
+[rapid MVP loop](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md). Lifecycle budgets and execution
 remain owned by the pinned `agentic-os` package. This module loads on demand.
 
 ## Measurement Contract

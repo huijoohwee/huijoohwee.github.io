@@ -23,7 +23,7 @@ const MODULES = Object.freeze({
   repositoryRuntimeReadiness: "adlc-repository-runtime-readiness.md",
   antiPatternGuards: "adlc-anti-pattern-guards.md",
   autonomousContinuation: "adlc-autonomous-continuation.md",
-  rapidMvpSprint: "adlc-rapid-mvp-sprint.md",
+  rapidMvpSprint: "adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md",
   proportionateCloseout: "adlc-proportionate-closeout.md",
 });
 const VERSION = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;

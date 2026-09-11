@@ -9,6 +9,7 @@ status: Enhanced Baseline
 date: 2026-05-25
 source_validation_doc: agentic-graph-animatic-demo.md
 guidelines_ref: guidelines/prd-tad-adr-mvp-gtm-guidelines.md
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 ---
 
 # Agentic Graph Animatic — PRD-TAD-ADR-MVP-GTM
@@ -51,71 +52,71 @@ Standard: `guidelines/prd-tad-adr-mvp-gtm-guidelines.md`
 
 ## Phase 0 — Problem Discovery
 
-Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## User Journey — Content Author: Author → Playback → Edit
 
-Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Epics & User Stories
 
-Owned by [Agentic Graph Animatic Epics & User Stories Module](./agentic-graph-animatic-prd-epics.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Epics & User Stories Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-epics.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Scope Boundaries
 
-Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Implementation Constraints
 
-Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Decisions & Open Questions
 
-Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Problem & Scope Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architecture Overview
 
-Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Journey → System Mapping
 
-Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Component Specifications
 
-Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Integration Contracts
 
-Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-tad-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Components Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-components.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Workflow: Beat Drag-to-Move
 
-Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Workflow: Validator Script Run
 
-Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Data Flows
 
-Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architectural Decisions
 
-Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-decisions.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Quality Attributes
 
-Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-decisions.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Deployment Strategy
 
-Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-adr.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Decisions & Attributes Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-decisions.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Architecture Diagrams
 
-Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-tad-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
+Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animatic-prd-tad-adr-mvp-gtm-flows.md). Loaded on demand; this entry keeps the anchor stable for inbound references.
 
 ## Component Inventory
 

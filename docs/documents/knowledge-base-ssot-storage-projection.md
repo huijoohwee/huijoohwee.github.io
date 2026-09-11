@@ -1,6 +1,6 @@
 ---
 title: "Knowledge-Base SSOT Storage Projection"
-doc_type: "Architecture Decision Projection"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "1.0.0"
 status: "active"
 date: "2026-08-05"
@@ -9,14 +9,14 @@ owner: "cross-repo knowledge storage docs"
 frontmatter_contract: "required"
 source_repository: "huijoohwee/agentic-graph"
 source_revision: "9a8e4b8221e85102cc1f7fab9fc5d9716fb5c83a"
-source_document: "docs/documents/agentic-graph-storage-sync-document.md"
+source_document: "docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md"
 ---
 
 # Knowledge-Base SSOT Storage Projection
 
 ## Authority boundary
 
-This document projects the accepted Agentic Graph storage decision into the shared documentation repository. The normative product/runtime contract remains [`agentic-graph/docs/documents/agentic-graph-storage-sync-document.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-storage-sync-document.md). This projection does not create a second storage authority or claim that a remote Lark adapter is implemented.
+This document projects the accepted Agentic Graph storage decision into the shared documentation repository. The normative product/runtime contract remains [`agentic-graph/docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md). This projection does not create a second storage authority or claim that a remote Lark adapter is implemented.
 
 **Decision:** keep Git-backed Markdown plus YAML frontmatter as the portable knowledge-base SSOT. GitHub is the current protected forge and audit surface, not the content format. Integrate Lark Suite as a collaborative control-plane projection; generate Cloudflare serving and query projections; use CSV/JSON only for interchange.
 

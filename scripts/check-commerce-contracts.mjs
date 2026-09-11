@@ -55,7 +55,7 @@ export function validateProjection(record) {
 
 export function checkCommerceContracts(root) {
   const failures = [];
-  for (const file of ['guidelines/token-performance-economics-guidelines.md', 'guidelines/adlc-rapid-mvp-sprint.md']) {
+  for (const file of ['guidelines/token-performance-economics-guidelines.md', 'guidelines/adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md']) {
     failures.push(...validateFrontmatter(readFileSync(path.join(root, file), 'utf8')).map(issue => `${file}: ${issue}`));
   }
   const file = 'schema/AgenticRAG/roles-actions-outcomes-schema.jsonld';

@@ -1,6 +1,6 @@
 ---
 title: "Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion"
-doc_type: "PRD-TAD-ADR-MVP-GTM Companion"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "0.3.1"
 status: "mirror-notice"
 date: "2026-07-11"

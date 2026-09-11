@@ -10,7 +10,7 @@ excluded_vendors:
   - "Supabase (never in runtime stack; permanently excluded — Agentic OS ADR-3)"
   - "AWS (runtime tier removed — Agentic OS ADR-3; retained only as a TCO comparison column)"
 status: "current"
-doc_type: "Combined PRD-TAD-ADR-MVP-GTM"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 lang: "en-US"
 frontmatter_contract: "required"
 domain: "agentic-graph"

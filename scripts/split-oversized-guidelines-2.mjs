@@ -12,13 +12,13 @@ const PLANS = [
     parentTitle: "Agentic Graph Animatic PRD/TAD",
     modules: [
       {
-        file: "agentic-graph-animatic-prd-epics.md",
+        file: "agentic-graph-animatic-prd-tad-adr-mvp-gtm-epics.md",
         title: "Agentic Graph Animatic Epics & User Stories Module",
         intro: "Owns the epic and user-story decomposition with its acceptance criteria. This is the requirements payload of the PRD.",
         sections: ["Epics & User Stories"],
       },
       {
-        file: "agentic-graph-animatic-prd-scope.md",
+        file: "agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md",
         title: "Agentic Graph Animatic Problem & Scope Module",
         intro: "Owns problem discovery, the author journey, scope boundaries, implementation constraints, and open questions.",
         sections: [
@@ -30,19 +30,19 @@ const PLANS = [
         ],
       },
       {
-        file: "agentic-graph-animatic-tad-components.md",
+        file: "agentic-graph-animatic-prd-tad-adr-mvp-gtm-components.md",
         title: "Agentic Graph Animatic Components Module",
         intro: "Owns the architecture overview, the journey-to-system mapping, the component specifications, and the integration contracts.",
         sections: ["Architecture Overview", "Journey → System Mapping", "Component Specifications", "Integration Contracts"],
       },
       {
-        file: "agentic-graph-animatic-tad-flows.md",
+        file: "agentic-graph-animatic-prd-tad-adr-mvp-gtm-flows.md",
         title: "Agentic Graph Animatic Flows & Diagrams Module",
         intro: "Owns the runtime behaviour views: the two workflows, the data flows, and the architecture diagrams.",
         sections: ["Workflow: Beat Drag-to-Move", "Workflow: Validator Script Run", "Data Flows", "Architecture Diagrams"],
       },
       {
-        file: "agentic-graph-animatic-adr.md",
+        file: "agentic-graph-animatic-prd-tad-adr-mvp-gtm-decisions.md",
         title: "Agentic Graph Animatic Decisions & Attributes Module",
         intro: "Owns the architectural decision records, the quality attribute scenarios, and the deployment strategy.",
         sections: ["Architectural Decisions", "Quality Attributes", "Deployment Strategy"],

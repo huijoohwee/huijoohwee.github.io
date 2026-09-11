@@ -1,6 +1,6 @@
 ---
 title: "Agentic Graph MCP Service - PRD-TAD-ADR-MVP-GTM Companion"
-doc_type: "PRD-TAD-ADR-MVP-GTM Companion"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "0.4.24"
 status: "mirror-notice"
 date: "2026-07-11"

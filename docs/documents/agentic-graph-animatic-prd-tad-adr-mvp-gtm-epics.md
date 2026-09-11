@@ -1,6 +1,6 @@
 ---
 title: "Agentic Graph Animatic Epics & User Stories Module"
-doc_type: "Guidelines Module"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
 version: "1.0.0"
 date: "2026-08-20"
 lang: "en-US"

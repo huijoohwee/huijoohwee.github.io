@@ -121,7 +121,7 @@ Every rule is exactly one of two classes, and the class decides whether an unmet
 
 ## Markdown YAML Frontmatter Enforcement
 
-- Canonical PRD, TAD, and combined PRD/TAD Markdown docs must start with a valid YAML frontmatter block as the first block in the file.
+- Canonical planning artifacts and their companions use `prd-tad-adr-mvp-gtm` filenames and start with valid YAML frontmatter declaring `doc_type: "PRD-TAD-ADR-MVP-GTM"`; PRD, TAD, ADR, MVP, and GTM remain distinct section roles. Guideline modules retain their guideline document types.
 - Frontmatter is the SSOT for document identity, status, versioning, renderer activation, and reusable metadata referenced by the body specification.
 - Canonical authored PRD/TAD docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with typed wrapper records.
 - Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Diagram Templates (Companion)"
 doc_type: "Guidelines Companion"
-version: "1.0.1"
+version: "1.0.2"
 date: "2026-09-05"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Diagram Guidelines (Companion)"
-parent_version: "1.1.1"
+parent_version: "1.1.2"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---

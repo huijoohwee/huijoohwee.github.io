@@ -1,7 +1,7 @@
 {
   "schema": "prd-tad-adr-codebase-grounding/v1",
   "owner": "huijoohwee.github.io",
-  "observed_on": "2026-09-09",
+  "observed_on": "2026-09-12",
   "load_policy": "on-demand",
   "scope": "Repository ownership and specification-to-runtime seams; not exhaustive feature or production certification.",
   "semantic_owner": "../../guidelines/cid-guidelines.md#shared-field-contract",
@@ -12,12 +12,12 @@
     {
       "id": "agentic-os",
       "repository": "github.com/huijoohwee/agentic-os",
-      "revision": "46c14586282a952d4af76e9f61e3b53f9e32dfab",
+      "revision": "08afe0e775b3a65bf7c9e6f21c0b19d9c2a6b2d3",
       "owns": "Repository lifecycle, bounded ranking, cross-repository source observation",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "591b2d3adf155091b9989fab0611451e396f15155be69c694be2e7b42c1b49c2"
+          "sha256": "98b06425d311bdfbc94b7888d3b6274e5e7bf92bd9aa6523fa321f6c0c31ce20"
         },
         {
           "path": "src/rank.mjs",
@@ -25,19 +25,19 @@
         },
         {
           "path": "bin/agentic-os.mjs",
-          "sha256": "9d7fa9765267e00fe4a3f25d8e6b0294c8bb0941e32f9aab7bd62a7876901201"
+          "sha256": "85b0774f48828089962599ccf079061e0a3436f29aa47af5827168f98073fa51"
         },
         {
           "path": "catalog/composition-source-lock.json",
-          "sha256": "53a850b1e38ebfdbfb8a8a598e69ffc8326875fe9d3799aa299db372e8b01f45"
+          "sha256": "815a1d27e973c0f0d5da669ea99a52baba97b2af4213a79508b6305bd9deafd0"
         },
         {
           "path": "guides/TECH-STACK.md",
-          "sha256": "37972ec12a75635f84e2d689b2946d078cf47be464c62224bb3601ca72a59985"
+          "sha256": "8e28b20f1161c9f106c6158977d075098573310e8c60a5cee4b09c9f828751f1"
         },
         {
           "path": "guides/LIFECYCLE-FLIGHT.md",
-          "sha256": "c0a67f11013070690c5a348048c17bab520175bea85f77461466e678a021ea96"
+          "sha256": "eb1c54f261d018d5b43af299c31e29b9da80000d96db4a068fc4171aa8c63c62"
         }
       ],
       "checks": [
@@ -49,24 +49,24 @@
     {
       "id": "huijoohwee.github.io",
       "repository": "github.com/huijoohwee/huijoohwee.github.io",
-      "revision": "d0b0fdf0a63c6bd94dda2cc7ac87f7e200059138",
+      "revision": "c83b43bd7fd018e0ac41629787e0e713db9a1e13",
       "owns": "Shared authoring semantics and reference schema projections",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "0e44271f531aac956d860563afa2b14f3ac91783e013e560db1c37b3ad373ed8"
+          "sha256": "329710a07b1e5875dae1f7a2490c7aa75d9eb52accf35e623d0b903a2c6ae3d3"
         },
         {
           "path": "guidelines/cid-guidelines.md",
-          "sha256": "23fefca1c4921852ed090fb1203ced6ce54a7577b97b0af37b850f271ab64f4e"
+          "sha256": "5b05f80eac327ec8bff25e62c4b5cfb7b89bf3337d25eae9f1cce3dd96684303"
         },
         {
           "path": "guidelines/prd-tad-adr-mvp-gtm-guidelines.md",
-          "sha256": "0291a4c6a0e519acb96b406a47c1653b3bed958b19c2b49150a9e441ac076c3e"
+          "sha256": "6bd94d4877627c09753cb96873b4de7ec53d0a1dd6722649ab42dcbc11895e3f"
         },
         {
           "path": "schema/AgenticRAG/roles-actions-outcomes-schema.jsonld",
-          "sha256": "77d08db9dff8209bb1fbfe92e077c8129a44d445efe4fdd76ab7c46302cd4ab0"
+          "sha256": "781e6bb833ed6b57b1992200542c8042adef3bcbdbd378ea004bde9a120a66c1"
         }
       ],
       "checks": [
@@ -78,41 +78,58 @@
     {
       "id": "agentic-commerce-os",
       "repository": "github.com/huijoohwee/agentic-commerce-os",
-      "revision": "50d0047fe140595c7086e1a122ffa76ab20a29bd",
+      "revision": "37d1e2a2e3a0efa4f9c5f44c457efa3234d86ad9",
       "owns": "Commerce checkout, admission consumption and paid-loop runner",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "0609e6f819632abcf7d7a624bc9fa9a92858bff5aa8fa61a9f6afd522317ec74"
-        },
-        {
-          "path": "src/core/acos-admission.ts",
-          "sha256": "c8fb93488e4b0983b71901729886869c1aee46ed375c8b9478ddec6069306ae0"
+          "sha256": "80c39fb456b2c347b754a8a6ad21ce8ebf190b646751a3225f5d5f3b1fe21805"
         },
         {
           "path": "src/core/checkout-finalization.ts",
           "sha256": "670756a0ba01d6cadd3a6c010bc1ea2c435bb5367bcbebf63827d9d0bf077f96"
         },
         {
+          "path": "src/local-first/checkout.ts",
+          "sha256": "fe8b803398ad3f9e7d73576f176d4fe5cfca4af4d9ef99a105fa52313c0c1458"
+        },
+        {
+          "path": "scripts/demand-evidence-verifier.mjs",
+          "sha256": "90c8cc859d6aa6662b88c49ffd15ebe4e1fb8f704cc876f70ef6afb76cc2b6a5"
+        },
+        {
           "path": "scripts/checks/browser.ts",
-          "sha256": "8fdbe1c7242bc777e020b2dd13f75f1f973931e0d83990819a740db4db472b0d"
+          "sha256": "92db1aa328d65994a47deff907103e76a5b63becc1fa5afd68fc2b7ea08ad1fc"
+        },
+        {
+          "path": "test/e2e/dev-paid-loop.spec.ts",
+          "sha256": "bdced0cfc18965739595da2d44fb5fa3a41b9f8e6dcaf4ccd17c544a3ef402a8"
+        },
+        {
+          "path": "test/domain/demand-evidence-verifier.test.mjs",
+          "sha256": "019133ebbc71e73f2c22ce42e89a56b121a97c455438e9c83cc3fe6661c1f524"
+        },
+        {
+          "path": "docs/prd-tad-adr-mvp-gtm-handoff.md",
+          "sha256": "5332de87c97c5e9ffda33f8857fa3effa1149dfb454d6e93aef67f2a93bebc68"
         }
       ],
       "checks": [
         "test",
         "test:workers",
-        "test:e2e:dev"
+        "test:e2e:dev",
+        "check:local-first"
       ]
     },
     {
       "id": "agentic-canvas-os",
       "repository": "github.com/huijoohwee/agentic-canvas-os",
-      "revision": "954de91689abc1ab99a783e54f5ca7ac61387449",
+      "revision": "821415e48c59de96f7184a2b32d1597727698558",
       "owns": "Application agent runtime, admission provider and deferred tool discovery",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "4900b4c082eb878944f1e83e80234856e884d21fb5a6e9b8c83e485e00caa763"
+          "sha256": "f6da945e7e4dd260a2c23ac4943df23400ef5f8ae73d12a06306046d1838b2cd"
         },
         {
           "path": "agent-api/src/commerce-admission-contract.js",
@@ -124,28 +141,32 @@
         },
         {
           "path": "docs/PRD-TAD-ADR-MVP-GTM.md",
-          "sha256": "2b0bc00023353d94405d216945e4208ef25b990cb8823f4710af4c26079e6a79"
+          "sha256": "8b702fe001f2775159dde22512619c5995ecc16939884b78c9b28cf0da9e41e2"
+        },
+        {
+          "path": "__tests__/tool-search.test.mjs",
+          "sha256": "0341b31c926534d5b725e133d1660537e792c0962abe1a581d87e5279f6aecaf"
         }
       ],
       "checks": [
         "docs:check",
-        "test",
-        "check"
+        "tool-search:check",
+        "commerce-admission-provider:check"
       ]
     },
     {
       "id": "huijoohwee",
       "repository": "github.com/huijoohwee/huijoohwee",
-      "revision": "b7b6c39ce0b5844a43042026a910f7552477c8ff",
+      "revision": "6f1d5d0ef0d6345a3b066bb7029e08dcf6b68077",
       "owns": "Generated production artifacts and projection validation",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "cfe023e6ff8db1b9d61d5e0671847ad278dabeb982089300f3ecef9521e086fd"
+          "sha256": "c031ea71fac3b438dd91b04ca2f84d0a03d825f13ae3be6ca36f1fd0c71b9654"
         },
         {
           "path": "scripts/check-runtime-readiness.mjs",
-          "sha256": "ff4175cb607fb968ab748110f8d0dd499958f3edec8ef0f49c87954f9ba76720"
+          "sha256": "e54de7f5b263075ae510101c2fddd3d3f3f3ed181b7b86b1eadb70e54e77f882"
         },
         {
           "path": "scripts/check-gamexr-public.mjs",
@@ -160,12 +181,12 @@
     {
       "id": "agentic-graph",
       "repository": "github.com/huijoohwee/agentic-graph",
-      "revision": "eb19100b4604e4d296bf6094f183f255ef0b20a6",
+      "revision": "ddfb165472ce20a2fe4ebca9b799d32c86cb052d",
       "owns": "Canvas/browser authoring runtime and Graph production release",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "2cff4bf86caeaf1fbcab114cdb3432cb2401b3f49687688ab9f046d9383d9b7f"
+          "sha256": "a0fc154788202c8a79118f83cdeb98d50e7c0bc96abd6f8e76b5056e16269ee7"
         },
         {
           "path": "canvas/src/lib/markdown/invocationTokens.ts",
@@ -173,11 +194,19 @@
         },
         {
           "path": ".github/workflows/release.yml",
-          "sha256": "fa9f3cd13e6dd46f8c38d1d8e5dbb075f4c632efc3f84d63bd3ec09d765dceaf"
+          "sha256": "9b1323525dc011b6537000166f6a81985a4cf902a00475a85cc19325319f70af"
         },
         {
           "path": "docs/runtime-readiness-contract.md",
-          "sha256": "96399a9fcbb7af145ed9bebfa6d9ff3fe4f9f0f71dcaac23454f8bd2f7e62f23"
+          "sha256": "414ef5a3a8ba9c95603b231b98f358efd9afd663aef533e7b7de7949b84e1ccc"
+        },
+        {
+          "path": "scripts/check-agentic-graph-payments-readiness.mjs",
+          "sha256": "60e2b7f86e06946b3695356a890611d272c5d3e6f4cc57fa7e86a7bbe6c1bc6f"
+        },
+        {
+          "path": "scripts/sync-pages-agentic-graph.mjs",
+          "sha256": "df74afe086059e03e88894c63e049da0b6e3e4ec67bdb69d1534097231596e40"
         }
       ],
       "checks": [
@@ -190,12 +219,12 @@
     {
       "id": "GameXR",
       "repository": "github.com/huijoohwee/GameXR",
-      "revision": "718298dec9928f30bd24e349a7527aba2c85bfb1",
+      "revision": "8334355dc2c1f9bdf463ba102a63b5a3ac579d89",
       "owns": "Spatial runtime consuming shared archives with its own release checks",
       "artifacts": [
         {
           "path": "package.json",
-          "sha256": "69dbdad6c2917a5d9287af4dae865de50990e5ad8449384bca2b31177e5e7485"
+          "sha256": "623b50589891e41a9c88593fe2c63d3067fb89caaf4892df339fd84d4a946dae"
         },
         {
           "path": "src/runtime/GameRuntime.ts",
@@ -258,7 +287,7 @@
       "evidence": [
         "agentic-commerce-os"
       ],
-      "limit": "Independent source/unit/Worker checks do not need that runtime and do not substitute for paid-loop coverage."
+      "limit": "Independent source/unit/Worker checks do not substitute for the paid-loop runner; execute the owner command to observe current prerequisites."
     },
     {
       "id": "flight-operation-scope",
@@ -289,5 +318,59 @@
       ],
       "limit": "Ranking logic and checkout code do not establish buyer interviews, paid pilots, settlement or margin."
     }
-  ]
+  ],
+  "rubric_source": {
+    "locator": "joohwee/undocumented-draft/maturity-level-rubric.md",
+    "sha256": "79543922a03c67d539d16a1fc53f470d232790ed43d67470090d9228a4de94ed",
+    "owner": "../../guidelines/prd-tad-adr-mvp-gtm-maturity.md",
+    "scope": "Input provenance; canonical descriptors are maintained in the linked module."
+  },
+  "reference_inspiration": {
+    "repository": "github.com/anthropics/commerce-agents",
+    "revision": "fd4d59224ab96b43c6dc6888207c67b3bd5a24cf",
+    "path": "README.md",
+    "disposition": "reference-only; no copied code or dependency",
+    "limit": "Shopping and merchant role patterns; demo checkout and staged writes do not prove live settlement."
+  },
+  "maturity": {
+    "continuity_id": "PRD-TAD-ADR-ADLC-PIPELINE-001",
+    "revision": "1.1.0",
+    "environment": "source inspection; no product runtime observation",
+    "ratings": [
+      {
+        "criterion": "Core Requirements & Functionality",
+        "score": null,
+        "evidence": [],
+        "rationale": "Source presence and test definitions do not establish an observed agent experience.",
+        "owner": "agentic-commerce-os",
+        "next_check": "test:e2e:dev plus evaluator-observed buyer loop"
+      },
+      {
+        "criterion": "Innovation & Theme Alignment",
+        "score": null,
+        "evidence": [],
+        "rationale": "Source presence and test definitions do not establish an observed agent experience.",
+        "owner": "agentic-commerce-os",
+        "next_check": "Priced prospect walkthrough of the existing storefront/merchant job"
+      },
+      {
+        "criterion": "Technical Execution & Integration",
+        "score": null,
+        "evidence": [],
+        "rationale": "Source presence and test definitions do not establish an observed agent experience.",
+        "owner": "agentic-canvas-os",
+        "next_check": "commerce-admission-provider:check plus deployed failure/recovery observation"
+      },
+      {
+        "criterion": "Usefulness & Agentic Experience",
+        "score": null,
+        "evidence": [],
+        "rationale": "Source presence and test definitions do not establish an observed agent experience.",
+        "owner": "agentic-commerce-os",
+        "next_check": "Accepted paid pilot and timed repeat-use study"
+      }
+    ],
+    "observations": [],
+    "evaluated_at": "2026-09-12T00:50:29.595Z"
+  }
 }

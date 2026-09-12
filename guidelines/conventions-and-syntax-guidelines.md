@@ -1,8 +1,8 @@
 ---
 title: "Conventions and Syntax Guidelines"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-10"
+version: "1.0.1"
+date: "2026-09-12"
 lang: "en-US"
 owner: "shared authoring conventions"
 frontmatter_contract: "required"
@@ -64,6 +64,38 @@ adding both `CONVENTIONS.md` and `SYNTAX.md` is useful only when their responsib
 Common frontmatter rules do not impose a renderer's output format on ordinary documentation.
 Renderer variables, color annotations, table persistence and retry rules apply only to the selected
 product profile. The shared field contract owns semantic definitions; do not restate them here.
+
+## Document locators and format
+
+Keep editable source owners at stable descriptive locators. Put dates in frontmatter and observations;
+renaming a living guide on every edit breaks references and does not version its contents.
+
+| Artifact | Filename profile | Identity / format |
+|---|---|---|
+| Living guideline or companion | Lowercase kebab-case `.md`; retain meaningful `.companion.md` suffix | Opening YAML, one H1, addressable sections, exact evidence links |
+| Existing guide/API asset | Preserve the owner's declared casing and published path | Same content rules; migrate case only with consumer/reference repair |
+| New immutable observation/export without an existing profile | `YYYYMMDDTHHmmssZ-<context>-<id>.md` (or declared data extension) | UTC, uppercase literal `T`/`Z`, seconds, stable kebab-case context, collision-resistant ID |
+| Existing planning, memory or provider record | Its owning contract's locator | Do not replace its parser, identity or timestamp precision with this default |
+
+`YYYYMMDDTHHmmz-*` is ambiguous: lowercase `z` is not the UTC literal, and minutes alone cannot
+prevent collisions. For the default export profile, use e.g. `20260912T083000Z-checkout-replay-a1b2c3d4.md`.
+A timestamp is an observation locator, never the continuity ID, authority or evidence by itself.
+Create immutable exports with exclusive/no-clobber writes; on collision preserve the existing bytes and
+issue a new ID. Retain full digests and provenance in content. Do not timestamp every guide or ADR.
+
+Use UTF-8, LF, a final newline, ordinary Markdown links and one frontmatter identity mapping as owned by
+[runtime frontmatter](runtime-frontmatter-guidelines.md). Joined product artifacts use
+`doc_type: "PRD-TAD-ADR-MVP-GTM"` and five addressable section roles; guideline modules keep their own types.
+Use `date: "YYYY-MM-DD"` for document dates and RFC 3339 UTC for observation timestamps in content.
+CID/RAO/SVO and exact revisions join artifacts regardless of spelling or casing.
+
+### Reference implementation: existing directory profiles
+
+`agentic-os/guides` retains its established uppercase kebab-case assets, including
+`PRD-TAD-ADR-MVP-GTM.md`; `huijoohwee.github.io/guidelines` retains lowercase kebab-case.
+This is one explicit two-profile convention, not two competing semantic contracts. Case-only renames
+would churn package exports, links and case-insensitive checkouts without improving user outcomes.
+New files follow their destination profile; generated mirrors follow their source owner's manifest.
 
 ## Reference implementation: seven repository profiles
 

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
-date: "2026-09-05"
+version: "1.0.2"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -61,6 +61,9 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 | Token cost / month | [est.] | [budget] | |
 | Monthly TCO | [est.] | [budget] | |
 | ROI Score | — | [threshold] | [sprint] |
+
+### Agent experience assessment (when applicable)
+[Link the maturity rubric revision and one assessment at this continuity ID/revision: four ratings or unassessed, environment, check/result/reference, rationale, gap owner and next check. Keep readiness, WTP and collected revenue separate.]
 
 ### MoSCoW Priority
 [Must / Should / Could / Won't — with ROI score and rationale per tier]

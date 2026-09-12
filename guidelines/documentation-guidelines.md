@@ -1,8 +1,8 @@
 ---
 title: "Documentation Guidelines"
 doc_type: "Guidelines"
-version: "2.2.0"
-date: "2026-09-10"
+version: "2.2.1"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -239,3 +239,5 @@ Owned by [Documentation CID Matrix & Guards Module](./documentation-cid-matrix.m
 ```
 PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Doc-[Section]-[Component]
 ```
+
+Document locators and format follow the [shared naming profile](conventions-and-syntax-guidelines.md#document-locators-and-format); timestamps belong to immutable records, while living owners retain stable links.

@@ -6,10 +6,30 @@ agenticOsDocumentStructureBaselineLock: false
 prd_version: "1.1.0"
 tad_version: "1.1.0"
 status: Enhanced Baseline
-date: 2026-05-25
+date: "2026-09-12"
 source_validation_doc: agentic-graph-animatic-demo.md
 guidelines_ref: guidelines/prd-tad-adr-mvp-gtm-guidelines.md
 doc_type: "PRD-TAD-ADR-MVP-GTM"
+version: "0.1.1"
+lang: "en-US"
+owner: "Product maintainers"
+frontmatter_contract: "required"
+continuity_id: "PLAN-AGENTIC-GRAPH-ANIMATIC-PRD-TAD-ADR-MVP-GTM"
+local_rung: "undocumented"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: false
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
+guideline_revision: "2.7.0"
+guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
+reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_document_version: "0.1.0"
+prd_revision: "0.1.1"
+tad_revision: "0.1.1"
+adr_revision: "0.1.1"
+mvp_revision: "0.1.1"
+gtm_revision: "0.1.1"
 ---
 
 # Agentic Graph Animatic — PRD-TAD-ADR-MVP-GTM
@@ -184,3 +204,30 @@ Owned by [Agentic Graph Animatic Flows & Diagrams Module](./agentic-graph-animat
 ---
 
 *End of document. PRD v1.1.0 · TAD v1.1.0 · Enhanced Baseline 2026-05-25.*
+
+## Planning revision — reference implementation
+
+All five roles below consume `PLAN-AGENTIC-GRAPH-ANIMATIC-PRD-TAD-ADR-MVP-GTM@0.1.1`. Existing source and runtime observations retain their original revisions and scope; this documentation update renews no deployment or demand evidence. The guideline is [v2.7.0](https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md); the shared maturity rubric loads on demand.
+
+| Role | Owning content at this revision |
+|---|---|
+| PRD | [Part 1 — Product Requirements (PRD)](agentic-graph-animatic-prd-tad-adr-mvp-gtm.md#part-1--product-requirements-prd) |
+| TAD | [Part 2 — Technical Architecture (TAD)](agentic-graph-animatic-prd-tad-adr-mvp-gtm-scope.md#part-2--technical-architecture-tad) |
+| ADR | [Architectural Decisions](agentic-graph-animatic-prd-tad-adr-mvp-gtm-decisions.md#architectural-decisions) |
+| MVP | [MVP — reference implementation](agentic-graph-animatic-prd-tad-adr-mvp-gtm.md#mvp--reference-implementation) |
+| GTM | [GTM — reference implementation](agentic-graph-animatic-prd-tad-adr-mvp-gtm.md#gtm--reference-implementation) |
+
+## MVP — reference implementation
+
+Reuse the minimum scope, acceptance conditions and component owners identified above. The demonstration must follow the documented entry, permitted action, durable outcome and readback, including its stated failure/recovery path. Use `npm run check` for its actual coverage and the named feature checks in the specification; attach exact source, command, result and authoring/mirror/delivery surface to each VCC before advancing readiness. A source locator or structural check alone proves no user outcome.
+
+Record the observed steps and elapsed time against the existing TTV target. If no target or invocation is stated, the demonstration remains unverified until the document owner supplies it. All four experience criteria are **unassessed** in this authoring review: Core Requirements & Functionality, Innovation & Theme Alignment, Technical Execution & Integration, and Usefulness & Agentic Experience. No scored user observation is attached to this revision; the document owner must capture a timed pilot and criterion-specific evidence.
+
+## GTM — reference implementation
+
+Use the stated persona and pain hypothesis to test one priced pilot in the existing user environment. Keep the documented free/self-serve workflow as the comparison; additional hosting, channels or agent roles require an evidenced constraint or buyer need. Record the buyer’s workaround, frequency, accepted outcome, offered price, observed response and support minutes before ranking a commercial winner. Demand, collected payment and repeat use remain unvalidated by this documentation review; mechanism evidence keeps its narrower original scope. Measure tokens, cash expense and maintenance separately for each proposed deployment model. Feed actual pilot outcomes into a successor Context using the shared four-column planning record.
+
+## Planning gaps — reference implementation
+
+Source review is bounded to repository `e8d2a10a8d3e5735c43edf350a22523df05fdf91`. No feature implementation artifact was independently bound by this document review; implementation disposition remains **unverified** pending the document owner’s source-to-VCC check.
+Experience observations, current VCC execution and buyer/payment evidence are unverified here. This is a bounded planning update, not a full-guideline conformance verdict; historical conformance percentages above apply only to their recorded profile and revision.

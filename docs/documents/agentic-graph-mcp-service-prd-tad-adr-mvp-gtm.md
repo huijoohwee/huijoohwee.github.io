@@ -1,43 +1,21 @@
 ---
-title: "Agentic Graph MCP Service - PRD-TAD-ADR-MVP-GTM"
-doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.4.27"
-status: "mirror-notice"
-date: "2026-07-11"
+title: "Reference implementation: Agentic Graph MCP Service - PRD-TAD-ADR-MVP-GTM source notice"
+doc_type: "Reference Notice"
+version: "1.0.0"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
+owner: "Documentation navigation"
+status: "mirror-notice"
 canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md"
-parent: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md"
+previous_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_source_sha256: "1a8a09dc32dcb08a282484191075cbcf7aade29fba14058b68762b5a70126979"
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
 ---
 
-# Agentic Graph MCP Service - PRD-TAD-ADR-MVP-GTM
+# Reference implementation: canonical planning source
 
-> **Mirror notice**: canonical SSOT lives in
-> [`agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md).
-> Edit there first; this file exists as a stable publish-side entry in the
-> `huijoohwee.github.io` doc index.
->
-> For current remote MCP onboarding, start with
-> `docs/documents/agentic-graph-mcp-onboarding-index.md`, then use
-> `docs/documents/agentic-graph-mcp-install-contract.md` for the canonical
-> public-discovery vs control-plane endpoint boundary.
-> Map intent on `https://airvio.co/agentic-graph/mcp`, orchestrate agents on
-> `https://airvio.co/agentic-graph/control-plane/mcp` only for session-capable
-> hosts, and prove outcomes first with the source-side `README.md` or
-> `docs/documents/agentic-graph-superagent-harness.md` offline path.
+The [maintained specification](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md) owns this concern. Resolve its continuity ID and exact revision from its content before creating a planning record or evaluating a candidate. This notice owns navigation only; it does not restate product requirements, runtime readiness, deployment topology or commercial claims.
 
-Use the canonical source doc for:
-- implemented MCP baseline and shipped-vs-planned boundaries
-- local stdio, Pages HTTP MCP, WebMCP, and MCP Apps readiness ownership
-- current public install vs control-plane orchestration truth
-- the published template-only `promotionRecovery` operator contract on the shared MCP Apps card
-
-Related publish-side entry points:
-- `docs/documents/agentic-graph-mcp-onboarding-index.md`
-- `docs/documents/agentic-graph-mcp-install-contract.md`
-- `docs/documents/agentic-graph-mcp-install-boundary-release-note-20260710.md`
-
-Published operator surface:
-- `https://airvio.co/agentic-graph/.well-known/mcp/apps/agentic-graph-agent-ready.html`
-  - shared MCP Apps card that advertises `#promotion.retry <path...>` as a template-only published contract
-  - exact path-bearing retry commands still come from browser-local finalize inspection after a real mirroring failure
+The [previous website text](https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/docs/documents/agentic-graph-mcp-service-prd-tad-adr-mvp-gtm.md) remains available at its exact Git revision. The original bytes are identified by `previous_source_sha256`. Existing historical links and evidence do not become current merely because the locator now directs readers to the source owner.

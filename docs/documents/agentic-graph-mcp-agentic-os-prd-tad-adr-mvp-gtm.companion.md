@@ -1,32 +1,21 @@
 ---
-title: "Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion"
-doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.3.1"
-status: "mirror-notice"
-date: "2026-07-11"
+title: "Reference implementation: Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion source notice"
+doc_type: "Reference Notice"
+version: "1.0.0"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
-canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md"
-parent: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.md"
+owner: "Documentation navigation"
+status: "mirror-notice"
+canonical_ssot: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md"
+previous_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_source_sha256: "94685fcf786a8d2e08b78fab161c19594dc3e1c2b99ff8b89ddb2c93b6600c84"
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
 ---
 
-# Agentic Graph MCP Agentic Canvas OS - PRD-TAD-ADR-MVP-GTM Companion
+# Reference implementation: canonical planning source
 
-> **Mirror notice**: canonical SSOT lives in
-> [`agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md`](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-mcp/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md).
-> Edit there first; this file exists as a stable publish-side entry in the
-> `huijoohwee.github.io` doc index.
->
-> For current remote MCP onboarding, start with
-> `docs/documents/agentic-graph-mcp-onboarding-index.md`, then use
-> `docs/documents/agentic-graph-mcp-install-contract.md` for the canonical
-> public-discovery vs control-plane endpoint boundary.
-> Map intent on `https://airvio.co/agentic-graph/mcp`, orchestrate agents on
-> `https://airvio.co/agentic-graph/control-plane/mcp` only for session-capable
-> hosts, and prove outcomes first with the source-side `README.md` or
-> `docs/documents/agentic-graph-superagent-harness.md` offline path.
+The [maintained specification](https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-agentic-os-prd-tad-adr-mvp-gtm.md) owns this concern. Resolve its continuity ID and exact revision from its content before creating a planning record or evaluating a candidate. This notice owns navigation only; it does not restate product requirements, runtime readiness, deployment topology or commercial claims.
 
-Use the canonical source doc for:
-- detailed lane payloads for dashboard runtime, market radar, and browser evidence
-- starter-repo and learning-loop companion contracts
-- follow-on execution links and payload-level guardrails
+The [previous website text](https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/docs/documents/agentic-graph-mcp-agentic-os-prd-tad-adr-mvp-gtm.companion.md) remains available at its exact Git revision. The original bytes are identified by `previous_source_sha256`. Existing historical links and evidence do not become current merely because the locator now directs readers to the source owner.

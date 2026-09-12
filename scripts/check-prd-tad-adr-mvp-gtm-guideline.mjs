@@ -14,12 +14,15 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFrontmatter } from "./lib/git-guidelines/fm-reader.mjs";
 
+import { readMaturityRubric, validateMaturityAssessment } from "./lib/maturity-rubric.mjs";
+
 const dir = "guidelines";
 const read = (name) => readFileSync(join(dir, name), "utf8");
 
 const INDEX = "prd-tad-adr-mvp-gtm-guidelines.md";
 
 const MODULES = [
+  "prd-tad-adr-mvp-gtm-maturity.md",
   "prd-tad-adr-mvp-gtm-codebase-grounding.md",
   "prd-tad-adr-mvp-gtm-economics.md",
   "prd-tad-adr-mvp-gtm-process-flows.md",
@@ -190,3 +193,10 @@ for (const row of grounding.findings) {
 console.log(`PRD/TAD/ADR guideline contract ok (${files.length} files; ${report.join("; ")})`);
 console.log(`Grounding: ${repoIds.length} repositories, ${artifacts} artifacts; ${codebaseRoot === null
   ? "structure checked; source bytes not read" : "exact historical source bytes and declared check names verified"}; no runtime or deployment verdict`);
+
+const rubricText = read("prd-tad-adr-mvp-gtm-maturity.md");
+assert.equal(grounding.rubric_source.owner, "../../guidelines/prd-tad-adr-mvp-gtm-maturity.md");
+assert.match(grounding.rubric_source.sha256, /^[0-9a-f]{64}$/u);
+assert.ok(rubricText.includes(grounding.rubric_source.sha256), "rubric provenance mismatch");
+const maturity = validateMaturityAssessment(readMaturityRubric(rubricText), grounding.maturity, grounding.repositories);
+console.log(`Maturity: ${maturity.assessed}/4 assessed; evidence structure only, no experience or readiness verdict`);

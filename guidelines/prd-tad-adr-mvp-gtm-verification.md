@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.0.2"
-date: "2026-09-05"
+version: "1.0.3"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -221,7 +221,7 @@ Every finding carries exactly six fields:
 | Product-Market Fit | `pain-point-not-validated` | `major` |
 | Demonstration | `missing-demo-beat` | `minor` |
 | Domain-Object Rubric | `overclaimed-rubric-level` | `major` |
-| Domain-Object Rubric | `unresolved-rubric-gap` | `minor` |
+| Domain-Object / Experience Rubric | `unresolved-rubric-gap` | `minor` |
 | Roadmap | `roadmap-reuse-unstated` | `major` |
 | Roadmap | `roadmap-order-unexplained` | `minor` |
 | Roadmap | `roadmap-scope-silently-dropped` | `minor` |
@@ -349,3 +349,5 @@ The regression comparison above is meaningless unless two runs over the same inp
 ---
 
 ---
+
+Experience maturity uses the [rubric assessment contract](prd-tad-adr-mvp-gtm-maturity.md#assessment-contract) and the existing finding types above; no averaged score can discharge the alignment or delivery gate.

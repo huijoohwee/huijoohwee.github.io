@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "2.6.0"
-date: "2026-09-10"
+version: "2.7.0"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -55,7 +55,7 @@ lifecycle_status: "proposed"
 - [Selection Criteria](#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) — bounded Constraints ↔ Argumentation ↔ Outranking for platform/vendor/provider choices
 - [Pain-Point Mapping](#pain-point-to-feature-mapping) — pain-point-to-feature traceability
 - [Demo Skeleton](#demo-skeleton) — bounded demonstration of the acceptance condition
-- [Domain-Object Rubric](#domain-object-rubric-assessment) — evidence-based capability assessment
+- [Domain-Object Rubric](#domain-object-rubric-assessment) — capability ladders and the [four-criterion maturity rubric](./prd-tad-adr-mvp-gtm-maturity.md)
 - [Roadmap](#roadmap) — phased reuse and delta sequencing
 - [Monetization](#monetization) — payer validation and revenue evidence
 - `prd-tad-adr-mvp-gtm-planning-record` — binding MVP/GTM section roles and the four-column task record -> [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md)
@@ -121,6 +121,7 @@ Every rule is exactly one of two classes, and the class decides whether an unmet
 
 ## Markdown YAML Frontmatter Enforcement
 
+- Select stable guide names or immutable timestamped records through the [document naming profile](./conventions-and-syntax-guidelines.md#document-locators-and-format); retain continuity joins through renames.
 - Canonical planning artifacts and their companions use `prd-tad-adr-mvp-gtm` filenames and start with valid YAML frontmatter declaring `doc_type: "PRD-TAD-ADR-MVP-GTM"`; PRD, TAD, ADR, MVP, and GTM remain distinct section roles. Guideline modules retain their guideline document types.
 - Frontmatter is the SSOT for document identity, status, versioning, renderer activation, and reusable metadata referenced by the body specification.
 - Canonical authored PRD/TAD docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with typed wrapper records.
@@ -414,11 +415,11 @@ This section owns the bounded demonstration sequence; one compact flow may satis
 
 ## Domain-Object Rubric Assessment
 
-This section owns rubric assessment. When using a rubric, the PRD or TAD declares or cites its exact levels and named acceptance checks; no universal domain object or external catalog is implied.
+This section binds rubric assessment. The [Agent Experience Maturity module](./prd-tad-adr-mvp-gtm-maturity.md) owns the supplied four-criterion 1–5 matrix, evidence joins and MVP→GTM use. Its independent ratings are separate from the readiness ladder and any product-specific capability ladder.
 
 **Directives**:
 - Identify the product's actual domain object before applying any external leveled capability rubric; forbid scoring against a rubric's supplied example object when the product's own domain object is structurally different
-- Report the attained rubric level as the highest contiguous level whose checks pass, and the next unpassed level as a gap; claiming an aspirational level while a prerequisite is absent is `overclaimed-rubric-level`
+- For a cumulative capability ladder, report the highest contiguous level whose checks pass and the next unpassed level as a gap; for the four-criterion experience rubric, report each evidenced descriptor or `unassessed`; claiming an aspirational level while a prerequisite is absent is `overclaimed-rubric-level`
 - Name the specific blocking component for every unclaimed rung between the current and target level; an unclaimed rung with no stated blocker is an `unresolved-rubric-gap` finding
 - Permit closing a rubric gap by reusing an existing capability from another artifact in this set; require an explicit cross-artifact reference per Division of Work rather than a silent re-implementation
 
@@ -579,7 +580,7 @@ Each entry is the document-scope default `role`/`action`/`outcome` envelope defi
 - **Agent-platform readiness sequences**: Agentic OS visibility → AI Agent discovery → Gateway federation (Must); then spend safety → live orchestration proof → operator UI (Follow-on); forbid proxy duplication and dependency-blind parallel surface work
 - **Pain points ground**: every `Must` feature traces to one named pain point in fixed form, labelled `unvalidated` until an evidence reference exists — a feature with no pain point is unscoped, not merely under-documented
 - **Demo skeletons prove**: a fixed, time-boxed beat table anchors the Reveal beat to the feature's own VCC, so the demonstration shows the acceptance condition holding rather than narrating a claim of it
-- **Domain-object rubrics name**: the product's actual domain object is identified before any external rubric is applied, and the reported level is the lowest not yet cleared — never the highest aspired to
+- **Domain-object rubrics name**: the product's actual domain object is identified before any external rubric is applied, and capability levels report the highest contiguous pass; experience ratings report observed descriptors separately
 - **Roadmaps sequence**: phases order by reuse-adjusted build cost, each stating what it reuses and what is genuinely new; a real, deferred idea is marked `Won't (this increment)`, never silently dropped
 - **Monetization tests**: mechanism evidence, WTP evidence, and collected revenue remain separate; prioritize an existing payer segment and the shortest credible path to its paid outcome
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes — the document-granularity instance of the CID `role`/`action`/`outcome` triad (Directive Grammar (CID))

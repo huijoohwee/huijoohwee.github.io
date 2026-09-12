@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Economics & Time-to-Value Module"
 doc_type: "Guidelines Module"
-version: "1.0.2"
-date: "2026-09-05"
+version: "1.0.3"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -27,6 +27,8 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 ---
 
 ## Solo-Dev AI-Native Orientation
+
+For an MVP→GTM sprint, use the [maturity assessment handoffs](prd-tad-adr-mvp-gtm-maturity.md#mvp-to-gtm-use) alongside pain/WTP and time-to-first-dollar. Quality ratings never substitute for demand.
 
 ### Five Compounding Lenses
 

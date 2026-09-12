@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Readiness & Lane Topology Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
-date: "2026-09-05"
+version: "1.0.2"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -53,7 +53,7 @@ undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-v
 - Assign exactly one rung per capability; forbid ranges, hedges, and compound values such as "mostly runtime-ready"
 - Derive every rung from Evidence References only; forbid deriving a rung from a file name, a directory layout, a downstream mirror, or a narrative claim
 - Report **local readiness** and **delivered readiness** as two separate fields; forbid one status field that blends them (`blended-status`)
-- Treat the ladder as monotone under evidence: adding an Evidence Reference while retaining every existing one must never lower a rung; a drop under added evidence is a defect in the derivation, not a status change
+- Added satisfying evidence cannot lower a rung while scope and all evidence remain valid. A failure, expiry, revoked authority or changed criterion requires re-derivation; historical success cannot override a current blocker. Experience ratings use the separate [maturity rubric](prd-tad-adr-mvp-gtm-maturity.md), never this status vocabulary
 - Never skip a rung: `production-verified` requires the `runtime-ready` condition to hold first
 - A claim of `runtime-ready` with any unproven VCC is an `unproven-claim` at `blocker` severity; a claim of `production-verified` with no referenced operator promotion instruction is an `ungated-promotion`
 - Re-derive every rung whenever acceptance criteria or VCCs change (see Phase 4); a stale rung produces a false completion

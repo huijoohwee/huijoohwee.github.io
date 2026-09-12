@@ -1,8 +1,8 @@
 ---
 title: "PRD-TAD-ADR-MVP-GTM Codebase Grounding - Reference Implementation"
 doc_type: "Guidelines Companion"
-version: "1.1.0"
-date: "2026-09-09"
+version: "1.2.0"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -14,7 +14,7 @@ schema: "prd-tad-adr-codebase-grounding/v1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 ---
 # Codebase grounding - reference implementation
 
@@ -82,7 +82,7 @@ No monetary savings, demand or production claim follows merely from a ranking or
 
 ## Findings and integration - reference implementation
 
-The snapshot records bounded source claims and unresolved delivery/demand claims. Their dispositions
+The refreshed 2026-09-12 snapshot records bounded source claims and unresolved delivery/demand claims. Their dispositions
 apply to its exact revisions, not future HEADs. It is not an exhaustive guideline conformance ratio or
 a production verdict. Git history retains the preceding snapshot and its then-unresolved corrections.
 
@@ -108,3 +108,52 @@ For available local clones, `node scripts/check-prd-tad-adr-mvp-gtm-guideline.mj
 also verifies all recorded artifacts against the exact Git revisions, without executing their code,
 fetching remotes, starting services or altering worktrees. Historical revision verification does not
 establish current HEAD or deployment freshness; reacquire those at the consuming transition.
+
+## Experience and first dollar — reference implementation
+
+Apply the [maturity rubric](prd-tad-adr-mvp-gtm-maturity.md) to the existing commerce slice.
+The snapshot owns exact source pins and digests; this table maps the four criteria to reusable code
+and named checks. It is a check plan, not a scored product review.
+
+| Criterion | Source owner and useful validation | Evidence still needed to rate the experience |
+|---|---|---|
+| Core Requirements & Functionality | Commerce `src/core/checkout-finalization.ts`, `test/e2e/dev-paid-loop.spec.ts`; `test:e2e:dev` | Observed entry-to-receipt/readback loop in the selected environment, including retries |
+| Innovation & Theme Alignment | Commerce `src/local-first/checkout.ts` and existing merchant/storefront flow | Prospect comparison against today's workaround; explain why context and permitted actions help |
+| Technical Execution & Integration | Canvas admission and lazy `tool-search.js`; `commerce-admission-provider:check`, `tool-search:check`; Graph payment/release owners | Exact deployed identity, isolation, spend limits, failure/recovery and concurrency evidence |
+| Usefulness & Agentic Experience | Commerce demand verifier and `docs/prd-tad-adr-mvp-gtm-handoff.md`; demand verifier tests | Priced prospect walkthrough, accepted outcome and repeat use; synthetic signatures cannot establish WTP |
+
+Follow the existing Commerce sprint rather than launching another backlog: a bounded merchant/storefront
+setup and activation is a candidate first-dollar service. Record the reachable buyer's workaround,
+frequency, economic cost and offered price before claiming high WTP. Prefer this existing slice only if
+its observed buyer evidence outranks alternatives; the current snapshot selects no commercial winner.
+The next useful transition is a priced pilot and timed demonstration, followed by collected payment and
+support-cost evidence. Marketplace take-rate expansion and additional agent roles wait for that evidence.
+
+Current Commerce handoff records a protected public **sandbox** release and synthetic settlement.
+That is a newer observation than its retained 2026-09-09 blocked Dev-loop history. It still explicitly
+reports `realMoney:false`; neither a test payment nor sandbox deployment proves actual revenue,
+independently evaluated production payment, or demand. Consult the exact source-bound handoff before
+repeating a historical blocker as current fact.
+
+For this reference implementation, inspect
+[commerce-agents at the recorded revision](https://github.com/anthropics/commerce-agents/blob/fd4d59224ab96b43c6dc6888207c67b3bd5a24cf/README.md)
+for shopping/merchant responsibility boundaries and staged effects. Its demo does not place orders or
+charge cards. Reuse the local owners above; no reference code, SDK or package is copied or installed.
+
+Cloudflare, GitHub and Podman remain reference stack preferences under the project's cost/license and
+runtime gates. [Cloudflare Wallets documentation](https://developers.cloudflare.com/wallets/) checked
+2026-09-12 exposes handle reservation; a reserved handle cannot yet hold, send or receive funds.
+Keep Wallets a deferred provider option until account eligibility, a usable API, cost and payment
+acceptance evidence are available. Preserve existing payment adapters and do not invent a Wallets SDK.
+
+The requested route chain remains source-owned: Graph `dev:apex` (apex preview) / `dev` → generated
+`huijoohwee/agentic-graph` → Cloudflare `airvio.co`, `/agentic-commerce-os/`, `/agentic-graph`.
+Graph release/sync code and the mirror acceptance contract supply the topology checks; the Commerce
+sandbox route has its own owner evidence. Do not infer that all three URLs share one release or patch
+mirror assets to manufacture agreement. Source-only validation here leaves route equivalence unverified.
+
+Local recheck on 2026-09-12: Commerce checkout-finalization and demand-verifier suites passed 11 tests
+at the snapshot revision. `npm run test:e2e:dev` stopped before artifact creation with
+`podman_workerd_override_required`. Supply a matching-platform workerd verified against its build receipt
+through the existing `MINIFLARE_WORKERD_PATH` contract before rerunning. This host result neither invalidates
+the historical protected sandbox release nor proves the current full Dev loop.

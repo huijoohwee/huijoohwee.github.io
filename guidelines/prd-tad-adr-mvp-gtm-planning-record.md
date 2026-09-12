@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR MVP→GTM Planning Record Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-09-10"
+version: "1.0.1"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Planning record contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.6.0"
+parent_version: "2.7.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---

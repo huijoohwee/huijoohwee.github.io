@@ -1,17 +1,29 @@
 ---
 title: "Agentic Graph Animatic Epics & User Stories Module"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.0.0"
-date: "2026-08-20"
+version: "0.1.1"
+date: "2026-09-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
-universal_scope: "true"
+universal_scope: false
 parent: "Agentic Graph Animatic PRD/TAD"
 parent_version: "1.0.0"
+continuity_id: "PLAN-AGENTIC-GRAPH-ANIMATIC-PRD-TAD-ADR-MVP-GTM"
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
+guideline_revision: "2.7.0"
+guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
+reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_document_version: "1.0.0"
+prd_revision: "0.1.1"
+tad_revision: "0.1.1"
+adr_revision: "0.1.1"
+mvp_revision: "0.1.1"
+gtm_revision: "0.1.1"
 ---
 
 # Agentic Graph Animatic Epics & User Stories Module
@@ -542,3 +554,7 @@ to verify every runtime interaction **so that** acceptance is deterministic and 
 | Manual browser checks required       | Unknown  | 0      | v1.0     |
 
 ---
+
+## Planning continuity — reference implementation
+
+This size/ownership companion consumes `PLAN-AGENTIC-GRAPH-ANIMATIC-PRD-TAD-ADR-MVP-GTM@0.1.1` with [the five-role owner](agentic-graph-animatic-prd-tad-adr-mvp-gtm.md#planning-revision--reference-implementation). Requirements, architecture and decisions remain in their linked owners; MVP and GTM consume them. Historical source checks retain their recorded revision, environment and coverage; this documentation revision renews no readiness, experience rating or paid-demand evidence.

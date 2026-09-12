@@ -1,15 +1,28 @@
 ---
 title: "Knowledge-Base SSOT Storage Projection"
-doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.0.0"
+doc_type: "Projection Contract"
+version: "1.0.1"
 status: "active"
-date: "2026-08-05"
+date: "2026-09-12"
 lang: "en-US"
 owner: "cross-repo knowledge storage docs"
 frontmatter_contract: "required"
 source_repository: "huijoohwee/agentic-graph"
 source_revision: "9a8e4b8221e85102cc1f7fab9fc5d9716fb5c83a"
 source_document: "docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md"
+continuity_id: "PLAN-KNOWLEDGE-BASE-SSOT-STORAGE-PROJECTION"
+local_rung: "undocumented"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: false
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
+guideline_revision: "2.7.0"
+guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
+reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_document_version: "1.0.0"
+gtm_revision: "1.0.1"
+planning_source: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-storage-sync-prd-tad-adr-mvp-gtm.md"
 ---
 
 # Knowledge-Base SSOT Storage Projection
@@ -102,3 +115,7 @@ Fetch frontmatter and projection metadata before document bodies, batch provider
 
 This is a documentation-only recommendation. It does not evidence remote Lark discovery, event verification, write-back, Cloudflare database mutation, deployment, or production readiness. Those remain closed until source-backed implementation and focused verification exist.
 
+
+## Source role - reference implementation
+
+This stable guide owns the projection contract above. Its content is a projection contract, not a competing combined product plan. The `planning_source` locator identifies the product owner; consume its declared continuity and exact revision before deriving work. Historical implementation observations are unchanged and supply no current production or buyer evidence.

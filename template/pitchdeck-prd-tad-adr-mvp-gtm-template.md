@@ -8,6 +8,9 @@ lang: "{{template_inputs.language}}"
 $schema: "agentic-os-pipeline/v1"
 
 template_inputs:
+  continuity_id: "[Stable project continuity ID]"
+  worktree_id: "[Authoring worktree]"
+  agent_id: "[Authoring agent or human]"
   project_name: "[Project Name]"
   subtitle: "[One-line product promise]"
   date: "[YYYY-MM-DD]"
@@ -316,6 +319,22 @@ flow:
     - {id: e-image-output, source: w-image-keyvisual, sourceHandle: imageUrl, target: p-image-keyvisual, targetHandle: imageUrl, label: "imageUrl -> imageUrl", animated: true}
     - {id: e-image-to-video-ref, source: w-image-keyvisual, sourceHandle: imageUrl, target: w-video-cut, targetHandle: reference_image, label: "imageUrl -> reference_image", animated: true}
     - {id: e-video-output, source: w-video-cut, sourceHandle: videoUrl, target: p-video-cut, targetHandle: videoUrl, label: "videoUrl -> videoUrl", animated: true}
+version: "{{template_inputs.version}}"
+template_version: "1.1.0"
+continuity_id: "{{template_inputs.continuity_id}}"
+owner: "{{template_inputs.owner}}"
+local_rung: "undocumented"
+delivered_rung: "undocumented"
+lane: "authoring"
+universal_scope: false
+worktree_id: "{{template_inputs.worktree_id}}"
+agent_id: "{{template_inputs.agent_id}}"
+guideline_revision: "2.7.0"
+prd_revision: "{{template_inputs.version}}"
+tad_revision: "{{template_inputs.version}}"
+adr_revision: "{{template_inputs.version}}"
+mvp_revision: "{{template_inputs.version}}"
+gtm_revision: "{{template_inputs.version}}"
 ---
 
 # {{template_inputs.project_name}}
@@ -521,3 +540,15 @@ Add new provider or model values through shared SSOT, not per-document ad hoc ke
 | Neutrality | All values remain placeholders or generic defaults. |
 | Reusability | No project-only story, provider lock, or demo asset sneaks into the template. |
 | Render contract | Rich Media Panel is the only canonical final render surface. |
+
+## ADR
+
+Record the material choice that implements the TAD at this continuity revision: constraints, chosen option, best feasible FOSS alternative, evidence, consequences and recovery condition. An unresolved choice stays proposed; no template value is a decision or authorization.
+
+## MVP
+
+Select the smallest dependency-closed Must slice from the PRD. Link each criterion to its TAD owner and named VCC check; record exact source, result and surface. Demonstrate entry, permitted action, durable outcome, readback and failure recovery against a stated TTV target. All four experience criteria start unassessed until a timed user observation supports a rating.
+
+## GTM
+
+Name one reachable payer and their current workaround. Record one priced offer, observed response, accepted outcome, actual payment and support cost separately. Compare the free/self-serve path before adding hosted infrastructure. WTP, revenue and repeat use start unvalidated. Append pilot findings as a successor Context linked to this artifact revision.

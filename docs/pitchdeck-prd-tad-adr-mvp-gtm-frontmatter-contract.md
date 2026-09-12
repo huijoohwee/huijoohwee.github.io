@@ -1,16 +1,24 @@
 ---
 title: "Pitchdeck PRD TAD Frontmatter Contract"
-doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.0.0"
-date: "2026-09-11"
+doc_type: "Template Contract"
+version: "1.0.1"
+date: "2026-09-12"
 lang: "en-US"
 owner: "Documentation maintainers"
 local_rung: "undocumented"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "prd-tad-adr-mvp-gtm-alignment"
-agent_id: "codex"
+worktree_id: "device-cba000d3779d--planning-v27"
+agent_id: "codex-01a0940a"
+frontmatter_contract: "required"
+continuity_id: "PLAN-PITCHDECK-PRD-TAD-ADR-MVP-GTM-FRONTMATTER-CONTRACT"
+guideline_revision: "2.7.0"
+guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
+reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
+previous_document_version: "1.0.0"
+gtm_revision: "1.0.1"
+planning_source: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md"
 ---
 
 # Pitchdeck PRD TAD Frontmatter Contract
@@ -75,3 +83,7 @@ It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph
 | `template/pitchdeck-prd-tad-adr-mvp-gtm-template.md` | Full template source |
 | `docs/agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md` | Broader AGENTIC_OS pipeline contract reference |
 | `../agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |
+
+## Source role - reference implementation
+
+This stable guide owns template authoring bindings above. Its content is a template contract, not a competing combined product plan. The `planning_source` locator identifies the product owner; consume its declared continuity and exact revision before deriving work. Historical implementation observations are unchanged and supply no current production or buyer evidence.

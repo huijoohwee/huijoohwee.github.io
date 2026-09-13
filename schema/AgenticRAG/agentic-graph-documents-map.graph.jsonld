@@ -4946,6 +4946,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:launch-copilot-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "launch-copilot-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/launch-copilot-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/launch-copilot-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:markdown-convertible-agent-discovery-document",
       "@type": "kg:Node",
       "labels": [

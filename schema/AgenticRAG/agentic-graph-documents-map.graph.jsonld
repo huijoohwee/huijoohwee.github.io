@@ -1538,6 +1538,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-ci-evidence-reuse",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-ci-evidence-reuse.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-ci-evidence-reuse.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-ci-evidence-reuse.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-cloudflare-document",
       "@type": "kg:Node",
       "labels": [

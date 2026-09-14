@@ -44,6 +44,10 @@ make these checks ineligible for cached success reuse.
 
 ## MVP
 
+PR CI keeps its explicit head and branch identity. It materializes the exact
+provider revision when absent, allowing the shared verifier to check its base/head
+parents independently of optional merge metadata in the PR webhook.
+
 The broad fallback covers all six original test groups exactly once. Validate the
 policy with the shared selector, check script/CI reachability, then run the existing
 checks on the pinned candidate and require `adlc-policy-contract` in protected CI.

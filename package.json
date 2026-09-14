@@ -17,7 +17,7 @@
     "git-guidelines:test": "node --test scripts/__tests__/*.test.mjs scripts/__pbt__/*.test.mjs",
     "commerce:contract:check": "node scripts/check-commerce-contracts.mjs",
     "guideline:check": "npm run commerce:contract:check && npm run guideline:budget:check && npm run adlc:policy:check && npm run prd-tad-adr-mvp-gtm:policy:check && npm run diagram:canvas:check",
-    "test": "npm run planning:check && npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
+    "test": "node node_modules/agentic-os/bin/agentic-os-validation.mjs run",
     "diagram:canvas:check": "node scripts/check-diagram-canvas-render.mjs guidelines",
     "prd-tad-adr-mvp-gtm:policy:check": "node scripts/check-prd-tad-adr-mvp-gtm-guideline.mjs",
     "guideline:budget:check": "node scripts/check-guideline-file-budget.mjs",
@@ -26,7 +26,11 @@
     "land": "agentic-os land",
     "status": "agentic-os status",
     "reap": "agentic-os reap",
-    "planning:check": "node --test __tests__/planning-context-record-contract.test.mjs __tests__/kanban-projection.test.mjs __tests__/planning-migration.test.mjs __tests__/planning-naming.test.mjs"
+    "planning:check": "node --test __tests__/planning-context-record-contract.test.mjs __tests__/kanban-projection.test.mjs __tests__/planning-migration.test.mjs __tests__/planning-naming.test.mjs",
+    "test:source": "npm run planning:check && npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
+    "check:plan": "node node_modules/agentic-os/bin/agentic-os-validation.mjs plan",
+    "check:ci": "node node_modules/agentic-os/bin/agentic-os-validation.mjs ci",
+    "test:all": "node node_modules/agentic-os/bin/agentic-os-validation.mjs run --all --fresh"
   },
   "repository": {
     "type": "git",
@@ -41,7 +45,7 @@
   },
   "homepage": "https://github.com/huijoohwee/huijoohwee.github.io#readme",
   "devDependencies": {
-    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/13c3839aba7fc64bf94f93aa29b1239ab929840d",
+    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/9f5973dbd85d861c8346a885254efdf1a69669bc",
     "fast-check": "3.23.2",
     "js-yaml": "4.3.1"
   }

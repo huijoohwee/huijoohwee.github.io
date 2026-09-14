@@ -1,0 +1,113 @@
+{
+  "schema": "agentic-os/repository-validation-policy/v1",
+  "repository": "github.com/huijoohwee/huijoohwee.github.io",
+  "broadInputs": [
+    ".github/",
+    ".agentic-os.json"
+  ],
+  "always": [
+    "evaluators",
+    "naming"
+  ],
+  "fallback": [
+    "planning",
+    "guidelines",
+    "git-contracts",
+    "guideline-map",
+    "naming",
+    "evaluators"
+  ],
+  "checks": [
+    {
+      "id": "planning",
+      "command": [
+        "npm",
+        "run",
+        "planning:check"
+      ],
+      "inputs": [
+        "__tests__/",
+        "scripts/",
+        "data/",
+        "todo-log.md"
+      ],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    },
+    {
+      "id": "guidelines",
+      "command": [
+        "npm",
+        "run",
+        "guideline:check"
+      ],
+      "inputs": [
+        "guidelines/",
+        "docs/",
+        "scripts/"
+      ],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    },
+    {
+      "id": "git-contracts",
+      "command": [
+        "npm",
+        "run",
+        "git-guidelines:test"
+      ],
+      "inputs": [
+        "guidelines/",
+        "docs/",
+        "scripts/",
+        "schema/",
+        "template/"
+      ],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    },
+    {
+      "id": "guideline-map",
+      "command": [
+        "npm",
+        "run",
+        "agenticrag:guidelines-map:check"
+      ],
+      "inputs": [
+        "guidelines/",
+        "schema/",
+        "scripts/"
+      ],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    },
+    {
+      "id": "naming",
+      "command": [
+        "npm",
+        "run",
+        "agentic-naming:check"
+      ],
+      "inputs": [],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    },
+    {
+      "id": "evaluators",
+      "command": [
+        "npm",
+        "run",
+        "evals"
+      ],
+      "inputs": [],
+      "requires": [],
+      "reuse": "never",
+      "timeoutMs": 240000
+    }
+  ]
+}

@@ -25,11 +25,15 @@ jobs:
         env:
           REVIEW_BRANCH: ${{ github.head_ref }}
           REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+          PROVIDER_REVISION: ${{ github.sha }}
         run: |
           git check-ref-format --branch "$REVIEW_BRANCH"
           test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
           git checkout -B "$REVIEW_BRANCH" "$REVIEW_SHA"
           test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
+          # The shared verifier binds the provider revision to both event parents.
+          # An explicit head checkout may not have fetched the synthetic merge.
+          git cat-file -e "$PROVIDER_REVISION^{commit}" || git fetch --no-tags origin "$PROVIDER_REVISION"
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22

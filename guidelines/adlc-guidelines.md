@@ -25,7 +25,7 @@ lifecycle_status: "proposed"
 - **Complementary**: this set owns **execution**. Authoring — what a PRD, TAD, or ADR must contain, the Readiness Ladder, the Rule ID scheme, and the authoring-domain finding vocabulary — is owned by the **PRD, TAD & ADR Guidelines** companion set. This set does not restate those rules; it names them and consumes them.
 - **Adaptive**: rules scale their evidence to the size and kind of the change, and the artifact chain may collapse or reorder its phases, but a rule never adapts away the obligation it encodes. Scaling evidence is conformant; eliding a coverage obligation, a bound, an independent verdict, or a gate is not.
 - **Autonomous**: after the Operator supplies an objective, scope, bounds, and the capabilities needed to act, the Orchestrator continues through every safe, in-scope, dependency-ready step without requesting clerical confirmation. It derives and transports machine tokens, digests, commands, retries, and idempotent continuations internally. Autonomy never invents a missing product choice, widens scope or capability, crosses a promotion boundary, or authorizes a new irreversible effect.
-**Reference implementation**: [Agentic OS ADLC](https://github.com/huijoohwee/agentic-os/blob/main/docs/adlc-guidelines.md) owns its lifecycle controller; consumers retain product and target policy and reference its start/release workflows. This guideline defines contracts, not another controller.
+**Reference implementation**: this repository's lean from-0-to-1 operator chain is [`START-WORKFLOW`](../docs/START-WORKFLOW.md) → [`RELEASE-WORKFLOW`](../docs/RELEASE-WORKFLOW.md) → [`DEPLOY-WORKFLOW`](../docs/DEPLOY-WORKFLOW.md). The shared [Agentic OS ADLC](https://github.com/huijoohwee/agentic-os/blob/main/docs/adlc-guidelines.md) remains the execution engine behind those steps; this guideline defines contracts, not another controller.
 ## Module Index
 - `scope--neutrality-contract` — universality, neutrality, agnosticity, modularity, enforceability, complementarity rules
 - `boundary-with-the-authoring-set` — what this set owns, what it consumes, and where the seam sits
@@ -83,6 +83,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 - Name the companion set wherever a rule crosses the seam; forbid an execution rule that silently assumes an authoring rule the reader has not been pointed at
 - Apply the Artifact Continuity companion and shared [CID/RAO/SVO grammar](./cid-guidelines.md) to each authoring-to-execution handoff; forbid parallel schemas or dispatch from an unjoined or stale lineage
 - Close execution with a verified Integration Receipt before invoking a release controller; forbid an Implementer task from preparing, authorizing, or deploying a release
+- Keep the operator path externally simple: start one lane, release one exact candidate, then deploy one exact protected `main` revision; if Dev and Prod are distinct, keep both inside one deploy workflow and name their separate receipts there
 ## Agent Roles & Independence
 Four execution roles. Roles are **functions**, not people and not necessarily separate processes — except where the independence rule says otherwise.
 | Role | Owns | Must not |
@@ -162,7 +163,6 @@ Actor ID + Device ID + Session ID + Worktree ID + Branch ID + Scope ID + Lease E
 - Retain or remove temporary branches according to the declared profile and exact authorized cleanup receipt; verified integration, canonical parity, and value closure establish eligibility, never implicit deletion authority
 ### Granularity
 A well-sized task follows the universal minimum-time-and-resource / maximum-core-value chain: `highest-ranked baselined core VCC (or coherent group) → smallest dependency-closed mandatory obligation set → narrowest sufficient mechanism → independent verification → stop or select the next ranked core VCC`, within one per-task budget.
-
 **What "highest-ranked" resolves against**: consume the authoring set's pain point → solution → feature → monetization order: validated pain and evidenced willingness-to-pay (WTP), the nearest reusable solution, and the shortest credible path to a first paid outcome. A prospective payer or price signal is not collected revenue. For equally-ready candidates, reuse its bounded **Constraints ↔ Argumentation ↔ Outranking** pipeline:
 1. **Constraints** exclude violations of stated hard bounds before comparison; arguments or scores cannot waive a failed bound.
 2. **Outranking** preserves partial orders and eliminates a dominated candidate when another is no worse on every relevant criterion and strictly better on at least one; other methods consume the authoring contract's recorded relation.

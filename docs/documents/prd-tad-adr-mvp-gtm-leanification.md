@@ -85,7 +85,7 @@ re-observed against the scoped revision above.
 | G17 | Canonical commit and push are refused by default | `src/guard-main.mjs` `blocked-canonical-authoring` | confirmed |
 | G18 | Canonical write exists only as an override | `AGENTIC_OS_ALLOW_CANONICAL_WRITE=1` | confirmed |
 | G19 | Release start requires a lane worktree | `docs/START-WORKFLOW.md`, `docs/RELEASE-WORKFLOW.md` | confirmed |
-| G20 | Cleanup retains by default; quarantine is not prune | `.agentic-os.json` `cleanup.*: retain`, `docs/LIFECYCLE-COMPLETION.md` | confirmed |
+| G20 | Cleanup now aligns to quarantine-by-profile; quarantine is not prune | `.agentic-os.json` `cleanup.worktree*: quarantine`, `docs/LIFECYCLE-COMPLETION.md` | confirmed |
 | G21 | Required CI jobs are `test` and `budgets`; `merge_group` is required | `.github/workflows/ci.yml` | confirmed |
 | G22 | Profile selects squash-preferred pull-request integration | `.agentic-os.json` `capabilities` | confirmed |
 | G23 | Runtime and release authority are consumer-owned | `.agentic-os.json` `authority` | confirmed |
@@ -106,9 +106,9 @@ about two seconds (G10); the cost is authored bytes, not CPU.
 
 **Ceremony tax.** Every change, including one actor with no concurrent writer, must open a lane
 worktree (G17, G19). Canonical is a read-only observation surface. After protected integration,
-cleanup retains the worktree (G20). The operator then still has to fast-forward canonical to
-`origin/main`. That is the right path when writers can collide or the branch is protected. It is
-the wrong default when they cannot.
+cleanup now quarantines the worktree instead of retaining it (G20). The operator then still has to
+fast-forward canonical to `origin/main`. That is the right path when writers can collide or the
+branch is protected. It is the wrong default when they cannot.
 
 A density rule already applies to consumers: a gate that narrows no observed failure and shortens
 no time-to-first-dollar does not earn its place. Apply it to the harness.
@@ -467,8 +467,9 @@ proof still required before prune; no new module.
 | C. Check → merge PR → prune → ff `origin/main` → Dev → Prod | pass |
 | D. Quarantine instead of prune | pass as profile option, not the lean default |
 
-**Decision.** Adopt C as the documented happy path. Keep A as named diagnostics. D remains selectable
-via `cleanup.*: retain|quarantine`. Prune is opt-in on the profile, not silent deletion.
+**Decision.** Adopt C as the documented happy path. Keep A as named diagnostics. D is now the
+committed consumer profile via `cleanup.worktree*: quarantine`; prune remains opt-in on the profile,
+not silent deletion.
 
 **Consequences.** Positive: fewer operator commands; worktrees do not accumulate. Negative: prune
 destroys a convenient checkout; recovery refs must remain if the profile asks. Rollback: revert

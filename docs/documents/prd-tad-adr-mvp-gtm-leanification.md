@@ -76,8 +76,8 @@ re-observed against the scoped revision above.
 | G8 | 37 guides totalling 531,744 bytes | `git ls-files 'guides/*.md'` at v1.0 | confirmed |
 | G9 | 46 npm scripts are declared | `package.json` `scripts` at v1.0 | confirmed |
 | G10 | Evaluators cost ~2.1s; selection ~1.5s | timed `evals`, `check:plan` at v1.0 | confirmed |
-| G11 | Three consumers pin three distinct revisions | `c86bc780`, `69c86981`, `047e7240` at v1.0 | confirmed |
-| G12 | One evaluator gate fails | `evals` → `docs/INVOCATION.md:5` at v1.0 | confirmed |
+| G11 | Distinct consumer pins | three revisions at v1.0 | confirmed → **converged locally** to `c99988c7bcd7ef3c8c6a68428af4750e5b7a09cd` (2026-09-20); merge pending per consumer PR |
+| G12 | One evaluator gate fails | `evals` → `docs/INVOCATION.md:5` at v1.0 | **superseded** — green at `c99988c7` / `6b8a91a` |
 | G13 | Migration subpaths exist | `package.json` `./compat/*` | confirmed |
 | G14 | A pin drift detector exists | `agentic-os pin --consumer` | confirmed |
 | G15 | Every export is load-bearing somewhere | not measured at consumer revisions | unverified |

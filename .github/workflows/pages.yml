@@ -60,8 +60,8 @@ jobs:
         env:
           CANDIDATE_SHA: ${{ inputs.candidate_sha }}
           EXPECTED_CHECK_APP_ID: "15368"
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "0d58f096dffbaedf2516c42ce485675523a20e88b4e405ad13d9750cc8bd7796"
           GH_TOKEN: ${{ github.token }}
         run: |
           canonical_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
@@ -97,7 +97,7 @@ jobs:
               and ([.rules[] | select(.type == "required_status_checks")] | length) == 1
               and ([.rules[] | select(.type == "required_status_checks")][0].parameters
                 == {
-                  strict_required_status_checks_policy: true,
+                  strict_required_status_checks_policy: false,
                   do_not_enforce_on_create: false,
                   required_status_checks: [{context: "adlc-policy-contract", integration_id: $app_id}]
                 })
@@ -369,8 +369,8 @@ jobs:
           EXPECTED_CHECK_APP_ID: "15368"
           EXPECTED_PAGE_URL: https://huijoohwee.github.io/
           EXPECTED_POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
-          EXPECTED_RULESET_ATTESTATION_DIGEST: "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8"
-          EXPECTED_RULESET_SEMANTIC_DIGEST: "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7"
+          EXPECTED_RULESET_ATTESTATION_DIGEST: "112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054"
+          EXPECTED_RULESET_SEMANTIC_DIGEST: "0d58f096dffbaedf2516c42ce485675523a20e88b4e405ad13d9750cc8bd7796"
           PAYLOAD_MANIFEST_DIGEST: ${{ needs.build.outputs.payload_manifest_digest }}
           PROVIDER_ARTIFACT_ID: ${{ needs.build.outputs.provider_artifact_id }}
           WORKFLOW_SHA: ${{ github.workflow_sha }}
@@ -425,7 +425,7 @@ jobs:
               and ([.rules[] | select(.type == "required_status_checks")] | length) == 1
               and ([.rules[] | select(.type == "required_status_checks")][0].parameters
                 == {
-                  strict_required_status_checks_policy: true,
+                  strict_required_status_checks_policy: false,
                   do_not_enforce_on_create: false,
                   required_status_checks: [{context: "adlc-policy-contract", integration_id: $app_id}]
                 })

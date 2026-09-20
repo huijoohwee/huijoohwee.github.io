@@ -84,7 +84,7 @@ test("Pages policy gates attest normalized semantics and reject security drift",
       fixture.execute(deployGate);
       assert.match(
         readFileSync(fixture.output, "utf8"),
-        /policy_digest=0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8/u,
+        /policy_digest=112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054/u,
       );
     }
 
@@ -117,7 +117,7 @@ test("Pages policy gates attest normalized semantics and reject security drift",
       detail => { detail.rules.find(rule => rule.type === "pull_request")
         .parameters.required_review_thread_resolution = false; },
       detail => { detail.rules.find(rule => rule.type === "required_status_checks")
-        .parameters.strict_required_status_checks_policy = false; },
+        .parameters.strict_required_status_checks_policy = true; },
       detail => { detail.rules.find(rule => rule.type === "required_status_checks")
         .parameters.required_status_checks[0].context = ["agentic", "sdlc", "policy", "contract"].join("-"); },
       detail => { detail.rules.find(rule => rule.type === "required_status_checks")
@@ -348,7 +348,7 @@ function createPolicyGateFixture() {
         parameters: {
           do_not_enforce_on_create: false,
           required_status_checks: [{ context: "adlc-policy-contract", integration_id: 15368 }],
-          strict_required_status_checks_policy: true,
+          strict_required_status_checks_policy: false,
         },
       },
     ],
@@ -395,7 +395,7 @@ esac
     DISPATCH_REF: "refs/heads/main", DISPATCH_REF_PROTECTED: "true", DISPATCH_SHA: candidateSha,
     EFFECTIVE_RULES_PATH: effectivePath, EXPECTED_CHECK_APP_ID: "15368",
     EXPECTED_PAGE_URL: "https://huijoohwee.github.io/",
-    EXPECTED_POLICY_DIGEST: "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8",
+    EXPECTED_POLICY_DIGEST: "112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054",
     GH_TOKEN: "fixture-token", GITHUB_OUTPUT: output,
     GITHUB_REPOSITORY: repository, GITHUB_STEP_SUMMARY: summary,
     PAGES_CONFIG_PATH: pagesConfigPath, PATH: `${fakeBin}:${process.env.PATH}`,

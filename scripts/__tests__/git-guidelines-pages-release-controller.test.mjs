@@ -106,16 +106,16 @@ test("Pages delivery authenticates one exact protected candidate and attests pol
   assert.equal(canonical.env.EXPECTED_RULESET_UPDATED_AT, undefined);
   assert.equal(canonical.env.EXPECTED_RULESET_STATE_DIGEST, undefined);
   assert.equal(canonical.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
-    "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7");
+    "0d58f096dffbaedf2516c42ce485675523a20e88b4e405ad13d9750cc8bd7796");
   assert.equal(canonical.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
-    "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8");
+    "112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054");
   assert.match(canonical.run, /git\/ref\/heads\/main/u);
   assert.match(canonical.run, /test "\$canonical_sha" = "\$CANDIDATE_SHA"/u);
   assert.match(canonical.run, /rules\/branches\/main\?per_page=100/u);
   assert.match(canonical.run, /expected one active repository ruleset/u);
   assert.match(canonical.run, /rulesets\/\$ruleset_id\?includes_parents=false/u);
   assert.match(canonical.run, /agentic-github-ruleset-semantic-attestation\/v1/u);
-  assert.match(canonical.run, /strict_required_status_checks_policy: true/u);
+  assert.match(canonical.run, /strict_required_status_checks_policy: false/u);
   assert.match(canonical.run, /\.app\.slug == "github-actions"/u);
   assert.match(canonical.run, /\.github\/workflows\/guideline-contract\.yml/u);
   assert.match(canonical.run, /test "\$policy_digest" = "\$EXPECTED_RULESET_ATTESTATION_DIGEST"/u);
@@ -170,9 +170,9 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   const preflight = deploy.steps[preflightIndex];
   assert.equal(preflight.env.EXPECTED_PAGE_URL, "https://huijoohwee.github.io/");
   assert.equal(preflight.env.EXPECTED_RULESET_SEMANTIC_DIGEST,
-    "dba5b27df7d5659765db801d62ad128da92a82539642db937b9d28e73ee35af7");
+    "0d58f096dffbaedf2516c42ce485675523a20e88b4e405ad13d9750cc8bd7796");
   assert.equal(preflight.env.EXPECTED_RULESET_ATTESTATION_DIGEST,
-    "0f9adeda056c256d770c7e038a5c8a8a2b3ab3ad5243986a0f8684a08008c0c8");
+    "112073bff96a370620545697c3352b7bb3d828d8e7bb23bc93e952accfaeb054");
   assert.match(preflight.run, /gh api "repos\/\$GITHUB_REPOSITORY\/pages"/u);
   assert.match(preflight.run, /\.build_type == "workflow"/u);
   assert.match(preflight.run, /\.html_url == \$page_url/u);

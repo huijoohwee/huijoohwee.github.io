@@ -16,5 +16,5 @@ This repository's lean source-release path is one closed chain from lane complet
 
 Notes:
 - Protected integration is the source release boundary.
-- Leanification's prune step applies only when the committed cleanup profile selects prune; this consumer currently retains lane worktrees instead.
+- This consumer now aligns with current `agentic-os` cleanup policy by opting worktree projection and registration into quarantine rather than default retain.
 - `completion status` and `reap` are diagnostics. They do not authorize cleanup, deployment, or rollback.

@@ -24,7 +24,6 @@
     "quarantine-worktree-cleanup-opt-in",
     "read-only-repository-observation",
     "read-only-review-observation",
-    "required-check-policy:strict",
     "shallow-observation-default"
   ],
   "authority": {
@@ -39,5 +38,5 @@
     "worktreeProjection": "quarantine",
     "worktreeRegistration": "quarantine"
   },
-  "profileDigest": "675eaaf6b434654e29c4c1c1367b3b8e78cb5dd78b7413b1a6a452e5562c494b"
+  "profileDigest": "ed8237cd6e74a5537beac7c7855935141cf32e5fc5f4b4149bd493177fe962ce"
 }

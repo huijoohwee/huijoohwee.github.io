@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.8.0"
+parent_version: "3.0.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -43,9 +43,12 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | API             | Specify integration contracts        | - [ ] Define API contracts; specify interfaces; forbid implicit interfaces                    |
 | Architecture    | Design component interactions        | - [ ] Map component relationships; design interactions; forbid undocumented dependencies      |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
+| Ask             | State one instrumented request       | - [ ] Tie the ask to Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity; forbid an unsourced amount |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
 | Business plan   | Project the artifact as an operation | - [ ] Size the market by two cited methods and reconcile; draw risks from open findings; state milestone rungs from evidence; forbid a requirement or decision first stated in the plan |
 | Capacity        | Specify performance limits           | - [ ] Define load requirements; specify capacity; forbid unspecified scalability              |
+| Capitalization  | State claims before an equity ask    | - [ ] Record instrument, outstanding claims, and dilution of the ask; forbid an equity ask with no capitalization rows |
+| Cash flow       | Quantify cash movement and runway    | - [ ] Produce cash-flow statement for the same period as the ADLC ledger; state runway from ending cash / monthly burn; forbid a scenario set without it |
 | Changes         | Track requirement evolution          | - [ ] Version requirement changes; track evolution; forbid unversioned modifications          |
 | Components      | Specify modular units                | - [ ] Define component boundaries; specify modules; forbid monolithic designs                 |
 | Conformance     | Make every rule violation recordable | - [ ] Map every rule to a Finding Type with a severity; deduplicate on type, anchor, and artifact; order by severity then type; forbid `forbid` statements with no typed finding name |
@@ -62,7 +65,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
-| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count token cost as COGS; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; forbid revenue from anything but collected payment |
+| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count token cost as COGS; produce income and cash statements; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; forbid revenue from anything but collected payment |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
@@ -78,6 +81,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Journeys        | Map user workflows                   | - [ ] Chart user paths; map journeys; forbid feature-centric views                            |
 | Knowledge       | Capture domain insights              | - [ ] Document domain knowledge; capture insights; forbid undocumented context                |
 | Lanes           | Gate movement toward public surfaces | - [ ] Document authoring, mirror, and delivery lanes with a named Deploy Boundary carrying evidence, operator instruction, and rollback; keep boundaries `closed` by default; forbid authoring-lane commands that mutate a delivered surface |
+| LTV             | Relate lifetime value to acquisition | - [ ] State LTV and LTV:CAC whenever CAC is stated; source retention; forbid a CAC row with no LTV |
 | Maintainability | Design for evolution                 | - [ ] Plan for change; design maintainably; forbid rigid architectures                        |
 | Mapping         | Trace requirements to implementation | - [ ] Link specs to code; trace mapping; forbid orphaned requirements                         |
 | Metrics         | Define success measures              | - [ ] Specify KPIs; define metrics; forbid unmeasured outcomes                                |
@@ -96,7 +100,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Patterns        | Apply proven solutions               | - [ ] Use established patterns; apply solutions; forbid anti-patterns                         |
 | Performance     | Specify response requirements        | - [ ] Define latency/throughput; specify performance; forbid unspecified latency              |
 | Personas        | Define user archetypes               | - [ ] Create user personas; define archetypes; forbid generic user assumptions                |
-| Pitch deck      | Project the artifact to a decision   | - [ ] Carry a bounded Slide Register whose Reveal is the MVP VCC; label every claim by evidence status; tie the ask to Roadmap phases and model rows; forbid a slide claim absent from the joined artifact |
+| Pitch deck      | Project the artifact to a decision   | - [ ] Carry a bounded Slide Register whose Reveal is the MVP VCC; label every claim by evidence status; tie the ask to Roadmap phases, use-of-funds, and capitalization; forbid a slide claim absent from the joined artifact |
 | Planning record | Join bounded work to one artifact    | - [ ] Record `continuity_id@revision`, CID, RAO with a named check, and date; forbid path-only or random identifiers, restated decisions, and rewritten records |
 | Prioritization  | Rank systematically                  | - [ ] Use value/effort matrix; rank systematically; forbid first-come ordering                |
 | Problems        | Define user pain points              | - [ ] Identify user problems; define pain points; forbid solution-first thinking              |
@@ -233,8 +237,8 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 ❌ A pitch deck or business plan that introduces a capability, market figure, or number the joined artifact never stated; pipeline or signed-unpaid pilots counted as revenue; market sized by one uncited method  
 → ✅ Every slide, section, and row cites the artifact section or Evidence Reference it projects; revenue rows carry collected payment only; two independent cited sizing methods reconciled
 
-❌ A financial model whose inputs have no source or date; token cost absent from COGS; the cost of running the agentic lifecycle assumed rather than read from receipts; a single scenario with no runway  
-→ ✅ Assumption register with source, disposition, and date; token cost as a COGS component; ADLC Cost Ledger filled from execution receipts and observations; Base, Downside, and Upside each stating runway and break-even
+❌ A financial model whose inputs have no source or date; token cost absent from COGS; no income or cash-flow statement; the cost of running the agentic lifecycle assumed rather than read from receipts; a single scenario with no runway  
+→ ✅ Assumption register with source, disposition, and date; token cost as a COGS component; income and cash statements for the ledger period; ADLC Cost Ledger filled from execution receipts; Base, Downside, and Upside each stating runway and break-even
 
 ---
 

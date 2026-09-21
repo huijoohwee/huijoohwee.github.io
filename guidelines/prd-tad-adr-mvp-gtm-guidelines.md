@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "2.7.0"
-date: "2026-09-12"
+version: "2.8.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -52,13 +52,15 @@ lifecycle_status: "proposed"
 - `autonomous-implementation-verification` — binding VCC and Evidence obligations -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
 - `cid-directive-matrix` — lookup surface -> [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md)
 - `core-templates` — binding template-field obligations -> [Core Templates](./prd-tad-adr-mvp-gtm-templates.md)
-- [Selection Criteria](#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) — bounded Constraints ↔ Argumentation ↔ Outranking for platform/vendor/provider choices
+- [Selection Criteria](#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) — binding Constraints ↔ Argumentation ↔ Outranking obligations -> [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md)
 - [Pain-Point Mapping](#pain-point-to-feature-mapping) — pain-point-to-feature traceability
 - [Demo Skeleton](#demo-skeleton) — bounded demonstration of the acceptance condition
 - [Domain-Object Rubric](#domain-object-rubric-assessment) — capability ladders and the [four-criterion maturity rubric](./prd-tad-adr-mvp-gtm-maturity.md)
 - [Roadmap](#roadmap) — phased reuse and delta sequencing
 - [Monetization](#monetization) — payer validation and revenue evidence
 - `prd-tad-adr-mvp-gtm-planning-record` — binding MVP/GTM section roles and the four-column task record -> [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md)
+- `venture-record-pitch-deck-business-plan--financial-model` — binding projection, sizing, revenue-recognition, and ADLC cost-ledger obligations -> [Venture Record](./prd-tad-adr-mvp-gtm-venture.md)
+- `adlc-execution-seam` — what a PRD, TAD, or ADR must hand to execution and read back from it -> [ADLC Guidelines](./adlc-guidelines.md)
 - `architecture-diagram-standards` — diagram format obligations, and the seam to the diagram companion set
 - [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
 - [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
@@ -348,42 +350,14 @@ The separately loadable [Core Templates module](./prd-tad-adr-mvp-gtm-templates.
 
 ## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline
 
-This section owns the reusable **Constraints ↔ Argumentation ↔ Outranking** pipeline for platform, vendor, or provider choices. The stages name reasoning functions, not a mandatory process count or one-way workflow: constraints gate comparison first, argumentation may challenge assumptions or pairwise relations, and changed evidence reopens affected checks. Keep one compact decision record with source evidence, constraints, comparisons, contested arguments, and an independent verdict; separate agents only where they contribute independent reasoning or evaluation. Single scalar or distance-to-ideal scoring cannot replace hard constraints or the recorded comparison relation.
-
-### Stage 1 — Constraints
-
-A gating pass, run before any comparison: every candidate is disposed `pass` or `fail-<named-constraint>` against the project's stated non-negotiable requirements (a license, a deployment model, an offline-capability floor). A `fail` candidate is named and excluded; it is never scored further.
+The separately loadable [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **Constraints ↔ Argumentation ↔ Outranking** stage bodies, cross-stage rules, and reference implementation for platform, vendor, provider, channel, or price choices. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
 
 **Directives**:
-- State every disqualifying constraint explicitly before comparing any candidate; a candidate carried into outranking without a recorded `pass` disposition against every stated constraint is a `constraint-gate-skipped` finding at `major` severity
-- Record disposition per candidate, not an aggregate score; naming a losing candidate's low overall score in place of its specific failed constraint is a `vendor-preference-unscored` finding
-- Derive constraints from the product's own governing requirements — economics, deployment model, deployment platform, offline/edge posture, AI-native compute/token/embedding needs, license compliance — never from a candidate's own marketing or feature list; a constraint set that happens to match exactly one vendor's differentiators is a `vendor-coupling` finding under Scope & Neutrality
-
-### Stage 2 — Outranking
-
-Compare admitted candidates against project-stated criteria with an auditable non-compensatory relation. A simple Pareto comparison suffices when one candidate is no worse on every criterion and strictly better on at least one; use weighted concordance/discordance only when the tradeoff requires it. The result is a partial order; an unresolved pair is legitimate.
-
-**Directives**:
-- Record the criteria and supporting pairwise comparisons needed to justify the selected candidate, including concordance and discordance where the chosen method uses them; an unsupported relation is `outranking-relation-unstated`. A sole admitted candidate needs no fabricated comparison
-- Preserve incomparability where the outranking relation does not resolve a pair; forbid collapsing an unresolved pair into an arbitrary total order — a forced order over an unresolved pair is an `outranking-incomparability-collapsed` finding at `minor` severity, and every pair it leaves unresolved routes to Stage 3
-- Derive criteria and any weights from the governing requirements, never candidate marketing; a criteria set matching one vendor's differentiators is `vendor-coupling`
-
-### Stage 3 — Argumentation
-
-Route unresolved comparisons and contested assumptions to structured argumentation: a claim, its source evidence, and support/attack relations. Independent agents may test competing reasons within the same declared budget. The Evaluator, independent of the argument producers, records the accepted arguments and verdict; it may leave a choice unresolved rather than invent a winner.
-
-**Directives**:
-- Record the argument graph — claims, support/attack edges, accepted arguments — inline or by exact reference for a contested choice; compact prose or a table suffices when the relations are unambiguous. Closing a contested choice without that record is `argumentation-graph-missing`
-- Require the rendering Evaluator to hold no argument of its own in the graph it adjudicates; a verdict authored by the same agent that submitted a winning argument is an `argumentation-self-graded` finding at `blocker` severity, extending Evaluator independence (Autonomous Implementation Verification) into the selection pipeline
-- Attach the persisted argument graph to the selection ADR as its Evidence Reference; a selection ADR whose contested candidates carry no linked argument graph is an `unproven-claim`
-
-**Directives (cross-stage)**:
-- Label the outcome by its pipeline derivation: require constraint dispositions, pairwise evidence when alternatives survive, and an argument graph when contested. An unsupported winning choice is `vendor-preference-unscored`; record why a stage is inapplicable instead of fabricating evidence
-- Reopen only affected constraints and comparisons when a cited fact changes; revising a governing requirement follows the authoring authority seam. Argumentation never waives a failed hard constraint, and no useful new evidence means no further reasoning round
-- Bound the whole pipeline by the task's time, token, and iteration limits; reuse unchanged evidence and agent roles. At the bound, record the unresolved decision or select a supported in-scope alternative; preserve incomparability and continue disjoint work
-- Present illustrative constraints, criteria, and candidates only under a heading or block whose own text contains the words "reference implementation," per the Scope & Neutrality Contract; a checklist or candidate list naming real vendors outside such a label is a `vendor-coupling` finding
-
-**Reference implementation** — for a solo-operator, AI-native, MCP-/WebMCP-native, edge-native product (any project instantiates its own constraint set, criteria set, and candidates; none of this is universal): Stage 1 constraints typically include license compliance, offline/edge capability, and zero-infra posture; Stage 2 criteria typically include AI-native fit (embedding/vector and agentic-workload support), total cost of ownership, primary-deployment-platform fit, and a mobile-/web-/offline-first delivery triad — browser-based (web-first) delivery, mobile-first delivery, and offline-first operation via on-device/edge execution and local-first data ownership — scored alongside concurrency-safety under multi-device/multi-agent use, token performance and economics, min-viable-max-value, time-to-value, and ROI, with an ELECTRE- or PROMETHEE-style outranking relation; Stage 3 argumentation typically uses an abstract argumentation framework (Dung-style attack graph with grounded or preferred extension). A project's "primary-platform fit" criterion names whichever platform that project has already adopted as primary as a reference implementation of the general criterion — the criterion itself, not the named platform or method, is what every future ADR in that project's set re-applies.
+- Dispose every candidate `pass` or `fail-<named-constraint>` against the project's own governing requirements before any comparison; a candidate compared without recorded dispositions is `constraint-gate-skipped`
+- Record an auditable non-compensatory outranking relation over admitted candidates and preserve incomparability where it does not resolve; a scalar score in place of the relation is `outranking-relation-unstated`, a forced order over an unresolved pair is `outranking-incomparability-collapsed`
+- Route contested choices to an argument graph adjudicated by an Evaluator holding no argument in it; a missing graph is `argumentation-graph-missing`, a self-graded verdict is `argumentation-self-graded` at `blocker` severity
+- Bound the pipeline by the task's declared time, token, and iteration limits and record an unresolved decision at the bound rather than inventing a winner
+- Name real vendors, platforms, or providers only under a heading or block whose own text contains the words "reference implementation"; otherwise `vendor-coupling`
 
 ---
 
@@ -457,6 +431,32 @@ The separately loadable [MVP→GTM Planning Record module](./prd-tad-adr-mvp-gtm
 **Directives**:
 - Treat `MVP` and `GTM` as consumers of PRD criteria, TAD elements, and ADR decisions under one continuity ID and exact revision; a requirement, design, or decision first stated there is a `duplicate-owner` finding
 - Join every planning record to the artifact by `continuity_id@revision`, never by path or a free-standing identifier; an unjoined record is `artifact-naming-noncompliant`
+
+---
+
+## Venture Record: Pitch Deck, Business Plan & Financial Model
+
+The separately loadable [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, scenario set, and ADLC Cost Ledger. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+
+**Directives**:
+- Treat the pitch deck, business plan, and financial model as projections of the joined artifact at one `continuity_id@revision`; a claim, number, or decision that first appears in a projection is `pitch-claim-unsourced`, and a projection joined by path alone is `artifact-naming-noncompliant`
+- Carry every projected claim's evidence status in the owners' vocabulary — pain labels, monetization labels, derived rungs; forbid an unlabelled forward-looking statement
+- Recognize revenue in any projection only from collected payment; WTP, pilots, and test transactions sit on their own labelled rows or it is `revenue-recognized-unpaid`
+- Register every model input with source, disposition, and date, ledger the lifecycle's own operating cost from execution receipts, and state at least three scenarios with runway; the module names the finding each omission raises
+- Size a market by two cited independent methods and reconcile them; one method is `market-size-single-method`
+
+---
+
+## ADLC Execution Seam
+
+The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task budgets, agent roles, tool permissions, human-in-the-loop gates, release control, and the execution-domain finding vocabulary. This section owns only what a PRD, TAD, or ADR must hand across that seam and read back from it.
+
+**Directives**:
+- Hand execution a baselined artifact with zero open `blocker` findings, current Codebase Grounding Records, and VCCs it can decompose into bounded task nodes; a directive with no closable decomposition is `cid-decomposition-missing`
+- Name in the TAD every human-in-the-loop gate the execution set requires for this scope, with its evidence and rollback; an unnamed gate is `human-gate-unstated`
+- State per-feature token, iteration, and wall-clock ceilings the execution set's per-task budgets may narrow but never exceed; an unbounded loop is `unbounded-loop` at `blocker` severity
+- Read readiness, cost, and integration facts back only from Evidence References and receipts the execution set emits; a rung, savings, or completion claim authored without them is `unproven-claim`
+- Keep the operator path externally simple as start one lane → release one exact candidate → deploy one exact protected revision; a document that narrates a different order is `gate-order-drift`
 
 ---
 
@@ -559,6 +559,8 @@ Each entry is the document-scope default `role`/`action`/`outcome` envelope defi
 
 **Evaluator** *(a mechanism, never a person; the one role that must not collapse into any other, including any work tree or agent whose output it judges)* → judges each VCC against the surfaced output only, records the Evidence Reference, derives the readiness rung, resolves irreconcilable concurrent claims, renders selection verdicts from an argumentation graph it holds no argument in, and emits the finding set with types and severities → produces verdicts no participant can self-grade, which is what makes a rung and an alignment claim trustworthy. See the ADLC Guidelines companion set for how this role is instantiated and bounded during execution.
 
+**Financial Modeler** → registers assumptions with source and date, computes unit economics with token cost as COGS, fills the ADLC Cost Ledger from receipts, runs scenarios and sensitivity → produces a financial model whose every headline row traces to an evidenced input
+
 **UX Designer** → creates personas, maps user journeys, validates usability requirements, provides design guidance → ensures user-centered design principles guide feature development
 
 **Engineering Lead** → reviews TAD feasibility, validates architectural patterns, identifies technical risks, suggests alternatives → ensures technical approach is implementable and maintainable
@@ -573,7 +575,7 @@ Each entry is the document-scope default `role`/`action`/`outcome` envelope defi
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · Pain points ground every feature · Demo skeletons prove the story in one sitting · Domain-object rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before it tests a mechanism · RAO aligns team responsibilities · Division of work gives each capability exactly one owner · Concurrent collaboration keeps every work tree honest without a single point of blocking · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
+**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · Pain points ground every feature · Demo skeletons prove the story in one sitting · Domain-object rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before it tests a mechanism · Venture records project, never originate · The lifecycle has a ledger line · RAO aligns team responsibilities · Division of work gives each capability exactly one owner · Concurrent collaboration keeps every work tree honest without a single point of blocking · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
 
 - **CID frames**: establishes scope, user value, and traceable rules under the shared CID contract's grounding, density, and ADLC budgets
 - **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
@@ -583,6 +585,8 @@ Each entry is the document-scope default `role`/`action`/`outcome` envelope defi
 - **Domain-object rubrics name**: the product's actual domain object is identified before any external rubric is applied, and capability levels report the highest contiguous pass; experience ratings report observed descriptors separately
 - **Roadmaps sequence**: phases order by reuse-adjusted build cost, each stating what it reuses and what is genuinely new; a real, deferred idea is marked `Won't (this increment)`, never silently dropped
 - **Monetization tests**: mechanism evidence, WTP evidence, and collected revenue remain separate; prioritize an existing payer segment and the shortest credible path to its paid outcome
+- **Venture records project**: pitch deck, business plan, and financial model cite the joined artifact section or Evidence Reference behind every slide, section, and row; revenue is collected money only, and market size rests on two reconciled methods
+- **The lifecycle has a ledger line**: active minutes, token spend, CI minutes, provider fees, and avoidable-block cost enter the financial model from execution receipts, so the cost of running an agentic pipeline is measured rather than assumed
 - **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes — the document-granularity instance of the CID `role`/`action`/`outcome` triad (Directive Grammar (CID))
 - **Division of work**: assigns exactly one owning component per capability, extending the CID `role`/`action`/`outcome` triad from roles-to-documents into components-to-capabilities — every other consumer calls the owner rather than re-implementing it
 - **Concurrent collaboration keeps honest**: one current writer owns an overlapping scope; exact replays are idempotent, owner work and history survive, and reviewed obsolete content may be removed. Bound waits and capacity, verify cross-origin claims, and use exact profile-selected cleanup receipts

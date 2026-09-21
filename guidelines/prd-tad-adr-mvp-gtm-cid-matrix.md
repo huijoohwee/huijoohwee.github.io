@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.0.4"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.7.0"
+parent_version: "2.8.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -44,6 +44,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Architecture    | Design component interactions        | - [ ] Map component relationships; design interactions; forbid undocumented dependencies      |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
+| Business plan   | Project the artifact as an operation | - [ ] Size the market by two cited methods and reconcile; draw risks from open findings; state milestone rungs from evidence; forbid a requirement or decision first stated in the plan |
 | Capacity        | Specify performance limits           | - [ ] Define load requirements; specify capacity; forbid unspecified scalability              |
 | Changes         | Track requirement evolution          | - [ ] Version requirement changes; track evolution; forbid unversioned modifications          |
 | Components      | Specify modular units                | - [ ] Define component boundaries; specify modules; forbid monolithic designs                 |
@@ -61,6 +62,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
+| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count token cost as COGS; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; forbid revenue from anything but collected payment |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
@@ -94,6 +96,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Patterns        | Apply proven solutions               | - [ ] Use established patterns; apply solutions; forbid anti-patterns                         |
 | Performance     | Specify response requirements        | - [ ] Define latency/throughput; specify performance; forbid unspecified latency              |
 | Personas        | Define user archetypes               | - [ ] Create user personas; define archetypes; forbid generic user assumptions                |
+| Pitch deck      | Project the artifact to a decision   | - [ ] Carry a bounded Slide Register whose Reveal is the MVP VCC; label every claim by evidence status; tie the ask to Roadmap phases and model rows; forbid a slide claim absent from the joined artifact |
 | Planning record | Join bounded work to one artifact    | - [ ] Record `continuity_id@revision`, CID, RAO with a named check, and date; forbid path-only or random identifiers, restated decisions, and rewritten records |
 | Prioritization  | Rank systematically                  | - [ ] Use value/effort matrix; rank systematically; forbid first-come ordering                |
 | Problems        | Define user pain points              | - [ ] Identify user problems; define pain points; forbid solution-first thinking              |
@@ -226,6 +229,12 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 
 ❌ A guideline set that must be loaded whole on every turn, with its own compliance cost unmeasured  
 → ✅ Phase-scoped section loading; guideline load cost recorded as a line item in the authoring loop's token budget
+
+❌ A pitch deck or business plan that introduces a capability, market figure, or number the joined artifact never stated; pipeline or signed-unpaid pilots counted as revenue; market sized by one uncited method  
+→ ✅ Every slide, section, and row cites the artifact section or Evidence Reference it projects; revenue rows carry collected payment only; two independent cited sizing methods reconciled
+
+❌ A financial model whose inputs have no source or date; token cost absent from COGS; the cost of running the agentic lifecycle assumed rather than read from receipts; a single scenario with no runway  
+→ ✅ Assumption register with source, disposition, and date; token cost as a COGS component; ADLC Cost Ledger filled from execution receipts and observations; Base, Downside, and Upside each stating runway and break-even
 
 ---
 

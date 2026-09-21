@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { contractSlice } from "./adlc-contract-input.mjs";
 
 export function checkAuthoringContract({
-  source, authoringGuideline, productionReleaseLifecycle, conformanceRuntime, integrationOrder, specificationChain, artifactContinuity, upstreamAdmission, cloudCollaboration, scopedLaneAdmission, repositoryRuntimeReadiness, antiPatternGuards, autonomousContinuation, rapidMvpSprint, lines, guidelineLogicalLineCount, productionReleaseLifecycleLines, conformanceRuntimeLines, integrationOrderLines, specificationChainLines, artifactContinuityLines, upstreamAdmissionLines, cloudCollaborationLines, scopedLaneAdmissionLines, repositoryRuntimeReadinessLines
+  source, authoringGuideline, selectionCriteria, productionReleaseLifecycle, conformanceRuntime, integrationOrder, specificationChain, artifactContinuity, upstreamAdmission, cloudCollaboration, scopedLaneAdmission, repositoryRuntimeReadiness, antiPatternGuards, autonomousContinuation, rapidMvpSprint, lines, guidelineLogicalLineCount, productionReleaseLifecycleLines, conformanceRuntimeLines, integrationOrderLines, specificationChainLines, artifactContinuityLines, upstreamAdmissionLines, cloudCollaborationLines, scopedLaneAdmissionLines, repositoryRuntimeReadinessLines
 }) {
   assert.ok(source.startsWith("---\n"), "guideline frontmatter must be present");
   assert.match(source, /minimum-time-and-resource \/ maximum-core-value chain/);
@@ -226,9 +226,11 @@ export function checkAuthoringContract({
     );
   }
 
-  const pipeline = contractSlice(authoringGuideline,
+  const binding = contractSlice(authoringGuideline,
     "## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline", "## Pain-Point-to-Feature Mapping",
-    "shared reasoning pipeline");
+    "shared reasoning pipeline binding");
+  assert.match(binding, /\.\/prd-tad-adr-mvp-gtm-selection\.md/, "authoring index must delegate the pipeline stage bodies to the selection module");
+  const pipeline = contractSlice(selectionCriteria, "## Scope & Ownership", "## Conformance Findings", "shared reasoning pipeline");
   for (const requirement of [
     "constraints gate comparison first", "no worse on every criterion and strictly better on at least one",
     "Preserve incomparability", "The Evaluator, independent of the argument producers",

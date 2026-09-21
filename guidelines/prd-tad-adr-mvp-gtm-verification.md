@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.0.3"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.7.0"
+parent_version: "2.8.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -240,6 +240,12 @@ Every finding carries exactly six fields:
 | Concurrent Collaboration | `merge-lossy` | `major` |
 | Concurrent Collaboration | `deadlock-unbounded-wait` | `blocker` |
 | Concurrent Collaboration | `work-tree-sprawl` | `minor` |
+| Venture Record | `pitch-claim-unsourced` | `major` |
+| Venture Record | `market-size-single-method` | `minor` |
+| Venture Record | `financial-assumption-unsourced` | `major` |
+| Venture Record | `revenue-recognized-unpaid` | `major` |
+| Venture Record | `scenario-set-incomplete` | `minor` |
+| Venture Record | `adlc-cost-unledgered` | `major` |
 
 ### Directives
 

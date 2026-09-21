@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR MVP→GTM Planning Record Module"
 doc_type: "Guidelines Module"
-version: "1.0.1"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Planning record contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.7.0"
+parent_version: "2.8.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -32,8 +32,9 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 contract without restating them. Field meanings stay in the [shared CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract);
 identity and revision joins stay in [Artifact Continuity](./adlc-artifact-continuity.md#continuity-identity-and-revision-contract);
 sprint compression stays in the [Rapid MVP Sprint profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); pain, demo, roadmap and
-monetization obligations stay in the parent index. A planning record that redefines any of those is a
-`duplicate-owner` finding.
+monetization obligations stay in the parent index; pitch-deck, business-plan, and financial-model projections of
+the five roles stay in the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) and add no sixth role. A planning
+record that redefines any of those is a `duplicate-owner` finding.
 
 ---
 

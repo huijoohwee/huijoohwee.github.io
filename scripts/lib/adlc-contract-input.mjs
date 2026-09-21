@@ -158,6 +158,8 @@ export function loadAdlcSources(files) {
     .map(([key, name]) => [key, required(files, `guidelines/${name}`)]));
   sources.authoringGuideline = required(files, "guidelines/prd-tad-adr-mvp-gtm-guidelines.md");
   checkGuidelineFrontmatter(sources.authoringGuideline, "authoring guideline");
+  sources.selectionCriteria = required(files, "guidelines/prd-tad-adr-mvp-gtm-selection.md");
+  checkGuidelineFrontmatter(sources.selectionCriteria, "selection criteria module");
   for (const [key, value] of Object.entries(sources)) sources[`${key}Lines`] = value.split("\n");
   sources.guidelineLogicalLineCount = logicalLines(sources.source);
   for (const key of ["scopedLaneAdmission", "cloudCollaboration", "productionReleaseLifecycle"]) {

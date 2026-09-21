@@ -31,6 +31,8 @@ const MODULES = [
   "prd-tad-adr-mvp-gtm-templates.md",
   "prd-tad-adr-mvp-gtm-cid-matrix.md",
   "prd-tad-adr-mvp-gtm-planning-record.md",
+  "prd-tad-adr-mvp-gtm-selection.md",
+  "prd-tad-adr-mvp-gtm-venture.md",
   "prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
@@ -55,6 +57,9 @@ const PUBLISHED_ANCHORS = [
   "cid-directive-matrix",
   "core-templates",
   "prd-tad-adr-mvp-gtm-planning-record",
+  "venture-record-pitch-deck-business-plan--financial-model",
+  "adlc-execution-seam",
+  "platform-specific-selection-criteria--multi-agent-reasoning-pipeline",
   "architecture-diagram-standards",
   "prd--tad-integration",
   "anti-pattern-guards",
@@ -127,7 +132,27 @@ const DELEGATIONS = {
   "core-templates": "prd-tad-adr-mvp-gtm-templates.md",
   "cid-directive-matrix": "prd-tad-adr-mvp-gtm-cid-matrix.md",
   "prd-tad-adr-mvp-gtm-planning-record": "prd-tad-adr-mvp-gtm-planning-record.md",
+  "platform-specific-selection-criteria--multi-agent-reasoning-pipeline": "prd-tad-adr-mvp-gtm-selection.md",
+  "venture-record-pitch-deck-business-plan--financial-model": "prd-tad-adr-mvp-gtm-venture.md",
+  "adlc-execution-seam": "adlc-guidelines.md",
 };
+
+// Every Venture Record finding the module raises is enumerated by the verification module first.
+const VENTURE_FINDINGS = [
+  "pitch-claim-unsourced",
+  "market-size-single-method",
+  "financial-assumption-unsourced",
+  "revenue-recognized-unpaid",
+  "scenario-set-incomplete",
+  "adlc-cost-unledgered",
+];
+const verificationText = read("prd-tad-adr-mvp-gtm-verification.md");
+const ventureText = read("prd-tad-adr-mvp-gtm-venture.md");
+for (const type of VENTURE_FINDINGS) {
+  assert.match(verificationText, new RegExp(`^\\| Venture Record \\| \`${type}\` \\| \`(blocker|major|minor)\` \\|$`, "m"),
+    `verification module must enumerate ${type} before the venture module raises it`);
+  assert.ok(ventureText.includes(`\`${type}\``), `venture module must raise ${type}`);
+}
 const sections = indexText.split(/^## /m);
 for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
   const body = sections.find((s) => slug(s.split("\n")[0]) === anchor);

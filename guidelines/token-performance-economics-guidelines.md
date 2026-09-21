@@ -1,8 +1,8 @@
 ---
 title: "Token Performance and Economics Guidelines"
 doc_type: "Guideline Module"
-version: "2.0.0"
-date: "2026-09-09"
+version: "2.1.0"
+date: "2026-09-21"
 lang: "en-US"
 schema: "agentic-economics-guidelines/v2"
 frontmatter_contract: "required"
@@ -65,6 +65,45 @@ truth. A timeout means unknown completion until the effect owner reconciles it.
 Prefer event-driven continuation when supported; otherwise use bounded polling
 with backoff and a stated stop condition. Quotas and free-tier limits are inputs
 to verify, not architectural promises.
+
+## Incremental work contract
+
+Forbid costly recomputation and rendering for unchanged inputs. Repair the existing
+owner; do not add a parallel cache, scheduler, renderer, or performance controller.
+Required simulation steps, changed inputs, validation and effect readback remain
+real work. An optimization must preserve their ordering, events and correctness.
+
+- Identify the hot operation and its dependency set before changing it. Precompute
+  expensive sort keys outside comparators; update only affected items after a
+  mutation. In a simulation step, invalidate contact results when resolution moves
+  either body, and discard step-local results before the next step.
+- Reuse derived work only with an explicit input identity, lifetime and invalidation
+  rule. Include source/configuration revisions and caller scope where relevant.
+  Bound entries and retained bytes; release them on replacement or disposal.
+  Do not add memoization when key comparison, allocation or retention costs more
+  than recomputing. Mutable inputs require versioning or explicit invalidation.
+- Keep subscriptions, selectors, callbacks and effect dependencies stable when
+  their meaning is unchanged. Do not recreate an entire scene, editor, catalog or
+  list for a local edit, transport tick, pointer movement or unrelated state update.
+  Reuse existing incremental updates, batching, instancing and virtualization;
+  avoid per-frame UI state writes when the existing render owner can update directly.
+- Use the existing clock and scheduling owner. Coalesce duplicate pending work by
+  input identity, cap in-flight work, and cancel obsolete work or reject its stale
+  result. Stop optional visual work for inactive/hidden surfaces and release
+  listeners, animation handles, GPU resources and buffers on disposal. Visibility
+  never silently cancels required simulation, persistence or acknowledged effects.
+- Verify unchanged input, one changed dependency, reset/reload, eviction and teardown
+  as applicable. Preserve deterministic state, events, selection and edit/view parity.
+  Compare cold/warm and active/idle cases on the same fixture and device conditions;
+  measure compute/render counts, CPU/frame time and memory without double-counting.
+  Keep expensive profiling opt-in and bounded; no permanent profiler or polling loop.
+
+Use existing affected-check and release owners. Cache reuse never substitutes for
+fresh authority, required provider CI or content-integrity checks. Keep free/local
+delivery and zero paid calls intact. Report measured resource changes separately
+from provider waits, token usage and cash cost; a faster fixture proves neither
+system-wide savings nor production readiness. Revert if correctness, responsiveness
+or the agreed memory/frame budget regresses.
 
 ## Documentation and Agent Loading
 

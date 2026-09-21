@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.0.0"
+parent_version: "3.1.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -255,9 +255,23 @@ See ADR-[N] for each significant decision.
 **Learn loop**: [completed outcome / paid conversion / operating cost] → successor Context [id]
 ```
 
+### From-0-to-1 Coverage Record
+
+Copy into the joined artifact; use the parent's [C01–C16 domain IDs](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
+
+```markdown
+**Join**: [continuity_id@revision] · **As of**: [date] · **Owner**: [function]
+**0**: [grounded opportunity + unknowns] · **1**: [target outcome + scope + observation window]
+| Domain ID | Decision | Source section@revision | Evidence / gap | Owner | Next check / trigger |
+|---|---|---|---|---|---|
+| [one row each C01–C16] | covered / deferred / not-applicable | [exact join] | [evidence, or reason and dependency] | [function] | [check, revisit trigger or applicability reviewer] |
+**Coverage**: [n]/16 dispositioned; [k]/[applicable] covered; [d] deferred; [x] not applicable.
+**Local / delivered readiness**: [evidence-derived rungs, kept separate from coverage].
+```
+
 ### Pitch Deck / Business Plan / Financial Model
 
-Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: twelve-row Slide Register, business-plan section contract, assumption register, unit economics, income statement, cash flow, capitalization, use of funds, ADLC Cost Ledger, and Base/Downside/Upside. Do not duplicate those tables here.
+Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. Do not duplicate those tables here.
 
 
 ---

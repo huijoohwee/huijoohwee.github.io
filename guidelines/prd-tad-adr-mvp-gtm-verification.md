@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.0.0"
+parent_version: "3.1.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -271,6 +271,28 @@ The regression comparison above is meaningless unless two runs over the same inp
 - **Complete on degraded input**: a malformed or unreadable document yields a typed finding and the run completes; forbid aborting a run because one input is defective
 
 ---
+
+---
+
+## Venture coverage and financial evidence
+
+Consume the parent [C01–C16 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract)
+and the [Venture Record checks](./prd-tad-adr-mvp-gtm-venture.md#reconciliation-and-edge-case-checks).
+The structural policy check verifies document shape, joins and required sections. It does not audit a
+financial model, prove demand, discharge legal obligations or certify the semantic completeness of a plan.
+
+`revenue-recognized-unpaid` is retained for compatibility: apply it to unsupported revenue/cash or
+traction claims, not to valid accrual revenue backed by recognition policy and performance evidence.
+A signed order alone proves neither earned revenue nor a collected dollar.
+
+- [ ] All 16 coverage domains have a decision, source revision, owner and evidence/gap; exclusions have rationale and revisit/review information
+- [ ] Disposition coverage and substantive applicable coverage are reported separately; document coverage never raises readiness
+- [ ] Audience, ask and claim joins agree across deck, business plan and financial model at the same revision
+- [ ] Market filters, acquisition funnel, cohort retention, delivery capacity and scenario volumes agree
+- [ ] Three statements, cash timing, cost allocation, zero-denominator cases and headline projections have named reconciliation checks with results
+- [ ] Actual costs include unsuccessful ADLC work, with unknown telemetry labelled and no duplicate cost allocation
+- [ ] Free-tier ceilings and FOSS eligibility remain constraints in every scenario; an ask or forecast grants no spend or deploy effect
+- [ ] Business risk, applicable obligations, metric owners and continue/pivot/stop decisions feed a successor Context
 
 ---
 

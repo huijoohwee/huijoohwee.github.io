@@ -393,6 +393,8 @@ Markdown body is the human-readable projection.
 
 ## Pitch Deck
 
+This six-slide rendering is a condensed projection. Bind it to the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register): cover all twelve roles across these slides and a cited appendix, with evidence status, sources and speaking bounds. Reveal must cite the MVP VCC; the ask cites milestones and model rows. Rendering alone proves no product outcome.
+
 ### Slide 1 - Problem
 
 Describe the user problem in one paragraph.
@@ -552,3 +554,26 @@ Select the smallest dependency-closed Must slice from the PRD. Link each criteri
 ## GTM
 
 Name one reachable payer and their current workaround. Record one priced offer, observed response, accepted outcome, actual payment and support cost separately. Compare the free/self-serve path before adding hosted infrastructure. WTP, revenue and repeat use start unvalidated. Append pilot findings as a successor Context linked to this artifact revision.
+
+## Business Plan
+
+Use the [Venture Record section contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#business-plan).
+Join this projection to `{{template_inputs.continuity_id}}@{{template_inputs.version}}` and cite each
+section's source: summary, segment/problem, offer, market, alternatives, acquisition/retention,
+operations/capacity, team, obligations, capital, risks and milestones. Mark unknowns explicitly.
+
+## Financial Model
+
+Use the [model contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#financial-model): sourced driver
+assumptions, unit economics, linked income/cash/balance statements, scenario cash floors, funding and
+receipt-based ADLC costs. State basis, currency, horizon, actuals cut-off and model revision. Separate
+forecasts, recognized revenue and collected cash; report reconciliation results and unsupported ratios.
+
+## Coverage and ADLC Handoff
+
+Instantiate the [C01–C16 record](../guidelines/prd-tad-adr-mvp-gtm-templates.md#from-0-to-1-coverage-record)
+at this continuity ID/revision. State both coverage ratios, gaps, owners and next checks. Full and lite
+formats share these obligations; a shorter document links source records instead of dropping domains.
+Use the [ADLC seam](../guidelines/prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam) for scope, VCCs,
+time/token/byte bounds, authorization and exact source/release/deploy/rollback evidence. Record actual
+costs even for failed work. Return observed customer outcomes to the GTM successor Context.

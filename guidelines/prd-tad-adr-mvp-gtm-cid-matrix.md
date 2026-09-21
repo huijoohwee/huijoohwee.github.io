@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.2.0"
+version: "1.3.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.0.0"
+parent_version: "3.1.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -65,7 +65,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
-| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count token cost as COGS; produce income and cash statements; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; forbid revenue from anything but collected payment |
+| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count serving-token cost as COGS; produce linked income, cash and balance statements; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; separate actuals, forecasts, recognized revenue and collected cash under the Venture Record measurement basis |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
@@ -235,7 +235,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 → ✅ Phase-scoped section loading; guideline load cost recorded as a line item in the authoring loop's token budget
 
 ❌ A pitch deck or business plan that introduces a capability, market figure, or number the joined artifact never stated; pipeline or signed-unpaid pilots counted as revenue; market sized by one uncited method  
-→ ✅ Every slide, section, and row cites the artifact section or Evidence Reference it projects; revenue rows carry collected payment only; two independent cited sizing methods reconciled
+→ ✅ Every slide, section, and row cites the artifact section or Evidence Reference it projects; recognized revenue and collected cash reconcile separately; a first-dollar claim cites actual net customer payment; two independent cited sizing methods reconciled
 
 ❌ A financial model whose inputs have no source or date; token cost absent from COGS; no income or cash-flow statement; the cost of running the agentic lifecycle assumed rather than read from receipts; a single scenario with no runway  
 → ✅ Assumption register with source, disposition, and date; token cost as a COGS component; income and cash statements for the ledger period; ADLC Cost Ledger filled from execution receipts; Base, Downside, and Upside each stating runway and break-even

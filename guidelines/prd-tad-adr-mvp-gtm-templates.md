@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.0.2"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.8.0"
+parent_version: "3.0.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -226,6 +226,39 @@ See ADR-[N] for each significant decision.
 - **Negative**: [Costs / Risks]
 - **Neutral**: [Other impacts]
 ```
+
+### MVP Template
+
+```markdown
+## MVP: [Slice name]
+**Projects**: PRD `Must` features [ids] · TAD components [ids] · ADR [ids] at `continuity_id@revision`
+
+| Feature | VCC | Evidence Reference | Local rung | Delivered rung |
+|---|---|---|---|---|
+| [Must id] | [condition] | [check + result + surface] | [rung] | [rung] |
+
+**Demo Skeleton**: Hook / Probe / Reveal=VCC [id] / [domain action] / Close — total [N]s
+**Domain-Object Rubric**: current contiguous level [L] · blocker for next [component]
+**Min-viable scope**: [what is in] · **Won't (this increment)**: [what is out]
+```
+
+### GTM Template
+
+```markdown
+## GTM: [Segment]
+**Projects**: MVP slice · pain [P-id] · WTP evidence at `continuity_id@revision`
+
+| Stream | Segment exists now | Distance to first dollar | Mechanism | Demand | Collected revenue |
+|---|---|---|---|---|---|
+| [S-id] | yes/no | [rank] | proven/no | validated/no | [amount or none] |
+
+**Learn loop**: [completed outcome / paid conversion / operating cost] → successor Context [id]
+```
+
+### Pitch Deck / Business Plan / Financial Model
+
+Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: twelve-row Slide Register, business-plan section contract, assumption register, unit economics, income statement, cash flow, capitalization, use of funds, ADLC Cost Ledger, and Base/Downside/Upside. Do not duplicate those tables here.
+
 
 ---
 

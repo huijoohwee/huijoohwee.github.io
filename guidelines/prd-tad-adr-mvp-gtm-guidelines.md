@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "2.8.0"
+version: "3.0.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -14,584 +14,494 @@ runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
-# PRD, TAD & ADR Guidelines
+# PRD, TAD & ADR Guidelines — From 0 to 1, 360°
+
+One joined artifact carries a product from unvalidated pain to a paying customer. Five **section roles** specify it — **PRD, TAD, ADR, MVP, GTM**. Three **projections** present it — **Pitch Deck, Business Plan, Financial Model**. One **execution set** builds and ships it — the **ADLC** operator path `START → RELEASE → DEPLOY`. This index binds every role, projection, and seam. Companion modules own the bodies.
+
+---
 
 ## Scope & Neutrality Contract
 
-- **Universal**: these guidelines apply to any product, domain, language, or runtime; nothing here assumes a specific company, repository, file path, framework, or vendor.
-- **Neutral**: name capabilities and roles by their function, never by a brand. Where a concrete tool is shown, it appears only as a non-binding *reference implementation* and may be swapped for any equivalent. Every brand, product, or vendor name must sit under a heading or block whose own text contains the words "reference implementation"; a brand named outside such a label is a `vendor-coupling` finding regardless of surrounding intent.
-- **Agnosticity**: requirements are derived from document content and parsed frontmatter only — never from file names, directory layout, or downstream mirrors. Examples use placeholders (`[...]`) rather than real identifiers.
-- **Simple**: a rule earns its place by being checkable and load-bearing. Ceremony, Complication, Verbosity, and Clutter are named anti-patterns of the Directive Grammar (CID) Density Rules and apply at document scope as much as directive scope; a rule stateable in fewer words with no loss of observable consequence, and left unstated that way, is a `cid-density-violation` finding. Clutter is the artifact-scope case specifically: an unreferenced template field, an orphaned finding type, or a stale example carried past the rule that produced it, with no consumer left to read it, is a `cid-density-violation` finding at the artifact it clutters, not only at the rule that authored it.
-- **Autonomous**: a rule or dispatched directive — human-, LLM-, or agent-authored — is completable by its named role using only the checks, evidence, and grounding this set defines, with no synchronous, unstated manual approval standing between dispatch and outcome; a directive whose completion silently depends on an unnamed human gate outside the stated Deploy Boundary or Evaluator path is a `human-gate-unstated` finding. Lane Topology & Deploy Boundary's closed-by-default rule is this principle's own promotion instance: the gate is named and evidenced, never a silent hold.
-- **Modular**: each `##` section is self-contained and addressable by its heading anchor (see Module Index). Sections may be lifted into another guideline set without rewriting their internals.
-- **Reusable**: extend or reference an existing rule, template, finding type, or component before authoring a new one. A newly authored rule that restates an existing rule's observable consequence without extending it is a `non-modular-section` finding.
-- **Interoperable**: every module's inputs and outputs — frontmatter keys, Rule IDs, Finding Types, continuity IDs — are declared once and consumed by exact name across the set. A module that reads or writes an undeclared key is an `unresolvable-reference` finding.
-- **Portable**: a module's own text carries what it needs to be lifted into another guideline set, with no hidden dependency on this document's line numbers, file path, or heading order beyond the anchors it explicitly names. An anchor-order dependency is a `non-modular-section` finding.
-- **Coherent**: PRD, TAD, and ADR share exactly one CID/RAO/SVO schema (Directive Grammar (CID)) and one Finding Type enumeration (Conformance Findings). A document in this set that defines a competing schema or a parallel vocabulary is a `cid-schema-noncompliant` finding regardless of artifact type.
-- **Enforceable**: every rule in this set is written so a conformance check can record a typed finding against it (see Conformance Findings). A statement that cannot be violated observably is guidance, not a rule, and is labelled as such.
+| Property | Rule | Finding |
+|---|---|---|
+| Universal | Any product, domain, language, runtime; no assumed company, path, framework, or vendor | `vendor-coupling` |
+| Neutral | Capabilities and roles are named by function; a brand appears only under a heading or block whose own text says "reference implementation"; a brand named outside such a label is a `vendor-coupling` finding regardless of surrounding intent | `vendor-coupling` |
+| Agnostic | Requirements derive from content and parsed frontmatter, never from file names, directories, or mirrors; examples use `[...]` | `path-derived-claim` |
+| Simple | A rule earns its place by being checkable and load-bearing; Ceremony, Complication, Verbosity, and Clutter are named anti-patterns | `cid-density-violation` |
+| Autonomous | A named role completes a directive using only this set's checks, evidence, and grounding; a silent human gate outside the Deploy Boundary or Evaluator is a defect | `human-gate-unstated` |
+| Modular | Each `##` section is self-contained and addressable by its anchor | `non-modular-section` |
+| Reusable | Extend an existing rule, template, finding, or component before authoring one | `non-modular-section` |
+| Interoperable | Every key, Rule ID, Finding Type, and continuity ID is declared once and consumed by exact name | `unresolvable-reference` |
+| Portable | A module carries what it needs; no hidden dependency on line numbers, path, or heading order beyond named anchors | `non-modular-section` |
+| Coherent | Every role and projection shares one CID/RAO/SVO schema and one finding enumeration | `cid-schema-noncompliant` |
+| Enforceable | Every rule is phrased so a check records a typed finding; a statement that cannot fail is labelled guidance | — |
 
 ---
 
 ## Module Index
 
-- `scope--neutrality-contract` — universality, neutrality, agnosticity, simplicity, autonomy, modularity, reusability, interoperability, portability, coherence, enforceability rules
-- `rule-identity--classification` — stable rule addressing and the artifact-bearing vs advisory split
-- `markdown-yaml-frontmatter-enforcement` — authoring contract for frontmatter SSOT, including concurrency provenance keys
-- `overview` — what PRD/TAD are, the governing standards, and the ADLC/MCP-/WebMCP-native operating posture
-- `solo-dev-ai-native-orientation` — binding lens, harness, and bound obligations -> [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md)
-- `directive-grammar-cid` — shared CID/RAO/SVO message fields, decomposition, grounding, and budgets -> [CID Guidelines](./cid-guidelines.md#shared-field-contract)
-- `artifact-continuity-authoring-seam` — PRD/TAD/ADR CID ownership, codebase grounding, revision joins, RAO grounding, execution handoff, and the pipeline SSOT precedence rule
-- [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) — revision-bound ownership, schema seams, resource demand, checks and unresolved claims; load only for this implementation
-- `concurrent-collaboration--work-tree-integrity` — multi-device, multi-LLM, multi-agent, multi-work-tree obligations -> [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md)
-- `from-0-to-1-prd--tad-creation-process` — binding gate order -> [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md)
-- `flow-patterns` — binding five-pattern coverage -> [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md)
-- `time-to-value` — binding TTV metric obligation -> [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md)
-- `readiness-ladder` — binding status vocabulary -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
-- `agent-platform-readiness` — binding dimension and route obligations -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
-- `lane-topology--deploy-boundary` — binding closed-by-default rule -> [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md)
-- `autonomous-implementation-verification` — binding VCC and Evidence obligations -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
-- `cid-directive-matrix` — lookup surface -> [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md)
-- `core-templates` — binding template-field obligations -> [Core Templates](./prd-tad-adr-mvp-gtm-templates.md)
-- [Selection Criteria](#platform-specific-selection-criteria--multi-agent-reasoning-pipeline) — binding Constraints ↔ Argumentation ↔ Outranking obligations -> [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md)
-- [Pain-Point Mapping](#pain-point-to-feature-mapping) — pain-point-to-feature traceability
-- [Demo Skeleton](#demo-skeleton) — bounded demonstration of the acceptance condition
-- [Domain-Object Rubric](#domain-object-rubric-assessment) — capability ladders and the [four-criterion maturity rubric](./prd-tad-adr-mvp-gtm-maturity.md)
-- [Roadmap](#roadmap) — phased reuse and delta sequencing
-- [Monetization](#monetization) — payer validation and revenue evidence
-- `prd-tad-adr-mvp-gtm-planning-record` — binding MVP/GTM section roles and the four-column task record -> [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md)
-- `venture-record-pitch-deck-business-plan--financial-model` — binding projection, sizing, revenue-recognition, and ADLC cost-ledger obligations -> [Venture Record](./prd-tad-adr-mvp-gtm-venture.md)
-- `adlc-execution-seam` — what a PRD, TAD, or ADR must hand to execution and read back from it -> [ADLC Guidelines](./adlc-guidelines.md)
-- `architecture-diagram-standards` — diagram format obligations, and the seam to the diagram companion set
-- [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) — diagram identity, class catalog, notation, labelling, complexity, drift, diagram-domain findings
-- [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) — surface declaration, ingest surfaces, graph element contract, projection rules, canvas-domain findings
-- [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) — copy-ready, portable-intersection templates per class
-- `prd--tad-integration` — separation of concerns, traceability, and closure rules
-- `anti-pattern-guards` — prohibited patterns -> [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md)
-- `conformance-findings` — binding recording contract -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
-- `validation-checklist` — binding alignment gate -> [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md)
-- [Division of Work](#division-of-work) — one capability owner and reuse decisions across concurrent worktrees
-- `roleactionoutcome` — role-to-deliverable mapping
-- `mantra-application` — the framing mantra
+Load by phase. Every file stays under 600 lines.
 
-**Modular set**: load the bindings and named owners needed for the current phase. Every file stays under 600 lines; a compact protocol may live in its owning section, while larger protocols remain separately loadable. Do not copy a companion's rules into this index or require the entire set for one bounded action.
+**Foundations** — `scope--neutrality-contract` · `rule-identity--classification` · `markdown-yaml-frontmatter-enforcement` · `overview` · `directive-grammar-cid` → [CID Guidelines](./cid-guidelines.md#shared-field-contract) · `artifact-continuity-authoring-seam` → [Artifact Continuity](./adlc-artifact-continuity.md); [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) · `concurrent-collaboration--work-tree-integrity` → [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md), [Scoped Lane Admission](./adlc-scoped-lane-admission.md)
 
-**Companion sets**: this document owns authoring. [ADLC Guidelines](./adlc-guidelines.md) own execution; [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) and [Scoped Lane Admission](./adlc-scoped-lane-admission.md) own concurrency. The three diagram companions own their domain. Consume each owner at its seam; the conformance vocabulary is the union of their enumerations.
+**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
-**Continuity companion**: the [Artifact Continuity Module](./adlc-artifact-continuity.md) owns the universal CID-to-RAO seam, companion-artifact joins, outcome evidence, revision freshness, and successor feedback. This authoring set supplies its PRD, TAD, and ADR inputs; it does not redefine the continuity vocabulary.
+**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
-**Message envelope companion**: [CID Guidelines](./cid-guidelines.md#shared-field-contract) own the shared Context/Intent/Directive, Role/Action/Outcome, and Subject/Verb/Object contract. PRD, TAD, ADR, and cross-agent dispatch consume its grounding, composition, clarification, density, and budget rules; compact prose and exact references may carry fields without copying a full form.
+**Readiness and execution** — `readiness-ladder` · `agent-platform-readiness` · `lane-topology--deploy-boundary` → [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md) · `adlc-execution-seam` → [ADLC Guidelines](./adlc-guidelines.md); [Rapid MVP Sprint](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); [Production Release Lifecycle](./adlc-production-release-lifecycle.md); [Autonomous Continuation](./adlc-autonomous-continuation.md); [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md); [Repository Runtime Readiness](./adlc-repository-runtime-readiness.md)
+
+**Verification** — `autonomous-implementation-verification` · `conformance-findings` · `validation-checklist` → [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md) · `cid-directive-matrix` · `anti-pattern-guards` → [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md) · `architecture-diagram-standards` → [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md), [Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md), [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) · `mantra-application`
+
+This document owns authoring. ADLC Guidelines own execution. Collaboration companions own concurrency. Diagram companions own their domain. Artifact Continuity owns the CID-to-RAO seam. The conformance vocabulary is the union of their enumerations.
 
 ---
 
 ## Rule Identity & Classification
 
-**Makes every individual rule separately addressable and separately classifiable.** Section anchors address a *group* of rules; a conformance check needs to address *one*. Without per-rule identity, two different violations inside one section collapse into a single finding and the regression comparison in Conformance Findings silently stops working.
-
-### Rule Identifier
-
-Every rule carries a **Rule ID** that is stable across edits to unrelated rules:
-
-```
-Rule ID = [owning section anchor] + "#" + [ordinal of the rule within that section, in document order]
-```
+`Rule ID = [owning section anchor] + "#" + [ordinal of the rule within that section, in document order]`.
 
 **Directives**:
-- Derive the Rule ID from the owning `##` section anchor and the rule's position within that section; forbid deriving it from a file name, a line number, or a directory
-- Treat the Rule ID as stable while the rule's own text and owning section are unchanged; inserting an unrelated rule earlier in the same section re-ordinals the rules after it, so record the rule text alongside the ID wherever a finding is stored
-- Where two rules in one section carry identical text, disambiguate by ascending document-order ordinal; forbid merging them into one addressable rule
-- Use the Rule ID, not the section anchor alone, as the `rule anchor` field of a finding and as a component of the deduplication key
-- Rules authored before this section existed inherit their ID by the same derivation; no retroactive hand-labelling is required, and none is permitted to override the derivation
-
-### Artifact-Bearing vs Advisory
-
-Every rule is exactly one of two classes, and the class decides whether an unmet rule is a defect or a preference:
-
-| Class | Definition | Unmet consequence |
-|---|---|---|
-| **Artifact-bearing** | The rule requires a named, locatable output: a document, a section, a template field, a schema, a diagram, a recorded status, a named check | `unimplemented-guideline` |
-| **Advisory** | The rule states a preference, a framing, or a judgement that produces no separately locatable output | No finding; counted as advisory coverage |
-
-**Directives**:
-- Classify a rule as artifact-bearing when its text names a produced output; classify it as advisory otherwise; forbid a third class and forbid leaving a rule unclassified
-- Derive the class from the rule text, so the classification is recomputable and cannot drift from the rule it describes
-- Report the coverage ratio as linked artifact-bearing rules over total artifact-bearing rules; forbid an alignment claim that omits that ratio
-- Distinguish the two classes explicitly, because only artifact-bearing rules can produce an `unimplemented-guideline`; mislabelling advice as a rule inflates the defect count without improving the product
-- Forbid inflating the defect count by classifying advice as artifact-bearing; a high count achieved that way measures labelling, not conformance
-- Count advisory rules separately and report the count; an advisory rule with no artifact is expected, not a gap
+- Derive the Rule ID from anchor and ordinal only; forbid file name, line number, or directory; record rule text beside the ID, since inserting a rule re-ordinals those after it
+- Classify every rule as **Artifact-bearing** (names a locatable output; unmet → `unimplemented-guideline`) or **Advisory** (preference; unmet → counted, no finding); forbid a third class
+- Report coverage as linked artifact-bearing rules over total artifact-bearing rules, with the advisory count beside it
 
 ---
 
 ## Markdown YAML Frontmatter Enforcement
 
-- Select stable guide names or immutable timestamped records through the [document naming profile](./conventions-and-syntax-guidelines.md#document-locators-and-format); retain continuity joins through renames.
-- Canonical planning artifacts and their companions use `prd-tad-adr-mvp-gtm` filenames and start with valid YAML frontmatter declaring `doc_type: "PRD-TAD-ADR-MVP-GTM"`; PRD, TAD, ADR, MVP, and GTM remain distinct section roles. Guideline modules retain their guideline document types.
-- Frontmatter is the SSOT for document identity, status, versioning, renderer activation, and reusable metadata referenced by the body specification.
-- Canonical authored PRD/TAD docs use plain YAML for frontmatter and related schema-bearing blocks; do not replace normal authoring syntax with typed wrapper records.
-- Normalized `{key, type, value}` wrappers are permitted only in dedicated validation fixtures that explicitly test ingest -> parse -> render or ingest -> parse -> validate fidelity.
-- Scalars that contain reserved punctuation, including inline `:` content, must be quoted so strict YAML parsers read planning and architecture metadata deterministically.
-- Parser warning, repair, or fallback behavior is recovery-only; malformed YAML frontmatter remains an upstream authoring defect that must be fixed at source.
-- **Baseline required keys** for any canonical PRD, TAD, or ADR doc: `title`, `doc_type`, `version` (semantic), `date`, `lang`. Extend with domain-specific keys as needed (e.g. `parent` / `parent_version` for a linked Follow-On PRD/TAD per the Agent-Platform Readiness template) without dropping the baseline set.
-- **Conformance keys** are required in addition to the baseline set, because the rules in this guideline set read them and the agnosticity rule forbids recovering them from a path or a directory:
+Frontmatter is the SSOT for identity, status, version, renderer activation, and reusable metadata.
 
-| Key | Value domain | Read by |
+- Canonical planning artifacts use `prd-tad-adr-mvp-gtm` locators through the [document naming profile](./conventions-and-syntax-guidelines.md#document-locators-and-format) and declare `doc_type: "PRD-TAD-ADR-MVP-GTM"`; PRD, TAD, ADR, MVP, GTM remain distinct section roles; Pitch Deck, Business Plan, and Financial Model are projections joined by `continuity_id@revision`
+- Use plain YAML; quote scalars containing `:`; a `{key, type, value}` wrapper belongs only in a parse-fidelity fixture
+- **Baseline keys**: `title`, `doc_type`, `version` (semantic), `date`, `lang`. **Conformance keys**:
+
+| Key | Domain | Read by |
 |---|---|---|
-| `owner` | One named accountable function | `duplicate-owner` |
-| `local_rung` | One Readiness Ladder rung | Readiness Ladder, `status-conflict` |
-| `delivered_rung` | One Readiness Ladder rung | Readiness Ladder, `blended-status` |
-| `lane` | `authoring` \| `mirror` \| `delivery` | Lane Topology & Deploy Boundary |
-| `universal_scope` | `true` \| `false` | Scope & Neutrality Contract modularity rule |
-| `worktree_id` | One stable identifier for the work tree that produced this revision (spans one device or many in sync) | Concurrent Collaboration & Work-Tree Integrity, `worktree-provenance-missing` |
-| `agent_id` | One stable identifier for the authoring agent or session — human or LLM | Concurrent Collaboration & Work-Tree Integrity, `worktree-provenance-missing` |
+| `owner` | one accountable function | `duplicate-owner` |
+| `local_rung` / `delivered_rung` | one Readiness Ladder rung each, derived from evidence | `status-conflict`, `blended-status`, `unproven-claim` |
+| `lane` | `authoring` \| `mirror` \| `delivery` | Lane Topology |
+| `universal_scope` | boolean | Scope & Neutrality |
+| `worktree_id` / `agent_id` | producing work tree and agent | `worktree-provenance-missing` |
+| `continuity_id` | one stable join for every role and projection | `artifact-naming-noncompliant` |
 
-- Declare exactly one `owner` per document; two documents claiming ownership of one contract is a `duplicate-owner` finding, and a document with no `owner` cannot be assigned a rung
-- Keep `local_rung` and `delivered_rung` as two separate keys; a single blended `status` key is a `blended-status` finding
-- Treat every conformance key as derived where a derivation exists: `local_rung` and `delivered_rung` are computed from Evidence References and written back, never authored ahead of the evidence
-- Carry `worktree_id` and `agent_id` on every revision authored under concurrent multi-device, multi-agent, or multi-work-tree conditions; a revision missing either where more than one work tree is active on the same document is a `worktree-provenance-missing` finding
+- One `owner` per document; a blended `status` key is `blended-status`; a rung authored ahead of Evidence References is `unproven-claim`
 
 ---
 
 ## Overview
 
-**Product Requirements Documentation (PRD)**: defines user value propositions, specifies acceptance criteria, prioritizes features systematically, aligns stakeholders, validates assumptions iteratively, and maintains bidirectional traceability.
+**PRD** states WHAT and WHY. **TAD** states HOW. **ADR** records one material choice. **MVP** is the smallest evidenced slice. **GTM** is the payer path and learn loop. **Pitch Deck**, **Business Plan**, and **Financial Model** project the joined artifact. The **ADLC** executes bounded RAO Steps and returns receipts.
 
-**Technical Architecture Documentation (TAD)**: designs component interactions, specifies integration contracts, documents decision rationale, establishes quality attributes, defines deployment strategies, and traces requirements to implementation.
+### 360° Coverage Map
 
-**Governing standards**: structure documents with user-centric narratives; design architectures with domain-agnostic patterns; specify measurable outcomes; maintain requirement-to-implementation traceability; apply iterative refinement; separate concerns systematically.
+| Element | Phase | Owner | Must produce | Finding family |
+|---|---|---|---|---|
+| Pain, WTP, TTV | 0 | Pain-Point Mapping, Time-to-Value | labelled pain, TTV estimate | Product-Market Fit, Economics |
+| PRD | 1 | Core Templates, Flow Patterns, Verification | VCCs, TTV row, MoSCoW | Traceability, CID |
+| TAD | 2 | Templates, Division of Work, Diagrams, Lanes | owners, five flows, budgets, boundaries | Ownership, Topology, Lane |
+| ADR | 2 | Selection Criteria | decision, alternatives, consequences, recovery | Platform Selection |
+| Alignment | 3 | Conformance, Validation Checklist | zero `blocker` | all |
+| START / RELEASE / DEPLOY | 4 | ADLC Execution Seam | lane, exact candidate, exact deployed revision | execution-domain |
+| MVP | 4 | Planning Record, Demo Skeleton, Rubric, Readiness | evidenced `Must` slice | Readiness, Demonstration |
+| GTM | 5 | Monetization, Roadmap, Planning Record | ranked first-dollar path | Monetization, Roadmap |
+| Pitch Deck | 5 | Venture Record | bounded Slide Register, Reveal = VCC | Venture Record |
+| Business Plan | 5 | Venture Record | two-method market, risks from findings, legal and capital rows | Venture Record |
+| Financial Model | 5 | Venture Record | assumptions, unit economics, income, cash, scenarios, ADLC ledger | Venture Record |
 
-**Enforceability**: these standards are written to be checked, not only read. Each rule is phrased so a violation is observable, each violation has a name and a severity (see Conformance Findings), each readiness claim is a value derived from recorded evidence (see Readiness Ladder), and each step toward a public surface passes a named gate that is closed by default (see Lane Topology & Deploy Boundary). A rule that cannot fail a check is guidance; this set labels the difference rather than blurring it. The apparatus exists to keep the 0-to-1 loop fast and honest — a gate earns its place by narrowing a real, previously observed failure or by shortening time-to-first-dollar; a gate that does neither is itself a `cid-density-violation`, not a virtue.
+A gate that neither narrows an observed failure nor shortens time-to-first-dollar is a `cid-density-violation`.
 
-**Solo-operator AI-native orientation**: these guidelines are calibrated for a solo founder or small team operating an AI-native product stack across an Agentic Development Lifecycle (ADLC), MCP-/WebMCP-native by default, and routinely running multiple devices, multiple LLMs, multiple agents, and multiple work trees in hybrid cloud/local concurrency. Every decision is evaluated through five compounding lenses — **min-viable-max-value** (ship the smallest artifact that delivers the largest user impact), **TCO-zero** (prefer FOSS and zero-egress infrastructure; make cost a first-class architectural constraint), **token economics** (treat LLM token consumption as a measurable engineering metric at every pipeline boundary), **harness-first** (orchestrate AI capabilities through composable, observable, MCP-/WebMCP-conformant harnesses rather than ad-hoc prompt calls), and **concurrency-safe** (every artifact, directive, and merge holds under multiple simultaneous work trees, devices, and agents without deadlock, corruption, or hallucinated state). These lenses do not replace the core PRD/TAD standards — they sharpen prioritization, constrain architecture choices, and accelerate validation cycles.
-
-**Reference implementation** — one instantiation of this orientation, non-binding per Scope & Neutrality (a project instantiating this set states its own domain here in its place): a from-0-to-1, production-runtime-ready agentic-commerce/marketplace MVP — agent-to-agent discovery, agentic payment settlement, and AI-agent economics as the domain objects (Domain-Object Rubric Assessment) — drawing architectural inspiration from Anthropic's open-source `commerce-agents` reference architecture, run end-to-end on the ADLC and federated through an MCP-/WebMCP-conformant gateway per Agent-Platform Readiness, with `/`, `#`, and `@` as its three invocable routes declared in one Invocation Register. Neither the commerce domain, the inspiring architecture, nor the three route glyphs are universal; they name this project's own choices under the label this rule requires, and every future ADR in this project's set re-applies the general criterion, not the named example.
+**Reference implementation** — non-binding: a solo-operator, AI-native, MCP-/WebMCP-native product run end-to-end on the ADLC, with `/`, `#`, `@` as its three invocable routes in one Invocation Register.
 
 ---
 
 ## Solo Dev AI-Native Orientation
 
-The separately loadable [Solo-Operator AI-Native Orientation module](./prd-tad-adr-mvp-gtm-economics.md) owns the five compounding lenses, the guideline load budget, the AI-native harness pattern, orchestration topology, the ROI template, the FOSS-first rule, and deployment-model TCO variants. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Economics & Time-to-Value module](./prd-tad-adr-mvp-gtm-economics.md) owns the five lenses, load budget, harness pattern, orchestration topology, ROI template, FOSS-first rule, and deployment-model TCO variants.
 
 **Directives**:
-- Evaluate every decision through the five lenses named in that module — min-viable-max-value, TCO-zero, token economics, harness-first, concurrency-safe; forbid a scope or architecture decision that names none of them
-- Wrap every AI-powered component in a harness with typed input, typed output, an emitted cost log, and a stated fallback; a raw prompt call in a production pipeline is an anti-pattern guard violation
-- Prefer an MCP- or WebMCP-conformant tool contract for every AI Agent discovery, invocation, and harness route, labelled as a reference implementation per Scope & Neutrality; a proprietary protocol substituted where a conformant path exists, without a stated reason, is a `vendor-coupling` finding
-- Bound every agentic loop with a max-iteration count and a circuit-breaker condition; an unbounded loop is an `unbounded-loop` finding at `blocker` severity
-- Separate every candidate's deployment-model variants in a TCO comparison; a blended figure is a `blended-deployment-tco` finding
-- Weigh every new rule, gate, or template field against the pain-point-to-feature and monetization loops it protects; a rule that adds authoring cost without narrowing an observed failure mode or shortening time-to-first-dollar is a `cid-density-violation`
+- Evaluate every scope and architecture decision through min-viable-max-value, TCO-zero, token economics, harness-first, and concurrency-safe
+- Wrap every AI component in a harness with typed input, typed output, emitted cost log, and stated fallback
+- Prefer an MCP- or WebMCP-conformant contract for every agent route, labelled as reference implementation — otherwise `vendor-coupling`
+- Bound every agentic loop with a max-iteration count and circuit-breaker — `unbounded-loop` at `blocker`
+- Separate deployment-model variants in every TCO comparison — `blended-deployment-tco`
+- Weigh every new rule against the pain-point and monetization loops it protects — otherwise `cid-density-violation`
 
 ---
 
 ## Directive Grammar (CID)
 
-PRD, TAD, ADR, and authoring-to-execution or agent-to-agent messages consume one [CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract). Its roles name functions; worktree, device, and agent identities remain provenance rather than competing role definitions. SVO expresses the same RAO action at command granularity, not a second instruction.
-
-### Field Contract
-
-The [shared field contract](./cid-guidelines.md#shared-field-contract) is the sole schema owner. Carry its fields explicitly or by unambiguous reference in prose, tables, or structured records; all three tiers must resolve to the same instruction. This section adds no fields or mandatory serialization.
-
-### Sorting
-Each `CID Directive Matrix` entry is organized alphabetically (A→Z) for clarity and neutrality.
+The [shared field contract](./cid-guidelines.md#shared-field-contract) is the sole schema owner for Context/Intent/Directive, Role/Action/Outcome, and Subject/Verb/Object. Roles name functions; worktree, device, and agent are provenance.
 
 **Directives**:
-- Keep each directive and dispatched message resolvable against the shared Field Contract; unresolved required meaning or a competing schema is `cid-schema-noncompliant`, while an omitted duplicate form is not
-- Cite `context` and `directive` against real, locatable state — a file path, a revision, a Rule ID, a command output — or state `source=unverified` explicitly, per the module's Sender Grounding contract; an uncited or silently-paraphrased citation is a `cid-context-uncited` finding
-- Verify cited source state before consuming it, regardless of worktree, device, or LLM origin; reuse evidence bound to an unchanged immutable revision and refresh volatile facts at their consuming transition. Acting on an unverified material claim is `cid-grounding-unverified`
-- Resolve ambiguity from current evidence and existing decisions first; ask one concise question only for an unresolved semantic decision, with a concrete recommendation where available. A request for mechanically derivable facts or unnecessary reconfirmation is `cid-clarification-malformed`
-- Keep the three grammar tiers convergent per the Composition Rule; a `context`/`intent`/`directive` that resolves to a different instruction than its own `role`/`action`/`outcome` or `subject`/`verb`/`object` is a `cid-composition-divergence` finding
-- Apply the module's Density Rules and forbid its named anti-patterns — Ceremony, Complication, Verbosity — in every directive; a violation of either is a `cid-density-violation` finding
-- Decompose independently closable outcomes into bounded task nodes with dependencies and checks; reuse the same lineage across phases. Missing actionable decomposition is `cid-decomposition-missing`; a phase label alone does not require another file or agent
-- Stay within the ADLC Budgets on every always-load surface this document or its companions define; a directive that grows such a surface without stating its projected byte/module delta is a `cid-budget-exceeded` finding
-- Preserve stable identity and exact revision for persisted messages using the project's declared naming convention; do not require a file per decision. An ambiguous persisted identity is `cid-naming-noncompliant`
+- Keep every directive resolvable against the shared contract — `cid-schema-noncompliant`
+- Cite `context` and `directive` against locatable state or mark `source=unverified` — `cid-context-uncited`
+- Verify cited state before consuming it — `cid-grounding-unverified`
+- Resolve ambiguity from evidence first; one concise question only for an unresolved semantic decision — `cid-clarification-malformed`
+- Keep the three tiers convergent — `cid-composition-divergence`
+- Apply Density Rules — `cid-density-violation`
+- Decompose independently closable outcomes into bounded task nodes — `cid-decomposition-missing`
+- Stay within ADLC budgets on every always-load surface — `cid-budget-exceeded`
+- Preserve stable identity and exact revision for persisted messages — `cid-naming-noncompliant`
 
 ---
 
 ## Artifact Continuity Authoring Seam
 
-The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and validation. PRD owns product intent, scope, criteria, and VCCs; TAD consumes that exact revision and owns structure; ADR records material decisions, alternatives, consequences, and relevant recovery. Execution consumes their joined projection as bounded RAO Steps under the shared CID contract. Decompose independently closable outcomes, not phase labels; concurrent revisions also satisfy the collaboration seam before baseline.
-
-The [codebase-grounding reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) supplies one bounded, machine-readable ownership snapshot across source, schema, application and publication repositories. It introduces no competing CID/RAO/SVO fields or universal topology. Source-confirmed ownership, candidate corrections, runtime proof and deployed state remain separate.
+The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and validation. PRD owns product intent, scope, criteria, and VCCs; TAD consumes that exact revision and owns structure; ADR records material decisions, alternatives, consequences, and relevant recovery; MVP and GTM consume all three; projections consume the whole. Execution consumes the joined projection as bounded RAO Steps under the shared CID contract. The [codebase-grounding reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) supplies one machine-readable ownership snapshot.
 
 **Directives**:
-- Declare stable continuity IDs and exact revisions across PRD, TAD, and ADR; forbid prose, filename, or co-location joins
-- Give every generated PRD, TAD, or ADR a stable, collision-free locator under the project's declared naming convention; identify its role and continuity in content. A rename retains exact provenance and repaired references; a filename substituted for a continuity join is `artifact-naming-noncompliant`
-- Default to one combined `PRD-TAD-ADR` document with addressable sections; split only for a stated size, ownership, or review need. An unstated split that protects no boundary is a `cid-density-violation`
-- Carry the continuity ID and exact revision as the join between the `PRD`, `TAD`, and `ADR` sections whether combined in one file or split across several; a filename-based join is `artifact-naming-noncompliant` in either shape
-- Before baseline, produce an embedded or linked **Codebase Grounding Record** for every externally authored, generated, or imported document (a non-native input) used as specification input, including any PRD: bind the input revision and scoped codebase revision or digest; enumerate every material current-state claim used for capability existence, ownership, reuse, dependency or interface/configuration choice, feasibility, or readiness; cite source, configuration, schema, test, or runtime-contract evidence; and disposition each claim as `confirmed`, `contradicted`, `absent`, or `unverified`. Document provenance and internal consistency are not implementation evidence, while codebase evidence never silently rewrites product intent; a missing record or unresolved claim used to justify baseline, execution, or readiness is an `unproven-claim`
-- Close PRD-to-TAD coverage, TAD grounding, and applicable ADR joins before deriving RAO Steps
-- Re-run Directive-to-RAO coverage and affected re-derivation after any upstream revision, including one that arrived from a different work tree
-- Require joined independent evidence before satisfaction or readiness advances; forbid narrative or self-graded completion
-- Reuse the Artifact Continuity Module's findings and reference projections; forbid a parallel continuity vocabulary
-- Treat the joined PRD-TAD-ADR — one continuity ID at one exact revision — as the sole governing SSOT for every from-0-to-1 pipeline transition: scope, candidate, integration, release, and runtime evidence each consume one criterion, design element, and decision from it. On conflict, precedence is PRD-TAD-ADR → its named architecture or composition owner → derived indexes → navigation, workflow, and runtime command documents; a README, workflow, runbook, or runtime document that states a requirement, design, or decision absent from the joined artifact is a `duplicate-owner` finding, and a stale join blocks only the affected transition, never disjoint work
+- Declare stable continuity IDs and exact revisions across every role and projection — `artifact-naming-noncompliant`
+- Default to one combined document with addressable sections; an unstated split is `cid-density-violation`
+- Before baseline, produce a **Codebase Grounding Record** for every non-native input; an unresolved claim used for baseline, execution, or readiness is `unproven-claim`
+- Close PRD-to-TAD coverage, TAD grounding, and applicable ADR joins before deriving RAO Steps; re-run Directive-to-RAO coverage after any upstream revision
+- Require joined independent evidence before satisfaction or readiness advances
+- Treat the joined artifact at one `continuity_id@revision` as the sole SSOT; a downstream document stating a requirement, design, or decision absent from the artifact is `duplicate-owner`
 
-**Authoring-to-execution gate**: advance only with current Codebase Grounding Records, complete PRD-to-TAD and Directive-to-RAO coverage, grounded design and RAO steps, independent checks, and a recorded decision covering the scope. Correct and re-ground in the authorized authoring loop without clerical reconfirmation; unresolved product, scope, or authority choices block the affected transition. A confirmed capability gap may become planned work within that scope; it never becomes evidence of an existing capability.
+**Authoring-to-execution gate**: advance only with current grounding records, complete coverage, grounded RAO steps, independent checks, and a recorded decision covering the scope. A confirmed capability gap may become planned work; it never becomes evidence of an existing capability.
 
 ---
 
 ## Concurrent Collaboration & Work-Tree Integrity
 
-[Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) and [Scoped Lane Admission](./adlc-scoped-lane-admission.md) own coordination across devices, LLMs, agents, and worktrees. This section applies their contracts to PRD, TAD, and ADR and forbids **deadlock**, **corruption**, **hallucination**, **drift**, and **work-tree sprawl**. **Lossless** means preserved owner-authored work and reconstructable history; reviewed intentional replacement or deletion is permitted, silent loss is not.
+[Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) and [Scoped Lane Admission](./adlc-scoped-lane-admission.md) own coordination.
 
 **Directives**:
-- Carry `worktree_id` and `agent_id` on every revision per Markdown YAML Frontmatter Enforcement whenever more than one work tree is concurrently active on the same document; an unattributed revision under those conditions is a `worktree-provenance-missing` finding
-- Enforce single-writer-per-capability from Division of Work across every concurrent work tree and agent, not only within one; two work trees mutating the same owning component's capability without a recorded, merged reuse decision is a `duplicate-capability-owner` finding
-- Require idempotent integration by exact candidate and receipt: replay returns the recorded result without repeating effects; a replay that changes state is `merge-non-idempotent`. Dependency order remains explicit; arbitrary merges need not commute or preserve obsolete content as a union
-- Preserve every owner's unintegrated work and the provenance of intentional changes; a reviewed candidate may remove replaced content while keeping evidence and continuity reconstructable. Silent overwrites, dropped concurrent work, or invented resolution are `merge-lossy`; never force a content union to manufacture preservation
-- Treat any recorded state that no longer matches its governing source — a phase order, a diagram, a status vocabulary, a continuity ID, a rung — as **drift** the moment it is observed; forbid letting it stand once named, and route it through the specific Finding Type its governing section already owns (`gate-order-drift`, `diagram-spec-drift`, `status-conflict`, or the closest section-owned equivalent) rather than inventing a parallel drift vocabulary
-- Forbid any lock, lease, or wait condition spanning more than one work tree or device without a stated timeout and an escalation path to the Evaluator; an unbounded cross-work-tree wait is a `deadlock-unbounded-wait` finding at `blocker` severity
-- Apply Receiver Grounding (Directive Grammar (CID)) with no exception to state produced by another work tree, device, or LLM before acting on it; treat an unverified cross-origin claim as a hallucination risk, not a shortcut — proceeding on it is a `cid-grounding-unverified` finding
-- Bound active agents and worktrees by declared task capacity and review cadence; reuse admitted disjoint scopes before opening another lane. Retire or clean only exact profile-selected, receipt-eligible targets; unexplained inactive lanes raise `work-tree-sprawl` without authorizing deletion
-- Route every irreconcilable concurrent claim — two work trees each asserting a different `outcome` for the same directive — to the Evaluator for a binding verdict; forbid resolving such a conflict by whichever write lands last
-- Treat a hybrid cloud/local topology as a deployment-model variant of one coordination protocol, never a separate one; a claim authored locally and one authored in cloud CI reconcile through the identical merge and grounding rules, with no silent preference for either origin
+- Carry `worktree_id` and `agent_id` when more than one work tree is active — `worktree-provenance-missing`
+- Enforce single-writer-per-capability — `duplicate-capability-owner`
+- Require idempotent integration by exact candidate and receipt — `merge-non-idempotent`; preserve unintegrated owner work — `merge-lossy`
+- Route observed drift through the finding its governing section owns; forbid a parallel drift vocabulary
+- Forbid any cross-work-tree lock without timeout and Evaluator escalation — `deadlock-unbounded-wait` at `blocker`
+- Apply Receiver Grounding to every cross-origin claim — `cid-grounding-unverified`
+- Bound active agents and work trees by declared capacity; unexplained inactive lanes are `work-tree-sprawl` without authorizing deletion
+- Route irreconcilable concurrent outcomes to the Evaluator; forbid last-write-wins
 
 ---
 
 ## From 0 to 1: PRD & TAD Creation Process
 
-The separately loadable [From 0 to 1: PRD & TAD Creation Process module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the five phases, their numbered steps, and the gate that closes each one. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the phases, steps, and gates. The spine is **Phase 0** pain, WTP, TTV, grounding → **Phase 1** PRD → **Phase 2** TAD and ADRs → **Phase 3** alignment with zero `blocker` → **Phase 4** ADLC `START → RELEASE → DEPLOY` to an evidenced MVP → **Phase 5** GTM and venture projections.
 
 **Directives**:
-- Treat the phase order in that module as the canonical order; a documented stage order that contradicts it is a `gate-order-drift` finding, and a later gate passing while an earlier one fails is a `gate-sequence-violation`
-- Pass every gate before proceeding; Phase 3 exits only with both documents version-stamped and the alignment check reporting zero `blocker` findings
-- Bound the Phase 4 revision cycle like every other loop in this set: a max-iteration count plus a circuit-breaker on no reduction in open `blocker` findings across two consecutive cycles
+- Treat the module's phase order as canonical — `gate-order-drift`; a later gate passing while an earlier fails is `gate-sequence-violation`
+- Pass every gate before proceeding; Phase 3 exits only with version-stamped documents and zero `blocker` findings
+- Bound the revision cycle: 3 alignment cycles maximum, circuit-breaker on no reduction in open `blocker` findings across two consecutive cycles
 
 ---
 
 ## Flow Patterns
 
-The separately loadable [Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the five canonical flow types — user journey, workflow, data flow, orchestration/harness flow, and topology — with a template and directives for each. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns user journey, workflow, data flow, orchestration/harness flow, and topology.
 
 **Directives**:
-- Trace every feature through all five flow patterns; a feature that skips one is incompletely specified
-- Render each flow pattern as its bound diagram class per the diagram companion set; a missing rendering is a `missing-required-diagram` finding in the diagram domain
-- Anchor every data flow and harness flow to a journey stage; an orphaned flow has no user value to preserve
+- Trace every feature through all five — a skipped flow is incompletely specified
+- Render each flow as its bound diagram class — `missing-required-diagram`
+- Anchor every data and harness flow to a journey stage
 
 ---
 
 ## Time-to-Value
 
-The separately loadable [Time-to-Value module](./prd-tad-adr-mvp-gtm-economics.md) owns the TTV definition, its metric template, and its validation method. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Economics & Time-to-Value module](./prd-tad-adr-mvp-gtm-economics.md) owns the TTV definition, template, and validation method.
 
 **Directives**:
-- Estimate TTV steps and elapsed time in Phase 0 and state TTV as a named row in PRD success metrics for every user-facing feature; an absent TTV is a `missing-economics-metric` finding
-- Validate TTV on a clean environment before Phase 3 sign-off; forbid an estimate that has never been walked through
-
----
-
-## Readiness Ladder
-
-The separately loadable [Readiness Ladder module](./prd-tad-adr-mvp-gtm-readiness.md) owns what earns each rung and the evidence rule that governs it. This section publishes the **vocabulary**, because other documents consume it and a consumed interface belongs with the index rather than behind a load.
-
-Strictly ordered, lowest to highest:
-
-```
-undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-verified
-```
-
-What earns each rung is defined once in the [Readiness Ladder module](./prd-tad-adr-mvp-gtm-readiness.md); this index does not restate it.
-
-**Directives**:
-- Draw every status value from that ladder and no other vocabulary; an unrecognised value is an `unknown-status` finding
-- Derive every rung from Evidence References only; a hand-authored rung is an `unproven-claim` at `blocker` severity
-- Report local and delivered readiness as two separate fields; one blended field is a `blended-status` finding
-
----
-
-## Agent-Platform Readiness
-
-The separately loadable [Agent-Platform Readiness module](./prd-tad-adr-mvp-gtm-readiness.md) owns the three readiness dimensions, their tiers, the execution order, the Invocation Surface Contract, the readiness gap matrix, and the follow-on document template. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
-
-**Directives**:
-- Name which dimensions are in scope; an unqualified "agent-ready" claim is unverifiable
-- Keep every discovery and read route at zero token cost; a non-zero cost on a read route is a `paid-read-path` finding
-- Declare every `/`, `#`, `@`, and tool-identity route in exactly one Invocation Register; a route declared nowhere is an `orphan-route` and one declared twice is an `ambiguous-route`
-- Federate every AI Agent discovery and invocation route through an MCP- or WebMCP-conformant gateway wherever one is available, per Solo-Operator AI-Native Orientation; an agent-callable route left outside the federated gateway with no stated reason is an `unfederated-tool` finding
-
----
-
-## Lane Topology & Deploy Boundary
-
-The separately loadable [Lane Topology & Deploy Boundary module](./prd-tad-adr-mvp-gtm-readiness.md) owns the canonical lane sequence, the four required parts of every boundary, and the closed-by-default promotion rule. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
-
-**Directives**:
-- Document all three lanes and every boundary before the first promotion; a missing lane is a `missing-lane` finding at `blocker` severity
-- Keep every Deploy Boundary `closed` absent a referenced operator instruction; an unrecorded promotion is an `ungated-promotion`
-- Forbid any authoring-lane command that mutates a mirror or delivery surface; such a command is a `deploy-boundary-breach` at `blocker` severity
-
----
-
-## Autonomous Implementation Verification
-
-The separately loadable [Autonomous Implementation Verification module](./prd-tad-adr-mvp-gtm-verification.md) owns the VCC primitive, the criterion-to-condition pipeline, evaluator independence, the Evidence Reference, the traceability extension, and the closure rules. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
-
-**Directives**:
-- Express every acceptance criterion as a VCC with one measurable end state, a stated check, and its constraints; a criterion that cannot be demonstrated from surfaced output is not testable
-- Attach an Evidence Reference — named invocable check, recorded result, surface — to every satisfied VCC; a named check with no recorded result cannot raise a rung
-- Keep the Evaluator a distinct mechanism from the implementer, and from every work tree or agent whose output it judges; a self-graded verdict is not a verdict
-
----
-
-## CID Directive Matrix
-
-The separately loadable [CID Directive Matrix module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the alphabetical Context/Intent/Directive mantras covering every concern in this set. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
-
-**Directives**:
-- Use the matrix as the lookup surface for a concern's directive; it summarises obligations owned by the sections named in the Module Index and adds none of its own
+- Estimate TTV in Phase 0 and state it as a named row in PRD success metrics for every user-facing feature — `missing-economics-metric`
+- Validate TTV on a clean environment before Phase 3 sign-off
 
 ---
 
 ## Core Templates
 
-The separately loadable [Core Templates module](./prd-tad-adr-mvp-gtm-templates.md) owns the copy-ready PRD, TAD, and ADR template bodies, including the component inventory, Diagram Register, and Deploy Boundary Register. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Core Templates module](./prd-tad-adr-mvp-gtm-templates.md) owns the PRD, TAD, ADR, MVP, GTM, and projection template bodies, plus the component inventory, Diagram Register, and Deploy Boundary Register.
 
 **Directives**:
-- Instantiate the templates rather than reinventing their fields; a template field exists because a rule in this set requires the artifact it names
-- Keep every template field that carries a conformance obligation — rungs, Evidence References, VCCs, token budget, TCO per deployment model, boundary state, work-tree provenance; dropping one silently removes the check that reads it
-
----
-
-## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline
-
-The separately loadable [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **Constraints ↔ Argumentation ↔ Outranking** stage bodies, cross-stage rules, and reference implementation for platform, vendor, provider, channel, or price choices. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
-
-**Directives**:
-- Dispose every candidate `pass` or `fail-<named-constraint>` against the project's own governing requirements before any comparison; a candidate compared without recorded dispositions is `constraint-gate-skipped`
-- Record an auditable non-compensatory outranking relation over admitted candidates and preserve incomparability where it does not resolve; a scalar score in place of the relation is `outranking-relation-unstated`, a forced order over an unresolved pair is `outranking-incomparability-collapsed`
-- Route contested choices to an argument graph adjudicated by an Evaluator holding no argument in it; a missing graph is `argumentation-graph-missing`, a self-graded verdict is `argumentation-self-graded` at `blocker` severity
-- Bound the pipeline by the task's declared time, token, and iteration limits and record an unresolved decision at the bound rather than inventing a winner
-- Name real vendors, platforms, or providers only under a heading or block whose own text contains the words "reference implementation"; otherwise `vendor-coupling`
-
----
-
-## Pain-Point-to-Feature Mapping
-
-This section owns the pain-point-to-feature record and its evidence requirements; embed it in the PRD or reference the exact record.
-
-**Directives**:
-- Trace every `Must`-priority feature to exactly one named pain point stated as: pain point, hook, break, fix, close, and a min-time-resource-max-value note; a feature with no traceable pain point is unscoped, not merely under-documented
-- State the min-time-resource-max-value note as an explicit reuse-or-build split against components named in Division of Work; forbid presenting a fix as net-new when an existing capability already covers it
-- Label a pain point `unvalidated` until a user quote, ticket, or measured behavior supports it; label it `demand-proven` only with actual paid-customer evidence. A price signal, unpaid signed pilot, or test transaction is WTP or mechanism evidence, not collected revenue; an `unvalidated` pain point backing a `Must` at baseline is `pain-point-not-validated`
-- Rank competing fixes for the same pain point by proximity to what is already built — zero-code-change configuration first, minimal-code-change extension of an existing component second, net-new build last — before weighing any other feasibility factor; a fix ranked above a lower-cost equivalent with no stated reason is a `roadmap-order-unexplained` finding
-- Prioritize among qualifying pain points by evidence of willingness-to-pay (WTP) magnitude — a stated price point, deal size, or committed budget — ahead of build cost or technical elegance; a `Must` ranking that inverts a recorded WTP ordering with no stated reason is a `roadmap-order-unexplained` finding, and a pain point with no WTP evidence at all cannot outrank one that has it
-- Forbid a hook or close that implies a capability the fix does not have; both restate the pain point, they do not extend the claim beyond it
-
----
-
-## Demo Skeleton
-
-This section owns the bounded demonstration sequence; one compact flow may satisfy it without another document.
-
-**Directives**:
-- Require a fixed, time-boxed beat table — Hook, Probe, Reveal, `[domain action]`, Close — for every feature claiming `Must` priority or a Domain-Object Rubric rung of L3 or above; a beat with no stated time bound is a `missing-demo-beat` finding
-- Bound total demonstration time to the budget stated in the feature entry; forbid beats whose stated durations sum past that budget
-- Anchor the Reveal beat to the feature's own VCC — the instant the demo shows the acceptance condition holding, not a narrated claim of it
-- Name the `[domain action]` beat by the product's own interaction (approve, swipe, confirm, sign); forbid a skeleton hardcoded to one input device or channel
-
----
-
-## Domain-Object Rubric Assessment
-
-This section binds rubric assessment. The [Agent Experience Maturity module](./prd-tad-adr-mvp-gtm-maturity.md) owns the supplied four-criterion 1–5 matrix, evidence joins and MVP→GTM use. Its independent ratings are separate from the readiness ladder and any product-specific capability ladder.
-
-**Directives**:
-- Identify the product's actual domain object before applying any external leveled capability rubric; forbid scoring against a rubric's supplied example object when the product's own domain object is structurally different
-- For a cumulative capability ladder, report the highest contiguous level whose checks pass and the next unpassed level as a gap; for the four-criterion experience rubric, report each evidenced descriptor or `unassessed`; claiming an aspirational level while a prerequisite is absent is `overclaimed-rubric-level`
-- Name the specific blocking component for every unclaimed rung between the current and target level; an unclaimed rung with no stated blocker is an `unresolved-rubric-gap` finding
-- Permit closing a rubric gap by reusing an existing capability from another artifact in this set; require an explicit cross-artifact reference per Division of Work rather than a silent re-implementation
-
----
-
-## Roadmap
-
-This section owns the compact roadmap: feature, current reuse, new work, priority rationale, and prerequisite per phase.
-
-**Directives**:
-- State, for every roadmap phase: the feature, what it reuses (naming the specific existing component or artifact), what is genuinely new, and a priority rationale; a phase with an empty reuse statement and no stated justification is a `roadmap-reuse-unstated` finding
-- Order phases by reuse-adjusted build cost, not solely by an external rubric's nominal difficulty order; state any divergence from that nominal order explicitly, or record it as a `roadmap-order-unexplained` finding
-- Gate a later phase on an earlier phase's named prerequisite component wherever one exists; the gate must be stated, not merely honored by coincidence
-- Mark a deliberately deferred, real idea `Won't (this increment)` rather than omitting it; an omitted-but-known idea is a `roadmap-scope-silently-dropped` finding
-
----
-
-## Monetization
-
-This section owns monetization evidence and stream selection; reference observed customer results and distinguish them from pricing or settlement mechanism checks.
-
-**Directives**:
-- Track `mechanism-proven` (pricing/settlement works against stated test inputs) and `demand-validated` (a named segment supplies WTP evidence) independently; either may exist without the other. Record actual payment separately before claiming revenue; using a mechanism test as demand or paid evidence is `monetization-demand-unvalidated`
-- Select the nearest-term stream by which customer segment already exists in the current phase, not by which stream is technically simplest; a stream requiring a segment gated behind a later phase is `Should`/`Could` at best until that segment exists, never `Must`
-- Order every viable stream by its distance to a real first dollar — the fewest unvalidated assumptions and the least unbuilt infrastructure between today and one paying transaction — and state that ordering explicitly; a monetization section that proposes multiple streams without ranking them by time-to-first-dollar is a `monetization-demand-unvalidated` finding
-- Require the result of a validation action — a priced customer conversation, pilot commitment, or payment — before using `demand-validated`; a planned action or unpriced signup alone is not WTP evidence
-- Forbid deferring a monetization decision without stating the deferral explicitly; an undocumented default-to-free stance forecloses the test of whether a real payer exists
+- Instantiate the templates; a field exists because a rule requires the artifact it names
+- Keep every conformance-bearing field — rungs, Evidence References, VCCs, token budget, TCO per deployment model, boundary state, provenance, assumption IDs, Slide Register bounds
 
 ---
 
 ## PRD-TAD-ADR-MVP-GTM Planning Record
 
-The separately loadable [MVP→GTM Planning Record module](./prd-tad-adr-mvp-gtm-planning-record.md) owns the five section roles of the joined artifact — PRD, TAD, ADR, MVP, GTM — and the four-column task record `PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date` that joins bounded work to it. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [MVP→GTM Planning Record module](./prd-tad-adr-mvp-gtm-planning-record.md) owns the five section roles and the four-column task record `PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date`.
 
 **Directives**:
-- Treat `MVP` and `GTM` as consumers of PRD criteria, TAD elements, and ADR decisions under one continuity ID and exact revision; a requirement, design, or decision first stated there is a `duplicate-owner` finding
-- Join every planning record to the artifact by `continuity_id@revision`, never by path or a free-standing identifier; an unjoined record is `artifact-naming-noncompliant`
+- Treat MVP and GTM as consumers of PRD criteria, TAD elements, and ADR decisions under one `continuity_id@revision` — `duplicate-owner`
+- Join every planning record by `continuity_id@revision` — `artifact-naming-noncompliant`
+
+---
+
+## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline
+
+The [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **Constraints ↔ Argumentation ↔ Outranking** stage bodies for platform, vendor, provider, channel, price, or funder-instrument choices.
+
+**Directives**:
+- Dispose every candidate `pass` or `fail-<named-constraint>` against the project's own requirements before comparing — `constraint-gate-skipped`
+- Record an auditable non-compensatory outranking relation and preserve incomparability — `outranking-relation-unstated`, `outranking-incomparability-collapsed`
+- Route contested choices to an argument graph judged by an Evaluator holding no argument — `argumentation-graph-missing`, `argumentation-self-graded` at `blocker`
+- Bound the pipeline by declared time, token, and iteration limits; record an unresolved decision at the bound rather than inventing a winner
+- Name real vendors only under a "reference implementation" label — `vendor-coupling`
 
 ---
 
 ## Venture Record: Pitch Deck, Business Plan & Financial Model
 
-The separately loadable [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, scenario set, and ADLC Cost Ledger. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger.
 
 **Directives**:
-- Treat the pitch deck, business plan, and financial model as projections of the joined artifact at one `continuity_id@revision`; a claim, number, or decision that first appears in a projection is `pitch-claim-unsourced`, and a projection joined by path alone is `artifact-naming-noncompliant`
-- Carry every projected claim's evidence status in the owners' vocabulary — pain labels, monetization labels, derived rungs; forbid an unlabelled forward-looking statement
-- Recognize revenue in any projection only from collected payment; WTP, pilots, and test transactions sit on their own labelled rows or it is `revenue-recognized-unpaid`
-- Register every model input with source, disposition, and date, ledger the lifecycle's own operating cost from execution receipts, and state at least three scenarios with runway; the module names the finding each omission raises
-- Size a market by two cited independent methods and reconcile them; one method is `market-size-single-method`
+- Treat all three as projections of the joined artifact at one `continuity_id@revision`; a claim, number, or decision first appearing in a projection is `pitch-claim-unsourced`; a path-only join is `artifact-naming-noncompliant`
+- Carry every projected claim's evidence status in the owners' vocabulary; forbid an unlabelled forward-looking statement
+- Recognize revenue only from collected payment — `revenue-recognized-unpaid`
+- Register every model input with source, disposition, and date — `financial-assumption-unsourced`; carry token cost as COGS — `missing-economics-metric`; ledger ADLC operating cost from execution receipts — `adlc-cost-unledgered`
+- Produce income statement, cash-flow statement, and Base/Downside/Upside scenarios with runway; omit a balance sheet only with a stated reason — `scenario-set-incomplete`
+- Size a market by two cited independent methods and reconcile them — `market-size-single-method`
+- Anchor the deck's Reveal to the MVP Demo Skeleton VCC; tie the ask to named Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity
 
 ---
 
-## ADLC Execution Seam
+## Pain-Point-to-Feature Mapping
 
-The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task budgets, agent roles, tool permissions, human-in-the-loop gates, release control, and the execution-domain finding vocabulary. This section owns only what a PRD, TAD, or ADR must hand across that seam and read back from it.
+Owned here. Embed the record in the PRD or reference it exactly.
 
 **Directives**:
-- Hand execution a baselined artifact with zero open `blocker` findings, current Codebase Grounding Records, and VCCs it can decompose into bounded task nodes; a directive with no closable decomposition is `cid-decomposition-missing`
-- Name in the TAD every human-in-the-loop gate the execution set requires for this scope, with its evidence and rollback; an unnamed gate is `human-gate-unstated`
-- State per-feature token, iteration, and wall-clock ceilings the execution set's per-task budgets may narrow but never exceed; an unbounded loop is `unbounded-loop` at `blocker` severity
-- Read readiness, cost, and integration facts back only from Evidence References and receipts the execution set emits; a rung, savings, or completion claim authored without them is `unproven-claim`
-- Keep the operator path externally simple as start one lane → release one exact candidate → deploy one exact protected revision; a document that narrates a different order is `gate-order-drift`
+- Trace every `Must` feature to one pain point in fixed form — pain point, hook, break, fix, close, min-time-resource-max-value note
+- State the note as a reuse-or-build split against Division of Work components
+- Label a pain point `unvalidated` until a quote, ticket, or measured behaviour supports it; `demand-proven` only with paid-customer evidence; an `unvalidated` pain backing a `Must` at baseline is `pain-point-not-validated`
+- Rank fixes by proximity to what is built, and pain points by WTP magnitude before build cost — `roadmap-order-unexplained`
+- Forbid a hook or close implying a capability the fix lacks
 
 ---
 
-## Architecture Diagram Standards
+## Demo Skeleton
 
-The diagram domain is owned by the three linked companion modules: identity, classes, notation, complexity,
-and diagram findings; canvas-render targets and projection; and portable template bodies.
+Owned here.
 
-| Module | Owns |
-|---|---|
-| [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) | Diagram identity, class selection, notation, labelling, complexity, render reach, versioning and drift |
-| [Diagram Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) | Render target, ingest, graph elements, convertibility, projection, and canvas findings |
-| [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) | Copy-ready portable-intersection template bodies and reference examples |
-| Diagram identity, class, notation, and canvas projection rules | The companion modules above are the owning source |
 **Directives**:
-- Keep diagram source present in the mandated notation; the companion owns class, identity, and render details.
-- A diagram-bearing task must emit a projection check named by the authoring set's canvas-render contract.
-- Apply the companion gates alongside this set's Alignment Gate; the vocabulary is the union of all declared domains.
-
-## PRD ↔ TAD Integration
-
-### Separation of Concerns
-- PRD describes **WHAT** and **WHY**: user value, business logic
-- TAD describes **HOW**: technical approach, architecture
-- Forbid implementation details in PRDs; forbid business logic in TADs
-- **Boundary**: PRD stops at acceptance criteria; TAD starts at architectural approach
-
-### Traceability Pattern
-```
-PRD-[Epic-ID]-[Story-ID] ↔ TAD-[Component-ID]-[Interface-ID] ↔ VCC [condition] ↔ Evidence Reference [check + result]
-```
-
-The chain is bidirectional and must close in both directions. A link that resolves one way only is a defect with a named Finding Type — see Closure Rules in Autonomous Implementation Verification.
-
-### Iterative Refinement
-
-**Max iterations**: 3 alignment cycles | **Circuit-breaker**: no reduction in open `blocker` findings between two consecutive cycles
-
-1. The authoring function drafts the PRD from user research
-2. The architecture function reviews the PRD for feasibility → drafts the TAD
-3. The authoring function validates the TAD preserves user value
-4. Run the alignment check; if `blocker` findings remain and the circuit-breaker has not tripped, repeat from step 2
-5. On reaching the max-iteration bound or tripping the circuit-breaker, stop and escalate the unresolved findings as an explicit scope or design decision; forbid continuing to iterate past the bound
+- Require a time-boxed beat table — Hook, Probe, Reveal, `[domain action]`, Close — for every `Must` or L3+ feature — `missing-demo-beat`
+- Keep the sum of beat bounds within the feature's stated budget
+- Anchor the Reveal to the feature's own VCC
+- Name `[domain action]` by the product's own interaction; forbid hardcoding a device or channel
 
 ---
 
-## Anti-Pattern Guards
+## Domain-Object Rubric Assessment
 
-The separately loadable [Anti-Pattern Guards module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the prohibited patterns and their corrections, stated as paired guards. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+The [Agent Experience Maturity module](./prd-tad-adr-mvp-gtm-maturity.md) owns the four-criterion 1–5 matrix.
 
 **Directives**:
-- Read each guard as the prose form of a typed finding; a guard with no corresponding Finding Type cannot be recorded, compared, or regression-tracked
+- Identify the product's actual domain object before applying any external rubric
+- Report the highest contiguous passing level and the next unpassed as a gap — `overclaimed-rubric-level`
+- Name the blocking component for every unclaimed rung — `unresolved-rubric-gap`
+- Close a gap by named cross-artifact reuse, never a silent re-implementation
 
 ---
 
-## Conformance Findings
+## Roadmap
 
-The separately loadable [Conformance Findings module](./prd-tad-adr-mvp-gtm-verification.md) owns the recording contract,
-severity assignment, authoring-domain vocabulary, and deterministic comparison. This section binds only the
-module interface used by PRD, TAD, and ADR checks.
+Owned here.
 
 **Directives**:
-- Record every finding with all six fields and anchor it to a Rule ID, not a section anchor alone.
-- Treat the linked module as the single source of truth for authoring-domain finding names.
-- Report zero counts for types with no finding and preserve deterministic, additive, bounded, comparable results.
+- State per phase: feature, named reuse, what is new, priority rationale, prerequisite — `roadmap-reuse-unstated`
+- Order by reuse-adjusted build cost; state any divergence — `roadmap-order-unexplained`
+- Gate later phases on named earlier prerequisites
+- Mark a known deferred idea `Won't (this increment)` — `roadmap-scope-silently-dropped`
 
-## Validation Checklist
+---
 
-The separately loadable [Validation Checklist module](./prd-tad-adr-mvp-gtm-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists, each item mapped to a Finding Type. This section owns only the obligations that bind a PRD, TAD, or ADR directly.
+## Monetization
+
+Owned here.
 
 **Directives**:
-- Require current artifact continuity before baseline sign-off: Codebase Grounding Records for non-native inputs, CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration references, and successor references must satisfy the Artifact Continuity Module
-- Require current work-tree integrity before baseline sign-off whenever more than one work tree contributed: provenance keys, merge idempotency, and zero open `deadlock-unbounded-wait` or unresolved concurrent-claim findings must satisfy Concurrent Collaboration & Work-Tree Integrity
-- Discharge the alignment gate before baseline sign-off; zero `blocker` findings is the exit condition, and `major` and `minor` findings are resolved or formally tracked with an owner
-- Compare the finding set against the prior run on every baselined change; a new `blocker` is a regression, not a note
+- Track `mechanism-proven` and `demand-validated` independently; record collected payment separately before claiming revenue — `monetization-demand-unvalidated`
+- Select the nearest-term stream by which segment exists now
+- Order every viable stream by distance to a real first dollar and state the order
+- Require a validation result before `demand-validated`
+- State any monetization deferral explicitly
 
 ---
 
 ## Division of Work
 
-This section owns capability ownership and reuse decisions in TAD and ADR. Apply the shared RAO contract to components: the role is the capability owner, action is its transformation, and outcome is independently checked behavior. Other consumers call that owner; collaboration provenance identifies the current writer without redefining the role.
+Owned here.
 
 **Directives**:
-- Assign exactly one owning component per capability (a pricing computation, a state-change detection, a ledger mutation); every other consumer calls the owning component rather than re-implementing its logic; a second implementation of an existing capability is a `duplicate-capability-owner` finding at `major` severity, extending `duplicate-owner` from document ownership to component ownership
-- Record an explicit reuse-or-new decision, as an ADR or equivalent, for every component added to an architecture; a component with neither a stated reuse rationale nor a stated new-dependency rationale is a `component-origin-unstated` finding
-- Prefer extending an existing store, function, or ledger with a new dimension (a flag, a field, a row type) over introducing a second one for structurally identical data; an unjustified second store is an `unjustified-storage-duplication` finding at `major` severity
-- Permit cross-artifact reuse on the same terms as within-artifact reuse; require the consuming artifact to name the exact owning artifact and its version, not merely describe the capability in its own words
+- Assign exactly one owning component per capability — `duplicate-capability-owner` at `major`
+- Record a reuse-or-new decision for every component added — `component-origin-unstated`
+- Extend an existing store, function, or ledger before introducing a second — `unjustified-storage-duplication` at `major`
+- Permit cross-artifact reuse naming the exact owning artifact and version
+
+---
+
+## PRD ↔ TAD Integration
+
+PRD stops at acceptance criteria; TAD starts at architectural approach. Forbid implementation detail in PRD and business logic in TAD.
+
+```
+PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Evidence Reference [check + result]
+```
+
+The chain closes in both directions. Refinement is bounded: 3 cycles, circuit-breaker on no `blocker` reduction across two consecutive cycles, then escalate.
+
+---
+
+## Readiness Ladder
+
+The [Readiness & Lane Topology module](./prd-tad-adr-mvp-gtm-readiness.md) owns what earns each rung. The vocabulary is published here:
+
+```
+undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-verified
+```
+
+**Directives**:
+- Draw every status from this ladder — `unknown-status`
+- Derive every rung from Evidence References only — `unproven-claim` at `blocker`
+- Report local and delivered readiness separately — `blended-status`
+
+---
+
+## Agent-Platform Readiness
+
+The [Readiness & Lane Topology module](./prd-tad-adr-mvp-gtm-readiness.md) owns the dimensions, tiers, Invocation Surface Contract, gap matrix, and follow-on template.
+
+**Directives**:
+- Name which dimensions are in scope
+- Keep every discovery and read route at zero token cost — `paid-read-path`
+- Declare every `/`, `#`, `@`, and tool-identity route in exactly one Invocation Register — `orphan-route`, `ambiguous-route`
+- Federate agent routes through an MCP- or WebMCP-conformant gateway where available — `unfederated-tool`
+
+---
+
+## Lane Topology & Deploy Boundary
+
+The [Readiness & Lane Topology module](./prd-tad-adr-mvp-gtm-readiness.md) owns the lane sequence, the four boundary parts, and the closed-by-default rule.
+
+**Directives**:
+- Document all three lanes and every boundary before the first promotion — `missing-lane` at `blocker`
+- Keep every Deploy Boundary `closed` absent a referenced operator instruction — `ungated-promotion`
+- Forbid any authoring-lane command that mutates a mirror or delivery surface — `deploy-boundary-breach` at `blocker`
+
+---
+
+## ADLC Execution Seam
+
+The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task budgets, agent roles, tool permissions, human-in-the-loop gates, release control, execution findings. The [Rapid MVP Sprint profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md) collapses phases without eliding obligations. This section owns only what crosses the seam.
+
+| Verb | Artifact hands over | Execution returns | Next blocked without it |
+|---|---|---|---|
+| **START** | baselined `continuity_id@revision`, write-scope paths, VCCs as bounded RAO Steps | lane identity, worktree path, base SHA | RELEASE |
+| **RELEASE** | exact lane head, review body, named checks | Integration Receipt, protected `main` SHA | DEPLOY, Financial Model ledger period |
+| **DEPLOY** | exact protected SHA, consumer controller, operator instruction | deployment receipt, live identity, rollback predecessor | `production-verified` rung, GTM runtime evidence |
+
+**Directives**:
+- Hand execution a baselined artifact with zero open `blocker` findings, current Codebase Grounding Records, and VCCs decomposable into bounded task nodes — `cid-decomposition-missing`
+- Name in the TAD every human-in-the-loop gate the execution set requires for this scope, with evidence and rollback — `human-gate-unstated`
+- State per-feature token, iteration, and wall-clock ceilings that per-task budgets may narrow but never exceed — `unbounded-loop` at `blocker`
+- Read readiness, cost, and integration facts back only from Evidence References and receipts; the Financial Model's ADLC Cost Ledger consumes those receipts by exact reference — `unproven-claim`, `adlc-cost-unledgered`
+- Keep the operator path externally simple — start one lane, release one exact candidate, deploy one exact protected revision — `gate-order-drift`
+
+---
+
+## Autonomous Implementation Verification
+
+The [Verification & Conformance module](./prd-tad-adr-mvp-gtm-verification.md) owns the VCC primitive, criterion-to-condition pipeline, Evaluator independence, Evidence Reference, traceability extension, and closure rules.
+
+**Directives**:
+- Express every acceptance criterion as a VCC with one measurable end state, a stated check, and constraints
+- Attach an Evidence Reference — named invocable check, recorded result, surface — to every satisfied VCC
+- Keep the Evaluator a distinct mechanism from the implementer and from every work tree or agent it judges
+
+---
+
+## Architecture Diagram Standards
+
+| Module | Owns |
+|---|---|
+| [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md) | identity, class selection, notation, labelling, complexity, render reach, versioning, drift |
+| [Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md) | render target, ingest, graph elements, convertibility, projection, canvas findings |
+| [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) | copy-ready portable template bodies |
+| Diagram identity, class, notation, and canvas projection rules | The companion modules above are the owning source |
+
+**Directives**:
+- Keep diagram source present in the mandated notation
+- A diagram-bearing task must emit a projection check named by the authoring set's canvas-render contract
+- Apply the companion gates beside this set's Alignment Gate; the vocabulary is the union
+
+---
+
+## CID Directive Matrix
+
+The [CID Directive Matrix module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the A→Z Context/Intent/Directive lookup.
+
+**Directives**:
+- Use the matrix as the lookup surface; it summarizes obligations owned elsewhere and adds none
+
+---
+
+## Anti-Pattern Guards
+
+The [Anti-Pattern Guards module](./prd-tad-adr-mvp-gtm-cid-matrix.md) owns the paired prohibited patterns and corrections.
+
+**Directives**:
+- Read each guard as the prose form of a typed finding; a guard without a Finding Type cannot be recorded
+
+---
+
+## Conformance Findings
+
+The [Conformance Findings module](./prd-tad-adr-mvp-gtm-verification.md) owns the recording contract, severity assignment, enumeration, and determinism rules.
+
+**Directives**:
+- Record every finding with all six fields anchored to a Rule ID
+- Treat the module's enumeration as the single source of truth for authoring-domain names; extend it by adding the row first, then the rule
+- Report zero counts for types with no finding; keep results deterministic, additive, bounded, comparable
+
+---
+
+## Validation Checklist
+
+The [Verification & Conformance module](./prd-tad-adr-mvp-gtm-verification.md) owns the pre-implementation, post-documentation, and alignment-gate checklists.
+
+**Directives**:
+- Require current artifact continuity before baseline sign-off: grounding records, CID-to-RAO coverage, companion joins, artifact revisions, independent evidence, demonstration and successor references
+- Require work-tree integrity before baseline sign-off whenever more than one work tree contributed
+- Require venture projections at the baselined revision before any audience action that depends on them
+- Discharge the alignment gate: zero `blocker` is the exit; `major` and `minor` resolved or tracked with an owner
+- Compare the finding set against the prior run on every baselined change; a new `blocker` is a regression
 
 ---
 
 ## Role—Action—Outcome
 
-Each entry is the document-scope default `role`/`action`/`outcome` envelope defined in Directive Grammar (CID): the range of `action`s a directive naming this `role` typically performs, and the `outcome` category its completed directives produce. An individual directive's own `outcome` narrows this envelope; it never contradicts it. A role may be instantiated by one human, one LLM, or several LLMs across several concurrently active work trees; the envelope binds the function, not the instantiation count.
+Each entry is the document-scope `role`/`action`/`outcome` envelope. A role may be one human, one LLM, or several agents across work trees.
 
-**Product Manager** → defines user problems, maps user journeys, writes stories and acceptance criteria, prioritizes via MoSCoW, defines success metrics → produces user-centric PRDs enabling valuable feature delivery
-
-**System Architect** → designs component interactions, maps data flows, specifies interfaces, documents ADRs, defines quality attributes, plans deployment → establishes technical foundation enabling scalable implementation
-
-**Solo Founder / AI Orchestrator** *(combines authoring roles while preserving independent evaluation)* → grounds pain and WTP, ranks reusable solutions, states resource bounds, tracks observed TCO, and keeps collaboration within declared capacity and exact cleanup policy → delivers verified user outcomes and measured economics without duplicate agents or lanes
-
-**Evaluator** *(a mechanism, never a person; the one role that must not collapse into any other, including any work tree or agent whose output it judges)* → judges each VCC against the surfaced output only, records the Evidence Reference, derives the readiness rung, resolves irreconcilable concurrent claims, renders selection verdicts from an argumentation graph it holds no argument in, and emits the finding set with types and severities → produces verdicts no participant can self-grade, which is what makes a rung and an alignment claim trustworthy. See the ADLC Guidelines companion set for how this role is instantiated and bounded during execution.
-
-**Financial Modeler** → registers assumptions with source and date, computes unit economics with token cost as COGS, fills the ADLC Cost Ledger from receipts, runs scenarios and sensitivity → produces a financial model whose every headline row traces to an evidenced input
-
-**UX Designer** → creates personas, maps user journeys, validates usability requirements, provides design guidance → ensures user-centered design principles guide feature development
-
-**Engineering Lead** → reviews TAD feasibility, validates architectural patterns, identifies technical risks, suggests alternatives → ensures technical approach is implementable and maintainable
-
-**QA Engineer** → validates testability of acceptance criteria, creates test plans from PRD, defines automation strategy → ensures requirements are verifiable and quality is measurable
-
-**Technical Writer** → structures documents, maintains templates, ensures consistency, tracks versions, manages traceability → maintains clear documentation supporting team alignment
-
-**Stakeholder** → provides business context, validates user problems, reviews requirements, approves scope → ensures product development aligns with business objectives
+- **Product Manager** → problems, journeys, stories, VCCs, MoSCoW, success metrics → user-centric PRD
+- **System Architect** → interactions, flows, interfaces, ADRs, quality attributes, deployment → implementable TAD
+- **Solo Founder / AI Orchestrator** → grounds pain and WTP, ranks reusable solutions, states bounds, tracks observed TCO, keeps collaboration within capacity → verified outcomes without duplicate agents or lanes
+- **Financial Modeler** → sourced assumptions, unit economics with token cost as COGS, income and cash statements, ADLC Cost Ledger from receipts, scenarios → a model whose every headline row traces to evidence
+- **Evaluator** *(a mechanism, never a person; never collapses into any role or work tree it judges)* → judges VCCs, records Evidence References, derives rungs, resolves concurrent claims, renders selection verdicts from a graph it holds no argument in → verdicts no participant can self-grade
+- **UX Designer** → personas, journeys, usability → user-centred design
+- **Engineering Lead** → feasibility, patterns, risks → implementable approach
+- **QA Engineer** → testability, plans from PRD, automation → verifiable requirements
+- **Technical Writer** → structure, templates, versions, traceability → aligned documentation
+- **Stakeholder** → context, problem validation, scope approval → alignment with objectives
 
 ---
 
 ## Mantra Application
 
-**"CID frames PRD/TAD standards · Flow patterns anchor stories to reality · Agent-platform readiness sequences Must before Follow-on · Pain points ground every feature · Demo skeletons prove the story in one sitting · Domain-object rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before it tests a mechanism · Venture records project, never originate · The lifecycle has a ledger line · RAO aligns team responsibilities · Division of work gives each capability exactly one owner · Concurrent collaboration keeps every work tree honest without a single point of blocking · SVO clarifies requirement semantics · VCC closes the loop from criterion to verified implementation · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
+**"CID frames · Grounding binds claims to code · Flows anchor stories · Pain points ground every feature · Time-to-value gates the shortest path · Demo skeletons prove the story in one sitting · Rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before a mechanism · Venture records project, never originate · The lifecycle has a ledger line · START then RELEASE then DEPLOY · One owner per capability · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
 
-- **CID frames**: establishes scope, user value, and traceable rules under the shared CID contract's grounding, density, and ADLC budgets
-- **Flow patterns anchor**: user journeys, workflows, data flows, orchestration/harness flows, and topology connect abstract requirements to observable system behavior; every feature traces through all five; time-to-value is the gate metric that validates the shortest path through them
-- **Agent-platform readiness sequences**: Agentic OS visibility → AI Agent discovery → Gateway federation (Must); then spend safety → live orchestration proof → operator UI (Follow-on); forbid proxy duplication and dependency-blind parallel surface work
-- **Pain points ground**: every `Must` feature traces to one named pain point in fixed form, labelled `unvalidated` until an evidence reference exists — a feature with no pain point is unscoped, not merely under-documented
-- **Demo skeletons prove**: a fixed, time-boxed beat table anchors the Reveal beat to the feature's own VCC, so the demonstration shows the acceptance condition holding rather than narrating a claim of it
-- **Domain-object rubrics name**: the product's actual domain object is identified before any external rubric is applied, and capability levels report the highest contiguous pass; experience ratings report observed descriptors separately
-- **Roadmaps sequence**: phases order by reuse-adjusted build cost, each stating what it reuses and what is genuinely new; a real, deferred idea is marked `Won't (this increment)`, never silently dropped
-- **Monetization tests**: mechanism evidence, WTP evidence, and collected revenue remain separate; prioritize an existing payer segment and the shortest credible path to its paid outcome
-- **Venture records project**: pitch deck, business plan, and financial model cite the joined artifact section or Evidence Reference behind every slide, section, and row; revenue is collected money only, and market size rests on two reconciled methods
-- **The lifecycle has a ledger line**: active minutes, token spend, CI minutes, provider fees, and avoidable-block cost enter the financial model from execution receipts, so the cost of running an agentic pipeline is measured rather than assumed
-- **RAO aligns**: maps each role to documentation deliverables with clear accountability and measurable outcomes — the document-granularity instance of the CID `role`/`action`/`outcome` triad (Directive Grammar (CID))
-- **Division of work**: assigns exactly one owning component per capability, extending the CID `role`/`action`/`outcome` triad from roles-to-documents into components-to-capabilities — every other consumer calls the owner rather than re-implementing it
-- **Concurrent collaboration keeps honest**: one current writer owns an overlapping scope; exact replays are idempotent, owner work and history survive, and reviewed obsolete content may be removed. Bound waits and capacity, verify cross-origin claims, and use exact profile-selected cleanup receipts
-- **SVO (Subject-Verb-Object) clarifies**: expresses the same accountable action as RAO using the shared contract; requirement prose names its actor, action, and target without creating another command schema
-- **Evidence earns**: a readiness rung is computed from named checks with recorded results, never asserted; valid supporting evidence can raise a rung; failures, expiry or changed scope require re-derivation
-- **Findings make checkable**: every prohibition carries a type and a severity, so alignment is a comparable measurement across runs rather than an impression that resets each review
-- **Boundaries stay closed**: promotion toward a public surface requires a named gate, its evidence, its rollback path, and a referenced operator instruction; the default state is closed, so nothing reaches the delivery lane by momentum
-- **VCC closes**: every acceptance criterion becomes an evaluable completion condition (mechanism-agnostic); the traceability chain extends from PRD through TAD to autonomous implementation verification
+- **CID frames**: one grammar for every role, projection, and dispatch
+- **Grounding binds**: a confirmed gap is planned work, never existing capability
+- **Flows anchor**: five flows per feature; TTV validates the shortest path
+- **Pain points ground**: every `Must` traces to one pain point labelled by evidence status
+- **Demo skeletons prove**: the Reveal is the VCC holding
+- **Rubrics name**: the real domain object first; highest contiguous pass, blockers named
+- **Roadmaps sequence**: reuse-adjusted cost; deferred ideas marked, never dropped
+- **Monetization tests**: mechanism, WTP, and collected revenue stay separate
+- **Venture records project**: every slide, section, and row cites its source; revenue is collected money only
+- **Ledger line**: active minutes, token spend, CI minutes, provider fees, and avoidable-block cost enter the model from receipts
+- **START then RELEASE then DEPLOY**: one lane, one exact candidate, one exact protected revision
+- **One owner**: consumers call, never re-implement
+- **Evidence earns**: rungs are computed, never asserted
+- **Findings make checkable**: type and severity on every prohibition
+- **Boundaries stay closed**: named gate, evidence, rollback, operator instruction

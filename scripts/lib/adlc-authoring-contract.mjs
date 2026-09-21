@@ -227,7 +227,7 @@ export function checkAuthoringContract({
   }
 
   const binding = contractSlice(authoringGuideline,
-    "## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline", "## Pain-Point-to-Feature Mapping",
+    "## Platform-Specific Selection Criteria — Multi-Agent Reasoning Pipeline", "## Venture Record: Pitch Deck, Business Plan & Financial Model",
     "shared reasoning pipeline binding");
   assert.match(binding, /\.\/prd-tad-adr-mvp-gtm-selection\.md/, "authoring index must delegate the pipeline stage bodies to the selection module");
   const pipeline = contractSlice(selectionCriteria, "## Scope & Ownership", "## Conformance Findings", "shared reasoning pipeline");

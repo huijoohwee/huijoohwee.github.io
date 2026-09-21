@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.8.0"
+parent_version: "3.0.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---

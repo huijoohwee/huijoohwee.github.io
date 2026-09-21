@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.1.2"
-date: "2026-09-12"
+version: "1.2.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "2.8.0"
+parent_version: "3.0.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -119,6 +119,18 @@ Do not request a new approval for a reversible seam already covered by the recor
 - **Bound the iteration**: each Phase 4 revision cycle carries the max-iteration bound owned by the parent's PRD ↔ TAD Integration section and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
 - **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
 - **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
+
+### Phase 5 — GTM and Venture Projections
+**Project the accepted revision to a payer, an operator, and a funder without originating new claims.**
+
+1. Rank GTM streams by distance to a real first dollar using recorded WTP evidence
+2. Generate the Pitch Deck Slide Register from the Demo Skeleton, GTM path, Financial Model headlines, and Roadmap phases
+3. Generate the Business Plan from all five roles plus legal, capitalization, acquisition, and risk rows drawn from open findings
+4. Generate the Financial Model from TAD budgets, GTM labels, and ADLC receipts: assumption register, unit economics, income statement, cash flow, scenarios, ADLC Cost Ledger
+5. Join every projection by `continuity_id@revision`; regenerate when the revision changes
+6. Feed learn-loop results into a successor Context, never a backward edit of the accepted revision
+
+**Gate**: every projected claim cites its owning section or Evidence Reference; revenue rows contain collected payment only; the ADLC Cost Ledger is filled from receipts for the stated period. An audience action on a stale or unsourced projection is blocked.
 
 ---
 

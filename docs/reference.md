@@ -80,6 +80,7 @@ frontmatter_contract: "required"
 
 | [ADLC Guidelines](../guidelines/adlc-guidelines.md) | Website execution-domain anchor for task, verification, and release-control references |
 | [PRD, TAD & ADR Guidelines](../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) | Website authoring-domain anchor for PRD/TAD/ADR scope, readiness, and conformance vocabulary |
+| [Lean ADLC Economy](./documents/prd-tad-adr-mvp-gtm-adlc-economy.md) | Joined `PRD-TAD-ADR-MVP-GTM` study (`ADLC-ECON-01`) scoping measurable ADLC time/resource/cost comparison and leanness reductions independent of the outcome |
 | [Agentic OS ADLC Guidelines](https://github.com/huijoohwee/agentic-os/blob/main/docs/adlc-guidelines.md) | Upstream execution SSOT consumed by the website anchor and repo workflow |
 
 ---

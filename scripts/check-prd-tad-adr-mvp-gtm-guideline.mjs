@@ -153,6 +153,33 @@ for (const type of VENTURE_FINDINGS) {
     `verification module must enumerate ${type} before the venture module raises it`);
   assert.ok(ventureText.includes(`\`${type}\``), `venture module must raise ${type}`);
 }
+// Coverage decisions and model semantics are authored by their existing modules. These checks
+// protect their navigable structural contract; they do not grade an instantiated business plan.
+const coverageSection = indexText.split("### From-0-to-1 coverage contract\n")[1]?.split("\nA gate that")[0];
+assert.ok(coverageSection, "index must publish the from-0-to-1 coverage contract");
+const coverageIds = [...coverageSection.matchAll(/^\| (C\d{2}) \|/gm)].map(match => match[1]);
+assert.deepEqual(coverageIds, Array.from({ length: 16 }, (_, index) => `C${String(index + 1).padStart(2, "0")}`),
+  "coverage domains must appear exactly once in order, C01 through C16");
+for (const heading of ["Measurement basis and horizon", "Driver schedule",
+  "Reconciliation and edge-case checks", "Free-core and cost classification"])
+  assert.ok(ventureText.includes(`### ${heading}\n`), `venture contract missing ${heading}`);
+for (const name of [INDEX, "prd-tad-adr-mvp-gtm-venture.md", "prd-tad-adr-mvp-gtm-cid-matrix.md",
+  "prd-tad-adr-mvp-gtm-process-flows.md"])
+  assert.doesNotMatch(read(name), /recognize revenue only from collected payment|revenue (?:is collected money only|rows (?:carry|contain) collected payment only)|forbid revenue from anything but collected payment/i,
+    `${name}: cash-only revenue rule contradicts the declared measurement basis`);
+for (const name of ["pitchdeck-prd-tad-adr-mvp-gtm-template.md", "pitchdeck-prd-tad-adr-mvp-gtm-template-lite.md"]) {
+  const template = readFileSync(join("template", name), "utf8");
+  assert.ok(template.trimEnd().split("\n").length < 600, `${name}: must remain below 600 lines`);
+  for (const heading of ["PRD", "TAD", "ADR", "MVP", "GTM", "Pitch Deck", "Business Plan",
+    "Financial Model", "Coverage and ADLC Handoff"])
+    assert.ok(template.includes(`## ${heading}\n`), `${name}: missing ${heading} section`);
+  // Resolve the newly introduced cross-owner joins instead of checking link text alone.
+  for (const match of template.matchAll(/\]\(\.\.\/guidelines\/(prd-tad-adr-mvp-gtm-[a-z-]+\.md)#([a-z0-9-]+)\)/g)) {
+    const anchors = [...read(match[1]).matchAll(/^#{2,3} (.+)$/gm)].map(row => slug(row[1]));
+    assert.ok(anchors.includes(match[2]), `${name}: unresolved source join ${match[1]}#${match[2]}`);
+  }
+}
+console.log("Venture coverage: 16 domain IDs, financial contract sections and full/lite source joins checked; semantic venture evidence not evaluated");
 const sections = indexText.split(/^## /m);
 for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
   const body = sections.find((s) => slug(s.split("\n")[0]) === anchor);

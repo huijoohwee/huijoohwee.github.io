@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.2.0"
+version: "1.3.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.0.0"
+parent_version: "3.1.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -123,14 +123,16 @@ Do not request a new approval for a reversible seam already covered by the recor
 ### Phase 5 — GTM and Venture Projections
 **Project the accepted revision to a payer, an operator, and a funder without originating new claims.**
 
+Discovery already drafts market, offer and financial assumptions. This phase publishes current projections; it does not postpone viability research until delivery. Consume the parent's [C01–C16 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
+
 1. Rank GTM streams by distance to a real first dollar using recorded WTP evidence
 2. Generate the Pitch Deck Slide Register from the Demo Skeleton, GTM path, Financial Model headlines, and Roadmap phases
-3. Generate the Business Plan from all five roles plus legal, capitalization, acquisition, and risk rows drawn from open findings
-4. Generate the Financial Model from TAD budgets, GTM labels, and ADLC receipts: assumption register, unit economics, income statement, cash flow, scenarios, ADLC Cost Ledger
+3. Generate the Business Plan from all five roles plus legal, capitalization, acquisition, and business risks and the open finding set
+4. Generate the Financial Model from TAD/GTM assumptions and ADLC receipts: driver schedules, unit economics, linked income/cash/balance statements, scenarios, ADLC Cost Ledger
 5. Join every projection by `continuity_id@revision`; regenerate when the revision changes
 6. Feed learn-loop results into a successor Context, never a backward edit of the accepted revision
 
-**Gate**: every projected claim cites its owning section or Evidence Reference; revenue rows contain collected payment only; the ADLC Cost Ledger is filled from receipts for the stated period. An audience action on a stale or unsourced projection is blocked.
+**Gate**: every projected claim cites its owning section or Evidence Reference; actuals, forecasts, recognized revenue and collected cash follow the Venture Record measurement basis; first-dollar claims cite payment evidence; the ADLC Cost Ledger is filled from receipts for the stated period. An audience action on a stale or unsourced projection is blocked.
 
 ---
 

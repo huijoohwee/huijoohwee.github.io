@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.0.0"
+version: "3.1.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -105,8 +105,48 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 | MVP | 4 | Planning Record, Demo Skeleton, Rubric, Readiness | evidenced `Must` slice | Readiness, Demonstration |
 | GTM | 5 | Monetization, Roadmap, Planning Record | ranked first-dollar path | Monetization, Roadmap |
 | Pitch Deck | 5 | Venture Record | bounded Slide Register, Reveal = VCC | Venture Record |
-| Business Plan | 5 | Venture Record | two-method market, risks from findings, legal and capital rows | Venture Record |
-| Financial Model | 5 | Venture Record | assumptions, unit economics, income, cash, scenarios, ADLC ledger | Venture Record |
+| Business Plan | 5 | Venture Record | two-method market, business risks and findings, legal and capital rows | Venture Record |
+| Financial Model | 5 | Venture Record | assumptions, unit economics, linked statements, scenarios, ADLC ledger | Venture Record |
+
+### From-0-to-1 coverage contract
+
+“360°” means every domain below has a decision and an exact source join. It does not mean every
+feature is built, every market is validated, or every projection is ready for an audience. Reuse the
+joined artifact; the [Core Templates](./prd-tad-adr-mvp-gtm-templates.md#from-0-to-1-coverage-record)
+provide its coverage record. This table owns domain IDs; companions own the requirements it references.
+
+| ID | Domain to cover | Owning role / existing contract | Minimum record |
+|---|---|---|---|
+| C01 | Purpose, customer and pain | PRD / Pain-Point Mapping | vision, user/buyer/beneficiary, job, current workaround, evidence and exclusions |
+| C02 | Market and timing | GTM / Venture Record | segment, geography, why now, TAM/SAM/SOM, two sizing methods and uncertainty |
+| C03 | Offer and alternatives | GTM + ADR / Selection Criteria | value proposition, price/package, do-nothing/manual alternatives, differentiation and evidence |
+| C04 | Product and experience | PRD / Process & Flow Patterns | journeys, Must stories, accessibility, mobile/browser/offline reach, success metric and VCC |
+| C05 | Architecture and data | TAD / Division of Work | existing owners, interfaces, five flows, data lifecycle, interoperability and dependency boundaries |
+| C06 | Quality, security and AI | TAD / Verification + Economics | threat/failure cases, privacy, reliability, recovery, AI evaluation/fallback, license and quota limits |
+| C07 | Decisions and tradeoffs | ADR / Selection Criteria | alternatives, constraints, chosen option, consequences, reversibility and revisit trigger |
+| C08 | Smallest validated slice | MVP / Demo Skeleton + Readiness | scope, prototype/pilot/demo, criterion-to-evidence joins, local/delivered rungs and gaps |
+| C09 | Acquisition through retention | GTM / Venture Record | channel, sales cycle, activation, paid conversion, repeat use, support, retention and experiment |
+| C10 | Business operations | TAD + GTM / Venture Record | delivery/support process, capacity, suppliers, incidents, continuity and accountable roles |
+| C11 | Organization and obligations | TAD + ADR / Venture Record | team gaps, hiring triggers, entity/IP/data/contract obligations, jurisdiction and review owner |
+| C12 | Financial viability | GTM + TAD / Venture Record | driver assumptions, unit economics, linked statements, cash timing, scenarios and sensitivities |
+| C13 | Capital and milestones | GTM + ADR / Venture Record | bootstrap/funding decision, ask, use of funds, dilution if relevant, milestone and contingency |
+| C14 | ADLC execution | ADLC Execution Seam | authorized scope, bounds, checks, exact source/release/deploy/rollback receipts and cost attribution |
+| C15 | Audience projections | Venture Record | deck, business plan and financial model joined at the same revision, claim sources and audience decision |
+| C16 | Learning and next increment | MVP + GTM / Planning Record | actual vs target, risk register, continue/pivot/stop threshold, owner and successor Context |
+
+**Artifact-bearing directives**:
+- Record C01–C16 once each with source section/revision, accountable owner, evidence or explicit gap,
+  and next check. Mark `covered`, `deferred`, or `not-applicable` as coverage decisions only, never
+  readiness rungs. A deferral needs a reason, dependency, owner and revisit trigger; inapplicability
+  needs a rationale and reviewer. Unknown information remains a gap — `unimplemented-guideline`.
+- Report both counts: dispositioned domains / 16 and covered applicable domains / applicable domains;
+  disclose deferred and not-applicable counts. A linked heading alone proves no VCC — `unproven-claim`.
+- Revisit coverage at discovery, baseline, MVP acceptance and audience handoff. Draft market, offer and
+  financial assumptions during discovery; Phase 5 publishes their current projections. Do not postpone
+  viability research until after building. Only a dependent action waits for missing evidence.
+- Declare “0” as grounded opportunity and uncertainty; declare “1” as one stated target outcome with
+  scope, user/segment, acceptance check, evidence and observation period. Product delivery, first
+  collected dollar and repeat demand each need their own evidence — `blended-status`.
 
 A gate that neither narrows an observed failure nor shortens time-to-first-dollar is a `cid-density-violation`.
 
@@ -247,11 +287,11 @@ The [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **C
 The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger.
 
 **Directives**:
-- Treat all three as projections of the joined artifact at one `continuity_id@revision`; a claim, number, or decision first appearing in a projection is `pitch-claim-unsourced`; a path-only join is `artifact-naming-noncompliant`
+- Treat all three as projections of the joined artifact at one `continuity_id@revision`; an unsourced claim, input number, or decision first appearing in a projection is `pitch-claim-unsourced`; calculated outputs cite owned inputs and formulas; a path-only join is `artifact-naming-noncompliant`
 - Carry every projected claim's evidence status in the owners' vocabulary; forbid an unlabelled forward-looking statement
-- Recognize revenue only from collected payment — `revenue-recognized-unpaid`
-- Register every model input with source, disposition, and date — `financial-assumption-unsourced`; carry token cost as COGS — `missing-economics-metric`; ledger ADLC operating cost from execution receipts — `adlc-cost-unledgered`
-- Produce income statement, cash-flow statement, and Base/Downside/Upside scenarios with runway; omit a balance sheet only with a stated reason — `scenario-set-incomplete`
+- Separate forecast, recognized revenue and collected cash under the Venture Record measurement basis; a first-dollar claim requires payment evidence — `revenue-recognized-unpaid`
+- Register every model input with source, disposition, and date — `financial-assumption-unsourced`; carry serving-token cost as COGS — `missing-economics-metric`; ledger ADLC operating cost from execution receipts — `adlc-cost-unledgered`
+- Produce linked income, cash-flow and balance-sheet projections, and Base/Downside/Upside scenarios with cash-floor runway; label a reduced discovery sketch incomplete — `scenario-set-incomplete`
 - Size a market by two cited independent methods and reconcile them — `market-size-single-method`
 - Anchor the deck's Reveal to the MVP Demo Skeleton VCC; tie the ask to named Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity
 
@@ -311,7 +351,7 @@ Owned here.
 Owned here.
 
 **Directives**:
-- Track `mechanism-proven` and `demand-validated` independently; record collected payment separately before claiming revenue — `monetization-demand-unvalidated`
+- Track `mechanism-proven` and `demand-validated` independently; record recognized revenue and collected payment separately before claiming a first dollar — `monetization-demand-unvalidated`
 - Select the nearest-term stream by which segment exists now
 - Order every viable stream by distance to a real first dollar and state the order
 - Require a validation result before `demand-validated`
@@ -388,7 +428,7 @@ The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task 
 | Verb | Artifact hands over | Execution returns | Next blocked without it |
 |---|---|---|---|
 | **START** | baselined `continuity_id@revision`, write-scope paths, VCCs as bounded RAO Steps | lane identity, worktree path, base SHA | RELEASE |
-| **RELEASE** | exact lane head, review body, named checks | Integration Receipt, protected `main` SHA | DEPLOY, Financial Model ledger period |
+| **RELEASE** | exact lane head, review body, named checks | Integration Receipt, protected `main` SHA | DEPLOY; costs still accrue for failed/unmerged work |
 | **DEPLOY** | exact protected SHA, consumer controller, operator instruction | deployment receipt, live identity, rollback predecessor | `production-verified` rung, GTM runtime evidence |
 
 **Directives**:
@@ -476,7 +516,7 @@ Each entry is the document-scope `role`/`action`/`outcome` envelope. A role may 
 - **Product Manager** → problems, journeys, stories, VCCs, MoSCoW, success metrics → user-centric PRD
 - **System Architect** → interactions, flows, interfaces, ADRs, quality attributes, deployment → implementable TAD
 - **Solo Founder / AI Orchestrator** → grounds pain and WTP, ranks reusable solutions, states bounds, tracks observed TCO, keeps collaboration within capacity → verified outcomes without duplicate agents or lanes
-- **Financial Modeler** → sourced assumptions, unit economics with token cost as COGS, income and cash statements, ADLC Cost Ledger from receipts, scenarios → a model whose every headline row traces to evidence
+- **Financial Modeler** → sourced assumptions, unit economics with serving-token cost as COGS, three linked statements, ADLC Cost Ledger from receipts, scenarios → a model whose every headline row traces to evidence
 - **Evaluator** *(a mechanism, never a person; never collapses into any role or work tree it judges)* → judges VCCs, records Evidence References, derives rungs, resolves concurrent claims, renders selection verdicts from a graph it holds no argument in → verdicts no participant can self-grade
 - **UX Designer** → personas, journeys, usability → user-centred design
 - **Engineering Lead** → feasibility, patterns, risks → implementable approach
@@ -498,7 +538,7 @@ Each entry is the document-scope `role`/`action`/`outcome` envelope. A role may 
 - **Rubrics name**: the real domain object first; highest contiguous pass, blockers named
 - **Roadmaps sequence**: reuse-adjusted cost; deferred ideas marked, never dropped
 - **Monetization tests**: mechanism, WTP, and collected revenue stay separate
-- **Venture records project**: every slide, section, and row cites its source; revenue is collected money only
+- **Venture records project**: every slide, section, and row cites its source; recognized revenue and collected cash reconcile separately
 - **Ledger line**: active minutes, token spend, CI minutes, provider fees, and avoidable-block cost enter the model from receipts
 - **START then RELEASE then DEPLOY**: one lane, one exact candidate, one exact protected revision
 - **One owner**: consumers call, never re-implement

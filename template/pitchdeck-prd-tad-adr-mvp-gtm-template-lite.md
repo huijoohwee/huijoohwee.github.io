@@ -456,3 +456,32 @@ Select the smallest dependency-closed Must slice from the PRD. Link each criteri
 ## GTM
 
 Name one reachable payer and their current workaround. Record one priced offer, observed response, accepted outcome, actual payment and support cost separately. Compare the free/self-serve path before adding hosted infrastructure. WTP, revenue and repeat use start unvalidated. Append pilot findings as a successor Context linked to this artifact revision.
+
+## Pitch Deck
+
+Use the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register) when presenting.
+Cover its twelve roles in a bounded short deck/appendix; cite each claim, its evidence status, the MVP
+Reveal VCC and the ask's milestone/model joins. Defer with reason and trigger if no audience action is in scope.
+
+## Business Plan
+
+Use the [Venture Record section contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#business-plan).
+Join this projection to `{{template_inputs.continuity_id}}@{{template_inputs.version}}` and cite each
+section's source: summary, segment/problem, offer, market, alternatives, acquisition/retention,
+operations/capacity, team, obligations, capital, risks and milestones. Mark unknowns explicitly.
+
+## Financial Model
+
+Use the [model contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#financial-model): sourced driver
+assumptions, unit economics, linked income/cash/balance statements, scenario cash floors, funding and
+receipt-based ADLC costs. State basis, currency, horizon, actuals cut-off and model revision. Separate
+forecasts, recognized revenue and collected cash; report reconciliation results and unsupported ratios.
+
+## Coverage and ADLC Handoff
+
+Instantiate the [C01–C16 record](../guidelines/prd-tad-adr-mvp-gtm-templates.md#from-0-to-1-coverage-record)
+at this continuity ID/revision. State both coverage ratios, gaps, owners and next checks. Full and lite
+formats share these obligations; a shorter document links source records instead of dropping domains.
+Use the [ADLC seam](../guidelines/prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam) for scope, VCCs,
+time/token/byte bounds, authorization and exact source/release/deploy/rollback evidence. Record actual
+costs even for failed work. Return observed customer outcomes to the GTM successor Context.

@@ -25,7 +25,7 @@ One joined artifact carries a product from unvalidated pain to a paying customer
 | Property | Rule | Finding |
 |---|---|---|
 | Universal | Any product, domain, language, runtime; no assumed company, path, framework, or vendor | `vendor-coupling` |
-| Neutral | Name capabilities and roles by function; a brand appears only under a heading or block whose own text says "reference implementation" | `vendor-coupling` |
+| Neutral | Capabilities and roles are named by function; a brand appears only under a heading or block whose own text says "reference implementation"; a brand named outside such a label is a `vendor-coupling` finding regardless of surrounding intent | `vendor-coupling` |
 | Agnostic | Requirements derive from content and parsed frontmatter, never from file names, directories, or mirrors; examples use `[...]` | `path-derived-claim` |
 | Simple | A rule earns its place by being checkable and load-bearing; Ceremony, Complication, Verbosity, and Clutter are named anti-patterns | `cid-density-violation` |
 | Autonomous | A named role completes a directive using only this set's checks, evidence, and grounding; a silent human gate outside the Deploy Boundary or Evaluator is a defect | `human-gate-unstated` |

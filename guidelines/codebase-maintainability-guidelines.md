@@ -1,8 +1,8 @@
 ---
 title: "Codebase Maintainability Guidelines"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "1.1.0"
+date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -48,7 +48,7 @@ Each line is a three-beat `Context; Intent; Directive` mantra:
 - Cleanup; prevent resource leaks; forbid resource retention
 - Complexity; reduce DOM overhead; forbid excessive wrappers
 - Components; instantiate via factories; forbid hardcoded initialization
-- Computation; eliminate redundancy; forbid recalculation
+- Computation; follow the incremental work contract; forbid redundant unchanged-input work
 - Configuration; drive behavior externally; forbid hardcoded values
 - Consistency; maintain semantic coherence; forbid drift from schema
 - Constants; anchor keys to shared definitions; forbid magic strings
@@ -108,7 +108,7 @@ Each line is a three-beat `Context; Intent; Directive` mantra:
 - Quality; uphold code standards; forbid unchecked merges
 - Race Conditions; guarantee execution safety; forbid race conditions
 - Recalc; avoid style recomputation; forbid expensive hover handlers
-- Redundancy; eliminate duplicate computation; forbid recalculation
+- Redundancy; invalidate affected dependencies; forbid duplicate unchanged-input computation
 - Refactoring; split oversized modules; forbid files >600 lines
 - Registration; standardize settings storage; forbid inconsistent keys
 - Reliability; guarantee system stability; forbid unsafe patterns
@@ -339,13 +339,12 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 
 ### Pattern: CacheManager
 
-**From requests to optimized responses**: CacheManager → computes cache keys via content hashing → retrieves data using LRU eviction policy → validates freshness through TTL checking → serves cached results with performance metrics.
+**From requests to valid reuse**: CacheManager → identifies owner inputs and their revision → reuses a valid bounded result → invalidates affected dependencies → releases entries when their lifetime ends.
 
 **Developers implement CacheManager pattern**
-- Developers compute cache keys via content hashing
-- Developers retrieve data using LRU eviction policy
-- Developers validate freshness through TTL checking
-- Developers track performance metrics
+- Developers reuse the existing cache owner and choose keys, lifetime and eviction from the workload.
+- Developers follow the [incremental work contract](token-performance-economics-guidelines.md#incremental-work-contract); TTL alone does not prove mutable input freshness.
+- Developers measure lookup, recomputation and retained-memory costs before adding a cache.
 
 ---
 
@@ -366,6 +365,7 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 ### Performance
 
 **Performance engineers enforce optimization standards**
+- Engineers use the shared [incremental work contract](token-performance-economics-guidelines.md#incremental-work-contract) for dependency invalidation, render ownership, bounded scheduling and correctness evidence; unchanged input must not trigger costly work.
 - Engineers limit chunks to <500kB post-minification
 - Engineers enable batching/sharding
 - Engineers optimize memoization

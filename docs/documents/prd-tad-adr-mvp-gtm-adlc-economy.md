@@ -1,7 +1,7 @@
 ---
-title: "Lean ADLC Economy: Measured Comparison Against Industry ADLC Practice"
+title: "Lean ADLC Economy: Simple, Measured End-to-End Delivery"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
+version: "0.2.0"
 date: "2026-09-21"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -10,439 +10,322 @@ local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19"
-agent_id: "cursor-session-e1a208b3"
 continuity_id: "ADLC-ECON-01"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
 parent: "prd-tad-adr-mvp-gtm-guidelines.md"
 parent_version: "3.0.0"
 guideline_revision: "3.0.0"
 guideline_source: "huijoohwee.github.io/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
-reviewed_source_revision: "6a4971f26963e588d1a411d9d7619131fc4cb048"
+reviewed_source_revision: "c7f5bff72d898f442a66063cbe6b0f0d34aaae76"
 load_policy: "on-demand"
 ---
 
 # Lean ADLC Economy
 
-**Continuity**: `ADLC-ECON-01` @ source revision `25a38aa5b923e50092b5330895e38a0e1d15712a`.
-PRD, TAD, ADR, MVP, and GTM below are section roles of this one joined artifact. MVP and GTM consume
-PRD criteria, TAD elements, and ADR decisions; they originate no requirement, design, or decision.
+`ADLC-ECON-01@0.2.0` joins PRD, TAD, ADR, MVP and GTM. It succeeds the
+[0.1.0 study][previous]; earlier authored bytes remain in Git history.
 
-**Governing claim under test**: the ADLC is *not* currently shown to be more time-, resource-, or
-cost-performant than industry ADLC practice, and the repository's own economics guide declines the
-claim. This artifact scopes the smallest work that makes the claim decidable, and the leanness
-reductions that are independently justified whichever way the measurement lands.
+**Objective:** deliver the smallest accepted buyer outcome with less effort, repeated work,
+resource use and delay. Keep one intent, one workflow lineage, scoped work and existing checks.
+Measure the bottleneck, change its owner and compare equivalent quality and completion.
 
----
+This is a specification increment; implementation and external effects need their own covered scope.
+Savings, industry superiority, buyer demand and production readiness remain unproven.
 
-## Codebase Grounding Record
+## Codebase Grounding Record — Reference Implementation
 
-**Input revision**: this document, authored at `ADLC-ECON-01` v0.1.0.
-**Scoped codebase revisions**: OS `25a38aa5b923e50092b5330895e38a0e1d15712a`
-(`origin/main` `580288976b35afbdb8d3bed81d9bfc1ffd8c7346`);
-Canvas `1f3027d024ffdaa82c546d660621292e60975582`; Graph `cc74ce744dfa6f54c0c22b55a6dceb8f5545ab8f`;
-Commerce `09152179fd4b59a63ecff22b8897650da25d02d1`.
-**Guideline revision**: `e8d2a10a8d3e5735c43edf350a22523df05fdf91`.
+Inspected on 2026-09-21: website `c7f5bff72d898f442a66063cbe6b0f0d34aaae76`; lifecycle owner
+`580288976b35afbdb8d3bed81d9bfc1ffd8c7346`. The website and the three product consumers below pin
+`c99988c7bcd7ef3c8c6a68428af4750e5b7a09cd`; a capability on owner main is not proof of consumer adoption.
+Guideline 3.0.0 is present at the inspected website revision. Source inspection proves only the
+stated implementation or configuration; live performance and effect completion require receipts.
 
-| # | Material current-state claim | Evidence | Disposition |
-|---|---|---|---|
-| G01 | A local test receipt is reusable for one hour against exact inputs | `bin/agentic-os-test-receipt.mjs:75` (`now - receipt.finishedAt > 3_600_000`) | `confirmed` |
-| G02 | Local execution is bounded at 540 s wall clock with 4 workers | `bin/agentic-os-test-inputs.mjs:9` `testMs: 540_000`; `bin/agentic-os-tests.mjs:131` `concurrency: 4` | `confirmed` |
-| G03 | Input binding is capped at 2048 files / 499 kB per file / 16 MiB aggregate | `bin/agentic-os-test-inputs.mjs:8` | `confirmed` |
-| G04 | A bound CI observation can defer the duplicate local suite | `bin/agentic-os-tests.mjs:33,117,154` (`boundCiCoverage`, `deferred local suite`) | `confirmed` |
-| G05 | There is no cross-call result cache and CI never accepts local receipts | `guides/VALIDATION-ECONOMY.md` ("There is no cross-call cache", "CI never accepts local receipts") | `confirmed` |
-| G06 | Per-command CPU ms and peak RSS are capturable beside each stage | `guides/VALIDATION-ECONOMY.md` AO-05 (waited-process accounting, optional host Python) | `confirmed` |
-| G07 | A bounded provider read can attribute CI wait vs execution | `guides/VALIDATION-ECONOMY.md` AO-06 (`observe --root=. --ci-run=<run-id>`) | `confirmed` |
-| G08 | Fleet membership and cleanup disposition are catalogued in one place | `test/repositories.json` schema `agentic-os/repository-check-catalog/v1`, 7 rows with `releaseCommon` / `worktreeCleanup` | `confirmed` |
-| G09 | `complete` runs only from the canonical main worktree | `bin/agentic-os-release-common-wrapper.mjs`; observed `blocked-canonical-required` | `confirmed` |
-| G10 | `completion:status` exists in OS but not in the three consumers | `package.json:226` present in OS; observed `warning-release-common-close` in Canvas, Commerce, Graph | `confirmed` |
-| G11 | A prior Graph protected check block took 794.72 s | `guides/VALIDATION-ECONOMY.md` GTM/AO-01–AO-04, run `35097953831` | `confirmed` (single observation, not a baseline) |
-| G12 | An industry-practice comparison baseline exists for this fleet | no paired run, no comparison harness found in OS, Canvas, Graph, or Commerce | `absent` |
-| G13 | The ADLC reduces wall clock, CI minutes, or cost versus a plain protected-PR flow | no before/after evidence; guide states savings unmeasured | `unverified` |
-| G14 | Per-merge ADLC overhead is material | observed 2026-09-21: 3 lanes, 5 distinct block classes before first green land | `confirmed` (one sample, not a rate) |
+| ID | Verified source or observation | Consequence for this increment |
+|---|---|---|
+| G01 | [Test inputs][inputs] bound 2,048 files, 499,000 bytes/file, 16 MiB total and 540,000 ms execution; [runner][runner] uses at most four workers | These are native test-runner limits, not a universal e2e delivery deadline |
+| G02 | [Receipt owner][receipts] checks a one-hour age, command, log digest and result; runner compares the input fingerprint | Local result reuse already exists; age alone never grants reuse |
+| G03 | [Validation contract][validation] separates local reuse, fresh CI and conservative dependency fallback | “No cross-call cache” concerns particular live-read caches; it does not mean no reusable validation results |
+| G04 | [Observation guide][economy] and [workflow owner][workflow] already collect resources, CI timing, immutable manifests, exports and recommendations | Reuse these owners; do not start by building another comparison runner or ledger |
+| G05 | [Review-body owner][review] already validates supplied title/body before publication and supports a consumer `reviewBodyCheck` | Audit adoption and the failing input first; a new generic preflight is not a proven gap |
+| G06 | [Release wrapper][release-wrapper] warns when `completion:status` is absent; inspected consumer package manifests lack that alias | An operator-path gap exists; absence of an npm alias does not prove absence of the underlying completion API |
+| G07 | [Fleet catalog][fleet] has seven rows, four with `releaseCommon: true`; website uses its own [START][site-start] and [RELEASE][site-release] bindings | Consume declared owner bindings; do not prescribe one npm alias to every repository |
+| G08 | [Storage owner][storage] reports bounded observed logical/allocated bytes and incomplete scan reasons | Retained refs, mounted worktrees and disk consumption are different measurements; none authorizes cleanup |
+| G09 | Website [validation policy][site-validation] always selects evaluators/naming; docs select guidelines/git contracts; checks declare `reuse: never` | Use affected selection, but do not promise cache hits for this consumer |
+| G10 | Website [deploy contract][site-deploy] publishes `index.html` and `guidelines/` only | This `docs/documents/` edit can finish at source integration; it is not a Pages payload change |
+| G11 | Inspected `validatePlanning` in both owner main and the installed pin requires a `prd-tad-adr-mvp-gtm.md` filename suffix; this file fails optional `start --plan` with `blocked-workflow-planning-binding` | Normal scoped START works; record the capture gap, never rename/copy the artifact just to manufacture evidence |
+| G12 | The prior study supplies no joined comparable A/B record; its five block classes and 794.72-second example are historical observations | They motivate investigation, not a current rate, baseline, savings estimate or fleet-wide superiority claim |
 
-**Unresolved claims G12 and G13 block any performance superiority claim at baseline.** They do not
-block the leanness work in `MVP-2`, which is justified by `G14` independently of the comparison.
+Consumer snapshots for G06: Canvas `141e14604665ddfa1fdec8bfd5d532f6dc4f9298`,
+Graph `b242ab5d82c49155808a86b45565c797f8e04f61`, Commerce
+`ee9805d9b159ff1d33cd083efb8602eb1ed68d48`. Their `package.json` files were inspected;
+Graph also declares `reviewBodyCheck: scripts/collaboration-contract.mjs`. Recheck revisions, pins,
+profiles and current evidence before implementing any consumer change.
 
----
+The previous `compare` command and generic preflight proposal are superseded: the command is absent
+from inspected scripts and preflight already has an owner. Retained branches are not active worktrees.
 
 ## PRD
 
-### Problem
+### Outcome, scope and priority
 
-The operator cannot answer whether the ADLC costs less or more than an ordinary protected-PR flow,
-because nothing measures the two against each other. Meanwhile the per-merge overhead is visible and
-unpriced: on 2026-09-21 a four-file change across three repositories hit five distinct block classes
-(`blocked-review-body-invalid` twice, `blocked-invalid-arguments`,
-`blocked-release-common-helper-missing`, `blocked-canonical-required`) plus one flaky provider check
-before the first green land.
+**CID:** C: G01–G12 identify existing controls and unmeasured overhead. I: shorten safe delivery.
+D: reuse the e2e path, compare evidence and improve one demonstrated bottleneck.
+**RAO/SVO:** the operator measures one workflow, producing its source-bound outcome, resource use,
+blocker and next owner action.
 
-### Users
+Rank work by buyer pain, then proximity to a working solution, then a credible first-dollar path.
+Separate an internal operator improvement from independently validated buyer demand.
 
-| User | Need |
-|---|---|
-| Solo Founder / AI Orchestrator | Decide whether to keep, trim, or replace ADLC gates on cost evidence |
-| Evaluator mechanism | Derive a rung from recorded paired measurement, not narrative |
-| Consumer-repository owner | Know the per-merge price of adopting the ADLC before adopting it |
+| Pain / feature | Smallest solution | Priority and acceptance |
+|---|---|---|
+| P1 / F1: restarting, rereading and rechecking consume effort | Reuse the current workflow root, bounded context and valid exact-input proof | Must; VCC-1, VCC-2 |
+| P2 / F2: preventable metadata, command and pin errors interrupt release | Inspect supported commands and existing preflight; repair only a confirmed owner/adoption gap | Must as a diagnostic obligation; VCC-3; code remains conditional |
+| P3 / F3: a green merge can hide unfinished delivery | Carry the authorized intent through owner closeout, applicable deployment and runtime readback | Must; VCC-4 |
+| P4 / F4: elapsed time and resource estimates are mistaken for cash/value | Pair compatible observations; keep time, resources, estimates and actual charges separate | Must; VCC-5, VCC-6 |
+| P5 / F5: retained state creates unexplained storage/lookup overhead | Use bounded storage observation only when evidence identifies that bottleneck | Could; VCC-7; no automatic cleanup |
 
-### Pain-Point-to-Feature Mapping
+Independent buyer pain remains `unvalidated`; these observations support an internal pilot.
+Exclude new services, stores, dashboards, executors, remote caches, paid capacity, higher caps,
+weaker checks, automatic model switching, broad cleanup and unmeasured concurrency increases.
 
-| Pain point | Hook | Break | Fix | Close | Min-time-resource-max-value | Validation |
-|---|---|---|---|---|---|---|
-| P1 — the cost question is unanswerable | "Is this cheaper than a plain PR?" | No paired observation exists (`G12`) | `F1` Comparison harness | One command emits an A/B record | **Reuse**: AO-05 resource capture, AO-06 CI attribution, existing receipt writer. **New**: pairing and diff projection only | `unvalidated` |
-| P2 — avoidable blocks cost operator minutes | Land fails on a form defect, not a code defect | Review-body and arity failures surface after the work, not before | `F2` Preflight arity/body gate | `land` refuses early with the exact missing input | **Reuse**: existing `doctor`/`status` preflight pass. **New**: two checks in the existing preflight | `unvalidated` |
-| P3 — closeout degrades silently on consumers | `complete` warns instead of closing | `completion:status` present in OS, absent downstream (`G10`) | `F3` Consumer closeout parity | Closeout reports the same verdict in every `releaseCommon` repo | **Reuse**: OS `completion:status` implementation. **New**: catalog-driven presence check | `unvalidated` |
-| P4 — retained lanes accumulate unpriced | ~100 unretired lanes in one repository | Cleanup is separately governed and never scheduled | `F4` Sprawl cost report | One report prices retained lanes and worktrees | **Reuse**: `agentic-os-storage-report.mjs`, quarantine manifest. **New**: projection only | `unvalidated` |
+Reuse existing operator observations and agent/MCP/WebMCP discovery owners; add no route.
+Retained evidence supports local/offline inspection; provider checks require connectivity.
+Existing browser views must support mobile inspection without becoming a release dependency.
 
-Every pain point is `unvalidated`: no user quote, ticket, or measured behaviour is attached yet, so
-no `Must` in this artifact may claim demand. `P1` and `P2` rest on `G14`, a single observed session.
+### Success measures and verifiable completion conditions
 
-### Features (MoSCoW)
+Optimize one declared primary metric per pilot; report the others as constraints. Correctness, unchanged
+acceptance coverage, source identity and zero paid spend are hard gates. Faster failed or incomplete
+work never counts as accepted delivery. Unknown cost/license eligibility blocks the affected execution.
 
-| ID | Feature | Priority | Pain point | Rationale |
-|---|---|---|---|---|
-| F1 | Paired ADLC-vs-baseline comparison record | Must | P1 | Without it every performance statement is `unverified` |
-| F2 | Land preflight for review-body and command arity | Must | P2 | Cheapest observed defect class; zero new surface |
-| F3 | Catalog-driven consumer closeout parity | Should | P3 | Degrades verdict quality, not correctness |
-| F4 | Retained-lane and worktree cost report | Should | P4 | Priced visibility before any cleanup authority change |
-| F5 | Cross-machine shared result cache | Won't (this increment) | — | Contradicts `G05` fail-closed posture; reopen only via a new ADR |
-| F6 | Raise `testMs` or worker count | Won't (this increment) | — | Caps are the control being measured; moving them invalidates `F1` |
+| VCC | Observable result | Verification / target |
+|---|---|---|
+| VCC-1 | One intent joins source revision, scope, workflow locator, evidence and next action across resume | Resume from the exact root without creating a second lane or rerunning unchanged work; report missing capture explicitly |
+| VCC-2 | The owner selects affected checks with reasons, keeps mandatory coverage and valid reuse boundaries | Retain selection and result receipts; unknown/shared impact broadens; fresh protected CI remains required |
+| VCC-3 | Each avoidable block resolves to an existing owner, exact failing input and smallest corrective action | Reproduce the original failure and record whether existing preflight catches it before side effects; unsupported behavior remains a gap |
+| VCC-4 | The declared delivery endpoint has every applicable receipt, or one explicit blocker/next owner | Source, integration, retirement, cleanup, sync, deployment and readback remain independently evidenced |
+| VCC-5 | One comparable pair has provenance, quality coverage and time/resource/cost fields with missingness | Every number resolves to a receipt or labeled manual observation; invalid pairs produce no savings verdict |
+| VCC-6 | A keep/rework/revert decision follows predeclared quality and economic criteria | Start with one pair; collect five eligible pairs before a cohort claim; publish counts/range and failures, not industry superiority |
+| VCC-7 | A triggered storage report distinguishes retained refs, worktrees and observed bytes | Preserve scan bounds, incompleteness and shared-inode accounting; no deletion or cash claim follows from counts |
 
-### Success Metrics
-
-| Metric | Definition | Target | Source |
-|---|---|---|---|
-| **Time-to-Value (TTV)** | Elapsed time from `npm run compare -- --baseline` on a clean checkout to a readable A/B record | ≤ 4 steps, ≤ 10 min | Walked on a clean environment before Phase 3 sign-off |
-| Paired coverage | Change sets measured on both paths | ≥ 5 | `F1` record count |
-| Avoidable-block rate | Blocks attributable to form, not code, per 10 lands | Observed, then reduced | `F2` preflight counters |
-| Overhead ratio | ADLC wall clock ÷ baseline wall clock, per change set | Reported, not targeted | `F1` record |
-| Retained-lane count | Lanes past their integrated head | Reported | `F4` report |
-
-No savings target is set. Setting one before `F1` exists would be the `unproven-claim` this artifact
-is written to avoid.
-
-### Verifiable Completion Conditions
-
-| VCC | Measurable end state | Check | Constraints |
-|---|---|---|---|
-| VCC-1 | One change set produces an A/B record carrying wall clock, CPU ms, peak RSS, CI minutes, and block count for both paths | `npm run compare -- --record` exits 0 and emits the record | Reuses AO-05/AO-06; adds no service, daemon, or dependency |
-| VCC-2 | A land missing `--body-file` or PR frontmatter fails in preflight, before any commit or push | `land` exits non-zero naming the missing input, with no new ref | Must not weaken the existing post-hoc validator |
-| VCC-3 | Invoking an unsupported verb on a pinned consumer CLI names the supported verb set | Non-zero exit listing supported verbs | No change to the verb set itself |
-| VCC-4 | Every `releaseCommon: true` row in the catalog reports a closeout verdict, never `warning-release-common-close` | Closeout run across catalog rows | Catalog stays the single membership SSOT |
-| VCC-5 | One report prices retained lanes and mounted worktrees per repository | Report command exits 0 within its stated bound | Classification only; authorizes no deletion |
-
----
+**TTV target:** from available archived receipts to one usable bottleneck/next-action decision in at
+most four operator actions and ten active minutes. This is a proposed target, currently unmeasured;
+it excludes neither setup nor provider waits from the separate total-delivery measure. Collecting five
+pairs is a later pilot, not a ten-minute promise. Predeclare the minimum worthwhile improvement before
+running it; record inconclusive results when the sample or resource coverage is insufficient.
 
 ## TAD
 
-### Division of Work — One Owner Per Capability
+### One e2e path, existing owners
 
-| Capability | Owning component | Consumers call, never re-implement |
+Use existing START/RELEASE/DEPLOY owners. Carry valid grants across turns; pause only the blocked
+effect, continue independent covered work and resume from the retained outcome and next action.
+
+| Step | Existing owner / action | Evidence and economy rule |
 |---|---|---|
-| Input binding and digest | `bin/agentic-os-test-inputs.mjs` | comparison harness, preflight |
-| Receipt write / reuse window | `bin/agentic-os-test-receipt.mjs` | comparison harness |
-| Suite selection and bound-CI deferral | `bin/agentic-os-tests.mjs` | comparison harness |
-| Provider CI observation | `bin/agentic-os-validation.mjs observe` | comparison harness |
-| Release verb dispatch | `bin/agentic-os-release-common-wrapper.mjs` | every consumer `release:common` |
-| Fleet membership and cleanup disposition | `test/repositories.json` | closeout parity, sprawl report |
-| Storage / retained-object measurement | `bin/agentic-os-storage-report.mjs` | sprawl report |
+| 1. Select | Planning artifact and product owner select one accepted outcome and endpoint | Exact plan revision, scope, ETA and time/byte/module caps; no speculative adjacent work |
+| 2. Admit | Native doctor/status/START reserve a scoped lane | Verify pins, hooks, commands and write scope once; preserve unrelated work; bind an existing workflow root when supported |
+| 3. Build | Authored source owner implements the smallest vertical slice | Bounded lazy reads, deterministic tools first, explicit model input/output/fallback; reuse unchanged context |
+| 4. Validate | Native selector and consumer checks | Cheap metadata/contract checks first, affected checks next; revalidate changed dependencies; no blind full-suite retry |
+| 5. Integrate | Owner land/release path and protected provider checks | Final title/body before first publish; one exact candidate/run/attempt; source change invalidates dependent proof |
+| 6. Close source | Owner completion, eligible cleanup and canonical sync | Separate receipts; retain blocked, dirty or ambiguous state; no repeated broad inventory to imply completion |
+| 7. Deliver | Consumer deploy/rollback owner, when in scope | Exact authorized target and deployed identity plus readback; preserve verified rollback predecessor |
+| 8. Learn | Existing collect/export/recommend owners | Immutable end successor of the same lineage; record result, gaps and one next improvement |
 
-**Reuse-or-new decisions**: `F1`, `F2`, `F3`, and `F4` are all extensions of the owners above. No new
-store, ledger, service, or dependency is introduced. A second measurement ledger would be an
-`unjustified-storage-duplication`; the comparison record extends the existing receipt root.
+Steps 3–5 repeat only after a material input, failure or evidence change. Bound each repair sprint to
+at most two corrective iterations; on the same unchanged failure, preserve evidence and revise the
+plan at its owner. This bounds waste without weakening acceptance or abandoning covered work.
+External waits report dependency, condition and next recheck; they have no invented completion ETA.
 
-### Component Inventory
+```mermaid
+flowchart LR
+  A[Buyer outcome and exact plan] --> B[Scoped START]
+  B --> C[Small owner change]
+  C --> D[Affected checks]
+  D --> E[Protected integration]
+  E --> F[Source closeout]
+  F --> G{Delivery endpoint}
+  G -->|Source only| I[Collect end evidence]
+  G -->|Runtime| H[Authorized deploy and readback]
+  H --> I
+  I --> J[One measured next improvement]
+  D -->|Changed failure input| C
+```
 
-| ID | Component | Origin | Interface |
-|---|---|---|---|
-| C1 | Comparison harness | New — no existing component pairs two execution paths | CLI subcommand; emits one bounded JSON record |
-| C2 | Land preflight extension | Reuse — extends the existing `doctor`/`status` preflight | Inline check inside the existing land path |
-| C3 | Closeout parity check | Reuse — extends catalog validation | Reads `releaseCommon`; asserts script presence |
-| C4 | Sprawl cost projection | Reuse — extends storage report | Read-only projection over existing manifests |
+Journey: select → build → inspect → accept. Data: phase receipt → immutable root → read-only view
+→ decision. Planning, scoped worktrees, provider checks and delivery retain separate owners/authority.
 
-### Budgets
+### Reference implementation: invocation and ownership
 
-| Budget | Value | Source |
+| Surface | Existing invocation / source | Meaning |
 |---|---|---|
-| Local test wall clock | 540 000 ms | `testMs`, unchanged |
-| Worker concurrency | 4 | unchanged |
-| Input files / per file / aggregate | 2048 / 499 kB / 16 MiB | unchanged |
-| Receipt reuse window | 3 600 000 ms | unchanged |
-| Comparison record size | ≤ 128 kB, matching the existing receipt ceiling | reuses `receiptBytes` |
-| Source delta for this increment | ≤ 8 modules, ≤ 100 kB | stated bound |
-| Token budget | Authoring ≤ 60 k tokens; execution harness emits a cost log per AI-assisted stage with typed input, typed output, and a stated fallback | Solo-operator orientation |
-| Always-load delta | 0 bytes — no guide enters the always-load set | `cid-budget-exceeded` guard |
+| Website authoring | `npm run doctor`; `npm run lane -- <scope> --write=<paths>` | Scoped START; read the consumer workflow instead of assuming a `release:common` script |
+| Website validation | `npm run check:plan`; `npm test` | Selection preview then affected owner execution; not a universal full-test/cache promise |
+| Website publication | `npm run land -- --message="<message>" --title="<title>" --body-file=<file>` | Mutating publication through owner checks; finalize review text first |
+| Closeout | `node node_modules/agentic-os/bin/agentic-os.mjs completion status --ref=<lane>` | Existing diagnostic; follow the consumer RELEASE workflow for effects |
+| Evidence | `node node_modules/agentic-os/bin/agentic-os.mjs workflow collect --input=<input>` | Writes an immutable archive; use the returned exact manifest path |
+| Inspection | Same CLI: `workflow export --input=<manifest>` or `workflow recommend --input=<manifest>` | Bounded read-only observations; recommendations need current evidence and covered authority |
+| Agent inspection | Existing `workflow.export` / `workflow.recommend` MCP and `/workflow.recommend #read-only @input:<manifest>` | Same owner; no second registry, model call or autonomous spending |
 
-**TCO by deployment model, unblended**:
+Supply real paths/IDs. Admission, publication and collection write state; inspection needs no model
+call, although an agent reading it can use tokens. No new command is promised. G11 needs an authorized
+owner fix before claiming planning-bound capture for this filename; never fabricate a root.
 
-| Deployment model | Marginal cost of this increment |
+### Measurement contract: one decision record, referenced evidence
+
+Begin with a small comparison table in existing private task artifacts, referencing original
+manifest paths/digests. Keep archives immutable. Automate only demonstrated repeated manual effort
+through the existing contract owner; add no ledger or copied span pages.
+
+| Field group | Required content / interpretation |
 |---|---|
-| Local developer machine | CPU and wall clock only; no egress, no service |
-| Provider-hosted CI | One additional baseline run per paired change set; no new job type |
-| Hosted third-party cache service | Not adopted — see ADR-3 |
+| Identity | Pair ID; plan ID/revision; repository/base/head/tree; patch or task identity; manifest/receipt digests; owner pin; command/policy version |
+| Cohort | Host/runner class, environment, dependency state, cache warmth, model/configuration when used, quality obligations, endpoint and trial order |
+| Outcome | Accepted/failed/blocked/partial, scope and checks completed, defect/rework observations, missing phases and exclusion reason |
+| Timing | Start/end timestamps with clock scope; active human/agent effort; local execution; provider wait/execution; rework; setup and measurement overhead |
+| Resources | CPU user/system ms, maximum single-process RSS bytes, input/output/read bytes, calls, prompt/completion tokens and measurement coverage |
+| Economics | Reported model-cost estimate, actual cash evidence, optional explicit labor rate, quota use/headroom, one-time setup and recurring maintenance |
+| Decision | Primary metric, minimum worthwhile change, guardrails, paired deltas, keep/rework/revert/inconclusive and next owner |
 
-### Flow Patterns
+Use `null` plus reason for unavailable values; preserve known zero, partial and reused states.
+Historical reused CPU/tokens are not current consumption. Sum only non-overlapping executed stages;
+never sum parent with child, memory peaks, parallel wall times or cross-host clocks. Report maximum
+single-process RSS as such, never as concurrent process-tree memory. Initial provider wait and workflow
+execution are distinct; neither measures billed CI minutes, job CPU or all later scheduling delays.
 
-**User journey**
+Total delivery lead time is end minus start on a declared comparable clock, including waits and
+rework. Active effort is separately recorded; it cannot be inferred by subtracting arbitrary spans.
+If clocks cannot be reconciled, retain per-phase timing and mark the total unknown.
 
-```mermaid
-journey
-  title Operator answers the cost question
-  section Today
-    Ask "is ADLC cheaper?": 1: Operator
-    Find no paired evidence: 1: Operator
-  section With F1
-    Run compare on a change set: 4: Operator
-    Read A/B record: 5: Operator
-    Decide keep or trim a gate: 5: Operator
-```
+### Comparable pilot and economic decision
 
-**Workflow**
+1. Freeze the accepted outcome, quality obligations, endpoint, instrumentation and primary metric.
+   Baseline A is the owner's existing supported path; B changes exactly one measured inefficiency.
+   A plain protected-PR comparator is eligible only with equivalent checks and effect boundaries.
+2. Prefer existing compatible evidence. If a replay is necessary and authorized, use isolated disposable
+   fixtures for local stages. Do not double-merge, double-deploy or bypass protection to manufacture a pair.
+   Label a local replay local-only; e2e claims require real comparable delivery observations.
+3. Match task/patch class, pins, runner, tools/model and cache state; separate cold and warm trials.
+   Alternate A/B order where possible, retain all failed attempts and account for setup/capture cost.
+   If the patch or conditions differ materially, label the pair observational or incomparable.
+4. Inspect one pair first. Expand to five eligible pairs only when useful and within free quotas.
+   Report paired differences, median and range with the sample count; keep failures and coverage visible.
+   Five pairs are a pilot, not statistical proof or a representative industry benchmark.
+5. Keep B only if it meets the declared improvement floor without a correctness, resource-budget or
+   completion regression. Mixed tradeoffs need an explicit owner decision; inconclusive evidence grants
+   no savings claim. Roll back the changed source through the checked owner path when B regresses.
 
-```mermaid
-flowchart LR
-  A[change set] --> B{path}
-  B -->|ADLC| C[doctor/status/lane/land]
-  B -->|baseline| D[plain protected PR]
-  C --> E[receipt + CI observation]
-  D --> E
-  E --> F[paired A/B record]
-  F --> G[Evaluator verdict]
-```
+For each compatible metric, `delta = B - A`; reduction percentage is `100 × (A - B) / A` only when
+A is positive and both measurements are known. A zero/unknown denominator has no percentage result.
+Use cost per **accepted outcome** across all attempts, including failed/rework cost; a zero-success
+cohort has no finite unit cost. Keep local, provider-CI and deployed-runtime cohorts separate.
 
-**Data flow** — anchored to the "Read A/B record" journey stage.
+Cash, estimates and opportunity cost stay unblended. Actual incremental cash requires source evidence;
+free quota use still consumes capacity. Optional effort valuation is observed hours × a declared rate,
+never a charge. Estimated model spend is not additive to a bill for the same usage. Break-even accepted
+outcomes equal known one-time adoption cost divided by positive net recurring benefit per accepted
+outcome, using consistent units and including maintenance/measurement overhead; otherwise it is unknown.
 
-```mermaid
-flowchart LR
-  I1[input digest] --> R[(receipt root)]
-  I2[CPU ms / peak RSS] --> R
-  I3[CI run observation] --> R
-  R --> P[comparison projection]
-  P --> O[bounded JSON record ≤128kB]
-```
+### Budgets and admission
 
-**Orchestration / harness flow** — anchored to the "Run compare" journey stage.
+Documentation increment: one authored file, <600 lines, ≤30 KB final content, zero runtime modules,
+zero dependencies and zero always-load bytes. Implementation proposal: one bottleneck at a time,
+≤3 owner modules and ≤30 KB changed source in a 30-active-minute sprint; refresh the plan on drift.
+Pilot: one pair initially, at most five eligible pairs and two corrective iterations per sprint.
 
-```mermaid
-flowchart TD
-  H[comparison harness] --> T[test-inputs owner]
-  H --> RC[receipt owner]
-  H --> OB[validation observe owner]
-  H -.typed input / typed output / cost log / fallback.-> H
-  H --> X{max 2 paired runs\ncircuit-breaker: no new evidence}
-```
-
-**Topology**
-
-```mermaid
-flowchart LR
-  subgraph authoring[authoring lane]
-    AO[agentic-os canonical]
-  end
-  subgraph mirror[mirror lane]
-    CI[provider CI]
-  end
-  subgraph delivery[delivery lane]
-    REL[release surface]
-  end
-  AO -->|closed boundary B1| CI
-  CI -->|closed boundary B2| REL
-```
-
-Every agentic loop in `C1` is bounded: maximum 2 paired runs per change set, circuit-breaker when a
-run yields no new evidence.
-
-### Invocation Register
-
-| Route | Kind | Owner | Read cost |
-|---|---|---|---|
-| `compare` | CLI subcommand | C1 | zero-token |
-| `completion status` | CLI subcommand | existing OS script | zero-token |
-| `storage report` | CLI subcommand | existing storage owner | zero-token |
-
-All three are read routes at zero token cost. No route is added outside the register.
-
----
+Native G01 bounds remain unchanged; consumer policies keep their own limits. Use FOSS components and
+zero paid usage, addons or overages. Record current entitlement/headroom before provider work; if the
+remaining free budget cannot cover a trial, retain local progress and wait or reduce the experiment.
+Choose the smallest tool/model configuration that meets the acceptance contract; unknown quality or
+cost is not permission to switch. Parallel work requires independent scopes and observed benefit after
+coordination cost; serial execution remains the default for this documentation increment.
 
 ## ADR
 
-### ADR-1 — Make the comparison measurable before making the system faster
+| Decision | Constraints, alternatives and selection | Consequence / recovery |
+|---|---|---|
+| ADR-1: observe and reuse before building | Existing owners satisfy capture/export needs; a new harness adds setup and maintenance before value is known | F1/F4 start with referenced evidence; automate only a demonstrated repeated gap |
+| ADR-2: repair the earliest confirmed owner gap | Generic preflight already exists (G05); missing adoption/alias/filename support must be demonstrated separately | F2 first diagnoses; F3 retains native completion; no gate removal or timeout increase |
+| ADR-3: preserve equivalent quality and effect boundaries | A weaker baseline cannot establish better economics; production replay introduces unnecessary effects | Local experiments stay local; e2e comparisons require complete equivalent endpoints |
+| ADR-4: one lineage, explicit unknowns | A parallel ledger or invented totals hide provenance; cross-call live-state caching cannot grant authority | F1/F4 extend existing projections only; preserve original receipts and missingness |
+| ADR-5: optimize accepted value per total effort | Fast attempts and fewer tokens can still raise rework; hosted services violate this increment's cost/scope constraints | Rank one demonstrated bottleneck; keep/rework/revert from comparable evidence |
+| ADR-6: first-dollar pilot before a hosted product | Constraints: existing capability, no paid infrastructure, voluntary independent payer evidence; no payer commitment is present | Optional bounded service offer outranks a new platform by build distance, not proven demand; defer monetization until authorized |
 
-**Decision**: build `F1` before any optimization.
-**Alternatives**: optimize first and measure later; assert superiority from design intent.
-**Consequences**: one increment produces no speedup; every later speedup becomes checkable. Rejecting
-this leaves `G13` permanently `unverified`.
-
-### ADR-2 — Spend the increment on avoidable blocks, not on cap increases
-
-**Decision**: `F2` and `F3`; explicitly `Won't` on `F6`.
-**Alternatives**: raise `testMs`, raise worker count, relax the canonical-worktree rule.
-**Consequences**: observed overhead falls without weakening any gate. Caps stay fixed so `F1`
-measures one system, not two.
-
-### ADR-3 — Selection: shared result caching
-
-Illustrative candidates and criteria only; a future decision re-applies the criterion, not the names.
-
-**Stage 1 — Constraints** (derived from this project's governing requirements: fail-closed
-verification, no new always-running service, no new dependency, zero-egress preference).
-
-| Candidate | Fail-closed verification | No new service | No new dependency | Disposition |
-|---|---|---|---|---|
-| Keep current no-cross-call-cache posture | pass | pass | pass | `pass` |
-| Local-only content-addressed cache | pass | pass | pass | `pass` |
-| Hosted remote build cache | — | fail | — | `fail-no-new-service` |
-
-**Stage 2 — Outranking**: two candidates survive. On correctness-preservation they are equal; on
-measurable speedup the local cache is strictly better only if `F1` shows repeated identical input
-digests across runs. That fact is not yet observed, so the pair is **incomparable** and routes to
-Stage 3. It is not collapsed into an order.
-
-**Stage 3 — Argumentation**
-
-| Claim | Support | Attack | Accepted |
-|---|---|---|---|
-| A1: a local cache would cut wall clock | G01 shows reuse already exists within one hour | A2 | no |
-| A2: the existing one-hour receipt window may already capture most repeats | `bin/agentic-os-test-receipt.mjs:75` | — | yes |
-| A3: a hosted cache is the industry answer | industry practice | constraint `fail-no-new-service`; a failed hard constraint is never waived by argumentation | no |
-
-**Verdict** (Evaluator, holding no argument above): unresolved, deferred. `F5` is `Won't (this
-increment)`. Reopen only if `F1` records repeated identical input digests.
-
-#### Reference implementation — industry comparison baseline
-
-Named comparators are non-binding examples of the general criterion, not a recommendation: remote
-shared build caches of the Bazel, Nx, or Turborepo family, and a plain GitHub protected-branch PR
-flow with one required check. The general criterion every future ADR re-applies is *shared-result
-reuse across machines versus fail-closed per-call verification*, not these products.
-
-### ADR-4 — Catalog remains the single fleet membership SSOT
-
-**Decision**: `F3` and `F4` read `test/repositories.json`; neither introduces a second registry.
-**Alternatives**: a parallel closeout registry; per-repository configuration.
-**Consequences**: one edit point; a second registry would be a `duplicate-owner` finding.
-
----
+Selection: manual pairing and a local harness can meet zero-spend constraints; reuse wins on setup
+and maintenance. The automation-saves-effort argument lacks repeated manual-cost evidence and remains
+unaccepted. Hosted reporting fails constraints. Revisit ranking with independent pilot evidence.
 
 ## MVP
 
-**Scope**: `F1` and `F2` only. `F3` and `F4` are `Should` and follow the same continuity ID.
-**Bound**: ≤ 8 source modules, ≤ 100 kB of source edits, ≤ 90 active minutes across OS and consumers;
-provider CI waits tracked separately. No new dependency, service, or always-load surface.
-**Rollback**: revert through the owning checked PR; retain prior receipts and their provenance.
+The first slice consumes F1–F4, VCC-1–VCC-6 and ADR-1–ADR-6: one outcome, workflow, bottleneck
+decision and verified endpoint or blocker. G11 and closeout adoption remain separate implementation work.
 
-### Demo Skeleton
-
-| Beat | Content | Bound |
+| Order | Bounded action | Exit evidence |
 |---|---|---|
-| Hook | "Is the ADLC cheaper than a plain PR? Nobody here can answer that." | 20 s |
-| Probe | Show the economics guide declining the claim, and the five block classes from one real session | 40 s |
-| Reveal | Run `compare` on one change set; **VCC-1** holds the instant the A/B record prints both paths' wall clock, CPU ms, and CI minutes | 90 s |
-| Decide | Operator reads the overhead ratio and marks one gate keep or trim | 30 s |
-| Close | "The question is now answerable per change set, and the answer is recorded." | 20 s |
+| M1 | Inspect current owner bindings and available receipts | F1/F2 inventory; unsupported capture/commands stay explicit |
+| M2 | Complete one authorized source or runtime workflow through existing owners | F3 applicable effect receipts; pending actions retained across turns |
+| M3 | Form one compatible comparison using the measurement contract | F4 pair, quality coverage, missingness and provisional decision |
+| M4 | If justified, authorize one owner fix and extend to five eligible pairs | Independent checks plus keep/rework/revert/inconclusive decision; no unmeasured superiority claim |
 
-Total 200 s, within the 240 s feature budget.
+Demo target: select the exact manifest (30 s) → inspect costly/missing phases (60 s) → inspect one
+comparable pair (60 s) → explain next action and completion boundary (30 s). The 180-second script is
+an inspection demo target, not a claim that CI, deployment or a five-pair pilot completes in that time.
 
-### Domain-Object Rubric
-
-**Domain object**: *a validated change set moving from authored edit to protected integration*. Not a
-build artifact and not a deployment, so a build-system rubric does not apply unmodified.
-
-| Level | Capability | State |
-|---|---|---|
-| L1 | Change set is bounded and digest-identified | pass (`G03`) |
-| L2 | Execution is bounded and fails closed | pass (`G02`) |
-| L3 | Results are reusable under exact-input proof | pass (`G01`, `G04`) |
-| L4 | Cost of the change set is measured per path | **gap — blocking component: C1** |
-| L5 | Cost is compared against an alternative path and drives a decision | gap — blocked by L4 |
-
-Highest contiguous pass: **L3**. Each unclaimed rung names its blocker; no aspirational level claimed.
-
----
+Validate with affected `npm test`, then review this document's metadata, joins, source links, budgets
+and traceability. Guideline checks cover their own corpus, not performance claims. No new prose tests.
+Rollback through a checked source revert; retain history and evidence.
 
 ## GTM
 
-### Monetization
+Candidate buyer: an independent solo maintainer losing measurable time to repeated release work.
+The current operator is an internal pilot. Demand, payment and delivery economics remain unvalidated.
 
-| Stream | Segment exists now? | Distance to first dollar | Status |
-|---|---|---|---|
-| S1 — ADLC adoption engagement priced on measured overhead reduction | Yes, one operator with a 7-repository fleet | Nearest: needs `F1` output only | `mechanism-proven: no`, `demand-validated: no` |
-| S2 — Hosted fleet-economy reporting | No such segment in this phase | Requires hosted service — excluded by ADR-3 constraints | `Should` at best |
-| S3 — Guideline-set licensing | Segment unidentified | Farthest: no WTP signal at all | `Could` |
+| Candidate | Pain → near-built solution → first dollar | Evidence / disposition |
+|---|---|---|
+| Bounded delivery-economy review | Demonstrated repeated delay → existing receipts plus one diagnosis → optional $1 paid pilot | ADR-6 provisional first choice; $1 is a price hypothesis, not revenue or permission to contact/charge anyone |
+| Reusable local workflow kit | Repeatable diagnosis → existing FOSS path with measured onboarding → independently accepted offer | Defer until repeated demand; retain applicable licenses and free core |
+| Hosted fleet reporting | Unvalidated fleet buyer → new operation/support costs → uncertain transaction | Excluded this increment; no hosted service or paid capacity |
 
-Ordering is by distance to a real first dollar: **S1 → S2 → S3**. No stream is `demand-validated`; no
-priced conversation, pilot commitment, or payment has occurred. Calling `F1`'s output a savings proof
-would be `monetization-demand-unvalidated`. The deferral is explicit rather than a silent
-default-to-free: monetization is not pursued in this increment, and that is the recorded decision.
+Record pain, offer/price, acceptance, actual payment, fulfillment and operating cost separately.
+Sandbox transactions and exports prove no demand. Feed outcomes, failures and support effort into
+the next immutable planning revision; leave revenue and savings unknown without evidence.
 
-### Roadmap
+## Readiness, Traceability and Remaining Gaps
 
-| Phase | Feature | Reuses | Genuinely new | Priority rationale | Prerequisite |
-|---|---|---|---|---|---|
-| R1 | F2 preflight | Existing `doctor`/`status` preflight path | Two checks | Zero-code-change-adjacent; cheapest observed defect class | — |
-| R2 | F1 comparison harness | AO-05 capture, AO-06 observation, receipt writer | Pairing + diff projection | Unblocks `G12`/`G13`; everything downstream depends on it | R1 (clean lands make clean measurements) |
-| R3 | F3 closeout parity | OS `completion:status`, catalog | Presence check | Restores verdict quality across the fleet | R2 (measure before changing closeout) |
-| R4 | F4 sprawl cost report | Storage report, quarantine manifest | Projection only | Prices retained state before any authority change | R2 |
-| — | F5 shared cache | — | — | `Won't (this increment)` — ADR-3 verdict unresolved | — |
-| — | F6 raise caps | — | — | `Won't (this increment)` — would invalidate R2 | — |
+| Feature | Design / decision | Acceptance evidence still required |
+|---|---|---|
+| F1 | Existing lineage/context; ADR-1/4 | VCC-1/2: source-bound resume and selected-check results |
+| F2 | Existing owner preflight; ADR-2 | VCC-3: reproduced failure and earliest valid correction |
+| F3 | E2e owner sequence; ADR-2/3 | VCC-4: every applicable terminal receipt, including runtime when requested |
+| F4 | Comparable pair and economics; ADR-1/3/4/5/6 | VCC-5/6: eligible paired observations and independent decision |
+| F5 | Existing storage projection; ADR-5 | VCC-7: bounded observation only if this feature is selected |
 
-Phases are ordered by reuse-adjusted build cost, not nominal difficulty. R1 precedes R2 because a
-land that fails on form pollutes the very measurement R2 produces; that divergence from a
-"measure first" nominal order is stated here rather than left implicit.
+The defined VCCs support `local_rung: spec-complete`; no joined pilot Evidence Reference satisfies
+them yet, and delivered capability remains `undocumented`. Source links and document validation do not
+raise the runtime rung. A source-only request ends at its declared source endpoint; a production request
+remains open until the consumer verifies the deployment and runtime. G10 explicitly excludes this file
+from the current Pages payload; do not infer publication from its source merge.
 
----
+Open gaps: comparable savings (VCC-5/6), plan capture G11 (VCC-1), closeout adoption G06 (VCC-4),
+and independent buyer/payment evidence. Block only the corresponding claim/transition. Re-ground
+affected rows whenever source, scope or evidence changes.
 
-## Readiness, Lanes, and Evidence
-
-### Lane Topology and Deploy Boundary Register
-
-| Boundary | From → To | State | Evidence required to open | Rollback |
-|---|---|---|---|---|
-| B1 | authoring → mirror | `closed` | Protected CI green on the exact head | Revert the merge commit |
-| B2 | mirror → delivery | `closed` | Referenced operator instruction naming the exact candidate | Prior released revision |
-
-Both boundaries are closed by default. No command in this artifact mutates a mirror or delivery
-surface; deployment remains consumer-owned and is out of scope.
-
-### Evidence References
-
-| VCC | Named check | Recorded result | Rung effect |
-|---|---|---|---|
-| VCC-1 | `compare --record` | none yet | blocks `dev-proven` |
-| VCC-2 | land preflight exit | none yet | blocks `dev-proven` |
-| VCC-3 | unsupported-verb exit | none yet | blocks `dev-proven` |
-| VCC-4 | catalog closeout run | none yet | blocks `dev-proven` |
-| VCC-5 | sprawl report exit | none yet | blocks `dev-proven` |
-
-`local_rung: spec-complete` and `delivered_rung: undocumented` are derived from this table: no VCC
-carries a recorded result, so no higher rung is available. The Evaluator mechanism, distinct from the
-implementing agent, derives the rung; it is never hand-authored here.
-
-### Traceability
-
-```
-PRD-ADLCECON-F1 ↔ TAD-C1-compare ↔ VCC-1 ↔ Evidence[compare --record]
-PRD-ADLCECON-F2 ↔ TAD-C2-preflight ↔ VCC-2, VCC-3 ↔ Evidence[land preflight exit]
-PRD-ADLCECON-F3 ↔ TAD-C3-parity ↔ VCC-4 ↔ Evidence[catalog closeout run]
-PRD-ADLCECON-F4 ↔ TAD-C4-sprawl ↔ VCC-5 ↔ Evidence[sprawl report exit]
-```
-
-The chain closes in both directions: every `Must`/`Should` feature reaches a VCC, and every VCC
-resolves back to exactly one feature and one owning component.
-
-### Open Findings
-
-| Finding type | Severity | Anchor | Note |
-|---|---|---|---|
-| `unproven-claim` | blocker | Grounding G12, G13 | No comparison baseline exists; blocks any superiority claim, not the increment |
-| `pain-point-not-validated` | major | Pain-Point Mapping P1–P4 | All four `unvalidated`; resolve before a `Must` claims demand at baseline |
-| `work-tree-sprawl` | minor | Grounding G14 | Retained lanes and three mounted worktrees observed; raises visibility, authorizes no deletion |
-
-Alignment gate is **not** discharged: one `blocker` remains open. Baseline sign-off is withheld.
-Iteration bound: 3 alignment cycles; circuit-breaker on no reduction in open `blocker` findings
-across two consecutive cycles.
-
-### Conformance
-
-Finding names, severities, and the recording contract are owned by the linked verification module of
-the parent guideline set. This document defines no competing vocabulary, no second continuity scheme,
-and no parallel finding enumeration.
+[previous]: https://github.com/huijoohwee/huijoohwee.github.io/blob/c7f5bff72d898f442a66063cbe6b0f0d34aaae76/docs/documents/prd-tad-adr-mvp-gtm-adlc-economy.md
+[inputs]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-test-inputs.mjs
+[runner]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-tests.mjs
+[receipts]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-test-receipt.mjs
+[validation]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/guides/REPOSITORY-VALIDATION.md
+[economy]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/guides/VALIDATION-ECONOMY.md
+[workflow]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-workflow.mjs
+[review]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-review-body.mjs
+[release-wrapper]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-release-common-wrapper.mjs
+[fleet]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/test/repositories.json
+[storage]: https://github.com/huijoohwee/agentic-os/blob/580288976b35afbdb8d3bed81d9bfc1ffd8c7346/bin/agentic-os-storage-report.mjs
+[site-start]: https://github.com/huijoohwee/huijoohwee.github.io/blob/c7f5bff72d898f442a66063cbe6b0f0d34aaae76/docs/START-WORKFLOW.md
+[site-release]: https://github.com/huijoohwee/huijoohwee.github.io/blob/c7f5bff72d898f442a66063cbe6b0f0d34aaae76/docs/RELEASE-WORKFLOW.md
+[site-validation]: https://github.com/huijoohwee/huijoohwee.github.io/blob/c7f5bff72d898f442a66063cbe6b0f0d34aaae76/.agentic-os-validation.json
+[site-deploy]: https://github.com/huijoohwee/huijoohwee.github.io/blob/c7f5bff72d898f442a66063cbe6b0f0d34aaae76/docs/DEPLOY-WORKFLOW.md

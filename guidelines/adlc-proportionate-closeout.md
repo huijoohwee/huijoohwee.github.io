@@ -1,8 +1,8 @@
 ---
 title: "ADLC Proportionate Closeout"
 doc_type: "Guideline Module"
-version: "1.0.1"
-date: "2026-09-05"
+version: "1.1.0"
+date: "2026-09-22"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Convergence controller function"
@@ -82,3 +82,55 @@ Use existing findings by violated owner: unrelated disjoint delay is `coordinati
 - [ ] The selected outcome's protected receipts and exact verification all join
 - [ ] Every value-bearing or ambiguous item remains canonically included or recoverably preserved
 - [ ] Cleanup uses only its exact authorized effects; retained cleanup never replays integration or hides incomplete requested work
+
+## Change-Class Fast Path (v1.1.0)
+
+The source-integration fast path above treats every change class uniformly. The harness now exposes a change-class fast path that relaxes only the authority-chain requirement for low-risk change classes, never the cleanup mechanics or evidence invariants. This is a proportionate closeout selection: the least-powerful authority sufficient for a docs-only change is local consent, not the protected-authority chain.
+
+```text
+Change-Class Fast Path = sealed docs-only outcome + lane-diff confirmation + local-consent terminal state
+Proportionate = relax only the authority chain for the declared change class; never weaken cleanup, quarantine, or fail-closed
+```
+
+### Declared change classes
+
+| Declared class | Lane-diff confirmation required | Terminal authority |
+|---|---|---|
+| `docs-only` | Every touched path matches `docs/`, `guides/`, `*.md`, or the repository-root Markdown files | `local-consent` (`providerAuthority:false` is sufficient; no protected-authority chain required) |
+| `mixed` (default) | No relaxation; the full protected-authority chain applies | `protected` (the existing `release-common complete` → `completion:scaffold` → `completion:plan/apply` path) |
+
+A declared class that does not match the observed lane diff is refused as `change-class-mismatch`; uncertainty selects the stronger path, never the weaker one. This is the same fail-closed rule that governs outcome-profile selection: uncertainty always selects more proof, never a weaker authority.
+
+### Operator surface
+
+The fast path is exposed on three surfaces:
+
+- `agentic-os cleanup-user plan --change-class=docs-only` — the plan receipt carries `changeClass: { declared, observed, fastPath }` and `authorityTerminalState: 'local-consent'`
+- `agentic-os cleanup plan --mode=local-consent --change-class=docs-only` — the unified CLI thin wrapper over the three cleanup entry points; `--mode=protected` is reserved for profile-governed repos that still use the full chain
+- `npm run completion:status -- --ref=<lane>` — every finding carries `applicableToChangeClass`; findings marked `applicable: false` are not blockers for low-risk change classes
+
+### Stale-ref sweep
+
+A bounded retirement plan for lane refs that are (a) merged into canonical, (b) past a staleness window, and (c) not mounted in any active worktree. This is operator consent (`providerAuthority:false`); it does not delete refs — it projects them to recoverable quarantine, preserving the no-discard invariant.
+
+```sh
+agentic-os cleanup-user sweep --stale-older-than=<days> [--merged] [--no-active-worktree]
+```
+
+Each candidate still requires explicit `--authorize=<plan-digest>` and `--stopped` to apply, same as individual `cleanup-user plan/apply`. The sweep is a batching convenience, never a relaxation of the per-cleanup receipt requirement.
+
+### Auto-derive placeholders
+
+`npm run completion:scaffold -- --ref=<lane> --derive` pre-fills the locally-derivable scaffold fields (`recoveryInventoryDigest`, `recoveryInventoryContentEntries`, `expiresAt`, `integratedResource`, `integratedImmutableRevision`) so the operator only replaces the authoritative fields that require authenticated GitHub Actions dispatch. The derived scaffold lists `derivedFields` and `remainingPlaceholders`; derivation never fills authority fields.
+
+### What this fast path does NOT relax
+
+These remain load-bearing for every change class, including `docs-only`:
+
+- Separate receipts per effect (source/integration/deployment/rollback/cleanup/sync)
+- Recoverable quarantine over deletion (the recoverability invariant)
+- Fail-closed on incomplete evidence (prefer retained refs over wrong prunes)
+- Interactive-provider confirmation for production deploy/rollback
+- Branch protection, required checks, ownership, fencing, and exact-canonical verification
+
+A `docs-only` change that triggers an actual deployment or publication effect is production-triggering even if labelled docs-only; separate the effects or select `production-released`. The fast path relaxes only the authority chain for the cleanup of a proven docs-only integration, never the production-release lifecycle.

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.3.0"
+version: "1.4.0"
 date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.2.0"
+parent_version: "3.3.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -110,6 +110,10 @@ agent_id: "[producing agent]"
 [User / buyer / beneficiary / operator jobs; value exchanged; pain/WTP evidence or explicit hypothesis;
 one measurable outcome and observation window; join to the TAD Ecosystem Contract at this revision.]
 
+### Reuse Outcome
+[Pain/VCC, concrete consumers, observed duplicate behavior or drift; baseline and target integration time,
+failed/repeated actions and support cost. Unknown savings stay unmeasured; join the TAD reuse record.]
+
 ### Open Questions
 [Unresolved uncertainties requiring research]
 ```
@@ -191,6 +195,26 @@ flowchart TB
 **Dependency order**: [acyclic build/release order, distinct from runtime request/reply relationships].
 **External seams**: [cost/license provenance, zero-spend fallback, permitted reference provenance and exit].
 
+### Shared Utility and Invocation Reuse
+**Owns**: the parent's Shared Utilities and Invocation Reuse record at [continuity_id@revision].
+**Inventory join**: [existing component IDs; no parallel ownership register].
+| Capability / pain-VCC | Source export / exact revision / current consumers and pins | Decision / smallest delta | Runtime boundary / deliberate differences | Acceptance check / removal or retention |
+|---|---|---|---|---|
+| [component ID / criterion] | [native owner and inspected symbol; at least two consumers for extraction] | [reuse, extend-owner, retain-local or defer / ADR] | [pure, domain, transport or view; browser/edge/Node constraints] | [input/output/errors/bytes/digests/effects / former implementation and retirement trigger] |
+
+**Dependency order**: [portable contract → domain owner → transport adapter → view; exact public exports
+or versioned protocol, consumer pin/lock changes and cycle check].
+| Invocation Register join / capability ID | Surface and actual name | Input/output contract / dispatch owner | Mode / principal and effect boundary | Conformance evidence / unsupported reason |
+|---|---|---|---|---|
+| [existing register entry] | [browser, HTTP, MCP, WebMCP, / command, @ binding, # semantic, skill, command entrypoint] | [schema/version and handler; skill orchestrates those same handlers] | [supported, read-only, prepare-only or unsupported / server gate] | [check + result at exact revision / next check] |
+
+**Compatibility cases**: [valid/invalid inputs, binding arguments, ordering/encoding/newlines, digests,
+error mapping, limits, cancellation, replay/expiry and cross-principal attempts; distinguish domain result
+parity from legitimate transport differences].
+**Migration and recovery**: [owner export/check → consumer pin/lock → projection; remove replaced code;
+bounded shim callers/retirement; rollback pins and persisted-data compatibility].
+**Budgets**: [always-load delta, lazy chunk bytes, module count, zero-spend bound and baseline measurement].
+
 ### Value-Moving Flow and Policy Evidence (When Applicable)
 | Phase | Native owner / input → output | Authority and invariant | Failure / evidence / next action |
 |---|---|---|---|
@@ -261,6 +285,11 @@ See ADR-[N] for each significant decision.
 ### Rationale
 [Why this decision]
 
+### Reuse Compatibility Decision
+[Compare direct owner reuse, contract-only adapter, intentional local semantics and extraction.
+Record differing input/error/digest/effect contracts, equivalence evidence, two consumers if extracting,
+chosen dependency owner, removed implementation, migration/rollback and revisit trigger.]
+
 ### TCO Impact
 
 *If either the chosen option or the FOSS alternative offers more than one deployment model (Managed/Serverless, Provisioned/Self-Managed, Hybrid/Consolidated — see Deployment-Model TCO Variants), add one column per variant rather than blending them.*
@@ -298,6 +327,7 @@ See ADR-[N] for each significant decision.
 | Phase / outcome | Pain evidence / rank | Reuse / new delta / owner | Prerequisite / exit VCC | Bounds / wait condition | Stop, recovery / next check |
 |---|---|---|---|---|---|
 | [measurable buyer outcome] | [validated pain/WTP or hypothesis / reuse-adjusted priority rationale] | [named source / smallest extension / accountable function] | [earlier phase / observable acceptance evidence] | [active-time ETA and time/byte/module/token/spend caps; lazy-load delta / external unblock condition] | [stop or pivot threshold / rollback / successor trigger] |
+**Reuse rollout**: [TAD reuse rows / owner checks → export → exact consumer pins → adapters → affected conformance; rollback and deletion evidence].
 **Deferred ideas**: [Won't this increment / reason / dependency / owner / revisit trigger].
 **Milestones**: [documentation, local proof, source release, deployment, first collection and repeat demand each link their own evidence].
 ```
@@ -314,6 +344,7 @@ See ADR-[N] for each significant decision.
 
 **Learn loop**: [completed outcome / paid conversion / operating cost] → successor Context [id]
 **Ecosystem dependency**: [TAD participant/value row and PRD pain ID at the same revision].
+**Reuse outcome measurement**: [same buyer journey / before-after integration time, failed or repeated actions and support cost / observation period; savings, payment and demand each need separate evidence].
 **Roadmap join**: [MVP phase / observed outcome / continue, pivot or stop threshold; no second roadmap].
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.2.0"
+version: "3.3.0"
 date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -44,7 +44,7 @@ Load by phase. Every file stays under 600 lines.
 
 **Foundations** — `scope--neutrality-contract` · `rule-identity--classification` · `markdown-yaml-frontmatter-enforcement` · `overview` · `directive-grammar-cid` → [CID Guidelines](./cid-guidelines.md#shared-field-contract) · `artifact-continuity-authoring-seam` → [Artifact Continuity](./adlc-artifact-continuity.md); [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) · `concurrent-collaboration--work-tree-integrity` → [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md), [Scoped Lane Admission](./adlc-scoped-lane-admission.md)
 
-**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
+**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
 **Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
@@ -354,6 +354,21 @@ Owned here; extend C05, C09–C12 and C16 without adding a second coverage schem
 | [role / job] | [benefit and consideration] | [component / source] | [contract / permitted effect] | [check, surface, result / next check] | [budget, retention / recovery] |
 
 An ecosystem expansion earns roadmap scope only when its dependency and buyer outcome are explicit. Coverage is not certification, provider availability, revenue or a production claim.
+
+## Shared Utilities and Invocation Reuse
+
+Owned here; TAD records reuse inside its existing component inventory and Invocation Register. Reuse is a source/dependency relationship, not a claim that all transports or products implement the same behavior.
+
+**Artifact-bearing directives**:
+- PRD names the user/integrator pain, consumers and measurable outcome for consolidation; count duplicated behavior or drift from inspected code and label unknown savings. Tie the change to an existing VCC — `component-origin-unstated`, `unproven-claim`.
+- TAD records each candidate's exact source/export/revision, current consumers and pins, runtime constraints, contract differences, decision (`reuse`, `extend-owner`, `retain-local`, `defer`), smallest delta and named check. Existing owner before new package; a generic extraction needs two concrete consumers and an ADR — `duplicate-capability-owner`, `unresolvable-reference`.
+- Separate pure grammar, encoding and validation from domain rules, storage and transport. Dependencies flow from portable contracts to domain owners to adapters to views; share by declared export or versioned protocol, never sibling source imports. Keep secrets, provider SDKs, filesystem access and effect authority out of browser-safe utilities — `component-origin-unstated`, `unimplemented-guideline`.
+- Join browser, HTTP, MCP, WebMCP, `/` commands, `@` bindings, `#` semantics, skills and command entrypoints to one capability identity and owning schema/handler. Record supported, read-only, prepare-only and unsupported modes individually; skills orchestrate existing commands and never create a second registry or grant authority — `orphan-route`, `ambiguous-route`, `duplicate-owner`.
+- ADR compares direct reuse, a contract-only adapter, retaining local semantics and extraction. Before replacing code, prove accepted/rejected inputs, canonical bytes/digests, errors, limits, cancellation and effect/idempotency behavior; preserve intentional differences through explicit policy parameters or versioned negotiation — `constraint-gate-skipped`, `unproven-claim`.
+- MVP orders owner contract/checks → compatible export → exact consumer pin/lock → adapter/projection → affected conformance. Remove the superseded implementation with its verified replacement; retain a shim only with callers, retirement trigger and check. Capture rollback pins, persisted-data compatibility and independent effect gates — `roadmap-reuse-unstated`, `unimplemented-guideline`.
+- GTM measures integration time, failed/repeated actions and support cost for the same buyer journey before/after reuse. Utility counts, shared imports and passing discovery checks prove neither payment, demand nor revenue — `missing-economics-metric`, `unproven-claim`.
+
+Use the [Core Templates reuse record](./prd-tad-adr-mvp-gtm-templates.md#tad-template) at the same continuity revision; unsupported surfaces need a reason and next check. Existing findings above apply; no parallel registry, lifecycle or finding vocabulary.
 
 ## Roadmap
 

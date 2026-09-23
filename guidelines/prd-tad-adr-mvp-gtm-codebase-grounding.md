@@ -14,7 +14,7 @@ schema: "prd-tad-adr-codebase-grounding/v1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.1.0"
+parent_version: "3.3.0"
 ---
 # Codebase grounding - reference implementation
 

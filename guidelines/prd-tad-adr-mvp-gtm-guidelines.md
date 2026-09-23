@@ -479,6 +479,11 @@ The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task 
 - State per-feature token, iteration, and wall-clock ceilings that per-task budgets may narrow but never exceed — `unbounded-loop` at `blocker`
 - Read readiness, cost, and integration facts back only from Evidence References and receipts; the Financial Model's ADLC Cost Ledger consumes those receipts by exact reference — `unproven-claim`, `adlc-cost-unledgered`
 - Keep the operator path externally simple — start one lane, release one exact candidate, deploy one exact protected revision — `gate-order-drift`
+- **Before ending every turn or session that implements any part of a PRD–TAD–ADR–MVP–GTM artifact, MUST update that artifact for the next turn/session**, including partial, blocked, failed or rolled-back work; do not wait for merge, deployment or full completion — `unimplemented-guideline`.
+  Reconcile affected requirements, design and decisions; record implemented versus remaining criteria, exact source/PR/receipt locators, named checks and observed results, limitations, blockers, and measured or explicitly unknown resources/costs.
+  State the next bounded action, owner, prerequisites, recheck trigger and completion check; preserve one continuity ID and coherent five-role revisions. Keep Development, Production Release and Runtime evidence distinct.
+  Update the existing editable owner through its admitted lane; published immutable versions require an authorized successor. Link private evidence without copying it. A chat summary or task status alone does not satisfy this obligation.
+  If the artifact cannot be updated safely, retain the exact blocker and recovery locator in existing handover evidence, report the obligation as unresolved, and resume it at the next authorized opportunity; never claim the checkpoint complete.
 
 ---
 

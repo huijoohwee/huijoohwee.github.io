@@ -1,8 +1,8 @@
 ---
 title: "Documentation Guidelines"
 doc_type: "Guidelines"
-version: "2.2.1"
-date: "2026-09-12"
+version: "2.2.2"
+date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -67,6 +67,22 @@ Offline resolution uses explicitly selected local sources or locked assets;
 missing sources remain unavailable. Index entries never confer runtime authority.
 When moving a source, repair inbound links and remove replaced definitions in
 the owning migration; preserve only required, validated compatibility surfaces.
+
+Keep an editable product specification, including its PRD, TAD, ADR, MVP, GTM,
+and demo requirements, in the repository that owns the implementation. Follow
+that owner's existing document layout and stable naming convention. Join a
+separate demo script or companion by continuity ID and exact source revision;
+keep runnable demo code and fixtures with their runtime owner. Create a
+dedicated demo directory only when an independently runnable example needs it.
+
+Keep shared authoring guidelines at their shared owner and product-specific
+rules with the product. A personal draft must identify its intended owner and
+provisional status; it does not grant a second editable product authority.
+Use source history for ordinary earlier versions. If a separate historical
+snapshot is retained, mark it immutable and record its source repository,
+path, revision, digest, and successor. A published copy must identify the same
+source and revision, remain read-only, and pass the applicable publication
+gate; its directory name does not establish live deployment or readiness.
 
 Reference implementation: the [workspace document owners][workspace-document-owners]
 page routes seven repositories to their existing concern owners. Its repository

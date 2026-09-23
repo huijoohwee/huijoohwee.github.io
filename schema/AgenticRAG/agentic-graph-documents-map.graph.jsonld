@@ -1538,6 +1538,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-choreography-studio-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-choreography-studio-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-choreography-studio-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-choreography-studio-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-ci-evidence-reuse",
       "@type": "kg:Node",
       "labels": [
@@ -4914,6 +4930,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-mode-increments",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-mode-increments.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-mode-increments.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-mode-increments.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-xr-mode-prd-tad-adr-mvp-gtm",
       "@type": "kg:Node",
       "labels": [
@@ -5055,6 +5087,38 @@
         "relPath": "docs/documents/markdown-syntax-guidelines.md"
       },
       "documentPath": "docs/documents/markdown-syntax-guidelines.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-offline-python-learning-workspace",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:python-learning-runtime-evidence",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "python-learning-runtime-evidence.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/python-learning-runtime-evidence.md"
+      },
+      "documentPath": "docs/documents/python-learning-runtime-evidence.md",
       "language": "en-us"
     },
     {

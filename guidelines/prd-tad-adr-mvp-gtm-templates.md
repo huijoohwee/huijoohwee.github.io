@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.2.0"
-date: "2026-09-21"
+version: "1.3.0"
+date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.1.0"
+parent_version: "3.2.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -20,13 +20,42 @@ lifecycle_status: "proposed"
 
 ## Scope & Ownership
 
-This module owns the copy-ready PRD, TAD, and ADR template bodies. It states no rules: every field here is required by a rule owned elsewhere, and a template that disagrees with its owning rule is a defect in this module.
+This module owns the copy-ready PRD, TAD, ADR, MVP and GTM template bodies. It states no rules: every field here is required by a rule owned elsewhere, and a template that disagrees with its owning rule is a defect in this module.
 
 It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivation, and finding recording contract without restating them. Rule IDs derive from the owning `##` section anchor and the rule's document-order ordinal, exactly as in the parent.
 
 ---
 
 ## Core Templates
+
+### Shared Continuity Header
+
+Use the parent's [metadata contract](./prd-tad-adr-mvp-gtm-guidelines.md#markdown-yaml-frontmatter-enforcement)
+and [planning record](./prd-tad-adr-mvp-gtm-planning-record.md); the same join connects all five roles
+and any size-bounded companion. Replace bracketed values with source-grounded values.
+
+```yaml
+title: "[Product or bounded capability]"
+doc_type: "PRD-TAD-ADR-MVP-GTM"
+version: "[semantic version]"
+revision: "[exact joined revision]"
+date: "[YYYY-MM-DD]"
+lang: "[language]"
+frontmatter_contract: "required"
+owner: "[one accountable function]"
+continuity_id: "[stable capability ID]"
+prd_revision: "[exact joined revision]"
+tad_revision: "[exact joined revision]"
+adr_revision: "[exact joined revision]"
+mvp_revision: "[exact joined revision]"
+gtm_revision: "[exact joined revision]"
+local_rung: "[evidence-derived rung]"
+delivered_rung: "[evidence-derived rung]"
+lane: "authoring"
+universal_scope: false
+worktree_id: "[producing worktree]"
+agent_id: "[producing agent]"
+```
 
 ### PRD Template
 
@@ -76,6 +105,10 @@ It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivati
 
 ### Dependencies
 [Required features, services, or infrastructure]
+
+### Ecosystem Outcome and Evidence
+[User / buyer / beneficiary / operator jobs; value exchanged; pain/WTP evidence or explicit hypothesis;
+one measurable outcome and observation window; join to the TAD Ecosystem Contract at this revision.]
 
 ### Open Questions
 [Unresolved uncertainties requiring research]
@@ -146,6 +179,25 @@ flowchart TB
 
 ### Integration Contracts
 **Interface**: [Name] | **Protocol**: [HTTP/gRPC/etc] | **Format**: [JSON/Protobuf] | **Errors**: [Strategy]
+
+### Ecosystem Contract
+**Owns**: the parent's Ecosystem record at [continuity_id@revision]; PRD owns the customer outcome.
+| Participant / job | Value exchange / payer | Native owner / exact revision | Interface / authority | Current evidence / gap | Cost, privacy and exit |
+|---|---|---|---|---|---|
+| [applicable user, buyer, operator, developer, agent, provider or assurance role] | [benefit / consideration] | [source path, symbol, revision / reuse or smallest delta] | [contract, trust boundary / effect permission] | [check + result + surface / next check] | [license, quota, retention / recovery] |
+
+**Developer path**: [discovery → local rehearsal → authenticated invocation → events → reconciliation → support → version retirement].
+**Invocation join**: [existing browser/API/MCP/WebMCP and applicable /, #, @ register; unsupported routes and offline/device/accessibility limits].
+**Dependency order**: [acyclic build/release order, distinct from runtime request/reply relationships].
+**External seams**: [cost/license provenance, zero-spend fallback, permitted reference provenance and exit].
+
+### Value-Moving Flow and Policy Evidence (When Applicable)
+| Phase | Native owner / input → output | Authority and invariant | Failure / evidence / next action |
+|---|---|---|---|
+| [intent, authorization, submission, unknown outcome, settlement, fulfillment or reversal] | [exact existing contract / proposed delta] | [actor, recipient, asset/network, integer precision, fees, expiry and idempotency binding] | [race/replay/reconciliation check and immutable receipt] |
+**Policy**: [versioned inputs, provenance/freshness, decision/reason, evidence reference and enforcement owner].
+**Boundaries**: [authentication ≠ business permission ≠ jurisdiction-specific obligations; missing evidence blocks the dependent effect].
+**Inapplicability**: [rationale and reviewer if no value-moving flow; reuse the C01–C16 coverage record].
 
 ### Architectural Decisions
 See ADR-[N] for each significant decision.
@@ -240,6 +292,14 @@ See ADR-[N] for each significant decision.
 **Demo Skeleton**: Hook / Probe / Reveal=VCC [id] / [domain action] / Close — total [N]s
 **Domain-Object Rubric**: current contiguous level [L] · blocker for next [component]
 **Min-viable scope**: [what is in] · **Won't (this increment)**: [what is out]
+
+### Roadmap
+**Owner and join**: [one product-owned roadmap / continuity_id@revision; portfolio views reference it].
+| Phase / outcome | Pain evidence / rank | Reuse / new delta / owner | Prerequisite / exit VCC | Bounds / wait condition | Stop, recovery / next check |
+|---|---|---|---|---|---|
+| [measurable buyer outcome] | [validated pain/WTP or hypothesis / reuse-adjusted priority rationale] | [named source / smallest extension / accountable function] | [earlier phase / observable acceptance evidence] | [active-time ETA and time/byte/module/token/spend caps; lazy-load delta / external unblock condition] | [stop or pivot threshold / rollback / successor trigger] |
+**Deferred ideas**: [Won't this increment / reason / dependency / owner / revisit trigger].
+**Milestones**: [documentation, local proof, source release, deployment, first collection and repeat demand each link their own evidence].
 ```
 
 ### GTM Template
@@ -253,6 +313,8 @@ See ADR-[N] for each significant decision.
 | [S-id] | yes/no | [rank] | proven/no | validated/no | [amount or none] |
 
 **Learn loop**: [completed outcome / paid conversion / operating cost] → successor Context [id]
+**Ecosystem dependency**: [TAD participant/value row and PRD pain ID at the same revision].
+**Roadmap join**: [MVP phase / observed outcome / continue, pivot or stop threshold; no second roadmap].
 ```
 
 ### From-0-to-1 Coverage Record

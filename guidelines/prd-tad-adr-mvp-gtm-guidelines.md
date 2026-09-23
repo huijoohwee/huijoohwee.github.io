@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.1.0"
-date: "2026-09-21"
+version: "3.2.0"
+date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -44,7 +44,7 @@ Load by phase. Every file stays under 600 lines.
 
 **Foundations** — `scope--neutrality-contract` · `rule-identity--classification` · `markdown-yaml-frontmatter-enforcement` · `overview` · `directive-grammar-cid` → [CID Guidelines](./cid-guidelines.md#shared-field-contract) · `artifact-continuity-authoring-seam` → [Artifact Continuity](./adlc-artifact-continuity.md); [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) · `concurrent-collaboration--work-tree-integrity` → [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md), [Scoped Lane Admission](./adlc-scoped-lane-admission.md)
 
-**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
+**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
 **Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
@@ -334,15 +334,42 @@ The [Agent Experience Maturity module](./prd-tad-adr-mvp-gtm-maturity.md) owns t
 
 ---
 
+## Ecosystem
+
+Owned here; extend C05, C09–C12 and C16 without adding a second coverage schema. An ecosystem is a set of accountable participants exchanging value through bounded contracts, not a feature count.
+
+**Artifact-bearing directives**:
+- Record user, buyer, operator, developer, agent, provider and assurance roles where applicable; map each to its job, value exchanged, owning component, interface, trust boundary, evidence and unresolved dependency — `unimplemented-guideline`.
+- Ground each capability in an exact native source revision, inspected symbol/contract and named check; distinguish implemented, proposed and deferred scope from evidence-derived readiness. Inspiration is conceptual input, never native implementation proof — `unproven-claim`.
+- Assign one owner per capability and identify the smallest reuse/extension; describe runtime interactions separately from an acyclic build/release dependency order — `duplicate-capability-owner`, `unjustified-storage-duplication`.
+- Specify the developer path from discovery and local rehearsal through authenticated invocation, events, reconciliation, support and version retirement. Reuse native API/tool/schema owners; add SDKs, portals or registries only for evidenced integration pain — `component-origin-unstated`.
+- Join browser, headless API, MCP/WebMCP and applicable `/`, `#`, `@` surfaces through the existing Invocation Register. State unsupported routes, effect authority, offline limits, device reach and accessibility; tool discovery grants no mutation authority — `orphan-route`, `unproven-claim`.
+- For value-moving flows, distinguish intent, authorization, submission, uncertain outcome, verified settlement, fulfillment and reversal. Bind actor, recipient, asset, network, amount precision, fees, expiry and idempotency to confirmation; specify races, replay, reconciliation and immutable evidence — `unimplemented-guideline`.
+- Model programmatic assurance as versioned policy inputs, provenance/freshness, decisions, reason codes and auditable evidence. Distinguish authentication, business permission and jurisdiction-specific obligations; missing evidence blocks the dependent effect. A policy fixture or screening result proves no general legal compliance — `unproven-claim`.
+- Record cost, license, quota, privacy/retention and exit conditions for each external seam. Under a zero-spend scope, unknown fees, sponsorship, paid infrastructure or proprietary dependencies cannot silently enter the MVP; use an isolated local rehearsal and label its limits — `constraint-gate-skipped`.
+- Preserve reference-use restrictions across documents, code, dependencies and release metadata; do not copy assets, prose or implementation. Record only permitted provenance, and stop adoption if required attribution conflicts with the authorized use — `vendor-coupling`.
+
+| Participant / job | Value exchange / payer | Native owner / exact revision | Interface / authority | Current evidence / gap | Cost, privacy and exit |
+|---|---|---|---|---|---|
+| [role / job] | [benefit and consideration] | [component / source] | [contract / permitted effect] | [check, surface, result / next check] | [budget, retention / recovery] |
+
+An ecosystem expansion earns roadmap scope only when its dependency and buyer outcome are explicit. Coverage is not certification, provider availability, revenue or a production claim.
+
 ## Roadmap
 
 Owned here.
 
 **Directives**:
-- State per phase: feature, named reuse, what is new, priority rationale, prerequisite — `roadmap-reuse-unstated`
-- Order by reuse-adjusted build cost; state any divergence — `roadmap-order-unexplained`
-- Gate later phases on named earlier prerequisites
+- State per phase: buyer pain and evidence, target outcome, feature, named reuse, smallest new delta, accountable owner and prerequisite — `roadmap-reuse-unstated`
+- Rank validated buyer pain/WTP first, then proximity to built capability and reuse-adjusted cost, then distance to a collected first dollar; label hypotheses and explain deviations. Do not let an inexpensive speculative feature outrank evidenced pain without rationale — `roadmap-order-unexplained`
+- Gate later phases on named earlier prerequisites and an observable exit VCC; include a stop/pivot threshold, evidence owner, rollback and successor trigger — `unimplemented-guideline`
 - Mark a known deferred idea `Won't (this increment)` — `roadmap-scope-silently-dropped`
+- Declare each increment's active-time ETA, time/byte/module/token/spend caps and lazy-load delta; external waits name dependency, unblock condition and recheck event, not a completion ETA — `missing-economics-metric`
+- Keep one product-owned roadmap; shared portfolio views reference its continuity ID and revision. Separate documentation completion, local proof, source release, deployment, first collection and repeat demand — `duplicate-owner`, `blended-status`
+
+| Phase / outcome | Pain evidence / rank | Reuse / new delta / owner | Prerequisite / exit VCC | Bounds / wait condition | Stop, recovery / next check |
+|---|---|---|---|---|---|
+| [phase / measurable value] | [validated or hypothesis / rationale] | [exact native owner / change] | [dependency / evidence] | [active estimate and caps / recheck] | [threshold / rollback / successor] |
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "ADLC End-to-End Production Release Lifecycle"
 doc_type: "Guideline Module"
-version: "1.0.1"
-date: "2026-09-05"
+version: "1.0.2"
+date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Lifecycle controller function"
@@ -201,10 +201,41 @@ Verification is not publication.
 - Publish the exact verified identity and record its immutable revision.
 - Persist the terminal receipt chain, authorization consumption, costs,
   deployment identity, state counts, route results, and rollback disposition.
+- Refresh the affected feature inventory and planning handover using
+  [Readiness and Next Steps](#readiness-and-next-steps) before reporting closure.
 - Remove only clean, integrated, completion-proven task lanes. Preserve active,
   parked, dirty, divergent, or unrelated lanes.
 - Report success only after the controller, verification, publication, and
   cleanup states are terminal.
+
+## Readiness and Next Steps
+
+After a delivery attempt reaches verified production, a blocked outcome, or
+rollback, update the affected entries in the existing feature inventory (for
+example, `FEATURES.md`) and append a successor record to the enrolled workspace
+planning ledger. Preserve immutable history and regenerate its existing board
+projection. These documents summarize receipts; they grant no effects.
+
+Record these three dimensions separately for the same feature and candidate:
+
+| Indication | Evidence and limits |
+|---|---|
+| **Development** | Exact source/merge revision and relevant check results; identify the Dev deployment and readback when applicable. Source CI alone does not prove a running Dev environment. |
+| **Production Release** | Exact promoted artifact, target, deployment receipt and outcome; retain the previous live identity when promotion is blocked or rolled back. Dev success does not prove production delivery. |
+| **Runtime** | Observed deployment identity, environment, observation time, required behavior/route/state checks and their results. Record missing, failed or stale evidence explicitly; a deployment receipt alone does not prove runtime readiness. |
+
+Use the owner's existing statuses and [readiness ladder](./prd-tad-adr-mvp-gtm-readiness.md#readiness-ladder);
+do not add a competing maturity scale. Mark a dimension inapplicable only with
+the owner's scope reason. Deferred work stays visible with its owner and reason;
+deferral never turns a failed required release check into a pass.
+
+The handover links the feature ID, accepted plan revision, predecessor record,
+exact receipt locators, unresolved work and one next bounded action with owner,
+prerequisite and completion check. If no action remains, state the next routine
+observation or explicitly record none. Include measured elapsed/resource cost
+when available; unknown cost is not zero. Reuse valid evidence for the same
+candidate and surface, refresh only affected rows, and avoid a full inventory
+scan or repeated deployment checks just to update documentation.
 
 ## Transport and Proof Separation
 

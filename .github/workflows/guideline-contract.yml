@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: huijoohwee/agentic-os
-          ref: abab0d39ddfcc69e2d683756e8e666ef260fdb22
+          ref: b8becb04f93813bd209f8cc7f711558062a98091
           path: .doc-sync-os
           persist-credentials: false
       - name: Check enrolled website document

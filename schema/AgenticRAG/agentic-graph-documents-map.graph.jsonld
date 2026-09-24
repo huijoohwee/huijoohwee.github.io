@@ -2018,6 +2018,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-design-editor-release-recovery-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-design-editor-release-recovery-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-design-editor-release-recovery-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-design-editor-release-recovery-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-deterministic-agent-graph-runtime",
       "@type": "kg:Node",
       "labels": [

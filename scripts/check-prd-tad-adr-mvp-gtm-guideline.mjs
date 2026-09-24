@@ -188,6 +188,19 @@ for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
 }
 
 const recordPath = "schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json";
+const maintenanceTemplate = readFileSync("template/document-maintenance-template.md", "utf8");
+const maintenanceMeta = readFrontmatter(maintenanceTemplate).data;
+assert.equal(maintenanceMeta.doc_type, "Template");
+assert.equal(maintenanceMeta.frontmatter_contract, "required");
+assert.equal(maintenanceMeta.universal_scope, true);
+for (const marker of ["<!-- agentic-os:doc-sync:start -->", "<!-- agentic-os:doc-sync:end -->"]) {
+  assert.equal(maintenanceTemplate.split(marker).length, 2, `template: exactly one ${marker}`);
+}
+assert.ok(maintenanceTemplate.indexOf("<!-- agentic-os:doc-sync:start -->")
+  < maintenanceTemplate.indexOf("<!-- agentic-os:doc-sync:end -->"));
+const documentationSchema = JSON.parse(readFileSync("schema/AgenticRAG/documentation.jsonld", "utf8"));
+assert.equal(documentationSchema.markdown_template_maintenance.managed_region.cardinality,
+  "exactly one ordered pair in an enrolled document");
 const recordBytes = readFileSync(recordPath);
 assert.ok(recordBytes.length < 65_536, "grounding record exceeds 64 KiB");
 const grounding = JSON.parse(recordBytes.toString("utf8"));

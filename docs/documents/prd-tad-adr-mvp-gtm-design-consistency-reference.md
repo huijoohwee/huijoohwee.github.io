@@ -1,8 +1,8 @@
 ---
 title: "Native design consistency — reference implementation"
 doc_type: "PRD-TAD-ADR-MVP-GTM Companion"
-version: "0.1.0"
-revision: "0.1.0"
+version: "0.2.0"
+revision: "0.2.0"
 date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -20,7 +20,7 @@ load_policy: "on-demand"
 # Native design consistency — reference implementation
 
 This is the source-grounding and implementation proposal companion for
-[NATIVE-DESIGN-CONSISTENCY@0.1.0](prd-tad-adr-mvp-gtm-design-consistency.md). Paths below are relative
+[NATIVE-DESIGN-CONSISTENCY@0.2.0](prd-tad-adr-mvp-gtm-design-consistency.md). Paths below are relative
 to their named repository. Source inspection proves the described code exists, not live deployment.
 All product and repository names in this companion are reference implementation bindings.
 
@@ -233,3 +233,21 @@ context, not a production identity. This increment neither edits that runtime no
 On runtime regression, retain preferences and use the owner's authorized exact predecessor; a prior
 build ignores the proposed variant and retains the old mode. Prove that rollback compatibility before
 release; do not remove stored user values or force a reset as a shortcut.
+
+## Source-bound concern projection — reference implementation
+
+This projection names existing owners, not accepted variant behavior. All paths are in `agentic-graph`
+at the inspected revision below. Named checks are acceptance references; the structural checker never
+executes them. The Monaco source exceeds the bounded source-file limit, so code typography binds to
+the smaller native typography owner and the separately observed editor evidence above.
+
+```native-design-adoption
+{"sourceRevision":"414ca9afcea332c7e5f357a850caa9463bb837c5","concerns":[
+{"id":"settings","owner":"native-settings","source":"canvas/src/features/settings/registry-ui.ui.ts","symbol":"themeMode","check":"ui.themeModePersistence"},
+{"id":"tokens","owner":"shared-token-source","source":"grph-shared/src/ui/kgTokens.ts","symbol":"AG_TOKEN_DEFS","check":"ui.tokens.ssot.indexCssDefinesAll"},
+{"id":"typography","owner":"shared-panel-typography","source":"grph-shared/src/ui/panelTypography.ts","symbol":"PANEL_TYPOGRAPHY_DEFAULTS","check":"V3"},
+{"id":"code-typography","owner":"shared-panel-typography","source":"grph-shared/src/ui/panelTypography.ts","symbol":"monospaceTextClass","check":"V3"},
+{"id":"ideograms","owner":"native-icon-settings","source":"canvas/src/features/settings/registry-ui.ui.ts","symbol":"uiIconFormat","check":"V3"},
+{"id":"illustration","owner":"native-catalog-artwork","source":"canvas/src/features/command-menu/XrMediaCatalogThumbs.tsx","symbol":"XrCatalogArtwork","check":"V3"}
+]}
+```

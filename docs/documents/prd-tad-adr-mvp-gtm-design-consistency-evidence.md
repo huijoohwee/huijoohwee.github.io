@@ -1,8 +1,8 @@
 ---
 title: "Native design consistency evidence and handoff"
 doc_type: "PRD-TAD-ADR-MVP-GTM Companion"
-version: "0.1.0"
-revision: "0.1.0"
+version: "0.2.0"
+revision: "0.2.0"
 date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -19,13 +19,13 @@ load_policy: "on-demand"
 
 # Native design consistency evidence and handoff
 
-Consumes [NATIVE-DESIGN-CONSISTENCY@0.1.0](prd-tad-adr-mvp-gtm-design-consistency.md).
+Consumes [NATIVE-DESIGN-CONSISTENCY@0.2.0](prd-tad-adr-mvp-gtm-design-consistency.md).
 This record reports bounded observations. It is not independent evaluation, global runtime
 conformance, buyer validation, or a deployment receipt.
 
 ## Coverage dispositions
 
-All source joins below refer to sections of the parent at revision 0.1.0. “Covered” means the scoped
+All source joins below refer to sections of the parent at revision 0.2.0. “Covered” means the scoped
 decision is documented; it does not close V1–V7. Counts: **16/16 dispositioned; 12/16 covered applicable;
 4 deferred; 0 not-applicable**. All sixteen domains remain applicable to the overall product increment.
 
@@ -84,7 +84,8 @@ conformance score or independent evaluator verdict is asserted.
 
 Scope extension requested after initial authoring: update the parent authoring guideline and add
 coherence enforcement; extend `agentic-os` and `agentic-canvas-os` invocation enforcement across
-MCP/WebMCP and `/`, `@`, `#`. These follow-on source effects remain pending in this initial snapshot.
+MCP/WebMCP and `/`, `@`, `#`. These source changes are now authored as separate review candidates; protected integration and
+Canvas dependency admission remain pending.
 Typography, ideograms and the Tropical Playground native illustration are now explicit guidance.
 
 This change is source documentation only. `docs/RELEASE-WORKFLOW.md` owns protected source integration;
@@ -95,3 +96,28 @@ changed by this increment. The default-Black and Dark-Blue behavior remains prop
 Preserve the task lane until its source handoff is recorded. Do not delete retained worktrees, refs
 or unrelated work. Runtime implementation resumes from the reference companion after re-grounding;
 existing MainPanel Settings, text, icons and persistence are mandatory owners.
+
+## Coherence and transport verification
+
+The parent guideline's proposed 3.3.0 draft now binds native design adoption in PRD/TAD integration;
+its existing companion version bindings remain coherent. The shared template points to that owner.
+`npm run guideline:check` passed, including the new `validateDesignConsistency` hook in the existing
+PRD policy checker. Seven focused tests passed, covering stale role/guideline revisions, broken links
+and anchors, missing code typography and duplicate owners. The parent is 597 lines, below 600.
+
+The source projection resolves six concerns to four exact Graph files at the pinned revision.
+`buildDesignCheckInput` produces 56,784 bytes from those historical Git bytes; no webpage data is used
+as source authority. Policy digest is `28d40ad252ad067e0fd6f0d51c16c4c4d4dc76bbffc80f26101bf0e341e7abce`.
+Native OS CLI, slash tuple, actual MCP stdio and an isolated Canvas WebMCP host adapter returned the
+same passing structural result. The OS focused suites passed 46 tests; Canvas adapter tests passed four.
+The isolated integration supplies the candidate engine without changing the Canvas lockfile.
+
+Proof limit: `scope=supplied-source-contract`, `authority=false`, `runtimeVerified=false`. Named VCCs
+are references, not executed tests. The existing code can satisfy ownership while still exhibiting the
+original palette mismatch; V1-V7 remain open. The live app has no new themes or registration from this
+change. Required protected source receipts, admitted Canvas dependency and live supported-browser proof
+are next checks for Runtime maintainers when the upstream candidate is integrated. No deploy is run.
+
+Initial documentation review: <https://github.com/huijoohwee/huijoohwee.github.io/pull/266>.
+The current successor contains the parent/template enforcement and this evidence; its exact source
+identity is the native publication receipt rather than a self-referential commit hash in this file.

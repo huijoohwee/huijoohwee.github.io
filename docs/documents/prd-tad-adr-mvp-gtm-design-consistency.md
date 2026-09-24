@@ -1,18 +1,18 @@
 ---
 title: "Native design consistency PRD-TAD-ADR-MVP-GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
-revision: "0.1.0"
+version: "0.2.0"
+revision: "0.2.0"
 date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Design maintainers"
 continuity_id: "NATIVE-DESIGN-CONSISTENCY"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
 local_rung: "undocumented"
 delivered_rung: "undocumented"
 lane: "authoring"
@@ -25,7 +25,7 @@ load_policy: "on-demand"
 
 # Native design consistency PRD-TAD-ADR-MVP-GTM
 
-Join: **NATIVE-DESIGN-CONSISTENCY@0.1.0**. This change authors reusable policy and an implementation
+Join: **NATIVE-DESIGN-CONSISTENCY@0.2.0**. This change authors reusable policy and an implementation
 proposal. Runtime palette selection, browser acceptance and independent evaluation remain open;
 the frontmatter rungs are conservative pending that evidence, not a claim that no documentation exists.
 All five roles live here. The [reference implementation](prd-tad-adr-mvp-gtm-design-consistency-reference.md)
@@ -45,8 +45,9 @@ and record checks without claiming unimplemented runtime behavior.
 **Outcome:** reviewable policy, source joins and acceptance conditions. **Check:** evidence record.
 **SVO:** Design maintainers maintain the native consistency contract.
 
-Scope is policy and planning, with the existing application as the first adopter. No runtime code,
-dependency, paid service, public website deployment or customer outreach is part of this increment.
+Scope is policy, planning and structural enforcement, with the existing application as the first
+adopter. The shared harness and Canvas adapters are separate source candidates; palette implementation,
+paid services, public deployment and customer outreach remain outside this increment.
 
 ## PRD
 
@@ -75,7 +76,7 @@ from a styling request. Priority: P1 → P2 → P3, based on direct observed pai
 | F7 Should | Given source drift, when updating policy, then stale joins are visible | V7: compare pinned revision/digest before consuming evidence; refresh only affected joins |
 
 V1–V7 are required future checks, not reported passes. Exact native test names and gaps are in the
-reference companion. The documentation increment delivers the conditions and owner map.
+reference companion. This increment delivers the conditions, owner map and a structural coherence check.
 
 ### Reach and success metrics
 
@@ -139,11 +140,12 @@ do not transmit them or log document contents. Appearance changes move no money 
 
 ### Invocation and ecosystem — reference implementation
 
-The supported mutation surface is existing MainPanel Settings in `agentic-graph`. Existing browser,
-MCP/WebMCP and design inspection routes may read their existing contracts; this proposal does not prove
-a settings mutation tool. `/design-consistency`, `#design-theme-governance` and `@design-maintainers`
-are task intent labels here, not new registered product commands. Any future agent mutation must reuse
-the existing action and invocation register, validate arguments and carry the same effect authority.
+The supported appearance mutation surface is existing MainPanel Settings in `agentic-graph`.
+Structural enforcement extends the native OS invocation register with `/design.check #read-only
+@input:record.json`, CLI `design-check` and MCP `design.check`. Canvas supplies a WebMCP adapter
+for the same checker and host-pinned policy. Its locked dependency and live registration await upstream
+protected admission; source-level adapter proof is not deployed availability. These routes do not
+mutate Settings or execute named acceptance tests. See the evidence companion for actual proof.
 
 Users receive coherent appearance; maintainers receive fewer duplicate fixes; the product operator
 owns support and release. No new provider, supplier, data processor or commercial dependency is added.
@@ -152,8 +154,9 @@ Third-party code already in the product keeps its existing license owner; this c
 ### Quality and resource budgets
 
 Documentation sprint: estimated 20 active minutes; 12-file/150 KB cap, below 600 lines per file.
-Always-load prompt delta: zero; all new guidance loads on demand. This increment adds zero runtime
-bytes or modules. Runtime successor: target two 30-minute local sprints, at most 12 touched owner modules
+Always-load prompt delta: zero; all new guidance loads on demand. The guideline slice adds zero application runtime bytes. The authorized enforcement extension
+has a revised 75-minute active-work cap, at most 14 OS files and six Canvas files / 50 kB source
+per owner, and no new dependency. Actual module counts and bytes belong to their native check receipts. Runtime successor: target two 30-minute local sprints, at most 12 touched owner modules
 and 50 KB source delta per sprint; split or re-scope before overrun. Preserve native token limits
 (256 definitions, depth 16, serialized bytes 65,536) and lazy chunks below 500 kB. Measure bundle delta;
 no new network fetch, service, model call, paid plan or overage is allowed.
@@ -185,7 +188,7 @@ new preferences inert; no destructive storage cleanup. V1–V4 must pass before 
 ### ADR-03: Keep identity guidance small and native
 
 Proposed: include voice, label and asset-owner rules in the design contract; do not create a separate
-brand file in this increment. No supplied logo, asset catalog or verified positioning needs a new owner.
+brand file in this increment. Existing native scene illustrations already have a code owner; no separate identity owner is needed.
 Alternatives: introduce a blank brand template (ceremony), or duplicate palette values in identity prose
 (drift). Revisit when approved assets, claims or voice rules have an accountable independent owner.
 Appearance preferences remain separate from product identity. This decision invents no brand system.

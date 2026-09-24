@@ -126,3 +126,19 @@ Use this compact record inside the product's joined plan; it adds no parallel sc
 
 Guidance: defer a standalone brand document until actual identity assets or voice rules need separate
 maintenance. Consistency means shared semantics and ownership; different products need not share colors.
+
+## Machine-readable concern projection
+
+This bounded policy input serializes the concern inventory above for the shared checker. It owns
+no palette values or runtime settings. A trusted repository caller pins these canonical policy bytes;
+the checker does not treat a digest supplied by an unknown caller as authenticated policy.
+
+```native-design-policy
+{"schema":"native-design-policy/v1","id":"native-design-consistency","revision":"1.0.0","requiredConcerns":["settings","tokens","typography","code-typography","ideograms","illustration"]}
+```
+
+A source bundle uses the existing joined record and its inspected files. Structural verification can
+reject missing owners, stale source bytes and revision drift; it cannot run the named checks, prove
+semantic correctness or replace browser acceptance. The guideline check validates this projection
+and the example join locally and in the existing policy CI; the runtime verifier remains a separate
+source-owned consumer, with no web fetch or automatic dependency adoption.

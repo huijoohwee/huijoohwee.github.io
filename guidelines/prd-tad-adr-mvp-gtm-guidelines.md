@@ -2,7 +2,7 @@
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
 version: "3.3.0"
-date: "2026-09-23"
+date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -421,6 +421,8 @@ PRD stops at acceptance criteria; TAD starts at architectural approach. Forbid i
 ```
 PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Evidence Reference [check + result]
 ```
+
+For appearance or identity scope, bind the [native design contract](design-theme-contract.md#ownership-and-adoption) in the same joined record: existing Settings, tokens, typography (including code), icons/ideograms, illustrations and affected adapters; record source revisions, checks and gaps — `duplicate-owner`, `unresolvable-reference`, `unimplemented-guideline`.
 
 The chain closes in both directions. Refinement is bounded: 3 cycles, circuit-breaker on no `blocker` reduction across two consecutive cycles, then escalate.
 

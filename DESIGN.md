@@ -1,7 +1,7 @@
 ---
 title: "Design policy entry point"
 doc_type: "Guidelines Index"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -30,6 +30,12 @@ the workflow harness owns admission and release evidence. A repository-local des
 reference these owners and exact revisions. It must not duplicate them or assume that its filename
 makes it authoritative. An offline checkout uses already-reviewed local content and records its
 revision; it never fetches policy, fonts, icons, or a theme at runtime.
+
+For reusable adoption, use the [native design contract](guidelines/design-theme-contract.md#ownership-and-adoption)
+and its [copy-ready adoption record](guidelines/prd-tad-adr-mvp-gtm-templates.md#native-design-adoption-record)
+in the existing joined plan. A product links its native settings, editor, notice, disclosure,
+metric, illustration and token owners. Shared runtime utilities belong in the package already
+consumed by that product; a policy document is never imported by the running application.
 
 ## Brand and design
 

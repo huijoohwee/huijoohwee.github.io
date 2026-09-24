@@ -1,7 +1,7 @@
 ---
 title: "Native design consistency contract"
 doc_type: "Guidelines Companion"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -32,6 +32,9 @@ Each numbered rule is artifact-bearing; section anchor plus ordinal is its Rule 
 3. For each adopter, bind changed surfaces and checks to an exact revision. A green policy check
    establishes document consistency only. Claim global runtime coverage only for individually proven
    adopters; missing acceptance evidence records `unimplemented-guideline`.
+4. Keep one active editor panel per capability. Reuse its native view, commands and icon semantics
+   across launch paths, then remove duplicate panel registrations and mounts. Global appearance
+   preferences remain in the existing Settings owner. Competing panels record `duplicate-owner`.
 
 ## Token resolution
 
@@ -62,6 +65,17 @@ Each numbered rule is artifact-bearing; section anchor plus ordinal is its Rule 
 4. Preserve text, icon and density overrides when switching palettes. Existing shared font, text-size,
    icon-format, stroke, size, color, animation and spacing settings remain authoritative. An unrelated
    preference reset records `status-conflict`.
+
+## Native UI composition
+
+1. Reuse an existing status treatment for warnings, a disclosure component for expandable evidence,
+   and a metric/card component for measured values. Apply the same semantic border, background,
+   content and focus roles as the surrounding surface. A copied local style utility or second state
+   owner records `duplicate-owner`.
+2. Keep the scope of a reusable utility at its actual consumer boundary. Pure tokens and validation
+   may live in an already-consumed shared package; application state, persistence and interactive
+   components stay with the product that owns them. Cross-repository adoption links policy and exact
+   source revisions rather than copying runtime components or requiring a network read.
 
 ## Typography ideograms and identity
 
@@ -134,7 +148,7 @@ no palette values or runtime settings. A trusted repository caller pins these ca
 the checker does not treat a digest supplied by an unknown caller as authenticated policy.
 
 ```native-design-policy
-{"schema":"native-design-policy/v1","id":"native-design-consistency","revision":"1.0.0","requiredConcerns":["settings","tokens","typography","code-typography","ideograms","illustration"]}
+{"schema":"native-design-policy/v1","id":"native-design-consistency","revision":"1.1.0","requiredConcerns":["settings","tokens","typography","code-typography","ideograms","illustration"]}
 ```
 
 A source bundle uses the existing joined record and its inspected files. Structural verification can

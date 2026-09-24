@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.4.0"
+version: "1.4.1"
 date: "2026-09-23"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -58,6 +58,21 @@ agent_id: "[producing agent]"
 ```
 
 For appearance or identity work, include the [native adoption record](design-theme-contract.md#adoption-record) in this same join. Bind existing Settings, tokens, interface/code typography, icons/ideograms and illustrations to source owners and named checks. Record unsupported dimensions as gaps; metadata does not prove browser acceptance.
+
+### Native Design Adoption Record
+
+Copy this table into the existing PRD–TAD–ADR–MVP–GTM join. Replace every bracketed value;
+keep one owner per row and put unverified behavior in the gap column. The owning rule is the
+[native design contract](design-theme-contract.md#adoption-record).
+
+| Concern | Native owner at exact revision | Reused surface or utility | Acceptance check and result | Gap / next check |
+|---|---|---|---|---|
+| Identity and illustration | [path, symbol, revision] | [asset/voice owner] | [check, result] | [gap] |
+| Settings and preferences | [path, symbol, revision] | [existing settings/search/reset] | [check, result] | [gap] |
+| Tokens and render adapters | [path, symbol, revision] | [shared token source and native adapter] | [check, result] | [gap] |
+| Typography and ideograms | [path, symbol, revision] | [interface/code font and icon owners] | [check, result] | [gap] |
+| Editor surface | [path, symbol, revision] | [one active editor panel and launch paths] | [check, result] | [gap] |
+| Status and evidence | [path, symbol, revision] | [warning, disclosure and metric components] | [check, result] | [gap] |
 
 ### PRD Template
 

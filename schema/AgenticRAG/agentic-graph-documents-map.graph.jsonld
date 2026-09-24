@@ -5106,6 +5106,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-block-editor",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-block-editor.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-block-editor.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-block-editor.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-documentation-management",
       "@type": "kg:Node",
       "labels": [

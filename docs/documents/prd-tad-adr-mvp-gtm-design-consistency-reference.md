@@ -42,7 +42,7 @@ No replacement prompt was created. The guideline authoring contract is version 3
 | Native owner / inspected symbol | Observed behavior | Smallest proposed change / criterion |
 |---|---|---|
 | `grph-shared/src/ui/kgTokens.ts` / `AG_TOKEN_DEFS`, `buildKgTokensCssText` | One ordered light/dark token inventory with semantic metadata | Add native dark-variant resolution while keeping semantic keys / V2,V6 |
-| `grph-shared/src/ui/kgTokenContract.ts` / `KgTheme`, `KgTokenDef`, `KG_TOKEN_LIMITS` | Two-theme contract, native color parsing, reference and size limits | Extend the existing contract/validator for complete variant palettes; no second schema / V4,V6 |
+| `grph-shared/src/ui/kgTokenContract.ts` / `KgTheme`, `KgTokenDef` and the native size limits | Two-theme contract, native color parsing, reference and size limits | Extend the existing contract/validator for complete variant palettes; no second schema / V4,V6 |
 | `grph-shared/src/ui/themeTokens.ts` / `UI_THEME_TOKENS` | Shared semantic class references | Retain native consumer API; avoid product-wide literal replacements / V2,V3 |
 | `canvas/src/lib/ui/tokens-ssot.ts` and `theme-tokens.ts` | Thin re-exports of shared owners; CSS-state key helper | Retain re-exports, include variant in state invalidation where needed / V2,V4 |
 | `canvas/src/lib/ui/theme.ts` / `ThemeMode`, `THEME_MODE_OPTIONS`, `applyThemeMode` | `system/light/dark`; default `system`; root `data-theme` and `dark` class | Keep mode API/cycle; introduce subordinate validated variant in this owner / V1,V4 |

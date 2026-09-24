@@ -60,3 +60,14 @@ never hand-edit generated map contents or treat a source check as deployed parit
 Measure selected groups and command time for one planning edit, one schema edit and
 unchanged inputs. This is an engineering delivery improvement; buyer demand, payment
 and production runtime readiness are separate and unmeasured by these receipts.
+
+## Block Editor map reconciliation — 2026-09-25
+
+Production verification run `36054392227` found one missing Graph document node.
+Regenerate the existing map from integrated Graph `2bd36eeec85d7f0ffa3b4c68c51129627fab0302`
+with `schema/AgenticRAG/sync_map.py`; accept exactly the Block Editor PRD node,
+zero removals, and a clean subsequent `--mode check` across all 302 documents.
+This consumes the existing source owner and generator without a parallel map or checker.
+Protected schema integration unblocks Graph candidate verification; it does not authorize
+Production activation. The map is outside this website's current Pages payload.
+Rollback is a reviewed regeneration from the selected canonical Graph document set.

@@ -57,6 +57,8 @@ worktree_id: "[producing worktree]"
 agent_id: "[producing agent]"
 ```
 
+For appearance or identity work, include the [native adoption record](design-theme-contract.md#adoption-record) in this same join. Bind existing Settings, tokens, interface/code typography, icons/ideograms and illustrations to source owners and named checks. Record unsupported dimensions as gaps; metadata does not prove browser acceptance.
+
 ### PRD Template
 
 ```markdown

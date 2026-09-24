@@ -1,8 +1,8 @@
 ---
 title: "Design Guidelines"
 doc_type: "Guidelines"
-version: "2.0.0"
-date: "2026-06-25"
+version: "2.1.0"
+date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -22,6 +22,7 @@ frontmatter_contract: "required"
 - `core-design-principles` — composability, separation of concerns, emergent complexity
 - `component-design-patterns` — atomic hierarchy, responsibility boundaries, SVO format
 - `configuration-driven-design` — schema-first approach, theme and style system
+- [Native design consistency](design-theme-contract.md) — ownership, theme variants, existing settings, text/icons and evidence
 - `flow-patterns` — user journey, workflow, data flow, orchestration/harness, topology integration
 - `state-management-architecture` — unidirectional data flow, normalization
 - `accessibility--internationalization` — a11y requirements, i18n strategy
@@ -113,6 +114,10 @@ component:
 **Rule**: configuration schemas are versioned alongside the component; breaking schema changes require a major version bump.
 
 ### Theme and Style System
+
+Apply the [native design consistency contract](design-theme-contract.md) for source ownership,
+mode/variant resolution, settings reuse, migration and adapter evidence. Palette values remain owned
+by each product's native token source; this guideline defines invariants rather than a global palette.
 
 **Abstraction layers** (from most abstract to most concrete):
 
@@ -466,6 +471,8 @@ Each row is a universal, neutral, project-agnostic directive in `Context | Inten
 - [ ] Design tokens used for all visual values (no magic numbers)
 - [ ] i18n keys for all user-facing strings (no inline literals)
 - [ ] Component renders correctly under ≥ 2 theme modes without code changes
+- [ ] Every declared palette passes adapter checks; existing text/icon/density settings survive switching and reload
+- [ ] Token exports match their source; computed-style evidence covers the declared consumer matrix
 - [ ] Schema is versioned alongside the component
 
 ### Performance (Required)
@@ -505,6 +512,10 @@ Each row is a universal, neutral, project-agnostic directive in `Context | Inten
 ---
 
 ## Documentation Integration
+
+Use the [design entry point](../DESIGN.md) to find policy and the
+[joined consistency plan](../docs/documents/prd-tad-adr-mvp-gtm-design-consistency.md) for grounded
+adoption. Product identity stays with its existing owner; do not duplicate palette values in prose.
 
 Designs are easy to document when components conform to these conventions:
 

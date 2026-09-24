@@ -16,6 +16,8 @@ import { readFrontmatter } from "./lib/git-guidelines/fm-reader.mjs";
 
 import { readMaturityRubric, validateMaturityAssessment } from "./lib/maturity-rubric.mjs";
 
+import { validateDesignConsistency } from "./lib/design-consistency.mjs";
+
 const dir = "guidelines";
 const read = (name) => readFileSync(join(dir, name), "utf8");
 
@@ -265,3 +267,6 @@ assert.match(grounding.rubric_source.sha256, /^[0-9a-f]{64}$/u);
 assert.ok(rubricText.includes(grounding.rubric_source.sha256), "rubric provenance mismatch");
 const maturity = validateMaturityAssessment(readMaturityRubric(rubricText), grounding.maturity, grounding.repositories);
 console.log(`Maturity: ${maturity.assessed}/4 assessed; evidence structure only, no experience or readiness verdict`);
+
+validateDesignConsistency(path => readFileSync(path, "utf8"));
+console.log("Design coherence: local links, guideline and role revisions, native concern owners checked; no runtime verdict");

@@ -118,6 +118,16 @@ original palette mismatch; V1-V7 remain open. The live app has no new themes or 
 change. Required protected source receipts, admitted Canvas dependency and live supported-browser proof
 are next checks for Runtime maintainers when the upstream candidate is integrated. No deploy is run.
 
+## Release map continuity — 2026-09-24
+
+Graph source `f16ad08ac920ed125072b6de81335e96c790e3f3` added the design-editor release
+recovery companion. Production verify run `35995608607` stopped before authorization because the
+shared AgenticRAG document map still described 300 of 301 Graph documents. The schema owner's
+existing `sync_map.py --mode write` generated the one missing node from canonical Graph source;
+the map remains a projection, not a second document owner. The next check is the schema owner's
+`--mode check`, then protected website integration and a fresh Graph release candidate. This
+repair grants no production effect and does not close V1–V7.
+
 Initial documentation review: <https://github.com/huijoohwee/huijoohwee.github.io/pull/266>.
 The current successor contains the parent/template enforcement and this evidence; its exact source
 identity is the native publication receipt rather than a self-referential commit hash in this file.

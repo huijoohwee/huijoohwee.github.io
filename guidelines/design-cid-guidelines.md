@@ -1,13 +1,17 @@
 ---
 title: "Design Guidelines – CID"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "1.1.0"
+date: "2026-09-24"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
 
 # Design Guidelines – CID
+
+This lookup consumes [Design Guidelines](design-guidelines.md) and the
+[native consistency contract](design-theme-contract.md). Theme, settings, text and icon rules are
+owned there; this index does not create another palette or settings authority.
 
 ## Slogan‑style, three‑beat mantra form
 
@@ -16,7 +20,7 @@ frontmatter_contract: "required"
 - [] A11y; ensure accessibility compliance; forbid div‑based interactive elements
 - [] Actions; validate via schema; forbid unvalidated dispatches
 - [] Adaptability; enable via configuration; forbid hardcoded behavior
-- [] Amber; use for hover interactions; forbid inconsistent hover colors
+- [] Amber; treat palette colors as configurable; forbid fixed hover hues outside the native token owner
 - [] Anti‑patterns; identify and prohibit; forbid undocumented bad practices
 - [] ARIA; label dynamic content; forbid unlabeled dynamic content
 - [] Assembly; drive via configuration; forbid hardcoded composition
@@ -207,7 +211,7 @@ frontmatter_contract: "required"
 | A11y                | Ensure accessibility compliance     | - [ ] Apply semantic HTML; ensure accessibility; forbid div‑based interactive elements        |
 | Actions             | Validate via schema                 | - [ ] Validate action schema; ensure correctness; forbid unvalidated dispatches               |
 | Adaptability        | Enable via configuration            | - [ ] Adapt behavior via props; enable flexibility; forbid hardcoded behavior                 |
-| Amber               | Use for hover interactions          | - [ ] Apply gallery‑style amber; indicate hover; forbid inconsistent hover colors             |
+| Amber               | Keep palette choices configurable   | - [ ] Use the native semantic hover token; forbid a fixed hue overriding the selected palette |
 | Anti‑patterns       | Identify and prohibit               | - [ ] Document forbidden patterns; prevent violations; forbid undocumented bad practices      |
 | ARIA                | Label dynamic content               | - [ ] Provide ARIA labels; enable screen readers; forbid unlabeled dynamic content            |
 | Assembly            | Drive via configuration             | - [ ] Assemble from config; compose systematically; forbid hardcoded composition              |

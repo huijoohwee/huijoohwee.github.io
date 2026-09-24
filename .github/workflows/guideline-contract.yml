@@ -50,6 +50,19 @@ jobs:
       - run: npm test
         env:
           GIT_GUIDELINES_EXPECTED_PROTECTED_REVISION: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || '' }}
+      - name: Checkout reviewed Markdown sync verifier
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: huijoohwee/agentic-os
+          ref: abab0d39ddfcc69e2d683756e8e666ef260fdb22
+          path: .doc-sync-os
+          persist-credentials: false
+      - name: Check enrolled website document
+        run: >-
+          node .doc-sync-os/scripts/doc-sync.mjs
+          --mode=check --repo=. --source-repo=.
+          --document=docs/document-maintenance.md
+          --to=a9ab28adedf0d96b74670f459315560fa854b3b5
 
   adlc-policy-contract:
     if: ${{ always() }}

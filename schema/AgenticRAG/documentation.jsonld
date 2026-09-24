@@ -5,7 +5,7 @@
   },
   "@id": "rag:DocumentationGuide",
   "@type": "core:Directive",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.0.2",
   "rdfs:label": [
     { "@value": "Documentation guide patterns", "@language": "en-us" },
     { "@value": "文档风格模式", "@language": "zh-cn" }
@@ -113,6 +113,18 @@
         "@language": "zh-cn"
       }
     ]
+  },
+  "markdown_template_maintenance": {
+    "scope": "Explicitly enrolled, non-executable Markdown only.",
+    "provenance": "Use source_docs with an exact Git commit and template path; document version and readiness retain their own meanings.",
+    "managed_region": {
+      "start": "<!-- agentic-os:doc-sync:start -->",
+      "end": "<!-- agentic-os:doc-sync:end -->",
+      "cardinality": "exactly one ordered pair in an enrolled document"
+    },
+    "comparison": "Three-way compare the pinned old template region, current authored region and pinned proposed region; preserve all bytes outside the markers.",
+    "failure": "Missing provenance, malformed markers, overlap, unsupported profile or source drift stops the dependent update without accepted writes.",
+    "authority": "Metadata, schema validity and CI results do not authorize publication or deployment."
   },
   "repo_hygiene": {
     "principles": [

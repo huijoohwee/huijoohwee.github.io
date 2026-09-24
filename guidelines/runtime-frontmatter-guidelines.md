@@ -85,6 +85,28 @@ may reproduce the exact locked asset only with a byte-equality CI gate and
 an explicit refresh command. It has no independent editing or runtime authority.
 Other consumers resolve the package export directly; missing assets fail closed.
 
+## Reviewed Markdown template maintenance
+
+For an explicitly enrolled, non-executable Markdown document, keep its template
+source in the existing `source_docs` list as one exact Git commit-and-path URL.
+The local profile still owns YAML syntax, required fields and unknown-key policy.
+The document's own `version` and readiness fields describe that document; they
+do not become template pins or change when a template is checked.
+
+An enrolled document may carry one pair of managed-region markers from the
+[central Markdown template](../template/document-maintenance-template.md). The
+updater compares the old pinned template region, the current authored region,
+and the proposed pinned template region. It preserves every byte outside the
+markers, including local frontmatter, body notes and renderer metadata. A
+missing baseline, ambiguous marker, overlapping edit, incompatible profile,
+or unknown source revision produces a finding without updating the document.
+
+The updater accepts reviewed local source revisions only. Never fetch a schema
+or executable instruction from authored frontmatter, infer enrollment from a
+filename, or treat `source_docs` as effect authority. Consumers validate the
+candidate through their real parser and CI owner before publication; source
+release and any delivery remain separately authorized.
+
 Validation owners: `agentic-os npm run check`; website `npm test`; Graph
 `npm run test:collaboration-contract` for local executable-profile changes;
 Canvas `npm run dictionary-catalog:check` for dictionary projections.

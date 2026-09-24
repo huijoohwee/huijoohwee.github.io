@@ -73,6 +73,7 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 
 - Canonical planning artifacts use `prd-tad-adr-mvp-gtm` locators through the [document naming profile](./conventions-and-syntax-guidelines.md#document-locators-and-format) and declare `doc_type: "PRD-TAD-ADR-MVP-GTM"`; PRD, TAD, ADR, MVP, GTM remain distinct section roles; Pitch Deck, Business Plan, and Financial Model are projections joined by `continuity_id@revision`
 - Use plain YAML; quote scalars containing `:`; a `{key, type, value}` wrapper belongs only in a parse-fidelity fixture
+- For reviewed non-executable Markdown template updates, record the exact commit-and-path in existing `source_docs` and follow the [frontmatter maintenance contract](./runtime-frontmatter-guidelines.md#reviewed-markdown-template-maintenance); keep local content outside the managed region
 - **Baseline keys**: `title`, `doc_type`, `version` (semantic), `date`, `lang`. **Conformance keys**:
 
 | Key | Domain | Read by |

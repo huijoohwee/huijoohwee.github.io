@@ -5090,6 +5090,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-documentation-management",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-documentation-management.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-documentation-management.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-documentation-management.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-offline-python-learning-workspace",
       "@type": "kg:Node",
       "labels": [
@@ -5103,6 +5119,22 @@
         "relPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md"
       },
       "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-xr-mp4-recovery",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-xr-mp4-recovery.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-xr-mp4-recovery.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-xr-mp4-recovery.md",
       "language": "en-us"
     },
     {

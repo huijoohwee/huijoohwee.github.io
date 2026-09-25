@@ -4978,6 +4978,38 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-mode-procedural-twin-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-mode-procedural-twin-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-mode-procedural-twin-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-mode-procedural-twin-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-mode-semantic-space-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-mode-semantic-space-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-mode-semantic-space-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-mode-semantic-space-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-xr-motion-reference-document",
       "@type": "kg:Node",
       "labels": [
@@ -5007,6 +5039,22 @@
         "relPath": "docs/documents/agentic-graph-xr-spatial-capture-fallback-readiness.md"
       },
       "documentPath": "docs/documents/agentic-graph-xr-spatial-capture-fallback-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-xr-spatial-workspace-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-xr-spatial-workspace-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-xr-spatial-workspace-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-xr-spatial-workspace-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -5151,6 +5199,22 @@
         "relPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md"
       },
       "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-workspace-program-pack",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-workspace-program-pack.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-workspace-program-pack.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-workspace-program-pack.md",
       "language": "en-us"
     },
     {

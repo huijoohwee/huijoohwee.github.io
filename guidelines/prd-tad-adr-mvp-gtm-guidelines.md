@@ -2,7 +2,7 @@
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
 version: "3.3.0"
-date: "2026-09-24"
+date: "2026-09-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -46,7 +46,7 @@ Load by phase. Every file stays under 600 lines.
 
 **From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
-**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
+**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md); [Pitch Deck Guidelines](./pitch-deck-guidelines.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
 **Readiness and execution** — `readiness-ladder` · `agent-platform-readiness` · `lane-topology--deploy-boundary` → [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md) · `adlc-execution-seam` → [ADLC Guidelines](./adlc-guidelines.md); [Rapid MVP Sprint](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); [Production Release Lifecycle](./adlc-production-release-lifecycle.md); [Autonomous Continuation](./adlc-autonomous-continuation.md); [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md); [Repository Runtime Readiness](./adlc-repository-runtime-readiness.md)
 
@@ -105,7 +105,7 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 | START / RELEASE / DEPLOY | 4 | ADLC Execution Seam | lane, exact candidate, exact deployed revision | execution-domain |
 | MVP | 4 | Planning Record, Demo Skeleton, Rubric, Readiness | evidenced `Must` slice | Readiness, Demonstration |
 | GTM | 5 | Monetization, Roadmap, Planning Record | ranked first-dollar path | Monetization, Roadmap |
-| Pitch Deck | 5 | Venture Record | bounded Slide Register, Reveal = VCC | Venture Record |
+| Pitch Deck | 5 | Venture Record, Pitch Deck Guidelines | bounded Slide Register, Reveal = VCC, Variant Register, Claim Manifest | Venture Record |
 | Business Plan | 5 | Venture Record | two-method market, business risks and findings, legal and capital rows | Venture Record |
 | Financial Model | 5 | Venture Record | assumptions, unit economics, linked statements, scenarios, ADLC ledger | Venture Record |
 
@@ -285,7 +285,7 @@ The [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **C
 
 ## Venture Record: Pitch Deck, Business Plan & Financial Model
 
-The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger.
+The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger. The [Pitch Deck Guidelines](./pitch-deck-guidelines.md) own deck ordering, time bounds, ask shape, variants, Claim Manifest, Reveal delivery, rendering, distribution, and outcome capture; they consume the Slide Register and add no finding type.
 
 **Directives**:
 - Treat all three as projections of the joined artifact at one `continuity_id@revision`; an unsourced claim, input number, or decision first appearing in a projection is `pitch-claim-unsourced`; calculated outputs cite owned inputs and formulas; a path-only join is `artifact-naming-noncompliant`

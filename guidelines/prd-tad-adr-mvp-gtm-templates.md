@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.4.1"
-date: "2026-09-23"
+version: "1.4.2"
+date: "2026-09-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -381,7 +381,7 @@ Copy into the joined artifact; use the parent's [C01–C16 domain IDs](./prd-tad
 
 ### Pitch Deck / Business Plan / Financial Model
 
-Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. Do not duplicate those tables here.
+Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. For each deck variant, instantiate the [Pitch Deck Guidelines](./pitch-deck-guidelines.md) records: Variant Register, ask fields, Claim Manifest, Objection Register, and Delivery & Outcome Log. Do not duplicate those tables here.
 
 
 ---

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.3.0"
-date: "2026-09-21"
+version: "1.3.1"
+date: "2026-09-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -100,7 +100,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Patterns        | Apply proven solutions               | - [ ] Use established patterns; apply solutions; forbid anti-patterns                         |
 | Performance     | Specify response requirements        | - [ ] Define latency/throughput; specify performance; forbid unspecified latency              |
 | Personas        | Define user archetypes               | - [ ] Create user personas; define archetypes; forbid generic user assumptions                |
-| Pitch deck      | Project the artifact to a decision   | - [ ] Carry a bounded Slide Register whose Reveal is the MVP VCC; label every claim by evidence status; tie the ask to Roadmap phases, use-of-funds, and capitalization; forbid a slide claim absent from the joined artifact |
+| Pitch deck      | Project the artifact to a decision   | - [ ] Carry a bounded Slide Register whose Reveal is the MVP VCC; label every claim by evidence status; tie the ask to Roadmap phases, use-of-funds, and capitalization; derive each variant from one register revision with a Claim Manifest; forbid a slide claim absent from the joined artifact and an external send without a recorded operator instruction |
 | Planning record | Join bounded work to one artifact    | - [ ] Record `continuity_id@revision`, CID, RAO with a named check, and date; forbid path-only or random identifiers, restated decisions, and rewritten records |
 | Prioritization  | Rank systematically                  | - [ ] Use value/effort matrix; rank systematically; forbid first-come ordering                |
 | Problems        | Define user pain points              | - [ ] Identify user problems; define pain points; forbid solution-first thinking              |

@@ -1,23 +1,23 @@
 ---
 title: "Pitchdeck PRD TAD Frontmatter Contract"
 doc_type: "Template Contract"
-version: "1.0.1"
-date: "2026-09-12"
+version: "1.0.2"
+date: "2026-09-26"
 lang: "en-US"
 owner: "Documentation maintainers"
 local_rung: "undocumented"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-cba000d3779d--planning-v27"
-agent_id: "codex-01a0940a"
+worktree_id: "device-0232231d4a19--pitch-deck-guidelines"
+agent_id: "kiro-pitch-deck-guidelines"
 frontmatter_contract: "required"
 continuity_id: "PLAN-PITCHDECK-PRD-TAD-ADR-MVP-GTM-FRONTMATTER-CONTRACT"
 guideline_revision: "2.7.0"
 guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
 reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
-previous_document_version: "1.0.0"
-gtm_revision: "1.0.1"
+previous_document_version: "1.0.1"
+gtm_revision: "1.0.2"
 planning_source: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md"
 ---
 
@@ -81,6 +81,7 @@ It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph
 | --- | --- |
 | `template/pitchdeck-prd-tad-adr-mvp-gtm-template-lite.md` | Minimal template source |
 | `template/pitchdeck-prd-tad-adr-mvp-gtm-template.md` | Full template source |
+| [`guidelines/pitch-deck-guidelines.md`](../guidelines/pitch-deck-guidelines.md) | Deck ordering, timing, Claim Manifest, delivery and outcome capture for the rendered Pitch Deck section |
 | `docs/agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md` | Broader AGENTIC_OS pipeline contract reference |
 | `../agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |
 

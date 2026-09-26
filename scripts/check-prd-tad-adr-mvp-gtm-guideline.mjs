@@ -38,6 +38,7 @@ const MODULES = [
   "prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
+  "pitch-deck-guidelines.md",
 ];
 
 // Anchors the set publishes. Inbound references rely on these resolving in the index.
@@ -155,6 +156,15 @@ for (const type of VENTURE_FINDINGS) {
     `verification module must enumerate ${type} before the venture module raises it`);
   assert.ok(ventureText.includes(`\`${type}\``), `venture module must raise ${type}`);
 }
+// The pitch deck module consumes the Slide Register and raises only enumerated finding types.
+const pitchText = read("pitch-deck-guidelines.md");
+assert.ok(pitchText.includes("./prd-tad-adr-mvp-gtm-venture.md#slide-register"), "pitch deck module must consume the Slide Register");
+assert.ok(ventureText.includes("./pitch-deck-guidelines.md"), "venture module must route deck delivery to the pitch deck module");
+const enumerated = new Set([...verificationText.matchAll(/^\| [^|\n]+ \| `([a-z-]+)` \| `(?:blocker|major|minor)` \|$/gm)].map(m => m[1]));
+const pitchFindings = pitchText.split("\n## Conformance Findings\n")[1]?.split("\n---\n")[0];
+assert.ok(pitchFindings, "pitch deck module must publish its conformance findings");
+for (const [, type] of pitchFindings.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g))
+  assert.ok(enumerated.has(type), `pitch deck module raises unenumerated finding ${type}`);
 // Coverage decisions and model semantics are authored by their existing modules. These checks
 // protect their navigable structural contract; they do not grade an instantiated business plan.
 const coverageSection = indexText.split("### From-0-to-1 coverage contract\n")[1]?.split("\nA gate that")[0];

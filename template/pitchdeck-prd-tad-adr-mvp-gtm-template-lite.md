@@ -461,7 +461,8 @@ Name one reachable payer and their current workaround. Record one priced offer, 
 
 Use the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register) when presenting.
 Cover its twelve roles in a bounded short deck/appendix; cite each claim, its evidence status, the MVP
-Reveal VCC and the ask's milestone/model joins. Defer with reason and trigger if no audience action is in scope.
+Reveal VCC and the ask's milestone/model joins. Order, time, check and deliver each variant per the
+[Pitch Deck Guidelines](../guidelines/pitch-deck-guidelines.md#deck-lifecycle). Defer with reason and trigger if no audience action is in scope.
 
 ## Business Plan
 

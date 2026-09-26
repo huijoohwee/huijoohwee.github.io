@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Venture Record Module"
 doc_type: "Guidelines Module"
-version: "2.1.0"
-date: "2026-09-21"
+version: "2.1.1"
+date: "2026-09-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Venture record contract"
@@ -63,6 +63,8 @@ Coverage is recorded through the parent's [C01–C16 contract](./prd-tad-adr-mvp
 ## Pitch Deck
 
 A pitch deck is the Demo Skeleton's beat table extended to an audience with a decision to make.
+This section owns what a deck covers; the [Pitch Deck Guidelines](./pitch-deck-guidelines.md) own how
+it is ordered, timed, composed, rendered, delivered and learned from.
 
 ### Slide Register
 

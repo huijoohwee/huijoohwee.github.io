@@ -393,7 +393,7 @@ Markdown body is the human-readable projection.
 
 ## Pitch Deck
 
-This six-slide rendering is a condensed projection. Bind it to the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register): cover all twelve roles across these slides and a cited appendix, with evidence status, sources and speaking bounds. Reveal must cite the MVP VCC; the ask cites milestones and model rows. Rendering alone proves no product outcome.
+This six-slide rendering is a condensed projection. Bind it to the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register): cover all twelve roles across these slides and a cited appendix, with evidence status, sources and speaking bounds. Reveal must cite the MVP VCC; the ask cites milestones and model rows. Order, time, check and deliver each audience variant per the [Pitch Deck Guidelines](../guidelines/pitch-deck-guidelines.md#deck-lifecycle). Rendering alone proves no product outcome.
 
 ### Slide 1 - Problem
 

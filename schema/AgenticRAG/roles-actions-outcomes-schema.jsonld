@@ -26,7 +26,7 @@
     }
   ],
 
-  "schemaVersion": "3.1.0",
+  "schemaVersion": "3.2.0",
   "extends": "rag:RoleActionOutcome/v1",
   "semanticAuthority": "../../guidelines/cid-guidelines.md#shared-field-contract",
   "continuityAuthority": "../../guidelines/adlc-artifact-continuity.md#reference-implementation-projection",
@@ -51,7 +51,11 @@
       "cell": "R: [role] · A: [subject verb object] · O: [outcome] · check: [named check]",
       "note": "The planning record RAO cell is the same projection in one table cell; `check` names the outcome's acceptance check and adds no field to the shared contract."
     },
-    "migration": "Version 3 corrects the former object-to-outcome mapping. Re-ground existing records against their directive; do not silently reinterpret them. Wire field names remain unchanged."
+    "migration": "Version 3 corrects the former object-to-outcome mapping. Re-ground existing records against their directive; do not silently reinterpret them. Wire field names remain unchanged.",
+    "roleMapping": {
+      "authority": "../../guidelines/adlc-artifact-continuity.md#role-action-outcome-contract",
+      "rule": "Map every authoring role onto one execution role before dispatch; authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism distinct from the Implementer."
+    }
   },
 
   "required": ["role", "actions", "outcome", "svo_pattern"],
@@ -225,7 +229,7 @@
       ],
       "rdfs:comment": [
         {
-          "@value": "High-level pipeline phase where this role is Responsible or Accountable. Extended to include ML pipeline phases: EDA, Ingestion, Feature Engineering, Preprocessing, Training, Evaluation, Deployment.",
+          "@value": "High-level pipeline phase where this role is Responsible or Accountable. Extended to include ML pipeline phases: EDA, Ingestion, Feature Engineering, Preprocessing, Training, Evaluation, Deployment. Lifecycle values Discover, Specify, Build & Evidence, Project and Learn name rows of the end-to-end lifecycle map in guidelines/prd-tad-adr-mvp-gtm-process-flows.md.",
           "@language": "en-us"
         },
         {
@@ -251,7 +255,12 @@
         "Index & Store",
         "Agentic Reasoning",
         "Produce",
-        "Reuse / Render"
+        "Reuse / Render",
+        "Discover",
+        "Specify",
+        "Build & Evidence",
+        "Project",
+        "Learn"
       ]
     },
 
@@ -465,6 +474,14 @@
       "date": "2026-01-04",
       "changes": [
         "Extended agenticUseCases with chat_explanation and chat_playback for Floating Panel Chat integration in markdown-to-rendering pipelines"
+      ]
+    },
+    {
+      "version": "3.2.0",
+      "date": "2026-09-30",
+      "changes": [
+        "Added projectionContract.roleMapping bound to the artifact-continuity Role-Action-Outcome Contract",
+        "Added lifecycle pipeline_phase values from the end-to-end lifecycle map; ML values unchanged"
       ]
     }
   ]

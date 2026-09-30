@@ -283,6 +283,34 @@
       "source": "node:site:guidelines:index",
       "target": "node:site:guidelines:project-rules",
       "label": "indexes"
+    },
+    {
+      "@id": "node:site:guidelines:lean-startup",
+      "@type": "kg:Node",
+      "labels": [
+        "GuidelineOwner"
+      ],
+      "name": [
+        "lean-startup-guidelines.md"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "guidelines/lean-startup-guidelines.md"
+      }
+    },
+    {
+      "@id": "edge:guidelines:lean-startup->example-lean-startup-layer-modes",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:lean-startup",
+      "target": "node:schema:agenticrag:example-lean-startup-layer-modes",
+      "label": "informs"
+    },
+    {
+      "@id": "edge:site:guidelines:index->lean-startup",
+      "@type": "kg:Edge",
+      "source": "node:site:guidelines:index",
+      "target": "node:site:guidelines:lean-startup",
+      "label": "indexes"
     }
   ]
 }

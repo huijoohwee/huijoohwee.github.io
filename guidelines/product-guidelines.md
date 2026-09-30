@@ -1,8 +1,8 @@
 ---
 title: "Product Guidelines"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "1.1.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -42,6 +42,10 @@ frontmatter_contract: "required"
 ---
 
 ### Lean Startup Methodology Directives
+The [Lean Startup Guidelines](./lean-startup-guidelines.md) own hypotheses, experiment design, innovation accounting and
+pivot-or-persevere decisions, placed on the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map).
+The cycle times, statistical thresholds and effect sizes below are **reference implementation** defaults: an
+experiment adopts one only by pre-registering it as its threshold before the first observation; none is universal.
 
 #### Build-Measure-Learn Cycle
 

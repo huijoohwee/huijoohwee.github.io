@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.3.2"
+version: "1.4.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -81,6 +81,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Journeys        | Map user workflows                   | - [ ] Chart user paths; map journeys; forbid feature-centric views                            |
 | Knowledge       | Capture domain insights              | - [ ] Document domain knowledge; capture insights; forbid undocumented context                |
 | Lanes           | Gate movement toward public surfaces | - [ ] Document authoring, mirror, and delivery lanes with a named Deploy Boundary carrying evidence, operator instruction, and rollback; keep boundaries `closed` by default; forbid authoring-lane commands that mutate a delivered surface |
+| Lifecycle       | Join every activity end to end       | - [ ] Place each activity on one End-to-End Lifecycle Map row; derive agent work on experiments and projections from execution-integrity VCCs; stop an autonomous run only at its listed stop points; forbid an activity with no row or a module restating a row |
 | LTV             | Relate lifetime value to acquisition | - [ ] State LTV and LTV:CAC whenever CAC is stated; source retention; forbid a CAC row with no LTV |
 | Maintainability | Design for evolution                 | - [ ] Plan for change; design maintainably; forbid rigid architectures                        |
 | Mapping         | Trace requirements to implementation | - [ ] Link specs to code; trace mapping; forbid orphaned requirements                         |
@@ -239,6 +240,10 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 
 ❌ A financial model whose inputs have no source or date; token cost absent from COGS; no income or cash-flow statement; the cost of running the agentic lifecycle assumed rather than read from receipts; a single scenario with no runway  
 → ✅ Assumption register with source, disposition, and date; token cost as a COGS component; income and cash statements for the ledger period; ADLC Cost Ledger filled from execution receipts; Base, Downside, and Upside each stating runway and break-even
+❌ A feature built before its riskiest hypothesis was tested by a cheaper method; a threshold set after the data arrived; sign-ups or letters of intent reported as validated demand  
+→ ✅ Riskiest hypothesis first with the cheapest sufficient method; metric, threshold and sample registered before the first observation; each method claims only its strongest evidence, and only collected payment proves a first dollar
+❌ An agent sending a deck, contacting prospects, or publishing a plan or model from inside an execution task; deck, plan and model shown to one audience at different revisions  
+→ ✅ Sends and publication at the release seam as Boundary-crossing, contacts and charges as Irreversible, each under a recorded operator decision; deck, plan and model reconciled at one revision through the Headline Register
 
 ---
 

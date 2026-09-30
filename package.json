@@ -30,7 +30,9 @@
     "test:source": "npm run planning:check && npm run guideline:check && npm run git-guidelines:test && npm run agenticrag:guidelines-map:check && npm run agentic-naming:check && npm run evals",
     "check:plan": "node node_modules/agentic-os/bin/agentic-os-validation.mjs plan",
     "check:ci": "node node_modules/agentic-os/bin/agentic-os-validation.mjs ci",
-    "test:all": "node node_modules/agentic-os/bin/agentic-os-validation.mjs run --all --fresh"
+    "test:all": "node node_modules/agentic-os/bin/agentic-os-validation.mjs run --all --fresh",
+    "venture:joins:check": "node scripts/check-venture-record-joins.mjs",
+    "guideline:pin-drift:report": "node scripts/report-guideline-pin-drift.mjs"
   },
   "repository": {
     "type": "git",

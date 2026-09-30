@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.4.2"
-date: "2026-09-26"
+version: "1.5.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -360,6 +360,8 @@ chosen dependency owner, removed implementation, migration/rollback and revisit 
 | [S-id] | yes/no | [rank] | proven/no | validated/no | [amount or none] |
 
 **Learn loop**: [completed outcome / paid conversion / operating cost] → successor Context [id]
+**Learning records**: [Hypothesis Register H-ids / experiment E-ids / innovation-accounting drivers / latest Pivot-or-Persevere row] per the [Lean Startup Guidelines](./lean-startup-guidelines.md#hypothesis-register); instantiate their tables there, not here.
+**Execution-integrity VCCs**: [VCC-id → experiment registered before observation · Claim Manifest resolved · reconciliation passed · model checks passed; check + Evidence Reference], derived into tasks under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge).
 **Ecosystem dependency**: [TAD participant/value row and PRD pain ID at the same revision].
 **Reuse outcome measurement**: [same buyer journey / before-after integration time, failed or repeated actions and support cost / observation period; savings, payment and demand each need separate evidence].
 **Roadmap join**: [MVP phase / observed outcome / continue, pivot or stop threshold; no second roadmap].
@@ -381,7 +383,7 @@ Copy into the joined artifact; use the parent's [C01–C16 domain IDs](./prd-tad
 
 ### Pitch Deck / Business Plan / Financial Model
 
-Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. For each deck variant, instantiate the [Pitch Deck Guidelines](./pitch-deck-guidelines.md) records: Variant Register, ask fields, Claim Manifest, Objection Register, and Delivery & Outcome Log. Do not duplicate those tables here.
+Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. For each deck variant, instantiate the [Pitch Deck Guidelines](./pitch-deck-guidelines.md) records: Variant Register, ask fields, Claim Manifest, Objection Register, change row, and Delivery & Outcome Log. For each plan variant, instantiate the [Business Plan Guidelines](./business-plan-guidelines.md) records: Variant Register, Section Claim Record, risk table, operating review, and Delivery & Outcome Log. For the model, instantiate the [Financial Model Guidelines](./financial-model-guidelines.md) records: layered structure, Headline Register, variance table, and view list. Place each in the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map). Do not duplicate those tables here.
 
 
 ---

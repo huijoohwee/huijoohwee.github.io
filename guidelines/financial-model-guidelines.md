@@ -1,7 +1,7 @@
 ---
 title: "Financial Model Guidelines"
 doc_type: "Guidelines Module"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -197,7 +197,7 @@ A view selects outputs for an audience; it never changes an input or formula.
 **Artifact-bearing directives**:
 - Derive every view from one model revision; a view with its own inputs is `duplicate-owner`
 - Classify each view's confidentiality; link private detail (capitalization, contracts, customer data) from a private appendix or data room — `unimplemented-guideline`
-- Treat every external send as an audience action with a recorded operator instruction — `human-gate-unstated`
+- Run every external send or publication of a model view at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion — `human-gate-unstated`, `ungated-promotion`
 
 ---
 
@@ -208,6 +208,7 @@ A view selects outputs for an audience; it never changes an input or formula.
 - Make the model recomputable from its inputs by a second party without the author's environment — `unproven-claim`
 - Render charts under the deck's [number rules](./pitch-deck-guidelines.md#numbers-and-charts) and meet [accessibility and reach](./design-theme-contract.md#accessibility-and-reach) obligations on every export — `incomplete-delivery-reach`
 - Author model source in an authoring lane and integrate it by exact candidate; publication on a reachable surface crosses a named Deploy Boundary — `ungated-promotion`
+- Declare model deliverables as execution-integrity VCCs in the GTM role — every check passes at the revision and an independent recomputation matches the Headline Register — so agent tasks derive from them under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); such a VCC proves arithmetic and joins, never demand — `unimplemented-guideline`
 
 ---
 
@@ -236,6 +237,8 @@ An agent may build, extend and check a model inside the
 ---
 
 ## Role—Action—Outcome
+
+Roles map onto the ADLC execution roles per the [Role-Action-Outcome Contract](./adlc-artifact-continuity.md#role-action-outcome-contract): authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism.
 
 - **Financial Modeler** → structure, drivers, statements, checks, Headline Register, variance → a model whose every headline traces to inputs and evidence
 - **Solo Founder / AI Orchestrator** → supplies owner inputs, decides on variance and cash-floor contingencies → decisions made on the Downside, not the Upside

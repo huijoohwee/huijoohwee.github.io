@@ -1,8 +1,8 @@
 ---
 title: "ADLC Rapid MVP Sprint Profile"
 doc_type: "Guideline Module"
-version: "1.2.0"
-date: "2026-09-09"
+version: "1.3.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -54,9 +54,9 @@ Use the same CID/RAO/SVO lineage and independent checks from discovery through o
 2. **Build**: inspect current capabilities, prefer a conforming reuse or minimal extension, and implement one dependency-closed vertical slice through its real interfaces
 3. **Verify**: join independent behavior evidence to that exact slice and its applicable production runtime, configuration, recovery, and resource checks; mocks, test payments, demos, and successful builds retain their limited evidence labels
 4. **Launch**: pass the declared protected integration and delivery workflow with exact target authorization; record integration, runtime, deployment, and cleanup outcomes separately
-5. **Learn**: measure the real user's completed outcome, paid conversion, and operating cost; count first revenue only with actual payment evidence. Feed failures or absent conversion into the next bounded Context instead of claiming a complete revenue loop
+5. **Learn**: measure the real user's completed outcome, paid conversion, and operating cost; count first revenue only with actual payment evidence. Feed failures or absent conversion into the next bounded Context instead of claiming a complete revenue loop; record the decision in the [Lean Startup](./lean-startup-guidelines.md#pivot-or-persevere-record) Pivot-or-Persevere Record, which owns the validated-learning loop this step compresses
 
-Record only failure modes material to the slice, with their prevention check and recovery action. Prioritize irreversible loss, duplicate effects, rejected authorization, broken recovery, or an unusable core flow when applicable; do not create a generic risk register detached from acceptance checks.
+Record only failure modes material to the slice, with their prevention check and recovery action. Prioritize irreversible loss, duplicate effects, rejected authorization, broken recovery, or an unusable core flow when applicable; do not create a generic risk register detached from acceptance checks. This list covers execution failure modes of the slice; the business risk register stays with the [Venture Record](./prd-tad-adr-mvp-gtm-venture.md#business-plan) and [Business Plan](./business-plan-guidelines.md#risk-presentation).
 
 **Reference implementation — lean agentic commerce**: a mobile/web/offline-first service may expose one reusable capability through browser, MCP, WebMCP, and `/`, `@`, `#` adapters, with local/edge operation where the dependency contract permits. Rank delivered buyer value, time-to-first-dollar, and token/TCO economics through the shared Constraints ↔ Argumentation ↔ Outranking pipeline; test-mode transactions never prove revenue or production settlement.
 

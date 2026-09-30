@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Diagram Guidelines (Companion)"
 doc_type: "Guidelines Companion"
-version: "1.1.2"
-date: "2026-09-12"
+version: "1.1.3"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -71,7 +71,8 @@ The parent's guideline load budget applies to this companion: load by section an
 | Phase 1 (PRD authoring) | `diagram-class-catalog`, `class-selection-rules`, `flow-pattern-binding`, Templates module (journey) |
 | Phase 2 (TAD authoring) | `diagram-identity-contract`, `notation-rules`, `labelling-contract`, `complexity-budget`, `topology-diagram-rules`, `orchestration-diagram-rules`, `lane--deploy-boundary-diagram-rules`, `canvas-render-binding`, Templates module |
 | Phase 3 (alignment check) | `conformance-findings--diagram-domain`, `validation-checklist-diagrams`, `versioning--drift`, `readiness-on-diagrams`, Canvas-Render module |
-| Phase 4 (living documents) | `versioning--drift`, `conformance-findings--diagram-domain` |
+| Phase 4 (build & evidence) and living-document revisions | `versioning--drift`, `readiness-on-diagrams`, `conformance-findings--diagram-domain` |
+| Phase 5 (projections) | `canvas-render-binding`, `versioning--drift` for any diagram shown in a deck, plan or model |
 | Any phase | `scope--ownership`, `module-index` |
 
 ---
@@ -342,7 +343,7 @@ A diagram is a picture of structure, not a source of status. The parent's Readin
 - Where a diagram shows status, draw local and delivered rungs as two separate annotations; one blended badge is the parent's `blended-status`
 - Draw only Readiness Ladder values; a colour or badge outside the ladder is the parent's `unknown-status`
 - Draw planned-but-unbuilt nodes with a stated distinguishing convention, declared in the caption, so a plan is never read as a runtime fact; an undistinguished planned node is `aspirational-node`
-- Re-render every status annotation whenever a rung is re-derived, per the parent's Phase 4 cascade; a stale annotation is `diagram-spec-drift`
+- Re-render every status annotation whenever a rung is re-derived, per the living-document re-derivation cascade in the [process module](./prd-tad-adr-mvp-gtm-process-flows.md#across-phases--living-documents); a stale annotation is `diagram-spec-drift`
 
 ---
 

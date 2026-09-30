@@ -1,22 +1,22 @@
 ---
 title: "Pitchdeck PRD TAD Frontmatter Contract"
 doc_type: "Template Contract"
-version: "1.0.2"
-date: "2026-09-26"
+version: "1.0.3"
+date: "2026-09-30"
 lang: "en-US"
 owner: "Documentation maintainers"
 local_rung: "undocumented"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--pitch-deck-guidelines"
-agent_id: "kiro-pitch-deck-guidelines"
+worktree_id: "device-0232231d4a19--e2e-adlc-lean-coherence"
+agent_id: "kiro-e2e-adlc-lean-coherence-sync"
 frontmatter_contract: "required"
 continuity_id: "PLAN-PITCHDECK-PRD-TAD-ADR-MVP-GTM-FRONTMATTER-CONTRACT"
 guideline_revision: "2.7.0"
 guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/e8d2a10a8d3e5735c43edf350a22523df05fdf91/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
 reviewed_source_revision: "e8d2a10a8d3e5735c43edf350a22523df05fdf91"
-previous_document_version: "1.0.1"
+previous_document_version: "1.0.2"
 gtm_revision: "1.0.2"
 planning_source: "https://github.com/huijoohwee/agentic-graph/blob/main/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md"
 ---
@@ -82,6 +82,10 @@ It is the author-facing companion to `agentic-graph/docs/documents/agentic-graph
 | `template/pitchdeck-prd-tad-adr-mvp-gtm-template-lite.md` | Minimal template source |
 | `template/pitchdeck-prd-tad-adr-mvp-gtm-template.md` | Full template source |
 | [`guidelines/pitch-deck-guidelines.md`](../guidelines/pitch-deck-guidelines.md) | Deck ordering, timing, Claim Manifest, delivery and outcome capture for the rendered Pitch Deck section |
+| [`guidelines/business-plan-guidelines.md`](../guidelines/business-plan-guidelines.md) | Plan variants, Section Claim Record and deck–plan–model reconciliation for the rendered Business Plan section |
+| [`guidelines/financial-model-guidelines.md`](../guidelines/financial-model-guidelines.md) | Model structure and the Headline Register that the rendered Financial Model section exports by HL-id |
+| [`guidelines/lean-startup-guidelines.md`](../guidelines/lean-startup-guidelines.md) | Hypothesis, experiment and pivot-or-persevere records the Coverage and ADLC Handoff section cites |
+| [`guidelines/prd-tad-adr-mvp-gtm-process-flows.md`](../guidelines/prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) | Lifecycle row and autonomous stop points for every templated section; both templates declare `template_version: "1.2.0"` |
 | `docs/agentic-os-ai-pipeline-prd-tad-adr-mvp-gtm.md` | Broader AGENTIC_OS pipeline contract reference |
 | `../agentic-graph/docs/documents/agentic-graph-pitchdeck-frontmatter-template-contract.md` | Upstream implementation contract |
 

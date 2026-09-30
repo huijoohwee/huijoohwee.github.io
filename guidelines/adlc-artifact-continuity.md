@@ -1,8 +1,8 @@
 ---
 title: "ADLC Artifact Continuity Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-05"
+version: "1.2.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -120,6 +120,14 @@ execution vocabulary rather than creating a parallel authority model.
 - Require the Outcome to be concrete, measurable, and directly produced by the Action; forbid aspirations, activities, or verdicts as Outcomes
 - Reference dependencies by RAO Step ID rather than Role; forbid treating a Role as a unique execution node
 - Preserve evaluator independence from the Implementer; forbid self-graded Outcomes under any collapsed representation
+- Map every authoring-set role onto one execution role before dispatch; an authoring role with no mapping cannot hold an RAO Step
+
+| Authoring-set role | Execution role | Boundary |
+|---|---|---|
+| Product Manager, System Architect, Technical Writer, Deck Author, Plan Author, Financial Modeler | Implementer | produces artifacts and surfaced results; never marks its own Outcome verified |
+| Solo Founder / AI Orchestrator | Orchestrator, and Operator only for recorded decisions | derives and dispatches RAO Steps; authorizes only named effects |
+| Presenter, Domain Reviewer, Stakeholder | Operator-scoped decision owner | delivers or signs under a recorded decision; never substitutes for the Evaluator |
+| Evaluator | Evaluator | always a mechanism distinct from the Implementer |
 
 ## Artifact Companion Contract
 

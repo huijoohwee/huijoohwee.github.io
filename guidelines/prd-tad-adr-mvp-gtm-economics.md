@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Economics & Time-to-Value Module"
 doc_type: "Guidelines Module"
-version: "1.0.3"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -46,11 +46,14 @@ Token economics applies to this guideline set itself, not only to the product pi
 
 | Phase | Sections to load | Rationale |
 |---|---|---|
-| Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value` | ROI, TCO, TTV ceiling only |
+| Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value`; Lean Startup `hypothesis-register`, `experiment-design` | ROI, TCO, TTV ceiling; riskiest hypotheses and their experiments |
 | Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value` | Authoring the PRD |
 | Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness` | Authoring the TAD |
 | Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification` | Running the alignment check |
-| Phase 4 | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
+| Phase 4 | `adlc-execution-seam`, `demo-skeleton`, `readiness-ladder` | Build and evidence the MVP; derive rungs from receipts |
+| Phase 5 | `venture-record-pitch-deck-business-plan--financial-model`, `monetization`, `roadmap`; the deck, plan and model lifecycles | Project the accepted revision; one lifecycle per projection |
+| Learn | `roadmap`; Lean Startup `innovation-accounting`, `pivot-or-persevere-record` | Decide and open the successor Context |
+| Living-document revisions | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
 | Any phase | `scope--neutrality-contract`, `module-index` | Always in scope; smallest sections in the set |
 
 **Directives**:

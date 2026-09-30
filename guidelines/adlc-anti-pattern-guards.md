@@ -1,8 +1,8 @@
 ---
 title: "ADLC Execution Anti-Pattern Guards"
 doc_type: "Guideline Module"
-version: "1.1.0"
-date: "2026-09-05"
+version: "1.2.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -37,3 +37,5 @@ lifecycle_status: "proposed"
 | Asking an Operator to relay a machine token, digest, nonce, or successor command for an unchanged recorded decision | Derive and transport encodings internally; re-prompt only after material decision drift |
 | A task list with cycles, or a wave whose tasks write the same artifact concurrently | Acyclic dependency graph; wave membership checked for write disjointness before dispatch |
 | A completion date produced from activity guesses or unlimited parallelism, with overhead, waits, verification, rework, contingency, or assumptions hidden | The Orchestrator derives a dependency-closed outcome WBS and evidenced critical-path and capacity basis, records range, confidence, assumptions, and time components, and reforecasts on invalidating evidence |
+| Agent tasks for experiments, decks, plans or models with no VCC, or judged by whether a hypothesis passed or an audience agreed | Execution-integrity VCCs declared in the GTM role; the task is verified when the work is done correctly, while hypothesis results and audience decisions stay in their own records |
+| An agent sending a deck, contacting or charging people, or publishing a projection from inside an execution task | Sends and publication at the release seam as Boundary-crossing, contacts and charges as Irreversible, each under a recorded Operator decision bound to the exact audience and effect |

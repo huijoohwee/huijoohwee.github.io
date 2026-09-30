@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.3.2"
-date: "2026-09-30"
+version: "1.4.1"
+date: "2026-10-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -106,19 +106,20 @@ Reuse the current scope decision; ask only when a material choice remains unreso
 Correct in-scope grounding defects in the owning artifact, then recheck; continue dependency-disjoint work.
 Do not request a new approval for a reversible seam already covered by the recorded objective and scope.
 
-### Phase 4 — Living Documents
-**Iterate documents as product and architecture evolve.**
+### Phase 4 — Build & Evidence the MVP
+**Execute the baselined `Must` slice through the ADLC and earn its rungs from evidence.**
 
-- Apply semantic versioning to every change
-- Update PRD and TAD together whenever requirements shift
-- Re-run relevant gate reviews for breaking changes
-- Preserve superseded ADR decisions through a stable successor link and retrievable revision history; reviewed cleanup may remove obsolete projections
-- Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
-- **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
-- **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note
-- **Bound the iteration**: each Phase 4 revision cycle carries the max-iteration bound owned by the parent's PRD ↔ TAD Integration section and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
-- **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
-- **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
+1. Hand the ADLC a baselined `continuity_id@revision` with zero open `blocker`, current grounding records and VCCs through the parent's [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam)
+2. Derive the task list from VCCs through the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); work an agent performs on experiments or projections carries execution-integrity VCCs from the GTM role
+3. **START** one scoped lane per disjoint write set and implement the smallest dependency-closed vertical slice through its real interfaces
+4. **RELEASE** one exact candidate through protected integration and record the Integration Receipt
+5. **DEPLOY** one exact protected revision only across a named Deploy Boundary with a referenced operator instruction; record deployment, runtime and rollback receipts separately
+6. Run the Demo Skeleton against the delivered revision, emit Evidence References and derive local and delivered rungs separately
+7. Emit per-task cost fields for the [ADLC Cost Ledger](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger) and update the joined artifact before each turn or session ends
+
+**Gate**: every `Must` VCC is `verified` by an independent Evaluator with an Evidence Reference; rungs derive
+from those references only; source integration, deployment and runtime claims stay separate. A built slice
+proves the build, not the hypothesis it was built to test.
 
 ### Phase 5 — GTM and Venture Projections
 **Project the accepted revision to a payer, an operator, and a funder without originating new claims.**
@@ -134,7 +135,58 @@ Discovery already drafts market, offer and financial assumptions. This phase pub
 
 **Gate**: every projected claim cites its owning section or Evidence Reference; actuals, forecasts, recognized revenue and collected cash follow the Venture Record measurement basis; first-dollar claims cite payment evidence; the ADLC Cost Ledger is filled from receipts for the stated period. An audience action on a stale or unsourced projection is blocked.
 
----
+### Across Phases — Living Documents
+**Iterate documents as product and architecture evolve; these rules apply in every phase.**
+
+- Apply semantic versioning to every change
+- Update PRD and TAD together whenever requirements shift
+- Re-run relevant gate reviews for breaking changes
+- Preserve superseded ADR decisions through a stable successor link and retrievable revision history; reviewed cleanup may remove obsolete projections
+- Re-derive VCCs whenever acceptance criteria change; stale conditions produce false completions
+- **Re-derive every readiness rung** whenever a VCC or an Evidence Reference changes; a rung is a computed value, so leaving it pinned after the evidence moves is a false completion
+- **Re-run the alignment check** on every baselined change and compare the finding set against the prior run; a new `blocker` finding is a regression, not a note
+- **Bound the iteration**: each revision cycle carries the max-iteration bound owned by the parent's PRD ↔ TAD Integration section and a circuit-breaker, exactly as required of every other loop in this guideline set. The default circuit-breaker is *no reduction in open `blocker` findings across two consecutive cycles*; on breaking the circuit, stop revising and escalate the unresolved findings as a scope or design decision rather than continuing to iterate
+- **Track token cost actuals vs estimates** each sprint; update budget projections when model pricing or traffic changes
+- **Re-evaluate FOSS alternatives** whenever a dependency's TCO crosses the 12-month justification threshold
+
+### End-to-End Lifecycle Map
+
+The canonical join of phases, loops, owners and evidence. Other modules cite a row; none restates it.
+
+| Phase | Loop / verb | Authoring owner | Learning and projection owner | Execution | Evidence out | Cost Ledger line |
+|---|---|---|---|---|---|---|
+| 0 Discovery | hypothesize → experiment → decide | [Pain-Point Mapping](./prd-tad-adr-mvp-gtm-guidelines.md#pain-point-to-feature-mapping), [Time-to-Value](./prd-tad-adr-mvp-gtm-guidelines.md#time-to-value) | [Lean Startup](./lean-startup-guidelines.md#learning-loop) | a lane only for a feasibility build | labelled pain, WTP, measured baselines | discovery minutes, tokens, experiment spend |
+| 1–3 Specify | PRD → TAD → ADR → alignment | [Core Templates](./prd-tad-adr-mvp-gtm-templates.md), [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md), [Verification](./prd-tad-adr-mvp-gtm-verification.md) | experiment results cited as evidence | none; authoring only | baselined `continuity_id@revision`, zero `blocker` | authoring minutes, tokens |
+| 4 Build & evidence | `START → RELEASE → DEPLOY` | MVP, [Demo Skeleton](./prd-tad-adr-mvp-gtm-guidelines.md#demo-skeleton), [Readiness](./prd-tad-adr-mvp-gtm-readiness.md) | the MVP slice is the experiment artifact when a build is needed | [ADLC Guidelines](./adlc-guidelines.md#specification-to-task-bridge) | Integration, deployment and runtime receipts; derived rungs | per-task receipts, CI minutes, fees |
+| 5 Project | variant → claim record → reconcile → authorize → deliver | GTM, [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap) | [Pitch Deck](./pitch-deck-guidelines.md#deck-lifecycle), [Business Plan](./business-plan-guidelines.md#plan-lifecycle), [Financial Model](./financial-model-guidelines.md#model-lifecycle) | tasks from execution-integrity VCCs; sends and publication at the release seam | manifests, Headline Register, delivery logs | generation, rehearsal and review cost |
+| Learn | measure → decide → successor | Roadmap thresholds, coverage C16 | [Pivot-or-Persevere Record](./lean-startup-guidelines.md#pivot-or-persevere-record), [variance](./financial-model-guidelines.md#actuals-variance-and-re-forecast) | successor revisions through new lanes | decision record, successor Context | experiment and analysis cost |
+
+**Artifact-bearing directives**:
+- Place every lifecycle activity on one row; an activity with no row, or a module restating a row, is `duplicate-owner`
+- Keep evidence per row distinct: a verified task, a passed experiment threshold, a delivered deck and a collected payment never substitute for one another — `blended-status`
+
+### Autonomous From-0-to-1 Run
+
+An Orchestrator given an objective, scope, bounds and the capabilities to act continues through every
+step below without clerical confirmation, under [ADLC autonomous continuation](./adlc-autonomous-continuation.md).
+The listed stop points require an applicable recorded decision under the ADLC capability classes;
+reuse a valid decision for the same effect rather than asking again.
+
+| Step | Autonomous actions | Stop point | Highest readiness it can support |
+|---|---|---|---|
+| Discover | draft and rank hypotheses, design experiments, analyse existing evidence | contacting, recruiting or charging people (Irreversible external commitment); any spend | none; evidence labels only |
+| Specify | author and ground PRD, TAD and ADR; run alignment; derive VCCs | an unresolved product, scope or pricing decision | `spec-complete` |
+| Build | start lanes, implement, verify, release exact candidates | scope change, irreversible operation, exhausted bounds needing new authority | `dev-proven` |
+| Deploy | prepare the exact candidate and its receipt chain | production authorization and the Deploy Boundary operator instruction | `runtime-ready`, then `production-verified` from live receipts |
+| Project | generate variants, claim records, headline register; reconcile deck, plan and model | every external send or publication (Boundary-crossing, at the release seam) | none; projections never earn a rung |
+| Learn | analyse results, propose successor values, draft the decision record | a pivot or stop that changes scope or product choice | none; decisions are recorded, not rated |
+
+**Artifact-bearing directives**:
+- Continue through every dependency-ready step inside the recorded authority; asking for a confirmation the recorded authority already covers is `human-gate-unstated`
+- When a listed point lacks a valid recorded decision, stop that dependent step with the decision, options and consequence surfaced; proceeding without it is `ungated-promotion` for publication and deployment, and `unproven-claim` for any claim that depends on the skipped decision
+- Fail closed: a missing receipt, join, check or bound blocks only the dependent step, and disjoint steps continue — `unimplemented-guideline`
+- Bound every step by time, tokens, iterations and spend with a circuit-breaker — `unbounded-loop` at `blocker`
+- Update the joined artifact before each turn or session ends, including blocked and failed steps — `unimplemented-guideline`
 
 ---
 

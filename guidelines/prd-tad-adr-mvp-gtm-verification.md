@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.2.2"
-date: "2026-09-30"
+version: "1.3.2"
+date: "2026-10-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -124,7 +124,7 @@ Extend the traceability pattern through to the evidence that closes it:
 PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Evidence Reference [check + result] → Readiness rung
 ```
 
-Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see Phase 4). Record the Evidence Reference beside the VCC so the rung is recomputable from the document alone.
+Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see [living documents](./prd-tad-adr-mvp-gtm-process-flows.md#across-phases--living-documents)). Record the Evidence Reference beside the VCC so the rung is recomputable from the document alone.
 
 ### Closure Rules
 
@@ -292,6 +292,8 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] Each plan variant carries a Section Claim Record, cross-projection reconciliation, review evidence and outcome log per the [Business Plan Guidelines](./business-plan-guidelines.md#validation-checklist)
 - [ ] The model exports every projected number through its Headline Register, recomputed by an independent check, per the [Financial Model Guidelines](./financial-model-guidelines.md#validation-checklist)
 - [ ] Demand, WTP and driver evidence comes from pre-registered experiments with recorded decisions per the [Lean Startup Guidelines](./lean-startup-guidelines.md#validation-checklist)
+- [ ] Every lifecycle activity sits on one [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) row; an autonomous run stopped only at its listed stop points, and agent work on experiments and projections derived from execution-integrity VCCs
+- [ ] Instantiated deck, plan, model and learning records pass the repository's record-join check (reference implementation: `npm run venture:joins:check`); the structural result is not a semantic verdict
 - [ ] Market filters, acquisition funnel, cohort retention, delivery capacity and scenario volumes agree
 - [ ] Three statements, cash timing, cost allocation, zero-denominator cases and headline projections have named reconciliation checks with results
 - [ ] Actual costs include unsuccessful ADLC work, with unknown telemetry labelled and no duplicate cost allocation
@@ -369,7 +371,7 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] **Rule IDs used** as the finding anchor and in the deduplication key; every rule classified artifact-bearing or advisory; advisory count reported separately
 - [ ] **Conformance frontmatter keys present**: `owner`, `local_rung`, `delivered_rung`, `lane`, `universal_scope` — no blended `status` key
 - [ ] **Invocation Register present** for every document declaring a route; every tool identity in both the federation contract and the capability catalog
-- [ ] **Every loop in this guideline set's own process bounded**, including the Phase 4 revision cycle and Iterative Refinement
+- [ ] **Every loop in this guideline set's own process bounded**, including living-document revision cycles, validated-learning loops and Iterative Refinement
 - [ ] **Check determinism satisfied**: deterministic, order-independent, additive, bounded, comparable, and complete on degraded input
 - [ ] **Evaluator is a distinct mechanism** from the implementer; role collapse does not extend to the Evaluator
 - [ ] **Guideline load budget respected**: sections loaded per phase; guideline load cost recorded in the authoring loop's token budget

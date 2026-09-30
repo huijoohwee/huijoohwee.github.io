@@ -1,8 +1,8 @@
 ---
 title: "Product Guidelines"
 doc_type: "Guidelines"
-version: "1.0.0"
-date: "2026-09-09"
+version: "1.2.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -15,7 +15,7 @@ frontmatter_contract: "required"
 
 ## Intent
 
-**Product practices**: run Build–Measure–Learn cycles to accelerate discovery, design user‑centric MVPs to ensure relevance, prioritize with RICE to maximize impact, version prompt engineering to preserve adaptability, construct evaluation pipelines to guarantee rigor, execute agile sprints with acceptance criteria to maintain accountability, test hypotheses to validate assumptions, and monitor metrics continuously to sustain quality.  
+**Product practices**: run validated-learning loops (owned by the [Lean Startup Guidelines](./lean-startup-guidelines.md)) to accelerate discovery, design user‑centric MVPs to ensure relevance, prioritize with RICE to maximize impact, version prompt engineering to preserve adaptability, construct evaluation pipelines to guarantee rigor, execute agile sprints with acceptance criteria to maintain accountability, test hypotheses to validate assumptions, and monitor metrics continuously to sustain quality.  
 
 ## Directives
 
@@ -42,31 +42,13 @@ frontmatter_contract: "required"
 ---
 
 ### Lean Startup Methodology Directives
+The [Lean Startup Guidelines](./lean-startup-guidelines.md) own hypotheses, experiment design, innovation accounting and
+pivot-or-persevere decisions, placed on the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map).
+This module adds no second loop, hypothesis format or statistical rule.
 
-#### Build-Measure-Learn Cycle
-
-**From hypothesis to pivot/persevere**: Team -> defines falsifiable hypothesis via problem statement -> builds MVP with instrumentation -> deploys to target cohort using feature flags -> measures behavior through analytics pipeline -> analyzes results against success criteria -> decides pivot or persevere based on statistical significance.
-
-**Teams minimize cycle time**
-- Teams complete iterations in <2 weeks
-- Teams minimize time to validated learning
-
-#### Hypothesis Framework
-
-**Product managers structure hypotheses with testable predictions**:
-```yaml
-hypothesis: "Users will [behavior] when [condition]"
-success_metric: [quantifiable_kpi]
-baseline: [current_value]
-target: [minimum_viable_improvement]
-sample_size: [statistical_power_calculation]
-duration: [test_timeframe]
-```
-
-**Analysts validate hypotheses through statistical tests**
-- Analysts require p-value <0.05
-- Analysts confirm effect size >10%
-- Analysts conduct retention analysis
+**Reference implementation** defaults some teams pre-register — two-week iterations, a 0.05 significance level and a
+minimum effect size of 10% — apply to an experiment only when registered as its threshold before the first
+observation; none is universal, and a small sample stays inconclusive rather than failing or passing.
 
 ---
 
@@ -75,11 +57,11 @@ duration: [test_timeframe]
 #### Sprint Structure
 
 **Teams execute sprint cadence**
-- Teams run 2-week sprints
+- Teams declare sprint length, ETA and time/byte/module caps as an ADLC lean sprint; two weeks is a reference default
 - Teams hold daily standups
 - Teams conduct sprint planning/review/retro
 
-**From backlog to production**: Product Owner -> prioritizes stories via RICE scoring -> team commits to sprint scope during planning -> developers implement with TDD -> QA validates against acceptance criteria -> deploy via CI/CD pipeline -> monitor production metrics.
+**From backlog to production**: Product Owner -> prioritizes stories via RICE scoring -> team commits to sprint scope during planning -> developers implement with TDD in a scoped lane -> an independent check verifies acceptance criteria -> protected integration merges one exact candidate -> one exact revision deploys across the Deploy Boundary under an operator instruction -> production metrics are monitored. See the [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam).
 
 **Product owners write user stories**
 - Format: "As [user_type], I want [capability] so that [benefit]"
@@ -101,18 +83,18 @@ duration: [test_timeframe]
 - Managers enable learning with minimal investment
 
 **Teams include required MVP components**:
-- Teams implement one critical user journey (happy path only)
+- Teams implement one critical user journey, its happy path plus the failure modes material to it
 - Teams instrument key metrics
 - Teams provide feedback collection mechanism
 - Teams produce schema-compliant data models
 - Teams configure behavior without hardcoding
 
 **Teams avoid scope creep in MVPs**:
-- Teams exclude edge case handling
+- Teams defer edge cases not material to the slice, while keeping each material failure mode — irreversible loss, duplicate effects, rejected authorization, broken recovery, an unusable core flow — with a prevention check and recovery action per the [Rapid MVP Sprint Profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md)
 - Teams skip polish/animations
 - Teams defer multiple user roles
 - Teams postpone scalability optimization
-- Teams minimize comprehensive error states
+- Teams keep error states to those the material failure modes need
 
 #### Feature Prioritization (RICE)
 
@@ -154,7 +136,7 @@ duration: [test_timeframe]
 
 **Pattern**: RAG (Retrieval-Augmented Generation) -> retrieves relevant context via embeddings -> ranks by relevance using reranker -> constructs prompt with top-k chunks -> generates response with citations -> validates against source material.
 
-**Systems enforce quality gates**:
+**Systems enforce quality gates** (reference implementation thresholds; each harness declares its own in the TAD per the [AI-native harness pattern](./prd-tad-adr-mvp-gtm-economics.md#ai-native-harness-pattern)):
 - Groundedness score >0.9
 - Citation accuracy 100%
 - Context token budget <4k
@@ -162,7 +144,7 @@ duration: [test_timeframe]
 
 #### Human-in-the-Loop Workflows
 
-**Systems require human approval for critical decisions**
+**Systems require human approval for critical decisions** at the [ADLC human-in-the-loop gates](./adlc-guidelines.md#human-in-the-loop-gates)
 - Systems pause before execution
 - Systems log provenance for audit
 
@@ -207,7 +189,7 @@ duration: [test_timeframe]
 ## Role—Action—Outcome
 
 **Role: Product Manager**  
--> Action: defines hypotheses, validates problem statements, prioritizes via RICE scoring, measures outcomes, decides pivot/persevere  
+-> Action: defines hypotheses, validates problem statements, prioritizes via RICE scoring, measures outcomes, proposes pivot or persevere for the recorded decision  
 -> Outcome: delivers validated learning enabling data-driven product evolution
 
 **Role: Product Owner**  
@@ -231,8 +213,8 @@ duration: [test_timeframe]
 -> Outcome: provides evidence grounding product decisions and hypothesis refinement
 
 **Role: Data Analyst**  
--> Action: measures success metrics, calculates statistical significance, analyzes retention, reports on experiments, validates sample sizes  
--> Outcome: determines experiment validity enabling confident pivot/persevere decisions
+-> Action: measures success metrics against the pre-registered threshold, analyzes retention, reports on experiments, checks sample sizes against their stated minimum  
+-> Outcome: supplies the evidence an independent Evaluator judges before the pivot-or-persevere decision
 
 ---
 
@@ -240,7 +222,7 @@ duration: [test_timeframe]
 
 **"CID frames product practices, SRP isolates feature concerns, RAO aligns team accountabilities, SVO clarifies delivery semantics"**
 
-- **CID frames**: Establishes scope (product development methodology), purpose (validated learning + user value), rules (lean cycles + LLM quality gates)
+- **CID frames**: Establishes scope (product development methodology), purpose (validated learning + user value), rules (validated-learning loops owned by the Lean Startup Guidelines + LLM quality gates)
 - **SRP isolates**: Ensures each feature validates single hypothesis, each component handles focused capability
 - **RAO aligns**: Maps product managers, owners, developers, QA, LLM engineers, researchers, analysts to their deliverables
 - **SVO clarifies**: Expresses all operations (teams execute sprints, systems measure metrics, engineers version prompts) with grammatical precision for accountability

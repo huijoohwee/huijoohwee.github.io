@@ -1,7 +1,7 @@
 ---
 title: "Lean Startup Guidelines"
 doc_type: "Guidelines Module"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -48,7 +48,10 @@ It inherits the parent's [Scope & Neutrality Contract](./prd-tad-adr-mvp-gtm-gui
 [shared CID/RAO/SVO field contract](./cid-guidelines.md#shared-field-contract) and the
 [recording contract](./prd-tad-adr-mvp-gtm-verification.md#recording-contract). Directive lists are
 labelled artifact-bearing or advisory per Rule Identity. Records live in the joined artifact at one
-`continuity_id@revision`; this module adds no document of its own.
+`continuity_id@revision`; this module adds no document of its own. Its place in the lifecycle is the
+[End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) rows *0 Discovery* and *Learn*.
+**Terms**: *validated-learning loop* names this module's loop; a *lean sprint* is an ADLC execution policy
+(time-bound, budget-driven delivery) and proves no learning; neither term implies the other.
 
 ---
 
@@ -121,7 +124,7 @@ section fixes how they are designed.
 - State the minimum sample or the uncertainty a small sample leaves; a pass on a sample below its stated minimum stays inconclusive, never `demand-validated` — `monetization-demand-unvalidated`
 - Keep spend within the declared bounds and the [free-core classification](./prd-tad-adr-mvp-gtm-venture.md#free-core-and-cost-classification); an experiment that needs paid capacity first passes the constraint gate — `constraint-gate-skipped`
 - Record consent, data class and retention for any contact with real people; people's data stays with its existing owner, linked not copied — `unimplemented-guideline`
-- Treat recruiting, messaging, charging or publishing to real people as an audience action with a recorded operator instruction; an agent never starts one on its own discretion — `human-gate-unstated`
+- Run any publication of an offer or artifact to real people at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion — `human-gate-unstated`, `deploy-boundary-breach`
 - Keep negative, inconclusive and stopped results with the same prominence as passes; dropping them is `roadmap-scope-silently-dropped`
 
 ---
@@ -149,6 +152,7 @@ product.
 - Label prototypes, recorded demos and simulated automation as such in every projection; a simulated capability shown as built is `unproven-claim`
 - Build a product slice only through the [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam) with its own PRD VCC and [Demo Skeleton](./prd-tad-adr-mvp-gtm-guidelines.md#demo-skeleton); exposing it to real users crosses a named [Deploy Boundary](./prd-tad-adr-mvp-gtm-readiness.md#lane-topology--deploy-boundary) — `ungated-promotion`
 - Keep the experiment threshold and the product VCC distinct; a VCC holding proves the build, not the hypothesis — `blended-status`
+- Give agent-performed experiment work execution-integrity VCCs in the GTM role — registered before the first observation, run within bounds, result recorded against the threshold — so tasks derive from them under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); the VCC holds whether the hypothesis passes or fails — `unimplemented-guideline`
 
 ---
 
@@ -246,7 +250,7 @@ An agent may draft hypotheses, design experiments, analyse results and propose d
 
 ## Role—Action—Outcome
 
-Each role may be one person, one agent or several; the Evaluator is always a mechanism.
+Each role may be one person, one agent or several. Roles map onto the ADLC execution roles per the [Role-Action-Outcome Contract](./adlc-artifact-continuity.md#role-action-outcome-contract): authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism.
 
 - **Solo Founder / AI Orchestrator** → ranks hypotheses, chooses the cheapest sufficient method, decides pivot or persevere → the riskiest question answered first within bounds
 - **Product Manager** → writes falsifiable hypotheses from pain rows, defines metrics → experiments whose results change a PRD decision
@@ -264,7 +268,7 @@ This module introduces no new finding type. It raises the Venture Record family 
 `unimplemented-guideline`, `pain-point-not-validated`, `unresolvable-reference`,
 `roadmap-order-unexplained`, `monetization-demand-unvalidated`, `unproven-claim`,
 `constraint-gate-skipped`, `human-gate-unstated`, `roadmap-scope-silently-dropped`,
-`cid-density-violation`, `ungated-promotion`, `blended-status`, `missing-economics-metric`,
+`cid-density-violation`, `ungated-promotion`, `deploy-boundary-breach`, `blended-status`, `missing-economics-metric`,
 `duplicate-owner`, `stale-evidence`, `cid-grounding-unverified`.
 Severity follows the Finding Enumeration unless a rule states it inline.
 

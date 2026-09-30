@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.3.0"
+version: "1.3.1"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -371,7 +371,7 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] **Rule IDs used** as the finding anchor and in the deduplication key; every rule classified artifact-bearing or advisory; advisory count reported separately
 - [ ] **Conformance frontmatter keys present**: `owner`, `local_rung`, `delivered_rung`, `lane`, `universal_scope` — no blended `status` key
 - [ ] **Invocation Register present** for every document declaring a route; every tool identity in both the federation contract and the capability catalog
-- [ ] **Every loop in this guideline set's own process bounded**, including the Phase 4 revision cycle and Iterative Refinement
+- [ ] **Every loop in this guideline set's own process bounded**, including living-document revision cycles, validated-learning loops and Iterative Refinement
 - [ ] **Check determinism satisfied**: deterministic, order-independent, additive, bounded, comparable, and complete on degraded input
 - [ ] **Evaluator is a distinct mechanism** from the implementer; role collapse does not extend to the Evaluator
 - [ ] **Guideline load budget respected**: sections loaded per phase; guideline load cost recorded in the authoring loop's token budget

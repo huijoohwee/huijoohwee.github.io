@@ -1,8 +1,8 @@
 ---
 title: "ADLC Autonomous Continuation & Interaction Economy"
 doc_type: "Guideline Module"
-version: "1.1.0"
-date: "2026-09-05"
+version: "1.2.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -38,6 +38,7 @@ An Operator decision chooses or authorizes an effect. A digest, capability, nonc
 - Treat inability to consume a valid recorded decision as an interaction- or authority-adapter defect, not as a new decision; preserve state, continue disjoint safe work, and repair the adapter through the protected path
 - Ask once for the smallest unresolved semantic decision only after evidence proves it cannot be derived from the specification, current policy, or a still-valid recorded decision
 - Batch independent decisions that are simultaneously ready; do not serialize avoidable Operator interruptions
+- Across the from-0-to-1 lifecycle, continue through every step of the [Autonomous From-0-to-1 Run](./prd-tad-adr-mvp-gtm-process-flows.md#autonomous-from-0-to-1-run) and stop only at its listed points: contact, charges or spend; unresolved product choices; scope change or new irreversibility; production authorization; external sends or publication; pivot or stop decisions
 - Stop when the decision itself is absent at a human gate. Autonomous continuation supplies mechanics and evidence; it never substitutes agent judgment for a reserved human choice
 
 ## Bounded Recovery

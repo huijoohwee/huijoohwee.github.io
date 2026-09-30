@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Venture Record Module"
 doc_type: "Guidelines Module"
-version: "2.1.2"
+version: "2.1.3"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -57,6 +57,8 @@ reads them, it does not redefine them.
 Inputs and material assumptions live in GTM/TAD at the joined revision before projection. A model
 may calculate derived values, but its formula and assumption IDs must resolve to that source.
 Coverage is recorded through the parent's [C01–C16 contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
+Each projection occupies the *5 Project* row of the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map);
+its sends and publication follow the audience-action classes of the [ADLC Tool Permission](./adlc-guidelines.md#tool-permission--blast-radius) rules.
 
 ---
 
@@ -358,7 +360,7 @@ The financial model reads execution facts; it does not create them.
 
 | Execution fact | Owner | Financial Model reads it as |
 |---|---|---|
-| Per-task token, iteration, wall-clock budgets and actuals | ADLC Guidelines — Per-Task Budgets | Token spend and active minutes |
+| Per-task token, iteration, wall-clock budgets and actuals, with ledger fields | ADLC Guidelines — Per-Task Budgets and Return Obligations | Token spend, active minutes and ledger entry identity |
 | Integration Receipt, block verdicts, recovery | Execution Contract, Atomic Lane Convergence | Avoidable-block cost |
 | Bound CI observation | Runtime Readiness Enforcement | Provider CI minutes, wait vs execution |
 | Lane admission and cleanup receipts | Scoped Lane Admission, Proportionate Closeout | Retained-lane carrying cost (optional) |

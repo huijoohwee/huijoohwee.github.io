@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Diagram Guidelines (Companion)"
-parent_version: "1.1.2"
+parent_version: "1.1.3"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---

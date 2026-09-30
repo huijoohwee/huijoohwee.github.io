@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Readiness & Lane Topology Module"
 doc_type: "Guidelines Module"
-version: "1.0.2"
-date: "2026-09-12"
+version: "1.1.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -56,7 +56,7 @@ undocumented  <  spec-complete  <  dev-proven  <  runtime-ready  <  production-v
 - Added satisfying evidence cannot lower a rung while scope and all evidence remain valid. A failure, expiry, revoked authority or changed criterion requires re-derivation; historical success cannot override a current blocker. Experience ratings use the separate [maturity rubric](prd-tad-adr-mvp-gtm-maturity.md), never this status vocabulary
 - Never skip a rung: `production-verified` requires the `runtime-ready` condition to hold first
 - A claim of `runtime-ready` with any unproven VCC is an `unproven-claim` at `blocker` severity; a claim of `production-verified` with no referenced operator promotion instruction is an `ungated-promotion`
-- Re-derive every rung whenever acceptance criteria or VCCs change (see Phase 4); a stale rung produces a false completion
+- Re-derive every rung whenever acceptance criteria or VCCs change (see living documents in the [process module](./prd-tad-adr-mvp-gtm-process-flows.md#across-phases--living-documents)); a stale rung produces a false completion
 - Declare a status value outside this ladder only after extending this section; an unrecognised value is an `unknown-status`
 
 ---
@@ -199,7 +199,7 @@ flowchart LR
 
 Readiness work follows a **dependency-ordered sequence**. Must-tier dimensions ship before Follow-on tracks; tracks ship in an order that respects spend safety and proof-before-UI.
 
-**Relationship to the phase model**: the phase model (`from-0-to-1-prd--tad-creation-process`) and this execution order are **not** two competing sequences. Phases 0–3 produce the documents; this order sequences the *workstreams those documents describe*, and every workstream below sits inside Phase 3's exit and Phase 4's iteration. The canonical order used by `gate-order-drift` is the phase model; a documented workstream order that contradicts the table below is `gate-order-drift` scoped to this section, not to the phase model.
+**Relationship to the phase model**: the phase model (`from-0-to-1-prd--tad-creation-process`) and this execution order are **not** two competing sequences. Phases 0–3 produce the documents; this order sequences the *workstreams those documents describe*, and every workstream below sits inside Phase 3's exit and Phase 4's build-and-evidence cycle, and living-document revisions re-derive it. The [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) joins these rows to learning and projection owners. The canonical order used by `gate-order-drift` is the phase model; a documented workstream order that contradicts the table below is `gate-order-drift` scoped to this section, not to the phase model.
 
 | Phase | Produces | Governs which workstreams |
 |---|---|---|
@@ -207,7 +207,8 @@ Readiness work follows a **dependency-ordered sequence**. Must-tier dimensions s
 | Phase 1 | PRD with criteria and rungs targeted | All Must-tier scoping |
 | Phase 2 | TAD with VCCs, topology, lanes, registers | All, per workstream |
 | Phase 3 | Baselined pair, alignment check at zero blockers | Gate for Must-tier start |
-| Phase 4 | Bounded revision cycles | Follow-on tracks and rung re-derivation |
+| Phase 4 | Built slices with Integration, deployment and runtime receipts | Must-tier delivery, follow-on tracks and rung derivation |
+| Phase 5 | Projections at the baselined revision | Audience actions only; a projection earns no rung |
 
 **Canonical execution order**:
 

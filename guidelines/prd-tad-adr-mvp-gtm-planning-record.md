@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR MVP→GTM Planning Record Module"
 doc_type: "Guidelines Module"
-version: "1.1.2"
+version: "1.1.3"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -93,7 +93,9 @@ exactly one dated heading and one row under the canonical four-column header:
 
 SVO is recovered from `A`, not authored as another column. The record key — a stable kebab-case context
 key — is carried by the record's locator and frontmatter, never as a table column, so the row states no
-identity twice.
+identity twice. For agent work on experiments and projections, `R:` names the execution role mapped by the
+[Role-Action-Outcome Contract](./adlc-artifact-continuity.md#role-action-outcome-contract) and `check:` names the
+execution-integrity VCC; a hypothesis result or audience decision is recorded in its own owner, never as this row's outcome.
 
 ### Identity Choice
 

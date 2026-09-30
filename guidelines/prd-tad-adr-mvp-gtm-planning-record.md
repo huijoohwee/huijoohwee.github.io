@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR MVP→GTM Planning Record Module"
 doc_type: "Guidelines Module"
-version: "1.1.1"
-date: "2026-09-26"
+version: "1.1.2"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Planning record contract"
@@ -34,7 +34,9 @@ identity and revision joins stay in [Artifact Continuity](./adlc-artifact-contin
 sprint compression stays in the [Rapid MVP Sprint profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); pain, demo, roadmap and
 monetization obligations stay in the parent index; pitch-deck, business-plan, and financial-model projections of
 the five roles stay in the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md), with deck delivery in the
-[Pitch Deck Guidelines](./pitch-deck-guidelines.md), and add no sixth role. A planning
+[Pitch Deck Guidelines](./pitch-deck-guidelines.md), plan delivery in the [Business Plan Guidelines](./business-plan-guidelines.md),
+model construction in the [Financial Model Guidelines](./financial-model-guidelines.md) and the learning loop in the
+[Lean Startup Guidelines](./lean-startup-guidelines.md), and add no sixth role. A planning
 record that redefines any of those is a `duplicate-owner` finding.
 
 ---

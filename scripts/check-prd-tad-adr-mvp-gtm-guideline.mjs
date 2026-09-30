@@ -39,6 +39,9 @@ const MODULES = [
   "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
   "pitch-deck-guidelines.md",
+  "lean-startup-guidelines.md",
+  "business-plan-guidelines.md",
+  "financial-model-guidelines.md",
 ];
 
 // Anchors the set publishes. Inbound references rely on these resolving in the index.
@@ -165,6 +168,21 @@ const pitchFindings = pitchText.split("\n## Conformance Findings\n")[1]?.split("
 assert.ok(pitchFindings, "pitch deck module must publish its conformance findings");
 for (const [, type] of pitchFindings.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g))
   assert.ok(enumerated.has(type), `pitch deck module raises unenumerated finding ${type}`);
+// Lean startup, business plan and financial model modules consume their Venture Record owners,
+// are routed from them, and raise only enumerated finding types.
+for (const [name, consumed, routedFrom] of [
+  ["lean-startup-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#assumption-register", indexText],
+  ["business-plan-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#section-contract", ventureText],
+  ["financial-model-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#financial-model", ventureText],
+]) {
+  const text = read(name);
+  assert.ok(text.includes(consumed), `${name} must consume ${consumed}`);
+  assert.ok(routedFrom.includes(`./${name}`), `${name} must be routed from its owner`);
+  const findings = text.split("\n## Conformance Findings\n")[1]?.split("\n---\n")[0];
+  assert.ok(findings, `${name} must publish its conformance findings`);
+  for (const [, type] of findings.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g))
+    assert.ok(enumerated.has(type), `${name} raises unenumerated finding ${type}`);
+}
 // Coverage decisions and model semantics are authored by their existing modules. These checks
 // protect their navigable structural contract; they do not grade an instantiated business plan.
 const coverageSection = indexText.split("### From-0-to-1 coverage contract\n")[1]?.split("\nA gate that")[0];

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.2.1"
-date: "2026-09-26"
+version: "1.2.2"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -289,6 +289,9 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] Disposition coverage and substantive applicable coverage are reported separately; document coverage never raises readiness
 - [ ] Audience, ask and claim joins agree across deck, business plan and financial model at the same revision
 - [ ] Each deck variant carries a Claim Manifest, timed rehearsal, recorded operator authorization and outcome log per the [Pitch Deck Guidelines](./pitch-deck-guidelines.md#validation-checklist)
+- [ ] Each plan variant carries a Section Claim Record, cross-projection reconciliation, review evidence and outcome log per the [Business Plan Guidelines](./business-plan-guidelines.md#validation-checklist)
+- [ ] The model exports every projected number through its Headline Register, recomputed by an independent check, per the [Financial Model Guidelines](./financial-model-guidelines.md#validation-checklist)
+- [ ] Demand, WTP and driver evidence comes from pre-registered experiments with recorded decisions per the [Lean Startup Guidelines](./lean-startup-guidelines.md#validation-checklist)
 - [ ] Market filters, acquisition funnel, cohort retention, delivery capacity and scenario volumes agree
 - [ ] Three statements, cash timing, cost allocation, zero-denominator cases and headline projections have named reconciliation checks with results
 - [ ] Actual costs include unsuccessful ADLC work, with unknown telemetry labelled and no duplicate cost allocation

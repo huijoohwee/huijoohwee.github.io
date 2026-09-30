@@ -2,7 +2,7 @@
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
 version: "3.3.0"
-date: "2026-09-26"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -44,9 +44,9 @@ Load by phase. Every file stays under 600 lines.
 
 **Foundations** — `scope--neutrality-contract` · `rule-identity--classification` · `markdown-yaml-frontmatter-enforcement` · `overview` · `directive-grammar-cid` → [CID Guidelines](./cid-guidelines.md#shared-field-contract) · `artifact-continuity-authoring-seam` → [Artifact Continuity](./adlc-artifact-continuity.md); [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) · `concurrent-collaboration--work-tree-integrity` → [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md), [Scoped Lane Admission](./adlc-scoped-lane-admission.md)
 
-**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — owned here · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
+**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — owned here; validated-learning loop → [Lean Startup Guidelines](./lean-startup-guidelines.md) · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
-**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md); [Pitch Deck Guidelines](./pitch-deck-guidelines.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
+**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md); [Pitch Deck Guidelines](./pitch-deck-guidelines.md), [Business Plan Guidelines](./business-plan-guidelines.md), [Financial Model Guidelines](./financial-model-guidelines.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
 **Readiness and execution** — `readiness-ladder` · `agent-platform-readiness` · `lane-topology--deploy-boundary` → [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md) · `adlc-execution-seam` → [ADLC Guidelines](./adlc-guidelines.md); [Rapid MVP Sprint](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); [Production Release Lifecycle](./adlc-production-release-lifecycle.md); [Autonomous Continuation](./adlc-autonomous-continuation.md); [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md); [Repository Runtime Readiness](./adlc-repository-runtime-readiness.md)
 
@@ -106,8 +106,8 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 | MVP | 4 | Planning Record, Demo Skeleton, Rubric, Readiness | evidenced `Must` slice | Readiness, Demonstration |
 | GTM | 5 | Monetization, Roadmap, Planning Record | ranked first-dollar path | Monetization, Roadmap |
 | Pitch Deck | 5 | Venture Record, Pitch Deck Guidelines | bounded Slide Register, Reveal = VCC, Variant Register, Claim Manifest | Venture Record |
-| Business Plan | 5 | Venture Record | two-method market, business risks and findings, legal and capital rows | Venture Record |
-| Financial Model | 5 | Venture Record | assumptions, unit economics, linked statements, scenarios, ADLC ledger | Venture Record |
+| Business Plan | 5 | Venture Record, Business Plan Guidelines | two-method market, business risks and findings, legal and capital rows | Venture Record |
+| Financial Model | 5 | Venture Record, Financial Model Guidelines | assumptions, unit economics, linked statements, scenarios, ADLC ledger | Venture Record |
 
 ### From-0-to-1 coverage contract
 
@@ -285,7 +285,7 @@ The [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **C
 
 ## Venture Record: Pitch Deck, Business Plan & Financial Model
 
-The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger. The [Pitch Deck Guidelines](./pitch-deck-guidelines.md) own deck ordering, time bounds, ask shape, variants, Claim Manifest, Reveal delivery, rendering, distribution, and outcome capture; they consume the Slide Register and add no finding type.
+The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger. The [Pitch Deck Guidelines](./pitch-deck-guidelines.md) own deck ordering, time bounds, ask shape, variants, Claim Manifest, Reveal delivery, rendering, distribution, and outcome capture; they consume the Slide Register and add no finding type. The [Business Plan Guidelines](./business-plan-guidelines.md) own plan variants, depth, section claims, risk presentation, cross-projection reconciliation, review, delivery and operating use; the [Financial Model Guidelines](./financial-model-guidelines.md) own model structure, input provenance, the Headline Register, scenario construction, actuals and variance, views and review. The [Lean Startup Guidelines](./lean-startup-guidelines.md) own the hypothesis, experiment, innovation-accounting and pivot-or-persevere records that supply their evidence. None adds a finding type.
 
 **Directives**:
 - Treat all three as projections of the joined artifact at one `continuity_id@revision`; an unsourced claim, input number, or decision first appearing in a projection is `pitch-claim-unsourced`; calculated outputs cite owned inputs and formulas; a path-only join is `artifact-naming-noncompliant`
@@ -378,7 +378,7 @@ Owned here.
 **Directives**:
 - State per phase: buyer pain and evidence, target outcome, feature, named reuse, smallest new delta, accountable owner and prerequisite — `roadmap-reuse-unstated`
 - Rank validated buyer pain/WTP first, then proximity to built capability and reuse-adjusted cost, then distance to a collected first dollar; label hypotheses and explain deviations. Do not let an inexpensive speculative feature outrank evidenced pain without rationale — `roadmap-order-unexplained`
-- Gate later phases on named earlier prerequisites and an observable exit VCC; include a stop/pivot threshold, evidence owner, rollback and successor trigger — `unimplemented-guideline`
+- Gate later phases on named earlier prerequisites and an observable exit VCC; include a stop/pivot threshold (decisions recorded in the Lean Startup Pivot-or-Persevere Record), evidence owner, rollback and successor trigger — `unimplemented-guideline`
 - Mark a known deferred idea `Won't (this increment)` — `roadmap-scope-silently-dropped`
 - Declare each increment's active-time ETA, time/byte/module/token/spend caps and lazy-load delta; external waits name dependency, unblock condition and recheck event, not a completion ETA — `missing-economics-metric`
 - Keep one product-owned roadmap; shared portfolio views reference its continuity ID and revision. Separate documentation completion, local proof, source release, deployment, first collection and repeat demand — `duplicate-owner`, `blended-status`
@@ -397,7 +397,7 @@ Owned here.
 - Track `mechanism-proven` and `demand-validated` independently; record recognized revenue and collected payment separately before claiming a first dollar — `monetization-demand-unvalidated`
 - Select the nearest-term stream by which segment exists now
 - Order every viable stream by distance to a real first dollar and state the order
-- Require a validation result before `demand-validated`
+- Require a validation result before `demand-validated`, from an experiment recorded under the [Lean Startup Guidelines](./lean-startup-guidelines.md)
 - State any monetization deferral explicitly
 
 ---

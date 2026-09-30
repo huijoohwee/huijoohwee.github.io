@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.3.1"
-date: "2026-09-30"
+version: "1.3.2"
+date: "2026-10-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -124,7 +124,7 @@ Extend the traceability pattern through to the evidence that closes it:
 PRD-[Epic]-[Story] ↔ TAD-[Component]-[Interface] ↔ VCC [condition] ↔ Evidence Reference [check + result] → Readiness rung
 ```
 
-Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see Phase 4). Record the Evidence Reference beside the VCC so the rung is recomputable from the document alone.
+Record derived VCCs in the TAD component specification alongside the acceptance criteria they implement, so conditions stay synchronized when requirements evolve (see [living documents](./prd-tad-adr-mvp-gtm-process-flows.md#across-phases--living-documents)). Record the Evidence Reference beside the VCC so the rung is recomputable from the document alone.
 
 ### Closure Rules
 
@@ -293,7 +293,7 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] The model exports every projected number through its Headline Register, recomputed by an independent check, per the [Financial Model Guidelines](./financial-model-guidelines.md#validation-checklist)
 - [ ] Demand, WTP and driver evidence comes from pre-registered experiments with recorded decisions per the [Lean Startup Guidelines](./lean-startup-guidelines.md#validation-checklist)
 - [ ] Every lifecycle activity sits on one [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) row; an autonomous run stopped only at its listed stop points, and agent work on experiments and projections derived from execution-integrity VCCs
-- [ ] Instantiated deck, plan, model and learning records pass `npm run venture:joins:check`; the structural result is not a semantic verdict
+- [ ] Instantiated deck, plan, model and learning records pass the repository's record-join check (reference implementation: `npm run venture:joins:check`); the structural result is not a semantic verdict
 - [ ] Market filters, acquisition funnel, cohort retention, delivery capacity and scenario volumes agree
 - [ ] Three statements, cash timing, cost allocation, zero-denominator cases and headline projections have named reconciliation checks with results
 - [ ] Actual costs include unsuccessful ADLC work, with unknown telemetry labelled and no duplicate cost allocation

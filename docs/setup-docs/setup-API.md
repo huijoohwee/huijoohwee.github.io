@@ -4,7 +4,7 @@
 
 This document defines a single-path API setup for a static-site repository that may call external providers directly, route requests through an edge layer, or restore a Pages Functions runtime later.
 
-- **Current repository state**: `docs/setup-docs/setup-github.md` covers local tool installation, `docs/reference.md` and `docs/GrabMaps-SKILL.md` capture external API references, and `audit-security-performance-2026-04-06.md` records prior Cloudflare Pages Functions findings.
+- **Current repository state**: `docs/setup-docs/setup-github.md` covers local tool installation, `docs/reference.md` and `docs/GrabMaps-SKILL.md` capture external API references.
 - **Current runtime observation**: the working tree does not currently expose a checked-in `functions/` directory, so API setup must start from configuration, secrets management, and validation rules before any edge runtime is added or restored.
 - **Primary goal**: establish a reproducible API setup path that keeps credentials server-managed, keeps browser code free of long-lived secrets, and keeps future API surfaces documented before they are exposed.
 
@@ -49,8 +49,7 @@ This document defines a single-path API setup for a static-site repository that 
 - **Local setup surface**: `docs/setup-docs/setup-github.md`
 - **Reference surface**: `docs/reference.md`
 - **Provider-specific reference surface**: `docs/GrabMaps-SKILL.md`
-- **Operational audit surface**: `audit-security-performance-2026-04-06.md`
-- **Runtime caveat**: a checked-in `functions/` directory is not present in the current tree, even though the audit references earlier API handlers
+- **Runtime caveat**: a checked-in `functions/` directory is not present in the current tree; earlier API handler audits are retained only in Git history
 
 ### Transformation Statements
 

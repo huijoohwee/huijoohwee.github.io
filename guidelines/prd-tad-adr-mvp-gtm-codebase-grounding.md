@@ -1,8 +1,8 @@
 ---
 title: "PRD-TAD-ADR-MVP-GTM Codebase Grounding - Reference Implementation"
 doc_type: "Guidelines Companion"
-version: "1.2.0"
-date: "2026-09-12"
+version: "1.2.1"
+date: "2026-10-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -103,7 +103,7 @@ Green documentation checks prove these documents' bounded contracts, not the com
 
 ## Verification
 
-`npm run prd-tad-adr-mvp-gtm:policy:check` validates the local guideline structure and grounding record shape.
+Reference implementation — `npm run prd-tad-adr-mvp-gtm:policy:check` validates the local guideline structure and grounding record shape.
 For available local clones, `node scripts/check-prd-tad-adr-mvp-gtm-guideline.mjs --codebase-root=/absolute/workspace`
 also verifies all recorded artifacts against the exact Git revisions, without executing their code,
 fetching remotes, starting services or altering worktrees. Historical revision verification does not

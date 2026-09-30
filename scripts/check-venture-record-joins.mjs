@@ -7,10 +7,12 @@
 import { readFileSync, statSync } from "node:fs";
 import { validateRecordJoins } from "./lib/venture-record-joins.mjs";
 
-const MAX_BYTES = 512 * 1024;
+const MAX_BYTES = 499999;
+const MAX_RECORDS = 32;
 const paths = process.argv.slice(2);
-if (paths.length === 0) {
+if (paths.length === 0 || paths.length > MAX_RECORDS || new Set(paths).size !== paths.length) {
   console.error("usage: check-venture-record-joins <record.md> [<record.md> ...]");
+  console.error(`supply 1–${MAX_RECORDS} distinct records, each below 500 kB`);
   process.exit(2);
 }
 const documents = new Map();

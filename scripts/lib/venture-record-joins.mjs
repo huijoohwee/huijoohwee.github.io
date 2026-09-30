@@ -6,47 +6,51 @@
 // continuity ID and version. It also guards the shared column shapes the guideline modules
 // publish. It does not judge claims, demand, accounting or whether a threshold was met.
 
+import { scanFrontmatter } from "./planning-frontmatter.mjs";
+
 const ID_PATTERN = /\b(HL|H|E|A)(\d+)\b/g;
 const DEFINITION_PATTERN = /^\|\s*(HL|H|E|A)(\d+)\s*\|/gm;
 const PREFIX_NAMES = Object.freeze({ HL: "headline", H: "hypothesis", E: "experiment", A: "assumption" });
 
-function frontmatter(text) {
-  const match = /^---\n([\s\S]*?)\n---\n/.exec(text);
-  const fields = new Map();
-  if (!match) return fields;
-  for (const line of match[1].split("\n")) {
-    const field = /^([a-z_]+):\s*"?([^"]*)"?\s*$/.exec(line);
-    if (field) fields.set(field[1], field[2]);
-  }
-  return fields;
-}
-
-function body(text) {
-  return text.replace(/^---\n[\s\S]*?\n---\n/, "");
-}
-
-// Placeholder rows such as `| [HL-id] |` are template text, not definitions or citations.
-function withoutCode(text) {
-  return text.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
+// Fenced examples and placeholder IDs are not records. Inline-code IDs are real citations.
+function recordText(text) {
+  let fence = null;
+  return text.split("\n").filter(line => {
+    const marker = /^\s{0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+    if (marker && !fence) { fence = marker[1]; return false; }
+    if (marker && marker[1][0] === fence?.[0] && marker[1].length >= fence.length && !marker[2].trim()) {
+      fence = null; return false;
+    }
+    return !fence;
+  }).join("\n").replace(/`+/g, "");
 }
 
 export function collectRecordIds(text) {
-  const source = withoutCode(body(text));
-  const defined = new Set([...source.matchAll(DEFINITION_PATTERN)].map(([, prefix, n]) => `${prefix}${n}`));
+  const parsed = scanFrontmatter(text);
+  const source = recordText(parsed.readState === "ok" ? parsed.body : text);
+  const definitions = [...source.matchAll(DEFINITION_PATTERN)].map(([, prefix, n]) => `${prefix}${n}`);
+  const defined = new Set(definitions);
   const cited = new Set([...source.matchAll(ID_PATTERN)].map(([, prefix, n]) => `${prefix}${n}`));
   for (const id of defined) cited.delete(id);
-  return { defined, cited };
+  return { defined, cited, definitions };
 }
 
 // documents: Map<name, markdown text>. Returns typed failures named by existing finding types.
 export function validateRecordJoins(documents) {
   const failures = [];
   const defined = new Set();
+  const owners = new Map();
   const perDocument = new Map();
+  if (!documents.size) failures.push({ type: "unresolvable-reference", document: "record set", detail: "no records supplied" });
   for (const [name, text] of documents) {
     const ids = collectRecordIds(text);
     perDocument.set(name, ids);
-    for (const id of ids.defined) defined.add(id);
+    for (const id of ids.definitions) {
+      if (owners.has(id)) failures.push({ type: "duplicate-owner", document: name,
+        detail: `${id} is defined more than once; first owner: ${owners.get(id)}` });
+      else owners.set(id, name);
+      defined.add(id);
+    }
   }
   for (const [name, { cited }] of perDocument) {
     for (const id of [...cited].sort()) {
@@ -58,10 +62,13 @@ export function validateRecordJoins(documents) {
   }
   const joins = new Map();
   for (const [name, text] of documents) {
-    const fields = frontmatter(text);
-    const join = fields.has("continuity_id") ? `${fields.get("continuity_id")}@${fields.get("version") ?? ""}` : null;
-    if (!join) failures.push({ type: "artifact-naming-noncompliant", document: name, detail: "missing continuity_id" });
-    else joins.set(name, join);
+    const parsed = scanFrontmatter(text);
+    const { continuity_id: id, version } = parsed.frontmatter;
+    if (parsed.readState !== "ok" || typeof id !== "string" || !id.trim() ||
+        typeof version !== "string" || !/^\d+\.\d+(?:\.\d+)?$/.test(version)) {
+      failures.push({ type: "artifact-naming-noncompliant", document: name,
+        detail: parsed.error ?? "requires a nonempty continuity_id and a numeric dotted version" });
+    } else joins.set(name, `${id}@${version}`);
   }
   if (new Set(joins.values()).size > 1) {
     for (const [name, join] of joins) {

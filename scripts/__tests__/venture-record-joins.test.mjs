@@ -38,10 +38,42 @@ test("a record without a continuity join is named noncompliant", () => {
   assert.deepEqual(failures.map(f => f.type), ["artifact-naming-noncompliant"]);
 });
 
-test("template placeholders and code are neither definitions nor citations", () => {
-  const ids = collectRecordIds(`${header()}| [HL-id] | [row] |\n\`HL3\` and E2E are not IDs.\n`);
+test("template placeholders and fenced examples are neither definitions nor citations", () => {
+  const ids = collectRecordIds(`${header()}| [HL-id] | [row] |\nE2E is not an ID.\n\`\`\`markdown\n| HL3 | example |\n\`\`\`\n~~~text\nE9\n~~~\n`);
   assert.equal(ids.defined.size, 0);
   assert.equal(ids.cited.size, 0);
+});
+
+test("inline-code identifiers remain definitions and citations", () => {
+  const { failures } = validateRecordJoins(set({ model: model.replace("| HL1 |", "| `HL1` |"),
+    deck: `${header()}Use \`HL1\` and \`A9\`.\n` }));
+  assert.deepEqual(failures.map(f => [f.type, f.document]), [["financial-assumption-unsourced", "deck"]]);
+});
+
+test("empty, missing and malformed continuity metadata fail closed", () => {
+  for (const metadata of [
+    "continuity_id: PLAN-X", "continuity_id: PLAN-X\nversion: ''",
+    "continuity_id: ''\nversion: 1.0.0", "continuity_id: PLAN-X\nversion: current",
+    "continuity_id: PLAN-X\nversion: 1.0.0\nversion: 1.0.0",
+  ]) {
+    const { failures } = validateRecordJoins(new Map([["bad", `---\n${metadata}\n---\n`]]));
+    assert.ok(failures.some(f => f.type === "artifact-naming-noncompliant"), metadata);
+  }
+  assert.equal(validateRecordJoins(new Map()).failures[0].type, "unresolvable-reference");
+});
+
+test("shared frontmatter syntax accepts single quotes and CRLF", () => {
+  const alternate = "---\r\ncontinuity_id: 'PLAN-X'\r\nversion: '1.0.0'\r\n---\r\nUses HL1.\r\n";
+  assert.deepEqual(validateRecordJoins(set({ deck: alternate })).failures, []);
+});
+
+test("duplicate ID definitions within or across records have no silent winner", () => {
+  for (const overrides of [{ model: `${model}| A1 | second price |\n` },
+    { plan: `${plan}| A1 | copied assumption |\n` }]) {
+    const { failures } = validateRecordJoins(set(overrides));
+    assert.equal(failures.length, 1);
+    assert.equal(failures[0].type, "duplicate-owner");
+  }
 });
 
 test("published record schemas stay aligned across the guideline modules", () => {

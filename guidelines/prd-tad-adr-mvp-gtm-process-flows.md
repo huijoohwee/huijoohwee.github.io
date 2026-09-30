@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.4.0"
-date: "2026-09-30"
+version: "1.4.1"
+date: "2026-10-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -169,7 +169,8 @@ The canonical join of phases, loops, owners and evidence. Other modules cite a r
 
 An Orchestrator given an objective, scope, bounds and the capabilities to act continues through every
 step below without clerical confirmation, under [ADLC autonomous continuation](./adlc-autonomous-continuation.md).
-It stops only at the listed stop points, which reuse the ADLC capability classes and gates.
+The listed stop points require an applicable recorded decision under the ADLC capability classes;
+reuse a valid decision for the same effect rather than asking again.
 
 | Step | Autonomous actions | Stop point | Highest readiness it can support |
 |---|---|---|---|
@@ -182,12 +183,10 @@ It stops only at the listed stop points, which reuse the ADLC capability classes
 
 **Artifact-bearing directives**:
 - Continue through every dependency-ready step inside the recorded authority; asking for a confirmation the recorded authority already covers is `human-gate-unstated`
-- Stop at each listed point with the decision, options and consequence surfaced; proceeding past one without a recorded operator decision is `ungated-promotion` for publication and deployment, and `unproven-claim` for any claim that depends on the skipped decision
+- When a listed point lacks a valid recorded decision, stop that dependent step with the decision, options and consequence surfaced; proceeding without it is `ungated-promotion` for publication and deployment, and `unproven-claim` for any claim that depends on the skipped decision
 - Fail closed: a missing receipt, join, check or bound blocks only the dependent step, and disjoint steps continue — `unimplemented-guideline`
 - Bound every step by time, tokens, iterations and spend with a circuit-breaker — `unbounded-loop` at `blocker`
 - Update the joined artifact before each turn or session ends, including blocked and failed steps — `unimplemented-guideline`
-
----
 
 ---
 

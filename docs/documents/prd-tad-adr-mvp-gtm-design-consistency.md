@@ -19,7 +19,7 @@ lane: "authoring"
 universal_scope: true
 worktree_id: "device-0232231d4a19--design-theme-governance"
 agent_id: "codex-design-governance"
-guideline_revision: "3.3.0"
+guideline_revision: "3.4.0"
 load_policy: "on-demand"
 ---
 

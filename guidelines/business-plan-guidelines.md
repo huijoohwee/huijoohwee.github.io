@@ -1,7 +1,7 @@
 ---
 title: "Business Plan Guidelines"
 doc_type: "Guidelines Module"
-version: "1.0.0"
+version: "1.1.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -222,9 +222,10 @@ Deck, plan and model shown to the same audience are one claim set at one revisio
 - Resolve colour, type and identity from the native design contract and meet its [accessibility and reach](./design-theme-contract.md#accessibility-and-reach) obligations on every export — `duplicate-owner`, `incomplete-delivery-reach`
 - Render charts and numbers under the deck's [number rules](./pitch-deck-guidelines.md#numbers-and-charts) — the same findings apply
 - Stamp cover and footer with `continuity_id@revision`, variant, date and confidentiality class — `artifact-naming-noncompliant`
-- Treat every external send or upload as an audience action authorized by the named role through a recorded operator instruction — `human-gate-unstated`; publication on a reachable surface crosses a named Deploy Boundary — `ungated-promotion`
+- Run every external send, upload or publication of a plan variant, authorized by the named role, at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion; publication on a reachable surface crosses a named Deploy Boundary — `human-gate-unstated`, `ungated-promotion`
 - Link private evidence from a private appendix or data room instead of copying it into a shared export; record audiences by organization or role reference — `unimplemented-guideline`
 - Author plan source in an authoring lane and integrate it by exact candidate; editing a published export in place is `deploy-boundary-breach`
+- Declare each variant's deliverables as execution-integrity VCCs in the GTM role — the Section Claim Record resolves, reconciliation with deck and model passes, domain reviews are recorded — so agent tasks derive from them under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); such a VCC proves the plan is built correctly, never its approval — `unimplemented-guideline`
 
 ---
 
@@ -277,6 +278,8 @@ An agent may draft, reconcile and check a plan inside the
 ---
 
 ## Role—Action—Outcome
+
+Roles map onto the ADLC execution roles per the [Role-Action-Outcome Contract](./adlc-artifact-continuity.md#role-action-outcome-contract): authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism.
 
 - **Plan Author** → variant, outline, claim record, draft, change row → a plan whose every claim resolves at one revision
 - **Financial Modeler** → supplies headline IDs and confirms displayed numbers → zero plan–model mismatches

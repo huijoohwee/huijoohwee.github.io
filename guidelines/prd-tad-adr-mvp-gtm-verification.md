@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.2.2"
+version: "1.3.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -292,6 +292,8 @@ A signed order alone proves neither earned revenue nor a collected dollar.
 - [ ] Each plan variant carries a Section Claim Record, cross-projection reconciliation, review evidence and outcome log per the [Business Plan Guidelines](./business-plan-guidelines.md#validation-checklist)
 - [ ] The model exports every projected number through its Headline Register, recomputed by an independent check, per the [Financial Model Guidelines](./financial-model-guidelines.md#validation-checklist)
 - [ ] Demand, WTP and driver evidence comes from pre-registered experiments with recorded decisions per the [Lean Startup Guidelines](./lean-startup-guidelines.md#validation-checklist)
+- [ ] Every lifecycle activity sits on one [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) row; an autonomous run stopped only at its listed stop points, and agent work on experiments and projections derived from execution-integrity VCCs
+- [ ] Instantiated deck, plan, model and learning records pass `npm run venture:joins:check`; the structural result is not a semantic verdict
 - [ ] Market filters, acquisition funnel, cohort retention, delivery capacity and scenario volumes agree
 - [ ] Three statements, cash timing, cost allocation, zero-denominator cases and headline projections have named reconciliation checks with results
 - [ ] Actual costs include unsuccessful ADLC work, with unknown telemetry labelled and no duplicate cost allocation

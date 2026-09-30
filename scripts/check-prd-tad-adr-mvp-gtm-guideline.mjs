@@ -17,6 +17,7 @@ import { readFrontmatter } from "./lib/git-guidelines/fm-reader.mjs";
 import { readMaturityRubric, validateMaturityAssessment } from "./lib/maturity-rubric.mjs";
 
 import { validateDesignConsistency } from "./lib/design-consistency.mjs";
+import { validateRecordSchemas } from "./lib/venture-record-joins.mjs";
 
 const dir = "guidelines";
 const read = (name) => readFileSync(join(dir, name), "utf8");
@@ -183,6 +184,12 @@ for (const [name, consumed, routedFrom] of [
   for (const [, type] of findings.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g))
     assert.ok(enumerated.has(type), `${name} raises unenumerated finding ${type}`);
 }
+// Every module that names the index as parent pins its current version, and the shared
+// learning and venture record shapes stay aligned across the modules that publish them.
+const indexVersion = /^version: "([^"]+)"$/m.exec(indexText)[1];
+for (const name of ["pitch-deck-guidelines.md", "lean-startup-guidelines.md", "business-plan-guidelines.md", "financial-model-guidelines.md"])
+  assert.match(read(name), new RegExp(`^parent_version: "${indexVersion.replace(/\./g, "\\.")}"$`, "m"), `${name}: parent_version must match the index`);
+assert.deepEqual(validateRecordSchemas(read), [], "learning and venture record schemas drifted");
 // Coverage decisions and model semantics are authored by their existing modules. These checks
 // protect their navigable structural contract; they do not grade an instantiated business plan.
 const coverageSection = indexText.split("### From-0-to-1 coverage contract\n")[1]?.split("\nA gate that")[0];

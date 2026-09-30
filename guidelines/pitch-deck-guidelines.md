@@ -1,7 +1,7 @@
 ---
 title: "Pitch Deck Guidelines"
 doc_type: "Guidelines Module"
-version: "1.1.0"
+version: "1.2.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.3.0"
+parent_version: "3.4.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -38,7 +38,9 @@ GTM and venture projections (Phase 5) → a successor Context.
 | Built, proposed and deferred capability; rubric level | [Codebase Grounding](./prd-tad-adr-mvp-gtm-codebase-grounding.md), [Ecosystem](./prd-tad-adr-mvp-gtm-guidelines.md#ecosystem), [Domain-Object Rubric](./prd-tad-adr-mvp-gtm-guidelines.md#domain-object-rubric-assessment) | displays the recorded split and level |
 | Time-to-value, AI harness and serving cost | [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) | cites the TTV row and harness record |
 | Instrument, channel and price choices | [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) | cites the recorded decision in the ask |
-| Numbers, formulas, scenarios and headline rows | [Financial Model](./prd-tad-adr-mvp-gtm-venture.md#financial-model) | displays them at the same revision |
+| Numbers, formulas, scenarios and headline rows | [Financial Model](./prd-tad-adr-mvp-gtm-venture.md#financial-model), [Headline Register](./financial-model-guidelines.md#headline-register) | displays Headline Register rows by HL-id at the same revision |
+| Hypotheses, experiments and pivot decisions | [Lean Startup Guidelines](./lean-startup-guidelines.md) | shows stage, traction and gaps from their records |
+| Plan sections sharing the same claims | [Business Plan Guidelines](./business-plan-guidelines.md#cross-projection-reconciliation) | reconciles deck, plan and model before any send |
 | Market, competition, legal, risk and capitalization records | [Business Plan](./prd-tad-adr-mvp-gtm-venture.md#business-plan) | cites them; the appendix links, never re-authors |
 | Lanes, source integration and publication | [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam), [Lane Topology & Deploy Boundary](./prd-tad-adr-mvp-gtm-readiness.md#lane-topology--deploy-boundary) | routes deck source and publication through them |
 | Slide syntax, layout, notes and export | [Markdown slide modules](./markdown-slide-styling-guidelines.md) | selects them as the default render profile |
@@ -302,7 +304,7 @@ screen over text. A slide the audience must read while the speaker talks compete
 ## Numbers and Charts
 
 **Artifact-bearing directives**:
-- Give every displayed number its unit, period, denominator for a ratio, actual or forecast label and model row or assumption ID; a bare number is `pitch-claim-unsourced`
+- Give every displayed number its unit, period, denominator for a ratio, actual or forecast label and Headline Register HL-id or assumption ID; a bare number is `pitch-claim-unsourced`
 - Display the same value, rounding and period as the Financial Model at the same revision; a deck–model mismatch is `status-conflict`
 - Label cumulative series as cumulative and state the window; take windows from the model's periods, never chosen to flatter a trend — `pitch-claim-unsourced`
 - Start bar-chart value axes at zero or mark the break; pair every colour signal with a label or shape — `incomplete-delivery-reach`
@@ -391,6 +393,7 @@ deck-specific path.
 
 **Artifact-bearing directives**:
 - Author deck source in an authoring lane and integrate it by exact candidate; editing a published export in place is `deploy-boundary-breach`
+- Declare each variant's deliverables as execution-integrity VCCs in the GTM role — the Claim Manifest resolves every row at the revision, rehearsal is timed, reconciliation passes — so agent tasks derive from them under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); such a VCC proves the deck is built correctly, never that the audience will decide — `unimplemented-guideline`
 - Publish an export to a mirror or delivery surface only across a named Deploy Boundary with Evidence Reference, operator instruction and rollback statement; an unrecorded publication is `ungated-promotion`
 - Carry `worktree_id` and `agent_id` when variants are drafted in more than one work tree; one Deck Author per variant — `worktree-provenance-missing`, `duplicate-capability-owner`
 - Before ending a turn or session that drafts, renders, delivers or learns from a deck, update the joined artifact's GTM and planning records with the variant state, manifest result, delivery rows and next bounded action; a chat summary alone does not discharge it — `unimplemented-guideline`
@@ -400,7 +403,7 @@ deck-specific path.
 ## Distribution and Confidentiality
 
 **Artifact-bearing directives**:
-- Treat every external send, upload or presentation as an audience action authorized by the Variant Register's named role through a recorded operator instruction; an agent never shares a deck on its own discretion — `human-gate-unstated`
+- Run every external send, upload, presentation or publication of a deck variant, authorized by the Variant Register's named role, at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion — `human-gate-unstated`, `deploy-boundary-breach`
 - Classify content per variant; link private evidence (customer data, contracts, capitalization detail) from a private appendix or data room instead of copying it into a shared export — `unimplemented-guideline`
 - Cite the Business Plan's legal, IP and regulatory row for the offering, solicitation, disclosure and forward-looking-statement duties of the variant's audience and jurisdiction; unknown applicability blocks the dependent audience action — `unimplemented-guideline`. This module gives no legal advice
 - State a regulatory or licensing claim on a slide only as the Business Plan row records it, with jurisdiction and date; a slide asserting compliance the row does not evidence is `unproven-claim`
@@ -452,7 +455,7 @@ rewriting the deck.
 
 ## Role—Action—Outcome
 
-Each role may be one person, one agent or several; the Evaluator is always a mechanism.
+Each role may be one person, one agent or several. Roles map onto the ADLC execution roles per the [Role-Action-Outcome Contract](./adlc-artifact-continuity.md#role-action-outcome-contract): authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism.
 
 - **Deck Author** → variant, spine, manifest, render, change row → a variant whose every claim resolves at one revision
 - **Financial Modeler** → confirms displayed numbers against the model revision → zero deck–model mismatches

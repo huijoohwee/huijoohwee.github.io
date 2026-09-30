@@ -320,7 +320,7 @@ flow:
     - {id: e-image-to-video-ref, source: w-image-keyvisual, sourceHandle: imageUrl, target: w-video-cut, targetHandle: reference_image, label: "imageUrl -> reference_image", animated: true}
     - {id: e-video-output, source: w-video-cut, sourceHandle: videoUrl, target: p-video-cut, targetHandle: videoUrl, label: "videoUrl -> videoUrl", animated: true}
 version: "{{template_inputs.version}}"
-template_version: "1.1.0"
+template_version: "1.2.0"
 continuity_id: "{{template_inputs.continuity_id}}"
 owner: "{{template_inputs.owner}}"
 local_rung: "undocumented"
@@ -329,7 +329,7 @@ lane: "authoring"
 universal_scope: false
 worktree_id: "{{template_inputs.worktree_id}}"
 agent_id: "{{template_inputs.agent_id}}"
-guideline_revision: "2.7.0"
+guideline_revision: "3.4.0"
 prd_revision: "{{template_inputs.version}}"
 tad_revision: "{{template_inputs.version}}"
 adr_revision: "{{template_inputs.version}}"
@@ -561,6 +561,7 @@ Use the [Venture Record section contract](../guidelines/prd-tad-adr-mvp-gtm-vent
 Join this projection to `{{template_inputs.continuity_id}}@{{template_inputs.version}}` and cite each
 section's source: summary, segment/problem, offer, market, alternatives, acquisition/retention,
 operations/capacity, team, obligations, capital, risks and milestones. Mark unknowns explicitly.
+Keep a Section Claim Record and reconcile with the deck and model per the [Business Plan Guidelines](../guidelines/business-plan-guidelines.md#plan-lifecycle).
 
 ## Financial Model
 
@@ -568,6 +569,7 @@ Use the [model contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#financial-
 assumptions, unit economics, linked income/cash/balance statements, scenario cash floors, funding and
 receipt-based ADLC costs. State basis, currency, horizon, actuals cut-off and model revision. Separate
 forecasts, recognized revenue and collected cash; report reconciliation results and unsupported ratios.
+Export every projected number through the [Headline Register](../guidelines/financial-model-guidelines.md#headline-register) by HL-id.
 
 ## Coverage and ADLC Handoff
 
@@ -577,3 +579,5 @@ formats share these obligations; a shorter document links source records instead
 Use the [ADLC seam](../guidelines/prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam) for scope, VCCs,
 time/token/byte bounds, authorization and exact source/release/deploy/rollback evidence. Record actual
 costs even for failed work. Return observed customer outcomes to the GTM successor Context.
+Record hypotheses, experiments and each pivot-or-persevere decision per the [Lean Startup Guidelines](../guidelines/lean-startup-guidelines.md#learning-loop);
+place every step on the [End-to-End Lifecycle Map](../guidelines/prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) and stop only at the [autonomous run](../guidelines/prd-tad-adr-mvp-gtm-process-flows.md#autonomous-from-0-to-1-run) stop points.

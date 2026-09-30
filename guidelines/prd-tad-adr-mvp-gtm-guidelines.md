@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.3.0"
+version: "3.4.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -220,7 +220,7 @@ The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and v
 
 ## From 0 to 1: PRD & TAD Creation Process
 
-The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the phases, steps, and gates. The spine is **Phase 0** pain, WTP, TTV, grounding → **Phase 1** PRD → **Phase 2** TAD and ADRs → **Phase 3** alignment with zero `blocker` → **Phase 4** ADLC `START → RELEASE → DEPLOY` to an evidenced MVP → **Phase 5** GTM and venture projections.
+The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the phases, steps, and gates. The spine is **Phase 0** pain, WTP, TTV, grounding → **Phase 1** PRD → **Phase 2** TAD and ADRs → **Phase 3** alignment with zero `blocker` → **Phase 4** ADLC `START → RELEASE → DEPLOY` to an evidenced MVP → **Phase 5** GTM and venture projections → **Learn** successor Context. Its [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) joins each phase to its learning, projection and execution owners, evidence and Cost Ledger line; its [Autonomous From-0-to-1 Run](./prd-tad-adr-mvp-gtm-process-flows.md#autonomous-from-0-to-1-run) names the only stop points.
 
 **Directives**:
 - Treat the module's phase order as canonical — `gate-order-drift`; a later gate passing while an earlier fails is `gate-sequence-violation`

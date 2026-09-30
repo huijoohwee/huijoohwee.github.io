@@ -1,8 +1,8 @@
 ---
 title: "ADLC Guidelines"
 doc_type: "Guidelines"
-version: "2.0.0"
-date: "2026-09-05"
+version: "2.1.0"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -32,7 +32,7 @@ lifecycle_status: "proposed"
 - `agent-roles--independence` — the four execution roles and the independence rule that must not collapse
 - `specification-to-task-bridge` — how baselined documents become an executable task list
 - `task-model` — task identity, minimum-resource core-value granularity, dependency graph, orchestration-reasoned completion-time estimation, and state vocabulary
-- [Scoped Concurrent Lane Admission](./adlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof
+- [Scoped Concurrent Lane Admission](./adlc-scoped-lane-admission.md) — additive authoring admission, authoritative write-scope comparison, remote fencing, and preservation proof; [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
 - `execution-contract` — what an agent receives, what it must surface, and what closes a task
 - `tool-permission--blast-radius` — capability classes, escalation, and irreversibility rules
 - `per-task-budgets` — token, iteration, wall-clock, and context bounds per task
@@ -53,9 +53,7 @@ lifecycle_status: "proposed"
 - `validation-checklist` — pre-execution, per-task, and post-run gates
 - [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md) — prohibited execution patterns and their corrections
 - `mantra-application` — the framing mantra
-- [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md) — provider-neutral multi-device claims, fencing, offline admission, and remote runtime-readiness
-- [Specification Chain](./adlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./adlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback
-- `specification-chain-phases` — the mandatory execution seam over that chain
+- [Specification Chain](./adlc-specification-chain.md) — artifact roles, the requirements-design-tasks seams, re-derivation cascade, phase-advance authority, and seam-preserving adaptation; [Artifact Continuity](./adlc-artifact-continuity.md) — CID-to-RAO coverage, companion-artifact joins, outcome evidence, revision freshness, and successor feedback; `specification-chain-phases` owns the mandatory execution seam over that chain
 ## Boundary with the Authoring Set
 The two sets meet at a single seam: **a baselined document pair with derived VCCs on one side, an executable task list with recorded Evidence References on the other.**
 | Concern | Owner | This set's relationship |
@@ -76,6 +74,8 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Checkpointing and recovery | **This set** | Owns |
 | Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
 | Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
+| Experiments, audience projections and audience actions ([Lean Startup](./lean-startup-guidelines.md), [Pitch Deck](./pitch-deck-guidelines.md), [Business Plan](./business-plan-guidelines.md), [Financial Model](./financial-model-guidelines.md)) | Authoring set | Executes only tasks derived from their execution-integrity VCCs; never originates a claim, value or decision; sends, publication, contact and charges run at the release seam under Tool Permission classes |
+| ADLC Cost Ledger fields and period attribution ([Venture Record](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger)) | Authoring set | Emits per-task cost fields in every return, including failed and abandoned work; never estimates where a receipt exists |
 **Directives**:
 - Require a baselined document pair with zero open `blocker` findings and a current Codebase Grounding Record for each non-native specification input. A material claim marked `contradicted`, `absent`, or `unverified` blocks only dependent execution; return it to the authoring loop, correct and re-ground within existing authorized scope, and re-derive affected joins before dispatch. Escalate only a product, scope, or authority decision that remains unresolved; never present planned capabilities as existing ones
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary
@@ -236,7 +236,7 @@ An Implementer must surface, in its own output, everything the Evaluator needs:
 - The **named check** it ran, exactly as invocable
 - The **recorded result** of that check: exit code, counts, test summary, measurement
 - The **artifacts changed**, enumerated
-- The **budget consumed**: tokens, iterations, elapsed time
+- The **budget consumed**: tokens, iterations, elapsed time, plus the ADLC Cost Ledger fields — event ID, source revision, task/change ID, cost class, unit, actual or estimate label — with provider execution, waiting and fees where observed and explicit nulls where not
 - Any **constraint violation** it observed, including ones it caused
 **Directives**:
 - Forbid a return that asserts success without a named check and a recorded result; the Evaluator judges surfaced output only, so an unsurfaced pass is indistinguishable from no pass
@@ -258,7 +258,7 @@ Capability is granted per task, not per session, and scales to reversibility.
 - Forbid self-escalation: an Implementer that needs a wider class returns `blocked` with the reason, and the Orchestrator re-dispatches with a new grant. Widening a grant mid-task is a `self-escalated-capability` finding at `blocker` severity
 - Require an explicit Operator decision for each distinct irreversible effect envelope; propagate its receipt across unchanged idempotent continuations. A session or broad objective never authorizes unspecified irreversibility
 - Forbid boundary-crossing capability in any task; promotion is the Deploy Boundary's job, and a task that reaches a delivered surface is a `deploy-boundary-breach` under the authoring set's enumeration
-- Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission
+- Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission; classify an audience send or publication as Boundary-crossing and a contact, recruitment or charge to real people as Irreversible, so each runs at the release seam under its own recorded decision
 - State the declared write scope before dispatch; a write outside it is an `out-of-scope-write` finding
 ## Per-Task Budgets
 

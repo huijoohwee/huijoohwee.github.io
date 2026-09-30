@@ -158,7 +158,7 @@ for (const [name, before, after, expected] of [
   ["malformed YAML", 'owner: "Orchestrator function"', 'owner: [unterminated', /closing bracket is absent/],
   ["string booleans", "universal_scope: true", 'universal_scope: "true"', /must be a YAML boolean true/],
   ["non-scalar owner", 'owner: "Orchestrator function"', 'owner: ["Orchestrator function"]', /owner must name one accountable function/],
-  ["impossible date", 'date: "2026-09-05"', 'date: "2026-02-30"', /date must be a valid YYYY-MM-DD string/],
+  ["impossible date", 'date: "2026-09-30"', 'date: "2026-02-30"', /date must be a valid YYYY-MM-DD string/],
   ["unknown readiness rung", 'local_rung: "spec-complete"', 'local_rung: "ready"', /must be a declared readiness rung/],
   ["unsupported runtime claim", 'local_rung: "spec-complete"', 'local_rung: "runtime-ready"', /unsupported local runtime readiness claim/],
   ["unsupported production claim", 'delivered_rung: "undocumented"', 'delivered_rung: "production-verified"', /unsupported delivered readiness claim/],

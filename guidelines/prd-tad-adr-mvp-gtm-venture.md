@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Venture Record Module"
 doc_type: "Guidelines Module"
-version: "2.1.1"
-date: "2026-09-26"
+version: "2.1.2"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Venture record contract"
@@ -105,6 +105,8 @@ it is ordered, timed, composed, rendered, delivered and learned from.
 ## Business Plan
 
 A business plan is the joined artifact read as an operating system for one segment.
+This section owns what a plan covers; the [Business Plan Guidelines](./business-plan-guidelines.md) own how
+it is scoped, ordered, written, reconciled, reviewed, delivered and operated.
 
 ### Section Contract
 
@@ -152,7 +154,7 @@ A business plan is the joined artifact read as an operating system for one segme
   retained cohort, with denominator, window, owner and cost. Include onboarding, distribution,
   partnerships, sales motion and support/refund handling as applicable.
 - Give each experiment a hypothesis, segment, offer/price, bounded sample/time/spend, pass/fail threshold,
-  evidence location and continue/pivot/stop decision. Small samples remain uncertain; paid conversion
+  evidence location and continue/pivot/stop decision; the [Lean Startup Guidelines](./lean-startup-guidelines.md) own their design, order and decision record. Small samples remain uncertain; paid conversion
   and repeat use remain separate observations.
 - Link delivery capacity, operator time and hiring triggers to model volumes. Cover data retention,
   export/deletion, access, incidents, backup/restore and supplier exit through the existing TAD owners.
@@ -166,7 +168,9 @@ A business plan is the joined artifact read as an operating system for one segme
 
 A financial model is the artifact's numbers under stated assumptions. Inputs are an evidence record;
 outputs are statements and scenarios. The ADLC Cost Ledger makes the operating cost of an agent-run
-pipeline visible rather than assumed.
+pipeline visible rather than assumed. This section owns what a model contains; the
+[Financial Model Guidelines](./financial-model-guidelines.md) own how it is structured, built, checked,
+published and operated against actuals.
 
 ### Measurement basis and horizon
 

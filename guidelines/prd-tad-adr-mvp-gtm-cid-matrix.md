@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR CID Directive Matrix Module"
 doc_type: "Guidelines Module"
-version: "1.3.1"
-date: "2026-09-26"
+version: "1.3.2"
+date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -45,7 +45,7 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Assumptions     | Validate iteratively                 | - [ ] Test assumptions early; validate iteratively; forbid untested assumptions               |
 | Ask             | State one instrumented request       | - [ ] Tie the ask to Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity; forbid an unsourced amount |
 | Boundaries      | Define system scope                  | - [ ] Establish clear scope; define boundaries; forbid scope creep                            |
-| Business plan   | Project the artifact as an operation | - [ ] Size the market by two cited methods and reconcile; draw risks from open findings; state milestone rungs from evidence; forbid a requirement or decision first stated in the plan |
+| Business plan   | Project the artifact as an operation | - [ ] Size the market by two cited methods and reconcile; draw risks from open findings; state milestone rungs from evidence; forbid a requirement or decision first stated in the plan; derive each variant from one revision with a Section Claim Record; reconcile deck, plan and model before any send |
 | Capacity        | Specify performance limits           | - [ ] Define load requirements; specify capacity; forbid unspecified scalability              |
 | Capitalization  | State claims before an equity ask    | - [ ] Record instrument, outstanding claims, and dilution of the ask; forbid an equity ask with no capitalization rows |
 | Cash flow       | Quantify cash movement and runway    | - [ ] Produce cash-flow statement for the same period as the ADLC ledger; state runway from ending cash / monthly burn; forbid a scenario set without it |
@@ -65,14 +65,14 @@ Each row is a universal, neutral, project-agnostic mantra in `Context | Intent |
 | Evidence        | Prove claims with recorded checks    | - [ ] Attach an Evidence Reference (named invocable check + recorded result + surface) to every VCC; forbid readiness claims backed by narrative instead of a recorded result |
 | Evolution       | Version documents systematically     | - [ ] Apply semantic versioning; track evolution; forbid untracked changes                    |
 | Failures        | Document failure modes               | - [ ] Analyze failure scenarios; document modes; forbid undocumented edge cases               |
-| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count serving-token cost as COGS; produce linked income, cash and balance statements; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; separate actuals, forecasts, recognized revenue and collected cash under the Venture Record measurement basis |
+| Financial model | Quantify under sourced assumptions   | - [ ] Register every input with source, disposition, and date; count serving-token cost as COGS; produce linked income, cash and balance statements; ledger ADLC cost from receipts; run Base/Downside/Upside with runway; separate actuals, forecasts, recognized revenue and collected cash under the Venture Record measurement basis; enter values only through inputs; export every projected number through one Headline Register |
 | Features        | Prioritize systematically            | - [ ] Apply MoSCoW framework; prioritize features; forbid arbitrary ordering                  |
 | Feedback        | Incorporate user insights            | - [ ] Gather user input; incorporate feedback; forbid assumption-only design                  |
 | FOSS            | Default to open-source dependencies  | - [ ] Identify FOSS alternative before any proprietary selection; document TCO comparison in ADR; forbid undocumented vendor lock-in |
 | Gateway         | Federate tool surfaces without proxy duplication | - [ ] Document discovery-first federation across existing transports; compare unified-proxy alternative in ADR; forbid undocumented fifth-proxy gateway |
 | Goals           | Define measurable, evaluable objectives | - [ ] Set quantifiable goals expressible as VCCs; define objectives; forbid vague aspirations |
 | Harness         | Wrap AI calls in typed, observable contracts | - [ ] Define harness input/output schemas; emit cost log per call; specify fallback path; forbid raw unstructured prompt calls in production pipelines |
-| Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                   |
+| Hypotheses      | State testable assumptions           | - [ ] Formulate testable claims; state hypotheses; forbid untestable claims                  ; rank riskiest first; register metric, threshold and sample before observing; record pivot or persevere at each milestone |
 | Impact          | Assess user value                    | - [ ] Estimate value delivery; assess impact; forbid value-free features                      |
 | Integration     | Specify connection points            | - [ ] Define integration interfaces; specify connections; forbid undocumented interfaces      |
 | Interfaces      | Define contracts explicitly          | - [ ] Document API contracts; define interfaces; forbid implicit agreements                   |

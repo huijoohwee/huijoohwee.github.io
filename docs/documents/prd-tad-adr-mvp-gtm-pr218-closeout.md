@@ -47,14 +47,15 @@ Acceptance:
 ## TAD
 
 Reuse the existing Agentic OS historical-proof and record-only-retirement implementation. Pin the
-consumer to protected Agentic OS `40f17767d489d70cbb0b3e07ab56aacff53831b2`, then update only
-`package.json`, `package-lock.json`, and `.agentic-os/github-transition-policy.json` in the
-implementation lane. Add no runtime module, package, workflow, or duplicate evidence store.
+consumer to protected Agentic OS `9fcf98adef628f6b078d2e61599ddc880c79f945`, which adds exact-head
+detached equal-tree receipt compatibility required to observe the retained checkout without rewriting
+its receipt. Update the package pin and this plan in the follow-up lane; the already merged policy
+remains unchanged. Add no runtime module, package, workflow, or duplicate evidence store.
 
-Sequence: merge this plan; open the planning-bound implementation lane; review and merge the exact
-runtime/policy candidate after required CI; obtain a fresh claim after policy activation; replay the
-provider merge and check evidence; create the current retained disposition; retire only the fresh
-claim record; then verify completion status. Provider/environment waits have no promised ETA.
+Sequence: merge the policy; merge this exact compatibility-pin and plan update after required CI;
+obtain a fresh claim against the active policy and current main; replay the provider merge and check
+evidence; create the current retained disposition; retire only the fresh claim record; then verify
+completion status. Provider/environment waits have no promised ETA.
 
 ## ADR
 
@@ -67,11 +68,12 @@ claim.
 
 ## MVP
 
-The implementation is complete only when the protected policy and runtime commit pass the
-repository's required `adlc-policy-contract` check, the fresh integration and retirement workflows
-produce exact successful receipts, and native read-only completion status reports no applicable
-source-closeout blocker. Preserve all local and remote lane refs, objects, quarantine projection,
-registration and receipt bytes. The schema mapping remains the sole product change from PR #218.
+The implementation is complete only when the protected policy has passed its required contract
+check, this exact runtime-pin update passes `adlc-policy-contract` and `guideline-contract-check`, the
+fresh integration and retirement workflows produce exact successful receipts, and native read-only
+completion status reports no applicable source-closeout blocker. Preserve all local and remote lane
+refs, objects, quarantine projection, registration and receipt bytes. The schema mapping remains the
+sole product change from PR #218.
 
 ## GTM
 

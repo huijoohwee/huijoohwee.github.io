@@ -66,6 +66,20 @@ Prefer event-driven continuation when supported; otherwise use bounded polling
 with backoff and a stated stop condition. Quotas and free-tier limits are inputs
 to verify, not architectural promises.
 
+## Highest-ROI sequencing
+
+When multiple conforming changes are available, prefer the smallest sequence that
+improves accepted outcome economics without weakening correctness or neutrality:
+
+- Preserve the current accepted value path and repair the existing owner first.
+- Remove recurring startup, discovery, validation or handoff friction before adding broader capability.
+- Short-circuit unchanged preparation only with explicit identity, invalidation and bounded retention.
+- Refresh shared canonical dependencies on a bounded cadence rather than paying repeated recovery cost later.
+- Defer broader controller, cache, abstraction or modular expansion until a measured bottleneck still remains after the smaller fixes.
+
+Keep the sequence universal, provider-neutral, domain-agnostic and modular: rank
+reusable owner repairs above repo-specific parallel mechanisms or one-off orchestration.
+
 ## Incremental work contract
 
 Forbid costly recomputation and rendering for unchanged inputs. Repair the existing

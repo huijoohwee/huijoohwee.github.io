@@ -28,8 +28,6 @@ test("explicit workspace resolution observes Task 19 inputs and deduplicates cur
   assert.deepEqual(
     first.artifacts.map(artifact => path.basename(artifact.path)),
     [
-      "dev-source-resolver-cloud-request.json",
-      "dev-source-resolver-write-scope.json",
       `${fixture.scope}-write-scope.json`,
     ],
   );
@@ -50,20 +48,23 @@ test("default workspace discovery observes Task 19 inputs", () => {
     inputs.workspaceReferenceArtifacts.map(artifact => path.basename(artifact.path)),
     ["dev-source-resolver-cloud-request.json", "dev-source-resolver-write-scope.json"],
   );
-  assert.ok(inputs.workspaceReferenceArtifacts.every(reference => (
-    inputs.artifacts.some(artifact => artifact.path === reference.path && artifact.bytes === reference.bytes)
-  )));
+  assert.deepEqual(
+    inputs.artifacts.map(artifact => path.basename(artifact.path)),
+    [`${fixture.scope}-write-scope.json`],
+  );
   assert.deepEqual(inputs.problems, []);
 });
 
-test("default Task 19 references are required, raw, and fail closed", async t => {
-  await t.test("missing reference produces status and exit 2", () => {
+test("default Task 19 references stay diagnostic-only", async t => {
+  await t.test("missing reference does not block the checker", () => {
     const fixture = createFixture();
     const requestPath = path.join(fixture.coordinationRoot, "dev-source-resolver-cloud-request.json");
     rmSync(requestPath);
     const inputs = resolveDefaultFixture(fixture);
-    const resolvedRequestPath = path.join(inputs.workspaceRoot, ".coordination", path.basename(requestPath));
-    assertProblem(inputs, "input-absent", "absent", resolvedRequestPath);
+    assert.deepEqual(inputs.workspaceReferenceArtifacts.map(artifact => path.basename(artifact.path)), [
+      "dev-source-resolver-write-scope.json",
+    ]);
+    assert.deepEqual(inputs.problems, []);
 
     const result = spawnSync(process.execPath, [
       checker,
@@ -72,24 +73,34 @@ test("default Task 19 references are required, raw, and fail closed", async t =>
       "--skip-remote-probe",
     ], { encoding: "utf8" });
     const report = JSON.parse(result.stdout);
-    assert.equal(result.status, 2);
-    assert.equal(report.exitStatus, 2);
-    assert.match(report.findings[0].message, /input-absent.*dev-source-resolver-cloud-request/u);
+    assert.notEqual(result.status, 2);
+    assert.notEqual(report.exitStatus, 2);
+    assert.ok(report.findings.every(finding => !/dev-source-resolver-cloud-request/u.test(finding.message)));
   });
 
-  await t.test("invalid reference retains raw bytes and records schema failure", () => {
+  await t.test("invalid reference retains raw bytes without becoming a required finding", () => {
     const fixture = createFixture();
     const scopePath = path.join(fixture.coordinationRoot, "dev-source-resolver-write-scope.json");
     writeJson(scopePath, { semanticScope: "dev-source-resolver", paths: ["scripts/worktree-policy.mjs"] });
     const inputs = resolveDefaultFixture(fixture);
     const resolvedScopePath = path.join(inputs.workspaceRoot, ".coordination", path.basename(scopePath));
-    const problem = assertProblem(inputs, "input-unparseable", "unparseable", resolvedScopePath);
-    assert.match(problem.message, /Unknown or missing artifact schema/u);
-    const raw = inputs.artifacts.find(artifact => artifact.path === resolvedScopePath);
+    const raw = inputs.workspaceReferenceArtifacts.find(artifact => artifact.path === resolvedScopePath);
+    assert.equal(inputs.problems.length, 0);
     assert.equal(typeof raw.bytes, "string");
     assert.match(raw.bytes, /dev-source-resolver/u);
     assert.equal(raw.condition, "unparseable");
     assert.ok(raw.validationProblems.some(message => /missing artifact schema/iu.test(message)));
+
+    const result = spawnSync(process.execPath, [
+      checker,
+      `--repository=${fixture.repository}`,
+      `--acos-root=${fixture.acosRoot}`,
+      "--skip-remote-probe",
+    ], { encoding: "utf8" });
+    const report = JSON.parse(result.stdout);
+    assert.notEqual(result.status, 2);
+    assert.notEqual(report.exitStatus, 2);
+    assert.ok(report.findings.every(finding => !/dev-source-resolver-write-scope/u.test(finding.message)));
   });
 });
 

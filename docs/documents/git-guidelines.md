@@ -18,6 +18,7 @@ frontmatter_contract: "required"
 # Git Guidelines
 
 This git-layer companion projects the execution set into byte-preserving, provider-neutral operations; it creates no second authority.
+Repository-root coordination remains authoritative for this repository, and foreign workspace copies stay observational only.
 
 ## Boundary & Ownership
 

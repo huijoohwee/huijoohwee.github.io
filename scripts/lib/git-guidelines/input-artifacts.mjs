@@ -14,7 +14,7 @@ import {
 const REPOSITORY_ARTIFACT_ROOTS = Object.freeze([
   ".coordination", ".agentic-manifests", ".recovery", ".backups",
 ]);
-const WORKSPACE_REFERENCE_ARTIFACTS = Object.freeze([
+const OPTIONAL_WORKSPACE_REFERENCE_ARTIFACTS = Object.freeze([
   "dev-source-resolver-cloud-request.json", "dev-source-resolver-write-scope.json",
 ]);
 const LIVE_AUTHORITY_STATES = new Set(["active", "reviewed", "review-ready", "parked"]);
@@ -62,9 +62,6 @@ export function resolveArtifactInputs({
   const currentScope = branch?.split("/").at(-1) || null;
   const currentWorkspaceArtifacts = selectCurrentWorkspaceArtifacts(workspaceArtifacts, currentScope);
 
-  enforceRequiredWorkspaceReferences({
-    workspaceRoot, workspaceReferenceArtifacts, problems, statuses,
-  });
   if (explicitWorkspace || currentWorkspaceArtifacts.length > 0) {
     enforceCurrentWorkspacePair({
       currentScope, workspaceRoot, workspaceArtifacts, currentWorkspaceArtifacts,
@@ -78,7 +75,6 @@ export function resolveArtifactInputs({
   const checkerWorkspaceArtifacts = currentWorkspaceArtifacts.filter(artifact => Boolean(artifact.value?.schema));
   const artifacts = deduplicateArtifacts([
     ...repositoryArtifacts,
-    ...workspaceReferenceArtifacts,
     ...checkerWorkspaceArtifacts,
   ]);
   const changedPaths = resolveChangedPaths(runtime, repo, protectedBaseRevision, head);
@@ -425,30 +421,9 @@ function promoteWorkspaceArtifactProblem(artifact, inputId, problems, statuses) 
   });
 }
 
-function enforceRequiredWorkspaceReferences({
-  workspaceRoot, workspaceReferenceArtifacts, problems, statuses,
-}) {
-  for (const expectedName of WORKSPACE_REFERENCE_ARTIFACTS) {
-    const inputId = `artifact:.coordination/${expectedName}`;
-    const artifact = workspaceReferenceArtifacts.find(candidate => path.basename(candidate.path) === expectedName);
-    if (!artifact) {
-      recordProblem(problems, statuses, {
-        code: "input-absent",
-        condition: "absent",
-        inputId,
-        kind: "workspace-reference",
-        path: path.join(workspaceRoot, ".coordination", expectedName),
-        message: `Required Task 19 workspace reference is absent: ${expectedName}.`,
-      });
-      continue;
-    }
-    promoteWorkspaceArtifactProblem(artifact, inputId, problems, statuses);
-  }
-}
-
 function selectWorkspaceReferenceArtifacts(artifacts) {
   return artifacts.filter(artifact => (
-    WORKSPACE_REFERENCE_ARTIFACTS.includes(path.basename(artifact.path))
+    OPTIONAL_WORKSPACE_REFERENCE_ARTIFACTS.includes(path.basename(artifact.path))
   )).sort(compareArtifactPaths);
 }
 

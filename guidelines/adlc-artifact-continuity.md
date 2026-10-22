@@ -1,7 +1,7 @@
 ---
 title: "ADLC Artifact Continuity Module"
 doc_type: "Guidelines Module"
-version: "1.2.0"
+version: "1.3.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -182,6 +182,9 @@ the meaning of the Context under which earlier work and evidence were produced.
 - Invalidate evidence whose subject, conditions, artifact revision, or surface drifted; forbid replaying a verdict against different bytes or conditions
 - Record findings and changed conditions in a successor Context with an explicit supersedes reference
 - Preserve unaffected disjoint branches of the continuity graph; forbid global invalidation when the changed node has a bounded consumer closure
+- Close the post-release loop on demand: only a deterministic breach of a baselined runtime signal opens a read-only diagnosis whose
+  findings seed the successor Context; its fix adds a regression check reproducing the breach, and autonomy stays tiered as
+  log, diagnose, or propose through protected review—never self-merge or self-deploy
 
 ## Adaptivity and Collapse
 

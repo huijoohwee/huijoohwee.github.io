@@ -1,7 +1,7 @@
 ---
 title: "ADLC Guidelines"
 doc_type: "Guidelines"
-version: "2.1.0"
+version: "2.2.0"
 date: "2026-09-30"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -95,7 +95,7 @@ Four execution roles. Roles are **functions**, not people and not necessarily se
 ### The Independence Rule
 **The Evaluator must be a different mechanism from the Implementer.** This is the one role separation that survives every collapse.
 - Independence is **mechanical**, not organisational: a deterministic check, a hook, or a separate evaluating process satisfies it; a different job title applying the same judgement does not
-- A solo operator satisfies the rule by delegating the verdict to a check they do not adjudicate, and violates it by reading their own output and declaring it done
+- Solo-operator delegation is owned by the [verification companion](./prd-tad-adr-mvp-gtm-verification.md); self-reading one's own output is never a verdict
 - The Implementer may collapse into the Orchestrator only where the Orchestrator performs no judgement; forbid an Orchestrator that both implements and marks complete
 - A verdict produced by the Implementer about its own task is a `self-graded-verdict` finding at `blocker` severity, regardless of how convincing the output reads
 **Directives**:
@@ -111,6 +111,7 @@ A specification reaches this set as a chain, not as a single document. Execution
 - Forbid an execution task deciding structure or introducing behaviour absent upstream; either is a `requirement-introduced-downstream` at `blocker` severity and returns to the owning phase
 - Bind each seam crossing to a recorded Operator decision covering its scope and effect, plus independent coverage checks; reuse that decision for authorized reversible transitions. An uncovered decision remains `phase-advanced-without-approval`; new scope, product choices, irreversible effects, or promotion require their own authority
 - Permit a collapsed or reordered chain only where both seams still carry joins; a missing coverage obligation is a `seam-elided` at `blocker` severity, however small the change
+- Run the chain as one closed loop—intent → specification → read-only plan (the pre-dispatch WBS) → reviewed change → runtime signal → successor intent—loading each owner on demand; the post-release return is owned by [Artifact Continuity successor feedback](./adlc-artifact-continuity.md#re-derivation-and-successor-feedback)
 ## Specification to Task Bridge
 The authoring set ends at a baselined pair with derived VCCs. Execution begins at a task list. The bridge is a **derivation**, not a fresh authoring act.
 ```
@@ -178,11 +179,7 @@ A well-sized task follows the universal minimum-time-and-resource / maximum-core
 - Split a task that exceeds its budget rather than raising the budget; a persistent overrun or Pareto-dominated path is a decomposition defect, and adaptation may collapse or reorder mechanisms but never elide a mandatory obligation
 - Forbid a task with no verifiable outcome and forbid over-investing in non-core periphery: defer work untraced to the selected core VCCs or a specification- or policy-required correctness, safety, security, privacy, accessibility, legal, operability, recovery, evidence, or gate obligation; unused budget never authorizes it, and it resumes only after the authoring loop baselines its marginal core value above projected time and resource cost. Documentation-only tasks state the artifact and conforming check
 - Record one compact tie-break trail: failed constraints, pairwise relations, contested evidence, and the independent verdict. Reuse unchanged evidence; avoid duplicate worksheets or agents for a decided comparison. Missing rationale is `ranking-rationale-absent`; inconclusive reasoning stops at its bound while disjoint work continues
-#### Reference implementation — zero-infra tie-breaker profile
-Any repository profile may declare its own tie-breaker criteria in place of these; they are shown only as a concrete example, per the Scope & Neutrality Contract, and carry no universal authority.
-- Prefer the mechanism runnable in a browser or at the edge over one requiring dedicated infrastructure, and the offline-capable mechanism over one requiring a live connection
-- Prefer the lower total-cost-of-ownership, lower per-task token-consuming path when core value and budget are otherwise tied
-- Prefer a FOSS (MIT/Apache-2.0-class) dependency already in use over a new one, and a new consumer of an existing dependency over any new dependency
+Repository profiles declare their own tie-breaker criteria; the non-binding zero-infra example lives in [Selection](./prd-tad-adr-mvp-gtm-selection.md).
 ### Dependency Graph
 
 - Express dependencies as a directed acyclic graph over Task IDs; a cycle is a `task-cycle` finding at `blocker` severity
@@ -496,8 +493,7 @@ The **execution-domain** half of the conformance vocabulary. The recording contr
 
 **Directives**:
 - Treat this enumeration as the single source of truth for execution-domain finding names; forbid redefining any authoring-domain type here
-- Anchor every finding to the Rule ID of the violated rule in this set, per the authoring set's Rule Identity & Classification
-- Report a zero count for every type with no finding; an omitted row is indistinguishable from an unchecked rule
+- Anchor every finding to the Rule ID of the violated rule in this set, per the authoring set's Rule Identity & Classification, and report counts per the [verification companion](./prd-tad-adr-mvp-gtm-verification.md)'s zero-count rule
 - Forbid a type in this enumeration with no rule in this set that can raise it
 ## Execution Load Budget
 

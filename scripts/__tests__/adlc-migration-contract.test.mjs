@@ -179,3 +179,14 @@ test("companion metadata cannot silently reference an obsolete parent revision",
     source.replace(/^parent_version: .*$/m, 'parent_version: "0.0.0"'));
   assert.throws(() => checkAdlcMigration(candidate), /parent_version must match the current owning document/);
 });
+
+test("post-release loop has one owner and hubs point to it", () => {
+  const owner = "guidelines/adlc-artifact-continuity.md";
+  const rule = "only a deterministic breach of a baselined runtime signal";
+  const link = "./adlc-artifact-continuity.md#re-derivation-and-successor-feedback";
+  for (const path of [owner, "guidelines/adlc-guidelines.md", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"]) {
+    const source = readFileSync(path, "utf8");
+    assert.equal(source.includes(rule), path === owner, `${path} must ${path === owner ? "own" : "not restate"} the rule`);
+    if (path !== owner) assert.ok(source.includes(link), `${path} must point to the owner`);
+  }
+});

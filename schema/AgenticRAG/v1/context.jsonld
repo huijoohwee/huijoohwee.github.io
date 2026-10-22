@@ -64,22 +64,27 @@
     "negated": { "@id": "kg:negated", "@type": "xsd:boolean" },
     "causalityStrength": { "@id": "kg:causalityStrength", "@type": "xsd:double" },
     "sourceSentence": { "@id": "kg:sourceSentence", "@type": "xsd:string" },
-    "provenance": { "@id": "prov:wasDerivedFrom", "@container": "@set", "@type": "@id" }
+    "provenance": { "@id": "prov:wasDerivedFrom", "@container": "@set", "@type": "@id" },
+    "artifactFamily": { "@id": "rag:artifactFamily", "@type": "xsd:string" },
+    "continuityId": { "@id": "rag:continuityId", "@type": "xsd:string" },
+    "invocationToken": { "@id": "rag:invocationToken", "@container": "@set", "@type": "xsd:string" },
+    "agentSurface": { "@id": "rag:agentSurface", "@type": "xsd:string" },
+    "inputSchema": { "@id": "rag:inputSchema", "@type": "@json" }
   },
   "@id": "rag:AgenticRAGContext",
   "@type": "rag:Directive",
-  "schemaVersion": "1.0.1",
+  "schemaVersion": "1.1.0",
   "rdfs:label": [
     { "@value": "AgenticRAG JSON-LD context", "@language": "en-us" },
     { "@value": "AgenticRAG JSON-LD 上下文", "@language": "zh-cn" }
   ],
   "rdfs:comment": [
     {
-      "@value": "Base JSON-LD @context for AgenticRAG graphs. Defines stable prefixes and structural field mappings so graph documents stay domain-agnostic and reproducible across repositories.",
+      "@value": "Base JSON-LD @context for AgenticRAG graphs. Defines stable prefixes and structural field mappings so graph documents stay domain-agnostic and reproducible across repositories. Optional vendor-neutral agent terms: artifactFamily (a `#` family tag such as prd or pitch-deck), continuityId, invocationToken (`/`, `@`, `#` tokens resolved by the agentic-os dictionaries, never redefined here), agentSurface (mcp-tool, mcp-resource, mcp-prompt or webmcp-tool) and inputSchema (JSON Schema of a tool input).",
       "@language": "en-us"
     },
     {
-      "@value": "AgenticRAG 图的基础 JSON-LD @context。定义稳定的前缀与结构字段映射，使图文档在跨仓库使用时保持领域无关与可复现。",
+      "@value": "AgenticRAG 图的基础 JSON-LD @context。定义稳定的前缀与结构字段映射，使图文档在跨仓库使用时保持领域无关与可复现。可选的厂商中立智能体字段：artifactFamily（如 prd、pitch-deck 等 `#` 族标签）、continuityId、invocationToken（由 agentic-os 字典解析的 `/`、`@`、`#` 令牌，此处不重复定义）、agentSurface（mcp-tool、mcp-resource、mcp-prompt 或 webmcp-tool）与 inputSchema（工具输入的 JSON Schema）。",
       "@language": "zh-cn"
     }
   ]

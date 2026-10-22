@@ -450,6 +450,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-adlc-authority-enrollment-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-adlc-authority-enrollment-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-adlc-authority-enrollment-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-adlc-authority-enrollment-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-adm0-singapore-prd-tad-adr-mvp-gtm.companion",
       "@type": "kg:Node",
       "labels": [
@@ -1039,22 +1055,6 @@
         "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index.md"
       },
       "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-byteplus-modelark-video-generation-api-reference-codebase-index.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-api-reference--api-reference-codebase-index_202604261230--agentic-graph-deerflow-gateway-api-reference-codebase-index",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-api-reference/api-reference-codebase-index_202604261230/agentic-graph-deerflow-gateway-api-reference-codebase-index.md",
       "language": "en-us"
     },
     {
@@ -1874,54 +1874,6 @@
       "language": "en-us"
     },
     {
-      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-adr-mvp-gtm-delivery-validation",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-delivery-validation.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-delivery-validation.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-delivery-validation.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-adr-mvp-gtm-integration-contracts-and-patterns",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-integration-contracts-and-patterns.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-integration-contracts-and-patterns.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm-integration-contracts-and-patterns.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-adr-mvp-gtm.companion",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm.companion.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm.companion.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm.companion.md",
-      "language": "en-us"
-    },
-    {
       "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-prd-tad-adr-mvp-gtm",
       "@type": "kg:Node",
       "labels": [
@@ -1935,38 +1887,6 @@
         "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm.md"
       },
       "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-prd-tad-adr-mvp-gtm.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-setup-guide.companion",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.companion.md",
-      "language": "en-us"
-    },
-    {
-      "@id": "node:agentic-graph:doc:agentic-graph-deerflow--agentic-graph-deerflow-setup-guide",
-      "@type": "kg:Node",
-      "labels": [
-        "Document"
-      ],
-      "name": [
-        "agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md"
-      ],
-      "properties": {
-        "repo": "agentic-graph",
-        "relPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md"
-      },
-      "documentPath": "docs/documents/agentic-graph-deerflow/agentic-graph-deerflow-setup-guide.md",
       "language": "en-us"
     },
     {
@@ -2095,6 +2015,22 @@
         "relPath": "docs/documents/agentic-graph-docs-sheets-slides-runtime-readiness.md"
       },
       "documentPath": "docs/documents/agentic-graph-docs-sheets-slides-runtime-readiness.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-document-analysis-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-document-analysis-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-document-analysis-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-document-analysis-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -2466,6 +2402,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-hackamap-inventory-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-hackamap-inventory-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-hackamap-inventory-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-hackamap-inventory-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-html-canvas-export-callgraph",
       "@type": "kg:Node",
       "labels": [
@@ -2767,6 +2719,22 @@
         "relPath": "docs/documents/agentic-graph-mainpanel-help-shortcuts.md"
       },
       "documentPath": "docs/documents/agentic-graph-mainpanel-help-shortcuts.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-mainpanel-presentation-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-mainpanel-presentation-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-mainpanel-presentation-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-mainpanel-presentation-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -4002,6 +3970,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-production-runtime-ready-demo-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-production-runtime-ready-demo-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-production-runtime-ready-demo-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-production-runtime-ready-demo-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-pwa",
       "@type": "kg:Node",
       "labels": [
@@ -4191,6 +4175,22 @@
         "relPath": "docs/documents/agentic-graph-semantic-document.md"
       },
       "documentPath": "docs/documents/agentic-graph-semantic-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-sequence-flow-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-sequence-flow-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-sequence-flow-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-sequence-flow-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -4882,6 +4882,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-versioned-project-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-versioned-project-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-versioned-project-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-versioned-project-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-webpage-proxy-and-srcdoc-iframe-document",
       "@type": "kg:Node",
       "labels": [
@@ -4895,6 +4911,22 @@
         "relPath": "docs/documents/agentic-graph-webpage-proxy-and-srcdoc-iframe-document.md"
       },
       "documentPath": "docs/documents/agentic-graph-webpage-proxy-and-srcdoc-iframe-document.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-website-refresh-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-website-refresh-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-website-refresh-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-website-refresh-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -5202,6 +5234,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-agentic-graph-geo-xr-cinema-aigeddon",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-agentic-graph-geo-xr-cinema-aigeddon.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-agentic-graph-geo-xr-cinema-aigeddon.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-agentic-graph-geo-xr-cinema-aigeddon.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-block-editor",
       "@type": "kg:Node",
       "labels": [
@@ -5234,6 +5282,86 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-drone-flight-path",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-drone-flight-path.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-drone-flight-path.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-drone-flight-path.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-geo-xr-cooperative-city-overlay",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-geo-xr-cooperative-city-overlay.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-geo-xr-cooperative-city-overlay.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-geo-xr-cooperative-city-overlay.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-knowledge-graph-node-cluster-edge",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-knowledge-graph-node-cluster-edge.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-knowledge-graph-node-cluster-edge.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-knowledge-graph-node-cluster-edge.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-logistics-supply-chain-overview",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-logistics-supply-chain-overview.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain-overview.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain-overview.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-logistics-supply-chain",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-logistics-supply-chain.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-offline-python-learning-workspace",
       "@type": "kg:Node",
       "labels": [
@@ -5247,6 +5375,70 @@
         "relPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md"
       },
       "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-offline-python-learning-workspace.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-production-runtime-readiness-demo",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-production-runtime-readiness-demo.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-production-runtime-readiness-demo.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-production-runtime-readiness-demo.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-share-url-without-sign-in",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-share-url-without-sign-in.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-share-url-without-sign-in.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-share-url-without-sign-in.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-ui-appearance",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-ui-appearance.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-ui-appearance.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-ui-appearance.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-workspace-data-views",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-workspace-data-views.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-workspace-data-views.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-workspace-data-views.md",
       "language": "en-us"
     },
     {
@@ -5279,6 +5471,22 @@
         "relPath": "docs/documents/prd-tad-adr-mvp-gtm-xr-mp4-recovery.md"
       },
       "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-xr-mp4-recovery.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:production-runtime-ready-demo",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "production-runtime-ready-demo.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/production-runtime-ready-demo.md"
+      },
+      "documentPath": "docs/documents/production-runtime-ready-demo.md",
       "language": "en-us"
     },
     {

@@ -365,6 +365,18 @@ test("large retained non-JSON bundles are not treated as bounded schema artifact
   assert.equal(Object.isFrozen(retained), true);
 });
 
+test("archived JSON stays digest-bound retention data rather than live coordination authority", () => {
+  const fixture = createFixture();
+  const archive = path.join(fixture.repository, ".backups", "historical-decision.json");
+  writeJson(archive, { schema: "agentic-os/operator-preservation-decision/v1", decision: "keep" });
+  const inputs = resolveFixture(fixture);
+  assert.deepEqual(inputs.problems, []);
+  assert.equal(inputs.artifacts.some(artifact => artifact.path === archive), false);
+  const retained = inputs.retainedArtifacts.find(artifact => artifact.relativePath === ".backups/historical-decision.json");
+  assert.equal(retained.byteLength, readFileSync(archive).byteLength);
+  assert.match(retained.digest, /^[a-f0-9]{64}$/u);
+});
+
 test("required repository JSON without a declared schema is unparseable", () => {
   const fixture = createFixture();
   const artifact = path.join(fixture.repository, ".coordination", "missing-schema.json");

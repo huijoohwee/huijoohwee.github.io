@@ -49,13 +49,13 @@ export function resolveArtifactInputs({
     statuses,
     false,
   );
-  const repositoryArtifacts = repositoryArtifactFiles.filter(isCheckerArtifact).map(file => readArtifact(runtime, {
+  const repositoryArtifacts = repositoryArtifactFiles.filter(file => isCheckerArtifact(file, repo)).map(file => readArtifact(runtime, {
     file, root: repo, required: true, problems, statuses,
   })).filter(Boolean);
   const workspaceArtifacts = workspaceArtifactFiles.filter(isJsonArtifact).map(file => readArtifact(runtime, {
     file, root: workspaceRoot, required: false, problems, statuses,
   })).filter(Boolean);
-  const retainedArtifacts = repositoryArtifactFiles.filter(file => !isCheckerArtifact(file)).map(file => readRetainedArtifact(runtime, {
+  const retainedArtifacts = repositoryArtifactFiles.filter(file => !isCheckerArtifact(file, repo)).map(file => readRetainedArtifact(runtime, {
     file, root: repo, problems, statuses,
   })).filter(Boolean);
   const workspaceReferenceArtifacts = selectWorkspaceReferenceArtifacts(workspaceArtifacts);
@@ -491,4 +491,7 @@ function parseNullList(value) {
 
 function compareArtifactPaths(left, right) { return byteCompare(left.path, right.path); }
 function isJsonArtifact(file) { return path.extname(file).toLowerCase() === ".json"; }
-function isCheckerArtifact(file) { return isJsonArtifact(file) || path.basename(file) === ".complete"; }
+function isCheckerArtifact(file, root) {
+  const repositoryRoot = path.relative(root, file).split(path.sep)[0];
+  return repositoryRoot !== ".backups" && (isJsonArtifact(file) || path.basename(file) === ".complete");
+}

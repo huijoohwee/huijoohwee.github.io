@@ -35,10 +35,10 @@ test("registration path collection is exhaustive, artifact-scoped, bounded, and 
     reference("docs/DICTIONARY-BINDING.md", "BINDING-META.md"),
     reference("docs/DICTIONARY-BINDING.md", "BINDING-TABLE.md"),
     reference("docs/DICTIONARY-BINDING.md", "docs/documents/git-guidelines.md"),
+    reference("docs/DICTIONARY-COMMAND.md", "$GITHUB_ROOT/huijoohwee.github.io/docs/documents/git-guidelines.md"),
     reference("docs/DICTIONARY-COMMAND.md", "COMMAND-META.md"),
     reference("docs/DICTIONARY-COMMAND.md", "COMMAND-PROOF.md"),
     reference("docs/DICTIONARY-COMMAND.md", "COMMAND-TABLE.md"),
-    reference("docs/DICTIONARY-COMMAND.md", "docs/documents/git-guidelines.md"),
     reference("docs/DICTIONARY-SEMANTIC.md", "SEMANTIC-META.md"),
     reference("docs/DICTIONARY-SEMANTIC.md", "SEMANTIC-TABLE.md"),
     reference("docs/DICTIONARY-SEMANTIC.md", "docs/documents/git-guidelines.md"),
@@ -118,6 +118,43 @@ test("root registration references never resolve from a same-path dictionary rep
   assert.equal(present.exists, true);
 });
 
+test("workspace-root references resolve only within the declared workspace", t => {
+  const sandbox = mkdtempSync(path.join(tmpdir(), "git-guidelines-workspace-reference-"));
+  t.after(() => rmSync(sandbox, { recursive: true, force: true }));
+  const repositoryRoot = path.join(sandbox, "delivered-repository");
+  const registrationRoot = path.join(sandbox, "dictionary-repository");
+  const workspaceRoot = path.join(sandbox, "workspace");
+  const relativePath = "huijoohwee.github.io/docs/documents/git-guidelines.md";
+  const target = path.join(workspaceRoot, relativePath);
+  mkdirSync(path.dirname(target), { recursive: true });
+  writeFileSync(target, "checked document\n");
+  const registrations = {
+    "docs/README.md": `$GITHUB_ROOT/${relativePath}\n`,
+    "docs/DICTIONARY-COMMAND.md": "",
+    "docs/DICTIONARY-SEMANTIC.md": "",
+    "docs/DICTIONARY-BINDING.md": "",
+  };
+  const result = resolveRegistrationInventory({ stat: file => statSync(file) }, registrations, {
+    repositoryRoot,
+    registrationRoot,
+    workspaceRoot,
+    statuses: new Map(),
+  })[0];
+  assert.equal(result.resolvedPath, target);
+  assert.equal(result.exists, true);
+
+  const escaped = resolveRegistrationInventory({ stat: file => statSync(file) }, {
+    ...registrations,
+    "docs/README.md": "$GITHUB_ROOT/../outside.md\n",
+  }, {
+    repositoryRoot,
+    registrationRoot,
+    workspaceRoot,
+    statuses: new Map(),
+  })[0];
+  assert.equal(escaped.exists, false);
+});
+
 function dictionaries(tokens) {
   const rows = tokens.map(token => `| \`${token}\` | ${token} summary | b | f | done |`).join("\n");
   return {
@@ -164,7 +201,7 @@ function commandDictionary(digest, count, duplicateUnrelated) {
 catalog_digest: "${digest}"
 catalog_entry_count: ${count}
 source_docs:
-  - "docs/documents/git-guidelines.md"
+  - "$GITHUB_ROOT/huijoohwee.github.io/docs/documents/git-guidelines.md"
   - "COMMAND-META.md"
 runtime_proof: "COMMAND-PROOF.md"
 dictionary_entries:

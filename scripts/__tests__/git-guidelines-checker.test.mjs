@@ -197,7 +197,7 @@ test("pull-request workflow binds the protected revision into the checker enviro
 
 function createRepositoryFixture(commitMessage) {
   const workspaceRoot = mkdtempSync(path.join(os.tmpdir(), "git-guidelines-workspace-"));
-  const root = path.join(workspaceRoot, "repository");
+  const root = path.join(workspaceRoot, "huijoohwee.github.io");
   mkdirSync(root, { recursive: true });
   writeTask19Artifacts(workspaceRoot);
   const sourcePaths = [
@@ -231,7 +231,7 @@ function createRefreshRepositoryFixture({
   sameFileCleanMerge = false,
 } = {}) {
   const workspaceRoot = mkdtempSync(path.join(os.tmpdir(), "git-guidelines-refresh-workspace-"));
-  const root = path.join(workspaceRoot, "repository");
+  const root = path.join(workspaceRoot, "huijoohwee.github.io");
   mkdirSync(root, { recursive: true });
   writeTask19Artifacts(workspaceRoot);
   for (const relative of [
@@ -485,7 +485,7 @@ function commandDictionary(digest, count, duplicateUnrelated = false) {
   const rows = duplicateUnrelated
     ? "| `/unrelated` | Unrelated duplicate. | `@other` | `#other` | No effect. |\n| `/unrelated` | Unrelated duplicate. | `@other` | `#other` | No effect. |\n"
     : "";
-  return `---\ncatalog_digest: "${digest}"\ncatalog_entry_count: ${count}\nsource_docs:\n  - "docs/documents/git-guidelines.md"\ndictionary_entries:\n  - "/git.guidelines"\n${metadata}---\n\n## Commands\n\n| Token | Intent | Required bindings | Semantic filters | Completion signal |\n|---|---|---|---|---|\n| \`/git.guidelines\` | Load git rules. | \`@git-guidelines\` | \`#git-collaboration\` | One conformant report. |\n${rows}`;
+  return `---\ncatalog_digest: "${digest}"\ncatalog_entry_count: ${count}\nsource_docs:\n  - "$GITHUB_ROOT/huijoohwee.github.io/docs/documents/git-guidelines.md"\ndictionary_entries:\n  - "/git.guidelines"\n${metadata}---\n\n## Commands\n\n| Token | Intent | Required bindings | Semantic filters | Completion signal |\n|---|---|---|---|---|\n| \`/git.guidelines\` | Load git rules. | \`@git-guidelines\` | \`#git-collaboration\` | One conformant report. |\n${rows}`;
 }
 function dictionary(title, heading, token, summary) {
   return `---\ndictionary_entries:\n  - "${token}"\n---\n\n## ${heading}\n\n| Token | Meaning | Source |\n|---|---|---|\n| \`${token}\` | ${summary}. | \`docs/documents/git-guidelines.md\` |\n`;

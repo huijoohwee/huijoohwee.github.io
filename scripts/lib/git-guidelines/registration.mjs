@@ -5,6 +5,7 @@ import { finding, tableCells } from "./content.mjs";
 import { resolveRuleId } from "./rule-registry.mjs";
 
 const DOCUMENT_PATH = "docs/documents/git-guidelines.md";
+const DOCUMENT_SOURCE_REFERENCE = "$GITHUB_ROOT/huijoohwee.github.io/docs/documents/git-guidelines.md";
 const TOKEN = "/git.guidelines";
 const FILTER = "#git-collaboration";
 const BINDING = "@git-guidelines";
@@ -31,7 +32,7 @@ export function checkRegistrations(document, registrations, frontmatter, ruleInd
   if (docsCells.length < 3 || unquoteCode(docsCells[0]) !== DOCUMENT_PATH || docsCells[1] !== "Git-layer companion to the execution set" || docsCells[1].length > 120 || docsCells[2] !== "any git stage: session start through cleanup") {
     findings.push(reportIssue("registration-missing", "Docs Index row is absent or differs from its exact path, role, or load condition."));
   }
-  if (count(command, `  - "${DOCUMENT_PATH}"`) !== 1 || count(command, `  - "${TOKEN}"`) !== 1) findings.push(reportIssue("registration-missing", "Command metadata must name the document path and token exactly once."));
+  if (count(command, `  - "${DOCUMENT_SOURCE_REFERENCE}"`) !== 1 || count(command, `  - "${TOKEN}"`) !== 1) findings.push(reportIssue("registration-missing", "Command metadata must name the workspace-qualified document source and token exactly once."));
   const commandRows = linesWith(command, `\`${TOKEN}\``).filter(line => /^\|/u.test(line));
   const commandCells = commandRows.length === 1 ? tableCells(commandRows[0]) : [];
   if (commandCells.length < 5 || !commandCells[1] || unquoteCode(commandCells[2]) !== BINDING || unquoteCode(commandCells[3]) !== FILTER || !commandCells[4]) findings.push(reportIssue("registration-missing", "Command token row is absent or incomplete."));

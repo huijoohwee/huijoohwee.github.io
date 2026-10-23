@@ -31,6 +31,11 @@ export function resolveRegistrationInventory(runtime, registrations, {
 }
 
 function registrationCandidates(reference, { repositoryRoot, registrationRoot, workspaceRoot }) {
+  const workspacePrefix = "$GITHUB_ROOT/";
+  if (reference.base === "root" && reference.path.startsWith(workspacePrefix)) {
+    const candidate = path.resolve(workspaceRoot, reference.path.slice(workspacePrefix.length));
+    return isWithinRoot(candidate, workspaceRoot) ? [candidate] : [];
+  }
   if (reference.base === "artifact") {
     const candidate = path.resolve(registrationRoot, path.dirname(reference.artifact), reference.path);
     return isWithinRoot(candidate, registrationRoot) ? [candidate] : [];

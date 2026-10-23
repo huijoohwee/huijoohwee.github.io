@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { canonicalCatalogInput } from "agentic-os/invocation";
 
 import { resolveRegistrationInventory } from "../lib/git-guidelines/input-registration.mjs";
 import { checkRegistrations, collectRegistrationPathReferences, computeCatalogDigest } from "../lib/git-guidelines/registration.mjs";
@@ -11,9 +13,17 @@ test("catalog digest is order-insensitive but rename-sensitive", () => {
   const first = dictionaries(["/b", "/a"]);
   const second = dictionaries(["/a", "/b"]);
   const renamed = dictionaries(["/a", "/c"]);
-  assert.deepEqual(computeCatalogDigest(first), computeCatalogDigest(second));
-  assert.equal(computeCatalogDigest(first).count, 2);
-  assert.notEqual(computeCatalogDigest(first).digest, computeCatalogDigest(renamed).digest);
+  const catalog = computeCatalogDigest(first);
+  const reordered = computeCatalogDigest(second);
+  assert.equal(catalog.digest, reordered.digest);
+  assert.equal(catalog.count, reordered.count);
+  assert.equal(catalog.count, 2);
+  assert.notEqual(catalog.digest, computeCatalogDigest(renamed).digest);
+  assert.deepEqual(catalog.entries.map(({ token, kind, label, sourcePath }) => ({ token, kind, label, sourcePath })), [
+    { token: "/b", kind: "command", label: "b", sourcePath: "agentic-os/catalog/dictionaries/DICTIONARY-COMMAND.md" },
+    { token: "/a", kind: "command", label: "a", sourcePath: "agentic-os/catalog/dictionaries/DICTIONARY-COMMAND.md" },
+  ]);
+  assert.equal(catalog.digest, createHash("sha256").update(canonicalCatalogInput(catalog.entries)).digest("hex"));
 });
 
 test("registration path collection is exhaustive, artifact-scoped, bounded, and immutable", () => {

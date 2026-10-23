@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
+import { canonicalCatalogInput, DICTIONARY_DESCRIPTORS, labelFromToken } from "agentic-os/invocation";
 import { finding, tableCells } from "./content.mjs";
 import { resolveRuleId } from "./rule-registry.mjs";
 
@@ -60,10 +61,13 @@ export function checkRegistrations(document, registrations, frontmatter, ruleInd
 }
 
 export function computeCatalogDigest(registrations) {
-  const specs = [["docs/DICTIONARY-COMMAND.md", "command", "Commands"], ["docs/DICTIONARY-SEMANTIC.md", "semantic", "Tags"], ["docs/DICTIONARY-BINDING.md", "binding", "Bindings"]];
-  const entries = specs.flatMap(([sourcePath, kind, heading]) => parseDictionaryTable(registrations[sourcePath] || "", { sourcePath, kind, heading }));
-  entries.sort((left, right) => Buffer.from(left.token).compare(Buffer.from(right.token)));
-  const encoded = entries.map(entry => JSON.stringify(Object.fromEntries(Object.entries(entry).sort(([left], [right]) => left.localeCompare(right))))).join("");
+  const specs = DICTIONARY_DESCRIPTORS.map(({ docsPath, kind, tableHeading, sourcePath }) => [
+    `docs/${docsPath}`, kind, tableHeading, sourcePath,
+  ]);
+  const entries = specs.flatMap(([registrationPath, kind, heading, sourcePath]) => parseDictionaryTable(
+    registrations[registrationPath] || "", { sourcePath, kind, heading },
+  ));
+  const encoded = canonicalCatalogInput(entries);
   return Object.freeze({ digest: createHash("sha256").update(encoded).digest("hex"), count: entries.length, entries: Object.freeze(entries) });
 }
 
@@ -94,7 +98,7 @@ function parseDictionaryTable(text, { sourcePath, kind, heading }) {
   for (let index = start + 1; index < lines.length && !/^## /u.test(lines[index]); index += 1) {
     const cells = tableCells(lines[index]); const token = cells[0]?.match(/^`([^`]+)`$/u)?.[1];
     if (!token || !token.startsWith(kind === "command" ? "/" : kind === "semantic" ? "#" : "@")) continue;
-    output.push(Object.freeze({ token, kind, label: token, summary: cells[1] || "", sourcePath }));
+    output.push(Object.freeze({ token, kind, label: labelFromToken(token), summary: cells[1] || "", sourcePath }));
   }
   return output;
 }

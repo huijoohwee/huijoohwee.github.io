@@ -1,19 +1,19 @@
 ---
 title: "Central Design System"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
-revision: "0.1.0"
+version: "0.2.0"
+revision: "0.2.0"
 date: "2026-10-23"
-updated_date: "2026-10-23"
+updated_date: "2026-10-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product design system function"
 continuity_id: "DESIGN-SYSTEM-01"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
 local_rung: "undocumented"
 delivered_rung: "undocumented"
 lane: "authoring"
@@ -28,7 +28,7 @@ lifecycle_status: "proposed"
 
 # Central Design System
 
-**DESIGN-SYSTEM-01@0.1.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
+**DESIGN-SYSTEM-01@0.2.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
 design-system source of truth, catalog and documentation surface across existing products. It does
 not claim that a repository, public route, package, release or runtime adoption already exists.
 
@@ -36,8 +36,9 @@ not claim that a repository, public route, package, release or runtime adoption 
 brand profile, guideline, accessibility contract or reusable component, then apply it without
 copying an implementation or creating an unregistered variant.
 
-**Scope state:** proposed; source rights, one component-library ownership model and the production
-route remain blockers. Market pain and willingness to pay are hypotheses. Local source inspection
+**Scope state:** proposed; source rights and one component-library ownership model remain blockers.
+The route target and edge owner are selected, but implementation and production receipts are pending.
+Market pain and willingness to pay are hypotheses. Local source inspection
 below grounds current ownership only; it does not prove adoption, runtime behavior or deployment.
 
 ## Reference implementation: Agentic Design System
@@ -49,13 +50,14 @@ for another product with equivalent owners and evidence.
 |---|---|---|---|
 | huijoohwee.github.io | 254ad7c28ded94f0169c29c63db589a72bd5e8ef | guidelines/design-theme-contract.md 1.1.0 assigns one owner per concern; says application state and interactive components stay with their product owner, and cross-repo adoption links exact source revisions rather than copying runtime components. docs/DEPLOY-WORKFLOW.md publishes index.html and guidelines/ only. | Use the existing design contract; keep this proposal in docs/documents, outside that Pages payload. |
 | agentic-os | 8a16da19effb9cfb0dab750558454816153229c2 | guides/SYSTEM-PROMPT-RUNTIME.md and docs/START-WORKFLOW.md require free/FOSS, bounded work and source/deploy evidence separation. | Keep policy and lifecycle contracts owned here; design-system consumers reference them. |
-| agentic-canvas-os | b4eafdb737fa0d91e549878aba5fa6661caf4536 | wrangler.jsonc currently sets CANVAS_BASE_URL to https://airvio.co/agentic-os. | This does not establish ownership of the requested design-system route. |
+| agentic-commerce-os | 9454664 | `wrangler.edge.jsonc` owns the production edge Worker and `airvio.co` Commerce prefix; the existing release contract currently admits one route. | Extend the edge owner with a separate, exact static-site path and its own candidate/readback/rollback evidence; keep Commerce behavior intact. |
 | agentic-graph | 60333d43486537df7b89f46293c58f282b0394f0 | canvas/src/lib/ui/tokens-ssot.ts re-exports grph-shared/ui/kgTokens; source is grph-shared/src/ui/kgTokens.ts. DesignSystemHub.tsx states those tokens are authored once and generated CSS is read-only. config/surface-registry.json declares https://airvio.co as publicOrigin and registers /agentic-graph/; the design-system route is not in the inspected route entries. config/license-registry.json classifies application source as NONE-private and built output as no-reuse. | Treat this token source as the current owner until an authorized atomic transfer. Route and source publication need separate owner evidence. |
 | agentic-base | 529f1d866974453327977595a457d5065a8dbc45, the revision pinned by agentic-graph/canvas/package.json | package.json names @agentic-base/views-react, version 0.1.0, private=true. | The package is an existing component source, not a publicly reusable library under the inspected metadata. Do not publish or copy its source without verified rights. |
 
-The requested site path is the exact literal https://airvio.co/gentic-design-system. This proposal
-keeps that single path. Its spelling is unusual relative to the repository name; changing it requires
-a successor decision, and no second alias is planned.
+The selected canonical site path is https://airvio.co/agentic-design-system/. A request to
+https://airvio.co/agentic-design-system redirects to that trailing-slash URL; it is a URL
+normalization, not a second content alias. The site uses its own Cloudflare Pages project, and
+`agentic-commerce-os` owns the edge route that serves it under the existing `airvio.co` origin.
 
 ## PRD
 
@@ -122,6 +124,7 @@ checks; no implementation or check result is claimed in this proposal.
 | VCC-06 | Given a clean narrow viewport and a primed offline cache, when the catalog is opened and reloaded without connectivity, then its static index and local content remain usable. | design-site-browser-check | No remote fonts, CDN, telemetry or runtime model call. |
 | VCC-07 | Given any MVP build, when its dependency and cost manifest is evaluated, then all software is FOSS/free and incremental paid spend, provider add-ons, overages and model tokens are zero. | design-zero-cost-check | Unknown spend headroom blocks deployment. |
 | VCC-08 | Given a candidate release and deployment instruction, when each owner workflow completes, then source, route, runtime and rollback evidence have distinct exact receipts. | design-release-receipt-check | Source merge never implies deployment authority. |
+| VCC-09 | Given either `/agentic-design-system` or `/agentic-design-system/`, when requested at the public origin, then the edge redirects the slashless path to the canonical path and serves the same exact Pages candidate; asset and offline URLs remain beneath that path. | design-route-readback-check | Verify both paths, assets and service-worker scope in Dev and Production. |
 
 | Metric | Baseline | Proposed target | Window |
 |---|---|---|---|
@@ -260,7 +263,7 @@ authoring, provider mirror and delivery boundaries remain distinct and closed by
 
 | Surface | MVP status | Contract |
 |---|---|---|
-| /gentic-design-system | Planned | One static GET route at the exact path in the reference block. Route registration and live owner are not yet proven. |
+| /agentic-design-system/ | Selected; implementation pending | One static GET path on the dedicated Pages target, routed by `agentic-commerce-os`; slashless requests redirect to this canonical path. |
 | #section | Planned | Native fragment links for tokens, profiles, guidelines, accessibility, components and releases. |
 | @component-id | Planned | Stable local catalog identity resolved by the pinned release manifest; no mutable alias. |
 | MCP | Deferred | No new server in the MVP. An existing local/read-only adapter may consume the static manifest only after its owner and zero-cost route are verified. |
@@ -370,22 +373,25 @@ after licensing is verified and the native design contract is revised through it
 transfer, keep it linked as a private reference and exclude it from public releases. Revisit when
 written rights, a compatible FOSS license, a transfer plan and consumer migration checks are present.
 
-### ADR-02 — Keep one requested public path and defer deployment
+### ADR-02 — Keep the selected public path and route it through its edge owner
 
-**Status:** proposed; deployment remains closed.
+**Status:** target selected by the product owner on 2026-10-26; deployment remains gated on exact source, cost, route, readback and rollback receipts.
 
-**Options:** use the exact user-specified path on the existing origin; select a separate host/domain;
-or expose multiple aliases. The first is the only option that uses the requested address without
-adding a new domain or host. The separate-host option has no current zero-cost, route-owner or
-rollback evidence. Multiple aliases violate the one-route requirement.
+**Options:** use a dedicated Pages project behind the existing `airvio.co` edge owner; host under a
+new domain; or add multiple content aliases. The first preserves the selected public origin and
+keeps static hosting separate from route ownership. A slashless request redirects to the canonical
+trailing-slash path and does not create a second content alias.
 
-**Decision:** keep /gentic-design-system as the sole planned path. The current origin registry shows
-an existing public origin but does not register this route. The route owner must register the exact
-path, prove the no-cost deployment boundary and name a rollback predecessor before any deploy.
-Do not add a corrected-spelling alias. A deliberate spelling change is a successor ADR.
+**Decision:** use `https://airvio.co/agentic-design-system/` as the sole canonical content path.
+Use one dedicated Cloudflare Pages project for the immutable static site; exercise its Dev preview
+and Production deployment as separate exact candidate receipts. `agentic-commerce-os` owns the
+`airvio.co/agentic-design-system*` edge route and proxies only that prefix to the Pages origin.
+Production remains closed until the Free-tier request/build limits and $0 billing boundary are
+verified, the exact predecessor is recorded, and Dev/Production readbacks pass. Do not add another
+content path or route alias.
 
-**Recovery:** remove the route through its owner controller and restore the exact previous route map
-if live verification fails.
+**Recovery:** restore the exact prior Pages deployment and edge Worker version through their owner
+controllers, then verify the canonical path and redirect again. Keep Commerce route state unchanged.
 
 ### ADR-03 — License and public release boundary
 
@@ -566,11 +572,11 @@ The following are source observations at exact repository revisions, not runtime
 Unresolved rights and route questions block public release and deployment. They do not block
 source-grounded catalog design or disjoint local discovery work.
 
-## Planning Record — 2026-10-23
+## Planning Record — 2026-10-26
 
 | PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
 |---|---|---|---|
-| **DESIGN-SYSTEM-01@0.1.0** | C: Current cross-repo design ownership and rights are evidenced by the pinned source records above · I: Specify one reusable design-system catalog without conflicting or unlicensed variants · D: Author the joined 0.1.0 PRD/TAD/ADR/MVP/GTM, preserve native owners, and keep route and rights gates closed | R: Product spec author · A: Authors one source-grounded joined design-system proposal · O: Reviewable 0.1.0 proposal with owners, VCCs and release blockers · check: independent-prd-compliance-review | 2026-10-23 |
+| **DESIGN-SYSTEM-01@0.2.0** | C: Existing catalog and native ownership rules; product owner selected the corrected canonical URL, dedicated Pages target and `agentic-commerce-os` edge owner on 2026-10-26 · I: Make the existing site addressable without introducing another content alias · D: Update the joined 0.2.0 plan with canonical slash handling, an isolated Pages project, edge ownership and distinct Dev/Production receipts · R: Product spec author · A: Binds the owner's route decision and keeps rights/cost/deploy gates explicit · O: Reviewable route/target/rollback plan · check: independent-prd-compliance-review | 2026-10-26 |
 
 This is the planning row for this authored revision. The repository PRD policy check is a source
 guideline check; it does not evaluate this docs/documents artifact. Protected source integration,

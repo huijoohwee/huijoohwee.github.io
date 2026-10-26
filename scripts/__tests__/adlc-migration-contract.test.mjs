@@ -158,7 +158,7 @@ for (const [name, before, after, expected] of [
   ["malformed YAML", 'owner: "Orchestrator function"', 'owner: [unterminated', /closing bracket is absent/],
   ["string booleans", "universal_scope: true", 'universal_scope: "true"', /must be a YAML boolean true/],
   ["non-scalar owner", 'owner: "Orchestrator function"', 'owner: ["Orchestrator function"]', /owner must name one accountable function/],
-  ["impossible date", 'date: "2026-09-30"', 'date: "2026-02-30"', /date must be a valid YYYY-MM-DD string/],
+  ["impossible date", /^date: "\d{4}-\d{2}-\d{2}"$/m, 'date: "2026-02-30"', /date must be a valid YYYY-MM-DD string/],
   ["unknown readiness rung", 'local_rung: "spec-complete"', 'local_rung: "ready"', /must be a declared readiness rung/],
   ["unsupported runtime claim", 'local_rung: "spec-complete"', 'local_rung: "runtime-ready"', /unsupported local runtime readiness claim/],
   ["unsupported production claim", 'delivered_rung: "undocumented"', 'delivered_rung: "production-verified"', /unsupported delivered readiness claim/],
@@ -167,7 +167,8 @@ for (const [name, before, after, expected] of [
 ]) {
   test(`frontmatter rejects ${name}`, () => {
     const candidate = mutate("guidelines/adlc-guidelines.md", source => {
-      assert.ok(source.includes(before), "mutation must exercise the intended field");
+      assert.ok(before instanceof RegExp ? before.test(source) : source.includes(before),
+        "mutation must exercise the intended field");
       return source.replace(before, after);
     });
     assert.throws(() => checkAdlcMigration(candidate), expected);

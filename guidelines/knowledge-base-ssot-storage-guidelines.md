@@ -67,7 +67,9 @@ These directives govern a portable knowledge source plus optional collaboration,
 - Pipelines parse frontmatter and metadata before fetching or chunking full bodies.
 - Pipelines cache immutable revisions and content digests, batch operations, and skip unchanged projections.
 - Correctness paths use deterministic parsing, hashing, mapping, and conflict checks with zero mandatory LLM tokens.
-- Teams meter provider calls, storage, egress, operations time, and optional model usage before expanding scope.
+- Before provider storage effects, teams verify the current entitlement, billing window, included storage and operation limits, observed use, remaining headroom, retention duration, and projected usage. An account plan label or a current zero bill alone does not establish that a write fits.
+- Teams allow only included free allocation; they require the provider to fail closed at that boundary or stop before effects when usage cannot be bounded. Budget alerts alone do not cap billing. After effects, teams record total and billable usage for the same window and halt further effects if billable usage is nonzero or evidence is unavailable.
+- Teams meter provider calls, storage, retrieval, egress, operations time, and optional model usage before expanding scope.
 - Teams prefer the minimum managed surface that produces measured collaboration value and retain a portable FOSS exit path.
 
 ## Reference implementation mapping
@@ -92,6 +94,7 @@ These directives govern a portable knowledge source plus optional collaboration,
 - [ ] Source-base and provider-revision drift produce explicit conflict.
 - [ ] Offline outbox, bounded retry, rollback, deletion, and retention behavior are tested.
 - [ ] Invocation identities resolve from the centralized `/`, `#`, and `@` dictionaries.
+- [ ] Provider effects fit a verified included quota, fail closed at its boundary, and have a same-window post-effect billable-usage receipt.
 - [ ] Provider calls, cash TCO, operational time, and optional token use are measured.
 - [ ] Delivery and production claims cite exact runtime evidence rather than documentation status.
 

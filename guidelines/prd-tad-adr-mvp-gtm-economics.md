@@ -113,6 +113,27 @@ When selecting any dependency, library, or infrastructure component:
 4. **Record the decision** in the ADR with explicit TCO comparison at projected scale
 5. **Compare deployment models within each candidate** — see Deployment-Model TCO Variants below; do not collapse a candidate's managed and self-managed variants into a single TCO figure
 
+### Included Quota and Billable Boundary
+
+Included free quota may be used; paid plans, paid add-ons and overages are outside the default scope.
+An account plan label or a current `$0` bill does not prove that the next operation fits inside an
+included allocation. A separately subscribed service must not be mistaken for free allowance.
+
+**Directives**:
+- Before a provider effect, record the current entitlement, billing window, relevant usage meters,
+  included limits, observed usage, remaining headroom, and the planned effect's projected usage.
+- Admit only usage covered by the included allocation. Require a provider-enforced fail-closed limit
+  at that allocation, or stop before the effect when headroom cannot be bounded. A budget alert alone
+  is not a hard limit. Do not require a synthetic `$0` billing cap when the included quota itself is
+  a verified hard boundary.
+- Include retention duration and accumulated data in storage forecasts; include operation classes,
+  retrieval and egress meters when the provider prices them separately.
+- After an effect, re-read the same billing window and record total and billable usage. Stop further
+  effects if billable usage is nonzero, the free boundary is crossed, or the receipt is unavailable;
+  use the provider owner's rollback or disable path where needed.
+- Keep a redacted, revision-bound receipt with provider/resource, plan, check time, period, meter,
+  included limit, before/after usage, billable amount and fail mode. Never include credentials.
+
 ### Deployment-Model TCO Variants
 
 A single infrastructure candidate (a vendor, a FOSS stack, or a hosting category) frequently offers more than one **deployment model**, and each model carries a distinct cost and operations profile. Collapsing these into one TCO figure hides material tradeoffs. Evaluate deployment models by function, never by brand:

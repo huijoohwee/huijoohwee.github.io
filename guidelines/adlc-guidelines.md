@@ -1,8 +1,8 @@
 ---
 title: "ADLC Guidelines"
 doc_type: "Guidelines"
-version: "2.3.0"
-date: "2026-09-30"
+version: "2.3.1"
+date: "2026-10-26"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -259,6 +259,9 @@ Capability is granted per task, not per session, and scales to reversibility.
 - Forbid boundary-crossing capability in any task; promotion is the Deploy Boundary's job, and a task that reaches a delivered surface is a `deploy-boundary-breach` under the authoring set's enumeration
 - Forbid transmitting project content, credentials, or user data to an external endpoint during execution unless the Operator requested that specific transmission; classify an audience send or publication as Boundary-crossing and a contact, recruitment or charge to real people as Irreversible, so each runs at the release seam under its own recorded decision
 - State the declared write scope before dispatch; a write outside it is an `out-of-scope-write` finding
+- Permit included free quota only with current limits and a race-safe pre-effect reservation that denies at the owner's allocation.
+  Allocate every shared-account consumer; snapshots and alerts observe usage but do not enforce it.
+  Unknown aggregate headroom blocks. Report quota compliance separately from a provider hard-$0 cap.
 ## Per-Task Budgets
 
 Every task carries four bounds and a circuit-breaker. An unbounded task is the execution-domain equivalent of an unbounded loop.

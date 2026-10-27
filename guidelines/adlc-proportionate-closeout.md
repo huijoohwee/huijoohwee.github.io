@@ -1,8 +1,8 @@
 ---
 title: "ADLC Proportionate Closeout"
 doc_type: "Guideline Module"
-version: "1.1.0"
-date: "2026-09-22"
+version: "1.2.0"
+date: "2026-10-27"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Convergence controller function"
@@ -33,6 +33,26 @@ Proportionate = omit only non-triggered work; never weaken, skip, or relabel tri
 | `production-released` | Complete `source-integrated` and the full joined Production Release Lifecycle for every triggered target | No authority beyond the authorized target and cleanup effects |
 
 Cleanup is an explicit effect attached to a profile, not a reason to select a stronger profile. A source mutation whose actual integration effect automatically deploys or publishes is production-triggering even if it is labelled source-only; separate the effects or select `production-released`.
+
+## Full END ADLC
+
+`source_complete` closes one lane's source obligations; it is not a product-delivery claim. Full END
+ADLC is complete only when these four outcomes join to the same exact lane and candidate:
+
+1. **Source:** the candidate is integrated into current protected `origin/main`, or a policy-approved
+   successor disposition is recorded. A supersession receipt records supersession, not a merge.
+2. **Development to Production:** when the product has distinct Dev and Prod stages, Dev readback and
+   promotion/readback in Prod bind the same candidate digest. A Prod-only deployment or an excluded
+   path needs an exact product-owner applicability/no-deploy disposition and reason.
+3. **Product delivery:** required live route, runtime and feature/planning handover evidence joins the
+   release receipt; the exact rollback predecessor or rollback outcome is recorded.
+4. **Workspace cleanup:** stop and unmount every task worktree; verify its exact cleanup/quarantine
+   receipt and absent checkout path. Branch, object and byte-deletion choices remain separate
+   dispositions; a mounted worktree or pending cleanup keeps full END ADLC open.
+
+Every triggered outcome needs current evidence. Missing, stale or ambiguous evidence keeps END ADLC
+open. Mark a stage `not-applicable` only with its exact owner and product-scope reason. See the
+[production release lifecycle](./adlc-production-release-lifecycle.md) for receipt and effect details.
 
 ## Applicability and Selection
 
@@ -82,6 +102,7 @@ Use existing findings by violated owner: unrelated disjoint delay is `coordinati
 - [ ] The selected outcome's protected receipts and exact verification all join
 - [ ] Every value-bearing or ambiguous item remains canonically included or recoverably preserved
 - [ ] Cleanup uses only its exact authorized effects; retained cleanup never replays integration or hides incomplete requested work
+- [ ] Full END ADLC joins source, applicable Dev/Production delivery, product/runtime handover, and requested workspace cleanup for one exact candidate
 
 ## Change-Class Fast Path (v1.1.0)
 

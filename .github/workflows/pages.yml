@@ -176,10 +176,11 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   build:
-    name: Seal exact Pages artifact
+    name: Verify exact artifact in Development
     needs: authorize
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    environment: development
     permissions:
       contents: read
     outputs:
@@ -187,6 +188,7 @@ jobs:
       effect_id: ${{ steps.assemble.outputs.effect_id }}
       payload_manifest_digest: ${{ steps.assemble.outputs.payload_manifest_digest }}
       provider_artifact_id: ${{ steps.upload.outputs.artifact_id }}
+      dev_receipt_digest: ${{ steps.dev_preview.outputs.receipt_digest }}
     steps:
       - name: Check out exact authorized candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -327,6 +329,27 @@ jobs:
         with:
           path: ${{ runner.temp }}/pages-site
 
+      - name: Download exact Pages artifact for Development
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          artifact-ids: ${{ steps.upload.outputs.artifact_id }}
+          path: ${{ runner.temp }}/pages-dev-archive
+
+      - name: Extract downloaded Pages artifact
+        run: mkdir -p "${RUNNER_TEMP}/pages-dev/site" && tar -xf "${RUNNER_TEMP}/pages-dev-archive/artifact.tar" -C "${RUNNER_TEMP}/pages-dev/site" && rm "${RUNNER_TEMP}/pages-dev-archive/artifact.tar"
+
+      - name: Read back every Development route
+        id: dev_preview
+        env:
+          DEV_ROOT: ${{ runner.temp }}/pages-dev/site
+          CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          ARTIFACT_ID: ${{ steps.assemble.outputs.artifact_id }}
+          EFFECT_ID: ${{ steps.assemble.outputs.effect_id }}
+          PROVIDER_ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+          PAYLOAD_MANIFEST_DIGEST: ${{ steps.assemble.outputs.payload_manifest_digest }}
+          POLICY_DIGEST: ${{ needs.authorize.outputs.policy_digest }}
+        run: node scripts/lib/git-guidelines/pages-dev-preview.mjs
+
   deploy:
     name: Deploy and verify exact Pages artifact
     needs: [authorize, build]
@@ -353,9 +376,12 @@ jobs:
       - name: Verify exact release-controller source
         env:
           CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
+          DEV_RECEIPT_DIGEST: ${{ needs.build.outputs.dev_receipt_digest }}
         run: |
           test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
           test -z "$(git status --porcelain=v1 --untracked-files=all)"
+          test "${#DEV_RECEIPT_DIGEST}" -eq 64
+          case "$DEV_RECEIPT_DIGEST" in (*[!0-9a-f]*) exit 1 ;; esac
 
       - name: Revalidate canonical, policy, and trusted check before deployment
         id: preflight

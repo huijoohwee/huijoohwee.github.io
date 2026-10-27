@@ -125,11 +125,13 @@ test("Pages delivery authenticates one exact protected candidate and attests pol
 
 test("Pages controller gates, applies, reconciles, and receipts the exact sealed effect", () => {
   const build = pagesWorkflow.jobs.build;
-  assert.equal(build.name, "Seal exact Pages artifact");
+  assert.equal(build.name, "Verify exact artifact in Development");
+  assert.equal(build.environment, "development");
   assert.equal(build.outputs.artifact_id, "${{ steps.assemble.outputs.artifact_id }}");
   assert.equal(build.outputs.effect_id, "${{ steps.assemble.outputs.effect_id }}");
   assert.equal(build.outputs.payload_manifest_digest, "${{ steps.assemble.outputs.payload_manifest_digest }}");
   assert.equal(build.outputs.provider_artifact_id, "${{ steps.upload.outputs.artifact_id }}");
+  assert.equal(build.outputs.dev_receipt_digest, "${{ steps.dev_preview.outputs.receipt_digest }}");
   const assemble = build.steps.find(step => step.name === "Assemble and seal static site");
   assert.equal(assemble.env.POLICY_DIGEST, "${{ needs.authorize.outputs.policy_digest }}");
   assert.match(assemble.run, /pages-release-controller\.mjs seal/u);
@@ -137,6 +139,15 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   assert.doesNotMatch(assemble.run, /agentic-guideline-pages-release\/v2/u);
   const upload = build.steps.find(step => step.name === "Upload exact Pages artifact");
   assert.equal(upload.with.path, "${{ runner.temp }}/pages-site");
+  const download = build.steps.find(step => step.name === "Download exact Pages artifact for Development");
+  assert.equal(download.with["artifact-ids"], "${{ steps.upload.outputs.artifact_id }}");
+  assert.match(download.uses, /^actions\/download-artifact@[0-9a-f]{40}$/u);
+  const devPreview = build.steps.find(step => step.id === "dev_preview");
+  assert.ok(build.steps.indexOf(upload) < build.steps.indexOf(download)
+    && build.steps.indexOf(download) < build.steps.findIndex(step => step.id === "dev_preview"));
+  assert.equal(devPreview.env.PROVIDER_ARTIFACT_ID, "${{ steps.upload.outputs.artifact_id }}");
+  assert.equal(devPreview.env.CANDIDATE_SHA, "${{ needs.authorize.outputs.candidate_sha }}");
+  assert.match(devPreview.run, /pages-dev-preview\.mjs/u);
   assert.equal(build.steps.some(step => String(step.uses || "").startsWith("actions/configure-pages@")), false);
 
   const deploy = pagesWorkflow.jobs.deploy;
@@ -165,8 +176,10 @@ test("Pages controller gates, applies, reconciles, and receipts the exact sealed
   assert.match(checkout.uses, /^actions\/checkout@[0-9a-f]{40}$/u);
   assert.equal(checkout.with.ref, "${{ needs.authorize.outputs.candidate_sha }}");
   assert.equal(checkout.with["persist-credentials"], false);
+  assert.equal(deploy.steps[sourceIndex].env.DEV_RECEIPT_DIGEST, "${{ needs.build.outputs.dev_receipt_digest }}");
   assert.match(deploy.steps[sourceIndex].run, /test "\$\(git rev-parse HEAD\)" = "\$CANDIDATE_SHA"/u);
   assert.match(deploy.steps[sourceIndex].run, /git status --porcelain=v1 --untracked-files=all/u);
+  assert.match(deploy.steps[sourceIndex].run, /DEV_RECEIPT_DIGEST/u);
   const preflight = deploy.steps[preflightIndex];
   assert.equal(preflight.env.EXPECTED_PAGE_URL, "https://huijoohwee.github.io/");
   assert.equal(preflight.env.EXPECTED_RULESET_SEMANTIC_DIGEST,

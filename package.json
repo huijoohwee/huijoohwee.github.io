@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/huijoohwee/huijoohwee.github.io#readme",
   "devDependencies": {
-    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/c11453caedfd6d813adead235ce8fa3b4b2cacb9",
+    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/29004b5ec299eb8ddda1485508099c0e186c130f",
     "fast-check": "3.23.2",
     "js-yaml": "4.3.1"
   }

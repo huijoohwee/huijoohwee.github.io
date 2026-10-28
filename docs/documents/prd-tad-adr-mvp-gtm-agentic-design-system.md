@@ -1,19 +1,19 @@
 ---
 title: "Design Token and Component Adoption"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
-revision: "0.1.0"
+version: "0.2.0"
+revision: "0.2.0"
 date: "2026-10-28"
 updated_date: "2026-10-28"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Design-system product function"
 continuity_id: "DESIGN-TOKEN-ADOPTION-001"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
@@ -26,7 +26,7 @@ template_revision: "1.5.0"
 template_sha256: "862369425974a704529164c02973a7ccb98b94d9a4eea73e347c8b4b57aa7966"
 worktree_id: "device-0232231d4a19--design-system-prd"
 agent_id: "codex"
-source_revision: "148cb5ccd3bd9f1db69ca1b8b261939bcee5e582"
+source_revision: "b10771228c625fa2167a663d63d09af9f1f2f2b9"
 lifecycle_status: "proposed"
 load_policy: "on-demand"
 runtime_readiness_policy: "fail-closed"
@@ -34,9 +34,9 @@ runtime_readiness_policy: "fail-closed"
 
 # Design Token and Component Adoption
 
-**Join:** `DESIGN-TOKEN-ADOPTION-001@0.1.0`. This child proposal turns the parent catalog concept into a bounded ownership and adoption contract. It does not create a palette, component package, public release, consumer migration, or deployment. The status is `spec-complete` because VCCs are defined; no VCC has satisfying implementation evidence.
+**Join:** `DESIGN-TOKEN-ADOPTION-001@0.2.0`, continuing `0.1.0`. This revision keeps the product-neutral contract and adds one bounded Commerce profile with a generated static consumer projection. It does not impose one palette across unrelated products, copy private runtime components, or authorize deployment. The status is `spec-complete` because VCCs are defined; implementation evidence is still pending.
 
-**Objective:** enable a contributor to identify the single authorized owner, exact revision, reuse rights and behavior contract for a design concern, then consume it without copied values or divergent variants.
+**Objective:** enable a contributor to identify the single authorized owner, exact revision, reuse rights and behavior contract for a design concern, then consume it without copied values or divergent variants. For Commerce, Shop, Vendor, Admin and the SME pack use one product profile, one shared shell and one generated CSS projection; role-specific content may vary, but theme-token values and shell implementations do not.
 
 ## Reference implementation — Agentic Design System
 
@@ -49,18 +49,20 @@ This labelled block contains repository-specific facts; the product contract bel
 | `agentic-graph` / `cd1da527e93b8657792292273731e6d1305a78bf` | `grph-shared/src/ui/kgTokens.ts` owns current graph token values and CSS generation; `canvas/src/features/panels/ui/mainPanelHelpIconLibrary.tsx` owns its icon mapping. `config/license-registry.json` classifies application source as private/no-reuse. | Keep source native and private; link exact revisions only. No copying or public transfer is authorized by this observation. |
 | `agentic-base` / `a5d0f2d87d8c6871e9639f8224f5eaee056c5b6e` | Existing package metadata is private; no public distribution right is established here. | Record the native owner and pin; do not publish or replicate runtime components. |
 | `agentic-commerce-os` / `88bd730c8f35da249fb23349c50820cc1932a95c` | `config/graph-data-view.json` and `public/local-first/graph-ui-tokens.css` show an exact consumer boundary; the consumer is not evidence of whole-product parity. | Preserve the source pin and local adapter; reconcile drift at the consuming owner. |
+| `agentic-design-system` / `09dd76e52d03bcb1e6312bc9e326668e1b1c1861` | Public static catalog and schema; catalog is draft and empty. `LICENSE` covers `site/` only and grants no rights in referenced sources. | Add one rights-bound Commerce profile source; generated consumer files remain static and local. |
+| `agentic-commerce-os` / `88bd730c8f35da249fb23349c50820cc1932a95c` | Shop, Vendor, Admin and SME share one local-first app; current shell and SME CSS contain divergent token owners. | Reuse the existing shared shell; remove role-specific token roots and keep one pinned generated profile projection. |
 
-No single color palette is imposed across unrelated products. Shared semantics, naming, accessibility requirements, source identity and generated-output rules are the common contract. Product-owned profile values may differ by design and remain one value per `(owner, profile, token, mode)` key.
+No single color palette is imposed across unrelated products. Shared semantics, naming, accessibility requirements, source identity and generated-output rules are the common contract. This increment owns one `commerce` profile at `agentic-design-system/site/tokens/commerce-profile.json`; its color, type, spacing, radius, focus, touch-target and semantic icon-role keys each have one value. Commerce consumes a deterministic, committed CSS projection pinned to the exact profile revision and digest. No page fetches the source at runtime. Graph and other product values remain native to their owners.
 
 ### Native design adoption record
 
-This inventory records exact owners where identified; every check is pending and no source transfer is authorized.
+This inventory records exact owners where identified; every check is pending. The user's request authorizes the Commerce profile change described here. It grants no Graph/Base source or asset transfer; those owners remain private or unverified.
 
 | Concern | Native owner at exact revision | Reused surface or utility | Acceptance check and result | Gap / next check |
 |---|---|---|---|---|
 | Identity and illustration | Product-owned assets; Graph example `canvas/public/favicon.svg` at `cd1da527e93b8657792292273731e6d1305a78bf` | Catalog link only; no asset copy | `design-license-boundary-check` — not run | Cross-product rights and owner inventory open. |
 | Settings and preferences | Graph `canvas/src/hooks/store/designSystemSlice.ts` at `cd1da527e93b8657792292273731e6d1305a78bf` | Keep native editor state | `design-settings-owner-check` — not run | No shared preference store is proposed. |
-| Tokens and render adapters | Graph `grph-shared/src/ui/themeTokens.ts` and `canvas/src/lib/ui/tokens-ssot.ts` at that revision; Commerce projection `public/local-first/graph-ui-tokens.css` at `88bd730c8f35da249fb23349c50820cc1932a95c` | Exact source pin and generated CSS | `design-generated-output-check` — not run | Values remain product-owned; digest/rights must be rechecked before use. |
+| Tokens and render adapters | Graph `grph-shared/src/ui/themeTokens.ts` and `canvas/src/lib/ui/tokens-ssot.ts` remain native at that revision; Commerce profile source is planned at `agentic-design-system/site/tokens/commerce-profile.json` | Exact source pin, digest and deterministic static CSS projection | `design-generated-output-check` — not run | Commerce profile rights and source/output digests must be recorded; no Graph values are copied. |
 | Typography and ideograms | Graph `grph-shared/src/ui/typography.ts`, `fontStacks.js`, and `canvas/src/features/panels/ui/mainPanelHelpIconLibrary.tsx` at the Graph revision | Link native typography/icon contracts | `design-accessibility-evidence-check` — not run | No cross-product font or icon transfer established. |
 | Editor surface | Private Base package at `a5d0f2d87d8c6871e9639f8224f5eaee056c5b6e`; Graph remains its consumer | Exact private pin only | `design-consumer-pin-check` — not run | No public package right or common editor owner. |
 | Status and evidence | OS `src/design.mjs` and `bin/agentic-os-design.mjs` at `3405dc1246a1b32cfb10c044602505c4cf169c48` | Structural owner/digest/cycle validation | `design-release-receipt-check` — not run | Structural checks do not establish rendered behavior or accessibility. |
@@ -85,12 +87,12 @@ This inventory records exact owners where identified; every check is pending and
 | Need | Start a visual or interaction change. | Resolve the concern and its owner. | Guessing or copying a nearby value. |
 | Discover | Search the local catalog. | One exact owner, profile, revision and license record. | Stale `latest` or conflicting records. |
 | Verify | Inspect API, accessibility and compatibility evidence. | See pass, gap or blocked state. | Treating a screenshot as proof of behavior. |
-| Adopt | Pin and consume the native owner. | Small adapter change with a rollback pin. | Second editable implementation. |
+| Adopt | Pin and consume the native owner. | One shared Commerce profile and shell across Shop, Vendor, Admin and SME. | Role-specific token overrides or a second editable implementation. |
 | Maintain | Report drift in the current owner workflow. | Update the source and regenerate deterministic projections. | Parallel registries and silent drift. |
 
-**Must:** catalog schema; one-owner manifest; exact revision and digest; profile/token key uniqueness; license status; accessibility evidence schema; compatible generated artifacts; pin and rollback record; static, narrow-screen and offline-readable docs.
+**Must:** catalog schema; one-owner manifest; exact revision and digest; profile/token key uniqueness; license status; accessibility evidence schema; compatible generated artifacts; pin and rollback record; static, narrow-screen and offline-readable docs. For Commerce, define one product-scoped semantic profile, generate one checked-in CSS projection, and have Shop, Vendor, Admin and SME consume the same profile and shared shell. Reject duplicate token declarations and per-role overrides. Keep runtime behavior, icon rendering and component code at their existing Commerce owner; expose semantic icon-role names without copying private or unlicensed assets.
 
-**Should:** local search and consumer map. **Could:** preview automation or a public runtime package after rights, owner and economic gates. **Won't:** global palette replacement, copied private source, new settings/state store, remote telemetry, paid service, runtime network dependency, or model calls.
+**Should:** local search and consumer map. **Could:** preview automation or a public runtime package after rights, owner and economic gates. **Won't:** one global palette across unrelated products, copied private source, new settings/state store, remote telemetry, paid service, runtime network dependency, or model calls.
 
 | VCC | Given / when / then | Named check | Constraint |
 |---|---|---|---|
@@ -101,6 +103,7 @@ This inventory records exact owners where identified; every check is pending and
 | DS-05 | A clean narrow browser opens a primed static catalog offline; content and local navigation remain usable. | `design-site-browser-check` | No remote fonts, CDN, telemetry or runtime model call. |
 | DS-06 | A public candidate is assembled; every included asset and source has explicit rights and attribution evidence. | `design-license-boundary-check` | Private/no-reuse inputs excluded. |
 | DS-07 | A release candidate is evaluated; source, delivery and rollback evidence identify exact revisions and authority separately. | `design-release-receipt-check` | Source integration does not imply deployment. |
+| DS-08 | Shop, Vendor, Admin and SME render the same Commerce profile and shared shell; CSS contains one owner per token and no role-specific theme override. | `design-singleton-enforcement-check` | Deterministic generated CSS, one exact source revision/digest, no runtime fetch; role content may still vary. |
 
 Agentic OS-ready status, AI Agent-ready discovery/execution and MCP Gateway-ready federation are unchanged and unpromoted. The catalog MVP makes no agent invocation, approval, orchestration or model call.
 
@@ -132,10 +135,10 @@ The free/manual alternative is owner documentation plus repository search. The F
 | Concern | One owner rule | Consumer contract |
 |---|---|---|
 | Semantic token names and constraints | A single policy owner defines meaning, required states and validation. | Product owner maps each semantic name to one local profile value. |
-| Profile values | Each product owns its profile; only that owner edits its values. | Consumers pin profile ID, revision and digest. Profiles are not merged by visual similarity. |
-| Runtime components and behavior | Existing product owner retains source and state. | Contract-only adapter or exact authorized dependency; no copied runtime implementation. |
-| Icons and identity assets | Native licensed source owner. | Reference by exact path/revision and rights; exclude unlicensed material. |
-| Generated CSS/manifests | Deterministic generator from the native source. | Read-only output, reproducibility and digest check. |
+| Profile values | Each product owns its profile. This increment's single Commerce profile has one editable source in `agentic-design-system/site/tokens/commerce-profile.json`. | Consumers pin profile ID, revision and digest. Profiles are not merged by visual similarity. |
+| Runtime components and behavior | Commerce keeps one shared shell and existing state in `agentic-commerce-os`; role views supply data only. | Shop, Vendor, Admin and SME import the same shell owner; no copied or role-specific shell variants. |
+| Icons and identity assets | Native licensed source owner; Commerce retains one shared icon renderer and semantic role map. | Reuse exact path/revision and rights; exclude unlicensed material and duplicate renderers. |
+| Generated CSS/manifests | Deterministic generator from the Commerce profile source. | Read-only consumer projection, exact source pin, reproducibility and digest check; no runtime network request. |
 | Catalog and static docs | Catalog owner curates links, contracts and status. | Static output; runtime does not fetch it to render product UI. |
 
 Manifest fields: stable concern ID; owner; repository/path; immutable revision; source/output digest; token/profile key or API version; license/attribution; supported surface; accessibility contract; named evidence; consumers and pins; deprecation/rollback target. Unknown required fields block use. No second token registry may own the same key.
@@ -218,7 +221,7 @@ Threats: poisoned manifest, stale source digest, duplicate key, incompatible ada
 
 ## ADR-01 — Shared semantics, native profile values
 
-**Status:** proposed. **Decision:** standardize semantic contracts, owner identity, manifest shape, accessibility obligations and deterministic projections; preserve each product’s profile values and native runtime owner. No global palette or shared component extraction without a separate transfer decision.
+**Status:** proposed. **Decision:** standardize semantic contracts, owner identity, manifest shape, accessibility obligations and deterministic projections. This increment owns one Commerce-specific profile and one generated projection; it does not impose that palette on other products. Preserve native runtime owners and use the existing Commerce shell/icon renderer as the singleton across Shop, Vendor, Admin and SME.
 
 | Alternative | Benefit | Cost / reason not selected |
 |---|---|---|
@@ -238,24 +241,24 @@ Recovery: remove the catalog entry or revert a consumer pin to its predecessor; 
 
 ## MVP
 
-**MVP slice:** catalog one approved token concern and one behavior contract as links to exact native owners; validate owner/key/digest/rights; show a consumer pin and rollback target; test static mobile/offline docs. No source transfer or runtime migration.
+**MVP slice:** add one rights-bound Commerce profile source with unique semantic keys; generate a deterministic Commerce CSS projection pinned to its exact revision and digest; remove conflicting per-role token roots; reuse the existing shared Commerce shell and icon renderer across Shop, Vendor, Admin and SME; add a regression check for duplicate/overriding declarations; verify the rendered local-first app at narrow and desktop widths, including offline-safe local assets. No private Graph/Base code, runtime package, external fetch or production deployment.
 
 | VCC | Evidence Reference | Local rung | Delivered rung |
 |---|---|---|---|
-| DS-01–DS-07 | None; checks are specified, not run or satisfied. | spec-complete | undocumented |
+| DS-01–DS-08 | None; checks are specified, not run or satisfied. | spec-complete | undocumented |
 
 **Demo Skeleton:** Hook (find conflicting-looking value) → Probe (resolve owner/pin) → Reveal=DS-01 (one exact owner and rights state) → inspect contract → Close (select native owner or record blocker); ≤3 minutes, timed pilot not run. Domain-object rubric: unassessed; blocker for next level is owner inventory plus rights evidence.
 
 ### Roadmap
 
-**Owner and join:** product function · `DESIGN-TOKEN-ADOPTION-001@0.1.0`; this is the only roadmap for this increment.
+**Owner and join:** product function · `DESIGN-TOKEN-ADOPTION-001@0.2.0`; this continues the same roadmap and document.
 
 | Phase | Pain rank / reuse | Exit VCC and bounds | Stop / recovery |
 |---|---|---|---|
-| A: baseline | P1 unvalidated; inspect owners and timed tasks. | Signed inventory, five timed tasks, rights gaps; ≤80 min. | Stop if owner cannot be identified; retain links only. |
-| B: catalog pilot | Reuse native sources and existing validation. | DS-01/02/06; ≤25 paths, ≤100 kB. | Remove failing record; no pin change. |
-| C: one consumer | Smallest adapter at an existing seam. | DS-03/04 with consumer owner; same caps. | Revert pin and generated projection together. |
-| D: delivery decision | Reuse static docs route only if route owner confirms. | DS-05/07 with exact source, delivery, rollback receipts. | No deployment without explicit owner instruction. |
+| A: source and rights | P1 unvalidated; reuse existing Commerce profile values and shell behavior. | One editable profile, verified source license/permission, exact digest; ≤25 paths, ≤100 kB. | Stop if any source or rights owner is unclear; publish no catalog record. |
+| B: generated consumer | Reuse static CSS and local-first shell; remove role overrides. | DS-03/08; all four roles use the same profile and shell; no new dependency. | Revert the generated projection and pin together. |
+| C: visual/accessibility proof | Reuse existing browser and accessibility checks. | DS-04/05 with device, browser, viewport and offline evidence. | Fix owner source; do not add page-specific overrides. |
+| D: delivery decision | Reuse the static site route only if its owner confirms. | DS-06/07 with exact source, delivery and rollback receipts. | No deployment without explicit owner instruction. |
 
 ## GTM
 
@@ -286,32 +289,32 @@ Cash on the balance sheet must equal ending cash from the cash-flow statement; n
 
 ## C01–C16 coverage
 
-**Join:** `DESIGN-TOKEN-ADOPTION-001@0.1.0` · **As of:** 2026-10-28 · **Owner:** Design-system product function. **0:** source ownership and duplicate risk are observed; pain, market and WTP are unknown. **1:** resolve one concern to one owner/pin in ≤5 minutes during five tasks; no observation yet.
+**Join:** `DESIGN-TOKEN-ADOPTION-001@0.2.0` · **As of:** 2026-10-28 · **Owner:** Design-system product function. **0:** source ownership and duplicate risk are observed; pain, market and WTP are unknown. **1:** resolve one concern to one owner/pin in ≤5 minutes during five tasks; no observation yet.
 
 | Domain | Decision | Source section@revision | Evidence / gap | Owner | Next check / trigger |
 |---|---|---|---|---|---|
-| C01 Purpose, customer, pain | covered | PRD@0.1.0 | P1 hypothesis; no interviews | Product | Five tasks before baseline sign-off |
-| C02 Market, timing | covered | GTM@0.1.0 | Broad populations cited; price/fit unknown | Product | Segment and price evidence before sizing claim |
-| C03 Offer, alternatives | covered | GTM + ADR@0.1.0 | Manual/FOSS alternatives; offer unpriced | Product | Compare after observed repeated pain |
-| C04 Product, experience | covered | PRD@0.1.0 | Journey, mobile/offline/accessibility VCCs; no behavior pass | UX | Run DS-04/05 after pilot |
-| C05 Architecture, data | covered | TAD@0.1.0 | Owners, interfaces and five flows specified | Architecture | Recheck exact pins before source work |
-| C06 Quality, security, AI | covered | TAD@0.1.0 | Threats/fallback/rights/cost stated; no implementation proof | Security | Validate manifest and rights before candidate |
-| C07 Decisions, tradeoffs | covered | ADR@0.1.0 | Native owners selected; transfer deferred | Architecture | Revisit only on two-consumer evidence |
-| C08 Smallest validated slice | covered | MVP@0.1.0 | Slice and checks defined; no passing evidence | Product | Execute DS-01/02/05 |
-| C09 Acquisition, retention | covered | GTM@0.1.0 | Experiment defined; no buyer channel evidence | GTM | Review task outcomes before external test |
-| C10 Operations | covered | TAD/GTM@0.1.0 | Single maintainer, recovery and caps specified | Operations | Time actual pilot and review incidents |
-| C11 Organization, obligations | covered | TAD/ADR@0.1.0 | Rights/privacy gates named; legal owner/review open | Product counsel | Resolve before any public source inclusion |
-| C12 Financial viability | covered | GTM@0.1.0 | Formulae given; numeric inputs/statements unknown | Finance | Populate only from cost/payment receipts |
-| C13 Capital, milestones | covered | Roadmap@0.1.0 | Bootstrap/$0 plan; no ask or funding evidence | Product | Revisit if $0 cap cannot be maintained |
-| C14 ADLC execution | covered | Roadmap@0.1.0 | Current authoring lane scoped; delivery distinct | ADLC owner | Record source and exact no-deploy disposition |
+| C01 Purpose, customer, pain | covered | PRD@0.2.0 | P1 hypothesis; no interviews | Product | Five tasks before baseline sign-off |
+| C02 Market, timing | covered | GTM@0.2.0 | Broad populations cited; price/fit unknown | Product | Segment and price evidence before sizing claim |
+| C03 Offer, alternatives | covered | GTM + ADR@0.2.0 | Manual/FOSS alternatives; offer unpriced | Product | Compare after observed repeated pain |
+| C04 Product, experience | covered | PRD@0.2.0 | Journey, mobile/offline/accessibility VCCs; no behavior pass | UX | Run DS-04/05/08 after pilot |
+| C05 Architecture, data | covered | TAD@0.2.0 | Owners, interfaces and five flows specified | Architecture | Recheck exact pins before source work |
+| C06 Quality, security, AI | covered | TAD@0.2.0 | Threats/fallback/rights/cost stated; no implementation proof | Security | Validate manifest and rights before candidate |
+| C07 Decisions, tradeoffs | covered | ADR@0.2.0 | One Commerce profile and existing native runtime owner selected | Architecture | Revisit only on two-consumer evidence |
+| C08 Smallest validated slice | covered | MVP@0.2.0 | Slice and checks defined; no passing evidence | Product | Execute DS-01/02/05/08 |
+| C09 Acquisition, retention | covered | GTM@0.2.0 | Experiment defined; no buyer channel evidence | GTM | Review task outcomes before external test |
+| C10 Operations | covered | TAD/GTM@0.2.0 | Single maintainer, recovery and caps specified | Operations | Time actual pilot and review incidents |
+| C11 Organization, obligations | covered | TAD/ADR@0.2.0 | Rights/privacy gates named; legal owner/review open | Product counsel | Resolve before any public source inclusion |
+| C12 Financial viability | covered | GTM@0.2.0 | Formulae given; numeric inputs/statements unknown | Finance | Populate only from cost/payment receipts |
+| C13 Capital, milestones | covered | Roadmap@0.2.0 | Bootstrap/$0 plan; no ask or funding evidence | Product | Revisit if $0 cap cannot be maintained |
+| C14 ADLC execution | covered | Roadmap@0.2.0 | Planning and code lanes, delivery distinct | ADLC owner | Record source and exact no-deploy disposition |
 | C15 Audience projections | deferred | Venture@0.1.0 | Depends on validated pain/WTP and sourced financial inputs; audience claims are not yet evidenced | Product | Revisit after those inputs exist |
-| C16 Learning, next increment | covered | MVP/GTM@0.1.0 | Five-task threshold and successor trigger defined | Product | Update existing learning record after pilot |
+| C16 Learning, next increment | covered | MVP/GTM@0.2.0 | Five-task threshold and successor trigger defined | Product | Update existing learning record after pilot |
 
 **Coverage:** 16/16 dispositioned; 15/15 applicable covered; 1 deferred; 0 not applicable. Revisit at baseline, MVP acceptance and audience handoff. Learning belongs in the existing learning owner; no second registry is introduced.
 
 ## ADLC and release boundary
 
-This lane writes one planning document only. Local authoring checks are named in the handoff; no product code, consumer pin, package, site payload or runtime is changed. The Pages deployment workflow excludes `docs/documents/`; disposition this exact path as no-deploy after source integration. Source merge, delivery and deployment are separate states. No operator promotion instruction exists here, so delivered readiness remains `undocumented`.
+This lane revises the existing planning document only. Local authoring checks are named in the handoff; no product code, consumer pin, package, site payload or runtime is changed here. The Pages deployment workflow excludes `docs/documents/`; disposition this exact path as no-deploy after source integration. Source merge, delivery and deployment are separate states. No operator promotion instruction exists here, so delivered readiness remains `undocumented`.
 
 ## Evidence and references
 

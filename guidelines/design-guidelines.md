@@ -1,8 +1,8 @@
 ---
 title: "Design Guidelines"
 doc_type: "Guidelines"
-version: "2.1.0"
-date: "2026-09-24"
+version: "2.2.0"
+date: "2026-10-28"
 lang: "en-US"
 frontmatter_contract: "required"
 ---
@@ -26,7 +26,7 @@ frontmatter_contract: "required"
 - `flow-patterns` — user journey, workflow, data flow, orchestration/harness, topology integration
 - `state-management-architecture` — unidirectional data flow, normalization
 - `accessibility--internationalization` — a11y requirements, i18n strategy
-- `performance-design-patterns` — rendering optimization, data fetching
+- `performance-design-patterns` — responsive layout, rendering optimization, data fetching
 - `cid-directive-matrix` — alphabetical, project-agnostic design directives
 - `anti-pattern-guards` — prohibited patterns and their corrections
 - `design-validation-checklist` — pre-implementation and post-documentation gates
@@ -332,6 +332,22 @@ When multiple consumers (e.g., viewer, table of contents, editor) operate on the
 
 **Rule**: performance targets are component acceptance criteria, not aspirational metrics.
 
+### Responsive layout workflow
+
+Keep responsive rules in the existing layout owner and this as the single workflow reference; consumers
+link here rather than copying checklists. Start with intrinsic narrow layout and shared components and
+tokens. Add breakpoints only for reproduced constraints; remove superseded overrides and duplicate rules.
+
+1. **Select:** Name one region, interaction and pass signal; reproduce locally. Reuse evidence only when
+its source, state and browser behavior match. Set an ETA and byte/module cap; default to zero new modules,
+dependencies, assets, runners or width matrices and target 15 active minutes per region. Never waive
+correctness or reach acceptance; extend scope only on reproduced evidence.
+2. **Verify:** Reuse one live-browser session for one narrow target and one wide control. If changing a
+breakpoint, test just on both sides; keep the wide control only when it covers a distinct layout. Cover
+only affected behavior and criteria. For a new surface, meet the full [reach contract](design-theme-contract.md#accessibility-and-reach); for an existing surface, recheck changed criteria. Add routes, states or devices only for crossing rules, reproduced failures or platform behavior. Check behavior and accessibility directly; screenshots support review. Emulation proves geometry; use a device only for OS, browser, touch or performance claims.
+3. **Close:** Fix the existing owner, remove stale rules, rerun the failure plus nearest width, and stop
+when acceptance passes. Record viewport, state, interaction and active time.
+
 ### Data Fetching
 
 **Pattern**: cache-first → stale-while-revalidate → optimistic updates
@@ -482,6 +498,7 @@ Each row is a universal, neutral, project-agnostic directive in `Context | Inten
 - [ ] Code split at route and feature boundaries
 - [ ] Core Web Vitals targets met: FCP < 1.8 s, LCP < 2.5 s, CLS < 0.1, TTI < 3.8 s
 - [ ] Token sharing applied where multiple sibling consumers parse the same source
+- [ ] Responsive changes follow the [responsive layout workflow](#responsive-layout-workflow)
 
 ### State (Required)
 

@@ -2482,6 +2482,22 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:agentic-graph-import-url-complete-page-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-import-url-complete-page-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-import-url-complete-page-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-import-url-complete-page-prd-tad-adr-mvp-gtm.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:agentic-graph-infinite-canvas-interaction-performance-document",
       "@type": "kg:Node",
       "labels": [

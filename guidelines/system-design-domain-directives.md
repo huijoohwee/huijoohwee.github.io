@@ -164,6 +164,14 @@ This module is loaded on demand from [System Design Guidelines](./system-design-
 
 **Security Pattern**: Authenticate at edge → authorize at service → audit everywhere
 
+### Browser Content Security Policy
+
+- Production HTML responses enforce a `Content-Security-Policy` response header by default. Scope each policy to the product route and its required resource origins; never disable CSP globally to fix one integration.
+- Use `Content-Security-Policy-Report-Only` to discover violations in Dev. Before promotion, exercise the candidate with its intended enforcing policy in Dev, then verify that policy on the Production response for the same candidate.
+- Avoid `unsafe-inline`, `unsafe-eval`, and broad scheme or wildcard sources. When inline code is required, prefer nonces or hashes. Record any exception with its route, owner, reason, compensating control, and review date.
+- Verify the effective response policy in release readbacks; source configuration or a Report-Only header alone is not enforcement evidence.
+- CSP governs resources loaded and connections initiated by the browser document. It does not replace server authorization or restrict an independent MCP client; browser-side MCP/WebMCP code and its page-initiated requests remain subject to the document policy.
+
 ---
 
 ---

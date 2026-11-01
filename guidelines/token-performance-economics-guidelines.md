@@ -1,8 +1,8 @@
 ---
 title: "Token Performance and Economics Guidelines"
 doc_type: "Guideline Module"
-version: "2.1.0"
-date: "2026-09-21"
+version: "2.2.0"
+date: "2026-11-01"
 lang: "en-US"
 schema: "agentic-economics-guidelines/v2"
 frontmatter_contract: "required"
@@ -146,6 +146,11 @@ unchanged candidate/context when its successful umbrella command covers the
 needed checks; failures confer no inferred coverage. A source or context change
 invalidates affected results. Report fixture, repository, cross-repository E2E and
 live-provider evidence separately. Never label a focused suite as the full loop.
+For costly mobile/responsive/offline journeys, run affected-owner checks in the edit loop
+and batch the complete declared journey once on the stable final candidate. Relevant input drift
+reopens affected checks; unknown impact follows the owner's broader fallback, and required CI stays
+required. Record device/browser/network context and focused-versus-complete coverage. This scheduling
+rule makes no measured-savings claim by itself.
 
 For payment flows, optimize discovery and readback with deterministic operations.
 Keep explicit buyer confirmation, current price/expiry, idempotency, reconciliation,

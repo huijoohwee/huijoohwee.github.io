@@ -1,8 +1,8 @@
 ---
 title: "Testing Workflow & Maintenance Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.1.0"
+date: "2026-11-01"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -185,13 +185,18 @@ Refactor Code (REFACTOR)
        │   └─ Yes ─► Continue
        │
        ▼
-Run Full Test Suite
+Run focused checks for the changed owner
        │
-       ├─► All pass?
-       │   │
-       │   ├─ No ─► Fix failures
-       │   │
-       │   └─ Yes ─► Continue
+       ├─► Failure? ─► Fix and repeat affected checks
+       │
+       └─► Behavior still changing? ─► Continue the edit loop
+       │
+       ▼
+Run the applicable full integration journey once on the final candidate
+       │
+       ├─► Relevant input changed afterward? ─► Rerun affected checks
+       │
+       └─► Otherwise retain the exact coverage result
        │
        ▼
 Commit Changes
@@ -210,6 +215,19 @@ Merge to Main
 ```
 
 **Directive**: Forbid deviating from TDD cycle without justification.
+
+### Costly Mobile and Offline Journeys
+
+Use fast affected-owner checks while implementation is changing. When the acceptance scope includes
+a mobile/responsive or offline browser journey, batch the complete declared journey after behavior
+stabilizes and run it once on the final candidate before handoff. Keep the check owner's required
+coverage and protected CI intact. Use one executor for equivalent coverage; if exact required CI
+covers these inputs, wait on that run instead of starting a duplicate local journey. A change in
+route, layout, persistence, service-worker/network behavior, test harness or device/browser context
+reopens the checks it affects; unknown impact follows the owner's broader fallback. Record the source
+identity, command, device/browser/viewport and
+network states, and whether the evidence is focused or complete. A focused result never stands in
+for the complete journey.
 
 ---
 

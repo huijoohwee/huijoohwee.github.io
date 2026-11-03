@@ -1,19 +1,19 @@
 ---
 title: "Central Design System"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.3.0"
-revision: "0.3.0"
+version: "0.5.0"
+revision: "0.5.0"
 date: "2026-10-23"
 updated_date: "2026-11-03"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product design system function"
 continuity_id: "DESIGN-SYSTEM-01"
-prd_revision: "0.3.0"
-tad_revision: "0.3.0"
-adr_revision: "0.3.0"
-mvp_revision: "0.3.0"
-gtm_revision: "0.3.0"
+prd_revision: "0.5.0"
+tad_revision: "0.5.0"
+adr_revision: "0.5.0"
+mvp_revision: "0.5.0"
+gtm_revision: "0.5.0"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
@@ -21,14 +21,14 @@ universal_scope: false
 parent: "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
 parent_version: "3.4.0"
 guideline_source: "huijoohwee.github.io/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
-reviewed_source_revision: "20885603c3cb5bb7e4aa3bf8c0bc524851f02e63"
+reviewed_source_revision: "3f56c215f2d62cfc644f366723ed6bf41df90829"
 load_policy: "on-demand"
 lifecycle_status: "proposed"
 ---
 
 # Central Design System
 
-**DESIGN-SYSTEM-01@0.3.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
+**DESIGN-SYSTEM-01@0.5.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
 design-system source of truth, catalog and documentation surface across existing products. It does
 not claim that a repository, public route, package, release or runtime adoption already exists.
 
@@ -36,13 +36,13 @@ not claim that a repository, public route, package, release or runtime adoption 
 brand profile, guideline, accessibility contract or reusable component, then apply it without
 copying an implementation or creating an unregistered variant.
 
-**Scope state:** proposed; source rights and one component-library ownership model remain blockers.
-The Design System repository now owns a local candidate profile for two shared icon sizes; its
-consumers are local, unmerged projections. This bounded token ownership does not transfer existing
-product token sets, icons or runtime components. The route target and edge owner are selected, but
-implementation and production receipts are pending. Market pain and willingness to pay are
-hypotheses. Local source inspection grounds ownership and candidate checks only; it does not prove
-protected integration, public release, deployment or production adoption.
+**Scope state:** proposed; public source rights and one component-library ownership model remain
+blockers. Design System owns one merged profile for two shared icon sizes, and Base, Graph and
+Commerce have corresponding source integrations recorded in the child delta. This bounded token
+ownership does not transfer existing product token sets, icons or runtime components. The route target
+and edge owner are selected, but production receipts are pending. Market pain and willingness to pay
+remain hypotheses. Protected source integration does not prove public release, deployment or
+production adoption.
 
 ## Reference implementation: Agentic Design System
 
@@ -52,7 +52,7 @@ for another product with equivalent owners and evidence.
 | Repository or surface | Exact inspected revision | Inspected source and observed contract | Consequence |
 |---|---|---|---|
 | huijoohwee.github.io | 254ad7c28ded94f0169c29c63db589a72bd5e8ef | guidelines/design-theme-contract.md 1.1.0 assigns one owner per concern; says application state and interactive components stay with their product owner, and cross-repo adoption links exact source revisions rather than copying runtime components. docs/DEPLOY-WORKFLOW.md publishes index.html and guidelines/ only. | Use the existing design contract; keep this proposal in docs/documents, outside that Pages payload. |
-| agentic-design-system | source candidate 3224afd19c086e511dcfd892d82d12b68460b971; registry/projection candidate f5faa7887d22ffbd61121f30485a8d9ecca957e4 | Candidate `shared-ui` profile 0.1.0 defines only `icon.size.compact` (0.75rem) and `icon.size.default` (1rem); source digest `sha256:f335bd273298f267eddffdf3b3f344a69e31e965223e527e6f599b2947ac9856`, projection digest `sha256:c1b166161b7d85ee3bfe8aa085e3427718086de4dfd1445225b52b747fbe475d`. The MIT license scope is `site/`. | Name Design System as sole owner of these two generic size keys. Treat generated consumer projections as pinned/read-only; this candidate is not merged or released. |
+| agentic-design-system | PR #8 merged as `487b0680ac73b0157897d75d87841826095711f3`; source candidate `3224afd19c086e511dcfd892d82d12b68460b971`; registry/projection head `f5faa7887d22ffbd61121f30485a8d9ecca957e4` | Merged `shared-ui` profile 0.1.0 defines only `icon.size.compact` (0.75rem) and `icon.size.default` (1rem); source digest `sha256:f335bd273298f267eddffdf3b3f344a69e31e965223e527e6f599b2947ac9856`, projection digest `sha256:c1b166161b7d85ee3bfe8aa085e3427718086de4dfd1445225b52b747fbe475d`. The MIT license scope is `site/`. | Name Design System as sole owner of these two generic size keys. Treat generated consumer projections as pinned/read-only; source integration does not claim a public release. |
 | agentic-os | 8a16da19effb9cfb0dab750558454816153229c2 | guides/SYSTEM-PROMPT-RUNTIME.md and docs/START-WORKFLOW.md require free/FOSS, bounded work and source/deploy evidence separation. | Keep policy and lifecycle contracts owned here; design-system consumers reference them. |
 | agentic-commerce-os | 9454664 | `wrangler.edge.jsonc` owns the production edge Worker and `airvio.co` Commerce prefix; the existing release contract currently admits one route. | Extend the edge owner with a separate, exact static-site path and its own candidate/readback/rollback evidence; keep Commerce behavior intact. |
 | agentic-graph | 60333d43486537df7b89f46293c58f282b0394f0 | canvas/src/lib/ui/tokens-ssot.ts re-exports grph-shared/ui/kgTokens; source is grph-shared/src/ui/kgTokens.ts. DesignSystemHub.tsx states those tokens are authored once and generated CSS is read-only. config/surface-registry.json declares https://airvio.co as publicOrigin and registers /agentic-graph/; the design-system route is not in the inspected route entries. config/license-registry.json classifies application source as NONE-private and built output as no-reuse. | Retain Graph ownership of its existing tokens. Its candidate consumer uses only the two shared icon-size values; route and broader source publication need separate owner evidence. |
@@ -449,10 +449,12 @@ exists, and independent evaluation emits Evidence References. Public runtime del
 requires the route owner, exact production authority and VCC-08 receipts. No rung is inferred from
 this proposal.
 
-**Current evidence state:** specification and local candidate checks are recorded in the child
-adoption delta. Candidate source and consumer branches remain unmerged; there is no protected release,
-public deployment or production receipt. The child records live local UI observations only. Local
-readiness is `spec-complete`; delivered readiness remains `undocumented`.
+**Current evidence state:** specification and live local UI checks are recorded in the child adoption
+delta. Design System PR #8 (`487b068…`), Base PR #24 (`46d168…`) and #25 (`026b665…`), and Commerce
+PR #181 (`6725e4…`) are merged. Graph PR #1885 was aligned at `0155148…`, its exact tree is present in
+protected main at `815b817…`, both refreshed checks passed, and the empty PR was closed as a no-op.
+There is no production deployment or production receipt. Local readiness is `spec-complete`; delivered
+readiness remains `undocumented`.
 
 ## GTM
 
@@ -585,15 +587,15 @@ source-grounded catalog design or disjoint local discovery work.
 
 | PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
 |---|---|---|---|
-| **DESIGN-SYSTEM-01@0.3.0** | C: Existing catalog and native ownership rules; source candidates now define exactly two generic shared icon-size keys · I: Resolve ownership without copying or creating a competing value · D: Assign those keys to one Design System profile and record pinned local consumer evidence in the child delta · R: Product spec author · A: Binds one owner and keeps release/deploy gates explicit · O: Reviewable source-and-consumer contract · check: local docs and candidate evidence only | 2026-11-03 |
+| **DESIGN-SYSTEM-01@0.5.0** | C: Existing catalog and native ownership rules; merged source integrations define exactly two generic shared icon-size keys · I: Resolve ownership without copying or creating a competing value · D: Assign those keys to one Design System profile, record exact consumer merge receipts and retain separate release/deploy gates · R: Product spec author · A: Binds one owner and forbids competing token variants · O: Reviewable source-and-consumer contract · check: required source checks passed; local live UI evidence is recorded separately from production delivery | 2026-11-03 |
 
 This is the planning row for this authored revision. The repository PRD policy check is a source
 guideline check; it does not evaluate this docs/documents artifact. Protected source integration,
 deployment and runtime acceptance remain separate evidence stages.
 
-## Authoring handoff — 2026-11-03
+## Integration and authoring handoff — 2026-11-03
 
-- **Artifact state:** 0.3.0 updates the central ownership contract; the singular child records the two-key adoption delta and local-only evidence. Both remain lane changes, with no protected integration or release receipt.
-- **Checks:** `npm run guideline:check`, `npm run agentic-naming:check`, frontmatter parsing and `git diff --check` passed; the files are 599/99 lines. Guideline policy checks do not assess product, rights or deployment readiness.
-- **Not proven:** public rights for consumer source, protected merges, release, market demand, production deployment and rollback remain open. Consumer observations are local candidate evidence only.
-- **Cost and handoff:** $0 external spend and no provider effect in this authoring lane. Follow RELEASE-WORKFLOW.md before any integration; no deployment is in scope.
+- **Artifact state:** PR #320 merged its revision 0.3.0 handoff as `3f56c215f2d62cfc644f366723ed6bf41df90829`; revision 0.4.0 recorded that historical receipt. Revision 0.5.0 records the completed shared-icon source integrations and replaces the stale 0.4.0 handoff.
+- **Source receipts:** Design System PR #8 merged as `487b0680ac73b0157897d75d87841826095711f3`; Base PR #24 as `46d168d0d26ad52bde56938102a5acdcf11a4da9`; Base PR #25 as `026b66535a76dfb8be3e828872b8d07b35807d6e`; Commerce PR #181 as `6725e4be4b356e77cf64449da42c7d69f4994ef1`. Graph lane head `0155148db30a32cb3391ff6ee665f0abe09784fa` was aligned with protected main `815b8172dfb6c57228463f66816717a64b9a2e92`; PR #1885 had an empty diff, both checks passed, and it was closed as a no-op.
+- **Checks and limits:** Each listed merged source PR had its required check successful. The child records live local browser observations and their viewport limits. Public rights, market demand, production deployment and rollback remain unproven; local observations do not claim production behavior.
+- **Cost and handoff:** $0 external spend. These docs are outside the Pages payload; no deployment is authorized or in scope. Use one successor revision for any later scope change; do not retain a stale or parallel handoff variant. See RELEASE-WORKFLOW.md for later source integration.

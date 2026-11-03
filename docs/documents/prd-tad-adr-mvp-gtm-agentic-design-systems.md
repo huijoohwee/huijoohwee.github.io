@@ -1,19 +1,19 @@
 ---
 title: "Central Design System"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.3.0"
-revision: "0.3.0"
+version: "0.4.0"
+revision: "0.4.0"
 date: "2026-10-23"
 updated_date: "2026-11-03"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product design system function"
 continuity_id: "DESIGN-SYSTEM-01"
-prd_revision: "0.3.0"
-tad_revision: "0.3.0"
-adr_revision: "0.3.0"
-mvp_revision: "0.3.0"
-gtm_revision: "0.3.0"
+prd_revision: "0.4.0"
+tad_revision: "0.4.0"
+adr_revision: "0.4.0"
+mvp_revision: "0.4.0"
+gtm_revision: "0.4.0"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
@@ -21,14 +21,14 @@ universal_scope: false
 parent: "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
 parent_version: "3.4.0"
 guideline_source: "huijoohwee.github.io/guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
-reviewed_source_revision: "20885603c3cb5bb7e4aa3bf8c0bc524851f02e63"
+reviewed_source_revision: "3f56c215f2d62cfc644f366723ed6bf41df90829"
 load_policy: "on-demand"
 lifecycle_status: "proposed"
 ---
 
 # Central Design System
 
-**DESIGN-SYSTEM-01@0.3.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
+**DESIGN-SYSTEM-01@0.4.0** is one joined PRD, TAD, ADR, MVP and GTM proposal. It scopes a central
 design-system source of truth, catalog and documentation surface across existing products. It does
 not claim that a repository, public route, package, release or runtime adoption already exists.
 
@@ -585,15 +585,15 @@ source-grounded catalog design or disjoint local discovery work.
 
 | PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
 |---|---|---|---|
-| **DESIGN-SYSTEM-01@0.3.0** | C: Existing catalog and native ownership rules; source candidates now define exactly two generic shared icon-size keys · I: Resolve ownership without copying or creating a competing value · D: Assign those keys to one Design System profile and record pinned local consumer evidence in the child delta · R: Product spec author · A: Binds one owner and keeps release/deploy gates explicit · O: Reviewable source-and-consumer contract · check: local docs and candidate evidence only | 2026-11-03 |
+| **DESIGN-SYSTEM-01@0.4.0** | C: Existing catalog and native ownership rules; source candidates define exactly two generic shared icon-size keys · I: Resolve ownership without copying or creating a competing value · D: Assign those keys to one Design System profile and record pinned local consumer evidence in the child delta · R: Product spec author · A: Binds one owner and keeps release/deploy gates explicit · O: Reviewable source-and-consumer contract · check: protected source checks passed; consumer evidence remains local | 2026-11-03 |
 
 This is the planning row for this authored revision. The repository PRD policy check is a source
 guideline check; it does not evaluate this docs/documents artifact. Protected source integration,
 deployment and runtime acceptance remain separate evidence stages.
 
-## Authoring handoff — 2026-11-03
+## Integration and authoring handoff — 2026-11-03
 
-- **Artifact state:** 0.3.0 updates the central ownership contract; the singular child records the two-key adoption delta and local-only evidence. Both remain lane changes, with no protected integration or release receipt.
-- **Checks:** `npm run guideline:check`, `npm run agentic-naming:check`, frontmatter parsing and `git diff --check` passed; the files are 599/99 lines. Guideline policy checks do not assess product, rights or deployment readiness.
-- **Not proven:** public rights for consumer source, protected merges, release, market demand, production deployment and rollback remain open. Consumer observations are local candidate evidence only.
-- **Cost and handoff:** $0 external spend and no provider effect in this authoring lane. Follow RELEASE-WORKFLOW.md before any integration; no deployment is in scope.
+- **Artifact state:** Revision 0.3.0 was authored before integration. PR #320 merged head `b4ef68ac2a7a68b7bb0521da1c3e6c631a17e5a5` into protected main as `3f56c215f2d62cfc644f366723ed6bf41df90829`; revision 0.4.0 records the current receipt.
+- **Checks:** PR #320's `guideline-contract-check` and `adlc-policy-contract` passed. Local `npm run guideline:check`, `npm run agentic-naming:check`, frontmatter parsing and `git diff --check` passed; the files are 599/99 lines.
+- **Not proven:** consumer source merges, public rights, market demand, production deployment and rollback remain open. Consumer observations are local candidate evidence only.
+- **Cost and handoff:** $0 external spend. These docs are outside the Pages payload; no deployment is in scope. See RELEASE-WORKFLOW.md for any later source integration.

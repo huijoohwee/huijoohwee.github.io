@@ -13,7 +13,7 @@ universal_scope: true
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.0"
+parent_version: "3.4.1"
 ---
 
 # Agentic Reverse Engineering — PRD-TAD-ADR-MVP-GTM

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.4.0"
-date: "2026-09-30"
+version: "3.4.1"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -429,7 +429,7 @@ The [ADLC Guidelines](./adlc-guidelines.md) own execution: task model, per-task 
 - Read readiness, cost, and integration facts back only from Evidence References and receipts; the Financial Model's ADLC Cost Ledger consumes those receipts by exact reference — `unproven-claim`, `adlc-cost-unledgered`
 - Keep the operator path externally simple — start one lane, release one exact candidate, deploy one exact protected revision — `gate-order-drift`
 - Size source control to measured load: default to Git, protected PR, and affected pre-merge checks. Reuse current provider metadata for ref/PR/check questions without a checkout; hydrate exact shallow/path bytes only for required local byte/tree evidence. Post-merge checks supplement required pre-merge checks. Consider a custom VCS, cache, sparse/virtual checkout, or other topology only when repeatable checkout-count, hydrated-byte, stage-time, or runner-cost measurements exceed the declared budget and an ADR approves it ([scale reference](https://www.anthropic.com/research/redesigning-source-control)) — `unproven-claim`
-- **Before ending every turn or session that implements any part of a PRD–TAD–ADR–MVP–GTM artifact, MUST update that artifact for the next turn/session**, including partial, blocked, failed or rolled-back work; do not wait for merge, deployment or full completion — `unimplemented-guideline`.
+- Batch updates to the joined artifact at a planned handoff or when a material requirement, design, decision, acceptance, or outcome changes; do not require an edit for each turn. Include partial, blocked, failed, and rolled-back work in that update — `unimplemented-guideline`.
   Reconcile affected requirements, design and decisions; record implemented versus remaining criteria, exact source/PR/receipt locators, named checks and observed results, limitations, blockers, and measured or explicitly unknown resources/costs.
   State the next bounded action, owner, prerequisites, recheck trigger and completion check; preserve one continuity ID and coherent five-role revisions. Keep Development, Production Release and Runtime evidence distinct.
   Update the existing editable owner through its admitted lane; published immutable versions require an authorized successor. Link private evidence without copying it. A chat summary or task status alone does not satisfy this obligation.

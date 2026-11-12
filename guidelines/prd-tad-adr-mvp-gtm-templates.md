@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Core Templates Module"
 doc_type: "Guidelines Module"
-version: "1.5.0"
-date: "2026-09-30"
+version: "1.6.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -146,6 +146,7 @@ failed/repeated actions and support cost. Unknown savings stay unmeasured; join 
 ### Journey → System Mapping
 | Journey Stage | Workflow        | Data Flow       | Orchestration/Harness Flow | Topology Node(s) | Component        |
 |---------------|-----------------|-----------------|---------------------------|------------------|------------------|
+| [stage] | [applicable flow or N/A: reason] | [applicable flow or N/A: reason] | [applicable flow or N/A: reason] | [node or N/A: reason] | [owner] |
 
 ### Topology
 **Version**: [N] — [Date or milestone]
@@ -167,7 +168,7 @@ flowchart TB
 *Node keys are identifier-safe and human text sits in labels; a bracketed key such as `[NodeA]` does not parse. Edge labels use the canonical inline form, and boundaries are named subgraphs so they project as cluster elements. See the diagram companion set for the full notation and canvas-projection rules.*
 
 ### Orchestration/Harness Flows
-*(One block per AI-powered pipeline)*
+*(One block per in-scope AI-powered pipeline; otherwise record N/A with a reason.)*
 
 **Pipeline**: [Name]  
 **Topology pattern**: [Sequential | Fan-out/Fan-in | Agentic loop] | **Max iterations**: [N] | **Circuit-breaker**: [condition]  
@@ -371,6 +372,17 @@ chosen dependency owner, removed implementation, migration/rollback and revisit 
 
 Copy into the joined artifact; use the parent's [C01–C16 domain IDs](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
 
+#### Venture Snapshot
+
+Keep one concise current row per joined revision. Update it at a material business outcome or decision;
+link canonical evidence and model rows rather than copying their ledgers. Unknowns stay explicit.
+
+```markdown
+| As of · stage | Customer / payer · offer / channel | Last outcome · evidence | Delivery owner · next business outcome | Riskiest H-id · threshold / window | Cash / time bound · source | Next decision · trigger |
+|---|---|---|---|---|---|---|
+| [date · discover / validate / deliver / operate / grow / wind down] | [segment · offer / GTM IDs] | [outcome · E-id or unknown] | [owner · outcome / metric / window] | [H-id · pass/fail threshold] | [amount / runway / time or unknown · model row/source] | [continue / improve / grow / pivot / stop · trigger] |
+```
+
 ```markdown
 **Join**: [continuity_id@revision] · **As of**: [date] · **Owner**: [function]
 **0**: [grounded opportunity + unknowns] · **1**: [target outcome + scope + observation window]
@@ -383,7 +395,7 @@ Copy into the joined artifact; use the parent's [C01–C16 domain IDs](./prd-tad
 
 ### Pitch Deck / Business Plan / Financial Model
 
-Instantiate the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) registers: Slide Register covering twelve roles, business-plan section contract, assumption register, driver schedules, unit economics, three linked statements, capitalization, use of funds, ADLC Cost Ledger, and reconciled Base/Downside/Upside. For each deck variant, instantiate the [Pitch Deck Guidelines](./pitch-deck-guidelines.md) records: Variant Register, ask fields, Claim Manifest, Objection Register, change row, and Delivery & Outcome Log. For each plan variant, instantiate the [Business Plan Guidelines](./business-plan-guidelines.md) records: Variant Register, Section Claim Record, risk table, operating review, and Delivery & Outcome Log. For the model, instantiate the [Financial Model Guidelines](./financial-model-guidelines.md) records: layered structure, Headline Register, variance table, and view list. Place each in the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map). Do not duplicate those tables here.
+Load the [PD-BP-FM module](./pd-bp-fm-guidelines.md) only when an operating, financial, or audience decision needs a projection. For each requested deliverable, instantiate its owning registers: the Slide Register and deck lifecycle; the plan section contract and plan lifecycle; or the model assumptions, schedules, and model lifecycle. Keep a discovery sketch decision-specific and label it incomplete. Join each projection to the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map); do not copy unused registers or duplicate their tables here.
 
 
 ---

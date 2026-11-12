@@ -1,28 +1,31 @@
 ---
 title: "Lean Startup Guidelines"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-30"
+version: "1.2.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
-owner: "Validated-learning loop contract"
+owner: "Venture operating and validated-learning index"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
 # Lean Startup Guidelines
 
-From 0 to 1, the riskiest question is rarely whether something can be built; it is whether a named
-segment will change behaviour and pay. This module owns the validated-learning loop that answers that
-question with the least time, spend and code: hypotheses, experiments, the MVP as a learning vehicle,
-innovation accounting and the pivot-or-persevere decision. The loop produces evidence. The labels that
-evidence earns stay with their owners in the
+This is the business-facing entry point for starting and running a venture. It routes the recurring
+work of finding a customer problem, making an offer, delivering value, collecting payment where the
+model calls for it, serving and retaining customers, managing cash and choosing what to do next. Its
+learning loop answers the riskiest
+business question with the least time, spend and code: hypotheses, experiments, the MVP as a learning
+vehicle, innovation accounting and the pivot-or-persevere decision. It owns business cadence and
+navigation; specialized records, product contracts and execution remain with their named owners. The
+labels that evidence earns stay with their owners in the
 [PRD-TAD-ADR-MVP-GTM Guidelines](./prd-tad-adr-mvp-gtm-guidelines.md).
 
 ---
@@ -33,11 +36,15 @@ evidence earns stay with their owners in the
 |---|---|---|
 | Pain labels `unvalidated`, `demand-proven` | [Pain-Point Mapping](./prd-tad-adr-mvp-gtm-guidelines.md#pain-point-to-feature-mapping) | supplies the quote, ticket, behaviour or payment evidence a label needs |
 | `mechanism-proven`, `demand-validated`, first dollar | [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization) | supplies the validation result the owner requires |
-| Phase order and gates | [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md#phase-0--problem-discovery) | runs inside Phase 0 and the Phase 5 learn loop; adds no phase |
+| Phase order and gates | [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md#phase-0--problem-discovery) | runs through discovery, GTM and ongoing operation; adds no phase |
 | Stop, pivot thresholds and exit VCCs | [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap) | records each decision against them |
 | Coverage domains C01–C16, especially C16 | [From-0-to-1 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract) | updates evidence and gaps; never re-decides a disposition |
-| Experiment record fields | [Business Plan — market, acquisition and operating detail](./prd-tad-adr-mvp-gtm-venture.md#market-acquisition-and-operating-detail) | consumes the fields; owns their order, design and decision |
-| Assumption values and dispositions | [Assumption Register](./prd-tad-adr-mvp-gtm-venture.md#assumption-register) | proposes successor values from results; never edits the accepted row |
+| Current venture snapshot shape | [Core Templates — Venture Snapshot](./prd-tad-adr-mvp-gtm-templates.md#venture-snapshot) | supplies current business values and decision links; the template owns the shape |
+| Offer, delivery, service and operating outcome | [GTM, PRD and TAD roles](./prd-tad-adr-mvp-gtm-guidelines.md#overview) | routes the business question; the joined artifact keeps one current decision and source links |
+| Business-plan operations, cash and model values | [PD-BP-FM](./pd-bp-fm-guidelines.md) | consumes operating evidence; owns projection rows, formulas, actuals and variance |
+| Business obligations and recurring controls | Accountable business owner and applicable local authority | records an owner and review trigger; this module creates no universal legal, tax or accounting rules |
+| Experiment record fields | [Business Plan — market, acquisition and operating detail](./pd-bp-fm-guidelines.md#market-acquisition-and-operating-detail) | consumes the fields; owns their order, design and decision |
+| Assumption values and dispositions | [Assumption Register](./pd-bp-fm-guidelines.md#assumption-register) | proposes successor values from results; never edits the accepted row |
 | Readiness rungs | [Readiness Ladder](./prd-tad-adr-mvp-gtm-guidelines.md#readiness-ladder) | never raises a rung; learning is not delivery |
 | Build execution | [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam) | routes any built experiment through `START → RELEASE → DEPLOY` |
 | Finding names and severities | [Finding Enumeration](./prd-tad-adr-mvp-gtm-verification.md#finding-enumeration) | raises existing types only |
@@ -48,10 +55,35 @@ It inherits the parent's [Scope & Neutrality Contract](./prd-tad-adr-mvp-gtm-gui
 [shared CID/RAO/SVO field contract](./cid-guidelines.md#shared-field-contract) and the
 [recording contract](./prd-tad-adr-mvp-gtm-verification.md#recording-contract). Directive lists are
 labelled artifact-bearing or advisory per Rule Identity. Records live in the joined artifact at one
-`continuity_id@revision`; this module adds no document of its own. Its place in the lifecycle is the
-[End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) rows *0 Discovery* and *Learn*.
+`continuity_id@revision`; this module adds no document of its own. It is the business-facing route to the
+[End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) rows *0 Discovery*, *Operate* and *Learn*.
 **Terms**: *validated-learning loop* names this module's loop; a *lean sprint* is an ADLC execution policy
 (time-bound, budget-driven delivery) and proves no learning; neither term implies the other.
+
+---
+
+## Venture Operating Index
+
+Run this loop before launch and throughout operation. Use the existing joined artifact's [Venture
+Snapshot](./prd-tad-adr-mvp-gtm-templates.md#venture-snapshot) as the concise current view;
+keep detailed evidence, financial rows and delivery records with their owners.
+
+| Loop stage | Business question | Minimum decision output | Route when needed |
+|---|---|---|---|
+| Find | Which user, buyer or payer has an evidenced problem? | ranked pain and riskiest open assumption | Pain-Point Mapping, market evidence |
+| Offer | What offer, price and channel can reach a real buyer? | testable offer and demand threshold; intent stays separate from payment | Monetization, GTM stream, experiment |
+| Deliver | Can we provide the promised outcome and collect correctly? | manual or built path, service owner, quality and delivery cost | PRD/TAD for product; ADLC only for a required build; local obligations when applicable |
+| Operate | Do customers receive value at sustainable cost and cash timing? | cohort outcome, support/fulfillment load, collected cash, contribution and retention where relevant | PD-BP-FM operations and financial records |
+| Allocate | What is the next bounded use of time and money? | continue, improve, grow, finance, pivot or stop against a stated trigger | Roadmap, ADR, successor Context; PD-BP-FM if a funding decision needs a model |
+
+**Artifact-bearing directives**:
+- Keep one current venture snapshot per joined revision; link to detailed owner records instead of copying their ledgers — `duplicate-owner`
+- Treat first payment as evidence of a transaction, not proof of repeatable demand or viability; assess delivery, contribution, cash and repeat behaviour where relevant — `unproven-claim`
+- At each operating review, name an accountable owner and next trigger for receivables/payables, customer support/fulfillment, security/continuity, and applicable local registration, tax, contract or employment duties; link existing records and defer jurisdiction-specific conclusions to the local authority — `unimplemented-guideline`
+- Load only records needed for the current business decision; full plans and models are on demand, while a missing decision-critical cost, cash or delivery bound is `missing-economics-metric`
+
+This index does not require recurring purchases from a business whose model is one-time. Use retention,
+renewal, repeat purchase or referral measures only when they fit the offer and customer relationship.
 
 ---
 
@@ -71,19 +103,19 @@ Hypothesis Register → riskiest first → Experiment Design → smallest artifa
 | Run | authorized experiment | raw evidence under its privacy class | Measure |
 | Measure | raw evidence, metric definition | result against threshold | Learn |
 | Learn | result, prior results | updated evidence status and assumption proposal | Decide |
-| Decide | learning, Roadmap threshold | Pivot-or-Persevere Record | successor Context |
+| Decide | learning, Roadmap threshold, delivery/cash evidence where relevant | Pivot-or-Persevere Record and next business decision: continue, improve, grow, pivot or stop | successor Context or operating review |
 
 | Parent phase | Loop use |
 |---|---|
 | Phase 0 — discovery | problem, payer and channel hypotheses; no code unless the hypothesis is about feasibility |
 | Phases 1–3 — PRD, TAD, ADR | results cited as pain, WTP and TTV evidence; unresolved hypotheses stay labelled |
 | Phase 4 — MVP | the built slice is the experiment's artifact; its VCC and the experiment's threshold are separate |
-| Phase 5 — GTM | offer, price, channel and retention experiments; outcomes enter the successor Context |
+| Phase 5 — GTM and ongoing operation | offer, price, delivery, channel, cash and retention experiments; operating outcomes enter the successor Context |
 
 **Artifact-bearing directives**:
 - Run the steps in order per experiment; a decision recorded without a pre-registered threshold or a measured result is `gate-sequence-violation`
 - Keep one loop per hypothesis and bound it by time, spend and, for agent work, iterations and tokens with a circuit-breaker — `unbounded-loop` at `blocker`
-- Record every loop in the joined artifact's GTM and planning records before the session ends, including inconclusive and abandoned runs — `unimplemented-guideline`
+- Preserve run-level evidence in the experiment record and per-task detail in any execution receipt; join every completed, inconclusive, stopped, or abandoned experiment outcome when its threshold/decision is reached or a phase/handoff closes — `unimplemented-guideline`
 
 **Advisory**: a loop measured in days beats one measured in months. When a hypothesis can be tested
 without building, do not build.
@@ -122,7 +154,7 @@ section fixes how they are designed.
 - Register the metric, threshold and sample before the first observation; a threshold set or moved after seeing data turns the result into `unproven-claim`
 - Define every metric with its denominator, window and cohort; a ratio without a denominator or a window chosen after the fact is `pitch-claim-unsourced` wherever it is projected
 - State the minimum sample or the uncertainty a small sample leaves; a pass on a sample below its stated minimum stays inconclusive, never `demand-validated` — `monetization-demand-unvalidated`
-- Keep spend within the declared bounds and the [free-core classification](./prd-tad-adr-mvp-gtm-venture.md#free-core-and-cost-classification); an experiment that needs paid capacity first passes the constraint gate — `constraint-gate-skipped`
+- Keep spend within the declared bounds and the [free-core classification](./pd-bp-fm-guidelines.md#free-core-and-cost-classification); an experiment that needs paid capacity first passes the constraint gate — `constraint-gate-skipped`
 - Record consent, data class and retention for any contact with real people; people's data stays with its existing owner, linked not copied — `unimplemented-guideline`
 - Run any publication of an offer or artifact to real people at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion — `human-gate-unstated`, `deploy-boundary-breach`
 - Keep negative, inconclusive and stopped results with the same prominence as passes; dropping them is `roadmap-scope-silently-dropped`
@@ -165,6 +197,7 @@ can read it without special effort) and auditable (it traces to raw evidence).
 - Measure per cohort, per user or per account with denominator and window; report cumulative totals, page views, downloads and follower counts only labelled as not evidence of value or demand — `pitch-claim-unsourced`
 - Join every decision metric to a model driver or assumption ID so a result can update the model through a successor revision — `financial-assumption-unsourced`
 - Keep activation, paid conversion, repeat use and retention as separate observations; a blended "traction" figure is `blended-status`
+- Measure delivered outcomes, fulfillment/support effort, direct contribution and cash timing when they can change the next operating decision; distinguish observed actuals from forecasts — `unproven-claim`
 - Keep raw evidence retrievable at its privacy class and cite it by Evidence Reference; a summary with no retrievable source is `unresolvable-reference`
 - Measure TTV on the real user path against the [TTV row](./prd-tad-adr-mvp-gtm-guidelines.md#time-to-value); a TTV measured only in a prepared environment is labelled so — `missing-economics-metric`
 
@@ -187,7 +220,7 @@ against activity.
 **Artifact-bearing directives**:
 - Start from a measured baseline, not the forecast; a driver with no baseline cannot show progress — `financial-assumption-unsourced`
 - Take targets from the Financial Model's Base scenario at the same revision; a target set only in the learning record is `duplicate-owner`
-- Propose assumption changes to the [Assumption Register](./prd-tad-adr-mvp-gtm-venture.md#assumption-register) as a successor revision with E-ids as source; editing the accepted value in place is `duplicate-owner`
+- Propose assumption changes to the [Assumption Register](./pd-bp-fm-guidelines.md#assumption-register) as a successor revision with E-ids as source; editing the accepted value in place is `duplicate-owner`
 - Report progress as driver movement across cohorts; effort, features shipped or experiments run are not progress — `unproven-claim`
 
 ---
@@ -230,7 +263,7 @@ An agent may draft hypotheses, design experiments, analyse results and propose d
 - Treat model-generated personas, simulated interviews and synthetic usage as `concept` input for designing experiments; they never validate a pain, a price or demand — `unproven-claim`
 - Ground every analysed number in raw evidence at its location before use — `cid-grounding-unverified`
 - Keep the Evaluator that judges a result against its threshold distinct from the agent that designed or ran the experiment — `unproven-claim`
-- Ledger agent tokens, iterations and wall-clock per loop in the [ADLC Cost Ledger](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger) — `adlc-cost-unledgered`
+- Ledger agent tokens, iterations and wall-clock per loop in the [ADLC Cost Ledger](./pd-bp-fm-guidelines.md#adlc-cost-ledger) — `adlc-cost-unledgered`
 
 ---
 
@@ -295,11 +328,12 @@ contact with real people. No vendor, tool or platform is named here.
 - [ ] Consent, privacy class and operator authorization recorded for contact with real people
 - [ ] Negative, inconclusive and stopped results retained
 - [ ] Decision metrics per cohort with denominators, joined to model drivers
+- [ ] Delivery, support, cash and repeat-use measures included when relevant to the offer; unknown values remain unknown
 - [ ] Baselines measured; targets taken from the Base scenario; proposals routed as successor revisions
 - [ ] Pivot-or-Persevere Record at every milestone against a pre-stated threshold
 - [ ] Pivots carried into successor Contexts with coverage revisited and projections regenerated
 - [ ] Synthetic or simulated inputs labelled `concept`; results judged by an independent Evaluator
-- [ ] Joined artifact's GTM and planning records updated before the session ends
+- [ ] Material loop results and decisions are joined at the outcome or handoff; task receipts cover task-level detail
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.4.1"
+version: "3.5.0"
 date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -16,7 +16,7 @@ lifecycle_status: "proposed"
 
 # PRD, TAD & ADR Guidelines — From 0 to 1, 360°
 
-One joined artifact carries a product from unvalidated pain to a paying customer. Five **section roles** specify it — **PRD, TAD, ADR, MVP, GTM**. Three **projections** present it — **Pitch Deck, Business Plan, Financial Model**. One **execution set** builds and ships it — the **ADLC** operator path `START → RELEASE → DEPLOY`. This index binds every role, projection, and seam. Companion modules own the bodies.
+One joined venture artifact follows a business from unvalidated pain through paid delivery and ongoing operation. Five **section roles** specify the offer and product — **PRD, TAD, ADR, MVP, GTM**. Three **projections** present it when a decision needs them — **Pitch Deck, Business Plan, Financial Model**. One **execution set** builds and ships accepted changes — the **ADLC** operator path `START → RELEASE → DEPLOY`. This is the product-contract index; the Lean Startup Guidelines are the business-facing venture operating index and route to each specialized owner.
 
 ## Scope & Neutrality Contract
 
@@ -40,15 +40,15 @@ Load by phase. Every file stays under 600 lines.
 
 **Foundations** — `scope--neutrality-contract` · `rule-identity--classification` · `markdown-yaml-frontmatter-enforcement` · `overview` · `directive-grammar-cid` → [CID Guidelines](./cid-guidelines.md#shared-field-contract) · `artifact-continuity-authoring-seam` → [Artifact Continuity](./adlc-artifact-continuity.md); [Codebase Grounding — reference implementation](./prd-tad-adr-mvp-gtm-codebase-grounding.md) · `concurrent-collaboration--work-tree-integrity` → [Cloud-Authoritative Collaboration](./adlc-cloud-collaboration.md), [Scoped Lane Admission](./adlc-scoped-lane-admission.md)
 
-**From 0 to 1** — `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — owned here; validated-learning loop → [Lean Startup Guidelines](./lean-startup-guidelines.md) · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
+**From 0 to 1** — `core-default-on-demand-routing` · `solo-dev-ai-native-orientation` · `time-to-value` → [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) · `from-0-to-1-prd--tad-creation-process` · `flow-patterns` → [Process & Flow Patterns](./prd-tad-adr-mvp-gtm-process-flows.md) · `pain-point-to-feature-mapping` · `demo-skeleton` · `ecosystem` · `shared-utilities-and-invocation-reuse` · `roadmap` · `monetization` — product-contract owners; business-facing venture operating index and validated-learning loop → [Lean Startup Guidelines](./lean-startup-guidelines.md) · `domain-object-rubric-assessment` → [Agent Experience Maturity](./prd-tad-adr-mvp-gtm-maturity.md)
 
-**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [Venture Record](./prd-tad-adr-mvp-gtm-venture.md); [Pitch Deck Guidelines](./pitch-deck-guidelines.md), [Business Plan Guidelines](./business-plan-guidelines.md), [Financial Model Guidelines](./financial-model-guidelines.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
+**Roles and projections** — `core-templates` → [Core Templates](./prd-tad-adr-mvp-gtm-templates.md) · `prd-tad-adr-mvp-gtm-planning-record` → [MVP→GTM Planning Record](./prd-tad-adr-mvp-gtm-planning-record.md) · `platform-specific-selection-criteria--multi-agent-reasoning-pipeline` → [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) · `venture-record-pitch-deck-business-plan--financial-model` → [PD-BP-FM](./pd-bp-fm-guidelines.md); [Pitch Deck Guidelines](./pitch-deck-guidelines.md), [Business Plan Guidelines](./business-plan-guidelines.md), [Financial Model Guidelines](./financial-model-guidelines.md) · `prd--tad-integration` · `division-of-work` · `roleactionoutcome`
 
 **Readiness and execution** — `readiness-ladder` · `agent-platform-readiness` · `lane-topology--deploy-boundary` → [Readiness & Lane Topology](./prd-tad-adr-mvp-gtm-readiness.md) · `adlc-execution-seam` → [ADLC Guidelines](./adlc-guidelines.md); [Rapid MVP Sprint](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); [Production Release Lifecycle](./adlc-production-release-lifecycle.md); [Autonomous Continuation](./adlc-autonomous-continuation.md); [Execution Anti-Pattern Guards](./adlc-anti-pattern-guards.md); [Repository Runtime Readiness](./adlc-repository-runtime-readiness.md)
 
 **Verification** — `autonomous-implementation-verification` · `conformance-findings` · `validation-checklist` → [Verification & Conformance](./prd-tad-adr-mvp-gtm-verification.md) · `cid-directive-matrix` · `anti-pattern-guards` → [CID Directive Matrix](./prd-tad-adr-mvp-gtm-cid-matrix.md) · `architecture-diagram-standards` → [Diagram Guidelines](./prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md), [Canvas-Render Contract](./prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md), [Diagram Templates](./prd-tad-adr-mvp-gtm-diagram-templates.companion.md) · `mantra-application`
 
-This document owns authoring. ADLC Guidelines own execution. Collaboration companions own concurrency. Diagram companions own their domain. Artifact Continuity owns the CID-to-RAO seam. The conformance vocabulary is the union of their enumerations.
+This document owns product and technical authoring contracts; [Lean Startup](./lean-startup-guidelines.md) owns the business-facing venture index and learning cadence. ADLC Guidelines own execution. Collaboration companions own concurrency. Diagram companions own their domain. Artifact Continuity owns the CID-to-RAO seam. The conformance vocabulary is the union of their enumerations.
 
 ## Rule Identity & Classification
 
@@ -89,15 +89,49 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 |---|---|---|---|---|
 | Pain, WTP, TTV | 0 | Pain-Point Mapping, Time-to-Value | labelled pain, TTV estimate | Product-Market Fit, Economics |
 | PRD | 1 | Core Templates, Flow Patterns, Verification | VCCs, TTV row, MoSCoW | Traceability, CID |
-| TAD | 2 | Templates, Division of Work, Diagrams, Lanes | owners, five flows, budgets, boundaries | Ownership, Topology, Lane |
+| TAD | 2 | Templates, Division of Work, Diagrams, Lanes | owners, applicable flows, budgets, boundaries | Ownership, Topology, Lane |
 | ADR | 2 | Selection Criteria | decision, alternatives, consequences, recovery | Platform Selection |
 | Alignment | 3 | Conformance, Validation Checklist | zero `blocker` | all |
 | START / RELEASE / DEPLOY | 4 | ADLC Execution Seam | lane, exact candidate, exact deployed revision | execution-domain |
 | MVP | 4 | Planning Record, Demo Skeleton, Rubric, Readiness | evidenced `Must` slice | Readiness, Demonstration |
 | GTM | 5 | Monetization, Roadmap, Planning Record | ranked first-dollar path | Monetization, Roadmap |
-| Pitch Deck | 5 | Venture Record, Pitch Deck Guidelines | bounded Slide Register, Reveal = VCC, Variant Register, Claim Manifest | Venture Record |
-| Business Plan | 5 | Venture Record, Business Plan Guidelines | two-method market, business risks and findings, legal and capital rows | Venture Record |
-| Financial Model | 5 | Venture Record, Financial Model Guidelines | assumptions, unit economics, linked statements, scenarios, ADLC ledger | Venture Record |
+| Pitch Deck | 5 | PD-BP-FM, Pitch Deck Guidelines | when needed: bounded Slide Register, Reveal = VCC, Variant Register, Claim Manifest | PD-BP-FM |
+| Business Plan | 5 | PD-BP-FM, Business Plan Guidelines | when needed: market, business risks/findings, legal and capital rows | PD-BP-FM |
+| Financial Model | 5 | PD-BP-FM, Financial Model Guidelines | when needed: assumptions, unit economics, statements, scenarios, ADLC ledger | PD-BP-FM |
+
+### Core Default and On-Demand Routing
+
+Use one joined `continuity_id@revision`, one accountable owner, one target buyer pain, and one next
+measurable outcome. Rank the next outcome by buyer pain/WTP evidence, near-built reuse, and distance to
+a credible first dollar. The default loop is `pain/evidence → riskiest uncertainty → cheapest sufficient
+test → threshold-based decision → next bounded outcome`. Record the evidence method, window, threshold,
+stop/revisit condition, and active time, byte, module, token, and spend caps. Default to $0 spend and
+free/FOSS tools; prefer a usable mobile browser, edge, device, local, or offline path when it serves the
+same need. Keep unknown cost or capability explicit.
+
+Load only the owner needed for the next decision: Lean Startup for the business cycle and learning loop; Core Templates and
+the authoring index for requirements, design, or a material decision; Process & Flow Patterns for
+applicable system boundaries; ADLC when an accepted slice needs source execution; PD-BP-FM for a
+projection needed by an operating, financial, or audience decision; Verification for a conformance
+verdict. Follow the repository's own START → RELEASE → DEPLOY workflow when source or delivery is in
+scope. Existing checks and the ADLC remain the executor; do not add a parallel controller or build a
+custom harness unless a measured, repeated need or a feasibility hypothesis requires it.
+
+The C01–C16 coverage contract remains complete: mark each domain covered, deferred, or not applicable,
+with evidence or a reason, owner, and revisit trigger. Detail is on demand; a not-applicable row does
+not erase a relevant obligation. Classify each of the five canonical flow types for every feature;
+write and render the applicable views only, and record a reason for each not-applicable type. Use the
+smallest sufficient experiment, diagram, and projection. Build code only when code is needed to answer
+the question or deliver the accepted slice.
+Per-task results and cost receipts remain due at each task outcome. Update the joined artifact at a
+material assumption/scope/design/decision/outcome change, phase or release handoff, or before a
+dependent audience action; a task receipt, chat turn, or session boundary alone does not trigger an edit.
+
+**Artifact-bearing directives**:
+- Record one ranked next outcome, the uncertainty it resolves, the cheapest sufficient method, its threshold/window/stop condition, and bounds; a missing decision record is `unimplemented-guideline`
+- Reuse the C01–C16 coverage record and its one evidence join per disposition; duplicate registers or a missing domain disposition are `duplicate-owner` and `unimplemented-guideline`
+- Emit task results and cost receipts at each task outcome, and join material results at their decision/handoff; missing receipts or a missed material update are `adlc-cost-unledgered` or `unimplemented-guideline`
+- Use the existing ADLC as executor; a second controller without a measured need is `duplicate-owner`
 
 ### From-0-to-1 coverage contract
 
@@ -112,7 +146,7 @@ provide its coverage record. This table owns domain IDs; companions own the requ
 | C02 | Market and timing | GTM / Venture Record | segment, geography, why now, TAM/SAM/SOM, two sizing methods and uncertainty |
 | C03 | Offer and alternatives | GTM + ADR / Selection Criteria | value proposition, price/package, do-nothing/manual alternatives, differentiation and evidence |
 | C04 | Product and experience | PRD / Process & Flow Patterns | journeys, Must stories, accessibility, mobile/browser/offline reach, success metric and VCC |
-| C05 | Architecture and data | TAD / Division of Work | existing owners, interfaces, five flows, data lifecycle, interoperability and dependency boundaries |
+| C05 | Architecture and data | TAD / Division of Work | existing owners, interfaces, applicable flows (others reasoned not applicable), data lifecycle, interoperability and dependency boundaries |
 | C06 | Quality, security and AI | TAD / Verification + Economics | threat/failure cases, privacy, reliability, recovery, AI evaluation/fallback, license and quota limits |
 | C07 | Decisions and tradeoffs | ADR / Selection Criteria | alternatives, constraints, chosen option, consequences, reversibility and revisit trigger |
 | C08 | Smallest validated slice | MVP / Demo Skeleton + Readiness | scope, prototype/pilot/demo, criterion-to-evidence joins, local/delivered rungs and gaps |
@@ -212,9 +246,9 @@ The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) own
 The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns user journey, workflow, data flow, orchestration/harness flow, and topology.
 
 **Directives**:
-- Trace every feature through all five — a skipped flow is incompletely specified
-- Render each flow as its bound diagram class — `missing-required-diagram`
-- Anchor every data and harness flow to a journey stage
+- Classify all five flow types per feature; detail the types its user, system, data, agent, or deployment boundary needs, and mark unused types not applicable with a reason. An omitted applicable boundary is incompletely specified
+- Render each selected flow as its bound diagram class — `missing-required-diagram`
+- Anchor every selected data and harness flow to a journey stage; reuse one view when it covers several criteria
 
 ## Time-to-Value
 
@@ -253,14 +287,14 @@ The [Selection Criteria module](./prd-tad-adr-mvp-gtm-selection.md) owns the **C
 
 ## Venture Record: Pitch Deck, Business Plan & Financial Model
 
-The [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md) owns the Slide Register, business-plan section contract, market-sizing method, assumption register, unit economics, income statement, cash-flow statement, capitalization, use of funds, scenario set, and ADLC Cost Ledger. The [Pitch Deck Guidelines](./pitch-deck-guidelines.md) own deck ordering, time bounds, ask shape, variants, Claim Manifest, Reveal delivery, rendering, distribution, and outcome capture; they consume the Slide Register and add no finding type. The [Business Plan Guidelines](./business-plan-guidelines.md) own plan variants, depth, section claims, risk presentation, cross-projection reconciliation, review, delivery and operating use; the [Financial Model Guidelines](./financial-model-guidelines.md) own model structure, input provenance, the Headline Register, scenario construction, actuals and variance, views and review. The [Lean Startup Guidelines](./lean-startup-guidelines.md) own the hypothesis, experiment, innovation-accounting and pivot-or-persevere records that supply their evidence. None adds a finding type.
+The [PD-BP-FM module](./pd-bp-fm-guidelines.md) owns the joined projection registers and ADLC Cost Ledger; its shared record schema remains named Venture Record in existing consumer and finding contracts. The [Pitch Deck Guidelines](./pitch-deck-guidelines.md), [Business Plan Guidelines](./business-plan-guidelines.md), and [Financial Model Guidelines](./financial-model-guidelines.md) own their respective delivery, operating, and model workflows. Load a projection only when an operating, financial, or audience decision needs it; a discovery sketch may be partial and must be labelled incomplete. These projections consume the joined artifact and add no finding type. The [Lean Startup Guidelines](./lean-startup-guidelines.md) own the hypothesis, experiment, innovation-accounting and pivot-or-persevere records that supply their evidence. None adds a finding type.
 
 **Directives**:
 - Treat all three as projections of the joined artifact at one `continuity_id@revision`; an unsourced claim, input number, or decision first appearing in a projection is `pitch-claim-unsourced`; calculated outputs cite owned inputs and formulas; a path-only join is `artifact-naming-noncompliant`
 - Carry every projected claim's evidence status in the owners' vocabulary; forbid an unlabelled forward-looking statement
-- Separate forecast, recognized revenue and collected cash under the Venture Record measurement basis; a first-dollar claim requires payment evidence — `revenue-recognized-unpaid`
+- Separate forecast, recognized revenue and collected cash under the PD-BP-FM measurement basis; a first-dollar claim requires payment evidence — `revenue-recognized-unpaid`
 - Register every model input with source, disposition, and date — `financial-assumption-unsourced`; carry serving-token cost as COGS — `missing-economics-metric`; ledger ADLC operating cost from execution receipts — `adlc-cost-unledgered`
-- Produce linked income, cash-flow and balance-sheet projections, and Base/Downside/Upside scenarios with cash-floor runway; label a reduced discovery sketch incomplete — `scenario-set-incomplete`
+- For a full model deliverable, produce linked income, cash-flow and balance-sheet projections and Base/Downside/Upside scenarios with cash-floor runway; label a decision-specific discovery sketch incomplete — `scenario-set-incomplete`
 - Size a market by two cited independent methods and reconcile them — `market-size-single-method`
 - Anchor the deck's Reveal to the MVP Demo Skeleton VCC; tie the ask to named Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity
 
@@ -509,11 +543,11 @@ Each entry is the document-scope `role`/`action`/`outcome` envelope. A role may 
 
 ## Mantra Application
 
-**"CID frames · Grounding binds claims to code · Flows anchor stories · Pain points ground every feature · Time-to-value gates the shortest path · Demo skeletons prove the story in one sitting · Rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before a mechanism · Venture records project, never originate · The lifecycle has a ledger line · START then RELEASE then DEPLOY · One owner per capability · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
+**"CID frames · Grounding binds claims to code · Applicable flows anchor stories · Pain points ground every feature · Time-to-value gates the shortest path · Demo skeletons prove the story in one sitting · Rubrics name the breakthrough honestly · Roadmaps sequence reuse before invention · Monetization tests a real payer before a mechanism · Projections consume, never originate · The lifecycle has a ledger line · START then RELEASE then DEPLOY · One owner per capability · Evidence earns the rung · Findings make the rules checkable · Boundaries stay closed until an operator opens them"**
 
 - **CID frames**: one grammar for every role, projection, and dispatch
 - **Grounding binds**: a confirmed gap is planned work, never existing capability
-- **Flows anchor**: five flows per feature; TTV validates the shortest path
+- **Flows anchor**: each relevant boundary is modelled once; unused flow types carry a reason
 - **Pain points ground**: every `Must` traces to one pain point labelled by evidence status
 - **Demo skeletons prove**: the Reveal is the VCC holding
 - **Rubrics name**: the real domain object first; highest contiguous pass, blockers named

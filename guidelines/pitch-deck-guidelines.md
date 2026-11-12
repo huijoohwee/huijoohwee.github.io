@@ -1,8 +1,8 @@
 ---
 title: "Pitch Deck Guidelines"
 doc_type: "Guidelines Module"
-version: "1.2.0"
-date: "2026-09-30"
+version: "1.3.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Pitch deck authoring and delivery contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -20,7 +20,7 @@ lifecycle_status: "proposed"
 
 A pitch deck asks one audience for one decision in bounded time, using only claims the joined
 `PRD-TAD-ADR-MVP-GTM` artifact already owns. This module owns how a deck is ordered, timed, composed,
-rendered, delivered and learned from. The [Venture Record](./prd-tad-adr-mvp-gtm-venture.md#pitch-deck)
+rendered, delivered and learned from. The [Venture Record](./pd-bp-fm-guidelines.md#pitch-deck)
 owns what a deck must cover. The deck is the audience-facing end of the parent's 0-to-1 chain: pain
 (Phase 0) → PRD, TAD, ADR (Phases 1–3) → evidenced MVP through `START → RELEASE → DEPLOY` (Phase 4) →
 GTM and venture projections (Phase 5) → a successor Context.
@@ -31,23 +31,23 @@ GTM and venture projections (Phase 5) → a successor Context.
 
 | Concern | Owner | This module |
 |---|---|---|
-| Twelve slide roles, sources, evidence status per row, traction and ask ties | [Venture Record — Slide Register](./prd-tad-adr-mvp-gtm-venture.md#slide-register) | consumes rows by number; never adds, renames or re-sources a role |
+| Twelve slide roles, sources, evidence status per row, traction and ask ties | [Venture Record — Slide Register](./pd-bp-fm-guidelines.md#slide-register) | consumes rows by number; never adds, renames or re-sources a role |
 | Coverage domains C01–C16 and their dispositions | [From-0-to-1 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract) | reads dispositions at audience handoff; shows gaps, never re-decides them |
 | Hook, Probe, Reveal, `[domain action]`, Close beats and the Reveal VCC | [Demo Skeleton](./prd-tad-adr-mvp-gtm-guidelines.md#demo-skeleton) | orders register rows onto those beats |
 | Pain, monetization and readiness labels | [Pain-Point Mapping](./prd-tad-adr-mvp-gtm-guidelines.md#pain-point-to-feature-mapping), [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Readiness Ladder](./prd-tad-adr-mvp-gtm-guidelines.md#readiness-ladder) | prints the owner's label on the slide |
 | Built, proposed and deferred capability; rubric level | [Codebase Grounding](./prd-tad-adr-mvp-gtm-codebase-grounding.md), [Ecosystem](./prd-tad-adr-mvp-gtm-guidelines.md#ecosystem), [Domain-Object Rubric](./prd-tad-adr-mvp-gtm-guidelines.md#domain-object-rubric-assessment) | displays the recorded split and level |
 | Time-to-value, AI harness and serving cost | [Economics & Time-to-Value](./prd-tad-adr-mvp-gtm-economics.md) | cites the TTV row and harness record |
 | Instrument, channel and price choices | [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md) | cites the recorded decision in the ask |
-| Numbers, formulas, scenarios and headline rows | [Financial Model](./prd-tad-adr-mvp-gtm-venture.md#financial-model), [Headline Register](./financial-model-guidelines.md#headline-register) | displays Headline Register rows by HL-id at the same revision |
+| Numbers, formulas, scenarios and headline rows | [Financial Model](./pd-bp-fm-guidelines.md#financial-model), [Headline Register](./financial-model-guidelines.md#headline-register) | displays Headline Register rows by HL-id at the same revision |
 | Hypotheses, experiments and pivot decisions | [Lean Startup Guidelines](./lean-startup-guidelines.md) | shows stage, traction and gaps from their records |
 | Plan sections sharing the same claims | [Business Plan Guidelines](./business-plan-guidelines.md#cross-projection-reconciliation) | reconciles deck, plan and model before any send |
-| Market, competition, legal, risk and capitalization records | [Business Plan](./prd-tad-adr-mvp-gtm-venture.md#business-plan) | cites them; the appendix links, never re-authors |
+| Market, competition, legal, risk and capitalization records | [Business Plan](./pd-bp-fm-guidelines.md#business-plan) | cites them; the appendix links, never re-authors |
 | Lanes, source integration and publication | [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam), [Lane Topology & Deploy Boundary](./prd-tad-adr-mvp-gtm-readiness.md#lane-topology--deploy-boundary) | routes deck source and publication through them |
 | Slide syntax, layout, notes and export | [Markdown slide modules](./markdown-slide-styling-guidelines.md) | selects them as the default render profile |
 | Tokens, typography, contrast and reach | [Native design contract](./design-theme-contract.md#ownership-and-adoption) | applies them; no deck-local theme |
 | Finding names and severities | [Finding Enumeration](./prd-tad-adr-mvp-gtm-verification.md#finding-enumeration) | raises existing types only |
 
-The [Projection Contract](./prd-tad-adr-mvp-gtm-venture.md#projection-contract) lets a deck add three
+The [Projection Contract](./pd-bp-fm-guidelines.md#projection-contract) lets a deck add three
 things: **ordering, time bounds and the ask**. This module owns those three and the delivery surfaces
 around them — variants, claim manifest, slide composition, number display, Reveal delivery, notes,
 objections, rendering, distribution, agent generation and outcome capture. It inherits the parent's
@@ -218,7 +218,7 @@ and capitalization; this section fixes its shape.
 
 **Artifact-bearing directives**:
 - Source every field for the variant's single decision; an ask missing its milestone, date or next step is `pitch-claim-unsourced`
-- Show runway after a funding ask under Base and Downside from the [Scenario Set](./prd-tad-adr-mvp-gtm-venture.md#scenario-set); an upside-only runway is `scenario-set-incomplete`
+- Show runway after a funding ask under Base and Downside from the [Scenario Set](./pd-bp-fm-guidelines.md#scenario-set); an upside-only runway is `scenario-set-incomplete`
 - For a customer ask, state price, pilot scope, a success criterion expressed as a VCC and the end-of-pilot decision; a pilot with no success criterion is `unimplemented-guideline`
 - Take the instrument from a recorded selection decision when more than one was considered; an instrument chosen without its constraint gate is `constraint-gate-skipped`
 - Keep the Roadmap phase the ask buys identical to the owner's phase, prerequisite and exit VCC; a deck-only milestone is `duplicate-owner`
@@ -396,7 +396,7 @@ deck-specific path.
 - Declare each variant's deliverables as execution-integrity VCCs in the GTM role — the Claim Manifest resolves every row at the revision, rehearsal is timed, reconciliation passes — so agent tasks derive from them under the [Specification to Task Bridge](./adlc-guidelines.md#specification-to-task-bridge); such a VCC proves the deck is built correctly, never that the audience will decide — `unimplemented-guideline`
 - Publish an export to a mirror or delivery surface only across a named Deploy Boundary with Evidence Reference, operator instruction and rollback statement; an unrecorded publication is `ungated-promotion`
 - Carry `worktree_id` and `agent_id` when variants are drafted in more than one work tree; one Deck Author per variant — `worktree-provenance-missing`, `duplicate-capability-owner`
-- Before ending a turn or session that drafts, renders, delivers or learns from a deck, update the joined artifact's GTM and planning records with the variant state, manifest result, delivery rows and next bounded action; a chat summary alone does not discharge it — `unimplemented-guideline`
+- Retain draft/render task detail in its execution receipt; update joined GTM/planning records at a material claim/variant change, delivery, audience outcome, or handoff. Record each external delivery and its outcome before any dependent audience action; a chat summary alone does not discharge this checkpoint — `unimplemented-guideline`
 
 ---
 
@@ -421,7 +421,7 @@ An agent may draft, render and check a deck inside the
 |---|---|
 | Typed input | Slide Register, coverage record, Variant Register row, spine and sources at one revision |
 | Typed output | deck source, Claim Manifest and change row |
-| Cost log | tokens, iterations and wall-clock per generation, read by the [ADLC Cost Ledger](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger) |
+| Cost log | tokens, iterations and wall-clock per generation, read by the [ADLC Cost Ledger](./pd-bp-fm-guidelines.md#adlc-cost-ledger) |
 | Fallback | the last accepted deck revision, or the register rendered as plain slides |
 
 **Artifact-bearing directives**:
@@ -515,7 +515,7 @@ deck rendering bound to the Slide Register. No vendor, funder, tool or platform 
 - [ ] Deck source integrated through a lane; publication crossed a named Deploy Boundary
 - [ ] External delivery authorized by the named role; private evidence linked, not copied
 - [ ] Delivery & Outcome Log row per delivery; outcomes and the continue/pivot/stop decision routed to a successor Context
-- [ ] Joined artifact's GTM and planning records updated before the session ends
+- [ ] Material variant changes, deliveries, and audience outcomes are joined before dependent audience use; task receipts retain task-level detail
 
 ---
 

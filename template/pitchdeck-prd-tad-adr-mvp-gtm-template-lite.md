@@ -459,14 +459,15 @@ Name one reachable payer and their current workaround. Record one priced offer, 
 
 ## Pitch Deck
 
-Use the [Slide Register](../guidelines/prd-tad-adr-mvp-gtm-venture.md#slide-register) when presenting.
+Use the [Slide Register](../guidelines/pd-bp-fm-guidelines.md#slide-register) when presenting.
 Cover its twelve roles in a bounded short deck/appendix; cite each claim, its evidence status, the MVP
 Reveal VCC and the ask's milestone/model joins. Order, time, check and deliver each variant per the
 [Pitch Deck Guidelines](../guidelines/pitch-deck-guidelines.md#deck-lifecycle). Defer with reason and trigger if no audience action is in scope.
 
 ## Business Plan
 
-Use the [Venture Record section contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#business-plan).
+Use the [PD-BP-FM section contract](../guidelines/pd-bp-fm-guidelines.md#business-plan) only when a business-plan decision or audience deliverable is in scope.
+Otherwise, record the deferral reason and revisit trigger and leave this projection uninstantiated.
 Join this projection to `{{template_inputs.continuity_id}}@{{template_inputs.version}}` and cite each
 section's source: summary, segment/problem, offer, market, alternatives, acquisition/retention,
 operations/capacity, team, obligations, capital, risks and milestones. Mark unknowns explicitly.
@@ -474,7 +475,8 @@ Keep a Section Claim Record and reconcile with the deck and model per the [Busin
 
 ## Financial Model
 
-Use the [model contract](../guidelines/prd-tad-adr-mvp-gtm-venture.md#financial-model): sourced driver
+Create only the model view needed for a named decision; use the [model contract](../guidelines/pd-bp-fm-guidelines.md#financial-model). Otherwise, record the deferral reason and revisit trigger.
+For a full deliverable, include sourced driver
 assumptions, unit economics, linked income/cash/balance statements, scenario cash floors, funding and
 receipt-based ADLC costs. State basis, currency, horizon, actuals cut-off and model revision. Separate
 forecasts, recognized revenue and collected cash; report reconciliation results and unsupported ratios.

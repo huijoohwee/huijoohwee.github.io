@@ -344,6 +344,7 @@ jobs:
         id: dev_preview
         env:
           DEV_ROOT: ${{ runner.temp }}/pages-dev/site
+          REQUIRE_AGENTIC_RAG_SCHEMA_ROUTES: "true"
           CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
           ARTIFACT_ID: ${{ steps.assemble.outputs.artifact_id }}
           EFFECT_ID: ${{ steps.assemble.outputs.effect_id }}

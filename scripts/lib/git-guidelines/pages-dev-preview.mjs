@@ -86,13 +86,17 @@ function verifyArtifact(root, input) {
   });
   if (!rows.length || rows.length > MAX_FILES || !rows.some(row => row.path === "index.html")
     || rows.some(row => !allowedPayloadFile(row.path))
-    || [...SCHEMA_ROUTES].some(path => !rows.some(row => row.path === path))) fail("manifest-scope");
+    || (input.requireSchemaRoutes && [...SCHEMA_ROUTES].some(path => !rows.some(row => row.path === path)))) {
+    fail("manifest-scope");
+  }
   if (JSON.stringify(rows.map(row => row.path)) !== JSON.stringify([...new Set(rows.map(row => row.path))].sort(byteOrder))) fail("manifest-order");
   const actual = payloadFiles(root);
   if (JSON.stringify(actual.files.map(row => row.path)) !== JSON.stringify(rows.map(row => row.path))) fail("payload-set");
-  const byPath = new Map(actual.files.map(row => [row.path, row]));
-  if (!byPath.get("schema/agentic-rag/v1/context.jsonld").bytes.equals(
-    byPath.get("schema/AgenticRAG/v1/context.jsonld").bytes)) fail("context-alias-bytes");
+  if (input.requireSchemaRoutes) {
+    const byPath = new Map(actual.files.map(row => [row.path, row]));
+    if (!byPath.get("schema/agentic-rag/v1/context.jsonld").bytes.equals(
+      byPath.get("schema/AgenticRAG/v1/context.jsonld").bytes)) fail("context-alias-bytes");
+  }
   for (let index = 0; index < rows.length; index += 1) {
     if (actual.files[index].digest !== rows[index].digest) fail("payload-digest", rows[index].path);
   }
@@ -117,7 +121,8 @@ export async function runPagesDevPreview({ root, ...input }) {
     || !/^[a-f0-9]{64}$/u.test(input.payloadManifestDigest ?? "")
     || !/^[a-f0-9]{64}$/u.test(input.policyDigest ?? "")
     || !/^[1-9][0-9]*$/u.test(input.providerArtifactId ?? "")
-    || !/^[1-9][0-9]*$/u.test(input.runId ?? "")) fail("input");
+    || !/^[1-9][0-9]*$/u.test(input.runId ?? "")
+    || (input.requireSchemaRoutes !== undefined && typeof input.requireSchemaRoutes !== "boolean")) fail("input");
   const directory = resolve(root), rootStat = lstatSync(directory);
   if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) fail("root");
   const releaseDirectory = lstatSync(join(directory, "release"));
@@ -163,11 +168,14 @@ export async function runPagesDevPreview({ root, ...input }) {
 }
 
 export async function runCli(environment = process.env) {
+  const requireSchemaRoutes = environment.REQUIRE_AGENTIC_RAG_SCHEMA_ROUTES;
+  if (requireSchemaRoutes !== undefined && !["true", "false"].includes(requireSchemaRoutes)) fail("input");
   const { receipt, receiptDigest } = await runPagesDevPreview({ root: environment.DEV_ROOT,
     repository: environment.GITHUB_REPOSITORY, runId: environment.GITHUB_RUN_ID,
     candidateSha: environment.CANDIDATE_SHA, artifactId: environment.ARTIFACT_ID,
     effectId: environment.EFFECT_ID, providerArtifactId: environment.PROVIDER_ARTIFACT_ID,
-    payloadManifestDigest: environment.PAYLOAD_MANIFEST_DIGEST, policyDigest: environment.POLICY_DIGEST });
+    payloadManifestDigest: environment.PAYLOAD_MANIFEST_DIGEST, policyDigest: environment.POLICY_DIGEST,
+    requireSchemaRoutes: requireSchemaRoutes === "true" });
   const outputs = `receipt_digest=${receiptDigest}\nsource_revision=${receipt.sourceRevision}\nartifact_id=${receipt.artifactId}\nprovider_artifact_id=${receipt.providerArtifactId}\npayload_manifest_digest=${receipt.payloadManifestDigest}\nverified_file_count=${receipt.verifiedFileCount}\n`;
   if (environment.GITHUB_OUTPUT) appendFileSync(environment.GITHUB_OUTPUT, outputs, { encoding: "utf8" });
   if (environment.GITHUB_STEP_SUMMARY) appendFileSync(environment.GITHUB_STEP_SUMMARY,

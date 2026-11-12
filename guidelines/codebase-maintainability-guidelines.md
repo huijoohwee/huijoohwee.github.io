@@ -296,7 +296,7 @@ Each row is a universal, neutral, project-agnostic one-liner mantra: `Context | 
 ### Schema Alignment
 
 **Developers maintain consistency with authoritative schemas**
-- Developers synchronize with `/schema/AgenticRAG` jsonld schema
+- Developers synchronize with `/schema/agentic-rag` jsonld schema
 - Developers align API identifiers, catalogs, code identifiers, components, declarations
 - Developers standardize file names, handlers, hooks, import paths, keyboard shortcuts
 - Developers unify LocalStorage keys, naming conventions, render patterns

@@ -250,10 +250,9 @@ jobs:
           }
           copyFile("index.html");
           copyDirectory("guidelines");
-          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/agentic-rag/v1/context.jsonld", true);
-          copyFile("schema/AgenticRAG/venture-evidence.jsonld", "schema/agentic-rag/venture-evidence.jsonld", true);
-          copyFile("schema/AgenticRAG/example-venture-evidence.jsonld", "schema/agentic-rag/example-venture-evidence.jsonld", true);
-          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/AgenticRAG/v1/context.jsonld", true);
+          copyFile("schema/agentic-rag/v1/context.jsonld", "schema/agentic-rag/v1/context.jsonld", true);
+          copyFile("schema/agentic-rag/venture-evidence.jsonld", "schema/agentic-rag/venture-evidence.jsonld", true);
+          copyFile("schema/agentic-rag/example-venture-evidence.jsonld", "schema/agentic-rag/example-venture-evidence.jsonld", true);
           NODE
 
           PAYLOAD_ROOT="$SITE_ROOT" MANIFEST_PATH="$RUNNER_TEMP/payload-files.sha256" node <<'NODE'

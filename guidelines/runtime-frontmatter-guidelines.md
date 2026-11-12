@@ -22,7 +22,7 @@ guide to every session prompt.
 | Concern | Source owner | Consumer responsibility |
 |---|---|---|
 | Common authoring rules | This guideline | Reference it; do not copy or override its rules |
-| CID, RAO, SVO and readiness meanings | [PRD/TAD/ADR](prd-tad-adr-mvp-gtm-guidelines.md), [CID](cid-guidelines.md), [shared schema](../schema/AgenticRAG/roles-actions-outcomes-schema.jsonld) | Reuse their fields and revisions |
+| CID, RAO, SVO and readiness meanings | [PRD/TAD/ADR](prd-tad-adr-mvp-gtm-guidelines.md), [CID](cid-guidelines.md), [shared schema](../schema/agentic-rag/roles-actions-outcomes-schema.jsonld) | Reuse their fields and revisions |
 | Parsed-data envelope and dictionary metadata | `agentic-os/frontmatter`, `agentic-os/invocation`, `agentic-os/catalog/dictionaries` | Install an exact revision; load requested assets only |
 | Product fields, YAML dialect and executable checks | The product's local contract and validator | Declare required fields, unknown-key policy and bounded checks |
 | Deployed readiness, approvals and other effects | The product's evidence and authority owners | Verify exact source, environment and outcome |

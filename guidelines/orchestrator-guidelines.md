@@ -21,7 +21,7 @@ own extraction, structure detection, chunking and source provenance. Reuse that 
 parser algorithms into orchestration. [Shared CID, RAO and SVO](./cid-guidelines.md) define the meanings
 used to join requested work, accountable functions and evidence.
 
-The [orchestrator schema](../schema/AgenticRAG/orchestrator.jsonld) describes optional corpus unification,
+The [orchestrator schema](../schema/agentic-rag/orchestrator.jsonld) describes optional corpus unification,
 reasoning and feedback configuration. It is a vocabulary surface, not an executable controller.
 Repository lifecycle belongs to the pinned `agentic-os` owner; product runtimes own their execution state.
 
@@ -56,6 +56,6 @@ Enable corpus unification, threshold tuning or feedback only for a demonstrated 
 configuration. Preserve source provenance through every transformation. Bound iterations and retries;
 stop when the acceptance check is met, resources are exhausted, or an unresolved prerequisite blocks work.
 
-Use [stage metrics](../schema/AgenticRAG/stage-metrics.jsonld) for optional inspection data and
-[evaluation references](../schema/AgenticRAG/evals.jsonld) to find the existing verification owners.
+Use [stage metrics](../schema/agentic-rag/stage-metrics.jsonld) for optional inspection data and
+[evaluation references](../schema/agentic-rag/evals.jsonld) to find the existing verification owners.
 Metrics describe observations; they do not replace acceptance criteria or establish runtime readiness.

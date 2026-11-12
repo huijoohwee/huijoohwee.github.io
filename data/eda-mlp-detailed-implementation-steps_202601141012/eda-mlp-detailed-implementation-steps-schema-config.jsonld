@@ -468,7 +468,7 @@
     }
   ],
   "metadata": {
-    "agenticRagSchema": "https://huijoohwee.github.io/schema/AgenticRAG",
+    "agenticRagSchema": "https://huijoohwee.github.io/schema/agentic-rag",
     "generatedBy": "agentic-graph_parser.schema_config",
     "layersFromGraph": {
       "semantic": {

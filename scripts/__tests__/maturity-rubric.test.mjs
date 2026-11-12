@@ -5,7 +5,7 @@ import { readMaturityRubric, validateMaturityAssessment } from '../lib/maturity-
 
 const rubricText = readFileSync(new URL('../../guidelines/prd-tad-adr-mvp-gtm-maturity.md', import.meta.url), 'utf8');
 const rubric = readMaturityRubric(rubricText);
-const snapshot = JSON.parse(readFileSync(new URL('../../schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json', import.meta.url)));
+const snapshot = JSON.parse(readFileSync(new URL('../../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json', import.meta.url)));
 const run = data => validateMaturityAssessment(rubric, data, snapshot.repositories);
 function observed(score = 3) {
   const data = structuredClone(snapshot.maturity);

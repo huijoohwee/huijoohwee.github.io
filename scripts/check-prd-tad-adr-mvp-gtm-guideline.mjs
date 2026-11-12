@@ -224,7 +224,7 @@ for (const [anchor, mod] of Object.entries(DELEGATIONS)) {
   assert.ok(body.includes(`./${mod}`), `${INDEX}: section #${anchor} must delegate to ${mod}`);
 }
 
-const recordPath = "schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json";
+const recordPath = "schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json";
 const maintenanceTemplate = readFileSync("template/document-maintenance-template.md", "utf8");
 const maintenanceMeta = readFrontmatter(maintenanceTemplate).data;
 assert.equal(maintenanceMeta.doc_type, "Template");
@@ -235,7 +235,7 @@ for (const marker of ["<!-- agentic-os:doc-sync:start -->", "<!-- agentic-os:doc
 }
 assert.ok(maintenanceTemplate.indexOf("<!-- agentic-os:doc-sync:start -->")
   < maintenanceTemplate.indexOf("<!-- agentic-os:doc-sync:end -->"));
-const documentationSchema = JSON.parse(readFileSync("schema/AgenticRAG/documentation.jsonld", "utf8"));
+const documentationSchema = JSON.parse(readFileSync("schema/agentic-rag/documentation.jsonld", "utf8"));
 assert.equal(documentationSchema.markdown_template_maintenance.managed_region.cardinality,
   "exactly one ordered pair in an enrolled document");
 const recordBytes = readFileSync(recordPath);

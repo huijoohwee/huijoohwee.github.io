@@ -12,14 +12,11 @@ const SCHEMA_ROUTES = new Set([
   "schema/agentic-rag/v1/context.jsonld",
   "schema/agentic-rag/venture-evidence.jsonld",
   "schema/agentic-rag/example-venture-evidence.jsonld",
-  "schema/AgenticRAG/v1/context.jsonld",
 ]);
 const SCHEMA_DIRECTORIES = new Set([
   "schema",
   "schema/agentic-rag",
   "schema/agentic-rag/v1",
-  "schema/AgenticRAG",
-  "schema/AgenticRAG/v1",
 ]);
 const fail = (code, detail = "") => { throw new Error(`blocked-pages-dev-preview:${code}${detail ? `:${detail}` : ""}`); };
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -92,11 +89,6 @@ function verifyArtifact(root, input) {
   if (JSON.stringify(rows.map(row => row.path)) !== JSON.stringify([...new Set(rows.map(row => row.path))].sort(byteOrder))) fail("manifest-order");
   const actual = payloadFiles(root);
   if (JSON.stringify(actual.files.map(row => row.path)) !== JSON.stringify(rows.map(row => row.path))) fail("payload-set");
-  if (input.requireSchemaRoutes) {
-    const byPath = new Map(actual.files.map(row => [row.path, row]));
-    if (!byPath.get("schema/agentic-rag/v1/context.jsonld").bytes.equals(
-      byPath.get("schema/AgenticRAG/v1/context.jsonld").bytes)) fail("context-alias-bytes");
-  }
   for (let index = 0; index < rows.length; index += 1) {
     if (actual.files[index].digest !== rows[index].digest) fail("payload-digest", rows[index].path);
   }

@@ -22,7 +22,6 @@ Promotion and rollback rules:
 
 Current Pages payload boundary:
 - The controller seals `index.html`, `guidelines/`, and the explicit on-demand Agentic RAG schema
-  routes: the lowercase base context, optional venture profile, and example, plus the prior v1
-  `/schema/AgenticRAG/v1/context.jsonld` URL as a byte-identical compatibility alias. The loopback
+  routes: the lowercase base context, optional venture profile, and example. The loopback
   Development readback checks every sealed file.
 - A change outside that payload, such as `docs/documents/`, requires a source change to the deploy controller before it can appear on the published site.

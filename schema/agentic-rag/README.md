@@ -97,11 +97,11 @@ observation separate. One transaction does not establish repeat demand, profitab
 It adds no fields to the always-loaded graph context and contains no personal customer data.
 
 The authored schema tree has moved to `schema/agentic-rag/`; active first-party path consumers are
-migrating with it. The Pages artifact publishes the profile, example, and base context under
+aligned with it. The Pages artifact publishes the profile, example, and base context under
 [`/schema/agentic-rag/`](https://huijoohwee.github.io/schema/agentic-rag/venture-evidence.jsonld).
-The former `/schema/AgenticRAG/v1/context.jsonld` route remains a byte-identical compatibility alias;
-the former source directory no longer exists. Existing v1 vocabulary identifiers retain their
-original namespace. Consumers fetch this profile when they need venture evidence.
+The base context, profile, and example are served only at their canonical lowercase routes. Existing
+v1 vocabulary identifiers retain their original namespace. Consumers fetch this profile when they need
+venture evidence.
 
 ---
 

@@ -64,7 +64,7 @@ that transaction; it does not establish repeat demand, profitability, or viabili
 | VCC-04 | The module uses existing JSON-LD provenance and continuity fields. It adds no parallel CID, ledger, experiment record, accounting rules, or agent-invocation tokens. | Context and ownership review |
 | VCC-05 | The exact Pages artifact serves the context and optional module at the lowercase `/schema/agentic-rag/` route. The published bytes are the same candidate checked in local Development readback. | Existing Pages artifact/readback owner |
 | VCC-06 | The authored tree is `schema/agentic-rag`; active website and Agentic Graph source-path consumers use it. No duplicate editable tree remains. | Tracked path inventory and repository reference checks |
-| VCC-07 | The old `/schema/AgenticRAG/v1/context.jsonld` public URL remains a byte-identical compatibility alias. Existing v1 vocabulary IRIs and stable node identities stay unchanged. | Exact Pages artifact readback and identity diff |
+| VCC-07 | Only canonical lowercase schema routes are emitted. Existing v1 vocabulary IRIs and stable node identities stay unchanged. | Exact Pages artifact readback and identity diff |
 
 ### Product bounds
 
@@ -72,7 +72,7 @@ that transaction; it does not establish repeat demand, profitability, or viabili
 - One optional evidence module and one bounded end-to-end example; update only direct Agentic Graph consumers needed for the source-path migration.
 - No personal customer data. Examples use synthetic names and values.
 - Keep module files below 600 lines. Keep always-loaded prompt impact at zero; consumers opt in by reference.
-- Use lowercase kebab case for both the authored source directory and public URL. Migrate direct source-path consumers with the move; keep the old public context URL as a route alias rather than a second source tree.
+- Use lowercase kebab case for both the authored source directory and public URL. Migrate direct source-path consumers with the move; publish schema assets only at their canonical lowercase routes.
 
 ## TAD
 
@@ -90,10 +90,9 @@ retain those definitions.
 
 ### Distribution and resource use
 
-The Pages controller copies `schema/agentic-rag/` to `/schema/agentic-rag/` in the sealed artifact and exposes
-the existing v1 context at `/schema/AgenticRAG/v1/context.jsonld` as a compatibility route. The new route and compatibility context
-are checked from the exact downloaded artifact before Production can start. No browser page loads the
-profile by default; consumers fetch it only when selected.
+The Pages controller copies `schema/agentic-rag/` to `/schema/agentic-rag/` in the sealed artifact.
+The canonical context, profile, and example routes are checked from the exact downloaded artifact before
+Production can start. No browser page loads the profile by default; consumers fetch it only when selected.
 
 ## ADR
 

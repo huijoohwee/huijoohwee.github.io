@@ -2,7 +2,7 @@
   "@context": "https://huijoohwee.github.io/schema/AgenticRAG/v1/context.jsonld",
   "@type": "kg:Graph",
   "metadata": {
-    "schemaVersion": "1.0.1",
+    "schemaVersion": "1.0.2",
     "source": "system:docs-sync",
     "description": "Structural-only mapping between Agentic Graph docs/documents and AgenticRAG schema directive surfaces.",
     "languages": [
@@ -42,6 +42,38 @@
         "surface": "context"
       },
       "chunk_text": "AgenticRAG JSON-LD @context vocabulary surface."
+    },
+    {
+      "@id": "node:schema:agenticrag:venture-evidence",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "Venture evidence profile"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/venture-evidence.jsonld",
+        "surface": "optional-business-evidence"
+      },
+      "chunk_text": "Optional source-linked business evidence context; observation, forecast, and inference remain distinct."
+    },
+    {
+      "@id": "node:schema:agenticrag:example-venture-evidence",
+      "@type": "kg:Node",
+      "labels": [
+        "SchemaSurface"
+      ],
+      "name": [
+        "Example venture evidence"
+      ],
+      "properties": {
+        "repo": "huijoohwee.github.io",
+        "relPath": "schema/AgenticRAG/example-venture-evidence.jsonld",
+        "surface": "synthetic-business-evidence-example"
+      },
+      "chunk_text": "Synthetic one-customer journey keeps offer, order, cash, delivery, cost, and repeat-use evidence separate."
     },
     {
       "@id": "node:schema:agenticrag:node-schema",
@@ -2639,6 +2671,22 @@
         "relPath": "docs/documents/agentic-graph-llm-prompt-contract.md"
       },
       "documentPath": "docs/documents/agentic-graph-llm-prompt-contract.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:agentic-graph-local-poi-directory-prd-tad-adr-mvp-gtm",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "agentic-graph-local-poi-directory-prd-tad-adr-mvp-gtm.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/agentic-graph-local-poi-directory-prd-tad-adr-mvp-gtm.md"
+      },
+      "documentPath": "docs/documents/agentic-graph-local-poi-directory-prd-tad-adr-mvp-gtm.md",
       "language": "en-us"
     },
     {
@@ -5250,6 +5298,54 @@
       "language": "en-us"
     },
     {
+      "@id": "node:agentic-graph:doc:miaoxyz-catalog-publication",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "miaoxyz-catalog-publication.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/miaoxyz-catalog-publication.md"
+      },
+      "documentPath": "docs/documents/miaoxyz-catalog-publication.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:miaoxyz-florist-catalog-draft",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "miaoxyz-florist-catalog-draft.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/miaoxyz-florist-catalog-draft.md"
+      },
+      "documentPath": "docs/documents/miaoxyz-florist-catalog-draft.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:miaoxyz-production-governance-review",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "miaoxyz-production-governance-review.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/miaoxyz-production-governance-review.md"
+      },
+      "documentPath": "docs/documents/miaoxyz-production-governance-review.md",
+      "language": "en-us"
+    },
+    {
       "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-agentic-graph-geo-xr-cinema-aigeddon",
       "@type": "kg:Node",
       "labels": [
@@ -5375,6 +5471,22 @@
         "relPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain.md"
       },
       "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-logistics-supply-chain.md",
+      "language": "en-us"
+    },
+    {
+      "@id": "node:agentic-graph:doc:prd-tad-adr-mvp-gtm-miaoxyz",
+      "@type": "kg:Node",
+      "labels": [
+        "Document"
+      ],
+      "name": [
+        "prd-tad-adr-mvp-gtm-miaoxyz.md"
+      ],
+      "properties": {
+        "repo": "agentic-graph",
+        "relPath": "docs/documents/prd-tad-adr-mvp-gtm-miaoxyz.md"
+      },
+      "documentPath": "docs/documents/prd-tad-adr-mvp-gtm-miaoxyz.md",
       "language": "en-us"
     },
     {

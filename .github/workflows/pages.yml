@@ -215,44 +215,7 @@ jobs:
           test ! -e "$RUNNER_TEMP/payload-files.sha256"
           mkdir -p "$SITE_ROOT/release"
 
-          SOURCE_ROOT="$PWD" node <<'NODE'
-          const { copyFileSync, lstatSync, mkdirSync, readdirSync } = require("node:fs");
-          const path = require("node:path");
-          const sourceRoot = process.env.SOURCE_ROOT;
-          const siteRoot = process.env.SITE_ROOT;
-          function rejectName(name, relative) {
-            if (name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name)) {
-              throw new Error(`Unsupported Pages source path: ${relative}`);
-            }
-          }
-          function copyRegular(relative) {
-            const source = path.join(sourceRoot, relative);
-            const target = path.join(siteRoot, relative);
-            const stat = lstatSync(source);
-            if (!stat.isFile()) throw new Error(`Non-regular Pages source: ${relative}`);
-            copyFileSync(source, target, 0);
-          }
-          function copyDirectory(relative) {
-            const source = path.join(sourceRoot, relative);
-            const stat = lstatSync(source);
-            if (!stat.isDirectory()) throw new Error(`Non-directory Pages source: ${relative}`);
-            mkdirSync(path.join(siteRoot, relative), { recursive: false });
-            const names = readdirSync(source).sort((left, right) =>
-              Buffer.compare(Buffer.from(left), Buffer.from(right)));
-            for (const name of names) {
-              const child = path.posix.join(relative, name);
-              rejectName(name, child);
-              const childStat = lstatSync(path.join(sourceRoot, child));
-              if (childStat.isDirectory()) copyDirectory(child);
-              else if (childStat.isFile()) copyRegular(child);
-              else throw new Error(`Non-regular Pages source: ${child}`);
-            }
-          }
-          rejectName("index.html", "index.html");
-          copyRegular("index.html");
-          rejectName("guidelines", "guidelines");
-          copyDirectory("guidelines");
-          NODE
+          SOURCE_ROOT="$PWD" node scripts/lib/git-guidelines/pages-dev-preview.mjs assemble "$SITE_ROOT"
 
           PAYLOAD_ROOT="$SITE_ROOT" MANIFEST_PATH="$RUNNER_TEMP/payload-files.sha256" node <<'NODE'
           const { createHash } = require("node:crypto");

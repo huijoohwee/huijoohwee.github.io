@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR MVP→GTM Planning Record Module"
 doc_type: "Guidelines Module"
-version: "1.1.3"
-date: "2026-09-30"
+version: "1.1.4"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Planning record contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -33,7 +33,7 @@ contract without restating them. Field meanings stay in the [shared CID/RAO/SVO 
 identity and revision joins stay in [Artifact Continuity](./adlc-artifact-continuity.md#continuity-identity-and-revision-contract);
 sprint compression stays in the [Rapid MVP Sprint profile](./adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md); pain, demo, roadmap and
 monetization obligations stay in the parent index; pitch-deck, business-plan, and financial-model projections of
-the five roles stay in the [Venture Record module](./prd-tad-adr-mvp-gtm-venture.md), with deck delivery in the
+the projection registers stay in the [PD-BP-FM module](./pd-bp-fm-guidelines.md), with deck delivery in the
 [Pitch Deck Guidelines](./pitch-deck-guidelines.md), plan delivery in the [Business Plan Guidelines](./business-plan-guidelines.md),
 model construction in the [Financial Model Guidelines](./financial-model-guidelines.md) and the learning loop in the
 [Lean Startup Guidelines](./lean-startup-guidelines.md), and add no sixth role. A planning

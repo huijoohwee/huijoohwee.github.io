@@ -35,7 +35,7 @@ const MODULES = [
   "prd-tad-adr-mvp-gtm-cid-matrix.md",
   "prd-tad-adr-mvp-gtm-planning-record.md",
   "prd-tad-adr-mvp-gtm-selection.md",
-  "prd-tad-adr-mvp-gtm-venture.md",
+  "pd-bp-fm-guidelines.md",
   "prd-tad-adr-mvp-gtm-diagram-guidelines.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-canvas-render.companion.md",
   "prd-tad-adr-mvp-gtm-diagram-templates.companion.md",
@@ -140,7 +140,7 @@ const DELEGATIONS = {
   "cid-directive-matrix": "prd-tad-adr-mvp-gtm-cid-matrix.md",
   "prd-tad-adr-mvp-gtm-planning-record": "prd-tad-adr-mvp-gtm-planning-record.md",
   "platform-specific-selection-criteria--multi-agent-reasoning-pipeline": "prd-tad-adr-mvp-gtm-selection.md",
-  "venture-record-pitch-deck-business-plan--financial-model": "prd-tad-adr-mvp-gtm-venture.md",
+  "venture-record-pitch-deck-business-plan--financial-model": "pd-bp-fm-guidelines.md",
   "adlc-execution-seam": "adlc-guidelines.md",
 };
 
@@ -154,7 +154,7 @@ const VENTURE_FINDINGS = [
   "adlc-cost-unledgered",
 ];
 const verificationText = read("prd-tad-adr-mvp-gtm-verification.md");
-const ventureText = read("prd-tad-adr-mvp-gtm-venture.md");
+const ventureText = read("pd-bp-fm-guidelines.md");
 for (const type of VENTURE_FINDINGS) {
   assert.match(verificationText, new RegExp(`^\\| Venture Record \\| \`${type}\` \\| \`(blocker|major|minor)\` \\|$`, "m"),
     `verification module must enumerate ${type} before the venture module raises it`);
@@ -162,7 +162,7 @@ for (const type of VENTURE_FINDINGS) {
 }
 // The pitch deck module consumes the Slide Register and raises only enumerated finding types.
 const pitchText = read("pitch-deck-guidelines.md");
-assert.ok(pitchText.includes("./prd-tad-adr-mvp-gtm-venture.md#slide-register"), "pitch deck module must consume the Slide Register");
+assert.ok(pitchText.includes("./pd-bp-fm-guidelines.md#slide-register"), "pitch deck module must consume the Slide Register");
 assert.ok(ventureText.includes("./pitch-deck-guidelines.md"), "venture module must route deck delivery to the pitch deck module");
 const enumerated = new Set([...verificationText.matchAll(/^\| [^|\n]+ \| `([a-z-]+)` \| `(?:blocker|major|minor)` \|$/gm)].map(m => m[1]));
 const pitchFindings = pitchText.split("\n## Conformance Findings\n")[1]?.split("\n---\n")[0];
@@ -172,9 +172,9 @@ for (const [, type] of pitchFindings.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g))
 // Lean startup, business plan and financial model modules consume their Venture Record owners,
 // are routed from them, and raise only enumerated finding types.
 for (const [name, consumed, routedFrom] of [
-  ["lean-startup-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#assumption-register", indexText],
-  ["business-plan-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#section-contract", ventureText],
-  ["financial-model-guidelines.md", "./prd-tad-adr-mvp-gtm-venture.md#financial-model", ventureText],
+  ["lean-startup-guidelines.md", "./pd-bp-fm-guidelines.md#assumption-register", indexText],
+  ["business-plan-guidelines.md", "./pd-bp-fm-guidelines.md#section-contract", ventureText],
+  ["financial-model-guidelines.md", "./pd-bp-fm-guidelines.md#financial-model", ventureText],
 ]) {
   const text = read(name);
   assert.ok(text.includes(consumed), `${name} must consume ${consumed}`);
@@ -200,7 +200,7 @@ assert.deepEqual(coverageIds, Array.from({ length: 16 }, (_, index) => `C${Strin
 for (const heading of ["Measurement basis and horizon", "Driver schedule",
   "Reconciliation and edge-case checks", "Free-core and cost classification"])
   assert.ok(ventureText.includes(`### ${heading}\n`), `venture contract missing ${heading}`);
-for (const name of [INDEX, "prd-tad-adr-mvp-gtm-venture.md", "prd-tad-adr-mvp-gtm-cid-matrix.md",
+for (const name of [INDEX, "pd-bp-fm-guidelines.md", "prd-tad-adr-mvp-gtm-cid-matrix.md",
   "prd-tad-adr-mvp-gtm-process-flows.md"])
   assert.doesNotMatch(read(name), /recognize revenue only from collected payment|revenue (?:is collected money only|rows (?:carry|contain) collected payment only)|forbid revenue from anything but collected payment/i,
     `${name}: cash-only revenue rule contradicts the declared measurement basis`);

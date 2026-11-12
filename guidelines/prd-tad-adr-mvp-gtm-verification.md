@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Verification & Conformance Module"
 doc_type: "Guidelines Module"
-version: "1.3.2"
-date: "2026-10-01"
+version: "1.3.3"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -277,7 +277,7 @@ The regression comparison above is meaningless unless two runs over the same inp
 ## Venture coverage and financial evidence
 
 Consume the parent [C01–C16 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract)
-and the [Venture Record checks](./prd-tad-adr-mvp-gtm-venture.md#reconciliation-and-edge-case-checks).
+and the [Venture Record checks](./pd-bp-fm-guidelines.md#reconciliation-and-edge-case-checks).
 The structural policy check verifies document shape, joins and required sections. It does not audit a
 financial model, prove demand, discharge legal obligations or certify the semantic completeness of a plan.
 

@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.4.1"
-date: "2026-10-01"
+version: "1.5.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -20,7 +20,7 @@ lifecycle_status: "proposed"
 
 ## Scope & Ownership
 
-This module owns the phase-gated authoring process and the five canonical flow patterns that bridge user intent to system behaviour. It owns no status vocabulary and no finding names.
+This module owns the phase-gated authoring process and five reusable flow patterns that bridge user intent to system behaviour when their boundaries apply. It owns no status vocabulary and no finding names.
 
 It inherits the parent set's Scope & Neutrality Contract, Rule Identity derivation, and finding recording contract without restating them. Rule IDs derive from the owning `##` section anchor and the rule's document-order ordinal, exactly as in the parent.
 
@@ -45,9 +45,10 @@ their authority boundary under [ADLC autonomous continuation](./adlc-autonomous-
 7. Identify whether the solution requires an AI harness, FOSS tools, or proprietary APIs — flag any dependency with non-zero egress or token cost
 8. Estimate **time-to-value (TTV)**: count the minimum steps a target persona must complete from zero state (prerequisites installed, no configuration done) to first successful outcome; set an acceptable TTV ceiling before Phase 1 begins; flag if TTV exceeds threshold
 
-**Gate**: record pain/WTP evidence or label the hypothesis unvalidated, scope the next learning or delivery
-outcome, and compare expected value, TCO and TTV with explicit assumptions. A bounded discovery sprint
-may gather missing evidence; it cannot claim demand, revenue or production readiness without proof.
+**Gate**: record pain/WTP evidence or label the hypothesis unvalidated, identify the payer and a testable
+offer where relevant, scope the next learning or delivery outcome, and compare expected value, cash need,
+TCO and TTV with explicit assumptions. A bounded discovery sprint may gather missing evidence; it cannot
+claim demand, revenue or production readiness without proof.
 
 ### Phase 1 — PRD Authoring
 **Translate validated problems into structured requirements.**
@@ -71,10 +72,10 @@ or independent reviewer supplies the verdict; a separate architect role or meeti
 
 1. Derive component list from PRD epics and acceptance criteria
 2. Assign single responsibility to each component (SRP)
-3. Map data flows: source → transform → store → consume
+3. Map data flows when the feature crosses a data boundary: source → transform → store → consume; otherwise record why it is not applicable
 4. Specify integration contracts: protocol, payload schema, error handling
-5. Map user workflows to system sequence diagrams
-6. Map **Orchestration/Harness Flow** for every AI-powered pipeline: define dispatcher, executor, observer, and consumer roles; specify routing logic, max-iteration bound, and circuit-breaker condition
+5. Map applicable user workflows to system sequence diagrams; reuse one view when it covers several criteria
+6. For each AI-powered pipeline in scope, map **Orchestration/Harness Flow**: define dispatcher, executor, observer, and consumer roles; specify routing logic, max-iteration bound, and circuit-breaker condition. Otherwise record not applicable with a reason
 7. Map **Topology**: enumerate all runtime components, their lane, their connection types (sync/async/stream), trust boundaries, and data residency; then map **Lane Topology & Deploy Boundary** for the movement between lanes
 8. Document architectural decisions with ADR format; **every ADR must include a TCO comparison and FOSS-first evaluation**
 9. Define quality attribute scenarios: performance, security, scalability, observability, **token cost, TCO**
@@ -94,7 +95,7 @@ Reuse the current scope decision; ask only when a material choice remains unreso
 2. Confirm no implementation detail in PRD; no business logic in TAD
 3. QA validates all acceptance criteria are testable **and expressible as VCCs** — each criterion must have a stated check the agent can surface in its own output (exit code, file count, test result, queue state)
 4. Stakeholders approve scope and success metrics; **confirm token budget, TCO, and TTV target are within acceptable envelope**
-5. Verify every AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
+5. Verify every selected AI-powered component has a harness contract, orchestration topology, and max-iteration bound documented
 6. Confirm Topology diagram is present and data residency is stated for every storage node
 7. Confirm agent-platform readiness dimensions in scope are documented with tier (Must/Follow-on), execution order, and VCCs per dimension
 8. Confirm FOSS-first decisions are recorded in ADRs with explicit TCO comparison
@@ -115,25 +116,25 @@ Do not request a new approval for a reversible seam already covered by the recor
 4. **RELEASE** one exact candidate through protected integration and record the Integration Receipt
 5. **DEPLOY** one exact protected revision only across a named Deploy Boundary with a referenced operator instruction; record deployment, runtime and rollback receipts separately
 6. Run the Demo Skeleton against the delivered revision, emit Evidence References and derive local and delivered rungs separately
-7. Emit per-task cost fields for the [ADLC Cost Ledger](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger) and update the joined artifact before each turn or session ends
+7. Emit per-task cost fields in every task outcome for the [ADLC Cost Ledger](./pd-bp-fm-guidelines.md#adlc-cost-ledger). Update the joined artifact at material changes and phase/release handoffs; retain blocked or failed task detail in its receipt until a joined revision is due
 
 **Gate**: every `Must` VCC is `verified` by an independent Evaluator with an Evidence Reference; rungs derive
 from those references only; source integration, deployment and runtime claims stay separate. A built slice
 proves the build, not the hypothesis it was built to test.
 
-### Phase 5 — GTM and Venture Projections
-**Project the accepted revision to a payer, an operator, and a funder without originating new claims.**
+### Phase 5 — GTM and On-Demand Projections
+**Prepare the accepted revision for a named operating, financial, or audience decision without originating new claims.**
 
-Discovery already drafts market, offer and financial assumptions. This phase publishes current projections; it does not postpone viability research until delivery. Consume the parent's [C01–C16 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
+Discovery already drafts market, offer and financial assumptions. Refresh only the projection needed for a decision; full audience deliverables remain on demand. Consume the parent's [C01–C16 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract).
 
 1. Rank GTM streams by distance to a real first dollar using recorded WTP evidence
-2. Generate the Pitch Deck Slide Register from the Demo Skeleton, GTM path, Financial Model headlines, and Roadmap phases; run the [deck lifecycle](./pitch-deck-guidelines.md#deck-lifecycle) per audience variant
-3. Generate the Business Plan from all five roles plus legal, capitalization, acquisition, and business risks and the open finding set; run the [plan lifecycle](./business-plan-guidelines.md#plan-lifecycle) per audience variant
-4. Generate the Financial Model from TAD/GTM assumptions and ADLC receipts: driver schedules, unit economics, linked income/cash/balance statements, scenarios, ADLC Cost Ledger; run the [model lifecycle](./financial-model-guidelines.md#model-lifecycle) and export numbers through its Headline Register
-5. Join every projection by `continuity_id@revision`; regenerate when the revision changes
+2. When an audience handoff needs a deck, generate its Slide Register from the Demo Skeleton, GTM path, model headlines and Roadmap phases; run the [deck lifecycle](./pitch-deck-guidelines.md#deck-lifecycle) for that variant
+3. Generate the Business Plan from the roles and legal, capitalization, acquisition, and business risks needed for a named operating or audience decision; run the [plan lifecycle](./business-plan-guidelines.md#plan-lifecycle) for each requested variant
+4. Generate the smallest sufficient Financial Model view from TAD/GTM assumptions and ADLC receipts. Build the full schedules, linked statements, scenarios, and ADLC Cost Ledger only when the decision requires them; run the [model lifecycle](./financial-model-guidelines.md#model-lifecycle) and export numbers through its Headline Register
+5. Join each requested projection by `continuity_id@revision`; refresh it when a material source revision changes and before any dependent action
 6. Feed learn-loop results into a successor Context, never a backward edit of the accepted revision
 
-**Gate**: every projected claim cites its owning section or Evidence Reference; actuals, forecasts, recognized revenue and collected cash follow the Venture Record measurement basis; first-dollar claims cite payment evidence; the ADLC Cost Ledger is filled from receipts for the stated period. An audience action on a stale or unsourced projection is blocked.
+**Gate**: every requested projected claim cites its owning section or Evidence Reference; actuals, forecasts, recognized revenue and collected cash follow the PD-BP-FM measurement basis; first-dollar claims cite payment evidence; any cost view uses ADLC receipts for its stated period. An action on a stale or unsourced projection is blocked.
 
 ### Across Phases — Living Documents
 **Iterate documents as product and architecture evolve; these rules apply in every phase.**
@@ -158,7 +159,8 @@ The canonical join of phases, loops, owners and evidence. Other modules cite a r
 | 0 Discovery | hypothesize → experiment → decide | [Pain-Point Mapping](./prd-tad-adr-mvp-gtm-guidelines.md#pain-point-to-feature-mapping), [Time-to-Value](./prd-tad-adr-mvp-gtm-guidelines.md#time-to-value) | [Lean Startup](./lean-startup-guidelines.md#learning-loop) | a lane only for a feasibility build | labelled pain, WTP, measured baselines | discovery minutes, tokens, experiment spend |
 | 1–3 Specify | PRD → TAD → ADR → alignment | [Core Templates](./prd-tad-adr-mvp-gtm-templates.md), [Selection Criteria](./prd-tad-adr-mvp-gtm-selection.md), [Verification](./prd-tad-adr-mvp-gtm-verification.md) | experiment results cited as evidence | none; authoring only | baselined `continuity_id@revision`, zero `blocker` | authoring minutes, tokens |
 | 4 Build & evidence | `START → RELEASE → DEPLOY` | MVP, [Demo Skeleton](./prd-tad-adr-mvp-gtm-guidelines.md#demo-skeleton), [Readiness](./prd-tad-adr-mvp-gtm-readiness.md) | the MVP slice is the experiment artifact when a build is needed | [ADLC Guidelines](./adlc-guidelines.md#specification-to-task-bridge) | Integration, deployment and runtime receipts; derived rungs | per-task receipts, CI minutes, fees |
-| 5 Project | variant → claim record → reconcile → authorize → deliver | GTM, [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap) | [Pitch Deck](./pitch-deck-guidelines.md#deck-lifecycle), [Business Plan](./business-plan-guidelines.md#plan-lifecycle), [Financial Model](./financial-model-guidelines.md#model-lifecycle) | tasks from execution-integrity VCCs; sends and publication at the release seam | manifests, Headline Register, delivery logs | generation, rehearsal and review cost |
+| 5 Project (when needed) | variant → claim record → reconcile → authorize → deliver | GTM, [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap) | [Pitch Deck](./pitch-deck-guidelines.md#deck-lifecycle), [Business Plan](./business-plan-guidelines.md#plan-lifecycle), [Financial Model](./financial-model-guidelines.md#model-lifecycle), on demand | tasks from execution-integrity VCCs; sends and publication at the release seam | requested manifest, headline or delivery log | only incurred generation, rehearsal and review cost |
+| Operate (ongoing, when applicable) | offer → sell → onboard → deliver → invoice/collect → support → retain, renew or refer | GTM and operating obligations | Lean Startup for outcome/learning; PD-BP-FM for operating and financial records | authorized service operation; an accepted product change uses ADLC | customer outcome, fulfillment/support load, cash collected and direct contribution; repeat/retention only where relevant | actual delivery, support, collection and operating costs |
 | Learn | measure → decide → successor | Roadmap thresholds, coverage C16 | [Pivot-or-Persevere Record](./lean-startup-guidelines.md#pivot-or-persevere-record), [variance](./financial-model-guidelines.md#actuals-variance-and-re-forecast) | successor revisions through new lanes | decision record, successor Context | experiment and analysis cost |
 
 **Artifact-bearing directives**:
@@ -178,7 +180,8 @@ reuse a valid decision for the same effect rather than asking again.
 | Specify | author and ground PRD, TAD and ADR; run alignment; derive VCCs | an unresolved product, scope or pricing decision | `spec-complete` |
 | Build | start lanes, implement, verify, release exact candidates | scope change, irreversible operation, exhausted bounds needing new authority | `dev-proven` |
 | Deploy | prepare the exact candidate and its receipt chain | production authorization and the Deploy Boundary operator instruction | `runtime-ready`, then `production-verified` from live receipts |
-| Project | generate variants, claim records, headline register; reconcile deck, plan and model | every external send or publication (Boundary-crossing, at the release seam) | none; projections never earn a rung |
+| Project (when needed) | generate only requested variants and claim/financial views; reconcile claims before use | every external send or publication (Boundary-crossing, at the release seam) | none; projections never earn a rung |
+| Operate | serve customers, fulfill, collect, support, review actual economics and retention where relevant | a new external commitment, changed offer/terms, unbounded spend, or material scope choice without current authority | none; operating evidence is not a readiness rung |
 | Learn | analyse results, propose successor values, draft the decision record | a pivot or stop that changes scope or product choice | none; decisions are recorded, not rated |
 
 **Artifact-bearing directives**:
@@ -186,13 +189,13 @@ reuse a valid decision for the same effect rather than asking again.
 - When a listed point lacks a valid recorded decision, stop that dependent step with the decision, options and consequence surfaced; proceeding without it is `ungated-promotion` for publication and deployment, and `unproven-claim` for any claim that depends on the skipped decision
 - Fail closed: a missing receipt, join, check or bound blocks only the dependent step, and disjoint steps continue — `unimplemented-guideline`
 - Bound every step by time, tokens, iterations and spend with a circuit-breaker — `unbounded-loop` at `blocker`
-- Update the joined artifact before each turn or session ends, including blocked and failed steps — `unimplemented-guideline`
+- Update the joined artifact at material assumption/scope/design/decision/outcome changes and phase or release handoffs. Per-task receipts retain task-level cost and blocked/failed detail; a turn, session, or task boundary alone does not trigger a joined edit — `unimplemented-guideline`
 
 ---
 
 ## Flow Patterns
 
-Five canonical flow types bridge user intent (PRD) to system behavior (TAD). Every feature must trace through all five.
+Five reusable flow types bridge user intent (PRD) to system behavior (TAD). For each feature, model every applicable type and mark unused types not applicable with a reason; omission of a relevant boundary is incomplete.
 
 ### User Journey Flow
 **Maps how a persona moves from trigger to outcome across system touchpoints.**

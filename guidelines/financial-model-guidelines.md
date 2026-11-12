@@ -1,8 +1,8 @@
 ---
 title: "Financial Model Guidelines"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-30"
+version: "1.2.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Financial model construction and operation contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -19,7 +19,7 @@ lifecycle_status: "proposed"
 # Financial Model Guidelines
 
 A financial model is the joined `PRD-TAD-ADR-MVP-GTM` artifact's numbers under stated assumptions. The
-[Venture Record](./prd-tad-adr-mvp-gtm-venture.md#financial-model) owns what a model must contain:
+[Venture Record](./pd-bp-fm-guidelines.md#financial-model) owns what a model must contain:
 measurement basis, assumption register, driver schedules, unit economics, linked statements, use of
 funds, capitalization, ADLC Cost Ledger, scenario set, reconciliation checks and free-core
 classification. This module owns how a model is structured, built, checked, published, operated
@@ -32,10 +32,10 @@ section read the model through one Headline Register.
 
 | Concern | Owner | This module |
 |---|---|---|
-| Required rows, formulas, statements, scenarios and checks | [Venture Record — Financial Model](./prd-tad-adr-mvp-gtm-venture.md#financial-model) | builds them; never adds, renames or re-defines a row |
-| Measurement basis, recognition and cash separation | [Measurement basis and horizon](./prd-tad-adr-mvp-gtm-venture.md#measurement-basis-and-horizon) | applies it per row |
-| Input fields and dispositions | [Assumption Register](./prd-tad-adr-mvp-gtm-venture.md#assumption-register) | enforces entry only through it |
-| Execution cost facts | [ADLC Seam](./prd-tad-adr-mvp-gtm-venture.md#adlc-seam), [ADLC Cost Ledger](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger) | ingests receipts; never estimates where receipts exist |
+| Required rows, formulas, statements, scenarios and checks | [Venture Record — Financial Model](./pd-bp-fm-guidelines.md#financial-model) | builds them; never adds, renames or re-defines a row |
+| Measurement basis, recognition and cash separation | [Measurement basis and horizon](./pd-bp-fm-guidelines.md#measurement-basis-and-horizon) | applies it per row |
+| Input fields and dispositions | [Assumption Register](./pd-bp-fm-guidelines.md#assumption-register) | enforces entry only through it |
+| Execution cost facts | [ADLC Seam](./pd-bp-fm-guidelines.md#adlc-seam), [ADLC Cost Ledger](./pd-bp-fm-guidelines.md#adlc-cost-ledger) | ingests receipts; never estimates where receipts exist |
 | TCO per deployment model, FOSS-first | [Deployment-Model TCO Variants](./prd-tad-adr-mvp-gtm-economics.md#deployment-model-tco-variants), [FOSS-First Decision Rule](./prd-tad-adr-mvp-gtm-economics.md#foss-first-decision-rule) | carries them as separate rows |
 | Baselines, measured drivers, pivot decisions | [Lean Startup Guidelines](./lean-startup-guidelines.md) | receives proposed values as successor revisions |
 | Deck number display | [Pitch Deck Guidelines — Numbers and Charts](./pitch-deck-guidelines.md#numbers-and-charts) | supplies Headline Register rows |
@@ -44,7 +44,7 @@ section read the model through one Headline Register.
 | Lanes, integration and publication | [ADLC Execution Seam](./prd-tad-adr-mvp-gtm-guidelines.md#adlc-execution-seam), [Lane Topology & Deploy Boundary](./prd-tad-adr-mvp-gtm-readiness.md#lane-topology--deploy-boundary) | routes model source and publication through them |
 | Finding names and severities | [Finding Enumeration](./prd-tad-adr-mvp-gtm-verification.md#finding-enumeration) | raises existing types only |
 
-The [Projection Contract](./prd-tad-adr-mvp-gtm-venture.md#projection-contract) lets a model add
+The [Projection Contract](./pd-bp-fm-guidelines.md#projection-contract) lets a model add
 **computed statements, scenarios, runway and sensitivity from owned assumptions** and nothing else. It
 inherits the parent's [Scope & Neutrality Contract](./prd-tad-adr-mvp-gtm-guidelines.md#scope--neutrality-contract),
 [Rule Identity](./prd-tad-adr-mvp-gtm-guidelines.md#rule-identity--classification),
@@ -232,7 +232,7 @@ An agent may build, extend and check a model inside the
 - Emit check results and the Headline Register with every generated model and fail closed on any failed check — `scenario-set-incomplete`
 - Bound generation by iteration, token and wall-clock ceilings with a circuit-breaker — `unbounded-loop` at `blocker`
 - Ledger generation cost from the harness cost log — `adlc-cost-unledgered`
-- Update the joined artifact's GTM and planning records before the session ends — `unimplemented-guideline`
+- Preserve task detail in its execution receipt; update joined GTM/planning records when a material assumption, formula, decision, or operating outcome changes, or at a decision/handoff that consumes the model — `unimplemented-guideline`
 
 ---
 
@@ -289,7 +289,7 @@ operator authorizes each send. No vendor, tool or platform is named here.
 - [ ] Views derived from one revision; confidentiality classified; sends authorized
 - [ ] Text-diffable and recomputable by a second party; exports accessible
 - [ ] Evaluator recomputation and domain-reviewer evidence recorded
-- [ ] Joined artifact's GTM and planning records updated before the session ends
+- [ ] Material model inputs and decisions are joined before dependent model use; task receipts retain task-level cost and check detail
 
 ---
 

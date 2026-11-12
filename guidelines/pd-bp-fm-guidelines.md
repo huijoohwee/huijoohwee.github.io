@@ -1,22 +1,22 @@
 ---
-title: "PRD, TAD & ADR Venture Record Module"
+title: "Pitch Deck, Business Plan & Financial Model Module"
 doc_type: "Guidelines Module"
-version: "2.1.3"
-date: "2026-09-30"
+version: "2.2.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
-owner: "Venture record contract"
+owner: "Projection and ADLC cost ledger contract"
 local_rung: "spec-complete"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.1"
+parent_version: "3.5.0"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
 
-# PRD, TAD & ADR Venture Record Module
+# Pitch Deck, Business Plan & Financial Model Module
 
 ## Scope & Ownership
 

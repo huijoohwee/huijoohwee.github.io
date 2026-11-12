@@ -1,0 +1,528 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@id": "rag:Canvas",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.0.32",
+  "rdfs:label": [
+    { "@value": "Canvas integration directives", "@language": "en-us" },
+    { "@value": "画布集成指令", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Directive describing domain-agnostic integration contracts for Canvas render surfaces that consume AgenticRAG JSON-LD graphs. Focuses on order-safe import→render behavior, cache-key isolation, renderer exclusivity, and viewport-aware auto-fit so different renderers (2D: D3 Graph/Flowchart/Flow/Design/Flow Editor/Storyboard, 3D, Voxel, Geospatial) do not drift or contaminate each other at runtime.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "描述消费 AgenticRAG JSON-LD 图的 Canvas 渲染表面的领域无关集成契约。重点覆盖顺序安全的 import→render 行为、缓存 key 隔离、渲染器互斥，以及对 viewport 变化敏感的自适配（auto-fit），避免不同渲染器（2D：D3 Graph/Flowchart/Flow/Design/Flow Editor/Storyboard，3D，Voxel，Geospatial）在运行时发生漂移或相互污染。",
+      "@language": "zh-cn"
+    }
+  ],
+  "canvasContracts": {
+    "rendererExclusivity": [
+      {
+        "@value": "Only one renderer surface is active at a time (2D: D3/Flow/Design/Flow Editor/Storyboard, 3D, Geospatial). The app may warm-mount inactive surfaces to reduce switch lag, but non-active surfaces must be effect-gated (no draw loops, no request consumption, no shared-cache writes). Switching renderer surfaces must preserve selection and view state via stable SSOT keys rather than duplicating computation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "任意时刻只允许一个渲染表面处于激活状态（2D：D3/Flow/Design/Flow Editor/Storyboard，3D，Geospatial）。可为降低切换延迟而 warm-mount 非激活表面，但必须通过 effect gating 禁止其运行 draw loop、消费共享请求、或写入共享缓存。切换渲染表面需通过稳定的 SSOT key 保持选择与视图状态，禁止重复计算。",
+        "@language": "zh-cn"
+      }
+    ],
+    "nativePhysicsEngines": [
+      {
+        "@value": "Agentic Graph merge `fc65982ecd24cd1553a1fe28c8007045f39f25e4` owns independent browser-local planar 2D and spatial 3D physics engines with separate bodies/colliders, explicit deterministic fixed steps, collision filtering, sensors, ordered events, point/overlap/ray queries, and dimension-tagged versioned snapshots. XR adapts the 3D owner while retaining one authored scene and one Canvas; Game Mode geometry remains separate. Rapier informs domain-separation principles only: no source, prose, schema, algorithm, example, fixture, test, package, compatibility layer, service, or runtime dependency may be copied or introduced, and no API, format, numerical, or benchmark compatibility is claimed.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Agentic Graph 合并版本 `fc65982ecd24cd1553a1fe28c8007045f39f25e4` 拥有独立的浏览器本地平面 2D 与空间 3D 物理引擎，具备分离的 body/collider、显式确定性 fixed step、碰撞过滤、sensor、有序事件、point/overlap/ray query，以及带维度标签和版本的 snapshot。XR 适配 3D 所有者，同时保留一个创作场景与一个 Canvas；Game Mode geometry 继续独立。Rapier 只提供领域分离原则：不得复制或引入其源代码、文案、模式、算法、示例、fixture、测试、package、兼容层、服务或运行时依赖，也不声明 API、格式、数值或基准兼容性。",
+        "@language": "zh-cn"
+      }
+    ],
+    "viewKeyIsolation": [
+      {
+        "@value": "View state and caches are isolated by explicit keys. Zoom view keys are isolated per 2D renderer variant (D3/Flow/Design/Flow Editor/Storyboard) to prevent cross-variant transform reuse. Build both zoom and layout keys from the same schema→layout-engine fingerprint (include schema.layout.flow). Never share layout caches between different layout keys.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视图状态与缓存必须通过显式 key 隔离。2D 渲染器变体（D3/Flow/Design/Flow Editor/Storyboard）的 zoom 视图 key 必须按变体隔离，防止跨变体复用相机变换。zoom 与 layout 的 key 都必须来自同一份 schema→布局引擎指纹（必须包含 schema.layout.flow）。不同布局 key 之间禁止共享布局缓存。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterActivationAuthority": [
+      {
+        "@value": "When a workspace bootstrap or exact UI import activates a frontmatter-preset Markdown document, that activated document becomes the raw-frontmatter authority before composed source-file replay or metadata/layout helpers run. A previously active document must not reapply stale renderer or surface choices over the newly activated preset document.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当工作区启动或精确 UI 导入激活带 frontmatter 预设的 Markdown 文档时，该被激活文档必须先成为 raw-frontmatter 权威来源，然后才允许 composed source-file replay 或 metadata/layout helper 运行。此前已激活的文档不得把过期的 renderer 或 surface 选择重新覆盖到新激活的预设文档上。",
+        "@language": "zh-cn"
+      }
+    ],
+    "appliedMarkdownReapplyEpoch": [
+      {
+        "@value": "Explicit applied-markdown replays are fresh source-authority epochs even when path and markdown text are unchanged. Storyboard Widget draft lifetime, transient overlays, and draft-only edges must invalidate from shared applied-document identity plus an incremented apply revision rather than relying only on path/text deltas.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "显式的 applied-markdown 重放即使在路径与 Markdown 文本完全相同的情况下，也属于新的 source-authority epoch。Storyboard Widget 的草稿生命周期、瞬态 overlay 与仅草稿边必须依据共享的 applied-document identity 加递增的 apply revision 进行失效，而不能只依赖路径/文本差异。",
+        "@language": "zh-cn"
+      }
+    ],
+    "schemaLayoutFingerprint2d": [
+      {
+        "@value": "Use a single schema→layout-engine JSON fingerprint builder for 2D renderer variants and reuse it in both zoom view keys and layout view keys. The fingerprint must include Flow layout knobs (schema.layout.flow) so 2D renderers do not compute mismatched keys.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体必须复用同一个 schema→layout-engine JSON 指纹构建器，并同时用于 zoom view key 与 layout view key。该指纹必须包含 Flow 布局参数（schema.layout.flow），避免不同 2D 渲染器计算出不一致的 key。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layerOrderSsot2d": [
+      {
+        "@value": "2D renderers must share one SSOT layer ordering for nodes/edges/groups/labels/handles. Centralize layer ranks and apply them consistently to both SVG z-order (D3) and native canvas draw order (Flow/Flow Editor/Storyboard) to prevent stacking drift across renderer switches.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器必须共享同一套 SSOT 的层级顺序（nodes/edges/groups/labels/handles）。应集中定义 layer rank，并一致应用于 SVG 的 z-order（D3）与原生 canvas 的绘制顺序（Flow/Flow Editor/Storyboard），防止切换渲染器时层级漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "postLayoutCollisionRelax2d": [
+      {
+        "@value": "To forbid persistent overlaps, run a bounded collision relax pass when layouts are produced or frozen: after collective layout and before final fit/freeze in D3, after layout engine output in Flow/Flow Editor/Storyboard, and after drag end in Design. Use overlap-pressure heuristics (not only 'unstable positions') so overlapping-but-stable layouts still get settled. Collision relax must be deterministic (seed RNG from stable inputs such as node ids) and must clamp displacement so overlap removal cannot destroy macro layout.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "为禁止持续重叠，布局产出或冻结时必须执行有界的碰撞 relax：D3 在 collective layout 之后、最终 fit/freeze 之前；Flow/Flow Editor/Storyboard 在布局引擎输出之后；Design 在拖拽结束之后。必须使用 overlap-pressure 等轻量启发式（不能只依赖“位置不稳定”检测），确保“稳定但重叠”的布局也会被收敛。碰撞 relax 必须可复现（用节点 id 等稳定输入作为随机种子），并必须限制位移幅度，避免“消重叠”破坏宏观布局。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layoutForceTuning2d": [
+      {
+        "@value": "2D D3 layout-force tuning must be driven by schema-only knobs (e.g., schema.layout.forces.antiLineStrength, postFitStrength, postFitAlphaMax, plus antiLine/postFit enable and alpha-range switches). Collision/repulsion tuning across ALL 2D graph elements (nodes, groups, labels, rich media as nodes/panels) must also be schema-only via schema.layout.forces.physics2d* (charge/collide/bbox scales, velocityDecay bias, max-speed scale, strict-overlap scale, label-nudge scale, drag charge/distanceMax). Floating Panel Interaction + MainPanel Settings are UI shells over these schema fields. Toolbar Reset is strictly camera/viewport Fit-to-View and must never mutate layout-force knobs or layout caches.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D D3 的布局力调参必须完全由 schema 控制（例如 schema.layout.forces.antiLineStrength、postFitStrength、postFitAlphaMax 以及 antiLine/postFit 的启用与 alpha 范围开关）。同时，覆盖全部 2D 图元素（节点、分组/子图、标签、富媒体作为节点/面板）的碰撞/斥力调参也必须完全由 schema 控制：schema.layout.forces.physics2d*（charge/collide/bbox 缩放、velocityDecay 偏置、max-speed 缩放、strict-overlap 缩放、label-nudge 缩放、拖拽时的 charge/distanceMax）。Floating Panel Interaction 与 MainPanel Settings 只是这些 schema 字段之上的 UI 外壳。工具栏 Reset 仅用于相机/viewport 的 Fit-to-View，禁止修改任何布局力参数或布局缓存。",
+        "@language": "zh-cn"
+      }
+    ],
+    "resetFitFraming2d": [
+      {
+        "@value": "Toolbar Reset is defined as Fit-to-View framing (collective centroid + group-aware bounds) and must not force k=1 when the visible graph is larger than the viewport. Reset must not mutate layout caches or node positions; it only applies a viewport transform.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "工具栏 Reset 的语义是 Fit-to-View 取景（整体重心 + group-aware 边界），禁止在可见图大于 viewport 时强制 k=1。Reset 不得修改布局缓存或节点位置；只能应用 viewport 变换。",
+        "@language": "zh-cn"
+      }
+    ],
+    "boundedLayoutWrites2d": [
+      {
+        "@value": "Any store writes caused by collision relax or layout settlement must be bounded and loop-safe: key computations by a stable graph/layout key, write caches at most once per key, and batch multi-node position patches into a single store update to avoid rerender churn and feedback loops. In the Design renderer, frame-drag commits must apply a single batched position update per drag gesture (no per-frame writes), with in-flight drag feedback handled via visual-only transforms rather than store mutations.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "由碰撞 relax 或布局收敛引起的任何 store 写入都必须有界且防环：以稳定的 graph/layout key 作为计算与写入门控，同一 key 最多写一次缓存，并将多节点位置补丁合并为一次 store 更新，避免 rerender 抖动与反馈循环。Design 渲染器在拖拽 frame 时，拖拽结束的提交必须按一次拖拽手势合并为单次位置批量写入（禁止按帧写入），拖拽过程中的即时反馈应通过纯视觉 transform 实现，而不是不断修改 store。",
+        "@language": "zh-cn"
+      }
+    ],
+    "cachedLayoutPositionsRespect": [
+      {
+        "@value": "Initialization must respect stable cached layout positions: if a per-mode layout position cache exists and is not extreme/unstable, apply it and avoid rewriting node positions during init; only seed missing positions or repair unstable/extreme layouts.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "初始化必须尊重稳定的布局位置缓存：当存在按模式隔离的布局位置缓存且其并非极端/不稳定时，应直接应用并禁止在初始化过程中重写节点位置；只允许为缺失位置做 seed，或对不稳定/极端布局进行修复。",
+        "@language": "zh-cn"
+      }
+    ],
+    "abortableAsyncDerivations": [
+      {
+        "@value": "Async derivations and parse/derive worker requests should be abortable (e.g., via AbortSignal) so stale computations do not leak results, caches, or UI warnings when inputs change rapidly.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "异步派生与 parse/derive worker 请求应支持可取消（例如通过 AbortSignal），避免在输入快速变化时，过期计算泄漏结果、缓存写入或 UI 警告。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorCameraInitKey": [
+      {
+        "@value": "Storyboard Widget camera init must be keyed per dataset when a stable datasetKey exists (e.g., path:*). When dataset keys collapse to rev:*, fall back to a per-graph hashed signature to avoid cross-file init collisions; if the current transform does not show the graph, re-apply an initial fit.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Storyboard Widget 的 camera init 在 datasetKey 稳定时必须按 datasetKey 作为 key（例如 path:*）。当 datasetKey 退化为 rev:* 时必须回退到按图签名 hash 的 key，避免跨文件冲突；若当前 transform 看不到图，则必须重新执行 initial fit。",
+        "@language": "zh-cn"
+      }
+    ],
+    "layoutCacheKeyIsolation": [
+      {
+        "@value": "Layout caches (positions, seeds, bounding boxes) must include all layout-affecting inputs in their cache keys, including renderer variant and media-related toggles. When a renderer variant changes, the layout pipeline must treat it as a distinct variant and avoid reusing stale positioning from another renderer.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "布局缓存（位置、seed、包围盒）必须在 cache key 中纳入所有影响布局的输入，包括渲染器变体与媒体相关开关。渲染器变体变化时，布局流水线必须视其为不同变体，禁止复用来自其他渲染器的过期定位结果。",
+        "@language": "zh-cn"
+      }
+    ],
+    "viewportAwareAutoFit": [
+      {
+        "@value": "Auto-fit/fit-to-screen must react to viewport dimension changes (including UI chrome changes such as sidebar/panel toggles) and respect the actual container aspect ratio (do not force 16:9). Auto-fit should be idempotent and should not fight user pinning; when view is pinned, auto-fit is suppressed until explicitly re-enabled. Initialization must avoid redundant fits: if a valid stored initial transform is applied for first paint, do not immediately re-run auto-fit in the same init pass (prevents double-fit jumps). For the Design renderer, frame grid layout must derive its column count from the active viewport width (within safety bounds) so initial framing and auto-fit operate on a viewport-responsive grid instead of a fixed column count, and fit geometry must be computed from the same visible frame set used by the grid.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "自适配/铺满屏幕必须对 viewport 尺寸变化作出响应（包括侧边栏/面板开关等 UI chrome 变化），并尊重容器实际纵横比（不得强制 16:9）。自适配应幂等，且不得与用户的 pin 操作对抗；当视图被 pin 时，自适配应被抑制，直到用户显式重新启用。初始化必须避免重复 fit：若首帧已应用了有效的持久化初始 transform，则同一轮初始化中不得立刻再次触发 auto-fit（防止 double-fit 跳变）。对于 Design 渲染器，frame 网格布局必须根据当前 viewport 宽度推导列数（在安全边界内），使首帧取景与自适配基于随 viewport 变化而响应的网格而非固定列数，并且 fit 几何计算必须复用与网格相同的可见 frame 集合作为签名。",
+        "@language": "zh-cn"
+      }
+    ],
+    "webpageLayoutWireframe2dDesign": [
+      {
+        "@value": "The Design 2D renderer consumes a browser-native webpage layout snapshot (webpageLayout) and a deterministic DOM→graph converter to render viewport-aware webpage wireframes. The snapshot captures DOM elements with bounding boxes, attributes, and neutral CSS signals only; the converter must remain domain-agnostic and URL-agnostic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 渲染器消费浏览器原生的网页布局快照（webpageLayout）与确定性的 DOM→图转换器，用于渲染随 viewport 变化而响应的网页线框。快照仅捕获带边界框的 DOM 元素及属性与中性 CSS 信号；转换器必须保持领域无关与 URL 无关。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "DOM→graph conversion must enforce geometric nesting and wrapper pruning using bounded, neutral heuristics: (1) re-parent elements when DOM containment and geometry disagree within tolerance; (2) drop tiny noisy leaves and overlapping glue boxes; (3) preserve large semantic containers and interactive/media nodes; (4) preserve landmark roles (banner/navigation/main/contentinfo/region/search) regardless of text.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "DOM→图转换必须使用有界且中性的启发式强制几何嵌套与 wrapper 削减：（1）当 DOM 包含关系与几何包含在容差内不一致时进行重挂载；（2）删除极小的噪声叶子与重叠的“胶水”盒子；（3）保留大尺寸语义容器与交互/媒体节点；（4）即使缺少文本也必须保留 landmark 角色（banner/navigation/main/contentinfo/region/search）。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "The converter may synthesize neutral SECTION containers for repeated grid/list regions (e.g., feature/pricing card grids) by detecting viewport-aware clusters of similar-sized siblings; optional headings immediately above the cluster may become ariaLabel text. Synthetic sections must be domain-neutral and keyed by geometry/structure only.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "转换器可以为重复的栅格/列表区域（例如特性/定价卡片栅格）合成中性的 SECTION 容器，通过检测在 viewport 维度上相近的同类兄弟元素簇来实现；紧邻簇上方的标题可用作 ariaLabel 文本。合成 section 必须保持领域中立，只能依赖几何/结构信号。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Design 2D shares SSOT interaction semantics with other 2D renderers: lasso/multi-select add/remove/replace semantics (Shift/Cmd/Ctrl vs Alt), snap-to-grid behavior (with Alt bypass), align/distribute shortcuts (Alt+Shift+L/H/R/T/V/B/X/Y), and keyboard nudging (arrow keys with grid-aware steps and Shift-based multipliers).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 必须与其他 2D 渲染器共享同一套交互 SSOT：lasso/多选的“添加/移除/替换”语义（Shift/Cmd/Ctrl vs Alt）、吸附到网格的行为（Alt 可临时绕过）、对齐/分布快捷键（Alt+Shift+L/H/R/T/V/B/X/Y），以及键盘箭头微调（带网格敏感步长与 Shift 倍数）。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Design 2D wireframe presentation is controlled by schema-only settings (e.g., metadata.renderer:designWireframe) that gate label/meta chips, text/media previews, depth-aware frame styling, optional edges, and label-collision avoidance. UI surfaces (Floating Panel controls) must remain a thin shell over these settings and stay domain- and URL-agnostic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Design 2D 的线框呈现由纯 schema 设置控制（例如 metadata.renderer:designWireframe），用于开关标签/元信息气泡、文本/富媒体预览、随深度变化的 frame 样式、可选边以及标签碰撞消解。UI（Floating Panel 控件）只是这些设置之上的轻量外壳，必须保持领域与 URL 中立。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "When a webpageLayout snapshot is available, Design 2D must use it as the sole layout SSOT (no fallback to legacy non-webpage frame grids). When no snapshot is ready yet, it may render a neutral placeholder frame (loading/error/idle) instead of a grid or empty canvas. Snapshot capture parameters (viewport size, element caps, timeouts, networkIdle/domQuiet thresholds) are URL-agnostic and must be derived from shared fidelity settings and current window size, not from host-specific rules.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当存在 webpageLayout 快照时，Design 2D 必须以其作为唯一布局 SSOT（不得回退到旧的非网页 frame 网格）。当尚无快照就绪时，可以渲染中性的占位 frame（loading/error/idle），而不是网格或空画布。快照采集参数（viewport 尺寸、元素上限、超时、networkIdle/domQuiet 阈值）必须 URL 无关，并从共享的保真度设置与当前窗口尺寸推导，而非基于 host 特定规则。",
+        "@language": "zh-cn"
+      }
+    ],
+    "lazyLoadingGates": [
+      {
+        "@value": "Heavy feature surfaces (Monaco editor, MapLibre GeoJSON previews, Mermaid diagrams, GLTF exporter) should be lazy-loaded per feature surface, and entry/vendor preloads must avoid auto-mounting these bundles on page load so low-end and mobile devices remain responsive.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "重量级特性表面（Monaco 编辑器、MapLibre GeoJSON 预览、Mermaid 图、GLTF 导出器）应按功能表面懒加载，入口与 vendor 预加载必须避免在页面加载时自动挂载这些 bundle，以保持低端设备与移动端的响应性。",
+        "@language": "zh-cn"
+      }
+    ],
+    "panZoomParity2d": [
+      {
+        "@value": "2D renderer variants (D3, Flow, Design, Flow Editor, Storyboard) must share one SSOT mapping for viewport controls (preset + selection + wheel/trackpad/pinch zoom): consistent preset semantics (`viewportControlsPreset`: map vs design) for pan/zoom/select, wheel delta normalization, zoom sensitivity, and pointer-anchored zoom. Storyboard Widget must never override the stored preset; selection-on-drag must be opt-in via a persisted setting (e.g., `storyboardWidgetSelectionOnDrag`). Wheel/pinch zoom must be continuous (no discrete stepping) and may rAF-batch deltas; all renderers should apply a short anchored easing animation to avoid per-frame delta clumping and feel continuous; cancel on pan/drag and cleanup RAF on unmount. Trackpad pinch should be supported both as ctrl/meta wheel events and (where emitted) Safari `gesture*` events on canvas surfaces. Wheel pan must be consistent across renderers and apply the same pan speed composition (schema `panSpeed` × `flowWheelPanSpeedMultiplier`), independent of current zoom k. Zoom magnitude/increment, ctrl/meta pinch boost, pan speed multiplier, and smoothing durations may be user-tunable via MainPanel Settings (persisted) but must remain bounded; defaults may be upgraded once via a versioned persisted key to improve pinch responsiveness without overriding user-tuned values. Fit/Selection zoom action durations and zoom modes (pin/fit-to-screen/zoom-to-selection) may also be user-tunable and must be enforced consistently across all 2D renderers. Zoom-in/out commands (toolbar/keyboard) must scale about the current viewport center (preserve view center world point), while fit/reset may recenter on graph bounds/centroid. Node-attached overlays track the node world→screen position and may leave the viewport like nodes; detached overlays clamp in renderer viewport coordinates and must avoid post-paint snap-back that creates border bounce. When wheel events land slightly outside the viewport, clamp to the nearest edge before falling back to last-pointer or center to prevent border bounce. During active panning, zoom state commits must be rAF-throttled and may be interval-gated (and may be quantized) so overlays stay synced without end-of-pan snap; avoid anchor rounding that causes overlay shimmy. Prefer shared helpers for viewport clamping and pre-paint correction to prevent drift across surfaces. When the pointer is over the active canvas, prevent default page scroll/zoom so zooming never triggers horizontal/vertical page scrolling.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体（D3、Flow、Design、Flow Editor、Storyboard）必须共享同一套 SSOT 的 viewport 控制映射（preset + 框选 + 滚轮/触控板/双指捏合缩放）：一致的 preset 语义（`viewportControlsPreset`: map vs design）用于 pan/zoom/select，一致的 delta 归一化、一致的缩放灵敏度、并以指针为锚点缩放。Storyboard Widget 禁止覆盖用户存储的 preset；“拖拽框选”必须通过持久化设置显式启用（例如 `storyboardWidgetSelectionOnDrag`）。滚轮/捏合缩放必须是连续的（不允许离散分级跳变），可以做 rAF 批处理；所有渲染器都应使用短时的“以锚点为中心”的缓动动画，避免同一帧 delta 堆叠导致跳变并提升连续感；在平移/拖拽时必须取消，并在卸载时清理 RAF。缩放幅度/增量、Ctrl/Meta 捏合加速倍率与平滑时长可以在 MainPanel Settings 中由用户调参（持久化），但必须保持有界；默认值允许通过带版本的持久化 key 进行一次性升级，以提升捏合缩放响应且不得覆盖用户自定义值。Fit/Selection 的缩放动作时长与缩放模式（pin/fit-to-screen/zoom-to-selection）也可以由用户调参，并且必须在所有 2D 渲染器中一致强制执行。工具栏/键盘的 zoom-in/out 必须以当前 viewport 中心为锚点（保持视图中心对应的 world 点不变），而 fit/reset 可回到图的边界/重心。节点附着的 overlay 必须跟随节点 world→screen 位置并允许像节点一样离开 viewport；脱离（detached）overlay 必须使用渲染器 viewport 坐标系进行 clamp，并避免 post-paint 的“回弹修正”导致边界抖动。当滚轮事件略微落在 viewport 外侧时，必须先向边界 clamp，再回退到 last-pointer 或 center，以避免边缘回弹。平移进行中必须对 zoom state 做 rAF 节流且可做 interval gate（并可进行量化）提交，确保 overlay 与渲染器保持同步且不会在平移结束时出现 snap；避免锚点取整导致的 overlay 抖动。应优先复用共享的 viewport clamp 与 pre-paint 修正 helper，防止各表面实现漂移。当指针位于激活画布之上时，必须阻止页面默认滚动/缩放，确保缩放不会触发页面横向/纵向滚动。",
+        "@language": "zh-cn"
+      }
+    ],
+    "nodeEdgeVisibilityParity2d": [
+      {
+        "@value": "2D renderer variants (D3, Flow, Design, Flow Editor, Storyboard) must apply the same node/edge display filter (visibility semantics) before layout, fit, and scene build. If a node is filtered out, all incident edges must also be filtered out; if the preferred filter would remove all nodes/edges, a safe fallback must display the base nodes/edges to avoid rendering an empty canvas. Initial view restoration must not apply stored transforms when graph bounds cannot be computed yet (e.g., no finite node positions); prefer fit/identity to prevent a blank view caused by stale offscreen pans. Initialization must be idempotent: if a stored transform is applied, the same init pass must not also re-fit. When positions are only partially available, scene build must skip nodes without finite positions (and suppress their edges) to prevent one-long stray lines. Fit geometry must use stable per-node dimensions (e.g., read visual:width/visual:height or renderer defaults) so centering does not drift across 2D variants.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 渲染器变体（D3、Flow、Design、Flow Editor、Storyboard）必须在 layout / fit / scene build 之前应用同一套节点/边显示过滤（可见性语义）。若某节点被过滤掉，则其相连的所有边也必须被过滤掉；若“优先过滤”会导致节点/边全部被过滤，则必须使用安全回退策略显示基础节点/边，避免渲染为空。初始视图恢复时，若尚无法计算图边界（例如没有任何有限的节点坐标），不得应用持久化的 transform；应优先使用 fit/identity，避免因旧的离屏平移导致画布空白。初始化必须幂等：若已应用持久化 transform，则同一轮初始化中不得再次触发 fit。若位置仅部分可用，则 scene build 必须跳过无有限坐标的节点（并抑制其相关边），防止出现“一条超长线”。fit 的几何计算必须使用稳定的节点尺寸（例如读取 visual:width/visual:height 或使用渲染器默认值），确保 2D 变体之间的居中不漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "multiDimTableModeSplit": [
+      {
+        "@value": "Document Mode “Multi-dimensional Table Mode” is a Canvas layout mode that only toggles multiDimTableModeEnabled for graph layout and must not open or configure Workspace Graph Data Table views; Workspace “Workspace: Multi-dimensional Table” controls only workspaceEditorMode and Graph Data Table UI and must not toggle canvas multiDimTableModeEnabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Document Mode「Multi-dimensional Table Mode」是 Canvas 布局模式，只能切换 multiDimTableModeEnabled 以控制图布局，禁止打开或配置 Workspace Graph Data Table 视图；Workspace「Workspace: Multi-dimensional Table」只负责 workspaceEditorMode 与表格 UI，禁止更改 Canvas multiDimTableModeEnabled。",
+        "@language": "zh-cn"
+      }
+    ],
+    "panZoomParityGeospatial": [
+      {
+        "@value": "Geospatial mode must honor the same viewportControlsPreset semantics as 2D canvas surfaces. In map preset: slippy-map interactions are enabled (drag-pan, scroll/pinch zoom) and shift-drag may be reserved for box-zoom/selection without triggering pan. In design preset: wheel defaults to panning; zoom on wheel requires Ctrl/Cmd (trackpad pinch counts as zoom), and pointer-drag panning is restricted to middle/right drag or Space+drag. Interactions must be gated when the Geospatial surface is not active.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Geospatial 模式必须遵循与 2D 画布一致的 viewportControlsPreset 语义。map preset：开启类地图交互（拖拽平移、滚轮/捏合缩放），并将 Shift+拖拽保留为框选/box-zoom（不得触发平移）。design preset：滚轮默认用于平移；滚轮缩放需 Ctrl/Cmd（触控板捏合也视为缩放）；指针拖拽平移仅允许中键/右键拖拽或 Space+拖拽。Geospatial 表面非激活时必须对交互做 effect gating。",
+        "@language": "zh-cn"
+      }
+    ],
+    "overlayScrollIsolation2d": [
+      {
+        "@value": "Scrolling inside overlays (e.g., Storyboard Widget) must not trigger canvas zoom. Mark overlays as wheel-ignore zones and make 2D wheel-zoom handlers early-return when the wheel event originates from (or the pointer is within) an ignore zone. In Storyboard Widget mode, wheel-ignore must not blanket block wheel zoom when the top-most element under the pointer is still the canvas.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在 overlay 内滚动（例如 Storyboard Widget）不得触发画布缩放。必须将 overlay 标记为 wheel-ignore zone，并让 2D 的 wheel-zoom handler 在事件来源于（或指针位于）ignore zone 时直接 return。对 Storyboard Widget 模式，还必须禁止 wheel-ignore 在“指针下最上层元素仍为 canvas”时把缩放整体屏蔽掉。",
+        "@language": "zh-cn"
+      }
+    ],
+    "overlayPointerCaptureSafety2d": [
+      {
+        "@value": "Overlays should prevent accidental canvas wheel zoom via wheel-ignore zones. Space-pan must remain usable even when pointerdown starts on an overlay: the Flow canvas may proxy Space+drag pan from overlay ignore targets, but must only do so for pan (no node/overlay drag forwarding) and must remain pointer-capture safe. Pinned overlay drags must update overlay anchor offsets directly and must not be routed through any pan proxy path. If pointer capture is lost while a drag is active, cancel/clear drag state so pan/zoom cannot become stuck or blocked. Any global user-select lock used during interactions must always unlock on end/cancel and have a bounded failsafe reset on blur/visibility hidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Overlay 应通过 wheel-ignore zone 防止误触发画布滚轮缩放。按住 Space 时必须始终可平移：Flow 画布可以从 overlay 的 ignore target 代理 Space+拖拽平移，但只能代理平移（禁止转发节点/overlay 拖拽）且必须保证 pointer capture 安全。Pinned overlay 的拖拽必须直接更新锚点偏移，不得通过任何 pan proxy 路径转发。拖拽中若丢失 pointer capture，必须取消/清理 drag 状态，防止平移/缩放被卡死。交互期间若使用全局 user-select 锁，必须在 end/cancel 时始终解锁，并提供有界的 failsafe（blur/页面隐藏时重置）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaRendering": [
+      {
+        "@value": "Rich Media nodes (image/svg/video/iframe) must be detected via shared, domain-agnostic URL/metadata heuristics and rendered through a bounded DOM overlay pool per canvas (2D D3/Flow/Design and 3D). Overlays follow node motion via a shared RAF-coalesced scheduler, reuse a single overlay surface per canvas, and respect Script/Imgs/Fid defaults as auto, driven by shared rich-media + iframe heuristics across Markdown Viewer, Canvas, Design, and Geospatial modes; per-document frontmatter overrides are optional escape hatches only and must not be required for normal Rich Media rendering.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "富媒体节点（image/svg/video/iframe）必须通过共享且领域无关的 URL/元数据启发式进行检测，并在每个画布中通过有界的 DOM overlay 池进行渲染（适用于 2D D3/Flow/Design 以及 3D）。Overlay 必须通过共享的 RAF 合并调度器跟随节点运动，并在每个画布上复用单一 overlay 表面；Script/Imgs/Fid 的默认行为必须保持为 auto，由共享的富媒体 + iframe 启发式驱动，在 Markdown Viewer、Canvas、Design 与 Geospatial 模式间保持一致；每文档 frontmatter 覆盖仅作为可选逃生阀，不能成为正常富媒体渲染的前提条件。",
+        "@language": "zh-cn"
+      }
+    ],
+    "imageToThreeJsSharedSurfaceProjection": [
+      {
+        "@value": "When a source-backed image skill result declares `mediaRenderMode: threejs` and a `agentic-graph-image-to-threejs/v1` manifest, Card, Widget, Storyboard, 2D overlay, Three overlay, and Rich Media Panel projections must preserve that same render mode and source URL. Raster images render as sRGB textured planes and SVG images as bounded fill/stroke geometry through the existing shared Three.js runtime; asynchronous readiness invalidates the demand-driven frame loop and every texture, geometry, and material is disposed on replacement or unmount. Source replacement is keyed to the canonical URL so late loader completion cannot overwrite the current projection. Loader failure returns visibly to the original image surface without provider calls or generated-media backfill. This contract is runtime-ready in Dev only; protected integration, Prod, and Cloudflare remain separately gated. The canonical runtime contract remains `agentic-graph/docs/documents/agentic-graph-image-to-threejs-api.md`.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当源支持的图片 skill 结果声明 `mediaRenderMode: threejs` 与 `agentic-graph-image-to-threejs/v1` manifest 时，Card、Widget、Storyboard、2D overlay、Three overlay 与 Rich Media Panel 投影必须保留同一 render mode 与源 URL。栅格图片通过现有共享 Three.js runtime 渲染为 sRGB textured plane，SVG 渲染为有界的 fill/stroke geometry；异步就绪后需使 demand-driven frame loop 失效重绘，并在替换或卸载时释放所有 texture、geometry 与 material。源替换必须以规范 URL 为键，避免延迟完成的 loader 覆盖当前投影。加载失败必须可见地回退到原始图片表面，不得调用 provider 或生成媒体补偿。该契约仅在 Dev 中达到 runtime-ready；受保护集成、Prod 与 Cloudflare 仍需独立门禁。规范运行时契约仍位于 `agentic-graph/docs/documents/agentic-graph-image-to-threejs-api.md`。",
+        "@language": "zh-cn"
+      }
+    ],
+    "lowEndDeviceFriendlyLoading": [
+      {
+        "@value": "Canvas should treat low-end devices as first-class: gate background renderer warm-mount and prefetch by navigator.deviceMemory, navigator.hardwareConcurrency, and connection.saveData/effectiveType; avoid prefetching non-active heavy 2D/3D bundles when memory/CPU are low or Save-Data/2g is detected, so entry interactions remain responsive.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas 必须将低端设备视为一等公民：根据 navigator.deviceMemory、navigator.hardwareConcurrency 与 connection.saveData/effectiveType 对后台渲染器的 warm-mount 与预取做 gate；在内存/CPU 紧张或检测到 Save-Data/2g 时避免预取非激活的重型 2D/3D bundle，从而保持入口交互响应。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolSurfaceLazySplitPoints": [
+      {
+        "@value": "Heavy tool surfaces (Toolbar menus/launch, MainPanel, MarkdownWorkspace, workspace export bridge, Graph Data Table) should be modeled as lazy boundaries: keep behavior identical while loading them on demand as separate bundles, and forbid reintroducing eager monolithic Toolbar/Canvas/Workspace bundles that cause churn or freeze on low-end browsers.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "重型工具表面（工具栏菜单/Launch、MainPanel、MarkdownWorkspace、Workspace 导出桥、Graph Data Table）应建模为“惰性边界”：在保持行为一致的前提下按需加载为独立 bundle，禁止重新引入将 Toolbar/Canvas/Workspace 打包为单体的大 bundle，从而在低端浏览器上造成卡顿或冻结。",
+        "@language": "zh-cn"
+      }
+    ],
+    "interactionAndSyncModes": [
+      {
+        "@value": "Canvas Interaction Mode and Workspace Sync Mode must be implemented as shared SSOT toggles that control how aggressively the infinite canvas runs force-directed layout and how Canvas↔Workspace sync behaves. `infiniteCanvasInteractionMode∈{static,interactive}` controls layout and overlay interactivity: static (default) runs D3 forces to a bounded stable state then freezes simulation and forwards overlay wheel/pan to Canvas so pan/zoom remain primary and Graph Data Table/GraphRecordDb treat position-only updates as non-syncing metadata; interactive keeps D3 forces running and enables full embedded overlay interactivity while still using the same GraphData/layout keys and bounded, revision-gated sync. `canvasWorkspaceSyncMode∈{manual,realtime}` controls when GraphData is synced into GraphRecordDb: manual (default) disables automatic sync and exposes a single 'Sync now' action for the current view; realtime enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) and must use structure-only revisions in static interaction mode and full graph revisions in interactive mode while deduping via last-write/last-sync gates to prevent loops and background churn. Toolbar toggles and MainPanel Settings must write the same underlying state; interaction/sync modes must never be implemented as parallel, renderer-specific flags.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas Interaction Mode 与 Workspace Sync Mode 必须作为共享的 SSOT 开关实现，用于控制无限画布运行力导向布局的程度以及 Canvas↔Workspace 的同步行为。`infiniteCanvasInteractionMode∈{static,interactive}` 用于控制布局与覆盖层交互：static（默认）将 D3 力导向布局运行到有界稳定状态后冻结模拟，并将覆盖层的滚轮/平移事件转发给 Canvas，使平移/缩放保持为主交互，并让 Graph Data Table/GraphRecordDb 将纯位置更新视为“非同步元数据”；interactive 则保持 D3 力导向布局持续运行，并启用完整的嵌入式覆盖层交互（iframe/图片/视频/Markdown 区块直接接收滚轮/指针事件），同时仍复用同一套 GraphData/布局 key 与有界、基于修订号的同步。`canvasWorkspaceSyncMode∈{manual,realtime}` 用于控制 GraphData 何时同步到 GraphRecordDb：manual（默认）禁用自动同步，仅对当前视图提供一次性的“Sync now” 操作；realtime 启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步，并在 static 交互模式下仅使用结构修订，在 interactive 模式下使用完整图修订，同时通过 last-write/last-sync 门控去重，防止循环与后台抖动。工具栏开关与 MainPanel Settings 必须写入相同的底层状态；交互/同步模式严禁作为并行的、渲染器特有的标志实现。",
+        "@language": "zh-cn"
+      }
+    ],
+    "interactionPerformance2d": [
+      {
+        "@value": "2D interaction handlers (wheel/pan/drag) must avoid forced layout reads and unnecessary rerenders. Prefer offset-based local coordinates (`offsetX/offsetY`) for canvas-local pointer/wheel mapping; only fall back to `getBoundingClientRect()` when offsets are unavailable. Avoid per-frame `getComputedStyle()`/CSS var reads in draw loops; cache theme tokens keyed by theme state. Imperative renderers should not subscribe to high-frequency store state (e.g., zoom state) in ways that rerender the React component on every commit.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 交互 handler（wheel/pan/drag）必须避免强制 layout 读取与不必要的 rerender。应优先使用基于 offset 的本地坐标（`offsetX/offsetY`）进行画布局部坐标映射；仅在 offset 不可用时回退到 `getBoundingClientRect()`。在 draw loop 中必须避免每帧执行 `getComputedStyle()`/CSS var 读取；应按主题状态 key 缓存 theme token。命令式渲染器不得订阅高频 store 状态（例如 zoom state）从而导致每次 commit 都触发 React 组件 rerender。",
+        "@language": "zh-cn"
+      }
+    ],
+    "collisionRelaxPerformance2d": [
+      {
+        "@value": "Collision relaxation during drag must be throttled (at most once per animation frame, and may be further time-bounded) and step-bounded. For large graphs, drag-time relaxation may be disabled to preserve interaction responsiveness; commit-time relaxation should use a size-aware step policy to stay bounded.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "拖拽期间的碰撞 relax 必须被节流（最多每个动画帧一次，且可进一步按时间间隔限频）并限制 steps 上限。对于大图可禁用拖拽期 relax 以保证交互顺滑；commit 期 relax 必须使用与图规模相关的 steps 策略以保持有界。",
+        "@language": "zh-cn"
+      }
+    ],
+    "overlayRenderIsolation2d": [
+      {
+        "@value": "2D overlays that depend on zoom/pan for positioning (e.g., Storyboard Widget) must isolate zoom-dependent layout from heavy UI subtrees. Zoom updates should not re-render editor forms; prefer rAF-batched DOM style updates for position/scale and keep updates on the compositor path (e.g., `transform: translate3d(...) scale(...)` instead of left/top writes), and memoize the panel body.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "依赖 zoom/pan 进行定位的 2D overlay（例如 Storyboard Widget）必须将与 zoom 相关的布局计算从重 UI 子树中隔离。zoom 更新不得触发 editor form rerender；应优先用 rAF 批处理的 DOM style 更新实现位置/缩放，并尽量走合成器路径（例如使用 `transform: translate3d(...) scale(...)` 而不是频繁写 left/top），并 memoize panel body。",
+        "@language": "zh-cn"
+      }
+    ],
+    "interactionNoTextSelectionDuringCanvasDrag": [
+      {
+        "@value": "During canvas pointer interactions (pan, drag, marquee) the app must prevent browser text selection and HTML dragstart side-effects so dragging never selects panel text or triggers copy/drag cursors.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在画布指针交互（平移、拖拽、框选）期间，应用必须阻止浏览器文本选择与 HTML dragstart 副作用，确保拖动不会选中面板文字或触发复制/拖拽光标。",
+        "@language": "zh-cn"
+      }
+    ],
+    "collisionNoStick": [
+      {
+        "@value": "Collision resolution must forbid exact-contact sticking: treat near-touch as overlap via a small touch-epsilon and enforce axis-aware spacing using sum-of-gaps (gapA + gapB) rather than max. Model boxes with indexed borders (inner x2..x4/y2..y4/z2..z4 vs outer envelope x1..x5/y1..y5/z1..z5); nested containment must compare child inner to parent outer. Z-axis resolution must be explicitly gated (non-zero cz, positive halfD, or positive explicit gapZ); otherwise treat Z as infinite overlap so 2D surfaces never accidentally push in Z.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "碰撞消解必须禁止“贴边粘连”：通过 touch-epsilon 将近似接触视为重叠，并使用按轴间距的 sum-of-gaps（gapA + gapB）而不是 max 来保证更严格的分离。将盒子建模为带索引的边界（内边界 x2..x4/y2..y4/z2..z4 vs 外包络 x1..x5/y1..y5/z1..z5），嵌套包裹需对比子盒内边界与父盒外包络。Z 轴消解必须显式 gating（cz 非零、halfD 为正、或显式 gapZ 为正）；否则将 Z 视为无限重叠，确保 2D 表面不会误在 Z 轴上推挤。",
+        "@language": "zh-cn"
+      }
+    ],
+    "labelTextSsot": [
+      {
+        "@value": "Label wrapping/truncation and approximate text measurement must reuse one SSOT helper set across 2D renderers (D3, Flow, Design, Flow Editor, Storyboard). Prefer cached, width-based truncation (estimate max chars from width + font size) over ad-hoc slice constants; avoid per-frame expensive text measurement loops. Label typography (font family/size/weight) must follow the UI design token SSOT so label behavior does not drift across surfaces.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Label 的换行/截断与近似文本度量必须在 2D 渲染器（D3、Flow、Design、Flow Editor、Storyboard）之间复用同一套 SSOT helper。应优先使用带缓存的“按宽度截断”（根据 width + fontSize 估算最大字符数），禁止使用各表面自定义的 slice 常量；避免每帧执行昂贵的 text measurement 循环。Label 排版（字体族/字号/字重）必须遵循 UI 设计 token 的 SSOT，防止跨表面漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphElementsSemantics": [
+      {
+        "@value": "Graph elements vocabulary: nodes (entities with id/label/type + properties), edges (relationships with id/source/target/label + properties), labels/text (rendered copy driven by SSOT UI tokens), and graph layers (groups/clusters/communities, selection, overlays). Storyboard Widget is a screen-space overlay anchored to a selected node and synchronized to world→screen transforms; its Key/Value grid uses In Port/Key/Type/Value/Out Port columns at 1%/29%/10%/59%/1%, shows port dots for every key row, aligns value inputs/selects via SSOT classes, and forbids horizontal scrolling. Storyboard Widget More actions are idempotent and SSOT-driven: enable Port Handles by setting schema.behavior.portHandles.enabled=true and schema.behavior.portHandles.showAllInputs=true; convert to Loop by setting node.type='Loop' and node.properties['workflow:kind']='loop'; open sidepane dispatches the panel open event without mutating GraphData. Edges may bind to explicit ports via edge.properties['flow:sourcePortKey'|'flow:targetPortKey']; schema-field ports are defined by node.properties['schema:fields'] and use port keys like field:<id>. When schema fields are edited in Storyboard Widget, renaming a field must rewrite any port-bound edges and recompute flow:displayLabel. Port-bound edges may provide a UI label override via edge.properties['flow:displayLabel'] and may be validated against schema endpoints + field-type compatibility. Storyboard Widget dataflow computes connectedValuesBySchemaPath across upstream chains without mutating GraphData; registry schemaMappings may specify reduceId and transformId to derive mapped values, and auto-apply fills only empty fields on demand or when enabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "图元素词汇：nodes（包含 id/label/type 与 properties 的实体）、edges（包含 id/source/target/label 与 properties 的关系）、labels/text（由 SSOT UI token 驱动的渲染文案）、graph layers（groups/clusters/communities、selection、overlays）。Storyboard Widget 是屏幕空间的覆层，锚定选中节点并与 world→screen 变换保持同步；其 Key/Value 栅格使用 In Port/Key/Type/Value/Out Port 五列（1%/29%/10%/59%/1%），每行都显示端口点位，Value 输入/选择通过 SSOT 类对齐边框，并禁止横向滚动。Storyboard Widget 的 More actions 必须幂等并遵循 SSOT：通过设置 schema.behavior.portHandles.enabled=true 与 schema.behavior.portHandles.showAllInputs=true 启用 Port Handles；通过设置 node.type='Loop' 与 node.properties['workflow:kind']='loop' 转换为 Loop；打开 sidepane 仅派发面板打开事件且不得修改 GraphData。Edges 可通过 edge.properties['flow:sourcePortKey'|'flow:targetPortKey'] 绑定到显式端口；schema-field 端口由 node.properties['schema:fields'] 定义，并使用形如 field:<id> 的 port key。当在 Storyboard Widget 中编辑 schema 字段时，字段重命名必须同步改写端口绑定边，并重新计算 flow:displayLabel。端口绑定的边可通过 edge.properties['flow:displayLabel'] 提供 UI 标签覆盖，并可根据 schema endpoints 与字段类型兼容性进行校验。Storyboard Widget 数据流会在上游链路上计算 connectedValuesBySchemaPath 且不修改 GraphData；registry schemaMappings 可指定 reduceId 与 transformId 以派生映射值，auto-apply 仅在字段为空时按需或启用后填充。",
+        "@language": "zh-cn"
+      }
+    ],
+    "edgeTypesGlobalSsot": [
+      {
+        "@value": "Edge visual types are controlled globally via schema.layout.edges.type∈{bezier,straight,step,smoothstep} and applied consistently across 2D D3/Flowchart, Flow, Design, Flow Editor, Storyboard, and 3D. Global edge type is renderer-neutral, view-only, and must not change GraphData; it selects the path shape used for rendering while edge labels, structural fields, and semantics remain unchanged. Per-edge visual properties such as visual:width or visual:edgeType inside edge.properties may refine presentation but must not introduce domain-specific edge semantics.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "边的可视化类型由全局字段 schema.layout.edges.type∈{bezier,straight,step,smoothstep} 控制，并在 2D D3/Flowchart、Flow、Design、Flow Editor、Storyboard 以及 3D 之间保持一致。全局 Edge Type 是与渲染器无关的纯视图开关，不得修改 GraphData，仅用于选择渲染时采用的路径形状；边的标签、结构字段与语义保持不变。边级的 visual:width 及 edge.properties 中的 visual:edgeType 等可视属性只能细化呈现效果，禁止引入任何特定领域的语义含义。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphConfigsSemantics": [
+      {
+        "@value": "Graph configs vocabulary: grouping (schema.layout.groups.*), positioning (layout mode + flow engine knobs), collisions (bounded relax policies + schema collision knobs), timing (rAF/interval gates and bounded timeouts), and knobs (schema/config/persistence SSOT; cache-keyed when render-affecting).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "图配置词汇：grouping（schema.layout.groups.*）、positioning（布局模式 + flow 引擎参数）、collisions（有界 relax 策略 + schema 碰撞参数）、timing（rAF/interval gate 与有界超时）、knobs（schema/config/persistence 的 SSOT；影响渲染时必须纳入 cache key）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "orderSafeImportRender": [
+      {
+        "@value": "Import→render flows are order-safe and batch-aware: bulk imports coalesce change notifications; late async completions (layouts, previews, derived views) must not override the currently selected graph or viewKey. Prefer explicit request ids or monotonic revision counters for applying async results.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Import→render 流程必须具备顺序安全与批处理意识：批量导入要合并变更通知；异步任务（布局、预览、派生视图）的迟到完成不得覆盖当前选择的图或 viewKey。应优先使用显式 request id 或单调递增的 revision 计数来应用异步结果。",
+        "@language": "zh-cn"
+      }
+    ],
+    "ssotActiveGraphRenderView": [
+      {
+        "@value": "All render surfaces consume the same SSOT-derived active graph render view. Derivation order: keyword base → optional frontmatter filter (document mode only) → optional group collapse. Forbid per-surface re-derivation to prevent drift between Canvas, Flow overview, tables, and stats panels.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "所有渲染表面必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter 过滤（仅 document mode）→ 可选 group collapse。禁止各表面自行二次推导，避免 Canvas、Flow 概览、表格与统计面板之间产生漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "documentStructureBaselineDefault": [
+      {
+        "@value": "Default UX anchors to Document Structure baseline. Baseline lock forces a stable 2D baseline (D3 + Fit-to-Screen, no Pin/Zoom-to-Selection) and blocks mode switches (semantic/frontmatter, renderer, 2D/3D, selection/create) to keep Editor/Table/Canvas/Preview aligned. Zoom view keys are isolated per 2D renderer variant; share controls semantics, not transforms. Flow, Flow Editor, and Storyboard must honor baseline lock (disable auto zoom modes) and reuse the same SSOT display filter and fit geometry as D3. Keyword graphs reuse Document baseline seeding/forces for stability; Flow does not run D3 forces but must respect the same visibility and fit rules.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "默认体验锚定在 Document Structure 基线。baseline lock 强制稳定的 2D 基线（D3 + Fit-to-Screen，禁用 Pin/Zoom-to-Selection），并阻止模式切换（semantic/frontmatter、渲染器、2D/3D、选择/创建），以确保 Editor/Table/Canvas/Preview 对齐。zoom 视图 key 按 2D 渲染器变体隔离；共享的是控制语义而非变换。Flow、Flow Editor 与 Storyboard 必须遵守 baseline lock（禁用自动缩放），并复用与 D3 相同的可见性过滤与 fit 几何。Keyword 图为稳定性复用 Document 基线的种子/力；Flow 不运行 D3 力，但必须遵循相同的可见性与 fit 规则。",
+        "@language": "zh-cn"
+      }
+    ],
+    "rendererModeMatrix2d3d": [
+      {
+        "@value": "Canvas surfaces expose a renderer matrix: 2D D3/Flow/Design/Flow Editor/Storyboard, 3D, and Geospatial. All variants must consume the same SSOT-derived active graph render view (keyword base → optional frontmatter filter in Document mode → optional group collapse) and differ only in layout/presentation. 2D D3 runs force/layout; Flow/Design/Storyboard reuse the same visibility and collective-fit geometry and do not re-run D3 forces; 3D reuses 2D positions (when present) as a baseline and applies its own camera/depth. Switching 2D↔3D must preserve selection and per-variant zoom keys while sharing controls semantics; layout caches are renderer-variant-aware but share the same schema→layout-engine fingerprint.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Canvas 表面暴露一组渲染器矩阵：2D D3/Flow/Design/Flow Editor/Storyboard、3D 与 Geospatial。所有变体必须消费同一份 SSOT 推导的 active graph render view（keyword 基础图 → Document 模式下可选 frontmatter 过滤 → 可选 group collapse），只能在布局/呈现上有差异。2D D3 负责 force/layout；Flow/Design/Storyboard 复用相同的可见性与 collective-fit 几何且不重新运行 D3 力；3D 复用 2D 位置（存在时）作为基线并施加自身相机/深度。2D↔3D 切换时必须保持选择与按变体隔离的 zoom key，同时共享控制语义；布局缓存需感知渲染器变体但共享同一套 schema→布局引擎指纹。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaHtmlCanvasExport": [
+      {
+        "@value": "HTML Viewer/Canvas exports must reuse the same renderer matrix semantics as in-app Canvas: the exported SVG is rendered from the display-derived graph (including group envelopes) via GraphCanvas (live or off-screen) and styled identically using `applyGraphCanvasStyles2d` to ensure parity of CSS animations (`kgNodeBob`), node strokes, and colors. A serialized mediaNodes list drives bounded Rich Media overlays at runtime. Full parity with DOM overlays (tables, blockquotes, codeblocks) is maintained by capturing `[data-kg-markdown-design-block]` elements from the live workspace and injecting them as `<foreignObject>`s inside the SVG snapshot with computed HTML styles. Flow-based HTML Canvas exports do not snapshot Flow’s canvas; they re-render into off-screen SVG using the same layout/fit rules as D3 and reuse derived group membership so dragging groups or nodes keeps nodes, edges, and overlays interconnected. Repo-relative Rich Media URLs (e.g., /__repo_file/…) are resolved by a runtime helper and may be inlined as data: URLs within bounded size limits; when exports are opened via file://, the runtime must still resolve these URLs through a probed http(s) origin so local media remains visible.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "HTML Viewer/Canvas 导出必须复用与应用内 Canvas 相同的渲染器矩阵语义：导出的 SVG 必须通过 GraphCanvas（实时或离屏）从 display 推导的图（包含 group 包络）渲染得到，并使用 `applyGraphCanvasStyles2d` 应用完全相同的样式，以确保 CSS 动画（`kgNodeBob`）、节点描边和颜色的高保真一致性。序列化的 mediaNodes 列表在运行时驱动有界的 Rich Media overlay，同时为保证 DOM overlay（如表格、引用、代码块）的高保真，导出时会捕获实时工作区中的 `[data-kg-markdown-design-block]` 元素并附带计算好的 HTML 样式将其作为 `<foreignObject>` 注入 SVG 快照中。基于 Flow 的 HTML Canvas 导出不会对 Flow 的 canvas 进行快照；而是使用与 D3 相同的布局/fit 规则在离屏 SVG 中重渲染，并复用推导出的 group 成员关系，确保拖拽 group 或节点时节点/边/overlay 始终保持互联。以 /__repo_file/… 为前缀的富媒体 URL 由运行时代码解析，并可在有界大小限制内被内联为 data: URL；当导出通过 file:// 打开时，运行时仍必须通过探测到的 http(s) origin 解析这些 URL，以保证本地媒体可见。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Exported HTML Canvas viewer must expose a compact HUD that mirrors in-app renderer toggles: 2D↔3D switch, Rich Media On/Off, Media interaction gate, and Frontmatter Mode On/Off. HUD toggles are strictly view-only, reuse the same SSOT GraphData/fit/zoom semantics as Canvas, and support desktop + mobile (full-viewport canvas with pointer pan/drag and touch pan/pinch/drag) without introducing export-only derivation or layout paths.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "导出的 HTML Canvas 查看器必须提供一组精简 HUD 开关，镜像应用内渲染器开关：2D↔3D 切换、Rich Media 开/关、媒体交互门控以及 Frontmatter Mode 开/关。HUD 开关必须是纯视图行为，复用与 Canvas 相同的 SSOT GraphData/fit/zoom 语义，并在桌面与移动端（充满视口的画布，指针平移/拖拽与触控平移/捏合/拖拽）上工作，禁止引入仅导出使用的推导或布局路径。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterModeToggleContract": [
+      {
+        "@value": "Frontmatter Mode controls which graph derivation path feeds Canvas, not GraphData itself. When Frontmatter Mode is On and the active Markdown file defines a Flow frontmatter graph (nodes/connections/'kg:subgraphs'), 2D D3 and Flow both treat that graph as the layout SSOT (no hidden per-renderer nodes) while still using the shared active graph render view pipeline. When Frontmatter Mode is Off, renderers fall back to the Markdown→JSON-LD pipeline; mode toggles are view-only and must not mutate imported Markdown/JSON-LD sources or layout caches beyond normal visibility/fit effects. 3D must respect the same frontmatter filter decisions as 2D, reusing positions where available but never introducing a separate, frontmatter-only GraphData fork.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Frontmatter Mode 只控制 Canvas 消费的图推导路径，而非 GraphData 本身。当 Frontmatter Mode 为 On 且当前 Markdown 文件定义了 Flow frontmatter 图（nodes/connections/'kg:subgraphs'）时，2D D3 与 Flow 都必须将该图视为布局 SSOT（不得存在仅某个渲染器可见的节点），同时仍复用共享的 active graph render view 流水线。Frontmatter Mode 为 Off 时，渲染器回退到 Markdown→JSON-LD 流程；模式切换必须是纯视图行为，不得修改导入的 Markdown/JSON-LD 源或超出正常可见性/fit 效果的布局缓存。3D 必须与 2D 一样尊重 frontmatter 过滤决策，在可用时复用位置，但不得引入单独的 frontmatter-only GraphData 分支。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowchartSuperGroups2d": [
+      {
+        "@value": "The 2D Flowchart renderer must treat Flowchart graphs (nodes with type∈{problem,solution} and cluster ids from metadata) as a nested super-group hierarchy: a root Flowchart super-group over all Flowchart nodes, side super-groups for Problems/Solutions, and per-cluster groups under each side. This hierarchy is expressed structurally via subgraphs (kg:subgraphs metadata) and reused by layout/fit/visibility; renderer-specific flags must not fork a parallel grouping model.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "2D 的 Flowchart 渲染器必须将 Flowchart 图（节点 type∈{problem,solution} 且 cluster id 来自元数据）视为嵌套的 super-group 层级：根 Flowchart super-group 覆盖所有 Flowchart 节点，其下按侧划分 Problems/Solutions super-group，再在每一侧下根据 cluster 建立子分组。该层级必须通过结构化的子图（kg:subgraphs 元数据）表达，并被 layout/fit/visibility 复用；禁止通过渲染器特定标志建立并行的分组模型。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Flowchart layouts must keep problem/solution nodes in separated left/right lanes derived from shared layout/index anchors and schema-only force knobs. Super-group/group envelopes and headers are part of fit geometry and must remain visible during interaction (click/drag/zoom) without requiring renderer switching. Edge visibility in Flowchart mode uses schema + per-edge visual width/opacity only; highlight/dimming must never fully hide the Flowchart line structure when nodes remain visible.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Flowchart 布局必须通过共享的布局/index 锚点与仅由 schema 控制的力参数，将 problem/solution 节点保持在左右分离的“车道”中。super-group/group 的边界与标题属于 fit 几何的一部分，交互（点击/拖拽/缩放）期间必须保持可见，无需通过切换渲染器来“找回”分组。Flowchart 模式下边的可见性只能由 schema 与每条边的可视宽度/不透明度控制；即使存在高亮/弱化，也不得在节点可见时完全隐藏 Flowchart“连线”结构。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}

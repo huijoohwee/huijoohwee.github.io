@@ -1,17 +1,17 @@
 ---
 title: "Agentic RAG Venture Evidence Projection"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
+version: "0.2.0"
 date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "AGENTIC-RAG-VENTURE-EVIDENCE-001"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
 guideline_revision: "3.4.1"
 guideline_source: "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"
 reviewed_source_revision: "75757578f951b1b4c8aaa0e734a53326b446aaa9"
@@ -21,7 +21,7 @@ lane: "authoring"
 universal_scope: false
 load_policy: "on-demand"
 lifecycle_status: "proposed"
-verification_scope: "Optional JSON-LD evidence profile and static distribution route; no runtime service or product-demand claim"
+verification_scope: "Optional JSON-LD profile, lowercase source cutover, static route and compatibility alias; no runtime service or product-demand claim"
 ---
 
 # Agentic RAG Venture Evidence Projection
@@ -63,15 +63,16 @@ that transaction; it does not establish repeat demand, profitability, or viabili
 | VCC-03 | The example keeps pain observation, offer, order acceptance, cash collected, delivery, operating cost, and repeat use distinct. It makes no viability, revenue-recognition, or demand claim from a single transaction. | Example graph review against Lean Startup and Venture Record owners |
 | VCC-04 | The module uses existing JSON-LD provenance and continuity fields. It adds no parallel CID, ledger, experiment record, accounting rules, or agent-invocation tokens. | Context and ownership review |
 | VCC-05 | The exact Pages artifact serves the context and optional module at the lowercase `/schema/agentic-rag/` route. The published bytes are the same candidate checked in local Development readback. | Existing Pages artifact/readback owner |
-| VCC-06 | Existing source links under `schema/AgenticRAG` remain valid during migration. The public lowercase route is generated from that source; the old v1 context URL remains a small compatibility alias. Existing v1 vocabulary IRIs stay unchanged. | Repository reference check and route readback |
+| VCC-06 | The authored tree is `schema/agentic-rag`; active website and Agentic Graph source-path consumers use it. No duplicate editable tree remains. | Tracked path inventory and repository reference checks |
+| VCC-07 | The old `/schema/AgenticRAG/v1/context.jsonld` public URL remains a byte-identical compatibility alias. Existing v1 vocabulary IRIs and stable node identities stay unchanged. | Exact Pages artifact readback and identity diff |
 
 ### Product bounds
 
 - Static JSON-LD only; free-tier and FOSS; no hosted service, paid dependency, external call, or new runtime.
-- One optional evidence module and one bounded end-to-end example; no edits to downstream repositories.
+- One optional evidence module and one bounded end-to-end example; update only direct Agentic Graph consumers needed for the source-path migration.
 - No personal customer data. Examples use synthetic names and values.
 - Keep module files below 600 lines. Keep always-loaded prompt impact at zero; consumers opt in by reference.
-- Preserve the existing source path because first-party source links exist across several repositories. Use lowercase kebab case for the published URL. A physical source rename requires a separately grounded consumer migration.
+- Use lowercase kebab case for both the authored source directory and public URL. Migrate direct source-path consumers with the move; keep the old public context URL as a route alias rather than a second source tree.
 
 ## TAD
 
@@ -89,15 +90,15 @@ retain those definitions.
 
 ### Distribution and resource use
 
-The Pages controller copies the source schema to `/schema/agentic-rag/` in the sealed artifact and exposes
-the existing v1 context at its prior URL as a compatibility route. The new route and compatibility context
+The Pages controller copies `schema/agentic-rag/` to `/schema/agentic-rag/` in the sealed artifact and exposes
+the existing v1 context at `/schema/AgenticRAG/v1/context.jsonld` as a compatibility route. The new route and compatibility context
 are checked from the exact downloaded artifact before Production can start. No browser page loads the
 profile by default; consumers fetch it only when selected.
 
 ## ADR
 
-1. Keep `schema/AgenticRAG` as the authored source directory while first-party repositories link to it.
-   Publish a lowercase URL from that source. Do not create a second editable schema tree.
+1. Make `schema/agentic-rag` the only authored source directory and migrate direct consumer paths.
+   Publish the lowercase URL from that source; do not keep a second editable tree.
 2. Keep v1 vocabulary IRIs stable. Change the context document's distribution URL only for new consumers;
    retain the previous v1 context URL as a compatibility alias in the same Pages artifact.
 3. Keep the universal graph context neutral. Add business semantics in one optional, lazy profile and
@@ -107,8 +108,8 @@ profile by default; consumers fetch it only when selected.
 
 ## MVP — reference implementation
 
-Implement the optional profile, one synthetic example, source-reference updates, and one Pages artifact
-route. Reuse the existing JSON-LD files and controller. Close VCC-01 through VCC-06 on the exact candidate;
+Implement the optional profile, one synthetic example, lowercase source-path migration, direct consumer
+updates, and Pages artifact routes. Reuse the existing JSON-LD files and controller. Close VCC-01 through VCC-07 on the exact candidate;
 source checks alone do not prove public route availability. Production release remains a separate exact-SHA
 authorization and receipt.
 
@@ -122,5 +123,5 @@ separate signals.
 
 ## Deferred scope
 
-Physical source-directory rename, downstream-repository edits, accounting policy, automated financial
-calculations, a general business ontology, new harnesses, and production deployment are outside this slice.
+Accounting policy, automated financial calculations, a general business ontology, new harnesses, and
+production deployment are outside this slice.

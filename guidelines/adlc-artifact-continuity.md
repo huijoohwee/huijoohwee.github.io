@@ -241,7 +241,7 @@ while a large change may distribute the same roles across systems and repositori
 
 ## Reference Implementation Projection
 
-The [Role-Action-Outcome JSON-LD schema](../schema/AgenticRAG/roles-actions-outcomes-schema.jsonld) is one replaceable
+The [Role-Action-Outcome JSON-LD schema](../schema/agentic-rag/roles-actions-outcomes-schema.jsonld) is one replaceable
 projection of RAO records. It does not override this module's semantic contract. A projection is conformant only
 when its declared version, identifiers, atomicity, dependencies, artifact references, and evidence joins satisfy
 this module. Domain phases, interface anchors, tooltip copy, tools, and storage paths remain profile data rather than

@@ -25,7 +25,7 @@ frontmatter_contract: "required"
 
 ## 3. Schema alignment = semantic consistency
 
-**Cross-reference /schema/AgenticRAG**: Component names, state fields, API identifiers, storage keys
+**Cross-reference /schema/agentic-rag**: Component names, state fields, API identifiers, storage keys
 - Mismatch signals: drift, technical debt, refactor incomplete
 - Verify: naming follows schema -> types match definitions -> provenance links exist
 

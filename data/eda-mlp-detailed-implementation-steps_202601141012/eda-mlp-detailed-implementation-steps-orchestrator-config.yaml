@@ -6,7 +6,7 @@ graph:
 orchestrator:
   parser_script: python -m agentic-graph_parser
 agentic_rag:
-  schema: "https://huijoohwee.github.io/schema/AgenticRAG"
+  schema: "https://huijoohwee.github.io/schema/agentic-rag"
   node_view_type: AgenticRagNodeView
   primary_fields:
     - chunk_text

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "agentic-naming:check": "node scripts/check-agentic-naming.mjs",
-    "check": "npm run agentic-naming:check && python3 schema/AgenticRAG/sync_map.py --mode check",
+    "check": "npm run agentic-naming:check && python3 schema/agentic-rag/sync_map.py --mode check",
     "adlc:policy:check": "node scripts/check-adlc-guideline.mjs",
     "adlc:contract:test": "node --test scripts/__tests__/adlc-migration-contract.test.mjs",
     "evals": "npm --prefix node_modules/agentic-os run evals",

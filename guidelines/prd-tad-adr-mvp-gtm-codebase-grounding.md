@@ -22,7 +22,7 @@ Ground specifications in exact source evidence, keep one owner per concern and d
 verification from runtime proof. This reusable procedure adds no semantic fields or universal topology.
 The reference implementation connects the [authoring guideline](./prd-tad-adr-mvp-gtm-guidelines.md) to seven
 named repositories. It covers ownership and integration seams, not every feature in their specifications.
-The [machine-readable snapshot](../schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json) owns exact source
+The [machine-readable snapshot](../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json) owns exact source
 revisions, artifact SHA-256 values, named checks and claim dispositions. Do not copy that inventory
 into consumer documents. This guide and the snapshot load only for affected authoring or integration work.
 
@@ -43,7 +43,7 @@ for cross-repository admission contracts. This record neither replaces that lock
 
 The [CID/RAO/SVO contract](./cid-guidelines.md#shared-field-contract) owns meaning; the
 [continuity module](./adlc-artifact-continuity.md) owns joins. The
-[RAO JSON-LD file](../schema/AgenticRAG/roles-actions-outcomes-schema.jsonld) is a versioned projection.
+[RAO JSON-LD file](../schema/agentic-rag/roles-actions-outcomes-schema.jsonld) is a versioned projection.
 It must not redefine the scoped SVO object as the observed outcome or collapse several independently
 closable actions into one step. Projection validation is not runtime execution or independent evaluation.
 

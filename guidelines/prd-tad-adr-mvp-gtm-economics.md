@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Economics & Time-to-Value Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-30"
+version: "1.2.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.0"
+parent_version: "3.4.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -112,6 +112,10 @@ When selecting any dependency, library, or infrastructure component:
 3. **Prefer zero-egress** storage and CDN over metered alternatives
 4. **Record the decision** in the ADR with explicit TCO comparison at projected scale
 5. **Compare deployment models within each candidate** — see Deployment-Model TCO Variants below; do not collapse a candidate's managed and self-managed variants into a single TCO figure
+
+### Agentic OS Runtime — Reference Implementation
+
+For work governed by the [Agentic OS ADLC runtime policy](https://github.com/huijoohwee/agentic-os/blob/22b46ed7dd5fc7f8cd4d0a0529256a7856a422c5/docs/adlc-guidelines.md), apply its stricter boundary: FOSS/free paths only; require a provider-observed hard `$0` cap or denial at quota exhaustion; and exclude paid plans, add-ons, overages, and upgrades. The generic proprietary-option comparison does not authorize paid execution through Agentic OS.
 
 ### Included Quota and Billable Boundary
 

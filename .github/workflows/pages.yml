@@ -216,42 +216,44 @@ jobs:
           mkdir -p "$SITE_ROOT/release"
 
           SOURCE_ROOT="$PWD" node <<'NODE'
-          const { copyFileSync, lstatSync, mkdirSync, readdirSync } = require("node:fs");
+          const { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync } = require("node:fs");
           const path = require("node:path");
-          const sourceRoot = process.env.SOURCE_ROOT;
-          const siteRoot = process.env.SITE_ROOT;
-          function rejectName(name, relative) {
-            if (name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name)) {
-              throw new Error(`Unsupported Pages source path: ${relative}`);
-            }
+          const sourceRoot = process.env.SOURCE_ROOT, siteRoot = process.env.SITE_ROOT;
+          function rejectPath(value) {
+            if (value.split("/").some(name => name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name))) throw new Error(`Unsupported Pages source path: ${value}`);
           }
-          function copyRegular(relative) {
-            const source = path.join(sourceRoot, relative);
-            const target = path.join(siteRoot, relative);
-            const stat = lstatSync(source);
-            if (!stat.isFile()) throw new Error(`Non-regular Pages source: ${relative}`);
-            copyFileSync(source, target, 0);
+          function copyFile(sourceRelative, targetRelative = sourceRelative, optional = false) {
+            for (const value of [sourceRelative, targetRelative]) rejectPath(value);
+            const source = path.join(sourceRoot, sourceRelative);
+            let stat;
+            try { stat = lstatSync(source); }
+            catch (error) { if (optional && error.code === "ENOENT") return; throw error; }
+            if (!stat.isFile()) throw new Error(`Non-regular Pages source: ${sourceRelative}`);
+            const target = path.join(siteRoot, targetRelative);
+            if (existsSync(target)) throw new Error(`Duplicate Pages target: ${targetRelative}`);
+            mkdirSync(path.dirname(target), { recursive: true });
+            copyFileSync(source, target);
           }
           function copyDirectory(relative) {
-            const source = path.join(sourceRoot, relative);
-            const stat = lstatSync(source);
-            if (!stat.isDirectory()) throw new Error(`Non-directory Pages source: ${relative}`);
-            mkdirSync(path.join(siteRoot, relative), { recursive: false });
-            const names = readdirSync(source).sort((left, right) =>
-              Buffer.compare(Buffer.from(left), Buffer.from(right)));
-            for (const name of names) {
-              const child = path.posix.join(relative, name);
-              rejectName(name, child);
-              const childStat = lstatSync(path.join(sourceRoot, child));
-              if (childStat.isDirectory()) copyDirectory(child);
-              else if (childStat.isFile()) copyRegular(child);
+            rejectPath(relative);
+            const source = path.join(sourceRoot, relative), target = path.join(siteRoot, relative);
+            if (!lstatSync(source).isDirectory() || existsSync(target)) throw new Error(`Invalid Pages directory: ${relative}`);
+            mkdirSync(target);
+            for (const name of readdirSync(source).sort((a, b) => Buffer.compare(Buffer.from(a), Buffer.from(b)))) {
+              const child = `${relative}/${name}`;
+              rejectPath(child);
+              const stat = lstatSync(path.join(sourceRoot, child));
+              if (stat.isDirectory()) copyDirectory(child);
+              else if (stat.isFile()) copyFile(child);
               else throw new Error(`Non-regular Pages source: ${child}`);
             }
           }
-          rejectName("index.html", "index.html");
-          copyRegular("index.html");
-          rejectName("guidelines", "guidelines");
+          copyFile("index.html");
           copyDirectory("guidelines");
+          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/agentic-rag/v1/context.jsonld", true);
+          copyFile("schema/AgenticRAG/venture-evidence.jsonld", "schema/agentic-rag/venture-evidence.jsonld", true);
+          copyFile("schema/AgenticRAG/example-venture-evidence.jsonld", "schema/agentic-rag/example-venture-evidence.jsonld", true);
+          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/AgenticRAG/v1/context.jsonld", true);
           NODE
 
           PAYLOAD_ROOT="$SITE_ROOT" MANIFEST_PATH="$RUNNER_TEMP/payload-files.sha256" node <<'NODE'
@@ -342,6 +344,7 @@ jobs:
         id: dev_preview
         env:
           DEV_ROOT: ${{ runner.temp }}/pages-dev/site
+          REQUIRE_AGENTIC_RAG_SCHEMA_ROUTES: "true"
           CANDIDATE_SHA: ${{ needs.authorize.outputs.candidate_sha }}
           ARTIFACT_ID: ${{ steps.assemble.outputs.artifact_id }}
           EFFECT_ID: ${{ steps.assemble.outputs.effect_id }}

@@ -38,6 +38,8 @@ source identity only, never runtime readiness or deployed-route equivalence.
 schema/AgenticRAG/
 ├── v1/
 │   └── context.jsonld                         # Base @context (semantic vocabulary)
+├── venture-evidence.jsonld                   # Optional business evidence context
+├── example-venture-evidence.jsonld           # Synthetic, source-linked one-customer journey
 ├── README.md                                 # This file
 ├── README.pipeline-and-renderer-guidelines.md # Continuation: pipeline and renderer guidelines
 ├── node-schema.jsonld                        # Node structural contract (@id + labels required)
@@ -78,6 +80,28 @@ schema/AgenticRAG/
 └── example-lean-startup-layer-modes.jsonld   # Example layer modes (Lean Startup tags + palette)
 ```
 <!-- SCHEMA_FILES_END -->
+
+## Optional Venture Evidence Profile
+
+The [`venture-evidence.jsonld`](./venture-evidence.jsonld) context adds an opt-in business evidence
+projection. It distinguishes observed, forecast, and inferred records; customer pain, an offer, an
+accepted order, collected cash, delivery, operating cost, repeat use, and a decision; and source,
+cohort, segment, period, denominator, value, unit, and currency where they apply. It carries evidence
+only. The [Lean Startup guidelines](../../guidelines/lean-startup-guidelines.md) own experiment and
+learning semantics; the [Venture Record](../../guidelines/prd-tad-adr-mvp-gtm-venture.md) owns
+financial definitions and accounting basis.
+
+The [example](./example-venture-evidence.jsonld) uses synthetic records and keeps an offer, accepted
+order, collected cash, delivered outcome, forecast cost, observed cost, and a bounded repeat-use
+observation separate. One transaction does not establish repeat demand, profitability, or viability.
+It adds no fields to the always-loaded graph context and contains no personal customer data.
+
+The authored source remains `schema/AgenticRAG/` because other first-party repositories link to that
+path. The Pages artifact publishes only the profile, example, and base context under
+[`/schema/agentic-rag/`](https://huijoohwee.github.io/schema/agentic-rag/venture-evidence.jsonld).
+The existing `/schema/AgenticRAG/v1/context.jsonld` route remains a compatibility alias. Existing
+v1 vocabulary identifiers retain their original uppercase namespace; only the distribution route is
+lowercase. Consumers fetch this profile when they need venture evidence.
 
 ---
 

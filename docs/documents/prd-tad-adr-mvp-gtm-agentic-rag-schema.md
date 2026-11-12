@@ -71,7 +71,7 @@ that transaction; it does not establish repeat demand, profitability, or viabili
 - One optional evidence module and one bounded end-to-end example; no edits to downstream repositories.
 - No personal customer data. Examples use synthetic names and values.
 - Keep module files below 600 lines. Keep always-loaded prompt impact at zero; consumers opt in by reference.
-- Preserve the existing source path because first-party source links exist in Agentic Graph, Knowgrph, Agentic OS, and Commerce OS. Use lowercase kebab case for the published URL. A physical source rename requires a separately grounded consumer migration.
+- Preserve the existing source path because first-party source links exist across several repositories. Use lowercase kebab case for the published URL. A physical source rename requires a separately grounded consumer migration.
 
 ## TAD
 

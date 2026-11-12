@@ -215,7 +215,46 @@ jobs:
           test ! -e "$RUNNER_TEMP/payload-files.sha256"
           mkdir -p "$SITE_ROOT/release"
 
-          SOURCE_ROOT="$PWD" node scripts/lib/git-guidelines/pages-dev-preview.mjs assemble "$SITE_ROOT"
+          SOURCE_ROOT="$PWD" node <<'NODE'
+          const { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync } = require("node:fs");
+          const path = require("node:path");
+          const sourceRoot = process.env.SOURCE_ROOT, siteRoot = process.env.SITE_ROOT;
+          function rejectPath(value) {
+            if (value.split("/").some(name => name.startsWith(".") || /[\\%?#\u0000-\u001f\u007f]/u.test(name))) throw new Error(`Unsupported Pages source path: ${value}`);
+          }
+          function copyFile(sourceRelative, targetRelative = sourceRelative, optional = false) {
+            for (const value of [sourceRelative, targetRelative]) rejectPath(value);
+            const source = path.join(sourceRoot, sourceRelative);
+            let stat;
+            try { stat = lstatSync(source); }
+            catch (error) { if (optional && error.code === "ENOENT") return; throw error; }
+            if (!stat.isFile()) throw new Error(`Non-regular Pages source: ${sourceRelative}`);
+            const target = path.join(siteRoot, targetRelative);
+            if (existsSync(target)) throw new Error(`Duplicate Pages target: ${targetRelative}`);
+            mkdirSync(path.dirname(target), { recursive: true });
+            copyFileSync(source, target);
+          }
+          function copyDirectory(relative) {
+            rejectPath(relative);
+            const source = path.join(sourceRoot, relative), target = path.join(siteRoot, relative);
+            if (!lstatSync(source).isDirectory() || existsSync(target)) throw new Error(`Invalid Pages directory: ${relative}`);
+            mkdirSync(target);
+            for (const name of readdirSync(source).sort((a, b) => Buffer.compare(Buffer.from(a), Buffer.from(b)))) {
+              const child = `${relative}/${name}`;
+              rejectPath(child);
+              const stat = lstatSync(path.join(sourceRoot, child));
+              if (stat.isDirectory()) copyDirectory(child);
+              else if (stat.isFile()) copyFile(child);
+              else throw new Error(`Non-regular Pages source: ${child}`);
+            }
+          }
+          copyFile("index.html");
+          copyDirectory("guidelines");
+          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/agentic-rag/v1/context.jsonld", true);
+          copyFile("schema/AgenticRAG/venture-evidence.jsonld", "schema/agentic-rag/venture-evidence.jsonld", true);
+          copyFile("schema/AgenticRAG/example-venture-evidence.jsonld", "schema/agentic-rag/example-venture-evidence.jsonld", true);
+          copyFile("schema/AgenticRAG/v1/context.jsonld", "schema/AgenticRAG/v1/context.jsonld", true);
+          NODE
 
           PAYLOAD_ROOT="$SITE_ROOT" MANIFEST_PATH="$RUNNER_TEMP/payload-files.sha256" node <<'NODE'
           const { createHash } = require("node:crypto");

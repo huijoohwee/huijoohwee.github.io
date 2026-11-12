@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
-import { appendFileSync, copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
+import { appendFileSync, lstatSync, readFileSync, readdirSync } from "node:fs";
+import { basename, extname, join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { canonicalJson, createReleaseCarrier, sha256 } from "./pages-release-controller.mjs";
 
@@ -36,49 +36,6 @@ function contentType(path) {
     : extension === ".json" ? "application/json; charset=utf-8"
     : extension === ".md" ? "text/markdown; charset=utf-8"
     : "application/octet-stream";
-}
-
-const SCHEMA_SOURCES = [
-  ["schema/AgenticRAG/v1/context.jsonld", "schema/agentic-rag/v1/context.jsonld"],
-  ["schema/AgenticRAG/venture-evidence.jsonld", "schema/agentic-rag/venture-evidence.jsonld"],
-  ["schema/AgenticRAG/example-venture-evidence.jsonld", "schema/agentic-rag/example-venture-evidence.jsonld"],
-  ["schema/AgenticRAG/v1/context.jsonld", "schema/AgenticRAG/v1/context.jsonld"],
-];
-
-export function assembleSourcePayload({ sourceRoot, siteRoot }) {
-  const source = resolve(sourceRoot), output = resolve(siteRoot);
-  if (!sourceRoot || !siteRoot || source === output) fail("assembly-root");
-  mkdirSync(output, { recursive: true });
-  function checkRelative(path) {
-    if (!safeRelative(path)) fail("assembly-path", path);
-  }
-  function copyRegular(relativePath, targetPath = relativePath) {
-    checkRelative(relativePath);
-    checkRelative(targetPath);
-    const from = join(source, relativePath), to = join(output, targetPath);
-    if (!lstatSync(from).isFile()) fail("assembly-source", relativePath);
-    if (existsSync(to)) fail("assembly-target-exists", targetPath);
-    mkdirSync(dirname(to), { recursive: true });
-    copyFileSync(from, to);
-  }
-  function copyDirectory(relativePath) {
-    checkRelative(relativePath);
-    const from = join(source, relativePath), to = join(output, relativePath);
-    if (!lstatSync(from).isDirectory() || existsSync(to)) fail("assembly-directory", relativePath);
-    mkdirSync(to);
-    for (const name of readdirSync(from).sort(byteOrder)) {
-      const child = `${relativePath}/${name}`;
-      checkRelative(child);
-      const stat = lstatSync(join(source, child));
-      if (stat.isDirectory()) copyDirectory(child);
-      else if (stat.isFile()) copyRegular(child);
-      else fail("assembly-source", child);
-    }
-  }
-  copyRegular("index.html");
-  copyDirectory("guidelines");
-  for (const [sourcePath, targetPath] of SCHEMA_SOURCES) copyRegular(sourcePath, targetPath);
-  return payloadFiles(output).files.map(file => file.path);
 }
 
 function payloadFiles(root) {
@@ -206,12 +163,6 @@ export async function runPagesDevPreview({ root, ...input }) {
 }
 
 export async function runCli(environment = process.env) {
-  if (process.argv[2] === "assemble") {
-    const files = assembleSourcePayload({ sourceRoot: environment.SOURCE_ROOT || process.cwd(),
-      siteRoot: process.argv[3] });
-    process.stdout.write(`${JSON.stringify({ status: "assembled", fileCount: files.length, files })}\n`);
-    return files;
-  }
   const { receipt, receiptDigest } = await runPagesDevPreview({ root: environment.DEV_ROOT,
     repository: environment.GITHUB_REPOSITORY, runId: environment.GITHUB_RUN_ID,
     candidateSha: environment.CANDIDATE_SHA, artifactId: environment.ARTIFACT_ID,

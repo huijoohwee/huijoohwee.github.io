@@ -1,8 +1,8 @@
 ---
 title: "Pitch Deck, Business Plan & Financial Model Module"
 doc_type: "Guidelines Module"
-version: "2.2.0"
-date: "2026-11-12"
+version: "2.2.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Projection and ADLC cost ledger contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.5.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -60,6 +60,10 @@ Coverage is recorded through the parent's [C01–C16 contract](./prd-tad-adr-mvp
 Each projection occupies the *5 Project* row of the [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map);
 its sends and publication follow the audience-action classes of the [ADLC Tool Permission](./adlc-guidelines.md#tool-permission--blast-radius) rules.
 
+Load only the sections and lifecycle of the projection needed for a named decision. A first payment
+triggers review of delivery, contribution and cash; it creates no requirement for a full plan, deck or
+model. Decision-critical evidence and applicable obligations remain due before the dependent action.
+
 ---
 
 ## Pitch Deck
@@ -93,7 +97,7 @@ it is ordered, timed, composed, rendered, delivered and learned from.
 - Anchor the Reveal slide to the MVP Demo Skeleton's Reveal beat and its VCC — `pitch-claim-unsourced`
 - Present traction with cohort, period, denominator and actual/forecast labels. Separate users, pilots, signed orders, recognized revenue and collected cash — `revenue-recognized-unpaid`
 - State one ask tied to named Roadmap phases, use-of-funds rows, and capitalization when the instrument is equity — `pitch-claim-unsourced`
-- Keep every competitor, platform, or vendor name under a "reference implementation" label — `vendor-coupling`
+- Keep contextual competitor, platform or vendor observations under a "reference implementation" label with scope, date and source; universal requirements stay functional and imply no provider preference — `vendor-coupling`
 
 - Declare audience, decision sought, deck revision and presentation time; a customer ask can be a paid
   pilot or next meeting, and a bootstrapped plan can state no external funding is sought.

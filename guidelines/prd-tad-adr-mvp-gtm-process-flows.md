@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Process & Flow Patterns Module"
 doc_type: "Guidelines Module"
-version: "1.5.0"
-date: "2026-11-12"
+version: "1.5.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.5.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -32,6 +32,10 @@ These are artifact roles and evidence seams, not mandatory meetings or separate 
 objective/scope authorization covers reversible in-scope authoring and execution after the relevant checks.
 Re-enter only the affected seam when evidence changes; new product choices and production effects retain
 their authority boundary under [ADLC autonomous continuation](./adlc-autonomous-continuation.md).
+
+Apply gates to the selected outcome's dependency chain. Discovery and manual delivery load only their
+applicable owners; product architecture and source release enter when a build is needed. Projection
+depth follows the named decision. Applicable obligations and effect authority remain due before action.
 
 ### Phase 0 — Problem Discovery
 **Start with a falsifiable pain hypothesis; validate it before claiming demand.**

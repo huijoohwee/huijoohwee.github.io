@@ -181,10 +181,15 @@ test("companion metadata cannot silently reference an obsolete parent revision",
   assert.throws(() => checkAdlcMigration(candidate), /parent_version must match the current owning document/);
 });
 
-test("post-release loop has one owner and hubs point to it", () => {
+test("successor feedback supports business learning and scopes autonomous incident diagnosis", () => {
   const owner = "guidelines/adlc-artifact-continuity.md";
-  const rule = "only a deterministic breach of a baselined runtime signal";
+  const rule = "require a deterministic breach of a baselined runtime signal";
   const link = "./adlc-artifact-continuity.md#re-derivation-and-successor-feedback";
+  const feedback = readFileSync(owner, "utf8").split("## Re-derivation and Successor Feedback\n")[1].split("\n## ")[0];
+  assert.match(feedback, /material observations, experiment results, scheduled reviews or recorded owner decisions/);
+  assert.match(feedback, /For autonomous post-release incident diagnosis only/);
+  assert.match(feedback, /an observation grants no effect authority/);
+  assert.match(feedback, /never self-merge or self-deploy/);
   for (const path of [owner, "guidelines/adlc-guidelines.md", "guidelines/prd-tad-adr-mvp-gtm-guidelines.md"]) {
     const source = readFileSync(path, "utf8");
     assert.equal(source.includes(rule), path === owner, `${path} must ${path === owner ? "own" : "not restate"} the rule`);

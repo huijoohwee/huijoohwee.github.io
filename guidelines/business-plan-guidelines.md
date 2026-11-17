@@ -1,8 +1,8 @@
 ---
 title: "Business Plan Guidelines"
 doc_type: "Guidelines Module"
-version: "1.2.0"
-date: "2026-11-12"
+version: "1.2.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Business plan authoring and delivery contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.5.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -81,7 +81,7 @@ Section Contract @revision + coverage record → Variant Register → Outline �
 
 **Artifact-bearing directives**:
 - Run the steps in order per variant; a later step recorded while an earlier one is missing is `gate-sequence-violation`
-- Start from a baselined revision that passed the [Phase 5 gate](./prd-tad-adr-mvp-gtm-process-flows.md#phase-5--gtm-and-venture-projections); a plan built from an unbaselined or superseded revision is `stale-evidence` for every audience action depending on it
+- Draft a decision-specific view from the current joined discovery or operating record. Before a dependent audience action, satisfy the [projection gate](./prd-tad-adr-mvp-gtm-process-flows.md#phase-5--gtm-and-venture-projections) for the claims used; an unreviewed or superseded claim is `stale-evidence` for that action
 - Keep plan source beside the joined artifact, joined by `continuity_id@revision` in frontmatter; variant, depth and confidentiality live in the Variant Register, not in new frontmatter keys — `artifact-naming-noncompliant`
 - Re-enter at Claim Record when the joined revision changes and at Variant when the audience or decision changes
 
@@ -118,15 +118,18 @@ A plan variant is a view: it selects, orders and sets depth; it never changes a 
 
 ## Depth by Stage
 
-Depth follows the decision, not a page target. The Section Contract applies at every depth; lower depth
-summarizes or defers, it never omits.
+Depth follows the decision and applicable obligation. Stage describes available evidence; it never
+mandates a standard or full plan. Reuse the Section Contract dispositions, with reasons and revisit
+triggers for deferred detail. Missing decision-critical evidence blocks only its dependent action.
 
-| Stage | Depth | Minimum content |
+| Stage | Decision-specific view | Relevant content |
 |---|---|---|
 | 0 — grounded opportunity | one-page | segment and problem, current alternative, offer and price hypothesis, first channel, key decision metric, cost drivers, revenue stream, riskiest hypotheses; every row labelled |
-| MVP evidenced | standard | every section with evidence or gap; model at the revision; experiments and results |
-| First dollar | full | observed unit economics, operations capacity, legal and capital rows complete |
-| Repeat demand | full | cohort evidence, scale plan, hiring triggers, contingency per cash-floor breach |
+| MVP evidenced | one-page or deeper as needed | delivered outcome, experiments and gaps relevant to the next decision |
+| First dollar | delivery and economics review | payment, fulfillment/support effort, contribution and cash timing; applicable obligations |
+| Repeat demand | operating or growth review | cohort evidence, capacity, cash and risk triggers relevant to the chosen next outcome |
+
+A full plan is loaded only when the named decision, audience or applicable obligation requires it.
 
 **Artifact-bearing directives**:
 - Declare each variant's stage from the owners' labels; a stage claimed ahead of its evidence is `unproven-claim`

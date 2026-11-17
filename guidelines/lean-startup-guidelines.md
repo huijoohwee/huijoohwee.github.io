@@ -1,8 +1,8 @@
 ---
 title: "Lean Startup Guidelines"
 doc_type: "Guidelines Module"
-version: "1.2.0"
-date: "2026-11-12"
+version: "1.2.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Venture operating and validated-learning index"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.5.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -154,7 +154,7 @@ section fixes how they are designed.
 - Register the metric, threshold and sample before the first observation; a threshold set or moved after seeing data turns the result into `unproven-claim`
 - Define every metric with its denominator, window and cohort; a ratio without a denominator or a window chosen after the fact is `pitch-claim-unsourced` wherever it is projected
 - State the minimum sample or the uncertainty a small sample leaves; a pass on a sample below its stated minimum stays inconclusive, never `demand-validated` — `monetization-demand-unvalidated`
-- Keep spend within the declared bounds and the [free-core classification](./pd-bp-fm-guidelines.md#free-core-and-cost-classification); an experiment that needs paid capacity first passes the constraint gate — `constraint-gate-skipped`
+- Keep spend within the declared bounds and the [free-core classification](./pd-bp-fm-guidelines.md#free-core-and-cost-classification); under a $0 scope, paid capacity is outside scope: reduce the test or use a conforming local/offline method — `constraint-gate-skipped`
 - Record consent, data class and retention for any contact with real people; people's data stays with its existing owner, linked not copied — `unimplemented-guideline`
 - Run any publication of an offer or artifact to real people at the release seam as a Boundary-crossing action, and any contact, recruitment or charge to real people as an Irreversible external commitment, each under a recorded operator decision bound to the exact audience and effect per [ADLC Tool Permission & Blast Radius](./adlc-guidelines.md#tool-permission--blast-radius); neither runs inside an execution task and an agent never starts one on its own discretion — `human-gate-unstated`, `deploy-boundary-breach`
 - Keep negative, inconclusive and stopped results with the same prominence as passes; dropping them is `roadmap-scope-silently-dropped`
@@ -169,7 +169,7 @@ product.
 
 | Method (by function) | Tests | Strongest evidence it can support | Cannot support |
 |---|---|---|---|
-| Interview or observation | problem, current workaround, who pays | `unvalidated` pain with quotes, count and date; problem frequency | demand, WTP, price |
+| Interview or observation | problem, current workaround, who pays | scoped problem evidence with quotes, count and date; problem frequency | paid demand, accepted price, retention |
 | Artifact review (tickets, logs, spend records) | problem size and frequency | measured behaviour behind a pain row | demand for this solution |
 | Offer or landing test | stated intent to a specific offer and price | intent rate with denominator | payment, retention |
 | Manual delivery | value, when a person performs the service by hand | outcome achieved per user; delivery cost | scalability, automation feasibility |
@@ -195,8 +195,8 @@ can read it without special effort) and auditable (it traces to raw evidence).
 
 **Artifact-bearing directives**:
 - Measure per cohort, per user or per account with denominator and window; report cumulative totals, page views, downloads and follower counts only labelled as not evidence of value or demand — `pitch-claim-unsourced`
-- Join every decision metric to a model driver or assumption ID so a result can update the model through a successor revision — `financial-assumption-unsourced`
-- Keep activation, paid conversion, repeat use and retention as separate observations; a blended "traction" figure is `blended-status`
+- Join a decision metric to its existing PRD/GTM experiment target, and to a model driver or assumption ID when it drives a model; a discovery test does not require a full model — `financial-assumption-unsourced`
+- Keep problem observations, offer responses, activation, payment, delivered outcomes, repeat use and retention separate, with method, segment, denominator/window and uncertainty in the existing evidence fields; a blended "traction" figure is `blended-status`
 - Measure delivered outcomes, fulfillment/support effort, direct contribution and cash timing when they can change the next operating decision; distinguish observed actuals from forecasts — `unproven-claim`
 - Keep raw evidence retrievable at its privacy class and cite it by Evidence Reference; a summary with no retrievable source is `unresolvable-reference`
 - Measure TTV on the real user path against the [TTV row](./prd-tad-adr-mvp-gtm-guidelines.md#time-to-value); a TTV measured only in a prepared environment is labelled so — `missing-economics-metric`
@@ -205,21 +205,21 @@ can read it without special effort) and auditable (it traces to raw evidence).
 
 ## Innovation Accounting
 
-Innovation accounting turns experiment results into progress measured against the model instead of
-against activity.
+Innovation accounting measures progress against pre-stated decision targets. Load it when a sequence
+of results informs a driver or operating decision; a single discovery test can use its experiment row.
 
 ```markdown
-| Driver (A-id) | Baseline (first measured) | Target (Base scenario) | Current | Cohorts observed | Trend | Experiments (E-ids) | Proposed successor value | Decision |
+| Driver (A-id) | Baseline (first measured) | Target (owning PRD/GTM or Base scenario) | Current | Cohorts observed | Trend | Experiments (E-ids) | Proposed successor value | Decision |
 |---|---|---|---|---|---|---|---|---|
 ```
 
 1. **Baseline** — measure the real current value of each driver the riskiest hypotheses touch, even when it is poor.
-2. **Tune** — run experiments that aim to move one driver toward the model's Base value.
+2. **Tune** — run experiments against the owning target; use the model's Base value for a model-linked driver.
 3. **Decide** — at each learning milestone, compare the trend to the Roadmap threshold and record pivot or persevere.
 
 **Artifact-bearing directives**:
 - Start from a measured baseline, not the forecast; a driver with no baseline cannot show progress — `financial-assumption-unsourced`
-- Take targets from the Financial Model's Base scenario at the same revision; a target set only in the learning record is `duplicate-owner`
+- Cite the owning PRD/GTM target when no model is needed; for a model-linked driver, reconcile to the Financial Model's Base scenario at the same revision. Do not create a competing target or require a full model for discovery — `duplicate-owner`
 - Propose assumption changes to the [Assumption Register](./pd-bp-fm-guidelines.md#assumption-register) as a successor revision with E-ids as source; editing the accepted value in place is `duplicate-owner`
 - Report progress as driver movement across cohorts; effort, features shipped or experiments run are not progress — `unproven-claim`
 
@@ -316,6 +316,15 @@ a paid pilot is the first method allowed to support a first-dollar claim. An age
 analyses, an independent check compares each result to its threshold, and the operator authorizes each
 contact with real people. No vendor, tool or platform is named here.
 
+**Optional worked path** — record one segment's current workaround and a falsifiable hypothesis;
+pre-register an offer test's price, threshold, sample/uncertainty and time/spend bounds. Under exact
+contact and charge authority, offer a manually delivered outcome. Record response, payment and
+fulfillment evidence separately, including support effort, direct contribution and cash timing. Decide
+continue, improve, pivot or stop against the threshold. One payment supports one transaction; repeat
+demand needs its own observations. Use the existing snapshot, experiment and decision rows; load a
+build, financial view or audience projection only if that next decision needs it. This path reports no
+actual customer result and is not a required template.
+
 ---
 
 ## Validation Checklist
@@ -327,9 +336,9 @@ contact with real people. No vendor, tool or platform is named here.
 - [ ] Bounds declared for time, spend and agent work; free-core constraints respected
 - [ ] Consent, privacy class and operator authorization recorded for contact with real people
 - [ ] Negative, inconclusive and stopped results retained
-- [ ] Decision metrics per cohort with denominators, joined to model drivers
+- [ ] Decision metrics scoped with denominators/windows and uncertainty; joined to their target and model driver when applicable
 - [ ] Delivery, support, cash and repeat-use measures included when relevant to the offer; unknown values remain unknown
-- [ ] Baselines measured; targets taken from the Base scenario; proposals routed as successor revisions
+- [ ] Baselines measured; targets sourced from their owner, with model-linked drivers reconciled to Base; proposals routed as successors
 - [ ] Pivot-or-Persevere Record at every milestone against a pre-stated threshold
 - [ ] Pivots carried into successor Contexts with coverage revisited and projections regenerated
 - [ ] Synthetic or simulated inputs labelled `concept`; results judged by an independent Evaluator

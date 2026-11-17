@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Guidelines"
 doc_type: "Guidelines"
-version: "3.5.0"
-date: "2026-11-12"
+version: "3.5.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -101,15 +101,15 @@ Frontmatter is the SSOT for identity, status, version, renderer activation, and 
 
 ### Core Default and On-Demand Routing
 
-Use one joined `continuity_id@revision`, one accountable owner, one target buyer pain, and one next
+Use one joined `continuity_id@revision`, one accountable owner, one target user/buyer need, and one next
 measurable outcome. Rank the next outcome by buyer pain/WTP evidence, near-built reuse, and distance to
-a credible first dollar. The default loop is `pain/evidence → riskiest uncertainty → cheapest sufficient
+a credible first dollar where monetization applies. The default loop is `pain/evidence → riskiest uncertainty → cheapest sufficient
 test → threshold-based decision → next bounded outcome`. Record the evidence method, window, threshold,
 stop/revisit condition, and active time, byte, module, token, and spend caps. Default to $0 spend and
 free/FOSS tools; prefer a usable mobile browser, edge, device, local, or offline path when it serves the
 same need. Keep unknown cost or capability explicit.
 
-Load only the owner needed for the next decision: Lean Startup for the business cycle and learning loop; Core Templates and
+Load applicable sections of the owner needed for the next decision: Lean Startup for the business cycle and learning loop; Core Templates and
 the authoring index for requirements, design, or a material decision; Process & Flow Patterns for
 applicable system boundaries; ADLC when an accepted slice needs source execution; PD-BP-FM for a
 projection needed by an operating, financial, or audience decision; Verification for a conformance
@@ -234,11 +234,11 @@ The [Artifact Continuity Module](./adlc-artifact-continuity.md) owns joins and v
 
 ## From 0 to 1: PRD & TAD Creation Process
 
-The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the phases, steps, and gates. The spine is **Phase 0** pain, WTP, TTV, grounding → **Phase 1** PRD → **Phase 2** TAD and ADRs → **Phase 3** alignment with zero `blocker` → **Phase 4** ADLC `START → RELEASE → DEPLOY` to an evidenced MVP → **Phase 5** GTM and venture projections → **Learn** successor Context, opened post-release only by a deterministic signal breach per [Artifact Continuity](./adlc-artifact-continuity.md#re-derivation-and-successor-feedback). Its [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) joins each phase to its learning, projection and execution owners, evidence and Cost Ledger line; its [Autonomous From-0-to-1 Run](./prd-tad-adr-mvp-gtm-process-flows.md#autonomous-from-0-to-1-run) names the only stop points.
+The [Process & Flow Patterns module](./prd-tad-adr-mvp-gtm-process-flows.md) owns the phases, steps, and gates. The spine is **Phase 0** pain, WTP, TTV, grounding → **Phase 1** PRD → **Phase 2** TAD and ADRs → **Phase 3** alignment with zero `blocker` → **Phase 4** ADLC `START → RELEASE → DEPLOY` to an evidenced MVP → **Phase 5** GTM and on-demand projections → **Learn** successor Context under [Artifact Continuity](./adlc-artifact-continuity.md#re-derivation-and-successor-feedback). Its [End-to-End Lifecycle Map](./prd-tad-adr-mvp-gtm-process-flows.md#end-to-end-lifecycle-map) joins applicable phases to their learning, projection and execution owners, evidence and Cost Ledger line; its [Autonomous From-0-to-1 Run](./prd-tad-adr-mvp-gtm-process-flows.md#autonomous-from-0-to-1-run) names the only stop points.
 
 **Directives**:
-- Treat the module's phase order as canonical — `gate-order-drift`; a later gate passing while an earlier fails is `gate-sequence-violation`
-- Pass every gate before proceeding; Phase 3 exits only with version-stamped documents and zero `blocker` findings
+- Treat the module's phase order as canonical for the selected dependency chain — `gate-order-drift`; a dependent gate passing while its prerequisite fails is `gate-sequence-violation`
+- Pass every applicable gate before its dependent action; Phase 3 exits only with version-stamped documents and zero `blocker` findings
 - Bound the revision cycle: 3 alignment cycles maximum, circuit-breaker on no reduction in open `blocker` findings across two consecutive cycles
 
 ## Flow Patterns
@@ -305,7 +305,7 @@ Owned here. Embed the record in the PRD or reference it exactly.
 **Directives**:
 - Trace every `Must` feature to one pain point in fixed form — pain point, hook, break, fix, close, min-time-resource-max-value note
 - State the note as a reuse-or-build split against Division of Work components
-- Label a pain point `unvalidated` until a quote, ticket, or measured behaviour supports it; `demand-proven` only with paid-customer evidence; an `unvalidated` pain backing a `Must` at baseline is `pain-point-not-validated`
+- Keep unevidenced pain `unvalidated`; record quotes, tickets or measured behaviour as scoped problem evidence. Keep pain, offer response, payment and repeat demand distinct; reserve `demand-proven` for paid-customer evidence. A `Must` at baseline needs problem evidence or an explicitly bounded learning hypothesis; an unsupported claim of validated pain is `pain-point-not-validated`
 - Rank fixes by proximity to what is built, and pain points by WTP magnitude before build cost — `roadmap-order-unexplained`
 - Forbid a hook or close implying a capability the fix lacks
 

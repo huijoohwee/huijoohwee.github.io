@@ -1,8 +1,8 @@
 ---
 title: "System Design Domain Directives Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.1.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -40,6 +40,12 @@ This module is loaded on demand from [System Design Guidelines](./system-design-
 - Architects assign data ownership
 - Architects maintain backward-compatible interfaces
 - Architects standardize semantic UI structure for observability and accessibility
+
+### Shared UI and Design System Ownership
+
+- For the Agentic suite, `agentic-design-system` is the single owner of shared UI tokens, themes, panel shell, layout, placement, behavior, and semantic icon/control mapping, including Search, Pin, Apply, Reset, Restore, and Close.
+- Consumers use revision- and digest-pinned projections/adapters from that owner. Consumer-local overrides, duplicate shells, and competing MainPanel, FloatingPanel, or BottomPanel variants are nonconformant.
+- Design System and consumer checks reject stale pins, duplicate definitions, overrides, and ownership drift.
 
 **Engineers enforce frontend performance & stability**
 - Engineers debounce heavy computations on user input

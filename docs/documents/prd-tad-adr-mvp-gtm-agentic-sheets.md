@@ -1,22 +1,22 @@
 ---
-title: "Reference implementation: Agentic Sheets workbook and feature parity"
+title: "Reference implementation: Agentic Sheets general-purpose workbook"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.3.0"
+version: "0.4.0"
 date: "2026-11-18"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "SHEETS-WORKBOOK-001"
-prd_revision: "0.3.0"
-tad_revision: "0.3.0"
-adr_revision: "0.3.0"
-mvp_revision: "0.3.0"
-gtm_revision: "0.3.0"
+prd_revision: "0.4.0"
+tad_revision: "0.4.0"
+adr_revision: "0.4.0"
+mvp_revision: "0.4.0"
+gtm_revision: "0.4.0"
 local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--sheets-parity-prd"
+worktree_id: "device-0232231d4a19--sheets-universal-contract"
 agent_id: "codex"
 lifecycle_status: "proposed"
 source_docs:
@@ -28,7 +28,7 @@ source_docs:
 
 ## Reference implementation — authority, scope and readiness
 
-This is the single joined `SHEETS-WORKBOOK-001@0.3.0` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the bounded workbook product; it does not redefine Base.
+This is the single joined `SHEETS-WORKBOOK-001@0.4.0` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the bounded workbook product; it does not redefine Base.
 
 **Owner-selected topology:** Dev source is `GitHub/agentic-base` (`https://github.com/huijoohwee/agentic-base`). The intended public Prod route is `https://airvio.co/agentic-sheets`; generated Prod artifacts belong at `GitHub/huijoohwee/content/agentic-sheets` (`huijoohwee/huijoohwee`, repository-relative `content/agentic-sheets/`). These names bind intended ownership and destinations, not proof of an existing application or permission to deploy it.
 
@@ -36,7 +36,16 @@ This is the single joined `SHEETS-WORKBOOK-001@0.3.0` specification under [PRD, 
 
 **Readiness:** local `dev-proven` follows from reproducible core/storage/browser checks satisfying VCC-01–04 (E-08/09). VCC-05 remains partial because physical touch devices, screen-reader use and a timed clean-environment TTV run are unverified; VCC-06/07 lack hosted preview/public receipts and current cost/predecessor/authorization proof. Delivered remains `undocumented`. The subsequent owner instruction `IMPLEMENT` authorizes this runtime/source work; it does not bypass the site owner's protected exact-candidate production environment approval or the hard-$0 provider gate. Source closure and local rehearsal do not establish product delivery.
 
-**Parity target.** A user can change a loan or a series of cash receipts, inspect how timing changes the result, and reopen the calculation offline. The current workbook proves arithmetic and recovery locally. Financial functions and the wider editor capabilities below are product requirements at different priorities. Each claim needs its own passing native check. Start with the [feature comparison](#reference-implementation--sheets-feature-comparison) and the [cash-flow acceptance cases](#cash-flow-acceptance-cases).
+**Product scope.** People use the same workbook to organize values, calculate from cells, inspect an edit and recover accepted work offline. Authors choose their labels, values, units and formulas. A simple text checklist is a complete workbook. The document names a specific product and delivery route, so its frontmatter retains `universal_scope: false`. The workbook contract applies across tasks and hosts. The portable requirements are the observable behaviors below.
+
+| Principle | How to verify it |
+|---|---|
+| Universality | Start with an empty workbook. Use typed cells and the same edit and snapshot operations for stock counts, a schedule and a text checklist. The scenario supplies the meaning of each column. |
+| Neutrality | Describe each capability by what the user can do and the result they can inspect. A comparison site can suggest a behavior. Product priority comes from an observed workbook task. |
+| Runtime and provider agnosticism | Express an edit as typed input, expected revision and observable outcome. Run the calculation headlessly and through an admitted host. Read workbook identity and version from the validated content. Renaming the snapshot file or changing the host route must preserve them. |
+| Modularity | Qualify the core with optional features absent. Qualify each added feature against its declared inputs, errors, limits and recovery behavior. Scope a failed check to the capabilities that depend on it. |
+
+See the [workbook scenarios](#workbook-scenarios) and [feature comparison](#reference-implementation--sheets-feature-comparison). The [cash-flow example](#cash-flow-acceptance-cases) illustrates one optional calculation family.
 
 **Reference-use restriction (applies to the repository and hosted showcase).** Univer may be considered conceptually under Base ADR-04. Copying, vendoring, porting or closely reproducing its source, documentation, schema/API structures, assets or fixtures is forbidden. Direct/transitive package, build/test, Git/tarball, submodule, CDN, hosted-service, preset/plugin or commercial dependencies on Univer and its sibling packages are forbidden. The same restriction covers screenshots, UI layouts, example data and golden outputs. Tests must run with both reference domains blocked. Generic workbook terminology and independently authored behavior are allowed. No external engine is selected or installed by this document.
 
@@ -44,14 +53,14 @@ This is the single joined `SHEETS-WORKBOOK-001@0.3.0` specification under [PRD, 
 
 ### Users, job and ranked pain
 
-**Target job hypothesis:** a browser user creates a small local workbook, edits quantities/prices, sees a deterministic total, reloads offline, and retains an exportable copy. This makes the workbook the domain object, rather than a Base record view or agent conversation. The owner has requested a Sheets product and delivery topology; interviews, frequency, willingness to pay, market size and measured workflow losses remain unknown. All buyer pain is `unvalidated`, never `demand-proven`.
+**Target job hypothesis.** A workbook author organizes local data, edits a value, inspects any dependent result and reopens the accepted work offline. An author can keep a list without formulas. The owner has selected this product and its delivery topology. Interviews, usage frequency, measured losses and willingness to pay remain unknown.
 
 | Rank / pain evidence | Hook → break → fix → close | Reuse/build and minimum-value rationale |
 |---|---|---|
 | P1. Workbook versus record-model mismatch; owner request + E-02, commercial demand unvalidated | Enter a calculation → a typed-record projection lacks cell dependencies → add an independently owned bounded workbook core → inspect changed totals while Base remains intact | Reuse browser platform and Design System; new Sheets semantics only; S1/VCC-01/02/09 |
 | P2. Data lost or unclear after offline/reload/edit conflicts; hypothesis | Edit locally → reload/quota/stale revision can hide loss → atomic local save, explicit errors and snapshot download/restore → read back the same accepted workbook | Reuse platform storage and source rollback practices; no cloud sync; S2/VCC-03/04 |
 | P3. Unclear source-to-public artifact identity; observed missing route/mirror E-03–05 | Open the named route → 404 or unknown candidate → source-owned exact-artifact preview/promotion/readback → identify delivered revision and predecessor | Extend existing release owner E-04, never hand-edit mirror; S3/VCC-06/07 |
-| P4. A maintainer comparing two repayment or receipt schedules must calculate timing and signs by hand. Requested comparison E-11/12, frequency and buyer cost unknown | Change one assumption → identical nominal totals can have different present values → recalculate locally and expose the inputs, result and any error → reopen the accepted scenario offline | Next discovery priority after the proven calculation slice. Reuse C1–C4. Start with periodic discounting before dated roots or another worksheet. S6/VCC-10–13 |
+| P4. Repeating or checking an edit by hand may cause an error. Frequency and cost are unknown. | Change a value used elsewhere → inspect the affected cells → confirm or correct the result → reopen the accepted workbook | Reuse C1–C4. Record which operation costs the user time before selecting a new editing or calculation feature. S6/S7, VCC-13–15. |
 
 Prioritize the smallest calculation/persistence proof over broad Office features. The delivery path is owner-selected; adding server infrastructure, Excel parity or a separate repository would add scope without demand evidence. Human assignees remain unassigned; accountable functions are named for each outcome before implementation admission.
 
@@ -62,7 +71,7 @@ Prioritize the smallest calculation/persistence proof over broad Office features
 - **S3:** As a release operator, I can verify the same source/artifact through Dev rehearsal and the selected Prod route, then restore the exact prior site state without deleting workbook data.
 - **S4:** As a keyboard/touch user, I can select, edit, commit/cancel and inspect cells on a narrow browser viewport with semantic labels, visible focus and readable errors.
 - **S5:** As an integrator, I can use Sheets without changing Base's record store, schema, exports or view ownership; a later transfer is an explicit consumer-owned snapshot operation.
-- **S6:** As a user comparing local cash flows, I can change a payment date, amount or rate guess and explain the resulting change using the stored formula, timing convention and residual.
+- **S6:** As a workbook author, I can see how a change to one input affects dependent cells, inspect a result or named error, and reopen the accepted work in its original types.
 - **S7:** As a workbook author, I can navigate, format and reuse a scenario across ranges and worksheets as each editing capability passes its acceptance check.
 
 The priority table describes the first workbook release. S6 and S7 belong to the successor comparison below.
@@ -79,15 +88,15 @@ The priority table describes the first workbook release. S6 and S7 belong to the
 
 ### Reference implementation — Sheets feature comparison
 
-The repository supplies the feature inventory (E-11). The running financial example supplies user tasks (E-12). The table gives the native baseline at E-08/09 and an independent acceptance check for each target. **Next** identifies the first financial increment, **planned** identifies later product requirements, and **deferred** requires a separate scope decision. All added targets are unimplemented at the pinned Base source. Grouped rows earn credit per named behavior.
+E-11 provides a comparison inventory. Each row defines a workbook capability in user terms, its native baseline at E-08/09, and the check for a claim of support. **Planned** means specified for possible implementation. **Deferred** requires a separate scope decision. Product chooses the order using observed need, reuse and cost. The comparison covers each named behavior individually.
 
 | User capability | Agentic Sheets today | Target and independent acceptance check |
 |---|---|---|
 | Inspect and edit a cell | One sheet, sparse scalar cells, selected address display and formula editor. Keyboard and narrow-screen checks pass locally. | **Baseline / VCC-01/05.** Commit, cancel, inspect raw source and result, then retain focus after an error. Physical touch and screen-reader proof remain open. |
 | Reuse a range | Individual cell edits and rectangular `SUM` references. | **Planned / S7.** Select a rectangle with keyboard or touch, paste a 2×3 plain-text block, fill a relative formula and preserve absolute and mixed anchors. Undo the entire edit once and redo it once. Reject an out-of-bounds paste atomically. |
 | Work across sheets and change structure | One fixed worksheet. | **Planned / S7.** Create, rename, reorder and switch sheets. Insert/delete a row or column and update dependent references. A rename preserves identity, a removed target yields an explicit reference error, and undo restores the original result. |
-| Read and navigate a dense workbook | Bounded scrolling grid and shared UI profile. Cells have no persisted display format. | **Planned / S7.** Render the same underlying number as currency or percent, independently set decimal places, alignment and emphasis, then restore the snapshot. Freeze a heading, resize a column, and reach an off-screen cell by address. Defer merge/wrap, rich text and images behind separate fixtures. |
-| Calculate from cells and ranges | Same-sheet arithmetic and rectangular `SUM`, with typed errors and cycle detection. | **Next / S6.** Add periodic cash-flow calculations under VCC-10. **Planned.** Loan and dated calculations under VCC-11/12. Follow-on targets include named ranges, logical, aggregate, lookup, text and date functions. Publish accepted signatures and an independent success/error fixture for each before claiming support. |
+| Read and navigate a dense workbook | Bounded scrolling grid and shared UI profile. Cells have no persisted display format. | **Planned / S7.** Display a number at two decimal places or as a percent, set alignment and emphasis, then verify the stored value and format after restore. Freeze a heading, resize a column, and reach an off-screen cell by address. Defer merge/wrap, rich text and images behind separate fixtures. |
+| Calculate from cells and ranges | Same-sheet arithmetic and rectangular `SUM`, with typed errors and cycle detection. | **Planned / S6.** Evaluate a requested aggregate, logical, lookup, text or date function against its declared arguments and independent expected results. Exercise invalid inputs and dependency updates. A specialized family can use the same calculation contract once selected. |
 | Find, sort and filter a range | No workbook commands for these operations. | **Planned / S7.** Find and replace a literal within the selected range, sort with ties while keeping rows intact, then filter and clear the filter. Verify row membership, formula destinations and that hidden rows retain their values. |
 | Validate inputs and highlight exceptions | Type/size checks protect the workbook contract. | **Planned / S7.** Reject a disallowed value or show its configured warning, highlight a threshold crossing with an accessible text cue, and re-evaluate after an edit. A rule survives save/restore without altering the underlying number. |
 | Annotate and protect a local workbook | No notes, links, threaded comments or protected ranges. | **Planned / S7.** Preserve a cell note and a user-approved link on restore. **Deferred.** Local protection requires an explicit edit-denial check. Threaded comments and identity-based permissions require separate authority and storage design. |
@@ -121,7 +130,7 @@ ROI `(impact × monthly reach) / (build hours + monthly TCO + monthly token cost
 
 ### Acceptance VCCs and traceability
 
-VCC-01–09 bind the existing workbook and delivery evidence. VCC-10–14 specify independent checks for the proposed financial and editor capabilities. Device and delivery gaps continue to gate the corresponding readiness claims.
+VCC-01–09 cover the bounded workbook and its delivery. VCC-13–15 apply when extending calculation, editing or host support. VCC-10–12 keep their original identifiers in the [optional finance example](#cash-flow-acceptance-cases) and apply only when the corresponding financial behavior is selected. Each result is scoped to the exact feature, source and device tested.
 
 | ID / story / TAD / ADR | Measurable end state | Stated check / bound | Evidence |
 |---|---|---|---|
@@ -134,33 +143,27 @@ VCC-01–09 bind the existing workbook and delivery evidence. VCC-10–14 specif
 | VCC-07 / S3 / C5 / ADR-04 | Authorized Prod public/immutable identity matches VCC-06; generated mirror matches files after smoke; predecessor restore readback passes and data survives | Owner-operated live route/artifact/SW/returning-browser checks plus rollback rehearsal/receipt; bootstrap baseline may be verified absent route | Pending: no production activation, mirror publication, public artifact smoke or retained live predecessor proof. |
 | VCC-08 / S5 / C1–C5 / ADR-01/05 | Base remains independently usable; Sheets has no copied or direct/transitive Univer dependency; shared UI comes from its native owner | Exact dependency/import/generated-output marker scan plus independent provenance/compatibility review; marker absence alone is insufficient | Satisfied locally E-08: independent Sheets exports/store; no record-engine changes or new packages; exact central profile and license notices. No Univer source/dependency. |
 | VCC-09 / S1–S3 / C1–C5 / ADR-05 | Product caps and $0 effect policy hold, noncritical capabilities remain lazy, no unexpected runtime network/model calls | Artifact/raw-byte inspection, browser request capture, typed limit fixtures and current provider proof for each external effect | Partial E-08/09: bounds and <500000-byte chunks pass; 64191 output bytes excluding manifest. Mobile-device load/TTV and hosted checks pending. |
-| VCC-10 / S6 / C1/C2 / ADR-06 | Compare equal-period receipts, initial outlay, numeric zero, missing entry and periodic return | F1 below against an independent finite-sum calculation and known root | Planned, first increment. No native financial function at E-08. |
-| VCC-11 / S6 / C2 / ADR-06 | Change payment timing, split interest/principal, and invert the loan inputs consistently | F2 checks beginning/end, zero rate, balances, signs and inverse functions | Planned. |
-| VCC-12 / S6 / C1/C2 / ADR-06 | Value irregular dates and distinguish valid rate roots by initial guess | F3/F4 check actual-day residuals, multiple solutions and failure modes | Planned. |
-| VCC-13 / S6 / C1–C4 / ADR-03/05/06 | Inspect, recalculate, save and restore a financial scenario offline | F5 checks one accepted revision, headless/browser agreement and zero third-party requests | Planned. VCC-03/04 evidence covers only v1. |
+| VCC-13 / S6 / C1–C4 / ADR-03/05/06 | An accepted edit has the same typed inputs, formula source, result or error after recovery | Run a task fixture headlessly and in the browser, reopen offline and restore a disposable copy. Compare accepted revisions according to restore/clone rules. | Required for the selected extension. E-09 covers the v1 browser slice. |
 | VCC-14 / S7 / C1–C4 / ADR-01/03/06 | Every claimed editor behavior passes its own feature-comparison row | Replay a new keyboard/touch fixture including undo or rejection, restore and formula readback. Record per-behavior results and outstanding cases | Planned per feature. A toolbar control earns no credit by itself. |
+| VCC-15 / S5/S6 / C1–C5 / ADR-05/06 | Core workbooks open and edit with a proposed optional module omitted. A workbook that requires the module preserves its input on an unsupported operation. | Run the core fixtures without the module, enable it for its own fixture, then reopen without it. Compare core results, preserved source, error and artifact bytes. | Proposed integration check for each admitted extension. E-14 covers v1 headless examples only. |
 
-The primary chain is `P1 → S1 → C1/C2 → ADR-01/02 → VCC-01/02`; persistence adds `P2/S2/C3/ADR-03/VCC-03/04`; device reach adds `S4/C4/VCC-05`; delivery adds `P3/S3/C5/ADR-04/VCC-06/07`. S5, VCC-08/09 and ADR-05 constrain every slice. No criterion is satisfied by this document's existence.
+The core joins P1/S1 to C1/C2, ADR-01/02 and VCC-01/02. Persistence joins P2/S2 to C3, ADR-03 and VCC-03/04. Device access joins S4/C4 to VCC-05. Delivery joins P3/S3 to C5, ADR-04 and VCC-06/07. VCC-08/09 apply across slices. P4/S6/S7 use the existing owners and ADR-06 for VCC-13–15.
 
-### Cash-flow acceptance cases
+### Workbook scenarios
 
-These are product-authored synthetic inputs. Negative amounts represent cash paid by the workbook user. Use full-precision finite values for calculation and an absolute tolerance of 0.000001 for the expected amounts and rates below. Formatting rounds only the displayed result.
+These original examples exercise the same v1 commands with different data. The expected values below are reproducible through the headless entry point at E-14. Browser storage, accessibility and timed user trials have their own evidence.
 
-| Case | User action and inputs | Expected result |
+| Task | Initial workbook and edit | Expected observation |
 |---|---|---|
-| F1. Compare receipt timing | Start at −60 today. At a periodic rate of 0.25 compare future receipts [75, 15] and [15, 75]. Calculate `NPV` of the future receipts and add the initial amount separately. Also try rate zero and `IRR` on [−80, 96]. | Net values 9.60 and 0.00, both 30.00 at zero discount. Periodic return is 0.20. At 0.25, a range containing [numeric zero, 125] discounts to 80, while [empty cell, 125] discounts to 100 under the proposed NPV range policy. A referenced error propagates and clears after repair. |
-| F2. Compare loan terms | Borrow 210 at 0.10 per period, repay over two periods to a zero ending balance. Compare `PMT` with end and beginning payments. For end payments inspect `IPMT` and `PPMT`, then apply `PV`, `FV`, `NPER` and `RATE` to recover the omitted input. | End payment −121, beginning payment −110. Interest/principal are −21/−100 then −11/−110. End balances are 110 then 0. Inverses recover 210, 0, 2 and 0.10 respectively. At zero interest both timing choices give −105. |
-| F3. Compare dated receipts | Use [−160, 44, 159.72] on 2032-03-01, 2033-03-01 and 2035-03-01. Compute `XNPV` at 0.10 and solve `XIRR`. Move the middle receipt one day later. | Day offsets [0, 365, 1095] make the initial present value zero and annual return 0.10. Moving the receipt lowers its present value. Check the new value against the dated sum and substitute the solved rate back into that sum. Reject unequal ranges and impossible dates explicitly. |
-| F4. Explain multiple rates | For dated annual flows [−80, 220, −150] starting 2030-01-01 and recurring on the next two January firsts, solve once from guess 0.23 and once from 0.53. Also use all-positive flows and stop a solve at its iteration limit before convergence. | The nearby roots are 0.25 and 0.50. Each must independently zero the present-value sum to the stated residual tolerance. Report an explicit numeric error for same-sign flows or failure to converge. Never substitute a default return or imply uniqueness. |
-| F5. Return to an edited scenario | In the admitted financial increment, edit one input, inspect formula and result by keyboard and touch, commit, reopen offline, export and restore a disposable copy. Supply an invalid input, repair it, and retry from a stale second tab. | Headless and browser results agree before and after restore. Accepted formula text, type and timing inputs survive. Stale writes preserve the user's draft. Named errors clear after correction. Record device, artifact and requests under VCC-05/08/09/13. |
-
-Finance calculations are explicitly scoped to the above conventions. Independently compute equal-period present value as the sum of future amounts discounted from period one. For dated flows use the first date as time zero and discount each amount by `(1 + rate)^((day − firstDay) / 365)`. The solver check is the absolute value of the independently evaluated cash-flow residual ≤0.000001 in fixture currency units. A display rounded to zero cannot qualify a rate.
+| Stock count | A1 has 18 on hand, B1 has 7 received and C1 has 4 issued. D1 contains `=A1+B1-C1`. Change C1 to 9. | Available stock changes from 21 to 16. The formula survives a snapshot round-trip. |
+| Session schedule | A1:A3 contain durations 12, 18 and 10. B1 contains `=SUM(A1:A3)`. Change the middle duration to 23. | Total scheduled minutes change from 40 to 45. The workbook supplies the unit. |
+| Inspection checklist | A1 contains the text “Inspect latch” and B1 a boolean false. Set B1 to true. | The label and boolean type survive export and decode. The workbook requires no formula. |
 
 ## Reference implementation — TAD: owners, contracts and delivery
 
 ### Native grounding and division of work
 
-E-08/09 identify the implemented workbook owners below. E-10/13 identify the separate site integration. The financial and editor extensions are proposed changes to these owners.
+E-08/09 identify the implemented workbook owners below. E-10/13 identify the separate site integration. Future editing and calculation features extend the owner of the affected behavior.
 
 | Component / responsibility | Native source or proposed location | Reuse decision / smallest delta | Ownership, readiness and check join |
 |---|---|---|---|
@@ -190,13 +193,19 @@ The storage owner uses one IndexedDB transaction to compare revision and persist
 
 Download/restore uses a versioned JSON snapshot with a deterministic serialization for checks. Restore validates the entire payload before an atomic replacement; an existing workbook ID/revision collision requires an explicit restore or clone choice. Restoring over an existing workbook requires its current expected revision and advances that revision; retain the imported revision as provenance, never reset the live concurrency fence. A clone starts with new identity/revision 1 and recorded provenance. Download captures accepted state; unsaved editor changes must be committed or explicitly excluded. Failed imports retain both current committed state and source file; no destructive schema migration. Browser eviction remains possible, so download/restore is a separate user-controlled recovery path, not a promise of durable backup. No user workbook, private file, credential or browser record belongs in a Git or Prod asset artifact.
 
-### Proposed contracts for financial functions and editor parity
+### Portable contracts and optional features
 
-C2 owns the financial grammar and pure evaluator. C1 resolves bounded typed arguments and ranges from the accepted workbook. Add the comma-separated signatures needed by the admitted function family. Periodic rates are per payment interval, dated rates are annual, and payment timing uses 0 for period end and 1 for period start. In NPV ranges an empty cell consumes no period and a numeric zero consumes one. The v1 arithmetic rule for an empty cell remains zero. Reject nonnumeric nonempty cash-flow entries. Propagate a referenced error before solving.
+| Owner | Portable behavior | Reference binding and extension boundary |
+|---|---|---|
+| C1 workbook | Validate workbook identity, typed edits and expected revision. Preserve accepted state on rejection. | Headless commands own edits. A template supplies ordinary cells. Its labels, units and sample data belong to the workbook. |
+| C2 calculation | Calculate deterministic results or named errors from typed cells and bounded references. | Extend the existing evaluator for an admitted function. Document arguments, missing values, error propagation, bounds and independent examples. The evaluator and C1 run without a browser view or persistence adapter. |
+| C3 persistence | Commit atomically, detect stale edits and recover a versioned snapshot. | The browser binding uses IndexedDB. Another adapter qualifies through the same conflict, replay and recovery checks before a portability claim. |
+| C4 view and input | Translate a user action into the same workbook command and display accepted values, drafts and errors. | Keyboard and touch use the browser shell. Localization and display formats belong here. A display change must preserve the stored value and formula. |
+| C5 packaging and delivery | Bind an exact capability set and static artifact to its source. | The selected release owner supplies the route, headers and scoped worker. A different host needs its own delivery evidence. |
 
-Use unambiguous Gregorian date-only inputs for dated functions, explicitly validated ISO YYYY-MM-DD text in the first dated slice. Derive integer UTC day differences independent of time zone, require paired ranges of equal length and dates on or after the first, and require rates greater than −1 for discounting. For IRR/XIRR require both signs, define a deterministic starting guess (default 0.10), and report a numeric error for an invalid guess, nonconvergence or out-of-domain root. Bound each solve to 64 iterations and charge each cash-flow evaluation to the existing per-edit calculation budget. Exhausting the 64 iterations yields a numeric error. Exceeding the workbook-wide budget rejects the edit under the existing limit contract. F4 exercises nonconvergence separately from a workbook-wide limit rejection.
+Optional calculation families consume the core value and error conventions. The host selects admitted capabilities. Keep optional code and example data outside the base load. A missing function must expose an unsupported-formula error and preserve its source. An unrecognized snapshot version must fail before replacement. Reopen a v1 snapshot with the feature disabled, check the raw artifact size and verify core behavior under VCC-15. A specialized function may state its own units, locale handling and numerical tolerance. Ordinary cells acquire such meaning only when the user or the called function specifies it.
 
-C4 owns editing and display. Stored values retain precision when a user changes the displayed currency, percent or dates. C1 owns atomic range/structure operations, reference rewriting and undo transactions. C3 owns revision checks and snapshot compatibility. V1 snapshots remain readable. A schema change for formatting or multiple worksheets requires a versioned reader, deterministic migration on a copy, round-trip proof and rejection of unknown versions before modifying stored bytes. C5 reuses the existing static artifact boundary. Load optional capabilities on first use, prime admitted assets for offline reopening, and measure cold/base bytes, per-chunk bytes and recalculation time at every increment.
+C1 owns proposed range edits, reference rewrites and undo transactions. C3 owns their persistence and migration. A schema change requires a versioned reader, migration on a copy and round-trip proof before modifying stored bytes. Prime admitted optional assets for offline use and measure cold/base bytes, each chunk and recalculation time. No plugin loader or second command registry is required by this design.
 
 ### Device, offline and native design adoption
 
@@ -219,10 +228,10 @@ Offline storage is device/browser-local. Paths under `airvio.co` share an origin
 | S2 persist/recover | Save → disconnect/reload → download/restore; D1 | Dedicated local store and explicit file boundary; D1 | N/A: ordinary storage transactions, not agent orchestration |
 | S4 browser access | Keyboard/touch edit → commit/cancel → named result; D1 | Host projects core state through shared primitives; D1 | N/A: no model/UI decision agent |
 | S3 release | Exact Dev source → sealed preview/readback → authorized same-candidate promotion → public smoke → generated mirror; D2 | Source/artifact/route identities and separate receipts; D2 | Existing ADLC/release workflow, bounded phase checks; no new orchestrator |
-| S6/S7 compare and edit | Enter scenario → change an input, date, guess or range → inspect raw result → reopen offline. F1–F5 and VCC-14 | C4 → C1/C2 → C3, reusing D1. All successor behaviors await native verification. | Headless fixtures and ordinary browser actions |
+| S6/S7 calculate and edit | Edit a value or range → inspect dependents and errors → reopen offline, VCC-13/14 | C4 → C1/C2 → C3 through D1. The same operation accepts user-defined labels and units. | Headless and browser fixtures, with optional features omitted for VCC-15 |
 | S5 Base transfer | Deferred, outside first slice | Base artifact's proposed consumer-owned snapshot bridge; no runtime edge now | N/A: live sync/agent routes excluded |
 
-**D1** · Class: User workflow/data flow · Notation: Mermaid `flowchart LR` · Surface: Markdown/canvas projection · Version: 0.1.0. Caption: local workbook journey at E-08/09. Successor financial inputs use the same owners.
+**D1** · Class: User workflow/data flow · Notation: Mermaid `flowchart LR` · Surface: Markdown/canvas projection · Version: 0.1.0. Caption: local workbook journey at E-08/09. Optional features use the same revision and recovery boundaries.
 
 ```mermaid
 flowchart LR
@@ -338,11 +347,11 @@ There is no contested vendor/platform winner requiring an invented argument verd
 
 ### ADR-06. Establish parity through independent user outcomes
 
-**Proposed for the successor.** Extend C1/C2 first for periodic cash flows, then loan and dated functions. An editor-wide rewrite would delay the first verifiable result and put the v1 storage contract at risk. A third-party engine or live showcase comparison would make development or verification dependent on the reference. Keep the native model, use product-authored fixtures with hand-derived expected values, and exercise the public editor and headless path on the same inputs. Accept a capability when its independent checks pass on the identified source and device. Revisit a claimed match on a reproducible discrepancy. Preserve the original snapshot, document any unsupported behavior and revert the affected capability if it changes an accepted result.
+**Decision for future increments.** Keep workbook identity, commands, formula evaluation and snapshot semantics independent of use case and presentation. Choose the smallest useful extension to an existing owner for an observed job. A specialized requirement may define a function, sample or display adapter that users select. Hard-coding one example would make unrelated workbooks inherit its conventions. A second workbook engine would duplicate revision and recovery behavior. Qualify the selected feature independently and run the core with that feature absent (VCC-15). If the extension changes an accepted result, preserve the snapshot and revert that extension before expanding its scope.
 
 ## Reference implementation — MVP: bounded calculation and recovery slice
 
-MVP projects S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09 at `SHEETS-WORKBOOK-001@0.3.0`. S3/C5/ADR-04/VCC-06/07 are required for the owner-selected public release but are a separately gated delivery phase. The existing local scope is recorded below. The 0.3.0 successor adds S6/S7, ADR-06 and VCC-10–14 to the plan.
+At `SHEETS-WORKBOOK-001@0.4.0` the local MVP covers S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09. S3/C5/ADR-04/VCC-06/07 cover public delivery. S6/S7, ADR-06 and VCC-13–15 describe how to qualify a successor. Optional example criteria apply only to a separately selected feature.
 
 | Slice | Proof fixture and expected result | Local / delivered readiness |
 |---|---|---|
@@ -350,7 +359,7 @@ MVP projects S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09 at `SHE
 | Persist/download/restore | Commit fixture, disconnect, reload, download, clone/restore in disposable origin; values/formulas and errors reconcile | dev-proven / undocumented, VCC-03/04 pass locally at E-08/09 |
 | Keyboard/touch and domain boundary | Edit/commit/cancel on narrow viewport; Base contracts unaffected; no forbidden source/dependencies | local checks partial / undocumented, VCC-08 passes locally and VCC-05/09 retain device and load gaps |
 | Source-to-Prod delivery | Exact preview candidate becomes selected public route and generated archive; rollback restores prior identity | local rehearsal only / undocumented, VCC-06 partial and VCC-07 pending |
-| Financial and editor parity | Compare F1 timings offline, then qualify additional functions and editing behaviors independently | Proposed / undocumented, VCC-10–14 pending |
+| General workbook extensions | Independently qualify a selected editing or calculation need and rerun its core fixtures with optional features disabled | Proposed / undocumented, VCC-13–15 pending for each successor |
 
 ### Demo skeleton and maturity
 
@@ -378,7 +387,7 @@ All future implementation units use one scoped lane, ≤60 active minutes before
 | 4. Controlled public release | P3; site operator and generated-mirror owner | Exact same candidate, B3/B4 effect authority, VCC-07 receipts/readback | No deploy ETA during review/provider wait; stop ambiguous identity/cost; native exact predecessor rollback |
 | 5. Learning and successor | Product measures the same fixture/recovery journey | GTM experiment actuals, failure/support time and continue/stop decision | ≤45 active minutes analysis after observation window; open successor Context on threshold breach |
 
-**Parity sequence for local development, independent of hosted promotion.** The first sprint targets NPV and the F1 discounting cases. The next adds periodic IRR and completes VCC-10. Loan repayment and inverses (F2) follow in bounded function families. Dated inputs and XNPV (F3) precede iterative XIRR and multiple-root handling (F3/F4). Each increment also runs F5 for its supported functions and the v1 regression checks. Give each S7 editing feature its own VCC-14 fixture. Start range editing and numeric formats before structural rewrites or file exchange. Apply the existing per-task caps to each increment. Re-estimate at the cap and split an unfinished increment. No production promotion is on this roadmap while the owner's hold applies.
+**How Product selects the next increment.** Observe a recurring workbook task and record the manual work or failure, its frequency and the smallest change that would address it. Check whether the existing workbook already suffices. Compare candidate changes by user impact, reuse of an existing owner, effort and offline cost. An atomic paste could address repeated entry across rows. A function family could address a repeated manual calculation. Pick the change the observation supports, apply the per-task caps and verify it independently. All optional examples can be skipped without blocking the core roadmap or its release checks.
 
 For an eventual release, the site owner verifies the sealed candidate in preview, obtains effect-specific authority, reads the same candidate back in production and then publishes the generated mirror. The local feature roadmap grants no delivery authority.
 
@@ -386,7 +395,7 @@ For an eventual release, the site owner verifies the sealed candidate in preview
 
 ### Segment, alternatives and first dollar
 
-Initial user hypothesis: maintainers/operators who need a small local calculation workbook inside the shared site and retain control of files/data. Developer distribution is global/browser-based; geography, reachable population, acquisition channel conversion and market timing are unmeasured. The owner's request is product direction, not validated buyer pain, payment or repeat demand.
+Initial user hypothesis: people who repeatedly organize or calculate with a small workbook and want to retain control of their data. The selected shared site is the first distribution channel. Developer distribution is global/browser-based; geography, reachable population, acquisition channel conversion and market timing are unmeasured. The owner's request is product direction, not validated buyer pain, payment or repeat demand.
 
 Offer: a free, bounded local workbook with explicit limits, no paid plan/addon/overage and no uptime/support SLA. Alternatives are an existing local spreadsheet, a native form/manual calculation, an existing Base view when the job is record-centric, or no build. Another FOSS engine requires a separate comparison and does not override the explicit Univer restriction. No architectural or import count proves time saved.
 
@@ -401,11 +410,11 @@ Monetization is explicitly deferred. `mechanism-proven`, `demand-validated`, rec
 
 ### Smallest learning loop and operations
 
-**H1:** a named user needs the bounded workbook job rather than a Base record view or existing form. **Cheapest next outcome:** Product confirms one independently authored line-item calculation/recovery fixture with the requesting owner before expanding the baseline. Pass if the owner identifies a recurring calculation need and the proposed subset resolves it; stop/re-scope if a current Base/form workflow suffices or required functions exceed the cap. Active window ≤30 minutes, source E-01/E-02 and user statement retained; no customer/WTP validation is inferred.
+**H1.** A user has a recurring task that the bounded workbook can support. Product asks the user to choose a familiar sheet and identify the input, action and expected outcome. Use synthetic data for the rehearsal. Record which step requires re-entry or manual checking. Stop expansion if the current workbook or an existing form already meets the need. Active window ≤30 minutes. A user statement informs discovery and carries no payment evidence.
 
 **EXP-S1, proposed:** after VCC-01–05 pass, up to two available maintainers complete the clean-browser calculation, offline return and snapshot restore; observe a second use within 14 days. Record eligible/participating denominators, steps/minutes, incorrect/failed/repeated actions, support minutes and data recovery failures. Continue only if every participant completes admitted criteria, median first calculation ≤2 minutes, no accepted-data loss, no forbidden dependency and $0 incremental spend. A small internal trial does not prove public demand or retention. Stop/pivot on any reproducible silent data loss or contract mismatch; capture source/fixture/result and open successor Context rather than rewriting the accepted result. Recheck on owner availability or a repaired exact candidate; this spec authorizes no invitations/messages.
 
-**H2 / internal cash-flow trial, proposed.** Once VCC-10/13 pass for periodic functions, ask an available maintainer in an authorized session to compare the two F1 schedules, identify the more valuable one, explain where the initial outlay belongs, then recover it offline. Record correct completions/attempts, elapsed minutes and any manual recalculations. Advance the loan or dated increment on a confirmed recurring use and a correct unaided result within five minutes. A wrong ranking, lost data or reliance on an external spreadsheet sends the case back to Product and Sheets Engineering. No buyer demand, charge or savings has been measured.
+**H2.** A selected extension reduces the effort of a recurring workbook task. In an authorized internal session, let a participant choose the task and define the expected result before trying it. Record correct completions/attempts, elapsed time, repeated actions and recovery failures with the existing workflow and the candidate. Continue discovery if the user reaches the expected result unaided, can recover the edit and identifies a recurring benefit. Record the sample size and task. One successful scenario supports only that use case.
 
 Support uses existing source/consumer issue owners, with no response SLA. Sheets Dev owns workbook incidents; shared site owner owns deployment/route incidents; user data recovery uses snapshots and compatible storage policy, not Git cleanup. Third-party notices and provider limits must be verified at exact release. Team/hiring obligations are unknown; assign one named accountable person per function before implementation/delivery.
 
@@ -419,16 +428,16 @@ No CAC/LTV, runway, break-even, profit or 12-month total can be calculated witho
 
 ### C01–C16 coverage and readiness
 
-Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.3.0`; coverage is not product proof or full rule conformance.
+Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.4.0`; coverage is not product proof or full rule conformance.
 
 | Domain | Disposition / exact join | Accountable function | Evidence/gap and next check |
 |---|---|---|---|
 | C01 Purpose/user/pain | covered / PRD P1–P4, H1/H2 | Product | Owner request and native model gap E-01/02; buyer pain unvalidated; confirm one job |
 | C02 Market/timing | deferred / GTM segment | Product | No independent dated population/conversion sources; revisit when market/offer decision depends on them |
 | C03 Offer/alternatives | covered / GTM offer, ADR-01–05 | Product | Free bounded offer; manual/Base/FOSS alternatives and disqualifiers explicit; revisit validated need |
-| C04 Product/experience | covered / S1–S7/VCCs, demo and F1–F5 | Product/quality | Core/browser results E-08/09; physical-device and timed TTV checks pending |
+| C04 Product/experience | covered / S1–S7/VCCs, workbook scenarios and demo | Product/quality | Core/browser results E-08/09; physical-device and timed TTV checks pending |
 | C05 Architecture/data | covered / C1–C5, D1/D2 | Architect | Concrete C1–C5 owners E-08/10; hosted delivery pending |
-| C06 Quality/security/AI | covered / VCC-01–14, local storage/CSP | Quality/security | Core/storage/recovery checks E-08/09; device/hosted proof pending |
+| C06 Quality/security/AI | covered / applicable VCC-01–15, local storage/CSP | Quality/security | Core/storage/recovery checks E-08/09; device/hosted proof pending |
 | C07 Decisions/tradeoffs | covered / ADR-01–06 | Architect | Physical source/domain split, bounded core, local state and native release owner; revisit concrete incompatibility |
 | C08 Smallest slice | covered / MVP fixture/readiness | Engineering | Implemented calculation+recovery slice E-08/09; VCC-05–07/09 retain gaps |
 | C09 Acquisition/retention | deferred / H1/EXP-S1 | Product | No qualified-user/cohort/support data; prerequisite implemented fixture and owner availability |
@@ -456,7 +465,7 @@ Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.3.0`; coverage is no
 | E-06 | `agentic-os@d3430c8da71b0128b644040bfd1ef32d9f36c50e`: runtime SSOT, START/ADLC/RELEASE/DEPLOY; documentation `docs/DEPLOY-WORKFLOW.md` at E-01 | Source lifecycle and effect receipts remain separate; `docs/documents/` is outside the documentation site's current deployed payload |
 | E-07 | This document candidate: frontmatter/revision/local-link/budget, target diagram projection, repository and affected authoring checks | Repository check and PRD policy check exit 0; target diagram projection validates two diagrams with 12 nodes/13 edges/3 clusters and no projection findings; joined frontmatter/local-link/budget checks and final affected validation are bound at handoff. No Sheets implementation/deployment result |
 
-E-01–07 document the original authoring baseline. E-08–10 supply local implementation evidence, E-11/12 ground the comparison, and E-13 closes the prior source-check gap. S6 and S7 require independent native results.
+E-01–07 document the original authoring baseline. E-08–10 supply local implementation evidence, E-11/12 ground the comparison and its optional example. E-13 closes the prior source-check gap. E-14 records headless results for three user-defined workbooks. S6 and S7 require independent native results.
 
 ### Implementation evidence — 2026-11-18
 
@@ -471,8 +480,9 @@ E-01–07 document the original authoring baseline. E-08–10 supply local imple
 | ID | Source and observation boundary | Use in this revision |
 |---|---|---|
 | E-11 | [Univer public repository](https://github.com/dream-num/univer), [README at inspected commit](https://github.com/dream-num/univer/blob/47468eaa654573cd608a954ac8e1774884461576/README.md) and [package inventory](https://github.com/dream-num/univer/tree/47468eaa654573cd608a954ac8e1774884461576/packages), inspected 2026-11-18 | The public project describes spreadsheet editing, formatting, calculation and data operations. Its broader offering includes separately distributed capabilities. The inventory informs the comparison only. It proves neither native Sheets implementation nor commercial availability in the free core. |
-| E-12 | [Financial cash-flow showcase](https://office.univer.ai/showcase/sheets/financial-cash-flow-formulas), rendered preview and expanded comparison notes observed 2026-11-18 | The four visible worksheets and notes distinguish loan timing and components, periodic receipts, dated cash flows and guess-sensitive roots. The notes also cover blanks, zero rates and recovery from input errors. This mutable page has no verified source pin. Its described behavior informed S6. No reference workbook, source, screen image, numeric example or layout is a product or test input. |
+| E-12 | [Financial cash-flow showcase](https://office.univer.ai/showcase/sheets/financial-cash-flow-formulas), rendered preview and expanded comparison notes observed 2026-11-18 | The four visible worksheets and notes distinguish loan timing and components, periodic receipts, dated cash flows and guess-sensitive roots. The notes also cover blanks, zero rates and recovery from input errors. This mutable page has no verified source pin. Its description informs the optional F1–F5 example only. No reference workbook, source, screen image, numeric example or layout is a product or test input. |
 | E-13 | [Protected site integration check](https://github.com/huijoohwee/agentic-graph/actions/runs/44142072396) at `agentic-graph@e13df11bad6001a0454ac79e04f18563b7b1dd53`, plus the site owner's local review receipt `9f0909b191c72e40d784b338bef6f201caaaa02b5dc6107e675a5d9afbc82b50` | Supersedes the pending source-check observation in E-10. Source integrated and local native review completed. The owner kept production pending. These receipts apply only to the existing slice. |
+| E-14 | At the E-08 source, pass the three [workbook scenarios](#workbook-scenarios) through `executeWorkbook` (create then setCells), `calculate`, `encodeSnapshot` and `decodeSnapshot`. Each workbook starts at revision 1. | All three edits reached revision 2. Stock read back 16, duration 45, and the checklist retained its label and boolean true. Typed cells matched after serialization. This run covered the existing headless entry only. |
 
 ### Risks, gates and next bounded action
 
@@ -486,7 +496,45 @@ E-01–07 document the original authoring baseline. E-08–10 supply local imple
 | R6 No captured prior Sheets/site rollback identity | Site operator | Capture exact current site deployment/artifact/route absence before activation; test restoration and local data compatibility |
 | R7 Copied reference material or forbidden dependency could enter later code | Dev/rights reviewer | VCC-08 provenance/dependency review at exact source; stop and reviewed-revert offending material with data preserved |
 
-**Next outcome.** Product confirms one recurring periodic-receipt comparison and Sheets Engineering uses F1 to qualify the first increment. Quality owns the outstanding physical-device, screen-reader and timed TTV checks. The existing source and local review closed at E-08/10/13. Production remains on owner hold. Recheck only on a new delivery decision, current hard-$0 proof, retained rollback identity and protected exact-candidate approval.
+**Next outcome.** Product identifies one recurring workbook job and compares the existing steps with the smallest change that would help. Quality owns the outstanding physical-device, screen-reader and timed TTV checks. Source and local review closed at E-08/10/13. Production remains on owner hold pending a new delivery decision, current hard-$0 proof, retained rollback identity and protected exact-candidate approval.
+
+## Optional domain example
+
+### Cash-flow acceptance cases
+
+Finance is one optional application of the workbook. F1–F5 are original, synthetic examples. Use a case only if its function is selected for implementation. A workbook using another capability can qualify without any of these cases. E-12 identifies the external inspiration. The calculations below are independent of the showcase.
+
+| Optional criterion | Selected behavior | Independent check | Status |
+|---|---|---|---|
+| VCC-10 / S6 / C1/C2 / ADR-06 | Compare equal-period receipts, initial outlay, numeric zero, missing entry and periodic return | F1 against an independent finite-sum calculation and known root | Optional, unimplemented at E-08. |
+| VCC-11 / S6 / C2 / ADR-06 | Change payment timing, split interest/principal, and invert the loan inputs consistently | F2 checks beginning/end, zero rate, balances, signs and inverse functions | Optional, unimplemented. |
+| VCC-12 / S6 / C1/C2 / ADR-06 | Value irregular dates and distinguish valid rate roots by initial guess | F3/F4 check actual-day residuals, multiple solutions and failure modes | Optional, unimplemented. |
+
+Negative amounts represent cash paid by the workbook user. Use full-precision finite values for calculation and an absolute tolerance of 0.000001 for the expected amounts and rates below. Formatting rounds only the displayed result.
+
+| Case | User action and inputs | Expected result |
+|---|---|---|
+| F1. Compare receipt timing | Start at −60 today. At a periodic rate of 0.25 compare future receipts [75, 15] and [15, 75]. Calculate `NPV` of the future receipts and add the initial amount separately. Also try rate zero and `IRR` on [−80, 96]. | Net values 9.60 and 0.00, both 30.00 at zero discount. Periodic return is 0.20. At 0.25, a range containing [numeric zero, 125] discounts to 80, while [empty cell, 125] discounts to 100 under the proposed NPV range policy. A referenced error propagates and clears after repair. |
+| F2. Compare loan terms | Borrow 210 at 0.10 per period, repay over two periods to a zero ending balance. Compare `PMT` with end and beginning payments. For end payments inspect `IPMT` and `PPMT`, then apply `PV`, `FV`, `NPER` and `RATE` to recover the omitted input. | End payment −121, beginning payment −110. Interest/principal are −21/−100 then −11/−110. End balances are 110 then 0. Inverses recover 210, 0, 2 and 0.10 respectively. At zero interest both timing choices give −105. |
+| F3. Compare dated receipts | Use [−160, 44, 159.72] on 2032-03-01, 2033-03-01 and 2035-03-01. Compute `XNPV` at 0.10 and solve `XIRR`. Move the middle receipt one day later. | Day offsets [0, 365, 1095] make the initial present value zero and annual return 0.10. Moving the receipt lowers its present value. Check the new value against the dated sum and substitute the solved rate back into that sum. Reject unequal ranges and impossible dates explicitly. |
+| F4. Explain multiple rates | For dated annual flows [−80, 220, −150] starting 2030-01-01 and recurring on the next two January firsts, solve once from guess 0.23 and once from 0.53. Also use all-positive flows and stop a solve at its iteration limit before convergence. | The nearby roots are 0.25 and 0.50. Each must independently zero the present-value sum to the stated residual tolerance. Report an explicit numeric error for same-sign flows or failure to converge. Never substitute a default return or imply uniqueness. |
+| F5. Return to an edited scenario | If this family is selected, edit one input, inspect formula and result by keyboard and touch, commit, reopen offline, export and restore a disposable copy. Supply an invalid input, repair it, and retry from a stale second tab. | Headless and browser results agree before and after restore. Accepted formula text, type and timing inputs survive. Stale writes preserve the user's draft. Named errors clear after correction. Record device, artifact and requests under VCC-05/08/09/13. |
+
+Finance calculations are explicitly scoped to the above conventions. Independently compute equal-period present value as the sum of future amounts discounted from period one. For dated flows use the first date as time zero and discount each amount by `(1 + rate)^((day − firstDay) / 365)`. The solver check is the absolute value of the independently evaluated cash-flow residual ≤0.000001 in fixture currency units. A display rounded to zero cannot qualify a rate.
+
+If selected, this family uses C2 for evaluation and C1 for typed argument and range validation. Periodic rates are per payment interval, dated rates are annual, and payment timing uses 0 for period end and 1 for period start. In NPV ranges an empty cell consumes no period and a numeric zero consumes one. The v1 arithmetic rule for an empty cell remains zero. Reject nonnumeric nonempty cash-flow entries. Propagate a referenced error before solving.
+
+Use unambiguous Gregorian date-only inputs for dated functions, explicitly validated ISO YYYY-MM-DD text in the first dated slice. Derive integer UTC day differences independent of time zone, require paired ranges of equal length and dates on or after the first, and require rates greater than −1 for discounting. For IRR/XIRR require both signs, define a deterministic starting guess (default 0.10), and report a numeric error for an invalid guess, nonconvergence or out-of-domain root. Bound each solve to 64 iterations and charge each cash-flow evaluation to the existing per-edit calculation budget. Exhausting the 64 iterations yields a numeric error. Exceeding the workbook-wide budget rejects the edit under the existing limit contract. F4 exercises nonconvergence separately from a workbook-wide limit rejection.
+
+## Reference implementation — revision history
+
+### 2026-11-18 general-purpose workbook scope
+
+| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
+|---|---|---|---|
+| `SHEETS-WORKBOOK-001@0.4.0` | C — the owner identified the cash-flow showcase as one sample. I — support user-defined workbook jobs with independent capabilities. D — qualify the core, optional features and release separately. | R — Product and Sheets Engineering. A — ground the common behavior in three local fixtures, then select extensions from observed need. O — one portable workbook contract, conditional example criteria and a task-led roadmap. | 2026-11-18 |
+
+The v0.3.0 checkpoint below preserves the earlier proposal. The task-based selection rule in v0.4.0 supersedes that sequence.
 
 ### 2026-11-18 feature-parity planning checkpoint
 

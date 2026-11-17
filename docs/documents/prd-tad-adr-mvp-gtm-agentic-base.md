@@ -1,22 +1,22 @@
 ---
 title: "Reference implementation: shared data-view runtime"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.2.0"
+version: "0.4.0"
 date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "SHARED-VIEW-RUNTIME-001"
-prd_revision: "0.2.0"
-tad_revision: "0.2.0"
-adr_revision: "0.2.0"
-mvp_revision: "0.2.0"
-gtm_revision: "0.2.0"
+prd_revision: "0.4.0"
+tad_revision: "0.4.0"
+adr_revision: "0.4.0"
+mvp_revision: "0.4.0"
+gtm_revision: "0.4.0"
 local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--agentic-base-grounding"
+worktree_id: "device-0232231d4a19--base-sheets-boundary"
 agent_id: "codex"
 lifecycle_status: "proposed"
 ---
@@ -25,13 +25,15 @@ lifecycle_status: "proposed"
 
 ## Reference implementation — revision and claim boundaries
 
-This joined artifact, `SHARED-VIEW-RUNTIME-001@0.2.0`, follows [PRD, TAD & ADR Guidelines v3.5.0](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) at documentation-source commit `99ea1f49211361528256045719b54f1634eee41a`. It refreshes the October specification against the actual local `agentic-base` checkout at `81e4608280be4ec515c5dd28df7b97d1438a0fc0`, observed on 2026-11-17. All Base source paths below resolve at that exact commit unless stated otherwise; evidence IDs resolve in the source register. This is a reference implementation, not a universal choice of framework, provider, or product.
+This joined artifact, `SHARED-VIEW-RUNTIME-001@0.4.0`, follows [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) at documentation-source commit `fc53dc02ea98e3119d1d1015fc72e1747a6d5087`. It refreshes the October specification against the actual local `agentic-base` checkout at `81e4608280be4ec515c5dd28df7b97d1438a0fc0`, observed on 2026-11-17. All Base source paths below resolve at that exact commit unless stated otherwise; evidence IDs resolve in the source register. This is a reference implementation, not a universal choice of framework, provider, or product.
 
 **Material change:** Table, Multi-dimensional Table, Kanban, Calendar, Dashboard, settings, field workbenches and menu controls already have source implementations. Kanban and Calendar are no longer proposed successor renderers. The bounded browser adapter now composes `TableView` or `MultiDimTableView`; the old `DataTableCore.tsx` is absent. Shared panels, disclosure, rich text, hover and Viewer surfaces belong to Design System and are consumed directly rather than implemented or re-exported by Base.
 
+**0.4.0 decision:** separate the structured-record Base domain from a future workbook-oriented Sheets domain (ADR-05). `agentic-sheets` is the recommended working name, not an existing admitted product or a repository-creation instruction. The local 0.3.0 draft is a recommendation input (E-11), not released authority; this revision authors its own decisions. Univer is reference-only (E-10/ADR-04): copying and external dependency are forbidden. No Base implementation or consumer pin changes.
+
 **Evidence limit:** E-03 satisfies the bounded headless VCC-09, earning local `dev-proven`; it does not satisfy the full UI, browser, release or recovery criteria. E-02 records a failed full Base check in the current installed dependency environment. Delivered readiness remains `undocumented`: no current consumer runtime, live parity, package publication, deployment, payment or repeat-demand proof was collected. The document remains proposed; source inspection and documentation checks do not discharge Phase 3 baseline sign-off.
 
-The inspected checkout has no tracked modifications and has three untracked planning drafts. They were preserved and excluded from implementation evidence. This task changes only this document; it does not implement repairs in Base, update consumers, or open a delivery boundary.
+The historical 0.2.0 inspection found no tracked modifications and three untracked planning drafts; the current source recheck is E-12. They were preserved and excluded from implementation evidence. This task changes only this document; it does not implement repairs in Base, update consumers, or open a delivery boundary.
 
 ## Reference implementation — PRD: purpose, users and pain
 
@@ -57,6 +59,7 @@ Graph and Shoply/Commerce are consumers documented by Base, not independently ve
 | 1. Integrator cannot reproduce a green current package check; observed E-02, not buyer/WTP validation | Use exact source → installed dependency cannot resolve Viewer → reconcile the existing dependency installation and rerun intact checks → retain exact result | Reuse dependency/lock and existing check owner; no new runtime. PRD-VIEW-04 → VCC-05; next bounded outcome |
 | 2. Specification and provenance drift; observed E-01/E-04 | Find shared views → October plan omits implemented surfaces and provenance includes removed paths → refresh this joined record and then the owner manifest → locate actual exports and current digests | Reuse Base source/manifest; this documentation update adds no package. PRD-VIEW-01 → VCC-01/05 |
 | 3. Consumer fidelity/accessibility friction; unvalidated in current runtime | Embed existing views → no current matched fixture result → test existing owner components and host callbacks → disclose measured behavior | Reuse Base + Design System; extend an owner only after a concrete failure. PRD-VIEW-02/03 → VCC-02/03/07/08/10 |
+| 4. Confusing a record view with a spreadsheet engine; owner question and source-model difference in E-01/E-10/E-11, commercial pain unvalidated | Ask for Sheets/Excel behavior → workbook semantics would expand the record contract → separate owners and a bounded optional bridge → keep existing Base consumers unchanged | Reuse current Base and Design System; no workbook code or repository in this task. PRD-VIEW-05/06 → VCC-11/12 |
 
 This ordering uses observed integration failures, then proximity to built source. It does not claim validated market demand. All commercial pain remains `unvalidated`; no `demand-proven` label or implementation baseline is earned by these hypotheses.
 
@@ -66,6 +69,8 @@ This ordering uses observed integration failures, then proximity to built source
 - **PRD-VIEW-02:** A workspace user keeps record identity, hierarchy, selection, layout and host-owned edit flows across Table, Multi-dimensional Table, Kanban and Calendar.
 - **PRD-VIEW-03:** A maintainer composes Dashboard, saved-view settings and field presentation with the shared Design System primitives while retaining product content and persistence.
 - **PRD-VIEW-04:** An operator reproduces the exact source checks, pins and artifact digests, then restores a prior reviewed revision without changing user data.
+- **PRD-VIEW-05:** A maintainer uses external product ideas as references while keeping authored code, schemas, assets and dependencies independent of Univer.
+- **PRD-VIEW-06:** An integrator can distinguish record-centric Base behavior from workbook-centric Sheets behavior and request an explicit snapshot transfer without introducing workbook semantics or a Sheets runtime into Base.
 
 | Priority | Outcome and pain join | Current disposition |
 |---|---|---|
@@ -73,9 +78,24 @@ This ordering uses observed integration failures, then proximity to built source
 | Must | Preserve schemas, records, domain permissions/actions and persistence in each host; pain 3 | Headless engine persists only explicitly Base-owned data; view consumers need no Base store |
 | Must | Reproduce checks and exact dependency/artifact identity; pain 1/2 | Full local check currently fails; VCC-05 pending |
 | Must | Provide browser/mobile/offline and accessible behavior for admitted surfaces; pain 3 | Source support differs by surface; prove through VCC-02/03/04 before baseline |
+| Must | Preserve separate Base/Sheets ownership and the reference-only restriction; pain 2/4 | ADR-04/05; VCC-11/12 are pending criteria, not claims of a Sheets implementation |
 | Should | Measure clean-checkout activation and consumer rollback using existing exports; pain 1/3 | Target ≤5 manual steps / 30 minutes; no timed walk-through yet |
 | Could | Extend an existing owner after a demonstrated host-contract gap | No new renderer, SDK, registry or orchestration controller justified now |
-| Won't (this increment) | New Kanban/Calendar implementations, hosted storage, remote sync, file service, package-registry publication, paid offer, consumer migration/deployment, or MCP/WebMCP and sigil routes | Existing views are reused; remaining delivery/agent scope requires its own evidence and authority |
+| Won't (this increment) | New Kanban/Calendar implementations, hosted storage, remote sync, file service, package-registry publication, paid offer, consumer migration/deployment, MCP/WebMCP and sigil routes, workbook implementation, Excel compatibility, Univer copying/dependency, or creation of a Sheets repository | Existing views are reused; remaining delivery/agent scope requires its own evidence and authority |
+
+### Reference implementation — inspiration and product distinction
+
+The user-supplied draft (E-11) recommends reference-only use of [Univer](https://github.com/dream-num/univer). Its public overview distinguishes workbook editing/calculation from its broader product family and separate commercial capabilities (E-10). These observations inform boundaries; they do not prove Base or Sheets capability. No source, prose, examples, schemas, assets, API shapes or fixtures are incorporated.
+
+| Concept considered | Native disposition / smallest useful consequence |
+|---|---|
+| Modular capabilities and headless/UI separation | Reuse Base's existing exports and engine; no new plugin registry or framework |
+| Workbook calculations and editable ranges | Assign to a proposed Sheets owner, outside Base; separate acceptance and demand proof required |
+| Very large rendered grids | Defer renderer changes until a measured host limit; no canvas migration justified by a reference demo |
+| Application-facing operations and change events | Extend the native owner only for an observed integration gap; no external API mirroring |
+| Open versus commercial feature boundaries | Keep explicit capability/license/cost evidence; no commercial or freemium dependency is admitted |
+
+“Airtable-/Lark-like Base” here means schema-defined records exposed through multiple views. It is a product analogy, not parity evidence: Base currently exposes five field types and does not thereby implement every relation, formula, permission or automation feature of those products. A Multi-dimensional Table or matrix projection remains a record view; it is not a workbook merely because it displays cells. “Excel-like” describes a prospective workbook job, not file-format or formula compatibility.
 
 ### Metrics, time-to-value and economics
 
@@ -91,6 +111,7 @@ All targets are acceptance goals unless an Evidence Reference states a result. T
 | Visual fidelity | Historical reference only; no matched local capture | Retain six named columns, hierarchy and host controls; matched boundaries within 4 CSS px and row heights within 2 CSS px; VCC-02 |
 | Accessibility/device reach | Source keyboard/focus and responsive rules; no end-to-end pass | Keyboard/touch, visible focus, non-color meaning, 200% zoom, reduced motion, narrow viewport, contrast and target checks; VCC-03 |
 | Local/offline/recovery | E-01: same-origin shell + IndexedDB v1; no live proof | Primed offline reload, literal-text bounds, preserved user data on source rollback; VCC-04/06 |
+| Base/Sheets boundary review TTV | Owner question; no Sheets runtime baseline | One ≤15-minute review classifies record-view versus workbook jobs with one owner each; bridge proof remains VCC-12, not an implementation ETA |
 | Bundle bytes | E-05 records 241,601 JS + 36,658 CSS; dropdown 22,113 JS | Each generated output <500,000 raw bytes; reproduce rather than infer from old sizes |
 | Spend and value | No payer, savings baseline or cost ledger | $0 incremental spend cap; no paid/addon/overage fallback; unknown current provider cost/headroom blocks external effects |
 
@@ -98,7 +119,7 @@ ROI `(impact × monthly reach) / (build hours + monthly TCO + monthly token cost
 
 ### VCCs and evidence-derived state
 
-VCC identities 01–08 are preserved; 07/08 now verify existing views rather than authorize new renderers. All full criteria below are pending except VCC-09. Readiness applies to these stated bounds, never to a whole consumer product.
+VCC identities 01–08 are preserved; 07/08 now verify existing views rather than authorize new renderers. VCC-11/12 are added in 0.4.0 for reference provenance and domain separation. All full criteria below are pending except VCC-09. Readiness applies to these stated bounds, never to a whole consumer product.
 
 | ID / PRD trace | Measurable end state and stated check | Constraint and current result |
 |---|---|---|
@@ -112,12 +133,14 @@ VCC identities 01–08 are preserved; 07/08 now verify existing views rather tha
 | VCC-08 / 02 | Existing React Calendar fixture tests civil dates, offset timestamps, time-zone conversion, invalid/missing/range inputs, month navigation, keyboard paging and DST boundary | E-03 proves separate headless date-only behavior only; React/DST/UI results pending |
 | VCC-09 / 01/04 | Existing Node suite exits 0 for authorization-before-storage, revisions/conflicts, one-winner concurrent writes, deterministic projections and shared helper/profile contracts | E-03: 37 passed, 0 failed/skipped; memory and helper scope; no browser IndexedDB atomicity or full UI proof |
 | VCC-10 / 03 | Dashboard/settings/field fixtures render through Base contracts and direct Design System panel, disclosure, rich-text, hover and Viewer owners; host save/cancel/resize/readback pass | Source exists; E-02 blocks current full type-check. No Base panel/Viewer/rich-text replacement or forwarding shim |
+| VCC-11 / 05 | At an exact candidate, inspect manifests/locks/imports/URLs/submodules/generated assets for direct or transitive Univer dependencies; independently review authored changes and provenance for copied material | No `@univerjs`/`@univerjs-pro` package, Git/tarball/CDN/service/plugin dependency or copied implementation/docs/assets/fixtures, including through wrappers. E-12 has a bounded marker scan only; it does not prove absence of copying or consumer compliance |
+| VCC-12 / 06 | Review one deterministic record→workbook-snapshot→proposed-writeback fixture: IDs/types/revisions mapped, losses explicit, permission/stale-revision/replay failures retain source, accepted writes read back; Base builds and runs without Sheets | Proposed bridge only, no implementation or runtime result. One writer per data domain, no implicit sync; workbook/formula/Excel parity requires a separate Sheets artifact |
 
 ## Reference implementation — TAD: owners, contracts and flows
 
 ### Codebase grounding record and component inventory
 
-E-01 pins the native Base input; E-06 pins non-native Design System contracts. E-04 records the historical Graph migration input and its present limitations. E-07 pins the authoring owner. These scoped grounding records consume the existing [cross-repository snapshot](../../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json); they do not refresh or duplicate its portfolio inventory. Current external consumer pins were not acquired and cannot be treated as baseline evidence.
+E-01 pins the native Base input; E-06 pins non-native Design System contracts. E-04 records the historical Graph migration input and its present limitations. E-07 pins the authoring owner. These scoped grounding records consume the existing [cross-repository snapshot](../../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json); they do not refresh or duplicate its portfolio inventory. E-10 is external conceptual reference, E-11 is an untracked local proposal, and E-12 rechecks the native model; none supplies a Sheets implementation. Current external consumer pins were not acquired and cannot be treated as baseline evidence.
 
 | TAD component / inspected contract | Exact source owner / grounding | Decision and smallest delta | Boundary / check / VCC |
 |---|---|---|---|
@@ -131,10 +154,50 @@ E-01 pins the native Base input; E-06 pins non-native Design System contracts. E
 | TAD-CONTROLS: React/native menus, checkbox/toggle groups, icons | E-01: `packages/views-react/src/controls/`; exports `./controls`, `./toolbar-icons`, `./toolbar.css` | `reuse`; one Base menu interaction owner and generated Design System visuals | Base menu focus/typeahead/placement/dismissal; native form semantics retained; VCC-03/04 |
 | TAD-DESIGN: panels, disclosure, rich text, hover, Viewer | E-06: `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904` declared/locked; direct imports listed below | `reuse`; owner first; no Base facade or lifecycle fork | Exact installed revision differs; E-02; VCC-05/10 |
 | TAD-DEMO: browser and React composition harnesses | E-01: `demo/`, `sw.js`, `scripts/dev-server.mjs`, `packages/views-react/dev/` | `retain-local` harness, not a second product UI | Root demo writes only via local form/engine; all four headless outputs use shared browser table; VCC-04/09 |
+| TAD-SHEETS / TAD-BRIDGE: proposed workbook owner and consumer snapshot bridge | No native Sheets implementation/export/repository acquired; E-01/E-12 ground the existing Base side only | `defer` implementation; ADR-05 records the domain split now | Separate Sheets artifact/owner and VCC-12 before transfer; Base remains independently usable |
 
 **Package facts:** name `@agentic-base/views-react`, version `0.1.0`, `private: true`, Node engine `>=22.22.0`. The dependency-free/no-network statement applies to the headless core, not to the React view package or its build toolchain. React/ReactDOM/lucide are peers; d3 and its types are optional peers. The browser bundle includes React and ReactDOM and targets ES2022. Source TypeScript exports require a compatible consumer build; this is not an already published compiled registry package. Exact consumer pin/lock readback remains a prerequisite for consumer changes.
 
 **Provenance qualification:** `migration-source.json` says `local-adapted-unpublished` and has 55 source/digest entries, not the README's stated 54. E-04 finds four removed paths and 20 mismatched candidate digests among the 51 existing files. Its Graph PR #1470 note conflicts with the README's statement that successor #1471 superseded it. Treat the manifest as historical migration evidence, not a current release receipt; resolve at the Base owner before VCC-05. Do not restore removed implementations to make an old map pass.
+
+### Base and proposed Sheets ownership
+
+| Concern | Base owner: existing source E-01/E-12 | Sheets owner: proposed, no implementation claimed |
+|---|---|---|
+| Primary object | Dataset/table, schema field, stable record ID and revision | Workbook, worksheet, sparse cell/range, workbook revision |
+| Identity and order | Record/field IDs persist when views sort, filter or pivot | Stable workbook/sheet identity plus cell addresses; row/column edits require reference rules |
+| Calculation | Current typed query/projection; a future record formula stays record-scoped if admitted | Expression parsing, dependency/recalculation semantics, references and spreadsheet error values |
+| Presentation | Existing Table/MultiDim/Kanban/Calendar/Dashboard/settings owners | Future workbook grid, range selection, formula editing and sheet navigation; not a replacement Base grid |
+| Formatting and files | Existing host formatting; no workbook/file service | Workbook formatting/number formats and any independently specified CSV/XLSX adapter; no implied Excel parity |
+| State/effects | Base-owned store only for explicit Base datasets; consumer-owned stores otherwise | Workbook state/history/storage under its own host contract; no automatic duplicate record store |
+| Shared capability | Direct Design System primitives and exact profiles | Reuse the same cleared Design System owner; extract pure utilities only after two concrete consumers and demonstrated need |
+
+**Dependency direction:** Design System → Base and, if admitted, Design System → Sheets. A consumer-owned bridge can depend on both public contracts; neither Base nor Sheets needs the other's runtime, internal source, persistence or renderer. Start with separate packages/modules inside an appropriate existing workspace if implementation earns admission; use separate repositories only when independent release/ownership or deployment needs justify their overhead. No new shared-kernel package, registry or forwarding shim is selected.
+
+**Snapshot bridge contract, proposed:** the integrating consumer owns one explicit transfer. Capture a source revision; map stable record/field IDs to worksheet positions in a versioned mapping; include a loss report for unsupported values, dates, precision, styles or formulas. Start read-only with plain scalar values and no formula execution. CSV is a lossy transport, not a workbook or identity-preserving schema; XLSX parsing/export is separately admitted only with a verified FOSS/local path. No such parser, adapter or transfer exists in current Base.
+
+For any later writeback, produce a typed proposed change set, require the record owner's permission and expected Base/record revisions, then invoke the existing owner and read back accepted state. Do not reinterpret row positions as record identity, silently overwrite unsupported values, or evaluate imported formulas/remote functions. A bridge uses a versioned operation ID and verifies retry/uncertain outcomes through owner readback; it must define atomicity for its own admitted batch rather than claiming existing Base has a cross-product transaction. No automatic bidirectional synchronization or dual writes. Preserve the original snapshot/mapping and prior pins; reverting the bridge does not delete records or workbooks. VCC-12 remains pending.
+
+**Diagram D-03** · Class: Data flow · Notation: Mermaid `flowchart LR` · Version: 0.4.0. Caption: optional future bridge, not an existing import/export implementation; runtime return edges do not change the acyclic build order. Check: E-13.
+
+```mermaid
+flowchart LR
+  baseOwner["Base / record owner"] -->|"authorized revisioned snapshot"| mapping["Consumer bridge: IDs, types, losses"]
+  mapping -->|"explicit value transfer"| workbook["Proposed Sheets workbook owner"]
+  workbook -->|"optional proposed edits"| changes["Typed change set and operation ID"]
+  changes -->|"permission and revision check"| authority["Record owner accepts or rejects"]
+  authority -->|"accepted write and readback"| baseOwner
+```
+
+| D-03 node / owner | Input → output / persistence boundary |
+|---|---|
+| `baseOwner` / Base or consumer record owner | Revisioned records → snapshot; existing record store |
+| `mapping` / integrating consumer | IDs/types/snapshot → explicit mapping and loss report; no automatic mirror store |
+| `workbook` / proposed Sheets host | Transferred values → independently owned workbook state |
+| `changes` / integrating consumer | Workbook edits → versioned typed proposal; no direct record write |
+| `authority` / record owner | Permission/revision-checked proposal → accepted result or explicit rejection |
+
+For the future bridge, user journey and workflow are explicit export/review/proposed-writeback; data flow and topology are D-03 plus the owner table. Orchestration/harness flow is not applicable: no agent or autonomous synchronization loop is selected. Sheets-only editing, calculation and storage require their own VCCs/flows in a separately admitted artifact; this Base record is the owner of the separation decision only.
 
 ### Host model, data lifecycle and limits
 
@@ -248,7 +311,7 @@ Base `docs/DEPLOY.md` defines no hosted deployment. The documentation repository
 
 ### ADR-01: reuse implemented views, preserve domain ownership
 
-**Status:** observed architecture retained; current full compatibility remains unproven. **Decision:** reuse the existing Base grid and view families, headless core only where records are explicitly Base-owned, and consumer adapters for product semantics. Table/MultiDim/browser use one table runtime. Kanban/Calendar/Dashboard/settings are existing capabilities to verify, not a new roadmap build.
+**Status:** observed architecture retained; current full compatibility remains unproven. **Decision:** reuse the existing Base grid and view families, headless core only where records are explicitly Base-owned, and consumer adapters for product semantics. Table/MultiDim/browser use one table runtime. This single-grid rule covers the Base record-view contract; it does not make a future workbook editor use Base's record grid or create shared ownership of workbook semantics (ADR-05). Kanban/Calendar/Dashboard/settings are existing capabilities to verify, not a new roadmap build.
 
 | Candidate | Constraint disposition | Cost/tradeoff and relation |
 |---|---|---|
@@ -272,6 +335,26 @@ Direct imports pass the single-owner constraint and minimize adapters. A contrac
 
 Mutable branch pins fail reproducibility. Registry publication, a new hosted service, remote storage and agent transport fail current scope/cost/evidence constraints. An exact artifact with manifest is feasible; copying anonymous bundle bytes is not. Local/static FOSS reuse is the selected deployment model; hosted/edge costs and capacities are unknown and therefore incomparable, not scored as free. Revisit distribution only after intact checks, current provenance/notices, consumer compatibility and exact predecessor proof. Recovery is a reviewed pin/artifact revert; state recovery remains a separate effect.
 
+### ADR-04: reference-only inspiration; no incorporation or dependency
+
+**Status:** selected constraint from the current user directive; full VCC-11 evidence remains pending. **Decision:** Univer may inform conceptual comparison only. Copying, vendoring, forking, translating/porting, or closely reproducing its code, tests, schemas, documentation, assets, styles, API structure or fixtures is forbidden. Direct and transitive package/Git/tarball/submodule/build/test/CDN/hosted-service dependencies on Univer or its commercial/sibling packages are forbidden in Base, any proposed Sheets implementation and admitted integration fixtures. A wrapper does not remove the dependency. Generic domain terms such as workbook, record and range are not proprietary API selections.
+
+Reference-only analysis passes the constraint; adopting packages/presets, embedding a hosted editor or copying a renderer fails it regardless of license permission or apparent feature savings. The public project includes OSS and separately licensed capabilities (E-10); its demos are not free-feature, performance, mobile/offline or Excel-parity evidence for our products. Inspect only the description needed for the decision; no clone, package install, source migration or commercial evaluation is selected. Use native contracts and independently authored fixtures. A bounded dependency scan is not a copying audit. Revisit only through an explicit superseding owner decision; recover any offending change by a reviewed revert preserving data.
+
+### ADR-05: separate record Base from workbook Sheets
+
+**Status:** recommended architecture, selected for this planning scope; Sheets implementation/repository deferred. **Decision:** retain `agentic-base` as the record/multi-view owner and use `agentic-sheets` as the provisional neutral name for workbook capabilities. Prefer it to a broader Office-suite name; `agentic-spreadsheet` is a descriptive naming alternative, while an Excel-specific name would imply unearned compatibility. Names do not establish an existing package, endpoint or product.
+
+| Option | Constraint disposition / consequence | Decision |
+|---|---|---|
+| Separate Base/Sheets domains and package contracts; defer physical repository split | pass: preserves Base and permits independently bounded workbook work with minimal immediate overhead | Chosen; no code or repository created now |
+| Independent Sheets repository immediately | Domain separation passes, but extra setup/release overhead has no validated buyer or ownership need yet | Defer; revisit on first admitted Sheets scope and independent release need |
+| Put workbook/formula/range semantics into Base's record engine | fail-current-scope/single-owner: changes data/error/identity contracts and couples Base consumers to spreadsheet work | Rejected |
+| Rename Base to Sheets or use one renderer/model for both | fail-contract-fit: record identity and arbitrary cell references have different semantics | Rejected |
+| Adopt Univer or another workbook engine now | Univer fails ADR-04; other FOSS engines remain unselected without a separately scoped requirement/license/budget review | No dependency or implementation decision |
+
+Separate domains outrank a merged model on contract safety and smallest current change; same-workspace packages versus repositories remain a deployment/operations choice, not competing data semantics. No build-time Base↔Sheets cycle or automatic two-way sync is allowed. Optional interoperability starts with a consumer-owned read-only scalar snapshot and explicit loss/identity mapping; writeback requires VCC-12. Preserve all existing Base exports, stores and user records. Rollback removes only the optional bridge/package wiring and restores prior pins; no workbook-to-Base migration is implied. Revisit on measured workbook demand, an owner-assigned bounded use case and a proposed contract that can pass free/FOSS, offline, byte and recovery constraints.
+
 ## Reference implementation — MVP: existing slice and remaining proof
 
 The smallest current slice is one exact local fixture through the existing Base engine/browser adapter and one rich host composition. The original Table-first implementation proposal is superseded by the actual broader source baseline. It does not justify rebuilding Kanban/Calendar, declare all views accepted, or authorize a consumer cutover.
@@ -283,6 +366,8 @@ The smallest current slice is one exact local fixture through the existing Base 
 | React Kanban/Calendar | Group/card controls, drag/move helpers; time-zone/range calendar and navigation | VCC-07/08 host, keyboard/touch, DST and effect readback |
 | Dashboard/settings/field presentation | Existing components and direct shared primitive consumption | VCC-10; first reconcile E-02 at the dependency owner |
 | Distribution/recovery | Exact declared dependency and generated output manifests | VCC-05/06 full check, current provenance/notices and disposable consumer rollback |
+
+**This revision's MVP is the reviewed separation and reference-use decision; it creates no Sheets code, repository, dependency or migration.** A later Sheets slice needs its own joined artifact and owner: one bounded local workbook job, independently authored semantics/fixtures, explicit formula/function subset if any, limits and loss behavior, mobile/offline proof and source rollback. Start with scalar snapshot inspection if it resolves the user job; full formula engine, Excel import/export, collaboration, server and agent orchestration remain outside this increment.
 
 **Must for the next proof increment:** reconcile the exact installed dependency without inventing a facade; run the intact existing check; reconcile provenance at its Base owner; then admit one fixture/action/readback on the existing renderer. **Should:** measure TTV and accessibility before broader adoption. **Could:** extend one observed contract gap. **Won't:** new renderers, new store, registry publication, remote agent routes, paid service, product data migration or deployment.
 
@@ -308,11 +393,14 @@ For each future proof/repair task: active estimate ≤60 minutes before re-estim
 | Bounded headless/helper slice | dev-proven | undocumented | VCC-09/E-03; memory/helper scope only |
 | Rich/browser views and Design System composition | spec-complete | undocumented | VCC-01–08/10 defined, not fully satisfied; E-02 full check fails |
 | Complete joined capability set | dev-proven | undocumented | At least one local VCC passes, but every UI/release/recovery VCC must pass before runtime-ready |
+| Proposed Sheets runtime | undocumented | undocumented | No standalone product/implementation admitted; VCC-12 specifies only the future integration boundary |
 | MCP/WebMCP/agent routes | undocumented | undocumented | Excluded; no Base transport or VCC admitted |
 
 ## Reference implementation — GTM: offer and learning
 
 ### Segment, first dollar and experiment
+
+The Sheets buyer hypothesis is separate: workbook calculation and cell/range authoring may serve different users from record-centric Base workflows. No Sheets demand, WTP, adoption, TTV or revenue baseline exists. Before a repository/engine build, Product should record one named workbook job and compare the cheapest native/local rehearsal to doing nothing; no Base consumer is counted as a Sheets customer. Free-only constraints keep first-dollar mechanisms deferred.
 
 Initial segment hypothesis: maintainers of local/offline structured-data workspaces and static catalogs who retain their own data and actions. Geography is global developer distribution, not a measured market. Base documents two consumers; their active usage, current pins, support burden and paid demand were not independently measured. Why now is observed implementation/evidence drift, not a sourced market trend.
 
@@ -343,11 +431,12 @@ No CAC/LTV, runway, break-even or linked statements can be derived from absent c
 | 2. Current provenance | E-04; Base maintainer updates existing source map/digests, not removed components | Actual files/owners and notice/predecessor record; VCC-05 | ≤60 min/shared caps; stop unknown source rights; recheck exact owner candidate |
 | 3. One host fixture and rollback | UI pain unvalidated; consumer maintainer reuses existing views and Design System | VCC-01–04/06 plus 07/08/10 only for admitted surfaces; TTV recorded | One fixture/action first; ≤3 cycles; no renderer/store fork; restore exact pins/artifacts |
 | 4. Internal learning | EXP-01; Product function records evidence, not adoption claims | Named preceding VCCs + two-week observation | ≤45 active min analysis; owner response is wait condition; no paid incentive or outbound message authority |
+| Sheets discovery, deferred | Owner question only; Product separates workbook demand from Base reuse | One reproducible workbook job, independent owner/artifact, and an explicit gate before any package/repository or engine work | ≤30 active minutes, ≤2 maintainer interviews or available subset, no paid incentive/outbound message without authorization; stop if an existing Base view satisfies the job; revisit on evidence |
 | Deferred | Hosted/edge sync, MCP/WebMCP/sigil routes, registry/paid offer, recurrence or new renderers | Won't this increment; concrete pain, owner, cost proof and new criterion required | No implementation or delivery authority from this roadmap |
 
 ### C01–C16 coverage record
 
-Coverage is a decision record, not satisfaction or readiness. Each join refers to `SHARED-VIEW-RUNTIME-001@0.2.0` sections and exact evidence IDs above/below.
+Coverage is a decision record, not satisfaction or readiness. Each join refers to `SHARED-VIEW-RUNTIME-001@0.4.0` sections and exact evidence IDs above/below.
 
 | Domain | Disposition / join | Accountable function | Evidence or reason / revisit trigger |
 |---|---|---|---|
@@ -355,13 +444,13 @@ Coverage is a decision record, not satisfaction or readiness. Each join refers t
 | C02 Market/timing | deferred / GTM segment | Product | No two dated population sources or conversion evidence; revisit after qualified-owner interviews |
 | C03 Offer/alternatives | covered / GTM offer + ADR-01/03 | Product | Free source offer and explicit alternatives; paid offer excluded; revisit scope change |
 | C04 Product/experience | covered / stories, VCCs and demo | Product/quality | E-01 source, E-03 bounded pass; full UI/device/TTV pending; revisit admitted fixture |
-| C05 Architecture/data | covered / TAD inventory/flows | Architect | E-01/E-04/E-06 boundaries and gaps; revisit export/pin/source drift |
+| C05 Architecture/data | covered / TAD inventory/flows, ADR-05 | Architect | E-01/E-04/E-06/E-12 boundaries, proposed D-03 bridge and gaps; revisit export/pin/source drift |
 | C06 Quality/security/AI | covered / TAD quality + VCC-04/09 | Quality/security | E-03 local proofs; no runtime AI; browser/recovery/CSP proof pending |
-| C07 Decisions/tradeoffs | covered / ADR-01–03 | Architect | Source reuse, direct owners, exact pins and recovery; revisit concrete host failure |
+| C07 Decisions/tradeoffs | covered / ADR-01–05 | Architect | Source reuse, direct owners, exact pins and recovery; revisit concrete host failure |
 | C08 Smallest slice | covered / MVP/readiness | Engineering | VCC-09/E-03 locally proven; remaining criteria stated; revisit full check/fixture |
 | C09 Acquisition/retention | deferred / EXP-01 | Product | No qualified leads, cohort or support measurements; prerequisite full check/owner availability |
 | C10 Business operations | covered / GTM operations + TAD boundaries | Base maintainer | Existing issue/release owners; unknown SLA/capacity explicit; revisit first actual integration |
-| C11 Organization/obligations | deferred / ADR-03 + operations | Product/rights | MIT owner source present, exact dependency notice/consumer review incomplete; revisit proposed distribution |
+| C11 Organization/obligations | deferred / ADR-03 + operations | Product/rights | MIT owner source present, exact dependency notice/consumer review incomplete; ADR-04 forbids Univer incorporation/dependency regardless of license; revisit proposed distribution |
 | C12 Financial viability | deferred / economics/scenarios | Product/finance | No price permission, labor/cost/reach inputs; revisit measured receipts and authorized business decision |
 | C13 Capital/milestones | not-applicable / GTM finance | Product reviewer | No funding ask or capital decision; revisit model change |
 | C14 ADLC execution | covered / checkpoint + boundaries | ADLC operator | Exact START lane and check outcomes; source/delivery effects require their own receipts |
@@ -383,8 +472,12 @@ Coverage is a decision record, not satisfaction or readiness. Each join refers t
 | E-05 | Same Base source: `packages/views-react/dist/browser-data-view.manifest.json` | Records browser JS 241,601 B, dropdown JS 22,113 B, CSS 36,658 B; 24 input rows. `npm run check:browser-data-view` independently exits 0, reproducing all four files including manifest; this is not the intact check or a browser interaction result; output digests below |
 | E-06 | Base package/lock declares `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; local `node_modules/.package-lock.json` resolves `67a8adb7e0089ddef7403e244f57be1e0842dce8` | Installed package v0.6.0 has no `./react/viewer` export; local install differs from declared source. Generated shared-ui pin separately records registry revision `54229ceed…` and original profile source `e52a52111f52b6af85f99195ec9e59a490548575`; do not collapse source/registry/install identities |
 | E-07 | Documentation source `99ea1f49211361528256045719b54f1634eee41a`: authoring guideline v3.5.0, grounding/readiness/verification companions and `docs/DEPLOY-WORKFLOW.md`; runtime SSOT at `agentic-os@d3430c8da71b0128b644040bfd1ef32d9f36c50e` | Governing source read; docs payload excludes this path; no deployment effect selected |
-| E-08 | This document candidate: affected authoring checks listed in the checkpoint | `npm run check`, PRD policy check and diagram projection check exit 0; two diagrams, 16 nodes/15 edges/3 clusters, no projection findings. Affected `npm test` validation exits 0 for naming, evaluators, guidelines and git-contracts (4/6 owner checks selected for this path); these checks establish bounded document contracts, never Base runtime parity |
+| E-08 | Historical 0.2.0 document candidate: affected authoring checks listed in the checkpoint | `npm run check`, PRD policy check and diagram projection check exit 0; two diagrams, 16 nodes/15 edges/3 clusters, no projection findings. Affected `npm test` validation exits 0 for naming, evaluators, guidelines and git-contracts (4/6 owner checks selected for this path); these checks establish bounded document contracts, never Base runtime parity |
 | E-09 | `gh repo view huijoohwee/huijoohwee.github.io --json name,visibility,isPrivate,url`; reviewed repository workflow runner declarations; [official Actions billing contract](https://docs.github.com/en/actions/concepts/billing-and-usage), read 2026-11-17 | Provider reports PUBLIC/isPrivate=false; source checks use standard `ubuntu-latest` runners, whose public-repository usage is free. This scoped compute proof does not cover a different runner, artifact expansion, Base/consumer delivery or authoring-model charges |
+| E-10 | [Univer public overview at `47468eaa654573cd608a954ac8e1774884461576`](https://github.com/dream-num/univer/blob/47468eaa654573cd608a954ac8e1774884461576/README.md), read 2026-11-17; branch identity from `gh api repos/dream-num/univer/commits/dev`; official documentation queried through Context7 | Reference only: workbook/worksheet/range operations, calculation and plugin composition; open-source core and separately licensed extensions. No package/source/artifact consumed; no compatibility, rights, performance or adoption verdict |
+| E-11 | User-supplied local `joohwee/undocumented-draft/prd-tad-adr-mvp-gtm-agentic-base.md`, proposed 0.3.0; SHA-256 `357a9f180415fa3b1e987a8ccf7a6d115472e25317d76e2397584e0afd810e6f` | Untracked proposal, not part of the inspected repository commit or an admitted release; reference-only/no-copy/no-dependency recommendation considered without copying its prose or importing its stale provenance/check claims |
+| E-12 | Native Base source still `81e4608280be4ec515c5dd28df7b97d1438a0fc0`: inspected `src/{index,schema,engine,projectors}.mjs`, PRODUCT and package exports; tracked-source marker scan described below | Record model has five field types and deterministic projections, no workbook/range/recalculation API in the inspected core/exports. Tracked non-Markdown code/config/artifact scan: enumerate `git ls-files`, inspect JSON/JS/MJS/TS/TSX/HTML/CSS/YAML and `.gitmodules` bytes for `@univerjs`/`@univerjs-pro`, Univer Git/codeload and hosted/CDN URL markers; 126 files, zero matching files, exit 0. This marker-only scan proves no copying audit or consumer/transitive-source compliance. Historical E-02–06 are not new test runs; no Sheets implementation proof |
+| E-13 | This 0.4.0 document candidate: current guideline v3.5.1 at `fc53dc02ea98e3119d1d1015fc72e1747a6d5087`; affected authoring checks and lane receipt below | `npm run check`, PRD policy check and the target diagram projection check exit 0; three diagrams project 21 nodes/19 edges/3 clusters with zero projection findings. Final affected validation is recorded in the checkpoint; no product-runtime verdict |
 
 E-05 recorded SHA-256 outputs: browser JS `43c553b79c27a2e3c6052ad86d68116d2827ecc88aa2fe6e61e26aeea4e87ae1`; dropdown JS `f63919b05314a6a1207b4b9d840aec26961864454909c3cd811d0e27ecf46021`; CSS `924fbfe75ce1564d7172b6905c73be0bcdf2bd097acabfdeddc2f7ca563fb6d7`. The old 148,590/1,883-byte figures are superseded. The standalone rebuild check reproduced these bytes in the current environment; it does not close the remaining VCC-04 browser conditions.
 
@@ -397,6 +490,7 @@ E-05 recorded SHA-256 outputs: browser JS `43c553b79c27a2e3c6052ad86d68116d2827e
 | R-03 No matched parity, accessibility, mobile/offline or consumer rollback results | Quality/consumer maintainers | One admitted fixture at exact pins; retain screenshots/checks/previous artifact; no runtime-ready claim yet |
 | R-04 Buyer pain/WTP, market and measured cost remain unknown | Product function | EXP-01 after source gates; obtain dated population and cost inputs only for the dependent decision |
 | R-05 Public distribution rights/notices and provider hard-$0 proof not refreshed | Rights/release operator | Exact candidate notices and current provider proof before dependent publication/CI/deploy effect; preserve predecessor and records |
+| R-06 Domain/reference drift: workbook semantics enter Base or an external reference becomes code/dependency, E-10–12 | Base/Sheets/rights owners | Apply ADR-04/05 and VCC-11/12 at admitted code changes; stop copied/dependent material or implicit sync; preserve record/workbook state on recovery |
 
 These are scoped product/implementation risks, not a fabricated full typed alignment scan. Prior revision had no formal finding set; a regression count is therefore unavailable. The independent Node mechanism supplies a bounded local VCC result; the writer does not self-certify complete alignment or runtime readiness.
 
@@ -404,12 +498,12 @@ These are scoped product/implementation risks, not a fabricated full typed align
 
 ### Authoring checkpoint and task receipt
 
-START ran from the canonical documentation checkout using `agentic-os@d3430c8d…` and the existing protected document as the plan. It admitted lane `agent/device-0232231d4a19/agentic-base-grounding`, base `99ea1f49211361528256045719b54f1634eee41a`, with only `docs/documents/prd-tad-adr-mvp-gtm-agentic-base.md` writable. Worktree provenance is in frontmatter. Unrelated canonical documentation edits and all Base planning drafts were preserved.
+This 0.4.0 update started from canonical documentation commit `fc53dc02ea98e3119d1d1015fc72e1747a6d5087` in lane `agent/device-0232231d4a19/base-sheets-boundary`, with only this document writable. The parked `canonical-edits-recovery` lane and Base planning drafts remain outside scope. Historical E-02–09 and the 0.2.0 authoring/release record remain available through PR #328 and protected commit `4685f4bd7d6bc93bd6761df40b216b03b1f9ea04`; they are not reissued as 0.4.0 product proof.
 
 | PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
 |---|---|---|---|
-| All five roles @0.2.0 | Existing implementation and failed/current evidence replace stale October assumptions | Technical Writer → ground existing artifact against exact source → one coherent proposed revision; VCC-09 pass is separate from pending UI/release criteria | 2026-11-17 |
+| All five roles @0.4.0 | Owner asks for external-reference restrictions and a Base/Sheets boundary grounded in existing source | Technical Writer → independently author reference register, ownership/bridge design, ADR-04/05, VCC-11/12 and gated Sheets discovery → one coherent proposed revision without new implementation/dependency | 2026-11-17 |
 
-Task bounds: 30 active minutes estimated, one document, <90 KiB and <600 lines; $0 incremental spend authorized, no paid service/dependency added, no always-load delta. Actual model tokens/provider charges, active authoring minutes and CI fees are not exposed as measured receipts here; do not report them as zero. Known local test execution and failure are E-02/E-03. The previous October checkpoint remains in Git history rather than being presented as current proof.
+Task caps: 20 active minutes estimated, one document, <90 KiB/<600 lines, ≤16,000 planning tokens, ≤2 authoring refinement cycles, $0 incremental spend and no new dependencies/always-load bytes. Actual active minutes, model tokens/charges and CI fees are not exposed as measured receipts; do not invent them. Source/runtime test results are reused only within their historical bounds. Affected documentation checks, exact source integration/sync/cleanup and any wait/recheck condition are recorded at handoff; delivery is outside this document's Pages payload. No Base/Sheets implementation, consumer change, migration or deployment is performed.
 
-Validation: `npm ci --ignore-scripts --offline --no-audit --no-fund` installed five locked authoring packages locally. `npm run check`, `npm run prd-tad-adr-mvp-gtm:policy:check`, the target-file diagram projection check, and `git diff --check` passed. The affected `npm test` run passed all four selected owners (4/6, no full-suite parity inferred); its receipt is in the lane Git directory under `agentic-os-tests/validation-last.json`. The policy checker validates guideline/grounding structure and explicitly does not evaluate source bytes, semantic venture evidence or product runtime. Source-release receipts are recorded at handoff; package publication, Base/consumer source changes, data migration and deployment remain separate, unperformed effects.
+Current document verification: the joined frontmatter/revision and local links are checked against this candidate; target diagram projection and guideline policy pass. The affected `npm test` receipt covers the selected documentation owners, not Base or Sheets runtime. Source integration/sync/cleanup receipts are supplied at handoff; no deployment effect is selected.

@@ -1,22 +1,22 @@
 ---
 title: "Reference implementation: local workbook runtime and delivery"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
-date: "2026-11-17"
+version: "0.2.0"
+date: "2026-11-18"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "SHEETS-WORKBOOK-001"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
-local_rung: "spec-complete"
+prd_revision: "0.2.0"
+tad_revision: "0.2.0"
+adr_revision: "0.2.0"
+mvp_revision: "0.2.0"
+gtm_revision: "0.2.0"
+local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--agentic-sheets-prd"
+worktree_id: "device-0232231d4a19--sheets-implementation-evidence"
 agent_id: "codex"
 lifecycle_status: "proposed"
 source_docs:
@@ -28,13 +28,13 @@ source_docs:
 
 ## Reference implementation — authority, scope and readiness
 
-This is the single joined `SHEETS-WORKBOOK-001@0.1.0` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the proposed workbook product; it does not redefine Base.
+This is the single joined `SHEETS-WORKBOOK-001@0.2.0` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the bounded workbook product; it does not redefine Base.
 
 **Owner-selected topology:** Dev source is `GitHub/agentic-base` (`https://github.com/huijoohwee/agentic-base`). The intended public Prod route is `https://airvio.co/agentic-sheets`; generated Prod artifacts belong at `GitHub/huijoohwee/content/agentic-sheets` (`huijoohwee/huijoohwee`, repository-relative `content/agentic-sheets/`). These names bind intended ownership and destinations, not proof of an existing application or permission to deploy it.
 
-**Observed gaps:** Base has a record engine and shared views, not a workbook/range/formula engine (E-02). The Prod mirror has no `content/agentic-sheets` directory or inspected Sheets redirect; a direct HTTP HEAD read returned 404 on 2026-11-17 (E-03/E-05). The existing site release owner already consumes an exact Base-demo source pin, but its current integration targets `content/agentic-base`, not Sheets (E-04). Controller, route and artifact contracts need explicit source-owned extensions before Sheets delivery.
+**Implementation:** protected Base revision `5b28d4b46505de115dcef1eaa60937a0db4eb5f4` implements `sheets/` with a separate headless contract, formula engine, IndexedDB adapter, native browser shell and deterministic `sheets/dist/` producer (E-08). Base record source remains independent. The site source extension binds a separate Sheets pin and consumes that sealed artifact through the existing release owner (E-10); it preserves the legacy Base demo pin. E-02–05 remain historical baseline observations, not current absence claims.
 
-**Readiness:** local `spec-complete` follows from the pending VCCs below; delivered `undocumented` reflects no satisfying Sheets runtime or delivery evidence. All product VCCs are pending. Source inspections, the 404, and authoring checks earn no runtime rung. This is a proposed baseline, not Phase 3 sign-off, an implemented workbook, a source-code authorization, package publication or a deployment instruction. The current user request authorizes generating and releasing this document only.
+**Readiness:** local `dev-proven` follows from reproducible core/storage/browser checks satisfying VCC-01–04 (E-08/09). VCC-05 remains partial because physical touch devices, screen-reader use and a timed clean-environment TTV run are unverified; VCC-06/07 lack hosted preview/public receipts and current cost/predecessor/authorization proof. Delivered remains `undocumented`. The subsequent owner instruction `IMPLEMENT` authorizes this runtime/source work; it does not bypass the site owner's protected exact-candidate production environment approval or the hard-$0 provider gate. Source closure and local rehearsal do not establish product delivery.
 
 **Inherited reference restriction:** Univer may be considered conceptually under Base ADR-04. Copying, vendoring, porting or closely reproducing its source, documentation, schema/API structures, assets or fixtures is forbidden. Direct/transitive package, build/test, Git/tarball, submodule, CDN, hosted-service, preset/plugin or commercial dependencies on Univer and its sibling packages are forbidden. Generic workbook terminology and independently authored behavior are allowed. No external engine is selected or installed by this document.
 
@@ -72,11 +72,11 @@ Prioritize the smallest calculation/persistence proof over broad Office features
 
 ### Metrics and economic bounds
 
-All numbers are proposed acceptance targets or product caps, not capacity, demand or cost results. Validate on the first admitted exact implementation candidate and record environment, denominators and duration. No clean-environment TTV run exists yet; baseline sign-off waits for it.
+Numbers below are acceptance targets/caps unless an evidence reference records a measured result. E-08/09 record local checks and a desktop Chromium 100-edit p95 of 1.3 ms; this is not mobile hardware performance. A timed clean-environment TTV run, physical-device load result and business/economic sign-off remain pending.
 
 | Metric / feature | Baseline | Target / method |
 |---|---|---|
-| First workbook calculation, S1 | No Sheets implementation | Open local fixture → create workbook → edit cell → inspect result; ≤4 user actions / 2 minutes in a timed clean-browser rehearsal |
+| First workbook calculation, S1 | Implemented E-08; timed run pending | Open local fixture → create workbook → edit cell → inspect result; ≤4 user actions / 2 minutes in a timed clean-browser rehearsal |
 | Developer first view, S1/S4 | Unknown | Exact checkout → install permitted locked build dependencies → run documented local command → render fixture; ≤5 manual steps / 30 minutes |
 | Returning/offline save and restore, S2 | Unknown | Accepted edits survive offline reload; downloading/restoring a fixture ≤5 actions / 2 minutes; no network after assets are primed |
 | Calculation, S1 | Unknown | Within caps, stable results and error classification; target p95 edit-to-result ≤100 ms across 100 fixture edits, report device/browser |
@@ -95,19 +95,19 @@ ROI `(impact × monthly reach) / (build hours + monthly TCO + monthly token cost
 
 ### Acceptance VCCs and traceability
 
-The checks below are required implementation/delivery checks, **not currently implemented commands**. The Dev owner must bind their actual invocable suites and exact fixture/source before any VCC satisfaction or Phase 3/4 transition. Existing Base or Graph tests cannot stand in for Sheets behavior. All evidence cells are pending.
+The following checks bind actual Sheets suites in E-08–10. A local satisfying result advances only its stated scope; pending device, hosted preview, provider or public-delivery evidence prevents `runtime-ready` and `production-verified`.
 
 | ID / story / TAD / ADR | Measurable end state | Stated check / bound | Evidence |
 |---|---|---|---|
-| VCC-01 / S1 / C1 / ADR-01/02 | Stable workbook/sheet identity; typed scalar edits commit once at expected revision, rejected/out-of-bound inputs leave prior bytes intact | Independently authored headless contract tests; valid/invalid payload, duplicate/replayed operation ID, stale/concurrent writes and limits fixtures | Pending |
-| VCC-02 / S1 / C2 / ADR-02 | Supported arithmetic/SUM references recalculate deterministically; cycles, bad refs/types, divide-by-zero and limits produce explicit errors without arbitrary code/network | Formula grammar/dependency tests and 100-edit benchmark; fixture totals and invalid-case assertions; no inferred Excel parity | Pending |
-| VCC-03 / S2 / C3 / ADR-03 | Acknowledged state reloads after disconnect/restart; two stale writers yield at most one commit; failed quota/save preserves committed snapshot and unsaved editor state | Real-browser IndexedDB transaction, second-tab and offline-reload tests; inspect error/readback and request capture | Pending |
-| VCC-04 / S2 / C1/C3 / ADR-03 | Download→validate→restore preserves supported workbook values/formulas/revision metadata; incompatible/malformed/oversize snapshots do not overwrite source | Disposable-origin snapshot round-trip and corrupt/version/ID-collision fixtures; explicit restore-versus-clone decision | Pending |
-| VCC-05 / S4 / C4 / ADR-01 | Selection/edit/commit/cancel/focus/error/readback work on keyboard and touch at the stated narrow/zoom/contrast targets | Per-device browser walkthrough and measured final colors/geometry; timed TTV run, not static markup proof | Pending |
-| VCC-06 / S3 / C5 / ADR-04 | Exact protected Dev source creates one sealed artifact; non-public preview passes identity, limits, routes, enforced-prod CSP and scoped SW checks; same candidate staged for Prod | Reproducible build/digest inventory, existing owner controller extension tests, preview HTTP/browser readback; no rebuild between stages | Pending |
-| VCC-07 / S3 / C5 / ADR-04 | Authorized Prod public/immutable identity matches VCC-06; generated mirror matches files after smoke; predecessor restore readback passes and data survives | Owner-operated live route/artifact/SW/returning-browser checks plus rollback rehearsal/receipt; bootstrap baseline may be verified absent route | Pending |
-| VCC-08 / S5 / C1–C5 / ADR-01/05 | Base remains independently usable; Sheets has no copied or direct/transitive Univer dependency; shared UI comes from its native owner | Exact dependency/import/generated-output marker scan plus independent provenance/compatibility review; marker absence alone is insufficient | Pending |
-| VCC-09 / S1–S3 / C1–C5 / ADR-05 | Product caps and $0 effect policy hold, noncritical capabilities remain lazy, no unexpected runtime network/model calls | Artifact/raw-byte inspection, browser request capture, typed limit fixtures and current provider proof for each external effect | Pending |
+| VCC-01 / S1 / C1 / ADR-01/02 | Stable workbook/sheet identity; typed scalar edits commit once at expected revision, rejected/out-of-bound inputs leave prior bytes intact | Independently authored headless contract tests; valid/invalid payload, duplicate/replayed operation ID, stale/concurrent writes and limits fixtures | Satisfied locally: E-08 typed commands/replay/stale/limits; E-09 real transaction race and cancellation. |
+| VCC-02 / S1 / C2 / ADR-02 | Supported arithmetic/SUM references recalculate deterministically; cycles, bad refs/types, divide-by-zero and limits produce explicit errors without arbitrary code/network | Formula grammar/dependency tests and 100-edit benchmark; fixture totals and invalid-case assertions; no inferred Excel parity | Satisfied locally: E-08 deterministic/error/budget fixtures; E-09 100 edits, p95 1.3 ms on desktop Chromium. |
+| VCC-03 / S2 / C3 / ADR-03 | Acknowledged state reloads after disconnect/restart; two stale writers yield at most one commit; failed quota/save preserves committed snapshot and unsaved editor state | Real-browser IndexedDB transaction, second-tab and offline-reload tests; inspect error/readback and request capture | Satisfied locally: E-09 real IndexedDB race/reopen/quota/replay, stale-tab draft retention and primed offline reload. |
+| VCC-04 / S2 / C1/C3 / ADR-03 | Download→validate→restore preserves supported workbook values/formulas/revision metadata; incompatible/malformed/oversize snapshots do not overwrite source | Disposable-origin snapshot round-trip and corrupt/version/ID-collision fixtures; explicit restore-versus-clone decision | Satisfied locally: E-08 strict snapshot/identity/revision cases; E-09 download/upload/restore/clone and corrupt import. |
+| VCC-05 / S4 / C4 / ADR-01 | Selection/edit/commit/cancel/focus/error/readback work on keyboard and touch at the stated narrow/zoom/contrast targets | Per-device browser walkthrough and measured final colors/geometry; timed TTV run, not static markup proof | Partial E-09: keyboard, 360px, 200% text zoom, light/dark contrast and 44px controls pass. Physical touch, screen-reader and timed TTV pending. |
+| VCC-06 / S3 / C5 / ADR-04 | Exact protected Dev source creates one sealed artifact; non-public preview passes identity, limits, routes, enforced-prod CSP and scoped SW checks; same candidate staged for Prod | Reproducible build/digest inventory, existing owner controller extension tests, preview HTTP/browser readback; no rebuild between stages | Partial E-08/10: sealed producer, pinned source, controller/HTTP/browser rehearsal pass. Hosted preview, current cost proof and same-candidate staging receipt pending. |
+| VCC-07 / S3 / C5 / ADR-04 | Authorized Prod public/immutable identity matches VCC-06; generated mirror matches files after smoke; predecessor restore readback passes and data survives | Owner-operated live route/artifact/SW/returning-browser checks plus rollback rehearsal/receipt; bootstrap baseline may be verified absent route | Pending: no production activation, mirror publication, public artifact smoke or retained live predecessor proof. |
+| VCC-08 / S5 / C1–C5 / ADR-01/05 | Base remains independently usable; Sheets has no copied or direct/transitive Univer dependency; shared UI comes from its native owner | Exact dependency/import/generated-output marker scan plus independent provenance/compatibility review; marker absence alone is insufficient | Satisfied locally E-08: independent Sheets exports/store; no record-engine changes or new packages; exact central profile and license notices. No Univer source/dependency. |
+| VCC-09 / S1–S3 / C1–C5 / ADR-05 | Product caps and $0 effect policy hold, noncritical capabilities remain lazy, no unexpected runtime network/model calls | Artifact/raw-byte inspection, browser request capture, typed limit fixtures and current provider proof for each external effect | Partial E-08/09: bounds and <500000-byte chunks pass; 64191 output bytes excluding manifest. Mobile-device load/TTV and hosted checks pending. |
 
 The primary chain is `P1 → S1 → C1/C2 → ADR-01/02 → VCC-01/02`; persistence adds `P2/S2/C3/ADR-03/VCC-03/04`; device reach adds `S4/C4/VCC-05`; delivery adds `P3/S3/C5/ADR-04/VCC-06/07`. S5, VCC-08/09 and ADR-05 constrain every slice. No criterion is satisfied by this document's existence.
 
@@ -119,21 +119,21 @@ Exact source records E-01–06 below distinguish native implementations from pro
 
 | Component / responsibility | Native source or proposed location | Reuse decision / smallest delta | Ownership, readiness and check join |
 |---|---|---|---|
-| C1 workbook schema/commands validates cell changes | Proposed separate Sheets module/package inside `agentic-base`; exact path assigned at source admission | New workbook contract; retain Base `src/{schema,engine,projectors}.mjs` unchanged, not a store/parser to rename | Sheets domain owner; local spec-complete / delivered undocumented; VCC-01/04/08 |
-| C2 calculation derives cell results | Proposed independently authored Sheets-only pure module | New bounded grammar/dependency owner; no JS eval, imported engine, copied schema or external functions | Sheets domain owner; spec-complete / undocumented; VCC-02/09 |
-| C3 storage persists accepted workbook snapshots | Proposed Sheets browser adapter, distinct namespace | Reuse IndexedDB platform/optimistic-revision patterns; Base adapter has a different record schema and is not copied or silently repurposed | Sheets storage owner; spec-complete / undocumented; VCC-03/04 |
-| C4 browser shell projects workbook commands/results | Proposed Sheets browser entry in Dev repo | Direct reuse of cleared Design System primitives; new workbook grid/selection belongs to Sheets, not a Base record-grid replacement | Sheets view owner; spec-complete / undocumented; VCC-05/08 |
-| C5 build/release/route integration seals and promotes static output | Existing Graph release owner E-04; new Sheets producer contract and route need admission | Extend existing artifact/controller owner, never duplicate its deploy machinery or manually author generated mirror assets | Release owner with Sheets producer; spec-complete / undocumented for Sheets; VCC-06/07 |
-| Shared panel, toolbar, typography/icons and lifecycle | Base currently pins `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; exact future Sheets pin must be verified, not inherited transitively | Reuse native public exports and generated profiles with digests; no local visual/lifecycle fork or Base forwarding shim | Design System owns primitives; Sheets adoption not proved; VCC-05/08 |
+| C1 workbook schema/commands validates cell changes | `agentic-base:sheets/{schema,core}.mjs` at E-08 | New workbook contract; retain Base `src/{schema,engine,projectors}.mjs` unchanged, not a store/parser to rename | Sheets domain owner; local dev-proven / delivered undocumented; VCC-01/04/08 |
+| C2 calculation derives cell results | `agentic-base:sheets/formula.mjs` at E-08 | New bounded grammar/dependency owner; no JS eval, imported engine, copied schema or external functions | Sheets domain owner; dev-proven / undocumented; VCC-02/09 |
+| C3 storage persists accepted workbook snapshots | `agentic-base:sheets/storage.mjs`; `agentic-sheets-v1` database | Reuse IndexedDB platform/optimistic-revision patterns; Base adapter has a different record schema and is not copied or silently repurposed | Sheets storage owner; dev-proven / undocumented; VCC-03/04 |
+| C4 browser shell projects workbook commands/results | `agentic-base:sheets/{app.mjs,index.html,styles.css,sw.js}` | Direct reuse of cleared Design System primitives; new workbook grid/selection belongs to Sheets, not a Base record-grid replacement | Sheets view owner; dev-proven / undocumented; VCC-05/08 |
+| C5 build/release/route integration seals and promotes static output | Base `scripts/build-sheets.mjs`; existing Graph release owner extended at E-10 | Extend existing artifact/controller owner, never duplicate its deploy machinery or manually author generated mirror assets | Release owner with Sheets producer; dev-proven / undocumented for Sheets; VCC-06/07 |
+| Shared panel, toolbar, typography/icons and lifecycle | Base currently pins `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; Sheets consumes the exact profile bytes/digest and both license notices at E-08 | Reuse native public exports and generated profiles with digests; no local visual/lifecycle fork or Base forwarding shim | Design System owns primitives; direct central CSS profile consumed, standalone host has no duplicated panel lifecycle; VCC-05/08 |
 | Base record views / optional data bridge | `SHARED-VIEW-RUNTIME-001@0.4.0`, Base E-02 | Retain local semantics; defer consumer-owned snapshot bridge and all writeback | No Base↔Sheets runtime/build dependency; no second record store; VCC-08 |
 
-**Physical source versus logical domain:** the user selected `agentic-base` as the Dev repository. That advances the prior Base ADR-05 physical-location decision without merging domains or claiming workbook implementation. A Sheets package/module can share the repository and ADLC while retaining its own schema, tests, browser entry, storage namespace and release artifact. No separate `agentic-sheets` repository is requested or created.
+**Physical source versus logical domain:** the user selected `agentic-base` as the Dev repository. That advances the prior Base ADR-05 physical-location decision while keeping independently implemented domains. A Sheets package/module can share the repository and ADLC while retaining its own schema, tests, browser entry, storage namespace and release artifact. No separate `agentic-sheets` repository is requested or created.
 
 **Acyclic build order:** cleared Design System contracts → independent Sheets core/adapters/view → sealed Sheets artifact → approved shared-site controller → verified Prod → generated Prod mirror publication. Base record packages remain independent siblings. Runtime edit/recalculation/readback can return to the workbook owner; that is not a build cycle. Extract a generic utility only after an existing owner and two concrete consumers justify it; no new shared-kernel/SDK/registry is selected.
 
-### Proposed headless contract, storage and limits
+### Headless contract, storage and limits
 
-The proposed versioned contract is `sheets/workbook/v1`, independently authored and distinct from Base's record contract. A workbook has stable `workbookId`, `sheetId`, `schemaVersion`, `revision`, bounded dimensions and sparse typed cells. Cell identity is sheet ID plus coordinate within this fixed-dimension MVP. Inserting/deleting/reordering rows/columns, cross-sheet references and reference-rewrite behavior are deferred; they require their own specification before being enabled.
+The implemented versioned contract is `sheets/workbook/v1`, independently authored and distinct from Base's record contract. A workbook has stable `workbookId`, `sheetId`, `schemaVersion`, `revision`, bounded dimensions and sparse typed cells. Cell identity is sheet ID plus coordinate within this fixed-dimension MVP. Inserting/deleting/reordering rows/columns, cross-sheet references and reference-rewrite behavior are deferred; they require their own specification before being enabled.
 
 Commands carry an operation ID, expected workbook revision and typed payload; results distinguish proposed edits, accepted persisted revision, calculation errors and storage/permission/conflict/limit failures. Storage acceptance is the acknowledgment point. Local reads/descriptions do not write or invoke a model. A host policy check runs before a storage effect, but same-origin policy callbacks are not authentication or isolation from other scripts. Any future external transport needs a trusted principal and effect authority of its own.
 
@@ -154,7 +154,7 @@ Download/restore uses a versioned JSON snapshot with a deterministic serializati
 | Workbook cells, selection and formula editor / Sheets | Semantic named grid/editor, stable keyboard focus, explicit commit/cancel and non-color errors | Native independently authored fixture and device walkthrough; no replacement Base table renderer |
 | Status/recovery / Sheets host | Show accepted/unsaved revision, offline state, save failures, download/restore | Quota, crash, reload, stale writer and corrupt snapshot results; no silent success |
 
-The app must fit 360 CSS px with internal grid scrolling rather than document overflow. Page only the necessary visible cell window if measured DOM cost requires it; no second grid or speculative canvas engine. Use lazy loading for calculation/editor features beyond the shell where it improves measured load; max raw JS/CSS chunk <500,000 bytes and initial app payload target ≤400,000 raw bytes excluding immutable notice/manifests. Both are unmeasured acceptance limits. No model SDK, telemetry, remote font or CDN fetch is needed at runtime.
+The app must fit 360 CSS px with internal grid scrolling rather than document overflow. Page only the necessary visible cell window if measured DOM cost requires it; no second grid or speculative canvas engine. Use lazy loading for calculation/editor features beyond the shell where it improves measured load; max raw JS/CSS chunk <500,000 bytes and initial app payload target ≤400,000 raw bytes excluding immutable notice/manifests. E-08 verifies these byte limits; E-09 does not substitute desktop results for mobile hardware load measurements. No model SDK, telemetry, remote font or CDN fetch is needed at runtime.
 
 Offline storage is device/browser-local. Paths under `airvio.co` share an origin; `/agentic-sheets/` does not create a security boundary. Use a dedicated database/cache namespace and a service worker scoped only to `/agentic-sheets/`; never intercept another product or delete its storage/caches. Cache only the selected static artifact, not uploaded/private workbooks. Enforce source-owned production CSP and MIME/security headers; Dev may be Report-Only, but preview checks must validate the production-enforced policy before promotion. No `eval` or executable formula/plugin input is admitted.
 
@@ -260,31 +260,31 @@ Authoring source is local/Git; preview holds non-public static build bytes; deli
 
 ### ADR-01: separate workbook domain inside the selected Dev repository
 
-**Status:** selected planning topology from the owner request, implementation pending. **Decision:** host independently owned Sheets modules in `agentic-base` while preserving Base schema/store/view exports. Directly reuse Design System primitives. One workbook grid belongs to Sheets; Base's one-record-grid rule does not force a workbook onto the record engine.
+**Status:** implemented locally, E-08/09. **Decision:** host independently owned Sheets modules in `agentic-base` while preserving Base schema/store/view exports. Directly reuse Design System primitives. One workbook grid belongs to Sheets; Base's one-record-grid rule does not force a workbook onto the record engine.
 
 Alternatives: merge workbook semantics into Base (fails contract separation); create a separate repository now (additional ownership/release work outside the selected topology); use native HTML inputs without a workbook model (FOSS/local and useful as a UI spike, but fails formula/persistence criteria); author an independent bounded core with native browser UI (chosen contract-first path). Reuse/adapt existing primitive owners and retain record semantics locally; do not extract a generic grid/storage kernel without two demonstrated consumers. Tradeoff: one Dev repo needs clear paths/tests/artifact ownership; benefit is shared Git/ADLC without domain coupling. Revisit if independent release rights require another source repository; recover through exact module/pin reverts, never a record migration.
 
 ### ADR-02: bounded independent formula core, no Office parity claim
 
-**Status:** proposed. Choose the declared grammar/caps with pure deterministic calculation and named errors; no arbitrary executable expressions. A general external workbook engine is unselected because compatibility, size, source rights and local-only cost are unproved; Univer copying/dependency fails the owner restriction regardless of license. A scalar-only browser form is the cheapest FOSS alternative, but cannot pass the admitted formula job; retain it only as a bounded discovery spike if Product drops calculation scope explicitly. Do not recreate a full Office engine. Revisit the subset after a concrete unsupported-user-formula fixture; recovery preserves formula source and explicit unsupported errors rather than silently changing results.
+**Status:** implemented locally, E-08/09. Choose the declared grammar/caps with pure deterministic calculation and named errors; no arbitrary executable expressions. A general external workbook engine is unselected because compatibility, size, source rights and local-only cost are unproved; Univer copying/dependency fails the owner restriction regardless of license. A scalar-only browser form is the cheapest FOSS alternative, but cannot pass the admitted formula job; retain it only as a bounded discovery spike if Product drops calculation scope explicitly. Do not recreate a full Office engine. Revisit the subset after a concrete unsupported-user-formula fixture; recovery preserves formula source and explicit unsupported errors rather than silently changing results.
 
 ### ADR-03: local persistence and user-controlled portable snapshots
 
-**Status:** proposed. Use a dedicated revisioned browser store and explicit versioned JSON download/restore. Memory-only state passes a deterministic test adapter role but fails returning-user/offline recovery; a remote managed database fails current scope/cost/privacy evidence; repurposing Base record storage fails ownership. Prefer platform APIs and compatible native export points; no copied adapter or general storage layer. Costs are device capacity and implementation/support effort, presently unmeasured. Revisit if measured offline requirements cannot be met; require backup/forward-recovery and owner-approved migration before any storage change.
+**Status:** implemented locally, E-08/09. Use a dedicated revisioned browser store and explicit versioned JSON download/restore. Memory-only state passes a deterministic test adapter role but fails returning-user/offline recovery; a remote managed database fails current scope/cost/privacy evidence; repurposing Base record storage fails ownership. Prefer platform APIs and compatible native export points; no copied adapter or general storage layer. Costs are device capacity and implementation/support effort, presently unmeasured. Revisit if measured offline requirements cannot be met; require backup/forward-recovery and owner-approved migration before any storage change.
 
 ### ADR-04: exact-artifact promotion through the existing site release owner
 
-**Status:** selected route/artifact destinations, controller extension pending. Preserve `GitHub/agentic-base` Dev → `airvio.co/agentic-sheets` public Prod and `GitHub/huijoohwee/content/agentic-sheets` generated Prod archive. Reuse the existing site controller's source pin, seal, preview/activation, rollback, smoke and mirror-CAS owners. A new mirror deploy workflow or manual asset copy fails single-owner and generated-source rules; a direct Dev→Prod shortcut fails required preview proof; redirecting the Base record demo to Sheets fails semantic fit. This is the shortest source-grounded route, not a claim that the extension already exists. Revisit only on an owner-reviewed controller incompatibility; rollback remains an exact native-site effect with its own receipt.
+**Status:** source extension and local rehearsal E-10; hosted preview/production pending. Preserve `GitHub/agentic-base` Dev → `airvio.co/agentic-sheets` public Prod and `GitHub/huijoohwee/content/agentic-sheets` generated Prod archive. Reuse the existing site controller's source pin, seal, preview/activation, rollback, smoke and mirror-CAS owners. A new mirror deploy workflow or manual asset copy fails single-owner and generated-source rules; a direct Dev→Prod shortcut fails required preview proof; redirecting the Base record demo to Sheets fails semantic fit. The source extension exists at E-10; hosted promotion remains a separately gated effect. Revisit only on an owner-reviewed controller incompatibility; rollback remains an exact native-site effect with its own receipt.
 
 ### ADR-05: reference-use, free/FOSS and lazy-load constraints
 
-**Status:** inherited mandatory constraints, checks pending. Independently author workbook behavior; keep Univer solely a conceptual reference under Base ADR-04. Use FOSS/browser-local tools, exact cleared dependency pins, existing ADLC and source-owned release machinery. A paid/commercial/freemium engine, remote formula service or CDN shortcut fails current authorization/cost boundaries; an unrelated FOSS engine remains unselected until its complete capability/license/bundle/offline comparison is admitted. No new model provider, database, SDK, orchestrator or runtime agent route. All external effects need current hard-$0 or deny-at-quota proof; scale down/stop instead of paying. Local/static/shared-site TCO variants remain separate and unknown; 0 serving-model calls do not imply free authoring or operator time. Recovery is an exact reviewed offending-source/pin/artifact revert with data retained.
+**Status:** inherited mandatory constraints; local source/dependency/profile checks E-08, provider cost proof pending. Independently author workbook behavior; keep Univer solely a conceptual reference under Base ADR-04. Use FOSS/browser-local tools, exact cleared dependency pins, existing ADLC and source-owned release machinery. A paid/commercial/freemium engine, remote formula service or CDN shortcut fails current authorization/cost boundaries; an unrelated FOSS engine remains unselected until its complete capability/license/bundle/offline comparison is admitted. No new model provider, database, SDK, orchestrator or runtime agent route. All external effects need current hard-$0 or deny-at-quota proof; scale down/stop instead of paying. Local/static/shared-site TCO variants remain separate and unknown; 0 serving-model calls do not imply free authoring or operator time. Recovery is an exact reviewed offending-source/pin/artifact revert with data retained.
 
 There is no contested vendor/platform winner requiring an invented argument verdict: owner constraints reject infeasible choices first; the feasible independent local slice outranks broader unproved scope on minimum change. Unknown market impact, performance and 12-month TCO remain incomparable rather than assigned invented scores.
 
 ## Reference implementation — MVP: bounded calculation and recovery slice
 
-MVP projects S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09 at `SHEETS-WORKBOOK-001@0.1.0`. S3/C5/ADR-04/VCC-06/07 are required for the owner-selected public release but are a separately gated delivery phase. No local workbook capability is implemented or accepted by this planning task.
+MVP projects S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09 at `SHEETS-WORKBOOK-001@0.2.0`. S3/C5/ADR-04/VCC-06/07 are required for the owner-selected public release but are a separately gated delivery phase. No local workbook capability is implemented or accepted by this planning task.
 
 | Slice | Proof fixture and expected result | Local / delivered readiness |
 |---|---|---|
@@ -356,24 +356,24 @@ No CAC/LTV, runway, break-even, profit or 12-month total can be calculated witho
 
 ### C01–C16 coverage and readiness
 
-Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.1.0`; coverage is not product proof or full rule conformance.
+Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.2.0`; coverage is not product proof or full rule conformance.
 
 | Domain | Disposition / exact join | Accountable function | Evidence/gap and next check |
 |---|---|---|---|
 | C01 Purpose/user/pain | covered / PRD P1–P3, H1 | Product | Owner request and native model gap E-01/02; buyer pain unvalidated; confirm one job |
 | C02 Market/timing | deferred / GTM segment | Product | No independent dated population/conversion sources; revisit when market/offer decision depends on them |
 | C03 Offer/alternatives | covered / GTM offer, ADR-01–05 | Product | Free bounded offer; manual/Base/FOSS alternatives and disqualifiers explicit; revisit validated need |
-| C04 Product/experience | covered / S1–S5/VCCs, demo | Product/quality | Criteria and TTV/device targets defined, no runtime result; next local fixture |
-| C05 Architecture/data | covered / C1–C5, D1/D2 | Architect | Native/proposed distinction and single data owner; E-02–04; next contract admission |
-| C06 Quality/security/AI | covered / VCC-01–09, local storage/CSP | Quality/security | Failures/caps/recovery and no-AI boundary defined; all behavior evidence pending |
+| C04 Product/experience | covered / S1–S5/VCCs, demo | Product/quality | Core/browser results E-08/09; physical-device and timed TTV checks pending |
+| C05 Architecture/data | covered / C1–C5, D1/D2 | Architect | Concrete C1–C5 owners E-08/10; hosted delivery pending |
+| C06 Quality/security/AI | covered / VCC-01–09, local storage/CSP | Quality/security | Core/storage/recovery checks E-08/09; device/hosted proof pending |
 | C07 Decisions/tradeoffs | covered / ADR-01–05 | Architect | Physical source/domain split, bounded core, local state and native release owner; revisit concrete incompatibility |
-| C08 Smallest slice | covered / MVP fixture/readiness | Engineering | Defined calculation+recovery slice; no satisfied VCC; next implementation checks |
+| C08 Smallest slice | covered / MVP fixture/readiness | Engineering | Implemented calculation+recovery slice E-08/09; VCC-05–07/09 retain gaps |
 | C09 Acquisition/retention | deferred / H1/EXP-S1 | Product | No qualified-user/cohort/support data; prerequisite implemented fixture and owner availability |
 | C10 Operations/continuity | covered / GTM operations, B1–B4 | Dev/release operator | Existing support/controller owners, clear gaps, snapshot/predecessor recovery; next actual incident/release receipt |
 | C11 Organization/obligations | deferred / ADR-05, E-02/03/04 | Product/rights | Exact licenses/notices, named assignees, provider/account effect proof incomplete; revisit source/distribution admission |
 | C12 Financial viability | deferred / PRD TCO, GTM scenarios | Product/finance | Cost/reach/labor unknown, paid offer excluded; revisit measured receipts and dependent business decision |
 | C13 Capital/milestones | not-applicable / GTM finance | Product reviewer | No capital decision/funding ask; review if business model changes |
-| C14 ADLC execution | covered / B1–B4, authoring handoff | ADLC operator | Exact documentation lane/evidence; future effect authority separate; next source/preview/Prod receipts |
+| C14 ADLC execution | covered / B1–B4, authoring handoff | ADLC operator | Protected Base source E-08, site source E-10; preview/Prod/runtime receipts remain separate |
 | C15 Audience projections | not-applicable / GTM scope | Product reviewer | No deck/model/external audience deliverable requested; revisit an audience-dependent decision |
 | C16 Learning/successor | covered / H1/EXP-S1, roadmap | Product | Explicit continue/stop thresholds and next owner; revisit observed fixture/recovery outcome |
 
@@ -395,25 +395,41 @@ Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.1.0`; coverage is no
 
 No product VCC has a satisfying Evidence Reference. The prior Base artifact's tests prove only their named Base source/surface and are not inherited as Sheets evidence. Proposed source locations/commands are not native capability claims. Immutable external-reference provenance is in the Base artifact; this spec imports no external code/prose/assets and adds no dependency.
 
+### Implementation evidence — 2026-11-18
+
+| ID | Exact source / reproducible check | Result and practical limit |
+|---|---|---|
+| E-08 | [Base PR #87](https://github.com/huijoohwee/agentic-base/pull/87); protected `agentic-base@5b28d4b46505de115dcef1eaa60937a0db4eb5f4`; `npm run check`, `npm run check:sheets`; provider `check` [run 44138222096](https://github.com/huijoohwee/agentic-base/actions/runs/44138222096) on candidate `64ede94100012d36475008aafa57d857bd5aa50d` | Full check passes 45 tests plus type/artifact/runtime checks. Eight Sheets core tests cover typed input, formula errors/budgets, capture-before-hash, exact replay, monotonic restore/clone and rejection without mutation. Artifact `e8ad70aa8b5e76183143224a67d1715b9b20a0039958f2630e2adeebd2243f76`; 64191 bytes across 12 inventory files plus manifest; exact source/profile/license inputs sealed. No new dependencies; MIT source and central Design System notice retained; no forbidden engine/package. |
+| E-09 | E-08 `npm run dev:sheets`; browser `import('/test-browser/sheets-check.mjs').then(m => m.runSheetsBrowserChecks())`; disposable isolated Chromium context, macOS desktop, browser 157 | 11 real IndexedDB checks pass, 100-edit p95 1.3 ms. UI sample 80→130, Escape cancel, stale second-tab conflict with draft retained, snapshot download/upload/restore (revision advances), rejected malformed import and clone rev1 pass. Primed offline reload makes zero failed network requests. 360px and 200% text zoom have no document overflow; primary controls ≥44px. Light text/focus contrast 17.28/6.83; dark 15.18/6.86. Physical phone/touch/screen-reader and timed TTV not measured. |
+| E-10 | Site source candidate `agentic-graph@631d1d87d84327472d95e45523838f29ef3d2489`, [PR #1986](https://github.com/huijoohwee/agentic-graph/pull/1986); `node --test scripts/__tests__/production-sheets.test.mjs`; `npm run ci:integration`; local sealed-artifact HTTP/browser rehearsal | Local full integration gate passes (11/11 selected owner checks; bounded, no parity claim); remote Integration Gate is pending at this checkpoint. Separate protected Base source pin; immutable Git blob inputs, digest inventory, generated route/headers, artifact whitelist and existing release owner extended. Rehearsal verifies 15 exact file/HTML responses, canonical redirect, MIME, enforced CSP, SW scope, three negative 404s and a 360px 80→130/offline browser result. This is localhost evidence; hosted preview/Prod, current hard-$0 proof, exact predecessor and production environment authorization are pending. |
+
 ### Risks, gates and next bounded action
 
 | Risk | Owner | Unblock/stop/recovery and recheck |
 |---|---|---|
-| R1 Product job and economics unvalidated | Product | Confirm H1 before implementation; stop if current Base/form suffices; recheck owner response |
-| R2 No workbook core/storage/view implementation or acceptance suite | Sheets Dev owner | Admit one bounded C1/C2 fixture; bind actual checks; preserve Base exports and scope; no runtime-ready claim |
-| R3 Requested public route and archive prefix absent | Release operator | Source-owned route/producer/manifest/controller extension plus same-artifact preview and current authority; never hand-edit generated mirror |
-| R4 Controller/pins/cost/rights not admitted for Sheets | Site owner/rights | Exact source/build/account hard-$0 proof and clear ownership; current Base-demo pipeline cannot be relabeled or extrapolated |
-| R5 Persistence/calculation/accessibility/recovery failures untested | Quality | Independent typed fixtures and real-device/browser/storage/recovery checks; preserve source snapshots and accepted state |
+| R1 Product job and economics unvalidated | Product | Confirm H1 for the first user trial; stop expansion if current Base/form suffices; recheck owner response |
+| R2 Bounded workbook does not establish broad spreadsheet compatibility | Sheets Dev owner | E-08/09 close the core/storage fixture; preserve explicit grammar/caps and Base independence; no Office or complete-runtime claim |
+| R3 Requested public route/archive not activated or read back | Release operator | Source-owned route/producer/manifest/controller extension plus same-artifact preview and current authority; never hand-edit generated mirror |
+| R4 Hosted cost/authorization/predecessor evidence incomplete | Site owner/rights | Exact source/build/account hard-$0 proof and clear ownership; E-10 uses a separate Sheets pin in the same owner; source success grants no provider effect |
+| R5 Device/accessibility and real user recovery evidence incomplete | Quality | Independent typed fixtures and real-device/browser/storage/recovery checks; preserve source snapshots and accepted state |
 | R6 No captured prior Sheets/site rollback identity | Site operator | Capture exact current site deployment/artifact/route absence before activation; test restoration and local data compatibility |
 | R7 Copied reference material or forbidden dependency could enter later code | Dev/rights reviewer | VCC-08 provenance/dependency review at exact source; stop and reviewed-revert offending material with data preserved |
 
-**Ranked next outcome:** Product confirms one bounded workbook calculation/recovery job (H1), then the Sheets Dev owner may seek source admission for the independent C1/C2 contract/fixture only. Prerequisites are named owner, exact grounding, scope/cost/rights evidence and actual check bindings; one task uses the caps above. Completion is a recorded accepted result or explicit unsupported/stop decision, not a new renderer count. No outreach, implementation, source-controller repair, mirror publication, deployment or rollback is performed by this documentation request.
+**Ranked next outcome:** retain the protected source and sealed artifact; complete native site `turn:end` review and read-only candidate/predecessor/cost preflight. Prepare only an exact green candidate. The site's protected `production` environment requires explicit human authorization for that candidate before its controller performs hosted preview and any Production mutation. Unknown hard-$0 proof blocks those effects even with approval. Recheck on the missing proof/authorization or a source drift event; do not rebuild or relabel a different candidate. Complete physical-device/screen-reader/TTV evidence before claiming every local criterion, then run the smallest H1 trial without unsolicited outreach.
+
+### 2026-11-18 implementation checkpoint
+
+| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
+|---|---|---|---|
+| `SHEETS-WORKBOOK-001@0.2.0` | C: owner instruction implements the bounded workbook and selected delivery topology · I: preserve domain separation and prove local calculation/recovery · D: publish only exact checked source; retain pending device/hosted/production gates | R: Sheets Dev and site release owners · A: implement C1–C5, run E-08–10 and update this joined evidence · O: local `dev-proven`, delivered `undocumented`; source and production receipts remain separate | 2026-11-18 |
+
+Source lanes: `agent/device-0232231d4a19/sheets-mvp` and `agent/device-0232231d4a19/sheets-release`; evidence lane: `agent/device-0232231d4a19/sheets-implementation-evidence`. Base source merge/sync/recoverable cleanup completed with refs/objects retained. Source implementation and release integration add no dependencies or always-load instructions. Each runtime sprint is capped at 60 active minutes, six new modules and 25 KiB new authored runtime code; generated artifacts/notices remain separately inventoried. Actual authoring time/tokens/provider cost are unavailable as measured receipts, not zero. Unrelated drafts/recovery lanes remain intact. Full delivery remains open until hosted preview, same-candidate activation/readback, generated mirror publication and rollback identity are proved.
 
 ### 2026-11-17 authoring checkpoint
 
 | PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
 |---|---|---|---|
-| `SHEETS-WORKBOOK-001@0.1.0` | C: E-01 selects a workbook product and Dev/Prod topology; E-02–05 expose capability/route gaps · I: create one evidence-bounded product contract · D: author the joined specification with separate Base/Sheets owners, pending VCCs and closed delivery effects | R: Technical Writer · A: Technical Writer authors this Sheets specification · O: one coherent proposed document · check: affected authoring validation and target diagram projection | 2026-11-17 |
+| `SHEETS-WORKBOOK-001@0.2.0` | C: E-01 selects a workbook product and Dev/Prod topology; E-02–05 expose capability/route gaps · I: create one evidence-bounded product contract · D: author the joined specification with separate Base/Sheets owners, pending VCCs and closed delivery effects | R: Technical Writer · A: Technical Writer authors this Sheets specification · O: one coherent proposed document · check: affected authoring validation and target diagram projection | 2026-11-17 |
 
 START used an untracked bounded Markdown planning draft, then admitted lane `agent/device-0232231d4a19/agentic-sheets-prd` at documentation base `d71aa52033ed1e64e426b10e7563051f05f29364`; only `docs/documents/prd-tad-adr-mvp-gtm-agentic-sheets.md` is writable. Current task caps: 20 active minutes estimated, one document, <600 lines/<90 KiB, ≤18,000 planning tokens, ≤2 authoring refinement cycles, no new dependencies or always-load bytes, $0 incremental spend. Actual active minutes, model tokens/charges and provider CI costs are not exposed as measured receipts; unknown is not zero. Unrelated recovery-lane bytes and all runtime repositories remain outside scope.
 

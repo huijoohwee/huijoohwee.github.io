@@ -1,22 +1,22 @@
 ---
 title: "Reference implementation: Agentic Sheets general-purpose workbook"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.5.0"
+version: "0.5.1"
 date: "2026-11-18"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "SHEETS-WORKBOOK-001"
-prd_revision: "0.5.0"
-tad_revision: "0.5.0"
-adr_revision: "0.5.0"
-mvp_revision: "0.5.0"
-gtm_revision: "0.5.0"
+prd_revision: "0.5.1"
+tad_revision: "0.5.1"
+adr_revision: "0.5.1"
+mvp_revision: "0.5.1"
+gtm_revision: "0.5.1"
 local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--sheets-dev-headless-spec"
+worktree_id: "device-0232231d4a19--sheets-dedicated-evidence"
 agent_id: "codex"
 lifecycle_status: "proposed"
 source_docs:
@@ -28,13 +28,13 @@ source_docs:
 
 ## Reference implementation — authority, scope and readiness
 
-This is the single joined `SHEETS-WORKBOOK-001@0.5.0` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the bounded workbook product; it does not redefine Base.
+This is the single joined `SHEETS-WORKBOOK-001@0.5.1` specification under [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md). PRD defines the product outcome, TAD its owners/contracts, ADR the choices, and MVP/GTM consume those exact criteria. The related [Base artifact `SHARED-VIEW-RUNTIME-001@0.4.0`](prd-tad-adr-mvp-gtm-agentic-base.md) remains the owner of Base record views and the Base/Sheets separation decision. This artifact owns the bounded workbook product; it does not redefine Base.
 
-**Owner-selected topology.** The selected Dev repository is [huijoohwee/agentic-sheets](https://github.com/huijoohwee/agentic-sheets). Its intended public route is `https://airvio.co/agentic-sheets`, and its generated Prod archive belongs at `huijoohwee/huijoohwee:content/agentic-sheets/`. An authenticated repository lookup returned HTTP 404 on 2026-11-18. Source and checks in the selected repository await verification.
+**Owner-selected topology.** The public Dev repository is [huijoohwee/agentic-sheets](https://github.com/huijoohwee/agentic-sheets). The intended public route is `https://airvio.co/agentic-sheets`. Its generated archive belongs at `huijoohwee/huijoohwee:content/agentic-sheets/` after approved promotion and live verification.
 
-**Verified implementation.** E-08 identifies the existing `sheets/` core, browser adapters and sealed artifact in `agentic-base@5b28d4b46505de115dcef1eaa60937a0db4eb5f4`. The site controller still pins that source for Sheets (E-10/15). The local readiness and artifact receipts in this record apply to that revision.
+**Verified implementation.** The protected Sheets revision in E-16 owns the headless core, browser editor, storage adapter and sealed static files. E-17 identifies the Graph release adapter that qualifies that revision. E-08/10 preserve the earlier Base producer and controller for recovery.
 
-**Readiness:** local `dev-proven` follows from reproducible core/storage/browser checks satisfying VCC-01–04 (E-08/09). VCC-05 remains partial because physical touch devices, screen-reader use and a timed clean-environment TTV run are unverified; VCC-06/07 lack hosted preview/public receipts and current cost/predecessor/authorization proof. Delivered remains `undocumented`. Qualification of the selected Dev repository requires its own exact source and checks. Production remains on owner hold.
+**Readiness.** Local `dev-proven` covers workbook edits, calculation and recovery in the headless and browser fixtures (E-08/09/16/17). Physical touch, screen-reader use and timed user TTV remain open under VCC-05. Hosted preview, current cost and predecessor evidence, and production authorization remain open under VCC-06/07. Delivered remains `undocumented` on owner hold.
 
 **Product scope.** People use the same workbook to organize values, calculate from cells, inspect an edit and recover accepted work offline. Authors choose their labels, values, units and formulas. A simple text checklist is a complete workbook. The document names a specific product and delivery route, so its frontmatter retains `universal_scope: false`. The workbook contract applies across tasks and hosts. The portable requirements are the observable behaviors below.
 
@@ -140,14 +140,14 @@ VCC-01–09 cover the bounded workbook and its delivery. VCC-16 qualifies the he
 | VCC-03 / S2 / C3 / ADR-03 | Acknowledged state reloads after disconnect/restart; two stale writers yield at most one commit; failed quota/save preserves committed snapshot and unsaved editor state | Real-browser IndexedDB transaction, second-tab and offline-reload tests; inspect error/readback and request capture | Satisfied locally: E-09 real IndexedDB race/reopen/quota/replay, stale-tab draft retention and primed offline reload. |
 | VCC-04 / S2 / C1/C3 / ADR-03 | Download→validate→restore preserves supported workbook values/formulas/revision metadata; incompatible/malformed/oversize snapshots do not overwrite source | Disposable-origin snapshot round-trip and corrupt/version/ID-collision fixtures; explicit restore-versus-clone decision | Satisfied locally: E-08 strict snapshot/identity/revision cases; E-09 download/upload/restore/clone and corrupt import. |
 | VCC-05 / S4 / C4 / ADR-01 | Selection/edit/commit/cancel/focus/error/readback work on keyboard and touch at the stated narrow/zoom/contrast targets | Per-device browser walkthrough and measured final colors/geometry; timed TTV run, not static markup proof | Partial E-09: keyboard, 360px, 200% text zoom, light/dark contrast and 44px controls pass. Physical touch, screen-reader and timed TTV pending. |
-| VCC-06 / S3 / C5 / ADR-04 | Exact protected Dev source creates one sealed artifact; non-public preview passes identity, limits, routes, enforced-prod CSP and scoped SW checks; same candidate staged for Prod | Reproducible build/digest inventory, existing owner controller extension tests, preview HTTP/browser readback; no rebuild between stages | Partial E-08/10: sealed producer, pinned source, controller/HTTP/browser rehearsal pass. Hosted preview, current cost proof and same-candidate staging receipt pending. |
+| VCC-06 / S3 / C5 / ADR-04 | Exact protected Dev source creates one sealed artifact; non-public preview passes identity, limits, routes, enforced-prod CSP and scoped SW checks; same candidate staged for Prod | Reproducible build/digest inventory, existing owner controller extension tests, preview HTTP/browser readback; no rebuild between stages | Partial E-16/17. The protected producer, pinned controller and local HTTP/browser rehearsal passed. Hosted preview, current cost proof and same-candidate staging receipt pending. |
 | VCC-07 / S3 / C5 / ADR-04 | Authorized Prod public/immutable identity matches VCC-06; generated mirror matches files after smoke; predecessor restore readback passes and data survives | Owner-operated live route/artifact/SW/returning-browser checks plus rollback rehearsal/receipt; bootstrap baseline may be verified absent route | Pending: no production activation, mirror publication, public artifact smoke or retained live predecessor proof. |
 | VCC-08 / S5 / C1–C5 / ADR-01/05 | Base remains independently usable; Sheets has no copied or direct/transitive Univer dependency; shared UI comes from its native owner | Exact dependency/import/generated-output marker scan plus independent provenance/compatibility review; marker absence alone is insufficient | Satisfied locally E-08: independent Sheets exports/store; no record-engine changes or new packages; exact central profile and license notices. No Univer source/dependency. |
 | VCC-09 / S1–S3 / C1–C5 / ADR-05 | Product caps and $0 effect policy hold, noncritical capabilities remain lazy, no unexpected runtime network/model calls | Artifact/raw-byte inspection, browser request capture, typed limit fixtures and current provider proof for each external effect | Partial E-08/09: bounds and <500000-byte chunks pass; 64191 output bytes excluding manifest. Mobile-device load/TTV and hosted checks pending. |
 | VCC-13 / S6 / C1–C4 / ADR-03/05/06 | An accepted edit has the same typed inputs, formula source, result or error after recovery | Run a task fixture headlessly and in the browser, reopen offline and restore a disposable copy. Compare accepted revisions according to restore/clone rules. | Required for the selected extension. E-09 covers the v1 browser slice. |
 | VCC-14 / S7 / C1–C4 / ADR-01/03/06 | Every claimed editor behavior passes its own feature-comparison row | Replay a new keyboard/touch fixture including undo or rejection, restore and formula readback. Record per-behavior results and outstanding cases | Planned per feature. A toolbar control earns no credit by itself. |
 | VCC-15 / S5/S6 / C1–C5 / ADR-05/06 | Core workbooks open and edit with a proposed optional module omitted. A workbook that requires the module preserves its input on an unsupported operation. | Run the core fixtures without the module, enable it for its own fixture, then reopen without it. Compare core results, preserved source, error and artifact bytes. | Proposed integration check for each admitted extension. E-14 covers v1 headless examples only. |
-| VCC-16 / S1/S2/S5 / C1/C2 / ADR-01/02/03 | The public core supports create, edit, calculate and snapshot recovery in a non-UI host | Import only the core entry with browser globals, browser storage and networking unavailable. Check typed inputs, dependent values, revision and restored formula source. Keep durable persistence and UI checks at C3/C4. | E-15 exercises the existing Base core. Repeat against the exact selected Dev revision before claiming headless support there. |
+| VCC-16 / S1/S2/S5 / C1/C2 / ADR-01/02/03 | The public core supports create, edit, calculate and snapshot recovery in a non-UI host | Import only the core entry with browser globals, browser storage and networking unavailable. Check typed inputs, dependent values, revision and restored formula source. Keep durable persistence and UI checks at C3/C4. | Satisfied locally at E-16. The public package read a Base v1 snapshot, calculated the edit, replayed it, rejected a stale writer and restored the original at revision 3. |
 
 The core joins P1/S1 to C1/C2, ADR-01/02 and VCC-01/02. Persistence joins P2/S2 to C3, ADR-03 and VCC-03/04. Device access joins S4/C4 to VCC-05. Delivery joins P3/S3 to C5, ADR-04 and VCC-06/07. VCC-08/09 apply across slices. P4/S6/S7 use the existing owners and ADR-06 for VCC-13–15.
 
@@ -165,19 +165,19 @@ These original examples exercise the same v1 commands with different data. The e
 
 ### Native grounding and division of work
 
-The paths in this table locate the verified Base implementation at E-08/09 and the site integration at E-10/13. They are the baseline for qualifying the corresponding owners in the selected Sheets repository.
+C1–C4 and the artifact builder belong to the dedicated Sheets repository at E-16. Graph owns the release adapter at E-17. E-08–10 retain the original integration evidence.
 
 | Component / responsibility | Native source or proposed location | Reuse decision / smallest delta | Ownership, readiness and check join |
 |---|---|---|---|
-| C1 workbook schema/commands validates cell changes | `agentic-base:sheets/{schema,core}.mjs` at E-08 | New workbook contract; retain Base `src/{schema,engine,projectors}.mjs` unchanged, not a store/parser to rename | Sheets domain owner; local dev-proven / delivered undocumented; VCC-01/04/08 |
-| C2 calculation derives cell results | `agentic-base:sheets/formula.mjs` at E-08 | New bounded grammar/dependency owner; no JS eval, imported engine, copied schema or external functions | Sheets domain owner; dev-proven / undocumented; VCC-02/09 |
-| C3 storage persists accepted workbook snapshots | `agentic-base:sheets/storage.mjs`; `agentic-sheets-v1` database | Reuse IndexedDB platform/optimistic-revision patterns; Base adapter has a different record schema and is not copied or silently repurposed | Sheets storage owner; dev-proven / undocumented; VCC-03/04 |
-| C4 browser shell projects workbook commands/results | `agentic-base:sheets/{app.mjs,index.html,styles.css,sw.js}` | Direct reuse of cleared Design System primitives; new workbook grid/selection belongs to Sheets, not a Base record-grid replacement | Sheets view owner; dev-proven / undocumented; VCC-05/08 |
-| C5 build/release/route integration seals and promotes static output | Base `scripts/build-sheets.mjs`; existing Graph release owner extended at E-10 | Extend existing artifact/controller owner, never duplicate its deploy machinery or manually author generated mirror assets | Release owner with Sheets producer; dev-proven / undocumented for Sheets; VCC-06/07 |
-| Shared panel, toolbar, typography/icons and lifecycle | Base currently pins `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; Sheets consumes the exact profile bytes/digest and both license notices at E-08 | Reuse native public exports and generated profiles with digests; no local visual/lifecycle fork or Base forwarding shim | Design System owns primitives; direct central CSS profile consumed, standalone host has no duplicated panel lifecycle; VCC-05/08 |
+| C1 workbook schema/commands validates cell changes | `agentic-sheets:sheets/{schema,core}.mjs` at E-16 | New workbook contract; retain Base `src/{schema,engine,projectors}.mjs` unchanged, not a store/parser to rename | Sheets domain owner; local dev-proven / delivered undocumented; VCC-01/04/08 |
+| C2 calculation derives cell results | `agentic-sheets:sheets/formula.mjs` at E-16 | New bounded grammar/dependency owner; no JS eval, imported engine, copied schema or external functions | Sheets domain owner; dev-proven / undocumented; VCC-02/09 |
+| C3 storage persists accepted workbook snapshots | `agentic-sheets:sheets/storage.mjs`; `agentic-sheets-v1` database | Reuse IndexedDB platform/optimistic-revision patterns; Base adapter has a different record schema and is not copied or silently repurposed | Sheets storage owner; dev-proven / undocumented; VCC-03/04 |
+| C4 browser shell projects workbook commands/results | `agentic-sheets:sheets/{app.mjs,index.html,styles.css,sw.js}` | Direct reuse of cleared Design System primitives; new workbook grid/selection belongs to Sheets, not a Base record-grid replacement | Sheets view owner; dev-proven / undocumented; VCC-05/08 |
+| C5 build/release/route integration seals and promotes static output | Sheets `scripts/build-sheets.mjs` and Graph `scripts/production-sheets.mjs` at E-16/17 | Extend existing artifact/controller owner, never duplicate its deploy machinery or manually author generated mirror assets | Release owner with Sheets producer; dev-proven / undocumented for Sheets; VCC-06/07 |
+| Shared panel, toolbar, typography/icons and lifecycle | Sheets pins `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; `design/` holds the exact profile, pin and notice at E-16 | Reuse native public exports and generated profiles with digests; no local visual/lifecycle fork or Base forwarding shim | Design System owns primitives; direct central CSS profile consumed, standalone host has no duplicated panel lifecycle; VCC-05/08 |
 | Base record views / optional data bridge | `SHARED-VIEW-RUNTIME-001@0.4.0`, Base E-02 | Retain local semantics; defer consumer-owned snapshot bridge and all writeback | No Base↔Sheets runtime/build dependency; no second record store; VCC-08 |
 
-**Source ownership.** The dedicated Sheets repository is the intended owner of workbook code, contracts, tests and artifacts. Base owns records, fields and views. For source cutover, identify the exact Sheets commit, verify existing v1 snapshots and the headless entry, and build its sealed artifact. The site owner can then qualify the new repository and revision together. Preserve the previous producer reference for recovery.
+**Source ownership.** Sheets owns the workbook contract, tests and artifact. Base owns records, fields and views. Existing v1 snapshots open through the public Sheets entry. Graph verifies repository, revision and source bytes. E-08/10 identify the previous producer and release adapter for a reviewed source revert.
 
 **Acyclic build order:** cleared Design System contracts → independent Sheets core/adapters/view → sealed Sheets artifact → approved shared-site controller → verified Prod → generated Prod mirror publication. Base record packages are independent of the Sheets build. Runtime edit/recalculation/readback can return to the workbook owner; that is not a build cycle. Extract a generic utility only after an existing owner and two concrete consumers justify it; no new shared-kernel/SDK/registry is selected.
 
@@ -259,7 +259,7 @@ flowchart LR
 ```mermaid
 flowchart LR
   subgraph authoring["Authoring lane: Dev source"]
-    source["GitHub agentic-sheets: selected Dev source"]
+    source["GitHub agentic-sheets: protected Dev source"]
     checks["Owner contract and source checks"]
     source -->|"exact protected source"| checks
   end
@@ -281,9 +281,9 @@ flowchart LR
 
 | D2 node / owner | Role / data residency and boundary |
 |---|---|
-| `source`, `checks` / Dev producer | Selected Sheets repository and its exact source receipts. Existing Base receipts are identified at E-08. |
+| `source`, `checks` / Dev producer | Protected Sheets repository and checks at E-16. Original Base receipts are retained at E-08. |
 | `artifact`, `preview` / build/verification owner | Static files, notices, manifest and temporary non-public rehearsal; no user workbook copied |
-| `controller` / existing shared-site release owner | E-10/13 bind the protected Sheets artifact and route extension. Hosted qualification remains pending. |
+| `controller` / existing shared-site release owner | E-17 binds the dedicated producer to the shared site controller. Hosted qualification remains pending. |
 | `route` / production site operator | Browser static runtime at owner-selected public URL; local user data remains on device |
 | `mirror` / generated Prod archive owner | Exact generated files only at requested repository prefix, after live verification; no hand-authored product source |
 
@@ -295,12 +295,12 @@ C1 owns the local command schema. The invocation register distinguishes existing
 
 | Capability / surface | Mode and schema owner | Principal/effect boundary / current support |
 |---|---|---|
-| Workbook calculation and typed edits / local module | C1/C2 export `calculate` and `executeWorkbook` from `sheets/core.mjs` | E-08 covers the headless contract. C3 gates persistent writes by policy and expected revision. |
+| Workbook calculation and typed edits / local module | C1/C2 export `calculate` and `executeWorkbook` from `sheets/core.mjs` | E-16 qualifies the public headless entry. C3 gates persistent writes by policy and expected revision. |
 | Browser edit/download/restore | C4 → C1/C3 using the local toolbar and cell editor | E-09 covers explicit snapshot actions, conflict recovery and primed offline reload. |
 | HTTP data API / MCP / WebMCP / `/` commands / `@` bindings / `#` semantic routes | Unsupported in MVP | No handler/schema registry/gateway exists; do not manufacture route names or claim agent readiness from a static page |
 | Static public URL | Selected delivery address, not an API command | Asset read only, no mutation authority; observed 404, promotion gated |
 
-For the existing Base checkout, `npm run check:sheets` runs its bounded checks and `npm run dev:sheets` serves the browser adapter. Exercise the headless core through the public Sheets export (E-15). Bind the selected repository’s actual commands and entry point to a verified commit before using them for qualification. Timed device TTV remains open.
+In the dedicated checkout, run `npm test` to check the core and sealed artifact, `npm run build:sheets` to reproduce the static files, and `npm run dev` to open the editor at `http://127.0.0.1:4177/agentic-sheets/`. A Node consumer imports `agentic-sheets` for the headless core and can select `agentic-sheets/storage` for the browser adapter. See E-16.
 
 ### Artifact, routes, promotion and rollback contract
 
@@ -308,11 +308,11 @@ For the existing Base checkout, `npm run check:sheets` runs its bounded checks a
 
 **Requested routes, proposed rules:** `/agentic-sheets` normalizes to `/agentic-sheets/`; index/assets/SW/manifest resolve only to the owned generated prefix. Use relative assets compatible with both preview and public base paths. Missing asset/unknown product paths return an explicit 404 rather than unrelated application HTML. Avoid a broad catch-all or another product's service worker. The exact redirect/status/cache/CSP rules must be owned and emitted by the existing release source extension and verified on immutable and public origins; no current `_redirects`/`_headers` mutation is authorized.
 
-**Current controller.** The site release owner controls preview, production promotion, rollback and mirror publication. Its separate Sheets pin still names the Base repository and revision in E-08. Qualify the dedicated Sheets producer and the controller’s repository, checkout, build and manifest bindings together. The legacy Base demo has its own pin.
+**Current controller.** Graph resolves its dedicated Sheets pin, checks out the public repository at that revision and validates the immutable input and output bytes. The route receipt includes the producing repository, source revision and artifact digest. Base demo releases use a separate pin. E-17 covers the local rehearsal.
 
 | Boundary | From → to / current state | Required evidence | Operator instruction / recovery |
 |---|---|---|---|
-| B1 source integration | Dev source lane → exact protected Dev commit; v1 integrated from Base (E-08/13), dedicated Dev source unverified | Bound VCC slice, source/rights/budget checks, reviewed exact changes and integration receipt | Separate source admission; recover by reviewed source revert preserving workbook files/data |
+| B1 source integration | Dev source lane → exact protected Dev commit; dedicated v1 producer and site source integration at E-16/17 | Bound VCC slice, source/rights/budget checks, reviewed exact changes and integration receipt | Separate source admission; recover by reviewed source revert preserving workbook files/data |
 | B2 preview qualification | Protected Dev source → non-public sealed artifact/preview; closed | VCC-01–06 results, exact source/output identity, enforced-prod headers and scope checks | Exact preview/build authorization under owner controller; retain prior artifact and record failed build without promotion |
 | B3 production activation | Qualified preview → selected Prod route; closed | Current hard-$0/deny-at-quota and rights proof, exact preview result, preserved live baseline/rollback identity, target permissions | Exact product/environment/candidate promotion instruction absent; restore prior whole-site artifact/route via native controller and read back |
 | B4 generated publication | Verified live candidate → Prod archive prefix; closed | VCC-07 public smoke, exact inventory identity, current mirror base and disjoint path ownership | Native source-owned mirror publication authority absent; CAS/serialized update prevents overwriting another product; source receipt does not grant this effect |
@@ -327,7 +327,7 @@ Authoring source is local/Git; preview holds non-public static build bytes; deli
 
 **Decision.** The owner selected `huijoohwee/agentic-sheets` for development. Its public headless entry owns workbook commands, calculation and portable snapshots. The browser view and persistence adapter consume that contract. Base retains its record schema, store and view exports.
 
-Co-location in Base supplied the verified v1 baseline at E-08/09. A dedicated repository gives Sheets its own source and release identity and requires the site owner to qualify a new source pin. Retain compatible v1 snapshots, the central design profile and its notices. Recover a failed cutover using the previous verified producer and artifact.
+Co-location in Base supplied the verified v1 baseline at E-08/09. E-16/17 establish the dedicated repository’s source identity and the exact pin consumed by Graph. Retain compatible v1 snapshots, the central design profile and its notices. Recover a failed cutover using the previous verified producer and artifact.
 
 ### ADR-02: bounded independent formula core, no Office parity claim
 
@@ -339,7 +339,7 @@ Co-location in Base supplied the verified v1 baseline at E-08/09. A dedicated re
 
 ### ADR-04: exact-artifact promotion through the existing site release owner
 
-**Decision.** Promote one sealed artifact from the selected `huijoohwee/agentic-sheets` Dev repository to `airvio.co/agentic-sheets` through the existing site controller. Publish the verified files to `huijoohwee/huijoohwee:content/agentic-sheets/` after live smoke checks. E-10 rehearsed the Base-sourced artifact locally. The dedicated source pin, hosted preview and production promotion are pending. Rollback uses the site owner’s retained predecessor.
+**Decision.** Promote one sealed artifact from the selected `huijoohwee/agentic-sheets` Dev repository to `airvio.co/agentic-sheets` through the existing site controller. Publish the verified files to `huijoohwee/huijoohwee:content/agentic-sheets/` after live smoke checks. E-17 rehearsed the dedicated artifact locally. Hosted preview and production promotion remain pending. Rollback uses the site owner’s retained predecessor.
 
 ### ADR-05: reference-use, free/FOSS and lazy-load constraints
 
@@ -353,12 +353,12 @@ There is no contested vendor/platform winner requiring an invented argument verd
 
 ## Reference implementation — MVP: bounded calculation and recovery slice
 
-At `SHEETS-WORKBOOK-001@0.5.0` the local MVP covers S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09. S3/C5/ADR-04/VCC-06/07 cover public delivery. S6/S7, ADR-06 and VCC-13–15 describe how to qualify a successor. Optional example criteria apply only to a separately selected feature.
+At `SHEETS-WORKBOOK-001@0.5.1` the local MVP covers S1/S2/S4/S5, C1–C4, ADR-01/02/03/05 and VCC-01–05/08/09/16. S3/C5/ADR-04/VCC-06/07 cover public delivery. S6/S7, ADR-06 and VCC-13–15 describe how to qualify a successor. Optional example criteria apply only to a separately selected feature.
 
 | Slice | Proof fixture and expected result | Local / delivered readiness |
 |---|---|---|
-| Create/edit/calculate | Quantities × prices; two rows total 80; change quantity 2→4 in the 25-unit-price row and read total 130; malformed/cyclic/bad-reference formulas expose errors | dev-proven / undocumented, VCC-01/02 pass locally at E-08/09 |
-| Persist/download/restore | Commit fixture, disconnect, reload, download, clone/restore in disposable origin; values/formulas and errors reconcile | dev-proven / undocumented, VCC-03/04 pass locally at E-08/09 |
+| Create/edit/calculate | Quantities × prices; two rows total 80; change quantity 2→4 in the 25-unit-price row and read total 130; malformed/cyclic/bad-reference formulas expose errors | dev-proven / undocumented, VCC-01/02 pass locally at E-08/09/16 |
+| Persist/download/restore | Commit fixture, disconnect, reload, download, clone/restore in disposable origin; values/formulas and errors reconcile | dev-proven / undocumented, VCC-03/04 pass locally at E-08/09/16 |
 | Keyboard/touch and domain boundary | Edit/commit/cancel on narrow viewport; Base contracts unaffected; no forbidden source/dependencies | local checks partial / undocumented, VCC-08 passes locally and VCC-05/09 retain device and load gaps |
 | Source-to-Prod delivery | Exact preview candidate becomes selected public route and generated archive; rollback restores prior identity | local rehearsal only / undocumented, VCC-06 partial and VCC-07 pending |
 | General workbook extensions | Independently qualify a selected editing or calculation need and rerun its core fixtures with optional features disabled | Proposed / undocumented, VCC-13–15 pending for each successor |
@@ -430,7 +430,7 @@ No CAC/LTV, runway, break-even, profit or 12-month total can be calculated witho
 
 ### C01–C16 coverage and readiness
 
-Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.5.0`; coverage is not product proof or full rule conformance.
+Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.5.1`; coverage is not product proof or full rule conformance.
 
 | Domain | Disposition / exact join | Accountable function | Evidence/gap and next check |
 |---|---|---|---|
@@ -467,7 +467,7 @@ Each disposition joins this artifact `SHEETS-WORKBOOK-001@0.5.0`; coverage is no
 | E-06 | `agentic-os@d3430c8da71b0128b644040bfd1ef32d9f36c50e`: runtime SSOT, START/ADLC/RELEASE/DEPLOY; documentation `docs/DEPLOY-WORKFLOW.md` at E-01 | Source lifecycle and effect receipts remain separate; `docs/documents/` is outside the documentation site's current deployed payload |
 | E-07 | This document candidate: frontmatter/revision/local-link/budget, target diagram projection, repository and affected authoring checks | Repository check and PRD policy check exit 0; target diagram projection validates two diagrams with 12 nodes/13 edges/3 clusters and no projection findings; joined frontmatter/local-link/budget checks and final affected validation are bound at handoff. No Sheets implementation/deployment result |
 
-E-01–07 document the original authoring baseline. E-08–10 supply local implementation evidence, E-11/12 ground the comparison and its optional example. E-13 closes the prior source-check gap. E-14 records three headless scenarios. E-15 checks the selected repository and scopes the headless proof to the verified source. S6 and S7 require independent native results.
+E-01–07 document the original authoring baseline. E-08–10 supply local implementation evidence, E-11/12 ground the comparison and its optional example. E-13 closes the prior source-check gap. E-14 records three headless scenarios. E-15 records the pre-cutover observation. E-16/17 qualify the dedicated source and its site adapter. S6 and S7 require independent native results.
 
 ### Implementation evidence — 2026-11-18
 
@@ -485,7 +485,9 @@ E-01–07 document the original authoring baseline. E-08–10 supply local imple
 | E-12 | [Financial cash-flow showcase](https://office.univer.ai/showcase/sheets/financial-cash-flow-formulas), rendered preview and expanded comparison notes observed 2026-11-18 | The four visible worksheets and notes distinguish loan timing and components, periodic receipts, dated cash flows and guess-sensitive roots. The notes also cover blanks, zero rates and recovery from input errors. This mutable page has no verified source pin. Its description informs the optional F1–F5 example only. No reference workbook, source, screen image, numeric example or layout is a product or test input. |
 | E-13 | [Protected site integration check](https://github.com/huijoohwee/agentic-graph/actions/runs/44142072396) at `agentic-graph@e13df11bad6001a0454ac79e04f18563b7b1dd53`, plus the site owner's local review receipt `9f0909b191c72e40d784b338bef6f201caaaa02b5dc6107e675a5d9afbc82b50` | Supersedes the pending source-check observation in E-10. Source integrated and local native review completed. The owner kept production pending. These receipts apply only to the existing slice. |
 | E-14 | At the E-08 source, pass the three [workbook scenarios](#workbook-scenarios) through `executeWorkbook` (create then setCells), `calculate`, `encodeSnapshot` and `decodeSnapshot`. Each workbook starts at revision 1. | All three edits reached revision 2. Stock read back 16, duration 45, and the checklist retained its label and boolean true. Typed cells matched after serialization. This run covered the existing headless entry only. |
-| E-15 | 2026-11-18. Authenticated repository lookup for `huijoohwee/agentic-sheets`, site `scripts/agentic-sheets-source.json`, and the E-08 package’s public `./sheets` export in Node 22.22.3 with fetch disabled and no window, document or IndexedDB | Lookup returned HTTP 404. The site pin names Base at E-08. On that Base revision the headless check created A1=4 and B1 containing `=A1*3`, edited A1 to 7, read 12 then 21, round-tripped the snapshot at revision 2 and restored it at revision 3 with result 21. All eight existing Sheets core tests also passed with OS networking denied. |
+| E-15 | 2026-11-18. Authenticated repository lookup for `huijoohwee/agentic-sheets`, site `scripts/agentic-sheets-source.json`, and the E-08 package’s public `./sheets` export in Node 22.22.3 with fetch disabled and no window, document or IndexedDB | Before repository creation the lookup returned HTTP 404 and the site pin named Base at E-08. On that Base revision the headless check created A1=4 and B1 containing `=A1*3`, edited A1 to 7, read 12 then 21, round-tripped the snapshot at revision 2 and restored it at revision 3 with result 21. All eight existing Sheets core tests also passed with OS networking denied. |
+| E-16 | [Sheets PR #1](https://github.com/huijoohwee/agentic-sheets/pull/1), protected `ac15ac55ee9c43dce51c4e07747db5780f6d1966`, [main check](https://github.com/huijoohwee/agentic-sheets/actions/runs/44207258906). Run `npm test` and import the package root in Node with networking denied. | Nine core tests pass. A Base v1 snapshot calculated 12, an edit produced 21 and restoring the original produced 12 at revision 3. Eleven real IndexedDB checks passed, including concurrent writes and 100 edits at 3.1 ms p95. The browser retained 130 after offline reload at 360 px. The 12 payload files total 64,191 bytes (69,047 with manifest), digest `a85b9bf3728fc73eca39582f0395ed0149754f7bbf50b5de1c3ed044257759ef`. The runtime uses platform APIs and retains both MIT notices. |
+| E-17 | [Graph PR #1987](https://github.com/huijoohwee/agentic-graph/pull/1987), candidate `ee55d213503b4a028b3f38b6618f5fd4cd89a074`, [protected integration check](https://github.com/huijoohwee/agentic-graph/actions/runs/44207735933). Graph read E-16 from immutable Git blobs. Run its Sheets release tests and rehearse the sealed files in a disposable local mirror. | Fourteen files synchronized, a repeat plan had zero changes, 15 HTTP responses matched and three missing paths returned 404. Chromium at 360 px recalculated 80→130 and retained 130 offline. The receipt identifies the repository, revision and digest. Hosted delivery remains pending. |
 
 ### Risks, gates and next bounded action
 
@@ -499,7 +501,7 @@ E-01–07 document the original authoring baseline. E-08–10 supply local imple
 | R6 No captured prior Sheets/site rollback identity | Site operator | Capture exact current site deployment/artifact/route absence before activation; test restoration and local data compatibility |
 | R7 Copied reference material or forbidden dependency could enter later code | Dev/rights reviewer | VCC-08 provenance/dependency review at exact source; stop and reviewed-revert offending material with data preserved |
 
-**Next outcome.** Product identifies one recurring workbook job and compares the existing steps with the smallest change that would help. Quality owns the outstanding physical-device, screen-reader and timed TTV checks. E-08/10/13 close the earlier Base-sourced work. Dev cutover awaits a readable dedicated repository, exact revision and qualifying checks. Production remains on owner hold pending a new delivery decision, current hard-$0 proof, retained rollback identity and protected exact-candidate approval.
+**Next outcome.** Product identifies one recurring workbook job and compares the existing steps with the smallest change that would help. Quality owns the outstanding physical-device, screen-reader and timed TTV checks. E-08/10/13 close the earlier Base-sourced work. E-16/17 close the dedicated source cutover and local release rehearsal. Production remains on owner hold pending a new delivery decision, current hard-$0 proof, retained rollback identity and protected exact-candidate approval.
 
 ## Optional domain example
 
@@ -530,6 +532,13 @@ If selected, this family uses C2 for evaluation and C1 for typed argument and ra
 Use unambiguous Gregorian date-only inputs for dated functions, explicitly validated ISO YYYY-MM-DD text in the first dated slice. Derive integer UTC day differences independent of time zone, require paired ranges of equal length and dates on or after the first, and require rates greater than −1 for discounting. For IRR/XIRR require both signs, define a deterministic starting guess (default 0.10), and report a numeric error for an invalid guess, nonconvergence or out-of-domain root. Bound each solve to 64 iterations and charge each cash-flow evaluation to the existing per-edit calculation budget. Exhausting the 64 iterations yields a numeric error. Exceeding the workbook-wide budget rejects the edit under the existing limit contract. F4 exercises nonconvergence separately from a workbook-wide limit rejection.
 
 ## Reference implementation — revision history
+
+### 2026-11-18 dedicated source qualification
+
+| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
+|---|---|---|---|
+| `SHEETS-WORKBOOK-001@0.5.1` | C — implement the dedicated workbook. I — retain editable v1 data across the source move. D — qualify the public core and the site source pin together. | R — Sheets and site owners. A — verify the sealed artifact and offline editor. O — E-16/17 establish source and local rehearsal. Production remains pending. | 2026-11-18 |
+
 
 ### 2026-11-18 Dev source and headless contract
 

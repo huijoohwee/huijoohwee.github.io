@@ -29,7 +29,9 @@
         "__tests__/",
         "scripts/",
         "data/",
-        "todo-log.md"
+        "docs/TODO.md",
+        "docs/kanban.md",
+        "docs/documents/hjh-workspace-todo-log.md"
       ],
       "requires": [],
       "reuse": "never",

@@ -32,7 +32,7 @@ overview, open `docs/documents/agentic-graph-mcp-onboarding-index.md`.
 - Mirrored the same install-boundary note into the published docs overview
 - Mirrored the template-only `#promotion.retry <path...>` recovery contract into the shared
   browser-published MCP Apps card instead of creating a second publish-only recovery path
-- Logged the new install boundary and doc-routing follow-ups in `todo-log.md`
+- Logged the new install boundary and doc-routing follow-ups in the workspace planning owner under `.workspace/.todo`
 
 ## Latest Release Evidence (2026-07-11)
 
@@ -98,7 +98,7 @@ Current live examples:
 - Canonical MCP overview:
   `huijoohwee/agentic-graph/docs/documents/agentic-graph-mcp/agentic-graph-mcp.md`
 - Planning ledger:
-  `todo-log.md`
+  `huijoohwee/.workspace/.todo/docs/TODO.md` and `huijoohwee/.workspace/.todo/todo/YYYY-MM/<context>.md`
 
 ## Published Recovery Surface
 

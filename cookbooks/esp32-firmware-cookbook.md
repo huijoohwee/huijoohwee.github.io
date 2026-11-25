@@ -43,9 +43,8 @@ instead of porting that plugin or copying its SDK paths/parser.
 5. Retain local bounded logs and input/artifact hashes. Repeat from another checkout;
    measure actual setup actions and elapsed time before claiming a speed improvement.
 
-The reusable [ESP-IDF skill](https://github.com/huijoohwee/agentic-os/blob/9fd9da9d6b2dfc8997b77ea2e9ffc58560d15d44/skills/esp-idf/SKILL.md)
-owns detailed agent instructions and optional editor/debug references. The link pins
-the exact source revision so consumers can review and install the same instructions.
+Use the [Gateway skill reference](https://github.com/huijoohwee/agentic-gateway/blob/cdb000925729a729732206a32de36e6bc7db011c/references/README.md#skillesp-idf) to find the pinned ESP-IDF instructions and their owner revision.
+
 
 `agentic-os` distributes the on-demand instructions; this website routes to them.
 Keep Canvas and Graph integrations deferred until existing tools leave a measured

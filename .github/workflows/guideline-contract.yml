@@ -40,6 +40,10 @@ jobs:
           cache: npm
       # Agentic OS owns lane and release authority outside candidate-run CI.
       # This job validates only the site's deterministic content contracts.
+      - name: Enforce shared owner reuse
+        uses: huijoohwee/agentic-os/.github/actions/owner-reuse@2a394c589064105387f1c58e6db54da135059c28
+        with:
+          baseline: f07f1a3c27d6936f86233d750d8db7b7690d5fb4
       - name: Materialize deterministic workspace references
         run: |
           printf '%s\n' 'node_modules/' >> .git/info/exclude

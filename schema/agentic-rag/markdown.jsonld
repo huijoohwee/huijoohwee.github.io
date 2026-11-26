@@ -1,0 +1,467 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@id": "rag:Markdown",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.40",
+  "rdfs:label": [
+    { "@value": "Markdown", "@language": "en-us" },
+    { "@value": "Markdown", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Describes Markdown documents used as neutral, dataset-agnostic inputs and exports for AgenticRAG workflows. Markdown content remains schema-agnostic; pipelines map sections and code blocks into GraphRAG-friendly nodes, edges, and chunk_text while keeping JSON-LD graphs and canvas views structurally aligned. In Canvas, the Bottom Panel Markdown Editor/Viewer keeps source text and preview together. The Contents panel may be rendered on the left and may include a Source Files tree (folder/file hierarchy derived from `/` in file names) with icon-only create actions. The Viewer renders preview using GFM-first markdown tokenization with a CommonMark-style fallback, supports word wrap and a slide-style Presentation Mode, and anchors selection back to document line ranges via metadata.documentPath and metadata.lineStart/metadata.lineEnd (with provenance tracked via metadata.timestamp and optional metadata.documentUrl). Token sharing is implemented between the Editor (TOC generation) and Viewer (Preview rendering) to avoid redundant lexing, ensuring optimal performance during mode switches; Presentation Mode renderers should key tokens by documentPath + line ranges to prevent per-slide state leakage. When composing chat context, Canvas may expand a selected node’s line range to a section-aware excerpt bounded by Markdown headings (ATX `#`…`######` and Setext), avoids breaking fenced code blocks, and trims to a small character budget (~2000 chars). Presentation Mode supports Slidev-style slide splitting using standalone `---` separators (outside code fences), an optional MDX evaluation path for embedding safe JSX components inside slides, and zoomable full-screen inspection for Mermaid diagrams. Preview rendering may optionally promote safe rich media embeds (images, video links, and common iframe providers) without requiring schema changes to the Markdown content. For fenced code blocks, implementations may expose a single global Beside/Inline/Render mode in the Markdown Viewer header so all code blocks follow the same layout; per-block overrides may exist but should clear automatically when they match the global mode so future global changes apply. Selecting Render may also enable frontmatter visibility for documents that start with YAML frontmatter. Render mode fits supported previews (e.g., Mermaid diagrams, GeoJSON via MapLibre) into the full code block area. GeoJSON previews should be available regardless of the Geospatial Mode overlay toggle (Document Mode and Geospatial Mode both allow Viewer/Presentation map previews) while reusing the same basemap style configuration. GeoJSON rendering may default to Render for `geojson` blocks and for `json` blocks when an integration detects GeoJSON content; map previews may follow the same overlay conventions as Mermaid (fullscreen overlay in container-scope, open Geospatial panel in viewport-scope). Mermaid code blocks may optionally include a leading YAML `--- ... ---` header to configure that block’s Mermaid init settings. Render mode should reuse the Geospatial Mode basemap style configuration while deferring map initialization until visible to reduce memory/render overhead. Canvas may also ingest external sources (e.g., PDF/HTML/YouTube transcripts) by converting them into Markdown while preserving provenance via metadata.documentUrl. When Geospatial Mode is available, implementations may optionally extract embedded fenced `geojson` code blocks (GeoJSON FeatureCollection) from local Markdown inputs and register them as bounded overlay dataset layers without hardcoding any external URLs.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "用于 AgenticRAG 工作流的 Markdown 文档类型，强调中立、与数据集无关的输入与导出形式。Markdown 内容本身不携带特定模式假设，流水线将段落和代码块映射为适合 GraphRAG 的节点、边和 chunk_text，同时保持 JSON‑LD 图和画布视图在结构上的一致性。Canvas 的 Bottom Panel Markdown Editor/Viewer 提供 Markdown 源文本编辑与预览；其中 Contents 面板可渲染在左侧，并可包含 Source Files 树形导航（按文件名中的 `/` 派生文件夹/文件层级）与图标式创建动作。预览使用以 GFM 为优先的 Markdown 分词与接近 CommonMark 的回退策略渲染，支持 Word Wrap 与幻灯片式 Presentation Mode，并通过 metadata.documentPath 与 metadata.lineStart/metadata.lineEnd 将选中节点/边锚定回文档行区间（来源信息通过 metadata.timestamp 以及可选的 metadata.documentUrl 记录）。在编辑器（TOC 生成）和预览器（渲染）之间实现了 Token 共享，以避免模式切换时的冗余词法分析，确保最佳性能；在 Presentation Mode 中应使用 documentPath + 行区间作为渲染 key 以避免跨幻灯片的状态泄漏。 在构建聊天上下文时，Canvas 可将选中节点的行区间扩展为基于 Markdown 标题边界的片段（ATX `#`…`######` 与 Setext），避免在 fenced code block 内截断，并裁剪到较小的字符预算（约 2000 字符）。Presentation Mode 支持 Slidev 风格的独立 `---` 分隔符（代码块外）分页、可选的 MDX 求值以在幻灯片中嵌入安全的 JSX 组件，以及 Mermaid 图的可缩放全屏查看。预览渲染可选地将安全的富媒体嵌入（图片、视频链接、常见 iframe 提供方）提升为可视内容，而无需修改 Markdown 内容的 schema。对于 fenced 代码块，实现可在 Markdown Viewer 头部提供全局 Beside/Inline/Render 模式，使所有代码块遵循同一布局；同时允许单块覆盖，但当单块模式与全局模式重新一致时应自动清除覆盖状态，以便后续全局切换继续生效。选择 Render 时也可为以 YAML frontmatter 开头的文档自动启用 frontmatter 可见性。Render 模式将支持的预览（例如 Mermaid 图、通过 MapLibre 渲染的 GeoJSON）适配并铺满代码块区域；GeoJSON 预览应与地理空间叠加层开关解耦（文档模式与地理空间模式下均允许 Viewer/Presentation 渲染地图预览），同时复用相同的底图样式配置。其中 `geojson` 代码块可默认进入 Render，而 `json` 代码块在识别为 GeoJSON 内容时也可默认进入 Render；GeoJSON 地图预览也可复用 Mermaid 的交互约定（容器范围用全屏 Overlay 查看，视口范围打开地理空间面板）。Mermaid 代码块可在内容开头放置 YAML `--- ... ---` 头部，用于配置该代码块的 Mermaid 初始化设置。Render 模式应复用地理空间模式的底图样式配置且将地图初始化延后到可见时以降低内存/渲染开销。Canvas 也可将外部来源（如 PDF/HTML/YouTube 字幕）转换为 Markdown 进行摄取，并通过 metadata.documentUrl 保留溯源。当可用地理空间模式时，实现也可以选择性地从本地 Markdown 输入中提取内嵌 fenced `geojson` 代码块（GeoJSON FeatureCollection），并以有界方式注册为叠加层数据集图层，且不得硬编码任何外部 URL。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Frontmatter flow Markdown imports must resolve frontmatter variables first, then a second pass of dotted node-scoped refs like `{{node.data.key}}` before labels and data finalize.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Frontmatter Flow Markdown 导入必须先解析 frontmatter 变量，再进行 `{{node.data.key}}` 这类点路径节点作用域引用的第二次解析，随后才最终写入 label 与 data。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Markdown text SSOT: Editor, Viewer, and Presentation must render the same markdown text source for the active document. Implementations must not require strict path equality between an active document path (e.g. sandbox/docs/demo.md) and a stored document name (e.g. demo.md); prefer store/imported markdown when identities match by basename, and fall back to store/imported text on fs-load failure for that same match to prevent an empty editor while the preview still has content.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Markdown 文本 SSOT：Editor、Viewer、Presentation 必须渲染同一份当前文档 Markdown 文本。实现不得强制要求 activeDocumentPath（例如 sandbox/docs/demo.md）与已存储的文档名（例如 demo.md）完全相等；当 basename 匹配时应优先使用 store/import 的 markdown，并在相同 basename 场景下 @fs 加载失败时回退到 store/import 文本，从而禁止出现“预览有内容而编辑器为空”。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Cross-surface markdown sync: Slides Gallery, Graph Data, and Canvas projections must render the same markdown text SSOT for the active document and must not reuse memoized markdown token caches across different activeDocumentPath values; cached tokens may be reused only when the stored tokens path matches the activeDocumentPath (prevents cross-document bleed and content disappearing on view switches).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "跨界面 Markdown 同步：Slides Gallery、Graph Data 与 Canvas 的投影视图必须渲染同一份当前文档 Markdown 文本 SSOT，且不得在不同 activeDocumentPath 之间复用已记忆化的 Markdown token 缓存；仅当缓存记录的 tokensPath 与 activeDocumentPath 相同才可复用（防止跨文档串扰与视图切换时内容消失）。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Frontmatter-preset Markdown import activation is order-safe: the document chosen for focus by the exact UI import flow becomes the active raw-frontmatter authority before composed source-file replay. Previously selected documents must not overwrite the imported document's frontmatter-selected renderer or surface landing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "带 frontmatter 预设的 Markdown 导入激活必须具备顺序安全：精确 UI 导入流程选中用于聚焦的文档，必须先成为 active raw-frontmatter 权威来源，然后才允许 composed source-file replay 运行。此前已选择的文档不得覆盖导入文档由 frontmatter 指定的 renderer 或 surface 落点。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Applied Markdown replay is also a source-authority reset when invoked explicitly through the runtime command, even if the active document path and markdown text are unchanged. Consumers that keep transient draft state must observe an incremented apply revision so same-text replays restore the source-backed baseline instead of preserving draft residue.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "当通过运行时命令显式触发时，Applied Markdown replay 即使在当前文档路径与 Markdown 文本都未变化的情况下，也属于 source-authority reset。保留瞬态 draft 状态的消费者必须观察递增的 apply revision，使 same-text replay 能恢复 source-backed baseline，而不是保留草稿残留。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Lossless MD→HTML→MD: whenever Markdown is rendered to HTML/DOM for preview (Viewer/Presentation), embed the exact Markdown source as a non-executing payload (base64-encoded) so HTML imports can restore Markdown exactly; do not attempt to reconstruct Markdown from rendered DOM.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "无损 MD→HTML→MD：当 Markdown 被渲染为预览用 HTML/DOM（Viewer/Presentation）时，必须以非执行的 payload（base64 编码）嵌入原始 Markdown 源文本，使 HTML 导入可精确还原 Markdown；禁止从渲染后的 DOM 反推 Markdown。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Webpage-backed Markdown fidelity: support view-only iframe render modes (markdown/html/dom/raw/json) and per-document fidelity controls stored in YAML frontmatter (script policy, include-images, and fidelity level). The UI must expose these controls in the Markdown toolbar nav and provide an explicit Sync (DOM→Markdown) action for JS-heavy pages. Sync output must stay Markdown-only (no duplicate artifact-doc wrappers, no HTML/YAML snapshot blocks, no synthetic HTML Head sections).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "网页型 Markdown 保真：支持视图只读的 iframe 渲染模式（markdown/html/dom/raw/json），并将每个文档的保真控制写入 YAML frontmatter（脚本策略、是否包含图片、保真等级）。UI 必须在 Markdown 工具条导航区集中呈现这些控制，并提供显式的 Sync（DOM→Markdown）动作以支持 JS 重页面。Sync 输出必须保持为纯 Markdown（不得写入重复的 artifact-doc 包装、不得附加 HTML/YAML 快照块、不得生成合成的 HTML Head 区块）。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "HTML/CSS/JS→Markdown conversion invariants (universal): resolve relative URLs against baseUrl for href/src/action/poster/srcset and common lazy-load data-* variants; upsert missing img src from data-src/srcset to prevent empty markdown images; forbid duplicate content emissions (no repeated synthetic headings/cards/pricing/features). Preview must render preserved HTML tables/grids/media with CSS grid spans applying even when the item itself is not display:grid, and must preserve safe video/audio attributes (autoplay/muted/loop/playsinline/poster) and source candidates.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "HTML/CSS/JS→Markdown 转换不变量（通用、与站点无关）：对 href/src/action/poster/srcset 以及常见懒加载 data-* 变体在 baseUrl 上做相对 URL 解析；当 img 缺少 src 时从 data-src/srcset 补齐 src 以禁止出现空的 Markdown 图片；禁止重复内容输出（不得重复合成标题/卡片/定价/特性）。预览必须渲染保留的 HTML 表格/网格/媒体：网格项的 span 规则即使在该项本身不是 display:grid 时也要生效，并保留安全视频/音频属性（autoplay/muted/loop/playsinline/poster）与 source 候选。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Markdown Viewer layout + export: in Viewer and Split modes, render article content at a stable 80% of the containing section width; toggling Explorer open/closed and the workspace Canvas pane open/closed must not change this rule. Save As supports Markdown/JSON/JSON-LD and PDF export; PDF export uses an in-page print pipeline (no pop-ups) and cleans up temporary print DOM.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Markdown Viewer 布局与导出：在 Viewer 与 Split 模式下，article 内容宽度应稳定为容器 section 宽度的 80%；切换 Explorer 展开/收起与工作区 Canvas pane 显示/隐藏不得改变该规则。Save As 支持导出 Markdown/JSON/JSON-LD 与 PDF；PDF 导出使用页面内 print 流水线（无弹窗）并清理临时打印 DOM。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "In-place Markdown editing palette: Viewer Read mode may enable click-and-edit contentEditable blocks with a selection-aware bubble toolbar, slash-command menu (\"/\" near caret), and inline link edit popover (Cmd/Ctrl+K). All operations are bounded Markdown text transforms via the shared formatting pipeline and floating-menu SSOT. Edit surfaces must reuse read-surface layout/typography (including indent/padding/margin/border/caret/whitespace/tab-size). Actions are selection-scoped and view-only: do not mutate GraphData/layout/zoom, gate selection sync with requestAnimationFrame, skip no-op commits, keep actionable buttons on shared hand-cursor tokens + pointer-down guards, and route variable Apply through shared applyVariableToken only (no direct DOM mutation).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "原位 Markdown 编辑调色板：Viewer Read 模式可启用点击即改的 contentEditable 区块，并配套基于选择的气泡工具条、斜杠命令菜单（光标附近输入“/”）以及内联链接编辑弹层（Cmd/Ctrl+K）。所有操作都通过共享格式化流水线作为有界的 Markdown 文本变换实现（不存在独立的 WYSIWYG 文档模型），复用唯一的浮动菜单 SSOT（气泡/调色板/弹层类名与主题 token），并遵守在 Viewer 根节点与代码块 Copy 按钮上执行的 FORBID‑copy 策略。这些动作严格基于当前选择且仅为视图层：不得修改 GraphData、布局或缩放；必须通过 requestAnimationFrame 限制选择更新，并跳过无变化提交，防止抖动式重算或选择监听死循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Workspace Editor `Markdown + Read + Viewer` must not keep a duplicate header-level formatting row (`Heading/Bold/Italic/Strikethrough/...`) when click-to-edit is available. The inline floating selection toolbar owns formatting on that surface; the workspace header keeps navigation, layout, and display controls only.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "在 Workspace Editor `Markdown + Read + Viewer` 中，只要 read surface 支持 click-to-edit，就不得保留重复的 header 级格式化行（`Heading/Bold/Italic/Strikethrough/...`）。该表面的格式化能力由内联浮动选择工具条独占；workspace header 仅保留导航、布局与显示控件。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Viewer header controls are actionable-only: hide Content mode controls when no real switch exists, hide Storyboard Widget when unavailable, hide non-actionable header formatting, and render Display toggles only on markdown read surfaces.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Viewer header 控件必须仅在可执行时渲染：无真实模式切换时隐藏 Content 控件，Storyboard Widget 不可用时隐藏，隐藏无效格式化入口，且 Display 开关仅在 markdown read surface 渲染。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Inline-code in-place editing must reuse the exact read surface (css-var colors, font, line-height, padding, ring/border, caret/whitespace/tab-size) so View→Edit never changes inline-code layout; edit contentEditable surfaces may only apply Markdown text transforms and must not introduce new typography or spacing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "行内代码原位编辑必须复用与 Read 模式完全相同的视觉表面（基于 css-var 的颜色、字体、行高、内边距与描边/轮廓），确保 View→Edit 不改变行内代码布局；contentEditable 编辑面仅允许执行 Markdown 文本变换，禁止新增或修改排版与间距。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "View↔Edit parity for inline code and lists is enforced via shared SSOT paths: a centralized inline-code parity module defines view/edit classes consumed by both MarkdownInlineRenderer and MarkdownBlockContainer html normalization, and a list layout SSOT module defines shared marker/indent/spacing and row gutter alignment reused by MarkdownListBlock so contentEditable entry never introduces per-surface typography or spacing drift beyond intentional, code-backed parity tightening.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "行内代码与列表的 View↔Edit 一致性通过共享 SSOT 路径强制实现：集中式行内代码 parity 模块定义 View/Edit 共用类，并由 MarkdownInlineRenderer 与 MarkdownBlockContainer HTML 规范化共同消费；列表布局 SSOT 模块统一定义标记/缩进/间距与行级 gutter 对齐，由 MarkdownListBlock 复用，确保进入 contentEditable 不会在各界面引入额外的排版或间距漂移，除非是有意且经代码实现的保真度微调。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "View↔Edit WYSIWYG-ish parity helpers must be centralized: clients should use a single shared helper layer for contiguous quote-/callout-line range mapping, no-op replace-line detection, and bounded typography/spacing capture, and must not duplicate ad-hoc regex/range/guard logic across surfaces or introduce churny commit/blur loops.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "View↔Edit WYSIWYG 式一致性辅助逻辑必须集中管理：客户端应通过单一共享 helper 层统一处理连续引用/Callout 行区间映射、无变化行替换检测以及有界的排版/间距捕获，禁止在不同界面重复实现临时性的正则/行号/防护逻辑或引入抖动式提交/失焦循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Title and title-like text (Markdown headings and workspace property names) must render truncated with ellipsis at rest, reuse the same typography in in-place html editors, reveal full text on focus via horizontal scroll, and forbid alternate WYSIWYG title stacks or layout/spacing drift when entering edit.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "标题与类标题文本（Markdown 标题与工作区属性名称）在静止状态必须使用省略号截断，并在原位 html 编辑器中复用相同排版；获得焦点时通过水平滚动展示完整文本；进入编辑时禁止引入平行的 WYSIWYG 标题栈或排版/间距漂移。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Floating selection toolbar SSOT: MarkdownBlockContainer and markdownFloatingSelectionToolbar own selection capture, floating summary toggles, and palette button handlers; all floating palettes must reuse these helpers, shared hand-cursor class tokens, and shared pointer-down guards. Do not introduce duplicate toolbars, per-surface handlers, direct editor DOM mutation paths, or churny recompute loops.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "浮动选择工具条 SSOT：MarkdownBlockContainer 与 markdownFloatingSelectionToolbar 统一负责选择捕获、浮动 summary 切换与调色板按钮处理；所有浮动调色板必须复用这些 helper，不得引入重复工具条、界面特有交互处理或抖动式重算循环。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Markdown Read Viewer data-view controls (Table, Multi-dimensional Table, Kanban) must use semantic landmarks (`header/nav/aside`) and shared high-z floating menu layers so controls remain clickable and are never occluded by sticky headers or neighboring surfaces.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Markdown Read Viewer 的数据视图控件（表格、多维表、看板）必须使用语义化地标（`header/nav/aside`），并复用高层级浮动菜单样式，确保控件可点击且不会被 sticky 表头或相邻界面遮挡。",
+      "@language": "zh-cn"
+    }
+  ],
+  "markdownUiGuidelines": {
+    "noExternalEditorJsDependency": "Do not import, embed, or copy Editor.js; keep Markdown editing/rendering native and dependency-free.",
+    "wysiwygLikeFormatting": "Provide Editor.js-like affordances via native controls (e.g., formatting buttons applying Markdown syntax to the current selection) while keeping the canonical document as Markdown text.",
+    "viewerBlockEditing": "In Viewer mode, allow bounded block-style operations (e.g., heading grip drag reorder among same-parent siblings and inserting a new blank line after a block) implemented as pure Markdown text transforms using TOC/line semantics; avoid WYSIWYG block state.",
+    "tocReorderHandleOnly": "Enable TOC reorder drag only from a dedicated grip handle; avoid making the whole row draggable to prevent accidental reorders.",
+    "tocFocusFromOtherSurfaces": "Allow non-markdown projections (e.g., Graph Table / Graph Data Table) to request TOC focus using a stable event contract (e.g., dispatch CustomEvent('kg:tocFocus', {detail:{id}})). The id must be a stable heading identifier derived from shared slugify/anchor rules; do not invent per-surface ids.",
+    "sidebarAndCollapsePersistence": "Persist Markdown sidebar-open state and collapsed heading ids via canonical, app-namespaced LocalStorage keys (no magic strings). Collapsed headings should be scoped per documentPath (store under a doc-derived suffix) to prevent cross-document content hiding.",
+    "ssotMarkdownSectionHeader": "Use one-and-only Markdown Section Header implementation across Editor/Viewer/Presentation; do not introduce mode-specific header variants.",
+    "ssotMarkdownSidebar": "Use one-and-only Markdown Explorer sidebar structure across modes. The sidebar may include an action menu in the Source Files section header for VS Code-like parity; other section headers remain typography-only. Actions must reuse the same underlying integrations as the Markdown header (no duplicate logic paths).",
+    "docsiteSpaExport": "Allow exporting a folder of Markdown files into a static documentation website that renders Markdown client-side with SPA routing; keep Markdown as SSOT and avoid domain coupling.",
+    "docsiteFileConventions": "Support common docsite conventions: README.md as home, optional _sidebar.md and _navbar.md for navigation, optional _coverpage.md and 404.md for landing/not-found; route paths map to file paths.",
+    "docsiteSearchIndex": "If search is enabled, build a bounded index from headings + short excerpts + anchors; avoid shipping unbounded full-text blobs.",
+    "persistenceKeys": [
+      "kg:ui:markdown:sidebarOpen",
+      "kg:ui:markdown:explorer:sourceFilesCollapsed",
+      "kg:ui:markdown:explorer:sourceFilesExpandedPaths",
+      "kg:ui:markdown:explorer:outlineCollapsed",
+      "kg:ui:markdown:explorer:backlinksCollapsed",
+      "kg:ui:markdown:collapsedHeadingIds",
+      "kg:ui:markdown:collapsedHeadingIds:<docHash>"
+    ]
+  },
+  "markdownPreviewSyntaxSupport": {
+    "anchors": [
+      {
+        "@value": "Preserve explicit anchor targets like <a id=\"...\"></a> (no href) and support deterministic heading ids using a shared slugify function so hash navigation works consistently.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "保留显式锚点目标（例如 <a id=\"...\"></a>，无 href），并用共享的 slugify 规则生成确定性的标题 id，以确保 hash 导航一致可用。",
+        "@language": "zh-cn"
+      }
+    ],
+    "blockIds": [
+      {
+        "@value": "Support trailing block-id markers like ^block-id as anchor targets (id=\"^block-id\") so in-doc links can target specific paragraphs/blocks.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持行尾 block-id 标记（例如 ^block-id）作为锚点目标（id=\"^block-id\"），使文内链接可指向特定段落/块。",
+        "@language": "zh-cn"
+      }
+    ],
+    "callouts": [
+      {
+        "@value": "Support callout syntax as a subset of blockquotes: first line [!type] (e.g., [!info]) and optional + / - to make it foldable (open or collapsed by default).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持 Callout 语法（作为 blockquote 子集）：首行 [!type]（如 [!info]），并可用 + / - 表示可折叠（默认展开或折叠）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterMermaidAnchors": [
+      {
+        "@value": "When YAML frontmatter contains a Mermaid diagram, Mermaid click directives (e.g., click X \"#anchor\") should map to graph edges (pointsTo) targeting Anchor nodes. Frontmatter-focused Canvas views may include these anchors plus any tied internal links and callouts. Producers preserve relative metadata.documentPath segments when available and strip absolute filesystem paths down to basenames to keep provenance portable.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "当 YAML frontmatter 含 Mermaid 图时，Mermaid 的 click 指令（如 click X \"#anchor\"）应映射为指向 Anchor 节点的图边（pointsTo）。前置的 Frontmatter 画布视图可包含这些锚点及其关联的文内链接与 Callout。生产者在可用时保留 metadata.documentPath 的相对路径片段，并将绝对文件系统路径剥离为 basename，以保持溯源的可移植性。",
+        "@language": "zh-cn"
+      }
+    ],
+    "frontmatterMarkdownRichMediaLinking": [
+      {
+        "@value": "Frontmatter graphs (nodes/connections/'kg:subgraphs'), Mermaid diagrams, Markdown body anchors, wikilinks, templates, and Rich Media nodes are different projections of the same document-level graph. YAML frontmatter may define Flow/cluster graphs and Mermaid diagrams; Markdown body may define anchors (<a id=\"...\">, heading ids, ^block-id), wikilinks ([[Note]] / [[#Heading]] / [[#^block-id]]), and {{templates}} in fenced blocks; Rich Media nodes carry media_kind/media_url/iframe_url and optional anchor metadata (e.g., doc:anchorId). Implementations must keep these projections structurally aligned: Mermaid click targets (#anchor) and graph edges should resolve to the same Anchor/Note nodes; body wikilinks and anchors must not require absolute in-repo filesystem paths; Rich Media overlays must preserve node ids and anchor links across live Canvas and HTML exports. Linking semantics must remain domain-agnostic and schema-neutral; YAML/Mermaid/Markdown/Rich Media must not introduce renderer-specific link syntax.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Frontmatter 图（nodes/connections/'kg:subgraphs'）、Mermaid 图、Markdown 正文锚点、Wikilink、模板以及 Rich Media 节点，是同一份文档级图的不同投影。YAML frontmatter 可定义 Flow/cluster 图与 Mermaid 图；Markdown 正文可定义锚点（<a id=\"...\">、标题 id、^block-id）、Wikilink（[[Note]] / [[#Heading]] / [[#^block-id]]）以及 fenced 块中的 {{templates}}；Rich Media 节点通过 media_kind/media_url/iframe_url 以及可选锚点元信息（如 doc:anchorId）描述媒体。实现必须保持这些投影在结构上的对齐：Mermaid click 目标（#anchor）与图边应解析到相同的 Anchor/Note 节点；正文 Wikilink 与锚点不得依赖绝对 in-repo 文件系统路径；Rich Media overlay 必须在实时 Canvas 与 HTML 导出中保持节点 id 与锚点链接不变。链接语义必须保持领域无关与模式中立；YAML/Mermaid/Markdown/Rich Media 不得引入特定渲染器专用的链接语法。",
+        "@language": "zh-cn"
+      }
+    ],
+    "wikilinks": [
+      {
+        "@value": "Support wikilinks in both forms: in-doc [[#Heading]] / [[#^block-id]] must render as safe hash links, and file-level [[Note]] / [[Note#Heading]] may resolve against the current Source Files set via loose name normalization (no hardcoded vault paths) and navigate in-app.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持两类 Wikilink：文内 [[#Heading]] 与 [[#^block-id]] 必须渲染为安全的 hash 链接；文件级 [[Note]] / [[Note#Heading]] 可基于当前 Source Files 集合通过宽松的名称归一化进行解析（禁止硬编码 vault 路径），并在应用内导航。",
+        "@language": "zh-cn"
+      }
+    ],
+    "backlinks": [
+      {
+        "@value": "Backlinks (linked mentions vs unlinked mentions) are derived from Source Files text/link indexing; do not require Markdown content changes and are surfaced as an optional computed sidebar view.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "反向链接（已链接提及 vs 未链接提及）可从 Source Files 文本/链接索引推导；无需修改 Markdown 内容，应作为可选的计算侧边栏视图呈现。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
+    "mermaidMultiDiagramFences": [
+      {
+        "@value": "Support multi-diagram Mermaid fences: when a single ```mermaid block contains repeated diagram starts (e.g., multiple graph/flowchart roots), split it into multiple Mermaid render units so every diagram renders deterministically.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "支持多图 Mermaid 代码块：当单个 ```mermaid 代码块包含多个图起始声明（例如多次出现 graph/flowchart 根声明）时，应拆分为多个可渲染单元，确保每个图都能确定性渲染。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
+    "mmdFileNormalization": [
+      {
+        "@value": "Treat .mmd (Mermaid-only) documents as first-class Mermaid inputs: normalize raw Mermaid text into a fenced ```mermaid block before parsing and before storing the active Markdown document, so both graph extraction and preview rendering behave consistently.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "将 .mmd（仅 Mermaid）文档视为一等 Mermaid 输入：在解析之前、以及写入当前活动 Markdown 文档之前，把原始 Mermaid 文本归一化为 fenced 的 ```mermaid 代码块，从而保证图抽取与预览渲染行为一致。",
+        "@language": "zh-cn"
+      }
+    ]
+    ,
+    "htmlCodeBlocks": [
+      {
+        "@value": "In code-block Render mode, render HTML/SVG fenced code blocks as safe HTML (sanitized; no scripts or inline event handlers) and allow drag-to-pan via container scrolling.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在代码块 Render 模式下，将 HTML/SVG fenced code block 渲染为安全 HTML（消毒；禁止 script 与内联事件处理器），并允许通过滚动容器实现拖拽平移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "iframeSrcdoc": [
+      {
+        "@value": "Allow local-only <iframe srcdoc=...> blocks to render as sandboxed iframes (no network dependency; scripts disabled), enabling rich media demos without hardcoded domains.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "允许本地化的 <iframe srcdoc=...> 以沙盒 iframe 渲染（不依赖网络；禁用脚本），以便在不硬编码域名的前提下演示富媒体。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "markdownUiInteractionContract": {
+    "textSelectionGestures": [
+      {
+        "@value": "Viewer/Presentation preserve native selection gestures: single click caret anchor, double click word, triple click paragraph/line. Do not hijack double-click for navigation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Viewer/Presentation 保持原生选择手势：单击光标锚点、双击选词、三击选段落/行；禁止把双击改成导航。",
+        "@language": "zh-cn"
+      }
+    ],
+    "rightClickShowOnIn": [
+      {
+        "@value": "Right Click opens the app-level \"Show on/in …\" toolbar at the exact pointer position (no fly-out bias).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条（禁止 fly-out 偏移）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "reorderGrip": [
+      {
+        "@value": "Drag reorder is enabled only from a dedicated grip handle; do not make entire blocks draggable.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "拖拽重排仅允许从专用 grip 手柄触发；禁止让整块内容可拖拽。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidRenderPanZoom": [
+      {
+        "@value": "Rendered Mermaid previews support drag/pan (and optional zoom) in code-block Render mode; interaction should be container-scoped and persist per a canonical storage key when enabled.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid 预览在代码块 Render 模式下支持拖拽平移（可选缩放）；交互应限定在容器范围内，并在启用时通过规范的存储 key 进行持久化。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidInDocHashLinks": [
+      {
+        "@value": "In Mermaid SVGs and rendered HTML, href=\"#...\" links are treated as in-document navigation only and scroll within the Markdown preview container; do not navigate to external URLs.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid SVG 与渲染 HTML 中的 href=\"#...\" 仅作为文内导航：在 Markdown 预览容器内滚动定位；不得跳转到外部 URL。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mermaidPreviewOpenGesture": [
+      {
+        "@value": "Open Mermaid Preview Panel only on double-click (not single click) so single click remains available for selection and in-doc navigation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Mermaid 预览面板仅允许通过双击打开（禁止单击打开），以便单击仍用于选择与文内导航。",
+        "@language": "zh-cn"
+      }
+    ],
+    "typographyLadder": [
+      {
+        "@value": "Typography ladder must be monotonic: body < h6 < h5 < h4 < h3 < h2 < h1; presentation mode scales the whole ladder up without inverting ordering.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "排版梯度必须单调：正文 < h6 < h5 < h4 < h3 < h2 < h1；演示模式整体放大但不得反转层级顺序。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "uiPaths": {
+    "ui-path-0": [
+      {
+        "@value": "Canonical Markdown curation path: BottomPanel → Curation → Markdown (Editor/Viewer/Presentation). Keep this path stable across hosts and extracted surfaces.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "规范的 Markdown 策展路径：BottomPanel → Curation → Markdown（Editor/Viewer/Presentation）。在宿主与抽取表面间保持该路径稳定。",
+        "@language": "zh-cn"
+      }
+    ]
+  },
+  "markdownTextSourceOfTruth": [
+    {
+      "@value": "Editor, Viewer, and Presentation render from a single canonical Markdown text value; switching modes must not create independent stale copies of the same document.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Editor、Viewer 与 Presentation 从单一的规范 Markdown 文本值渲染；模式切换不得生成彼此独立且可能陈旧的副本。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Workspace-seed authoring is source-owned by agentic-graph/docs/workspace-seeds. The Agentic Canvas OS default-storage projection must remain byte-identical, publish repositories must not retain an editable copy, and duplicate, stale, fallback, renamed, legacy, or conflicting variants are rejected instead of aliased or hidden.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "工作区种子的创作源仅由 agentic-graph/docs/workspace-seeds 管理。Agentic Canvas OS 的默认存储投影必须保持逐字节一致，发布仓库不得保留可编辑副本；重复、陈旧、回退、改名、旧版或冲突变体必须被拒绝，而不是通过别名或隐藏方式保留。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Explicit output topology is source-owned: generated Widget or Card text first persists in its Markdown graph as a standalone Rich Media Panel without an inferred edge. Only user-authored edge drags may fan out to Rich Media output panels or downstream Widget action cards; publication must not auto-merge targets or overwrite action cards.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "显式输出拓扑由源文档所有：Widget 或 Card 生成的文本先作为独立 Rich Media Panel 持久化到其 Markdown 图中，不推断连边。只有用户主动拖拽创建的边才能分流到 Rich Media 输出面板或下游 Widget 动作卡；发布不得自动合并目标，也不得覆盖动作卡。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "The active Source Files document remains the mutation authority for XR, Animation, and Camera. While bootstrap or an explicit document intent is resolving or failed, inspection reports not-ready and controls fail closed without changing graph metadata or runtime revision; AgenticRAG is a downstream contract mirror, not a mutation owner.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "当前 Source Files 文档继续作为 XR、Animation 与 Camera 的变更权威。当 bootstrap 或显式 document intent 正在解析或失败时，inspection 必须报告 not-ready，controls 必须在不改变 graph metadata 或 runtime revision 的情况下失败关闭；AgenticRAG 只是下游契约镜像，不是变更所有者。",
+      "@language": "zh-cn"
+    }
+  ],
+  "storageSyncContracts": [
+    {
+      "@value": "Canonical Markdown remains Git-owned source text; generated chat/session Markdown writes GitHub first, D1 mirrors readable Markdown/manifests, and remote updates must re-enter the visible Source Files workspace through the existing runtime path rather than a second import flow.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "规范 Markdown 仍是 Git 管理的源文本；生成的 chat/session Markdown 先写入 GitHub，D1 仅镜像可读 Markdown/manifest，且远端更新必须通过现有运行时路径重新进入可见 Source Files 工作区，而不是走第二套导入流程。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Cloudflare D1 document writes treat workspaceId plus canonicalPath as the storage identity. Seed, Source Files, and Share URL producers must converge on one row instead of creating duplicate ids for the same canonical document.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "Cloudflare D1 文档写入以 workspaceId 加 canonicalPath 作为存储身份。Seed、Source Files 与 Share URL 生产者必须收敛到同一行，而不是为同一规范文档创建重复 id。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Storage-sync conflicts should retain local outbox records until resolution and reuse the shared toast/log action surfaces instead of introducing a markdown-specific conflict UI.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "存储同步冲突应在解决前保留本地 outbox 记录，并复用共享的 toast/log 动作表面，而不是引入 Markdown 专属的冲突 UI。",
+      "@language": "zh-cn"
+    }
+  ],
+  "localMarkdownCrud": {
+    "supportedActions": [
+      {
+        "@value": "Local Markdown CRUD focuses on create/read/update inside a user-selected folder: Open Folder, New Folder, New Source File, and edit/save text. Delete/rename are optional and must surface capability state explicitly.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "本地 Markdown CRUD 聚焦于用户选定目录内的创建/读取/更新：Open Folder、New Folder、New Source File 以及编辑/保存文本。删除/重命名为可选能力且必须明确展示权限状态。",
+        "@language": "zh-cn"
+      }
+    ],
+    "browserConsistency": [
+      {
+        "@value": "Use the Web File System Access API for writable handles when available; otherwise fall back to directory input enumeration for read-only access. UI must clearly communicate read-only vs writable mode and avoid silent no-ops.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "可用时使用 Web File System Access API 获取可写句柄；否则回退到目录选择枚举以提供只读访问。UI 必须清晰表达只读/可写模式并避免静默无效操作。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}

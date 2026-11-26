@@ -1,0 +1,456 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@id": "rag:GeospatialMode",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.3.0",
+  "rdfs:label": [
+    { "@value": "Geospatial Mode", "@language": "en-us" },
+    { "@value": "地理空间模式", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a domain-agnostic geospatial visualization and spatial query surface for AgenticRAG graphs. Implementations should transform nodes containing properties.geo.{lat,lng} into GeoJSON Point features for map rendering, support clicking/selecting POIs and synchronizing selection across map and graph views (for example selecting the corresponding node when clicking a graph-node POI on the map), and execute bounded client-side spatial queries (for example proximity search) without unbounded loops or dataset-specific assumptions. Basemaps should prefer vector-tile style sources by default when available, and support interactive navigation (drag/pan + smooth zoom) unless explicitly gated by an interaction mode. Implementations may render lightweight popups on hover/click for POIs, and may cluster large point datasets using built-in map renderer clustering (configuration-driven, dataset-agnostic). Remote dataset fetching must be bounded by configurable timeout/size limits (UI may expose these limits in a Source Files surface) and should fail with actionable errors when limits are exceeded. In 3D render mode, implementations may present a globe-style projection when supported by the map renderer. Ingestion layers should support deriving properties.geo from dataset-agnostic shapes such as GeoJSON Feature/FeatureCollection inputs and generic record datasets (arrays of records or object maps) with common coordinate fields. The dataset registry may be updated from curation surfaces (for example a Source Files import surface with per-row URL registration) as long as additions remain dataset-agnostic and bounded. Persistence keys should be app-namespaced (for example kg:ui:geospatial:*) to avoid cross-app collisions. When embedded into an existing canvas UI, the overlay container must sit above the graph renderer and must capture pointer events when interactive; critical layout styles should be bundled with the module or inlined to avoid host-CSS regressions. When implemented as a plugin, cross-repo boundaries must be enforced by importing only via declared package entrypoints (prefer package-root imports for host integration; avoid package subpath imports) and by keeping persistence keys and contract types single-source-of-truth. Note: reference implementation lives in the gympgrph repo; some runtimes may load it via plugin modules and some may intentionally omit map rendering or spatial query execution.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义面向 AgenticRAG 图的领域无关地理空间可视化界面。实现应将包含 properties.geo.{lat,lng} 的节点转换为 GeoJSON 点要素用于地图渲染，并支持渲染额外的数据集图层（GeoJSON 与记录式数据集），禁止数据集特定假设。基底地图在可用时应默认优先使用矢量瓦片风格源，并支持交互式导航（拖拽/平移 + 平滑缩放），除非显式通过交互模式进行限制。实现可为 POI 提供 hover/click 轻量弹窗，并可对大型点数据集启用配置化聚类（保持数据集无关）。远程数据集拉取必须受可配置的超时/体积限制约束（UI 可在 Source Files 等策展表面暴露该限制配置），并在超出限制时给出可操作的错误提示；所有拉取/解析工作需有界并避免无界循环。数据集注册表可由策展表面更新（例如 Source Files 导入界面按行注册 URL），但新增行为必须保持数据集无关并执行有界。在嵌入现有画布 UI 的场景中，叠加层容器必须位于图渲染之上，并在可交互时捕获指针事件；关键布局样式应随模块一起打包或以内联方式提供，以避免宿主 CSS 回归导致交互失效。当以插件方式实现时，必须通过声明的包入口执行跨仓库集成（宿主集成优先使用包根入口，避免包子路径导入，并禁止 sibling 源码相对路径导入），并确保持久化 key 与合约类型单一真源。注：参考实现位于 gympgrph 仓库；部分运行时可能以插件方式加载，也可能不会实现地图渲染或空间查询执行。",
+      "@language": "zh-cn"
+    },
+    {
+      "@value": "Host integration contract: when Geospatial Mode is enabled, host UIs should forbid graph renderer interference by not mounting graph canvases in the background (2D/3D) and routing zoom/fit commands to the map surface. Hosts may sync the mode across tabs and embedded previews via a namespaced localStorage key (e.g. kg:ui:geospatial:overlayEnabled) and a same-window CustomEvent (e.g. kg:geospatialModeChanged). Markdown Viewer/Presentation may still render inline GeoJSON previews independently of the global Geospatial Mode toggle, and may expose an action to register an embedded GeoJSON block as a bounded overlay dataset.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "宿主集成合约：启用地理空间模式时，宿主 UI 应通过不在后台挂载 2D/3D 图画布来禁止图渲染干扰，并将缩放/适配类命令路由到地图表面。宿主可通过命名空间化的 localStorage key（例如 kg:ui:geospatial:overlayEnabled）与同窗口 CustomEvent（例如 kg:geospatialModeChanged）在多标签页与嵌入预览间同步模式。Markdown Viewer/Presentation 仍可独立渲染内嵌 GeoJSON 预览，不应与全局地理空间模式开关强耦合。",
+      "@language": "zh-cn"
+    }
+  ],
+  "geospatialUiGuidelines": {
+    "datasetFetchLimitsSurface": "Expose timeout/max-bytes in a single canonical surface (e.g. Workflow Step 3). Do not duplicate Dataset fetch limits inputs in the Geo side panel.",
+    "datasetImportHintWhenManagerHidden": "When the Geo side panel hides dataset-add UI, replace inline guidance copy with an icon-only hint button (tooltip) pointing to Source Files ingest.",
+    "embeddedGeoJsonFromMarkdown": "If a local Markdown Source File contains fenced `geojson` blocks whose content parses as a GeoJSON FeatureCollection, implementations may extract and upload those blocks to a bounded local dataset cache and register the resulting same-origin URLs as overlay datasets (for example via a per-code-block “Add as Dataset” action in Markdown Viewer/Presentation).",
+    "markdownGeoJsonLoadGraphAutoEnable": "When a fenced Markdown GeoJSON block loads as GraphData and auto-enable is allowed, extract requests through one shared helper and reuse the same geospatial auto-enable path as `.geojson` imports; forbid Markdown-only mode toggles.",
+    "devRemoteFetchProxy": "On localhost/dev, cross-origin map assets may be fetched via a same-origin proxy endpoint (e.g. /__fetch_remote). The proxy must return full, untruncated response bodies for JSON and binary assets (style JSON, glyph PBF, tile PBF/PNG) and must not prematurely abort upstream fetches on request close events.",
+    "markdownItineraryPoiDerivation": "If a local Markdown document contains itinerary-style structure (e.g. headings with location tokens such as airport codes), implementations may derive POIs from section metadata, resolve coordinates using a bounded in-memory index built from already-registered point datasets (records or GeoJSON points), and render a lightweight details panel (rich media links/images) when a POI is selected. The derivation must remain dataset-agnostic and configuration-driven."
+  },
+  "propertyDefinitions": {
+    "autoEnableGeospatialOnGeoImport": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Auto-enable Geospatial Mode on geo imports", "@language": "en-us" },
+        { "@value": "地理数据导入后自动启用地理空间模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the host should auto-enable Geospatial Mode immediately after a successful import that yields geo-capable GraphData (nodes contain properties.geo.{lat,lng}). This must be configurable and should default to false for graph-first defaults unless the product explicitly opts into auto-enable.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "宿主在成功导入产生地理节点（包含 properties.geo.{lat,lng}）后是否应自动启用地理空间模式。该行为必须可配置；若产品未显式选择自动启用，应默认关闭以保持以图为主的默认体验。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapStyleUrl": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Map style URL", "@language": "en-us" },
+        { "@value": "地图样式 URL", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional MapLibre vector style URL for MapLibre view modes. Blank style should resolve to a safe MapLibre default style URL. Absolute http(s) style URLs may be persisted for explicit non-default styles. SVG fallback mode should remain explicit and continue to forbid square raster fallback contracts.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于 MapLibre 视图模式的可选 MapLibre 矢量样式 URL。样式为空时应回退到安全的 MapLibre 默认样式 URL。可持久化绝对 http(s) 样式 URL 作为显式非默认样式。SVG 回退模式应保持显式选择并继续禁止方形栅格回退合约。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapViewMode": {
+      "@type": "xsd:string",
+      "enum": ["2d", "2d-svg", "3d"],
+      "rdfs:label": [
+        { "@value": "Map view mode", "@language": "en-us" },
+        { "@value": "地图视图模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "View mode for geospatial rendering: 2d (MapLibre), 2d-svg (high-fidelity SVG fallback), or 3d (MapLibre). Implementations should keep one SSOT mode value and avoid duplicate mode state paths.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "地理空间渲染视图模式：2d（MapLibre）、2d-svg（高保真 SVG 回退）或 3d（MapLibre）。实现应保持单一真源模式值并避免重复模式状态路径。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapOverlayEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Map overlay enabled", "@language": "en-us" },
+        { "@value": "地图叠加层启用", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether a translucent basemap layer is rendered on top of the main infinite canvas. Implementations should default to false on application load to preserve graph-first affordances.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "是否在主无限画布上方渲染半透明底图叠加层。实现应在应用加载时默认关闭，以保留以图为主的交互能力。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapOverlayOpacity": {
+      "@type": "xsd:decimal",
+      "rdfs:label": [
+        { "@value": "Map overlay opacity", "@language": "en-us" },
+        { "@value": "地图叠加层透明度", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Opacity of the basemap overlay layer. Implementations should clamp to [0,1].",
+          "@language": "en-us"
+        },
+        {
+          "@value": "底图叠加层透明度。实现应限制在 [0,1]。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapOverlayInteractive": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Map overlay interactive", "@language": "en-us" },
+        { "@value": "地图叠加层可交互", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the overlay map captures pointer/keyboard interactions. For newer implementations, prefer mapInteractionMode to express off / hold-to-interact / always-interact behavior while keeping graph-first defaults. Implementations should default to a graph-first mode on application load.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加地图是否捕获指针/键盘交互。新实现建议使用 mapInteractionMode 表达 关闭 / 按住键临时交互 / 始终交互，同时保持以图为主的默认体验。实现应在应用加载时默认采用以图为主的模式。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapInteractionMode": {
+      "@type": "xsd:string",
+      "enum": ["off", "hold-space", "always"],
+      "rdfs:label": [
+        { "@value": "Map interaction mode", "@language": "en-us" },
+        { "@value": "地图交互模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Interaction mode for the overlay map: off (graph only), hold-space (temporarily allow pan/zoom while holding Space), or always (map captures pointer interactions). On application load, graph-first affordances are preserved by defaulting mapOverlayEnabled to false; when the user explicitly enables Geospatial Mode, implementations may choose to default to always for immediate map navigation.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加地图的交互模式：off（仅图交互）、hold-space（按住 Space 临时允许平移/缩放）、always（地图捕获指针交互）。应用加载时通过默认关闭 mapOverlayEnabled 保留以图为主体验；当用户显式启用地理空间模式时，实现可以默认使用 always 以便立即进行地图导航。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapProjectionMode": {
+      "@type": "xsd:string",
+      "enum": ["auto", "mercator", "globe"],
+      "rdfs:label": [
+        { "@value": "Map projection mode", "@language": "en-us" },
+        { "@value": "地图投影模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Projection mode for the overlay basemap. Auto lets the runtime choose a suitable projection (for example globe in 3D render mode). Mercator forces a 2D projection. Globe forces a globe-style projection when supported.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加底图的投影模式。Auto 由运行时选择合适投影（例如 3D 渲染时使用 globe）。Mercator 强制 2D 墨卡托投影。Globe 在支持时强制球面投影。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapAnimateCamera": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Animate map camera", "@language": "en-us" },
+        { "@value": "地图相机动画", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether overlay camera moves (for example fit-to-data) should animate rather than jump. Implementations should allow disabling to reduce motion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "叠加层相机移动（例如 fit-to-data）是否使用动画而非瞬移。实现应允许关闭以减少动态效果。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapAutoFitEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Auto-fit enabled", "@language": "en-us" },
+        { "@value": "自动适配启用", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the runtime should auto-fit the overlay camera to active geospatial bounds (commonly enabled in 3D render mode to avoid a blank globe). Implementations should ensure auto-fit is bounded and does not trigger unbounded loops.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "运行时是否应自动将叠加层相机适配到当前地理范围（通常在 3D 渲染中启用以避免空白球体）。实现应确保自动适配有界且不会触发无界循环。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapOverlayDatasets": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Map overlay datasets", "@language": "en-us" },
+        { "@value": "地图叠加数据集", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "List of dataset references to render as map overlay layers (points/lines/polygons). Implementations must remain dataset-agnostic and treat sources as opaque URLs (http(s)) or same-origin absolute paths (starting with /), while validating GeoJSON shapes and bounding fetch size/time. A recommended neutral shape is: [{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }], where format may be omitted and default to auto. Dataset ids must be unique and stable within the persisted list (recommended: a generated uuid-based id such as geo:{uuid}). Implementations should normalize GitHub blob-like URLs to raw URLs, and should allow reloading a dataset layer without removing/re-adding it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于渲染地图叠加层（点/线/面）的数据集引用列表。实现必须保持数据集无关，将来源视为不透明 URL（http(s)）或同源绝对路径（以 / 开头），同时校验 GeoJSON 结构并限制拉取体积/耗时。建议的中性数据形态为：[{ id, label, enabled, source: { kind:\"url\", url }, format:\"auto\"|\"geojson\"|\"records\" }]；format 可省略并默认 auto。数据集 id 必须在持久化列表中唯一且稳定（推荐：uuid 生成的 id，例如 geo:{uuid}）。实现应将 GitHub blob 类 URL 规范化为 raw URL，并允许在不删除/重加数据集的情况下触发重新加载。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "datasetFetchTimeoutMs": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Dataset fetch timeout (ms)", "@language": "en-us" },
+        { "@value": "数据集拉取超时（毫秒）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Maximum time budget for fetching a dataset layer before failing. Implementations should default to a safe bounded timeout and allow configuration (for example via environment variables or settings) without hardcoding dataset-specific values.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "拉取数据集图层的最大耗时上限。实现应提供安全的默认超时并允许通过配置（例如环境变量或设置）调整，禁止数据集特定硬编码。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "datasetFetchMaxBytes": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Dataset fetch max bytes", "@language": "en-us" },
+        { "@value": "数据集拉取最大字节数", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Maximum number of bytes to accept when downloading a dataset layer. Implementations must bound this value to prevent unbounded memory usage and should default to a conservative limit.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "下载数据集图层时允许的最大字节数。实现必须限制该值以防止无界内存占用，并应提供保守的默认上限。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+
+    "clusterEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Cluster point datasets", "@language": "en-us" },
+        { "@value": "点数据集聚类", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether point-only dataset layers should be clustered for readability and performance. Implementations should remain dataset-agnostic and apply clustering only to point geometries.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点类型数据集图层是否启用聚类以提升可读性与性能。实现必须保持数据集无关，并且只对点几何启用聚类。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "clusterRadiusPx": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Cluster radius (px)", "@language": "en-us" },
+        { "@value": "聚类半径（px）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Cluster radius in pixels when clustering point datasets. Implementations should bound this to a safe range.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点数据集聚类时的像素半径。实现应限制在安全范围内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "clusterMaxZoom": {
+      "@type": "xsd:integer",
+      "rdfs:label": [
+        { "@value": "Cluster max zoom", "@language": "en-us" },
+        { "@value": "聚类最大缩放级别", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Maximum zoom level at which point clustering is applied. Implementations should bound this to the map renderer zoom domain.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "点聚类应用的最大缩放级别。实现应限制在地图渲染器的缩放范围内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "graphPoiColor": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph POI color", "@language": "en-us" },
+        { "@value": "图节点 POI 颜色", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Hex color used to render graph-node POIs on the overlay map (e.g. #2563EB). Implementations should validate a safe hex format and fall back to a default when invalid.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于渲染叠加地图上图节点 POI 的十六进制颜色（例如 #2563EB）。实现应校验安全的 hex 格式，非法值应回退默认值。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "graphPoiSelectedColor": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph POI selected outline color", "@language": "en-us" },
+        { "@value": "图节点 POI 选中描边颜色", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Hex color used for the selected graph-node POI outline/stroke on the overlay map. This should remain visually distinct against the POI fill and basemap.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于叠加地图上已选中图节点 POI 的描边/外轮廓十六进制颜色。该颜色应在 POI 填充与底图之上保持可见的对比度。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapRequestProxyEndpoint": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Map request proxy endpoint", "@language": "en-us" },
+        { "@value": "地图请求代理端点", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Same-origin proxy endpoint used to fetch cross-origin map tile/sprite/glyph resources to avoid browser CORS failures. In static/prod deploys the proxy may not exist, so implementations should treat proxying as a development-only convenience and prefer direct cross-origin loads when the provider supports CORS. If proxying is enabled, proxy request URLs should be absolute (including runtime origin) when executed in worker contexts. The initial Style request should remain directly fetchable by the browser when possible; aborted style requests are often caused by overlay teardown/recreation (or dev StrictMode effect probes) and should be mitigated by keeping the map instance stable. If the map appears blank after refresh while requests succeed, validate that the overlay container has a non-zero height and call map.resize() after style/load/resize events.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于拉取跨域地图瓦片/精灵图/字形资源的同源代理端点，以避免浏览器 CORS 失败。在静态/生产部署中代理端点可能不存在，因此实现应将代理视为仅开发环境的便利手段，并在提供方支持 CORS 时优先直接跨域加载。若启用代理，实现应在 worker 上下文中将代理请求 URL 构造成绝对 URL（包含运行时 origin）。初始 Style 请求应尽量由浏览器直接获取；Style 请求被中止通常来自叠加层销毁/重建（或开发环境 StrictMode 的 effect 探测），应通过保持地图实例稳定来规避。若刷新后地图空白但请求成功，应检查叠加层容器高度是否为非零，并在 style/load/resize 事件后调用 map.resize()。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "mapOverlayDisableOnExit": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Disable map overlay on exit", "@language": "en-us" },
+        { "@value": "退出时关闭地图叠加层", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the application disables the map overlay automatically when the user switches away from Geospatial Mode. If omitted, implementations should keep the overlay enabled until explicitly toggled off.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "当用户切换离开地理空间模式时，应用是否自动关闭地图叠加层。如果未设置，实现应保持叠加层开启，直到用户显式关闭为止。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "geospatialModeToggle": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Geospatial mode toggle", "@language": "en-us" },
+        { "@value": "地理空间模式开关", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the UI exposes Geospatial Mode as a top-level toggle (similar to 3D Mode). When ON, implementations should enable a translucent map overlay and a map-side panel, and may suppress knowledge-graph canvas rendering (nodes/edges/layers/rich media) so geospatial exploration becomes the primary surface. Interactivity should be configurable separately to avoid breaking graph-first affordances by default.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "UI 是否将地理空间模式作为顶层开关（类似 3D 模式）。开启时实现应启用半透明地图叠加层与地图侧边栏，并且可以抑制知识图画布渲染（节点/边/图层/富媒体），使地理空间探索成为主要界面。交互能力应作为独立配置项，以避免默认破坏以图为主的交互体验。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "geospatialMinimapPreviewEnabled": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Geospatial minimap basemap preview", "@language": "en-us" },
+        { "@value": "地理空间缩略图底图预览", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Whether the application embeds a non-interactive MapLibre basemap preview inside the minimap card using the same style URL and proxy configuration as Geospatial Mode. When a geospatial proximity center is active, implementations may sync the minimap basemap center and zoom to that center/radius. The minimap preview should remain decorative (no pointer capture) while the SVG graph overview and viewport rectangle remain the source of truth for interactions.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "应用是否在缩略图面板内嵌入使用与地理空间模式相同样式 URL 和代理配置的非交互 MapLibre 底图预览。当存在地理空间邻近中心时，实现可以将缩略图底图的中心和缩放级别与该中心/半径保持同步。缩略图预览应保持装饰性（不捕获指针事件），同时现有 SVG 图概览和视口矩形仍然作为交互的唯一来源。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "initialCamera3d": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Initial 3D globe camera", "@language": "en-us" },
+        { "@value": "3D 地球初始相机", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Deterministic initial camera for 3D render mode (MapLibre Globe). A recommended neutral shape is: { center: [lng, lat], zoom: number, pitch: number, bearing: number }. When omitted, implementations should use a safe default (for example Singapore center, zoom 2.8, pitch 0, bearing 0). Implementations must apply the initial camera as a single jumpTo-equivalent call with zero padding and must not run iterative zoom solvers, repeated jumpTo calls, multi-step recalc loops, or passive auto-fit overrides at 3D startup. Explicit fit requests (user-initiated or data-driven) remain fully functional.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "3D 渲染模式（MapLibre Globe）的确定性初始相机。建议的中性形态为：{ center: [lng, lat], zoom: number, pitch: number, bearing: number }。未设置时，实现应使用安全默认值（例如新加坡中心、zoom 2.8、pitch 0、bearing 0）。实现必须以单次 jumpTo 等效调用（零 padding）应用初始相机，禁止在 3D 启动时运行迭代式 zoom 解算器、重复 jumpTo 调用、多步重算循环或被动自动适配覆盖。显式适配请求（用户发起或数据驱动）保持完全可用。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    }
+  }
+}

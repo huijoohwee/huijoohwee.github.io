@@ -1,8 +1,8 @@
 ---
 title: "PRD, TAD & ADR Economics & Time-to-Value Module"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-30"
+version: "1.2.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -42,25 +42,29 @@ For an MVP→GTM sprint, use the [maturity assessment handoffs](prd-tad-adr-mvp-
 
 ### Guideline Load Budget
 
-Token economics applies to this guideline set itself, not only to the product pipelines it governs. A guideline set that must be loaded whole on every authoring turn taxes every turn.
+Load by the current decision and applicable capability, using phase as navigation. The scope contract
+and module index remain the small always-load surface. Other sections are guideline add-ons loaded
+when their trigger applies; entering a phase does not require all its modules or projections.
 
-| Phase | Sections to load | Rationale |
+| Decision / trigger | Sections to load | Rationale |
 |---|---|---|
-| Phase 0 | `solo-dev-ai-native-orientation`, `time-to-value`; Lean Startup `hypothesis-register`, `experiment-design` | ROI, TCO, TTV ceiling; riskiest hypotheses and their experiments |
-| Phase 1 | `core-templates` (PRD), `flow-patterns` (journey), `time-to-value` | Authoring the PRD |
-| Phase 2 | `core-templates` (TAD, ADR), `flow-patterns` (all), `readiness-ladder`, `lane-topology--deploy-boundary`, `agent-platform-readiness` | Authoring the TAD |
-| Phase 3 | `rule-identity--classification`, `conformance-findings`, `validation-checklist`, `autonomous-implementation-verification` | Running the alignment check |
-| Phase 4 | `adlc-execution-seam`, `demo-skeleton`, `readiness-ladder` | Build and evidence the MVP; derive rungs from receipts |
-| Phase 5 | `venture-record-pitch-deck-business-plan--financial-model`, `monetization`, `roadmap`; the deck, plan and model lifecycles | Project the accepted revision; one lifecycle per projection |
-| Learn | `roadmap`; Lean Startup `innovation-accounting`, `pivot-or-persevere-record` | Decide and open the successor Context |
-| Living-document revisions | `conformance-findings`, `readiness-ladder` | Re-derivation and regression comparison |
-| Any phase | `scope--neutrality-contract`, `module-index` | Always in scope; smallest sections in the set |
+| Material assumption needs testing | Lean Startup `hypothesis-register`, `experiment-design`; `time-to-value` if outcome latency matters | Cheapest sufficient test with pre-stated bounds and uncertainty |
+| Requirements need specification | `core-templates` (PRD), applicable journey, `time-to-value` | One accepted outcome and its checks |
+| Implementation or material choice needs design | `core-templates` (TAD, applicable ADR), applicable `flow-patterns` | Preserve relevant interfaces, failure modes and decisions |
+| Capability or effect enters scope | Applicable AI harness, agent-platform, commerce, security, data or obligation owner | Resolve applicable constraints before the dependent action |
+| Conformance verdict is needed | `rule-identity--classification`, applicable verification and findings | Check affected requirements and joins |
+| Source execution or delivery is needed | `adlc-execution-seam`; applicable demonstration, readiness and Deploy Boundary sections | Exact checks, authority and receipts for the selected effect |
+| Price, contribution, capacity, cash or financing affects a decision | PD-BP-FM and Financial Model sections needed for that decision | Smallest sufficient financial view; full model only when required |
+| Named operating or audience decision needs a projection | Requested Business Plan or Pitch Deck sections and their lifecycle; model headlines only if used | One requested projection, with source evidence |
+| Material result, review or decision changes an assumption | `roadmap`; applicable Lean Startup learning record and affected consumers | Record a successor and refresh affected joins |
+| Any decision | `scope--neutrality-contract`, `module-index` | Always-load identity and routing |
 
 **Directives**:
-- Load by section anchor for the current phase; forbid loading the whole set as a precondition for a single-phase task
+- Select sections by the decision and applicable boundary before acting; an applicable obligation blocks its dependent action until discharged. Phase alone never requires loading the whole set
 - Keep `scope--neutrality-contract` and `module-index` small enough to be always-loaded; a growing contract section raises the floor cost of every turn
 - Record the guideline load cost as a line item in the authoring loop's token budget; an unmeasured compliance cost is an `missing-economics-metric` against the process, not only against the product
-- Prefer adding a new `##` section over lengthening an existing one, so phase-scoped loading stays possible; this is the modularity rule expressed as a cost constraint
+- Measure always-load bytes separately from optional detail; keep net always-load growth at zero by replacing text or moving detail to its existing on-demand owner
+- Extend an existing addressable owner before adding a module; examples remain optional reference sections, and task/turn boundaries alone require no reload or joined edit
 
 ### AI-Native Harness Pattern
 
@@ -112,6 +116,10 @@ When selecting any dependency, library, or infrastructure component:
 3. **Prefer zero-egress** storage and CDN over metered alternatives
 4. **Record the decision** in the ADR with explicit TCO comparison at projected scale
 5. **Compare deployment models within each candidate** — see Deployment-Model TCO Variants below; do not collapse a candidate's managed and self-managed variants into a single TCO figure
+
+### Agentic OS Runtime — Reference Implementation
+
+For work governed by the [Agentic OS ADLC runtime policy](https://github.com/huijoohwee/agentic-os/blob/22b46ed7dd5fc7f8cd4d0a0529256a7856a422c5/docs/adlc-guidelines.md), apply its stricter boundary: FOSS/free paths only; require a provider-observed hard `$0` cap or denial at quota exhaustion; and exclude paid plans, add-ons, overages, and upgrades. The generic proprietary-option comparison does not authorize paid execution through Agentic OS.
 
 ### Included Quota and Billable Boundary
 

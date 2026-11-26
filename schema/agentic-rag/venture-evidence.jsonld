@@ -1,0 +1,44 @@
+{
+  "@context": [
+    "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+    {
+      "venture": "https://huijoohwee.github.io/schema/agentic-rag/v1/venture#",
+      "Evidence": "venture:Evidence",
+      "evidenceState": { "@id": "venture:evidenceState", "@type": "@vocab" },
+      "signalKind": { "@id": "venture:signalKind", "@type": "@vocab" },
+      "eventTime": { "@id": "venture:eventTime", "@type": "xsd:dateTime" },
+      "periodStart": { "@id": "venture:periodStart", "@type": "xsd:dateTime" },
+      "periodEnd": { "@id": "venture:periodEnd", "@type": "xsd:dateTime" },
+      "cohort": { "@id": "venture:cohort", "@type": "xsd:string" },
+      "segment": { "@id": "venture:segment", "@type": "xsd:string" },
+      "measure": { "@id": "venture:measure", "@type": "xsd:string" },
+      "measurementValue": { "@id": "venture:measurementValue", "@type": "xsd:decimal" },
+      "unit": { "@id": "venture:unit", "@type": "xsd:string" },
+      "currency": { "@id": "schema:priceCurrency", "@type": "xsd:string" },
+      "denominator": { "@id": "venture:denominator", "@type": "xsd:decimal" },
+      "denominatorUnit": { "@id": "venture:denominatorUnit", "@type": "xsd:string" },
+      "sourceDescription": { "@id": "venture:sourceDescription", "@type": "xsd:string" },
+      "description": "schema:description",
+      "version": "schema:version"
+    }
+  ],
+  "@id": "https://huijoohwee.github.io/schema/agentic-rag/venture-evidence.jsonld#profile",
+  "@type": "schema:CreativeWork",
+  "name": "Agentic RAG Venture Evidence Profile",
+  "version": "0.1.0",
+  "description": "An optional JSON-LD projection for source-linked business evidence. Evidence state separates observations, forecasts, and inferences. Signal kind separates customer pain, an offer, order acceptance, cash collection, delivery, operating cost, repeat use, and a decision. This transport profile does not define experiments, accounting policy, revenue recognition, viability, or demand claims. Load it only when a consumer needs venture evidence.",
+  "schema:keywords": [
+    "on-demand",
+    "observed",
+    "forecast",
+    "inferred",
+    "customerPain",
+    "offer",
+    "acceptedOrder",
+    "cashCollected",
+    "deliveredOutcome",
+    "operatingCost",
+    "repeatUse",
+    "decision"
+  ]
+}

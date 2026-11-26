@@ -1,0 +1,218 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/venture-evidence.jsonld",
+  "@graph": [
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/pain-001",
+      "@type": "venture:Evidence",
+      "name": "One prospective customer described a recurring order-tracking problem",
+      "signalKind": "venture:customerPain",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-01T09:00:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "one customer conversation",
+      "measurementValue": 1,
+      "unit": "conversation",
+      "sourceDescription": "Synthetic interview note; no personal data.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/interview-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/pain-inferred-001",
+      "@type": "venture:Evidence",
+      "name": "Working hypothesis that the pain may recur for similar sellers",
+      "signalKind": "venture:customerPain",
+      "evidenceState": "venture:inferred",
+      "eventTime": "2026-10-01T09:05:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "hypothesis for a follow-up experiment",
+      "sourceDescription": "Inference from one synthetic conversation; not a validated market finding.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/interview-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/offer-001",
+      "@type": "venture:Evidence",
+      "name": "A one-time service offer was presented",
+      "signalKind": "venture:offer",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-02T10:00:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "quoted price for one order",
+      "measurementValue": 120,
+      "unit": "per order",
+      "currency": "SGD",
+      "sourceDescription": "Synthetic offer record; a presented offer is not an accepted order.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/offer-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/order-accepted-001",
+      "@type": "venture:Evidence",
+      "name": "The customer accepted one order",
+      "signalKind": "venture:acceptedOrder",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-02T10:15:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "accepted orders",
+      "measurementValue": 1,
+      "unit": "order",
+      "sourceDescription": "Synthetic order confirmation; this is one transaction, not repeat demand.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/order-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/cash-collected-001",
+      "@type": "venture:Evidence",
+      "name": "Cash was collected for the accepted order",
+      "signalKind": "venture:cashCollected",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-02T10:20:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "cash receipt amount",
+      "measurementValue": 120,
+      "unit": "cash amount",
+      "currency": "SGD",
+      "sourceDescription": "Synthetic payment receipt; collection is not a revenue-recognition decision.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/payment-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/delivery-001",
+      "@type": "venture:Evidence",
+      "name": "The one-time order was delivered",
+      "signalKind": "venture:deliveredOutcome",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-03T14:00:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "completed deliveries",
+      "measurementValue": 1,
+      "unit": "delivery",
+      "sourceDescription": "Synthetic delivery record.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/delivery-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/cost-forecast-001",
+      "@type": "venture:Evidence",
+      "name": "Direct delivery cost forecast",
+      "signalKind": "venture:operatingCost",
+      "evidenceState": "venture:forecast",
+      "eventTime": "2026-10-02T10:25:00+08:00",
+      "periodStart": "2026-10-03T00:00:00+08:00",
+      "periodEnd": "2026-10-03T23:59:59+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "expected direct delivery cost",
+      "measurementValue": 18,
+      "unit": "one delivery",
+      "currency": "SGD",
+      "sourceDescription": "Forecast entered before delivery; it is not an observed expense.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/cost-plan-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/cost-observed-001",
+      "@type": "venture:Evidence",
+      "name": "Direct delivery cost recorded",
+      "signalKind": "venture:operatingCost",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-10-03T15:00:00+08:00",
+      "periodStart": "2026-10-03T00:00:00+08:00",
+      "periodEnd": "2026-10-03T23:59:59+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "direct delivery expense",
+      "measurementValue": 20,
+      "unit": "one delivery",
+      "currency": "SGD",
+      "sourceDescription": "Synthetic expense receipt; excludes overhead and is not a profitability calculation.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/cost-receipt-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/repeat-use-001",
+      "@type": "venture:Evidence",
+      "name": "No repeat order was observed during the defined follow-up",
+      "signalKind": "venture:repeatUse",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-11-02T23:59:59+08:00",
+      "periodStart": "2026-10-04T00:00:00+08:00",
+      "periodEnd": "2026-11-02T23:59:59+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "repeat orders within 30 days",
+      "measurementValue": 0,
+      "unit": "orders",
+      "denominator": 1,
+      "denominatorUnit": "initial synthetic customer",
+      "sourceDescription": "Observed zero in this bounded window; it does not predict future demand.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/follow-up-log-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#evidence/decision-001",
+      "@type": "venture:Evidence",
+      "name": "Run one more bounded experiment",
+      "signalKind": "venture:decision",
+      "evidenceState": "venture:observed",
+      "eventTime": "2026-11-03T09:00:00+08:00",
+      "cohort": "synthetic-customer-001",
+      "segment": "first-time independent food seller",
+      "measure": "next action",
+      "sourceDescription": "Synthetic decision record: run one more bounded experiment to learn whether the pain recurs; draw no viability or scale conclusion.",
+      "provenance": ["https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/decision-note-001"],
+      "continuityId": "VENTURE-EVIDENCE-SAMPLE-001"
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/interview-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic customer interview note; no personal data."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/offer-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic offer record."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/order-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic order confirmation."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/payment-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic payment receipt."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/delivery-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic delivery record."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/cost-plan-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic pre-delivery forecast."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/cost-receipt-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic direct delivery expense receipt."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/follow-up-log-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic 30-day follow-up log."
+    },
+    {
+      "@id": "https://huijoohwee.github.io/schema/agentic-rag/example-venture-evidence.jsonld#source/decision-note-001",
+      "@type": "prov:Entity",
+      "schema:description": "Synthetic founder decision note."
+    }
+  ]
+}

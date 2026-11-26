@@ -1,440 +1,509 @@
 ---
 title: "Reference implementation: shared data-view runtime"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.1.0"
-date: "2026-10-23"
+version: "0.4.0"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "SHARED-VIEW-RUNTIME-001"
-prd_revision: "0.1.0"
-tad_revision: "0.1.0"
-adr_revision: "0.1.0"
-mvp_revision: "0.1.0"
-gtm_revision: "0.1.0"
-local_rung: "spec-complete"
+prd_revision: "0.4.0"
+tad_revision: "0.4.0"
+adr_revision: "0.4.0"
+mvp_revision: "0.4.0"
+gtm_revision: "0.4.0"
+local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
-worktree_id: "device-0232231d4a19--agentic-base-prd"
+worktree_id: "device-0232231d4a19--base-sheets-boundary"
 agent_id: "codex"
 lifecycle_status: "proposed"
 ---
 
-# Reference implementation: Agentic Base shared view runtime
+# Reference implementation: Agentic Base shared data-view runtime
 
-## Revision and claim boundaries
+## Reference implementation — revision and claim boundaries
 
-This joined PRD–TAD–ADR–MVP–GTM specifies one reusable, product-neutral data-view runtime, with the shared table grid as the first parity-critical surface. It is grounded in source snapshots observed on 2026-10-23. The root heading labels the product-specific material as a reference implementation under the repository's neutrality contract.
+This joined artifact, `SHARED-VIEW-RUNTIME-001@0.4.0`, follows [PRD, TAD & ADR Guidelines v3.5.1](../../guidelines/prd-tad-adr-mvp-gtm-guidelines.md) at documentation-source commit `fc53dc02ea98e3119d1d1015fc72e1747a6d5087`. It refreshes the October specification against the actual local `agentic-base` checkout at `81e4608280be4ec515c5dd28df7b97d1438a0fc0`, observed on 2026-11-17. All Base source paths below resolve at that exact commit unless stated otherwise; evidence IDs resolve in the source register. This is a reference implementation, not a universal choice of framework, provider, or product.
 
-This is a specification, not an implementation, runtime verification, source release, package publication, or deployment instruction. Product readiness is local `spec-complete` / delivered `undocumented`: the VCCs below are proposed and do not have satisfying runtime Evidence References yet. Do not derive product readiness from this document's existence or its source inspection.
+**Material change:** Table, Multi-dimensional Table, Kanban, Calendar, Dashboard, settings, field workbenches and menu controls already have source implementations. Kanban and Calendar are no longer proposed successor renderers. The bounded browser adapter now composes `TableView` or `MultiDimTableView`; the old `DataTableCore.tsx` is absent. Shared panels, disclosure, rich text, hover and Viewer surfaces belong to Design System and are consumed directly rather than implemented or re-exported by Base.
 
-## PRD — purpose, users, and pain
+**0.4.0 decision:** separate the structured-record Base domain from a future workbook-oriented Sheets domain (ADR-05). `agentic-sheets` is the recommended working name, not an existing admitted product or a repository-creation instruction. The local 0.3.0 draft is a recommendation input (E-11), not released authority; this revision authors its own decisions. Univer is reference-only (E-10/ADR-04): copying and external dependency are forbidden. No Base implementation or consumer pin changes.
 
-### Problem statement
+**Evidence limit:** E-03 satisfies the bounded headless VCC-09, earning local `dev-proven`; it does not satisfy the full UI, browser, release or recovery criteria. E-02 records a failed full Base check in the current installed dependency environment. Delivered readiness remains `undocumented`: no current consumer runtime, live parity, package publication, deployment, payment or repeat-demand proof was collected. The document remains proposed; source inspection and documentation checks do not discharge Phase 3 baseline sign-off.
 
-Data-view consumers need a consistent, accessible table layout that can be embedded without moving their records, schemas, authorization, edits, or persistence into a shared package. Existing source provides a strong near-built solution: one shared structural table grid, an interactive host-driven React view, and a bounded offline browser adapter. However, consumers use different surfaces and revisions. The full Graph workspace includes host-owned frontmatter tabs, toolbar, hierarchy, settings, and edit flows; the design-system review page uses the smaller literal-text browser adapter. The latter therefore does not establish visual or interaction parity with the supplied Graph reference.
+The historical 0.2.0 inspection found no tracked modifications and three untracked planning drafts; the current source recheck is E-12. They were preserved and excluded from implementation evidence. This task changes only this document; it does not implement repairs in Base, update consumers, or open a delivery boundary.
 
-This evidence supports a product and integration gap, not validated market demand. No buyer interviews, frequency baseline, willingness-to-pay evidence, adoption count, or measured integration-time reduction was found in the inspected sources. Keep those claims open.
+## Reference implementation — PRD: purpose, users and pain
 
-### Users and jobs
+### Problem, users and jobs
 
-| Role | Job and value | Current owner / boundary |
+Maintainers need portable data projections and reusable views while retaining their own schemas, records, authorization, actions and persistence. The near-built solution is the existing Base engine and shared view package, rather than another grid or store. The current problem is reconciling the implemented contracts, dependency pins and evidence before further adoption. No measured buyer pain frequency, willingness to pay, integration savings or active-user count is available.
+
+| Participant / job | Value exchanged / payer | Owner and interface | Trust, cost and unresolved dependency |
+|---|---|---|---|
+| User / inspect and act on records | Consistent views within the owning product; no payer established | Base view contracts; host supplies records and accepted action results | Browser-local presentation; full keyboard, touch and accessibility checks pending |
+| Integrating developer / reuse views | One grid and host seam instead of repeated presentation; savings unknown | Base package exports in E-01; exact Git pins in each consumer | No consumer data transfer; integration time and current consumer pins need readback |
+| Operator / release and recover | Exact source/artifact identity and prior revision | Base and consumer release workflows; E-01/E-05 | Each owner retains effect authority; unknown provider fees/headroom block the dependent effect |
+| Design System maintainer / own shared primitives | Central panels, profiles, controls and accessibility contracts | Exact dependency and generated projections in E-01/E-06 | FOSS notices and source digests remain revision-specific; installed package drift observed |
+| Assurance / check bounded claims | Reproducible pass/fail evidence | Existing TypeScript, Node, artifact and policy checks | Checks grant no mutation authority and cannot substitute for production evidence |
+| Agent / provider | No runtime model job or payment flow in this slice | No Base agent transport or model provider | Zero serving model calls; external agent routes and financial settlement are out of scope |
+
+Graph and Shoply/Commerce are consumers documented by Base, not independently verified current integrations in this revision. Design System is the upstream primitive owner; its old catalog inventory is not used as current adoption, rights or release evidence. Named human owners remain unassigned; accountable functions are specified per outcome.
+
+### Ranked pain-to-feature record
+
+| Rank / pain and evidence | Hook → break → fix → close | Reuse/build split and trace |
 |---|---|---|
-| Product engineer | Render and configure a shared data view without duplicating its grid, then retain domain-specific data and actions | Consumer host maps its data and callbacks into the versioned Base host contract |
-| Graph workspace user | Inspect and edit Markdown/frontmatter records through the existing workspace | Graph owns parsing, source writes, tabs, toolbar commands, graph overlays, and workspace lifecycle |
-| Design-system maintainer | Review a source-linked inventory in a reusable table without treating review decisions as publication rights | Design-system site owns catalog rows, review state, and release decisions |
-| Commerce maintainer | Embed an offline table in a static product surface | Commerce owns its records, semantic theme mapping, actions, and lifecycle |
-| Base maintainer | Keep one shared table structure and component contract, publish exact source revisions, and remove superseded implementations after proven replacement | Base owns the shared runtime and its compatibility/release record |
+| 1. Integrator cannot reproduce a green current package check; observed E-02, not buyer/WTP validation | Use exact source → installed dependency cannot resolve Viewer → reconcile the existing dependency installation and rerun intact checks → retain exact result | Reuse dependency/lock and existing check owner; no new runtime. PRD-VIEW-04 → VCC-05; next bounded outcome |
+| 2. Specification and provenance drift; observed E-01/E-04 | Find shared views → October plan omits implemented surfaces and provenance includes removed paths → refresh this joined record and then the owner manifest → locate actual exports and current digests | Reuse Base source/manifest; this documentation update adds no package. PRD-VIEW-01 → VCC-01/05 |
+| 3. Consumer fidelity/accessibility friction; unvalidated in current runtime | Embed existing views → no current matched fixture result → test existing owner components and host callbacks → disclose measured behavior | Reuse Base + Design System; extend an owner only after a concrete failure. PRD-VIEW-02/03 → VCC-02/03/07/08/10 |
+| 4. Confusing a record view with a spreadsheet engine; owner question and source-model difference in E-01/E-10/E-11, commercial pain unvalidated | Ask for Sheets/Excel behavior → workbook semantics would expand the record contract → separate owners and a bounded optional bridge → keep existing Base consumers unchanged | Reuse current Base and Design System; no workbook code or repository in this task. PRD-VIEW-05/06 → VCC-11/12 |
 
-Human names for these functions have not been assigned in the source records. Each phase requires one accountable function owner before it starts.
+This ordering uses observed integration failures, then proximity to built source. It does not claim validated market demand. All commercial pain remains `unvalidated`; no `demand-proven` label or implementation baseline is earned by these hypotheses.
 
-### User stories
+### Stories and scope
 
-- **PRD-VIEW-01:** As a product engineer, I can pass a typed view model and host callbacks to one table contract so that the shared grid renders without a second product-owned renderer.
-- **PRD-VIEW-02:** As a Graph workspace user, I can keep the familiar frontmatter table's column order, type markers, nested-row affordances, toolbar and keyboard/touch paths while Graph retains Markdown editing and persistence.
-- **PRD-VIEW-03:** As a design-system maintainer, I can show the same shared grid against a review fixture while the site retains its review-only Keep/Remove state and publication gates.
-- **PRD-VIEW-04:** As a maintainer, I can pin, verify, and roll back one exact shared source revision without clearing or migrating consumer data.
+- **PRD-VIEW-01:** An integrator supplies a stable view model and host callbacks to existing shared views without another product-owned renderer or data store.
+- **PRD-VIEW-02:** A workspace user keeps record identity, hierarchy, selection, layout and host-owned edit flows across Table, Multi-dimensional Table, Kanban and Calendar.
+- **PRD-VIEW-03:** A maintainer composes Dashboard, saved-view settings and field presentation with the shared Design System primitives while retaining product content and persistence.
+- **PRD-VIEW-04:** An operator reproduces the exact source checks, pins and artifact digests, then restores a prior reviewed revision without changing user data.
+- **PRD-VIEW-05:** A maintainer uses external product ideas as references while keeping authored code, schemas, assets and dependencies independent of Univer.
+- **PRD-VIEW-06:** An integrator can distinguish record-centric Base behavior from workbook-centric Sheets behavior and request an explicit snapshot transfer without introducing workbook semantics or a Sheets runtime into Base.
 
-### Must, Should, Could, Won't
-
-| Priority | Outcome | Rationale / ROI input |
+| Priority | Outcome and pain join | Current disposition |
 |---|---|---|
-| Must | One Base-owned structural table grid; one versioned host contract; same reference fixture in the shared runtime and consumer previews | Explicit owner direction and existing source make this the smallest reuse path; impact, reach, and build-hour baselines remain unmeasured |
-| Must | Preserve consumer ownership of source data, schemas, authorization, mutations, workspace shells, and persistence | Existing Graph and Commerce contracts already depend on these boundaries |
-| Must | Compare the shared Multi-dimensional Table to the supplied Graph reference at matched viewport and zoom; meet keyboard, touch, contrast, and reduced-motion checks | Repeated user feedback identifies fidelity as a release blocker; no passing comparison result is recorded |
-| Must | Zero paid spend; browser, local, edge/device, and offline paths only when supported by current source; fail closed on unknown quota or rights | User mandate; no paid plan, addon, or overage is in scope |
-| Should | Publish immutable, versioned source releases with manifests, checks, and predecessor rollback information | Exact Git pins already work; package publication remains out of scope while `private: true` is set |
-| Could | Add more view projections or MCP/WebMCP invocation after a concrete user job, owner, and VCC exist | No evidence justifies expanding the current table-first scope |
-| Won't (this increment) | New grid package, copied Graph renderer, product-specific visual fork, hosted data store, paid service, registry publication, production migration, or claim of full parity | Conflicts with one-owner, FOSS, offline, or evidence boundaries |
+| Must | Document/reuse one structural table grid, existing views and actual host seams; pain 2 | Source exists; inspect instead of rebuilding; VCC-01/07/08/10 remain partially or wholly unverified |
+| Must | Preserve schemas, records, domain permissions/actions and persistence in each host; pain 3 | Headless engine persists only explicitly Base-owned data; view consumers need no Base store |
+| Must | Reproduce checks and exact dependency/artifact identity; pain 1/2 | Full local check currently fails; VCC-05 pending |
+| Must | Provide browser/mobile/offline and accessible behavior for admitted surfaces; pain 3 | Source support differs by surface; prove through VCC-02/03/04 before baseline |
+| Must | Preserve separate Base/Sheets ownership and the reference-only restriction; pain 2/4 | ADR-04/05; VCC-11/12 are pending criteria, not claims of a Sheets implementation |
+| Should | Measure clean-checkout activation and consumer rollback using existing exports; pain 1/3 | Target ≤5 manual steps / 30 minutes; no timed walk-through yet |
+| Could | Extend an existing owner after a demonstrated host-contract gap | No new renderer, SDK, registry or orchestration controller justified now |
+| Won't (this increment) | New Kanban/Calendar implementations, hosted storage, remote sync, file service, package-registry publication, paid offer, consumer migration/deployment, MCP/WebMCP and sigil routes, workbook implementation, Excel compatibility, Univer copying/dependency, or creation of a Sheets repository | Existing views are reused; remaining delivery/agent scope requires its own evidence and authority |
 
-**ROI calculation status:** The guideline formula is `(user impact × monthly reach) / (build hours + monthly TCO + token cost/month)`. Existing records identify three possible consumers, but not active-user reach, pain frequency, affected hours, a validated impact score, serving load, or a token workload. ROI is therefore not calculable from current evidence. Do not invent a score or treat a shared-import count as savings. Measure before authorizing implementation beyond the existing source and fixture.
+### Reference implementation — inspiration and product distinction
 
-### Success metrics and time-to-value
+The user-supplied draft (E-11) recommends reference-only use of [Univer](https://github.com/dream-num/univer). Its public overview distinguishes workbook editing/calculation from its broader product family and separate commercial capabilities (E-10). These observations inform boundaries; they do not prove Base or Sheets capability. No source, prose, examples, schemas, assets, API shapes or fixtures are incorporated.
 
-Targets below are acceptance goals, not results.
+| Concept considered | Native disposition / smallest useful consequence |
+|---|---|
+| Modular capabilities and headless/UI separation | Reuse Base's existing exports and engine; no new plugin registry or framework |
+| Workbook calculations and editable ranges | Assign to a proposed Sheets owner, outside Base; separate acceptance and demand proof required |
+| Very large rendered grids | Defer renderer changes until a measured host limit; no canvas migration justified by a reference demo |
+| Application-facing operations and change events | Extend the native owner only for an observed integration gap; no external API mirroring |
+| Open versus commercial feature boundaries | Keep explicit capability/license/cost evidence; no commercial or freemium dependency is admitted |
 
-| Metric | Baseline | Target | Validation |
+“Airtable-/Lark-like Base” here means schema-defined records exposed through multiple views. It is a product analogy, not parity evidence: Base currently exposes five field types and does not thereby implement every relation, formula, permission or automation feature of those products. A Multi-dimensional Table or matrix projection remains a record view; it is not a workbook merely because it displays cells. “Excel-like” describes a prospective workbook job, not file-format or formula compatibility.
+
+### Metrics, time-to-value and economics
+
+All targets are acceptance goals unless an Evidence Reference states a result. Target observation window is the next admitted local rehearsal, followed by the bounded internal learning experiment in GTM.
+
+| Metric / feature | Observed baseline | Target and check |
+|---|---|---|
+| Current source validation | E-02: full check exit 2; E-03: Node suite 37/37 | Entire `npm run check` exits 0 at exact source and installed pin; VCC-05 |
+| One table owner | E-01: Table/MultiDim/browser entry share the Table runtime; no `DataTableCore.tsx` | Source inventory plus matched host fixture; VCC-01 |
+| Table/MultiDim TTV | Unknown | Exact pin → host model → render fixture → host callback → readback; ≤5 steps / 30 minutes |
+| Kanban/Calendar TTV | Implemented source; integration time unknown | Each existing export renders a host fixture within ≤5 steps / 30 minutes; VCC-07/08 |
+| Dashboard/settings/field TTV | Implemented source; integration time unknown | Each host fixture composes existing Base and Design System contracts within ≤5 steps / 30 minutes; VCC-10 |
+| Visual fidelity | Historical reference only; no matched local capture | Retain six named columns, hierarchy and host controls; matched boundaries within 4 CSS px and row heights within 2 CSS px; VCC-02 |
+| Accessibility/device reach | Source keyboard/focus and responsive rules; no end-to-end pass | Keyboard/touch, visible focus, non-color meaning, 200% zoom, reduced motion, narrow viewport, contrast and target checks; VCC-03 |
+| Local/offline/recovery | E-01: same-origin shell + IndexedDB v1; no live proof | Primed offline reload, literal-text bounds, preserved user data on source rollback; VCC-04/06 |
+| Base/Sheets boundary review TTV | Owner question; no Sheets runtime baseline | One ≤15-minute review classifies record-view versus workbook jobs with one owner each; bridge proof remains VCC-12, not an implementation ETA |
+| Bundle bytes | E-05 records 241,601 JS + 36,658 CSS; dropdown 22,113 JS | Each generated output <500,000 raw bytes; reproduce rather than infer from old sizes |
+| Spend and value | No payer, savings baseline or cost ledger | $0 incremental spend cap; no paid/addon/overage fallback; unknown current provider cost/headroom blocks external effects |
+
+ROI `(impact × monthly reach) / (build hours + monthly TCO + monthly token cost)` cannot be calculated: impact, reach, effort and support inputs are absent. Zero runtime model calls do not make authoring tokens or operator time free. Local browser variant: no new hosted resource, serving-model tokens 0, browser storage/device and operator costs unmeasured. Consumer-hosted static variant: existing host/CI quotas, fees and 12-month TCO unverified. Edge/remote variant: no adapter, deployment or cost proof, therefore deferred. Do not blend these variants or report $0 realized TCO from a $0 budget.
+
+### VCCs and evidence-derived state
+
+VCC identities 01–08 are preserved; 07/08 now verify existing views rather than authorize new renderers. VCC-11/12 are added in 0.4.0 for reference provenance and domain separation. All full criteria below are pending except VCC-09. Readiness applies to these stated bounds, never to a whole consumer product.
+
+| ID / PRD trace | Measurable end state and stated check | Constraint and current result |
+|---|---|---|
+| VCC-01 / 01 | Table, column orientation, MultiDim and browser entry share `TableCore`/`TableView`; source inventory and the same host fixture pass | No second grid or store. Source-observed E-01; fixture result absent |
+| VCC-02 / 02 | Compare Base and host frontmatter fixture at 1113×952 CSS viewport and recorded 74% zoom; Key, Type, Scalar Value, List Value, Summary, Output, nested rows and host tabs/toolbar present; geometry meets metrics above | ≤3 review cycles; browser/font variance disclosed. Historical screenshot not available for recapture here; no parity pass |
+| VCC-03 / 02/03 | Per-surface browser checks pass keyboard, touch, focus, non-color semantics, 200% zoom, reduced motion, narrow viewport; text ≥4.5:1 (large text ≥3:1), control/focus ≥3:1, usable 44 CSS px touch targets | Measured final colors/geometry; profile metrics or source markup alone insufficient. Pending |
+| VCC-04 / 01/04 | Browser artifact rebuild/check passes; malformed/oversize and duplicate-ID inputs reject; strings remain literal text; primed demo reloads offline with no uncached dependency requests | Browser limits below; no data deletion. E-05 standalone artifact rebuild/check passes; live bounds/offline test pending |
+| VCC-05 / 04 | Intact Base `npm run check` exits 0; package/lock/installed pin reconcile; generated outputs and current provenance paths/digests match; notices and predecessor recorded | E-02 fails; E-04 provenance stale. No package publication or rights inference |
+| VCC-06 / 04 | Disposable consumer restores prior exact Base/Design System pins, lock and generated artifacts; rebuild/readback confirms old digests and unchanged records | No IndexedDB clearing or schema migration. Pending |
+| VCC-07 / 02 | Existing Kanban host fixture preserves lane/card IDs, empty groups and authorized move/reorder results through keyboard/touch; rejected/accepted outcomes read back from host | E-03 proves headless grouping only; React move/drag and consumer persistence not covered |
+| VCC-08 / 02 | Existing React Calendar fixture tests civil dates, offset timestamps, time-zone conversion, invalid/missing/range inputs, month navigation, keyboard paging and DST boundary | E-03 proves separate headless date-only behavior only; React/DST/UI results pending |
+| VCC-09 / 01/04 | Existing Node suite exits 0 for authorization-before-storage, revisions/conflicts, one-winner concurrent writes, deterministic projections and shared helper/profile contracts | E-03: 37 passed, 0 failed/skipped; memory and helper scope; no browser IndexedDB atomicity or full UI proof |
+| VCC-10 / 03 | Dashboard/settings/field fixtures render through Base contracts and direct Design System panel, disclosure, rich-text, hover and Viewer owners; host save/cancel/resize/readback pass | Source exists; E-02 blocks current full type-check. No Base panel/Viewer/rich-text replacement or forwarding shim |
+| VCC-11 / 05 | At an exact candidate, inspect manifests/locks/imports/URLs/submodules/generated assets for direct or transitive Univer dependencies; independently review authored changes and provenance for copied material | No `@univerjs`/`@univerjs-pro` package, Git/tarball/CDN/service/plugin dependency or copied implementation/docs/assets/fixtures, including through wrappers. E-12 has a bounded marker scan only; it does not prove absence of copying or consumer compliance |
+| VCC-12 / 06 | Review one deterministic record→workbook-snapshot→proposed-writeback fixture: IDs/types/revisions mapped, losses explicit, permission/stale-revision/replay failures retain source, accepted writes read back; Base builds and runs without Sheets | Proposed bridge only, no implementation or runtime result. One writer per data domain, no implicit sync; workbook/formula/Excel parity requires a separate Sheets artifact |
+
+## Reference implementation — TAD: owners, contracts and flows
+
+### Codebase grounding record and component inventory
+
+E-01 pins the native Base input; E-06 pins non-native Design System contracts. E-04 records the historical Graph migration input and its present limitations. E-07 pins the authoring owner. These scoped grounding records consume the existing [cross-repository snapshot](../../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json); they do not refresh or duplicate its portfolio inventory. E-10 is external conceptual reference, E-11 is an untracked local proposal, and E-12 rechecks the native model; none supplies a Sheets implementation. Current external consumer pins were not acquired and cannot be treated as baseline evidence.
+
+| TAD component / inspected contract | Exact source owner / grounding | Decision and smallest delta | Boundary / check / VCC |
 |---|---|---|---|
-| Shared table implementations | Base has `TableCore`, `TableView`, `MultiDimTableView`, and a bounded `DataTableCore` adapter; consumer layouts differ | One shared structural grid and one canonical visual contract; no product-owned duplicate grid | Source-owner inventory and VCC-01 |
-| Reference fidelity | User reports the preview is not faithful; no measured comparison | All required reference regions and columns present; no missing/duplicate controls; matched column boundaries within 4 CSS px and row heights within 2 CSS px at the recorded viewport/zoom | Golden-fixture screenshot comparison and manual interaction rubric, VCC-02 |
-| Integration time-to-first-view | Not measured | At most 5 distinct manual steps and 30 elapsed minutes from a clean, authorized local checkout | Timed walk-through; record elapsed time, steps, and environment |
-| Accessibility | Source has native table semantics and selected focus behavior; no end-to-end result recorded | All in-scope actions reachable by keyboard/touch; text contrast ≥4.5:1 (≥3:1 for large text), control/focus boundaries ≥3:1, visible focus, 200% text zoom, reduced motion, and usable 44 CSS px touch targets | VCC-03 and the local design-theme contract; no result recorded |
-| Local/offline behavior | Base documents a same-origin IndexedDB demo and an offline browser artifact | No network request for the local fixture after assets are present; bounded inputs fail with typed errors; no user data cleared during rollback | VCC-04 and VCC-06 |
-| Incremental paid spend | Not measured | $0 authorized; stop if free-tier capacity is exceeded | Cost ledger and receipt; a free quota is an assumption until observed |
+| TAD-CORE: `createBaseEngine`, `CONTRACT_VERSION=1`, adapters | E-01: `src/{index,engine,schema,query,projectors,errors}.mjs`, `src/adapters/{memory,indexeddb}.mjs` | `reuse`; no new core or storage | Base-owned data only; `test/engine.test.mjs`, `test/projectors.test.mjs`; VCC-09 |
+| TAD-TABLE: `TableCore`, `TableView`, `ColumnsTableView`, `MultiDimTableView` | E-01: `packages/views-react/src/table/`; exports `./table`, `./table/multi-dimensional` | `reuse`; one grid; narrow broad host types only for an observed gap | Host schema, editors, tokens, menus, formatting and graph overlay; VCC-01/02/03 |
+| TAD-BROWSER: `mountDataView`, `DATA_VIEW_BROWSER_LIMITS` | E-01: `src/browser/{index.ts,DataViewBrowserAdapter.tsx}` under `packages/views-react/`; E-05 manifest | `reuse`; replace the obsolete DataTableCore description; no alternate renderer | Literal-text read-only data; controlled selection/activation/orientation; `update`/`destroy`; VCC-04 |
+| TAD-KANBAN: `KanbanView`, `KanbanHostProvider`, move/reorder helpers | E-01: `packages/views-react/src/kanban/`; export `./kanban` | `reuse`, not successor implementation | Host data, inline editor components, domain grouping/actions, `onUpdateCell`/`onReorderRows`; VCC-07 |
+| TAD-CALENDAR: `CalendarView`, `projectCalendarView`, date helpers | E-01: `packages/views-react/src/calendar/`; export `./calendar` | `reuse`; keep rich and headless date policies distinct | Host config, permission and action callbacks; existing React time-zone/range behavior; VCC-08 |
+| TAD-DASHBOARD: board/grid/frame/charts/editor/layout/resize | E-01: `packages/views-react/src/dashboard/index.ts` and implementations; export `./dashboard` | `reuse`; no new dashboard engine | Host widget records/configuration, product drag policy, persistence and Mission content; VCC-10 |
+| TAD-SETTINGS: `ViewSettingsPanel`, settings primitives, shell/field workbench | E-01: `packages/views-react/src/settings/`; export `./settings`; FieldWorkbench implementation is not a root package export | `reuse`; distinguish implementation/deep source use from declared public exports | `SettingsHostAdapter`, saved views, product schema/actions remain host-owned; VCC-10 |
+| TAD-CONTROLS: React/native menus, checkbox/toggle groups, icons | E-01: `packages/views-react/src/controls/`; exports `./controls`, `./toolbar-icons`, `./toolbar.css` | `reuse`; one Base menu interaction owner and generated Design System visuals | Base menu focus/typeahead/placement/dismissal; native form semantics retained; VCC-03/04 |
+| TAD-DESIGN: panels, disclosure, rich text, hover, Viewer | E-06: `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904` declared/locked; direct imports listed below | `reuse`; owner first; no Base facade or lifecycle fork | Exact installed revision differs; E-02; VCC-05/10 |
+| TAD-DEMO: browser and React composition harnesses | E-01: `demo/`, `sw.js`, `scripts/dev-server.mjs`, `packages/views-react/dev/` | `retain-local` harness, not a second product UI | Root demo writes only via local form/engine; all four headless outputs use shared browser table; VCC-04/09 |
+| TAD-SHEETS / TAD-BRIDGE: proposed workbook owner and consumer snapshot bridge | No native Sheets implementation/export/repository acquired; E-01/E-12 ground the existing Base side only | `defer` implementation; ADR-05 records the domain split now | Separate Sheets artifact/owner and VCC-12 before transfer; Base remains independently usable |
 
-TTV path: pin an exact revision → supply the documented host contract → render one fixture → invoke one host callback → verify. Target ceiling is 5 steps / 30 minutes. No clean-environment walk-through has been performed, so the estimate remains unverified.
+**Package facts:** name `@agentic-base/views-react`, version `0.1.0`, `private: true`, Node engine `>=22.22.0`. The dependency-free/no-network statement applies to the headless core, not to the React view package or its build toolchain. React/ReactDOM/lucide are peers; d3 and its types are optional peers. The browser bundle includes React and ReactDOM and targets ES2022. Source TypeScript exports require a compatible consumer build; this is not an already published compiled registry package. Exact consumer pin/lock readback remains a prerequisite for consumer changes.
 
-### Ecosystem outcome and reuse
+**Provenance qualification:** `migration-source.json` says `local-adapted-unpublished` and has 55 source/digest entries, not the README's stated 54. E-04 finds four removed paths and 20 mismatched candidate digests among the 51 existing files. Its Graph PR #1470 note conflicts with the README's statement that successor #1471 superseded it. Treat the manifest as historical migration evidence, not a current release receipt; resolve at the Base owner before VCC-05. Do not restore removed implementations to make an old map pass.
 
-| Participant | Value exchanged | Source/owner | Evidence and gap |
-|---|---|---|---|
-| Consumer engineer | Less repeated layout and lower drift risk | Shared runtime owner; exact consumers listed in E-02/E-03/E-04 | Imports are visible; duplicated work avoided and support time saved are not measured |
-| Consumer user | Familiar, accessible table interaction within the consuming product | Consumer owns data and product behavior; Base owns shared structure | Screenshot is a user-provided reference only; no parity or accessibility result |
-| Maintainer | One reviewable source, release pin, and rollback predecessor | Base source; consumer release workflows | Exact revisions exist; a compatible versioned release and all current consumer pins do not |
-| Public user / payer | No paid offer in this FOSS-first increment | No external payer or payment mechanism | WTP and demand are unknown; no revenue claim |
+### Base and proposed Sheets ownership
 
-The reuse outcome is reduced repeated layout and drift across consumers, measured by a before/after source inventory, integration time, failed/repeated actions, and support minutes. Current savings remain unknown. The inventory count alone is not evidence of value.
+| Concern | Base owner: existing source E-01/E-12 | Sheets owner: proposed, no implementation claimed |
+|---|---|---|
+| Primary object | Dataset/table, schema field, stable record ID and revision | Workbook, worksheet, sparse cell/range, workbook revision |
+| Identity and order | Record/field IDs persist when views sort, filter or pivot | Stable workbook/sheet identity plus cell addresses; row/column edits require reference rules |
+| Calculation | Current typed query/projection; a future record formula stays record-scoped if admitted | Expression parsing, dependency/recalculation semantics, references and spreadsheet error values |
+| Presentation | Existing Table/MultiDim/Kanban/Calendar/Dashboard/settings owners | Future workbook grid, range selection, formula editing and sheet navigation; not a replacement Base grid |
+| Formatting and files | Existing host formatting; no workbook/file service | Workbook formatting/number formats and any independently specified CSV/XLSX adapter; no implied Excel parity |
+| State/effects | Base-owned store only for explicit Base datasets; consumer-owned stores otherwise | Workbook state/history/storage under its own host contract; no automatic duplicate record store |
+| Shared capability | Direct Design System primitives and exact profiles | Reuse the same cleared Design System owner; extract pure utilities only after two concrete consumers and demonstrated need |
 
-### Product acceptance criteria as VCCs
+**Dependency direction:** Design System → Base and, if admitted, Design System → Sheets. A consumer-owned bridge can depend on both public contracts; neither Base nor Sheets needs the other's runtime, internal source, persistence or renderer. Start with separate packages/modules inside an appropriate existing workspace if implementation earns admission; use separate repositories only when independent release/ownership or deployment needs justify their overhead. No new shared-kernel package, registry or forwarding shim is selected.
 
-Every condition is pending until a named check emits its result. The compatibility checks must run against the exact source revision and fixture recorded with that result.
+**Snapshot bridge contract, proposed:** the integrating consumer owns one explicit transfer. Capture a source revision; map stable record/field IDs to worksheet positions in a versioned mapping; include a loss report for unsupported values, dates, precision, styles or formulas. Start read-only with plain scalar values and no formula execution. CSV is a lossy transport, not a workbook or identity-preserving schema; XLSX parsing/export is separately admitted only with a verified FOSS/local path. No such parser, adapter or transfer exists in current Base.
 
-| ID | Measurable end state | Stated check | Constraint / bound |
-|---|---|---|---|
-| VCC-01 Shared owner | One shared `TableCore` renders row, column, and multi-dimensional projections; no second product-owned grid is introduced | Base component contract suite and source-owner inventory exit 0; report the component paths and consumer pins | Preserve all consumer schemas, data, actions, and persistence; no extra store; one source lane |
-| VCC-02 Graph reference parity (D-01) | The reference fixture contains the Key, Type, Scalar Value, List Value, Summary, and Output columns, nested map/list rows, type/value markers, the workspace tabs and toolbar; no required control is omitted or duplicated; geometry meets the stated tolerance | Render Base and Graph fixtures at the same 1113×952 CSS viewport and recorded 74% zoom; compare screenshots and complete the interaction checklist | No product code or data changes; disclose any browser/font variance; one fixture and at most 3 review cycles |
-| VCC-03 Accessibility | Every in-scope operation has a semantic name, keyboard path, visible focus, measured theme contrast, 200% text zoom, reduced-motion behavior, usable 44 CSS px touch targets, and a usable narrow viewport | Measure final composited colors: text ≥4.5:1 (≥3:1 for large text), control/focus boundaries ≥3:1; run keyboard/touch, narrow-viewport, and offline-reload checks | No color-only meaning; no accessibility pass inferred from static markup |
-| VCC-04 Offline and bounds | The same-origin fixture reloads offline after cache priming; limits and malformed inputs fail safely; the adapter never interprets cell strings as HTML | Run Base browser contract and offline network capture; report rows, columns, bytes, and typed error results | Stay within per-adapter limits; no remote storage, telemetry, or additional dependency fetch |
-| VCC-05 Rights and release | The exact release source, package state, notices, input/output digests, checks, and predecessor are recorded; public bundle contains only cleared source | Compare release manifest, source commit, license/notice inventory, and consumer lock pins | Do not publish a package or bundle an uncleared old pin; no inferred rights |
-| VCC-06 Recovery | A consumer can restore its previous exact source pin and generated artifact without changing user data | Revert the pinned dependency and read back prior artifact digest in a disposable local consumer | No IndexedDB deletion, schema rewrite, or production effect |
-| VCC-07 Kanban successor | One Base board renderer maps stable record IDs into host-provided lanes; keyboard/touch move controls emit typed intents and the host's accepted state is read back; no consumer owns a duplicate board renderer | Run the same board fixture through Base and a host adapter; verify lane/card identity, keyboard/touch paths, and host readback | Successor scope only; Base does not own lane semantics, authorization, persistence, or product actions |
-| VCC-08 Calendar successor | One Base calendar renderer maps host-provided events and time-zone-resolved dates; date navigation and event identity remain stable across month boundaries; no consumer owns a duplicate calendar renderer | Run month-boundary and daylight-saving fixtures through Base and a host adapter; verify keyboard/touch navigation, event mapping, and narrow viewport behavior | Read-only first slice; host owns time-zone policy and persistence; recurrence and event writes are excluded |
+For any later writeback, produce a typed proposed change set, require the record owner's permission and expected Base/record revisions, then invoke the existing owner and read back accepted state. Do not reinterpret row positions as record identity, silently overwrite unsupported values, or evaluate imported formulas/remote functions. A bridge uses a versioned operation ID and verifies retry/uncertain outcomes through owner readback; it must define atomicity for its own admitted batch rather than claiming existing Base has a cross-product transaction. No automatic bidirectional synchronization or dual writes. Preserve the original snapshot/mapping and prior pins; reverting the bridge does not delete records or workbooks. VCC-12 remains pending.
 
-## TAD — architecture and ownership
-
-### Component and source inventory
-
-The following matrix is the source-of-truth boundary for the first increment. A reuse entry names a source and revision; it does not claim rights beyond that revision or prove runtime parity.
-
-| Capability / pain-VCC | Source export / revision / consumers | Decision / smallest delta | Runtime boundary / deliberate difference | Acceptance / removal |
-|---|---|---|---|---|
-| Portable base and record contracts | `agentic-base@d7d7bdee978ee0dde35dd279ecf878d6853fc762`: `src/schema.mjs`, `src/engine.mjs`, `src/query.mjs`, `src/projectors.mjs`, `src/adapters/{memory,indexeddb}.mjs` | Reuse the existing engine and adapters; no second store | Base persists only data explicitly Base-owned or separately cut over; consumers keep their own records and authorization | VCC-01/VCC-04; do not migrate consumer data in a view release |
-| Shared interactive table (D-01) | `agentic-base@d7d7bdee…`: `packages/views-react/src/table/{TableCore,TableView,MultiDimTableView,TableHostContext}.tsx`; Graph pin is `529f1d866974453327977595a457d5065a8dbc45` | Extend the existing Base component/host contract; do not copy a renderer | Base owns grid, column/cell structure, and reusable interaction shell; host injects domain data, copy, tokens, editors, menus, and callbacks | VCC-01/VCC-02/VCC-03; remove any proven duplicate only after replacement passes |
-| Bounded offline browser table | Base `DataViewBrowserAdapter.tsx`, `DataTableCore.tsx`, `TableCore.tsx` at `d7d7bdee…`; output manifest reports 148,590 JS bytes and 1,883 CSS bytes | Retain as the literal-text, read-only browser adapter; do not present it as the full Graph workspace | Browser adapter accepts at most 64 columns, 1,000 rows, 4,096 characters/cell, and 196,608 payload bytes; React workspace view has a different host contract | VCC-04; retain as a bounded projection, never a competing rich table |
-| Graph data and workspace shell | `agentic-graph@60333d43486537df7b89f46293c58f282b0394f`: `canvas/src/features/markdown-workspace/main/viewer/MultiDimTableSurface.tsx`, `MarkdownWorkspaceDerivedViewer.tsx`, `GraphTableHost.tsx`, `canvas/src/features/markdown/ui/MarkdownDataViewTableView.tsx` | Keep Graph parsing, frontmatter tabs, toolbar, actions, formatting, settings state, source writes, and graph overlay in Graph; inject them through the Base host seam | Graph provides Markdown/frontmatter semantics and user operations; Base provides the shared grid visuals and contract. Its package pin is the older `529f1d…` source | VCC-02/VCC-03; no change to Graph data/source format in this increment |
-| Design-system catalog and review | Local `agentic-design-system` worktree at `8e66421aa167f4bf05b1c9f27a95eeb6c94b790f` was dirty on observation; `site/catalog.json`, `registry/owner-ledger.json`, `site/review-inventory.json`, `site/vendor/` | Consume Base through a thin host adapter; retain catalog records and Keep/Remove state in the site; use the richer shared React table for a fidelity demonstration when rights and build contract allow | Site owns catalog/review UI and publication gates, not a table renderer. Local inventory has 247 review-only rows across 23 collections; public catalog remains draft/empty; current package pin is `529f1d…` | VCC-02/VCC-05; working-tree content is not an approved release or public source |
-| Commerce browser projection | `agentic-commerce-os@b6867b2a79fd609eb4c43df7eeda7fb9f704d616`; config pins Base `093d2592449d19892170eac928606cd5d5da58b8` | Keep the browser artifact and consumer data/actions in Commerce; align pin only in a separate reviewed consumer change | Same-origin static asset, consumer-owned data and lifecycle | VCC-04/VCC-05/VCC-06; no Shoply migration or deploy in this increment |
-| Cross-product tokens and guidance | Proposed catalog owner is `agentic-design-system`; current Graph token source observed at `agentic-graph@60333d…:grph-shared/src/ui/kgTokens.ts`; local design-system ledger marks rights unverified | Use semantic host slots; centralize token contracts in the design-system owner after its source/rights/release record clears | Base must not import a product's token package; a host maps the approved tokens into Base variables | VCC-02/VCC-03/VCC-05; do not copy unverified token values/assets |
-
-### MECE view and visual ownership contract
-
-Each artifact has one implementation owner. Design-system examples may consume a released Base view, but the site does not ship a parallel view implementation. A product host maps its data and approved theme values into the contracts; it does not fork Base layout or interaction behavior.
-
-| Surface / concern | One implementation or source owner | Host-owned boundary | Explicit exclusion to prevent conflict |
-|---|---|---|---|
-| Table | Base `TableCore` / `TableView` owns the shared grid, generic column/cell layout, and interaction shell | Host provides schema, rows, query execution, authorization, and product actions | No second table grid in Graph, Commerce, or the design-system site |
-| Multi-dimensional Table | Base `MultiDimTableView` composes the shared table grid and hierarchy projection | Graph maps Markdown/frontmatter into the host model and keeps tabs, toolbar, source edits, graph overlays, and domain actions | No Graph-owned renderer fork; Base does not parse Markdown or own source writes |
-| Kanban | Base owns the reusable lane/card renderer and keyboard/touch move-intent controls after VCC-07 admission | Host provides grouping, lane labels, authorization, persistence, and the accepted move result | No product-specific board engine or Base-owned workflow/status semantics |
-| Calendar | Base owns the reusable date-grid renderer and navigation after VCC-08 admission | Host resolves event dates/time zones and owns event meaning, authorization, persistence, and actions | No duplicate calendar layout; no Base-owned recurrence or time-zone policy |
-| Brand, tokens, component specs, and visual guidance | `agentic-design-system` is the intended SSOT for cleared token values, brand profiles, component API specs, visual rules, accessibility contracts, and usage examples | Hosts map one approved profile through semantic CSS-variable slots; Base consumes those slots and owns the reusable component implementation | No conflicting per-product token overrides or duplicated token values; until rights clear, existing source values remain owned by their current repo |
-| Backend and domain state | Each product/service that owns the data remains its backend and persistence owner | Base emits typed interaction/query intents; the host executes and reports results | Base and the design-system site do not become another data store or service |
-
-The one-way dependency is: the product host loads an approved token artifact and the versioned Base component; the design-system website owns the catalog/specification and demonstrates those released artifacts. Base does not import Graph theme values or the design-system website. Graph remains the current owner of its Markdown/frontmatter mapping until a separately approved transfer is recorded.
-
-### Topology and principal flows
-
-**Diagram D-01** · Class: Data flow · Notation: Mermaid `flowchart LR` · Version: 0.1.0 — 2026-10-23
-**Caption:** Consumer data and approved theme slots enter product-owned host adapters; Base provides one Table/Multi-dimensional Table grid in the MVP and separately admitted Kanban/Calendar renderers later. User intents return to the owning consumer.
+**Diagram D-03** · Class: Data flow · Notation: Mermaid `flowchart LR` · Version: 0.4.0. Caption: optional future bridge, not an existing import/export implementation; runtime return edges do not change the acyclic build order. Check: E-13.
 
 ```mermaid
 flowchart LR
-  tokenSource["Design-system canonical token source"] --> tokens["Released semantic token artifact"]
-  graphSource["Graph Markdown/frontmatter"] --> graphHost["Graph host adapter"]
-  catalogSource["Design-system catalog rows"] --> catalogHost["Catalog host adapter"]
-  commerceSource["Commerce records"] --> commerceHost["Commerce host adapter"]
-  tokens --> graphHost
-  tokens --> catalogHost
-  tokens --> commerceHost
-  graphHost --> baseViews["Base shared views: MVP Table / MultiDim; successors Kanban / Calendar"]
-  catalogHost --> baseViews
-  commerceHost --> baseViews
-  baseViews --> grid["Base TableCore"] --> dom["Semantic HTML table"]
-  baseViews --> kanban["Base Kanban renderer (successor)"]
-  baseViews --> calendar["Base Calendar renderer (successor)"]
-  baseViews -->|typed host intents| graphHost
-  baseViews -->|review actions| catalogHost
-  baseViews -->|typed host intents| commerceHost
-  designSystemSite["Design-system docs/site"] -->|consumes released components and tokens| baseViews
-  localFixture["Base local fixture"] --> engine["Base engine"] --> indexedDb["Origin-local IndexedDB v1"]
+  baseOwner["Base / record owner"] -->|"authorized revisioned snapshot"| mapping["Consumer bridge: IDs, types, losses"]
+  mapping -->|"explicit value transfer"| workbook["Proposed Sheets workbook owner"]
+  workbook -->|"optional proposed edits"| changes["Typed change set and operation ID"]
+  changes -->|"permission and revision check"| authority["Record owner accepts or rejects"]
+  authority -->|"accepted write and readback"| baseOwner
 ```
 
-**Diagram inventory for D-01:**
+| D-03 node / owner | Input → output / persistence boundary |
+|---|---|
+| `baseOwner` / Base or consumer record owner | Revisioned records → snapshot; existing record store |
+| `mapping` / integrating consumer | IDs/types/snapshot → explicit mapping and loss report; no automatic mirror store |
+| `workbook` / proposed Sheets host | Transferred values → independently owned workbook state |
+| `changes` / integrating consumer | Workbook edits → versioned typed proposal; no direct record write |
+| `authority` / record owner | Permission/revision-checked proposal → accepted result or explicit rejection |
 
-| Node | Component / owner | Input / output | Persistence / boundary |
+For the future bridge, user journey and workflow are explicit export/review/proposed-writeback; data flow and topology are D-03 plus the owner table. Orchestration/harness flow is not applicable: no agent or autonomous synchronization loop is selected. Sheets-only editing, calculation and storage require their own VCCs/flows in a separately admitted artifact; this Base record is the owner of the separation decision only.
+
+### Host model, data lifecycle and limits
+
+Headless `engine.execute` accepts `{contractVersion:1, actorId, operation, payload}` and returns success data or a stable `BaseOperationError` code. Supported operations are base create/get, table list/create/rename, record get/list/create/update/delete, and view project. Caller authorization precedes storage access. Every write uses the expected base revision; update/delete also require the expected record revision. Adapter `load`/`commit` owns persistence and conflict atomicity; memory tests do not prove live IndexedDB transactions. The browser atomicity harness is `test-browser/idb-atomicity.html`/`.mjs`, unrun here.
+
+Headless caps: 2,000 records and 5 MiB serialized records/base, 64 tables/base, 128 fields/table, 64 filter nodes, six filter levels, eight sort keys, 250 records/page, 500 KiB/operation. Callers may lower limits, never raise them. Field types are text, number, boolean, date and select. These are configured bounds, not throughput or capacity measurements.
+
+React views consume `ViewModel {columns, rows, titleColumnId, groupByColumnId}` with stable row IDs and string cells. `TableHostAdapter` checks `agentic-base/table-host/v1` and injects components, helpers, theme/copy/style, icons and a preference store. Several shapes still use `any`/broad records; a fully narrow typed seam remains proposed. Kanban and settings have separate host contexts. UI callbacks express intent; each host authenticates, authorizes, persists and returns accepted state. A callback is not an authorization grant or a committed write receipt.
+
+Browser caps differ: 64 columns, 1,000 rows, 4,096 characters/cell, 128 characters/ID, 256 characters/label and 196,608 serialized payload bytes; optional hierarchy depth 1–8. IDs must be unique, cells match columns, selected rows exist, and orientation callbacks apply only to MultiDim. Invalid input raises `TypeError`/`RangeError`, rather than the engine's error envelope. Only `text`, `select`, `multi-select` column kinds are accepted. `canMutate`/`canConfigure` are false; controlled selection, row activation/deselection and optional pivot orientation are supported. Repeated mount of the same target rejects; updates after destroy reject and destroy is idempotent. This adapter is data-read-only, not noninteractive.
+
+Headless Calendar uses ISO date-only values without time-zone conversion and separates `unscheduled`, `invalid`, `outsideMonth`. React Calendar additionally accepts civil dates and RFC3339 timestamps with offsets, validates an explicit IANA display zone, supports start/end ranges and month/day navigation, and returns errors/invalid rows without silent repair. It builds a 42-day grid and derives visible weeks; instant end dates use the implemented end-exclusive adjustment. Do not apply the headless date-only claim to the React export or invent recurrence/event storage.
+
+Records remain in their owning consumer or in explicitly created Base IndexedDB v1. The demo shell caches same-origin assets, not record snapshots. Browser eviction is possible; export/import, backup restore, destructive migration, remote synchronization and file storage are absent. Local sample writes are illustrative and are not trusted authentication against same-origin code.
+
+### Native design ownership and adoption
+
+| Concern | Native owner / exact join | Base adoption and check | Current limitation |
 |---|---|---|---|
-| `tokenSource` | Design-system canonical token source / design-system owner after clearance | Approved token values → released semantic token artifact | Versioned tokens only; source rights must clear |
-| `designSystemSite` | Design-system docs/site / design-system owner | Released Base examples and token documentation | Versioned docs/examples only; no product records |
-| `graphSource` | Graph Markdown/frontmatter source / Graph | Markdown source → parsed view rows | Consumer source/store |
-| `catalogSource` | Design-system catalog/review rows / design-system site | Catalog records → review rows | Consumer-owned browser-local review state |
-| `commerceSource` | Commerce records / Commerce | Consumer records → view rows | Commerce-owned data adapter |
-| `tokens` | Released semantic token artifact / design-system owner after clearance | Approved token values → host CSS-variable mapping | No data persistence; no consumer-specific conflicting overrides |
-| `graphHost` | Graph host adapter / Graph | View model and callbacks | Consumer-owned commands and writes |
-| `catalogHost` | Catalog host adapter / design-system site | Read-only rows and review actions | Site-owned local choices; no rights transfer |
-| `commerceHost` | Commerce host adapter / Commerce | View model and callbacks | Consumer-owned actions/lifecycle |
-| `baseViews` | Base `TableView` / `MultiDimTableView`; future Kanban/Calendar renderers / Base | Typed view and host adapter → view structure | Table/MultiDim are MVP; future views require VCC-07/08 and separate admission; no domain-data persistence |
-| `grid` | Base `TableCore` / Base | Rows/columns → table structure | No persistence |
-| `kanban` | Planned Base Kanban renderer / Base | Host-projected records and lanes → board structure | Successor only; no lane persistence or domain rules |
-| `calendar` | Planned Base Calendar renderer / Base | Host-projected events and resolved dates → calendar structure | Successor only; no event persistence or time-zone policy |
-| `dom` | Browser semantic table / browser | Grid → visible HTML table | Rendered DOM only |
-| `localFixture` | Base local demo / Base | Fixture data → engine request | Same-origin local demo only |
-| `engine` | Base engine / Base | Validated request → projection/result | Adapter boundary |
-| `indexedDb` | Base `IndexedDBAdapter` / browser | Snapshot → local records | Origin-local database version 1 |
+| Panel family and lifecycle | E-06 `react/panels` | Dev imports FloatingPanel/control groups/disclosure directly; settings shell/workbench import section headers/scroll regions; panel checker passes before E-02 failure | No Base panel export or forwarding shim; placement/lifecycle parity requires live proof |
+| Rich text, hover, Viewer | E-06 `react/rich-text`, `react/hover`, `hover/text`, `react/viewer` | Dashboard editor/charts/card bodies use these owners directly | Installed older Design System lacks Viewer export; no full type-check success |
+| Tokens, typography and geometry | E-06 shared-ui/base profile pin files, icons and toolbar pins | Generated offline projections; 38px desktop / 54px touch rows, 14px/20px body role; shared helper/profile tests pass | Metrics are source defaults, not measured accessibility/contrast or whole-product uniformity |
+| Hierarchy and sticky table behavior | E-01 Table runtime and `stickyHierarchy.ts` | One header/ancestor-path owner; fixed grip/chevron/checkbox slots; native scroll-padding honored; helper tests pass | No consumer scroll/resize/shadow-host browser result recorded |
+| Brand and illustration | Consumer/Design System profile owners | No new brand asset, downloaded font or illustration needed | Third-party notices/rights must be checked for exact distribution; old catalog rights claims are not current evidence |
 
-**Data Flow table for D-01:**
+Build/release dependencies are acyclic: cleared Design System exact source/export → Base exact dependency/lock and generated projections → Base checks/source integration → consumer exact pin/lock/artifact and checks → separately gated delivery. Runtime callback/readback edges can return to a host; they are not build dependencies. A Design System site may consume released Base examples at the presentation layer; Base imports primitive package exports, not the catalog website or Graph source.
 
-| Stage | Component | Input format | Output format | Persistence | Error handling |
+### Applicable flows and diagrams
+
+| Feature set | User journey | Workflow | Data flow | Orchestration/harness | Topology |
 |---|---|---|---|---|---|
-| Ingest | Graph, catalog, or Commerce host | Consumer-owned records and schema | Bounded `ViewModel`/row inputs | Consumer-owned source/state | Consumer validation and typed error UI |
-| Adapt | Host adapter | View rows, semantic tokens, callbacks | Base host contract and view props | None in Base | Reject unsupported contract; report to consumer |
-| Render | Base `TableView` / `MultiDimTableView` and `TableCore` in MVP; Kanban/Calendar renderers after separate admission | Typed view, host controls, semantic theme slots | Semantic view DOM | None | Empty/bounded states; host handles domain failures; noncritical views are lazy-loaded |
-| Act | Base event → consumer host | Row/cell/review intent | Consumer callback/result | Graph source/store, local review choice, or Commerce store | Consumer authorization, conflict handling, and readback |
-| Local demo | Base engine and IndexedDB adapter | Versioned request and snapshot | Typed projection/result | Origin-local IndexedDB v1 | Typed validation, conflict, quota, and schema errors |
+| Core/local demo | Create sample → inspect/reload; D-02 | Form → engine → readback; D-02 | Request/projection/storage; D-01 | N/A: no agent/model loop | Local browser/origin and adapters; D-01 |
+| Table/MultiDim/browser | Pin → model → render/select/pivot; D-02 | Intent → host → accepted state; D-02 | Host view model → shared grid; D-01 | N/A: ordinary UI callbacks | Existing Base renderer and host; D-01 |
+| Kanban/Calendar | Inspect groups/dates → host action; D-02 | Move/navigation/config → host readback; D-02 | Same IDs projected into view; D-01 | N/A: no autonomous execution | Existing React exports; D-01 |
+| Dashboard/settings/fields/menus | Configure → save/cancel; D-02 | Host owns validation/persistence; D-02 | Config/content → Base + primitive owner; D-01 | N/A: component lifecycle is not orchestration | Base content with direct Design System; D-01 |
 
-| Flow | Path and owner | Data/effect boundary |
+**Diagram D-01** · Class: Data flow/component topology · Notation: Mermaid `flowchart LR` · Version: 0.2.0, 2026-11-17. Caption: existing owners and data residency; all shared view families already exist. Render surface: Markdown Mermaid/canvas projection check E-08.
+
+```mermaid
+flowchart LR
+  subgraph hostBoundary["Consumer-owned source and effects"]
+    source["Records, schema, authorization and actions"]
+    host["Host adapter and accepted state"]
+    source -->|"project records and callbacks"| host
+  end
+  subgraph viewBoundary["Base presentation; no consumer-data persistence"]
+    views["Table, MultiDim, Kanban, Calendar, Dashboard, settings"]
+    table["One TableView / TableCore grid"]
+    browser["Bounded browser adapter"]
+    views -->|"table projections"| table
+    browser -->|"same table runtime"| table
+  end
+  design["Pinned Design System primitives and projections"]
+  host -->|"view model, configuration, content"| views
+  views -->|"intent; host authorizes and commits"| host
+  host -->|"literal rows and callbacks"| browser
+  design -->|"shared UI contracts"| views
+  subgraph localBoundary["Explicitly Base-owned same-origin data"]
+    demo["Local sample form and projection harness"]
+    engine["Headless engine and pure projectors"]
+    storage["IndexedDB v1 or memory adapter"]
+    demo -->|"versioned authorized request"| engine
+    engine -->|"revision-checked load / commit"| storage
+  end
+  engine -->|"bounded projection result via demo"| browser
+```
+
+| Node / owner | Input → output | Persistence/failure boundary |
 |---|---|---|
-| User journey | Discover exact Base release → map one fixture → render shared view → invoke consumer callback → inspect result | Discovery/read is local; rendering itself grants no mutation authority |
-| Data flow | Graph Markdown parser or Commerce data adapter → host `ViewModel`/rows → Base grid → visible cells | Base view receives bounded presentation data; consumer remains source of truth |
-| Control flow | Workspace toolbar and settings → consumer callbacks → consumer query/configuration stores → new host view model | Graph owns commands, persisted view settings, permissions, and source writes |
-| Persistence/recovery | Base-owned demo → IndexedDB v1; Graph → its current source/store; Commerce → its current application adapter | Separate data owners; do not clear or migrate either consumer during view rollback |
-| Build/release/deploy | Base source lane → required checks → exact Git release → consumer exact pin/artifact → separately authorized deploy | Release and deploy boundaries stay closed absent their own receipts/instruction |
+| `source`, `host` / consumer | Records/schema/permissions → model and accepted callbacks | Consumer store; host handles authorization, conflicts and reconciliation |
+| `views`, `table`, `browser` / Base | Presentation data → React/DOM and intents | No consumer data storage; typed engine errors and browser exceptions remain distinct |
+| `design` / Design System | Pinned primitives/profiles → shared visuals and lifecycle | Package/versioned artifacts only; missing export blocks dependent build |
+| `demo`, `engine`, `storage` / Base-local | Form request → bounded projection and snapshot | IndexedDB origin v1 or memory; no remote storage |
 
-There is no AI/model pipeline in this scope; token usage for serving is 0 by design and no agent route is exposed. The implementation has no HTTP, MCP, WebMCP, `/`, `@`, or `#` mutation surface. Any later invocation surface requires an owner, schema, authority, budget, and dedicated VCC.
+**Diagram D-02** · Class: User journey/workflow · Notation: Mermaid `flowchart LR` · Version: 0.2.0. Caption: one reusable journey covers each feature row above; failed actions retain the host as authority. Render surface/check: E-08.
 
-### Host contract and data model
+```mermaid
+flowchart LR
+  pin["Discover exact export, pin and prerequisites"] -->|"rehearse locally"| model["Supply host model or create local sample"]
+  model -->|"render existing view"| inspect["Inspect records, groups, dates or settings"]
+  inspect -->|"select, configure, move or save"| intent["Dispatch supported host intent"]
+  intent -->|"check permission and revision"| owner["Owner accepts or rejects effect"]
+  owner -->|"read accepted state or explicit error"| result["Refresh view; preserve data on failure"]
+  result -->|"record fixture, steps and result"| evidence["Check or restore exact prior pin/artifact"]
+```
 
-The existing `agentic-base/table-host/v1` injects theme tokens, style classes, icons, components, a preference-store reader, data helpers, and width/density helpers into `TableView`. It is intentionally a host seam but currently uses broad `Record<string, any>` component/helper shapes. The next implementation increment should replace ambiguous fields with a small typed contract derived from the Graph host and the design-system fixture. Do not create a second renderer to avoid typing that seam.
+### Invocation, quality and deployment boundaries
 
-Keep one canonical `TableCore` structural grid. `TableView` supplies the rich interactive host-driven table. `MultiDimTableView` composes that same view and an optional host graph overlay. `DataTableCore` is the bounded, literal-text browser adapter built on the same `TableCore`; its simpler read-only API is deliberate and cannot satisfy the entire workspace-shell VCC by itself.
+**Invocation Register (one scoped register):**
 
-Core request limits observed in `src/schema.mjs` and `src/engine.mjs` are 2,000 records/base, 5 MiB serialized records, 128 fields/table, 64 filter nodes, 6 filter levels, 8 sort keys, 250 records/page, and 500 KiB/operation. The browser view adapter has its own lower limits in the inventory above; never merge the two limit sets into one claim. Browser quotas can be lower and no throughput/capacity test is implied.
-
-### Visual and accessibility contract
-
-The user-provided Graph reference is the fixture source: a frontmatter data view with the Markdown YAML Frontmatter / Markdown Body tabs; a top control bar; columns Key, Type, Scalar Value, List Value, Summary, and Output; scalar/type chips; nested map/list disclosure; and rows such as `kgSharedRendererContract`, `index`, and `tableMode`. Its saved screenshot is 1113×952 at 74% zoom. Preserve that exact fixture, viewport, zoom, font environment, and browser version in any future baseline artifact.
-
-Base owns the grid, shared row/column geometry, header behavior, and reusable keyboard/focus behavior. Graph owns Markdown-specific data semantics, toolbar commands, source editing, and theme-token mapping. The design-system site owns its catalog search, grouping, sorting, Keep/Remove state, export, and publication eligibility. These responsibilities may compose; they may not fork grid geometry or offer competing table layouts. Theme differences come from approved semantic tokens mapped into the same component slots.
-
-The local design-theme contract requires semantic table headers, a named table region, keyboard-accessible row/control paths, visible focus, non-color-only type/status meaning, text contrast ≥4.5:1 (≥3:1 for large text), control/focus boundaries ≥3:1, 200% text zoom, reduced motion, a narrow touch viewport, and usable 44 CSS px touch targets. It also requires offline reload after the cache is primed. Static markup and a screenshot do not prove the contract. Record each surface and check result before changing its readiness rung.
-
-### Native design adoption record
-
-| Concern | Native owner at exact revision | Reused surface or utility | Acceptance check and result | Gap / next check |
-|---|---|---|---|---|
-| Identity and illustration | Cross-product owner not yet approved; local catalog profile has no owner/source | None required by the table runtime | No runtime result | Assign one brand-profile owner and clear asset/license evidence before publication |
-| Settings and preferences | Graph `WorkspaceDataViewSettingsPanel.tsx` at `60333d…`; Base settings exports at `d7d7bdee…` | Reuse shared settings shell and host callbacks | No matched live comparison in this turn | VCC-02/03 against same fixture and state transitions |
-| Tokens and render adapters | Graph token source `grph-shared/src/ui/kgTokens.ts` at `60333d…`; design-system owner ledger is local and dirty | Host maps approved semantic slots; Base remains brand-neutral | No token rights or contrast result recorded | Clear source rights, add exact token manifest and per-mode contrast evidence |
-| Typography and ideograms | Graph panel typography/icons in consumer host at `60333d…`; cross-product token owner pending | Host supplies approved typography and icons to the shared component | No matched font/icon evidence | Record font/icon source, fallback, scaling, and checks; don't copy unverified assets |
-| Editor surface | Graph owns Markdown editor and source-line editing at `60333d…`; Base exposes host edit callbacks | Reuse Base cell shell and consumer editor adapter | No end-to-end edit result in this turn | Verify edit, commit, cancel, focus return, and source readback under VCC-02/03 |
-| Status and evidence | Design-system site owns review decisions; catalog draft is `0.1.0-draft` at local `8e66421…` plus dirty files | Base renders literal review text; site owns browser-local choices and export | Local review is not rights or publication evidence | Keep public manifest empty until owner, rights, digests, accessibility, and release evidence clear |
-
-### Security, privacy, quality, and recovery
-
-- The core makes no runtime network requests. The static demo's service worker caches same-origin static assets; records stay in origin-local IndexedDB. Browser eviction is possible; the demo is not backup.
-- The caller authorization callback is a local policy hook, not authentication or an isolation boundary from other same-origin code. Each consumer must enforce its own trusted access boundary.
-- Cells in the bounded browser adapter are literal text; test all rich host renderers for safe output independently. Treat source paths and Markdown content as untrusted data.
-- IndexedDB schema is currently version 1; incompatible versions fail closed. Export/import and destructive migration are not implemented. Stop writes on an incompatible schema; preserve origin data.
-- Source rollback and data recovery are separate effects. Restore the exact prior dependency pin and browser artifact; do not clear IndexedDB or consumer records. Any persistent-data migration requires a separate backup, forward-recovery, and owner-authorized plan.
-- MIT applies to owner-authored Base material at the current license-bearing source revision; third-party dependencies keep their own notices/licenses. Perform an exact source and dependency notice review for every release.
-- The old Graph/design-system Base pin `529f1d866974453327977595a457d5065a8dbc45` has no `LICENSE` file. Current Base main `d7d7bdee978ee0dde35dd279ecf878d6853fc762` contains the MIT license and is observed public. A public bundle must not inherit rights from a newer commit retroactively; move to an exact rights-cleared revision in a separately reviewed consumer change.
-
-### Deployment and invocation boundaries
-
-| Lane | Allowed in this scope | Boundary |
+| Surface / identity | Support / schema owner | Authority, offline/device reach and token cost |
 |---|---|---|
-| Authoring | Edit this document in its admitted worktree; later implementation uses one scoped source lane | No mutation of a mirror or delivery surface |
-| Source release | Exact PR, required policy check, protected squash integration, exact source receipt | A source release is not package publication or deployment |
-| Delivery | No hosted Base service or website deployment is authorized here | Closed; requires exact target/artifact, free-tier proof, readback, and separate operator instruction |
-| Browser, API, agent routes | Existing browser imports and consumer callbacks only | No HTTP service, MCP/WebMCP endpoint, or slash/mention/hashtag invocation is supported |
+| Local ESM engine call `createBaseEngine().execute` | Supported; E-01 request v1 and stable errors | Caller policy hook before adapter; local JS/browser; no serving model tokens |
+| Browser `mountDataView` | Supported; E-01 state/handle and bounds | Presentation + host callbacks; primed static assets; modern browser; no mutation grant |
+| React package exports | Supported at source/build level; E-01 contracts | Host owns effects; mobile geometry in source, device behavior unverified; no agent endpoint |
+| HTTP service / MCP / WebMCP / `/` command / `@` binding / `#` semantic route | Unsupported in Base | No handler, gateway or capability catalog; do not invent route identities or claim transport parity; revisit only on a concrete integration job |
 
-The requested design-system route is `/agentic-design-system/` on the stated domain, but route ownership, deployment, public catalog release, and rollback are not verified by this artifact. Keep the design-system static payload under its own reviewed release boundary; never publish its internal owner ledger or unapproved review inventory.
+The local static development server is not a production data API. Discovery is reading local docs/exports with zero runtime model calls; UI callbacks and typed engine calls are not an MCP service. Later transports must reuse these owners and declare schema, authentication, budgets, idempotency and effect authority rather than copying handlers.
 
-## ADR — decisions and alternatives
+Security/recovery scenarios: authorization rejects before storage; stale base/record revisions reject without partial memory writes; incompatible IndexedDB versions stop writes; bounded browser text does not interpret HTML; rich host renderers need independent safety checks. Same-origin code remains a trust boundary. Service-worker caches and origin storage are not backups. Local server sends CSP Report-Only for development HTML; there is no production enforcement receipt. Any future production HTML must enforce CSP under the owning deployment policy.
 
-### ADR-01: one shared table grid, host-owned domain behavior
+| Lane / residency | Boundary name and state | Required evidence / operator instruction / rollback |
+|---|---|---|
+| Authoring / local source and fixtures | `source-integration`: source-only workflow | Exact document/source candidate, affected checks, protected PR and per-effect authority; current user request covers this document update, not a Base/consumer change; reviewed revert preserves other bytes |
+| Mirror / non-public built static artifact | `local-preview`: closed for promotion in this task | Selected exact source/output digest + local readback, referenced operator instruction, prior artifact restore check; no promotion performed |
+| Delivery / selected public consumer host | `public-delivery`: closed | Exact Dev→Prod artifact identity, current hard-$0/deny-at-quota proof, operator instruction and live readback, rollback predecessor; none acquired here |
 
-**Status:** proposed for the next implementation baseline. **Decision:** extend the existing Base `TableCore`/`TableView`/`MultiDimTableView` contract; use Graph as the visual interaction reference; retain consumer-owned parsing, actions, authorization, data, and persistence. Treat the smaller `DataTableCore` as a bounded read-only browser projection on the same grid, not as a full workspace substitute.
+Base `docs/DEPLOY.md` defines no hosted deployment. The documentation repository's `docs/DEPLOY-WORKFLOW.md` seals `index.html`, `guidelines/` and explicit schema routes; `docs/documents/` is outside its current Pages payload. Updating this document does not publish it as a site route. Source release, mirror proof, delivery, package publication and consumer cutover need distinct receipts; none can be inferred from this artifact.
 
-| Option | Value | Cost / consequence | Result |
-|---|---|---|---|
-| Extend the existing shared Base grid and typed host seam | One component owner; current consumers already import the source; supports host-owned schemas/actions | Requires an exact parity fixture and a narrow host contract; existing consumer pins need separate alignment | **Chosen** |
-| Copy Graph table implementation into each consumer | Short apparent path for one page | Duplicates grid geometry, accessibility fixes, and release drift; violates one-owner requirement | Rejected |
-| Put the full Graph application in an iframe | Reuses a complete shell | Brings unrelated stores, controls, lifecycle, and bundle; weakens local integration and offline bounds | Rejected |
-| Use only the bounded browser adapter for every surface | Small literal-text offline table already exists | Cannot by itself supply Graph workspace tabs, editing, hierarchy behavior, settings, or full parity | Retain only for its intended read-only projection |
-| Add a new third-party grid | May offer more features | Adds a dependency, licensing/maintenance review, and competing grid owner without evidence of unmet Base capability | Rejected |
+## Reference implementation — ADR: decisions, alternatives and recovery
 
-**Consequences:** the implementation work must improve or document the one Base host contract; no Graph-only table fork or page CSS may redefine canonical grid geometry. Keep intentional host behavior behind typed callbacks and semantic token slots. **Revisit:** if the exact Graph fixture cannot be represented without importing product state, revise the contract before any consumer cutover. No exception creates a second grid.
+### ADR-01: reuse implemented views, preserve domain ownership
 
-### ADR-02: semantic theme slots; no product palette inside Base
+**Status:** observed architecture retained; current full compatibility remains unproven. **Decision:** reuse the existing Base grid and view families, headless core only where records are explicitly Base-owned, and consumer adapters for product semantics. Table/MultiDim/browser use one table runtime. This single-grid rule covers the Base record-view contract; it does not make a future workbook editor use Base's record grid or create shared ownership of workbook semantics (ADR-05). Kanban/Calendar/Dashboard/settings are existing capabilities to verify, not a new roadmap build.
 
-**Decision:** Base exposes stable semantic slots and shared layout rules. `agentic-design-system` is the intended single source for cleared brand profiles, token values, component specifications, visual guidelines, accessibility contracts, and usage examples; each consumer maps one approved profile through the Base host adapter. Graph remains the source owner of its current theme values until a cleared, versioned transfer is recorded. The design-system website consumes released Base components for examples and does not implement duplicate views.
+| Candidate | Constraint disposition | Cost/tradeoff and relation |
+|---|---|---|
+| Direct existing owner + explicit host contract | pass for source reuse; full check/parity remain prerequisites | Chosen; closest to built source; preserves host data/actions |
+| Contract-only consumer adapter | pass when required for intentional host semantics | Compatible with direct reuse, not a competing renderer; typed mapping/error/readback checks required |
+| Retain consumer domain logic locally | pass for parsing, permissions, persistence, product lifecycle | Required boundary; cannot justify duplicate grid or primitive lifecycle |
+| Copy a product renderer or add a new grid | fail-single-owner | More dependencies/drift without a demonstrated missing owner capability |
+| Embed full product in an iframe | fail-minimum-scope | Unrelated stores/lifecycle and unverified offline/bundle behavior |
 
-**Alternatives:** hard-code Graph token values in Base (rejected: product coupling and unclear rights at old pins); keep independent component CSS in each consumer (rejected: visual drift); make Base import the design-system website (rejected: dependency cycle and loss of portable host use). **Consequence:** product hosts load the approved token artifact and versioned Base component; the design-system presentation demonstrates those releases, while Base stays neutral. The local design-system branch is dirty and its catalog is draft; it is evidence of in-progress work, not a release or rights grant. **Revisit:** after the design-system owner ledger, public manifest, and matching token/contrast checks have an exact released revision.
+Among feasible options, reuse outranks new implementation on source delta and ownership; a host adapter and local domain logic are complementary, not ranked substitutes. Buyer ROI is incomparable because inputs are absent. No contested platform/vendor choice or independent argument verdict is claimed. Revisit only after a same-fixture contract failure. Recovery restores exact prior Base pin/lock/artifact without changing records.
 
-### ADR-03: exact source pins and immutable version records; no registry publication
+### ADR-02: direct Design System primitive consumption
 
-**Decision:** retain full Git commit pins while the package remains `private: true`. A source release should bind semantic version, exact commit, source and output digests, notices, checks, compatibility contract, and predecessor/rollback. Do not set `private: false` or publish a package as part of this increment.
+**Status:** implemented in source; installed dependency drift blocks full validation. **Decision:** retain Design System as owner of panel families, disclosure, shared UI profiles, toolbar/icons, rich text, hover and Viewer. Base owns data-view/domain-neutral presentation and its menu interaction helpers; consumers supply content, state and callbacks. Settings section/scroll and Dashboard rich-text/Viewer imports are direct. Removed Base disclosure/section-header implementations and panel forwarding APIs stay removed.
 
-**Alternatives:** mutable branch pins (rejected: non-reproducible); publish a package before rights, peer dependency, and compatibility evidence (rejected: release boundary not closed); copy a generated artifact without its manifest (rejected: source/output cannot be reconciled). **FOSS/TCO:** the current local/static path uses existing Git, browser storage, and FOSS dependencies; no new server or paid service is selected. Maintainer hours, CI quota headroom, and peer-dependency license inventory remain unmeasured. **Revisit:** after one exact source release passes VCC-05 and each consumer tests its own pin/rollback.
+Direct imports pass the single-owner constraint and minimize adapters. A contract-only host callback seam remains valid for product content; a Base re-export shim or local primitive lifecycle/style fork fails single-owner. The immediate delta is installation/pin reconciliation and verification at the owner, not another Viewer or panel. Restore prior exact Design System pin + lock + reviewed import changes together for rollback; never mix revisions or recreate removed shims. Revisit after E-02 is reproduced with the exact declared installation.
 
-## MVP — smallest dependency-closed slice
+### ADR-03: exact Git source and artifacts; no registry or hosted expansion
 
-The first MVP is the shared Table and Multi-dimensional Table slice: one Base grid, one typed host contract, and one deterministic Graph comparison fixture. Kanban and Calendar are explicit successor views, not hidden MVP scope. This sequencing captures the highest reuse first and avoids admitting two more renderers before the shared contract and visual fidelity are proven. It does not include product migration or public release.
+**Status:** existing distribution policy retained. **Decision:** keep `private: true`, exact Git pins and source/output manifests. MIT in the inspected Base source applies to its owner-authored material; third-party rights/notices remain separate. Current README identifies the public canonical repository and frozen private archive; no fresh provider visibility readback is claimed. Old October visibility/license blockers are historical, not present-day consumer pin findings.
 
-**Must:**
+Mutable branch pins fail reproducibility. Registry publication, a new hosted service, remote storage and agent transport fail current scope/cost/evidence constraints. An exact artifact with manifest is feasible; copying anonymous bundle bytes is not. Local/static FOSS reuse is the selected deployment model; hosted/edge costs and capacities are unknown and therefore incomparable, not scored as free. Revisit distribution only after intact checks, current provenance/notices, consumer compatibility and exact predecessor proof. Recovery is a reviewed pin/artifact revert; state recovery remains a separate effect.
 
-1. Normalize the typed host inputs required by the existing Base table; preserve current consumers through one documented compatibility migration and a retirement check.
-2. Build one fixture representing the supplied frontmatter table, including nested values, type chips, six named columns, tabs/toolbar shell, review controls, narrow viewport, and empty/error cases.
-3. Render the fixture with the same Base grid in the Base demo and design-system preview. Graph supplies its existing data/actions; do not transplant Graph's stores or workspace commands.
-4. Pass VCC-01 through VCC-04 for the Table/Multi-dimensional Table slice on an exact source candidate; record VCC-05/06 release and rollback proofs before any public catalog entry or consumer pin update. VCC-07/08 remain pending until separately admitted successor work.
-5. Keep one structural grid, one semantic token contract, no new database, no network read, and $0 paid spend.
+### ADR-04: reference-only inspiration; no incorporation or dependency
 
-**Should:** after VCC-01 through VCC-06 and the source-rights gate pass, publish an immutable, versioned source release and update each consumer in a distinct reviewed change. Then admit Kanban (VCC-07) and Calendar (VCC-08) as separate Base view increments with their own host fixtures and owner-approved scope; Calendar is read-only-first, while Kanban's first move is a host-mediated intent.
+**Status:** selected constraint from the current user directive; full VCC-11 evidence remains pending. **Decision:** Univer may inform conceptual comparison only. Copying, vendoring, forking, translating/porting, or closely reproducing its code, tests, schemas, documentation, assets, styles, API structure or fixtures is forbidden. Direct and transitive package/Git/tarball/submodule/build/test/CDN/hosted-service dependencies on Univer or its commercial/sibling packages are forbidden in Base, any proposed Sheets implementation and admitted integration fixtures. A wrapper does not remove the dependency. Generic domain terms such as workbook, record and range are not proprietary API selections.
 
-**Could:** later add projections or agent routes only after validated user pain and a separate ADR. **Won't:** deploy a hosted service, publish to a package registry, migrate product data, make a paid offer, or claim production visual/accessibility parity from source inspection alone.
+Reference-only analysis passes the constraint; adopting packages/presets, embedding a hosted editor or copying a renderer fails it regardless of license permission or apparent feature savings. The public project includes OSS and separately licensed capabilities (E-10); its demos are not free-feature, performance, mobile/offline or Excel-parity evidence for our products. Inspect only the description needed for the decision; no clone, package install, source migration or commercial evaluation is selected. Use native contracts and independently authored fixtures. A bounded dependency scan is not a copying audit. Revisit only through an explicit superseding owner decision; recover any offending change by a reviewed revert preserving data.
 
-### Demo skeleton
+### ADR-05: separate record Base from workbook Sheets
 
-| Beat | Time cap | Action / observable result |
+**Status:** recommended architecture, selected for this planning scope; Sheets implementation/repository deferred. **Decision:** retain `agentic-base` as the record/multi-view owner and use `agentic-sheets` as the provisional neutral name for workbook capabilities. Prefer it to a broader Office-suite name; `agentic-spreadsheet` is a descriptive naming alternative, while an Excel-specific name would imply unearned compatibility. Names do not establish an existing package, endpoint or product.
+
+| Option | Constraint disposition / consequence | Decision |
+|---|---|---|
+| Separate Base/Sheets domains and package contracts; defer physical repository split | pass: preserves Base and permits independently bounded workbook work with minimal immediate overhead | Chosen; no code or repository created now |
+| Independent Sheets repository immediately | Domain separation passes, but extra setup/release overhead has no validated buyer or ownership need yet | Defer; revisit on first admitted Sheets scope and independent release need |
+| Put workbook/formula/range semantics into Base's record engine | fail-current-scope/single-owner: changes data/error/identity contracts and couples Base consumers to spreadsheet work | Rejected |
+| Rename Base to Sheets or use one renderer/model for both | fail-contract-fit: record identity and arbitrary cell references have different semantics | Rejected |
+| Adopt Univer or another workbook engine now | Univer fails ADR-04; other FOSS engines remain unselected without a separately scoped requirement/license/budget review | No dependency or implementation decision |
+
+Separate domains outrank a merged model on contract safety and smallest current change; same-workspace packages versus repositories remain a deployment/operations choice, not competing data semantics. No build-time Base↔Sheets cycle or automatic two-way sync is allowed. Optional interoperability starts with a consumer-owned read-only scalar snapshot and explicit loss/identity mapping; writeback requires VCC-12. Preserve all existing Base exports, stores and user records. Rollback removes only the optional bridge/package wiring and restores prior pins; no workbook-to-Base migration is implied. Revisit on measured workbook demand, an owner-assigned bounded use case and a proposed contract that can pass free/FOSS, offline, byte and recovery constraints.
+
+## Reference implementation — MVP: existing slice and remaining proof
+
+The smallest current slice is one exact local fixture through the existing Base engine/browser adapter and one rich host composition. The original Table-first implementation proposal is superseded by the actual broader source baseline. It does not justify rebuilding Kanban/Calendar, declare all views accepted, or authorize a consumer cutover.
+
+| Scope | Implemented source | Remaining acceptance / existing owner |
+|---|---|---|
+| Headless records and projections | Revisioned engine, memory/IndexedDB adapters, Table/matrix/Kanban/date-only Calendar | VCC-09 locally passes; live IndexedDB atomicity and offline reload remain VCC-04/06 |
+| Browser Table/MultiDim | Shared rich table runtime, selection/hierarchy/pivot callbacks, bounded literal data | VCC-01–04 fixtures; no old DataTableCore fallback |
+| React Kanban/Calendar | Group/card controls, drag/move helpers; time-zone/range calendar and navigation | VCC-07/08 host, keyboard/touch, DST and effect readback |
+| Dashboard/settings/field presentation | Existing components and direct shared primitive consumption | VCC-10; first reconcile E-02 at the dependency owner |
+| Distribution/recovery | Exact declared dependency and generated output manifests | VCC-05/06 full check, current provenance/notices and disposable consumer rollback |
+
+**This revision's MVP is the reviewed separation and reference-use decision; it creates no Sheets code, repository, dependency or migration.** A later Sheets slice needs its own joined artifact and owner: one bounded local workbook job, independently authored semantics/fixtures, explicit formula/function subset if any, limits and loss behavior, mobile/offline proof and source rollback. Start with scalar snapshot inspection if it resolves the user job; full formula engine, Excel import/export, collaboration, server and agent orchestration remain outside this increment.
+
+**Must for the next proof increment:** reconcile the exact installed dependency without inventing a facade; run the intact existing check; reconcile provenance at its Base owner; then admit one fixture/action/readback on the existing renderer. **Should:** measure TTV and accessibility before broader adoption. **Could:** extend one observed contract gap. **Won't:** new renderers, new store, registry publication, remote agent routes, paid service, product data migration or deployment.
+
+### Demo skeleton and maturity
+
+| Beat | Cap | Action / VCC reveal |
 |---|---:|---|
-| Hook | 20 s | Open one locally served frontmatter fixture |
-| Probe | 60 s | Show tabs, table controls, six columns, typed scalar/list values, and nested map rows at the reference viewport |
-| Reveal | 60 s | Select, keyboard-navigate, open a host-owned action, and read the unchanged consumer source after a non-mutating preview |
-| Close | 30 s | Show the same Base grid in the design-system catalog and disclose pending rights/parity gates |
-| **Total** | **≤170 s** | Reveal is VCC-02; no write, network, or publication claim |
+| Hook | 20 s | Open local exact-source harness and disclose revision/check state |
+| Probe | 45 s | Render the same IDs through Table/MultiDim; inspect existing Kanban/Calendar fixtures separately |
+| Reveal | 45 s | Demonstrate deterministic projection and rejected stale write; VCC-09, bounded to memory tests unless live proof exists |
+| Select/configure | 45 s | Invoke one supported host action, inspect accepted state or explicit failure; VCC-01/07/08/10 stays pending without recorded result |
+| Close | 20 s | Show dependency/artifact predecessor and remaining UI/offline/rights gaps |
+| Total | ≤175 s | No production, full parity, payment or recovery claim from narration |
 
-### Proposed implementation limits
+Domain object is a stable record projected into a host-owned view, not an agent chat. No 1–5 experience level is claimed: the four-criterion maturity rubric has not been independently applied. No highest contiguous pass is established. Next assessment needs full dependency validation, per-surface user fixtures, clean-environment TTV and action readback; shared-import counts do not earn a level.
 
-These are per future source task, not results: one scoped lane; at most 3 refinement cycles with a stop if blockers do not decrease in two consecutive cycles; 60 active minutes before re-estimation; ≤6 changed source modules and ≤25 KiB of new source per task; ≤500,000 raw bytes per lazy-loaded browser chunk; zero paid spend; no runtime model calls. Keep noncritical views lazy-loaded and keep any always-loaded host adapter small. Use a 20,000-token planning ceiling per task and record actual usage if the harness exposes it. External review/CI waits have no completion ETA; name the exact blocker and recheck event.
+### Execution bounds and readiness gaps
 
-**Planning estimate, not measured capacity:** an integrated first release of all four views is approximately 8–14 engineer-days plus 0.5–1 reviewer-days, assuming one frontend engineer, current Base/host contracts, existing data adapters, one host-mediated Kanban move path, and no new backend. Calendar event writes, recurrence, and complex time-zone policy are excluded. This estimate is not authorization or a promise; re-estimate at each lane start. The current 60-minute/6-module/25-KiB task cap can support inventory, contract work, or a small vertical slice, not four complete views. Keep the admitted MVP to Table and Multi-dimensional Table; Kanban and Calendar require separately admitted successor increments after the core gates pass.
+For each future proof/repair task: active estimate ≤60 minutes before re-estimation; one scoped lane, ≤6 changed source modules, ≤25 KiB new source, files <600 lines, outputs <500,000 raw bytes, ≤20,000 planning tokens, ≤3 refinement cycles, stop after two cycles without blocker reduction, $0 incremental spend and zero runtime model calls. Lazy-load noncritical consumer views; actual consumer split/chunk behavior is unmeasured. This document adds no always-load surface. The old 8–14-day build estimate is retired because it assumed views that now exist; no replacement end-to-end ETA is supported without a current fixture/repair plan. External review/CI waits name a condition and recheck event, not a completion ETA.
 
-## GTM — audience, offer, and learning
+| Capability | Local rung | Delivered rung | Evidence / next gap |
+|---|---|---|---|
+| Bounded headless/helper slice | dev-proven | undocumented | VCC-09/E-03; memory/helper scope only |
+| Rich/browser views and Design System composition | spec-complete | undocumented | VCC-01–08/10 defined, not fully satisfied; E-02 full check fails |
+| Complete joined capability set | dev-proven | undocumented | At least one local VCC passes, but every UI/release/recovery VCC must pass before runtime-ready |
+| Proposed Sheets runtime | undocumented | undocumented | No standalone product/implementation admitted; VCC-12 specifies only the future integration boundary |
+| MCP/WebMCP/agent routes | undocumented | undocumented | Excluded; no Base transport or VCC admitted |
 
-### Segment, alternatives, and market boundary
+## Reference implementation — GTM: offer and learning
 
-**Initial segment hypothesis:** maintainers of local-first data workspaces and static/offline product catalogs that need structured tables but must retain application-owned data and actions. Initial geography is globally distributed open-source developers because the source distribution is Git-based; this is a hypothesis, not a measured segment. The immediate reachable set is the three observed candidate repositories, with one design-system worktree still dirty.
+### Segment, first dollar and experiment
 
-**Offer:** free, source-available/OSS use on the rights-cleared Base revision, with exact Git pins and documented host contracts. No paid plans, addons, overages, subscription, or support SLA is offered in this increment. Alternatives are: maintain a local grid; compose native HTML table controls; adopt another FOSS grid after license/maintenance review; or defer the feature. The selected route reuses existing source and avoids another runtime owner.
+The Sheets buyer hypothesis is separate: workbook calculation and cell/range authoring may serve different users from record-centric Base workflows. No Sheets demand, WTP, adoption, TTV or revenue baseline exists. Before a repository/engine build, Product should record one named workbook job and compare the cheapest native/local rehearsal to doing nothing; no Base consumer is counted as a Sheets customer. Free-only constraints keep first-dollar mechanisms deferred.
 
-**TAM/SAM/SOM:** not estimated. A defensible bottom-up method is dated counts of qualified repositories/teams × verified need × reachable maintainer conversion; a top-down method is dated population data for teams building local-first data workspaces, narrowed by runtime/offline fit. Neither dated population source nor conversion evidence is present, so customer counts and monetary market size remain unknown. Under the current $0 offer, modeled revenue is $0; that is a scope constraint, not evidence that demand or market value is zero. C02 stays deferred until both population methods and their gap reconciliation are cited.
+Initial segment hypothesis: maintainers of local/offline structured-data workspaces and static catalogs who retain their own data and actions. Geography is global developer distribution, not a measured market. Base documents two consumers; their active usage, current pins, support burden and paid demand were not independently measured. Why now is observed implementation/evidence drift, not a sourced market trend.
 
-### Acquisition, activation, and retention experiment
+Offer: free MIT owner-authored source at exact reviewed revisions, with host contracts and source/artifact identity; third-party licenses remain applicable. No paid plan, addon, overage, subscription or SLA is proposed. Alternatives are native HTML with host logic, another suitable FOSS grid after license review, maintaining the current integration, or doing nothing. Reuse of the existing owner wins on near-built scope; savings remain unknown.
 
-| Stage | Definition / denominator | Target or present gap |
-|---|---|---|
-| Audience | Maintainers of the three observed consumer repos | Three candidate integrations; not three active users |
-| Qualified lead | Owner confirms a repeated table/layout drift problem and wants to test the shared contract | No confirmations recorded |
-| Offer | A local exact Git pin and a shared fixture; $0 | No release of the design-system page |
-| Activation | Clean checkout renders the target fixture through the host contract | Target ≤5 steps / 30 minutes; baseline unmeasured |
-| Repeat use | Same consumer completes a second view/configuration change without local grid changes | No cohort data |
-| Paid conversion / support | No paid offer is permitted; support burden still measured in maintainer minutes | Paid conversion N/A under the current mandate; support baseline unknown |
+TAM/SAM/SOM are unknown. Bottom-up method would count dated qualified teams × verified need × reachable conversion; top-down would narrow an independently sourced developer/workspace population by offline/runtime fit. Neither population source exists here; no fabricated counts or monetary estimate. Monetization is explicitly deferred under the free-only mandate: no viable authorized paid stream can be ranked to a first dollar. Mechanism-proven, demand-validated, recognized revenue and collected payment are all unproven; no payment mechanism is built. Revisit only on a separately authorized offer with real payer evidence.
 
-**Experiment E-01:** invite up to three internal maintainers across the observed consumers to complete the clean-checkout fixture and one accessibility walkthrough. Record actual steps/minutes, failed/repeated actions, support minutes, source changes per consumer, and whether any grid fork is required. Pass the internal integration hypothesis only if each participating host passes VCC-01 through VCC-04, median first-view time is ≤30 minutes, no competing renderer is added, and paid spend is $0. This does not prove public demand, willingness to pay, revenue, or retention. Stop and open a successor Context if rights are unclear, a consumer needs a divergent grid, or any free-tier limit would create spend. Recheck when a maintainer is available; do not invent an external-wait ETA.
+**Ranked next outcome:** Base maintainer reproduces a green intact check with exact declared dependencies, resolving observed integrator uncertainty before any feature expansion. Cheapest method: compare package/lock/install identity, reproduce E-02, reconcile the existing installation, run the existing command. Threshold: exact pins match and intact check exits 0; active window ≤60 minutes, the task caps above, ≤2 installation/check attempts before re-estimation. Stop on a required unapproved source/pin change, unclear rights or unknown external cost. Do not treat narrower tests as this threshold.
 
-### Operations, obligations, and capital
+**Internal experiment EXP-01 (proposed):** after that check and owner provenance repair, invite up to two available consumer maintainers for local exact-pin rehearsals, then observe one second configuration change over two weeks. Record participating/eligible denominators, clean-checkout steps/minutes, failed/repeated actions, support minutes, fork attempts and consumer diff size. Activation target ≤5 steps/30 minutes; continue only if every participating host passes its admitted VCCs, no duplicate renderer appears and paid spend is $0. A second configuration change is repeat-use evidence only for that host; no conversion/cohort result exists now. Stop/pivot the contract on a reproducible incompatible host requirement; pause the dependent trial for unresolved rights/cost. Recheck on owner availability or a repaired exact candidate, with no external-wait ETA. This document does not authorize sending invitations.
 
-Support is maintainer-led through the source repository and consumer issues; no support response SLA or uptime is promised. Release operations reconcile exact Base commit, package manifest, generated artifact, peer dependencies, source notices, and prior rollback pin. Incident recovery preserves user data and blocks incompatible writes. Consumer migration requires each product owner to approve its own code/pin/artifact change.
+### Operations, finance and roadmap
 
-**IP and jurisdiction:** current Base main is observed public and contains an MIT license for owner-authored material. The `529f1d…` consumer pin predates the `LICENSE` file; third-party notices and copied source rights must be rechecked at the exact candidate. The design-system working ledger currently marks its Graph token source rights unverified and the old Base pin local-use-only/publication-blocked. Do not republish those materials until an exact source revision, grant, notice list, and owner decision are recorded. No jurisdiction-specific legal conclusion is made.
+Maintainers and consumer issue trackers own support; no uptime or response SLA is offered. FOSS tools/browser APIs and existing Git/CI are the suppliers; quotas are not capacity guarantees. Incidents preserve user data, stop incompatible writes, retain the predecessor pin/artifact and reopen only the failed owner contract. No hiring, legal entity, jurisdiction, tax or contract conclusion is supported; assign a rights reviewer before a new distribution obligation. An incomplete discovery sketch is sufficient for this document-only decision; no deck, business plan, full financial model, capital ask or external audience action was requested.
 
-**Capital:** not applicable to this free/FOSS, documentation-and-local-verification increment: no funding ask, equity, use of funds, or external capital is proposed. Reviewer is the product owner at the next scope baseline. Revisit only if a separately authorized business model introduces costs or a funding decision.
+| Scenario | Adoption assumption | Price / revenue / collection | 12-month cost and sensitivity |
+|---|---|---|---|
+| Downside | No qualified participant | $0 offer; no recognized revenue or payment evidence | Operator effort unknown; stop feature expansion |
+| Base | One internal rehearsal | $0 offer; no sale inferred | Integration/support minutes and host quota unknown; measure EXP-01 |
+| Upside | Both documented consumers rehearse | $0 offer; not two customers | Same unknowns; success depends on compatibility, not imports |
 
-### Financial and time-cost model
+No CAC/LTV, runway, break-even or linked statements can be derived from absent cost/reach inputs. Serving-model token usage is 0 for implemented paths; authoring/CI/provider costs and actual 12-month TCO are unknown. Free allowance/alerts do not prove a hard $0 provider cap. Reduce scope or stop before paid usage; never silently upgrade. External capital is not applicable to this free/FOSS increment; product owner reviews that disposition if the business model changes.
 
-| Scenario | Qualified consumers | Price/revenue | Incremental paid spend | Operator time / delivery cost | Status |
-|---|---:|---:|---:|---|---|
-| Downside | 0 adopted | $0 | $0 cap | Unknown; no receipt-based ledger | Unmeasured |
-| Base | Up to 1 internal adopter | $0 | $0 cap | Unknown; no receipt-based ledger | Hypothesis |
-| Upside | Up to 3 observed candidate repos | $0 | $0 cap | Unknown; no receipt-based ledger | Hypothesis, not demand |
-
-No income, cash-flow, balance-sheet, CAC, LTV, break-even, or runway model is supportable without a paid offer and cost/reach data. C12 remains deferred. Free-tier quotas must be observed before use; if they are exceeded, reduce volume or stop—never incur a paid overage. The authoring task's own tool spend is $0; elapsed active time and model tokens are not measured in this document.
-
-### Roadmap and gates
-
-| Phase / outcome | Pain and reuse | Prerequisite / exit VCC | Bound | Stop, recovery, next check |
-|---|---|---|---|---|
-| 0. Rights and baseline | Reconcile source owners, Graph reference, consumer pins, notices, and the 247 review-only design-system entries | Exact license-bearing source, clean inventory, dated user reference fixture | ≤30 active minutes; read-only; $0 | Stop on unclear rights; preserve pins; recheck with source owner |
-| 1. One shared Table contract | Reuse Base `TableCore`; implement no new grid; agree on typed host intents and one fixture | Phase 0; VCC-01 | ≤60 active minutes per task; ≤6 modules; ≤25 KiB new source | Re-estimate if limits are exceeded; no consumer cutover |
-| 2. Multi-dimensional Table parity | Adapt Graph frontmatter into the same Base grid; meet the reference geometry and interaction requirements | Phase 1; VCC-02; Graph remains owner of parsing and workspace shell | At most 3 refinement cycles per task; ≤500 KB lazy chunk; $0 | Stop on source/rights ambiguity or an attempted second renderer; record variance and recheck |
-| 3. Kanban successor | Add the one Base board renderer only after the shared contract release; host owns lane semantics and accepted mutations | Core release and separate lane admission; VCC-07 | One host-mediated move-intent path; Base persists nothing; lazy-loaded; each task stays inside the caps above | Stop if host requires a product-specific board fork; revise the contract before proceeding |
-| 4. Calendar successor | Add the one Base calendar renderer after the Kanban contract is stable; host supplies events and resolved date policy | VCC-08; separate lane admission; no recurrence or event writes in first slice | Read-only-first; lazy-loaded; each task stays inside the caps above | Stop on ambiguous time-zone ownership or a required duplicate calendar; re-scope before proceeding |
-| 5. Cross-view verification and release | Check accessibility, offline operation, bounds, bytes, rights, and exact rollback for the admitted view set | VCC-03 through VCC-06 plus VCC-07/08 for their successor releases | $0; chunks ≤500 KB; one consumer PR per write set; CI waits have no ETA | No release/deploy without receipts; revert exact pin/artifact only |
-| 6. Internal integration learning | Measure integration time and friction for the shared contract and admitted views | Three invitations or available subset; E-01 records every denominator | ≤45 active minutes; 2-week observation window; no paid incentive | If no qualified participants, retain unknown demand and recheck on next owner response |
+| Phase / outcome | Pain evidence / reuse and owner | Prerequisite / exit | Bounds / stop / recovery / recheck |
+|---|---|---|---|
+| 0. Current documentation grounding | Observed stale plan; reuse E-01–07; Technical Writer | This five-role revision + affected authoring checks | 30 active minutes, 1 doc, <90 KiB/<600 lines, $0; preserve unrelated edits; refresh on source drift |
+| 1. Reproducible full validation | E-02 installation mismatch; Base maintainer reuses declared lock/check | Exact installed source + intact check 0; VCC-05 portion | ≤60 min/2 attempts, shared caps; no substitute shim; restore prior environment on failed repair |
+| 2. Current provenance | E-04; Base maintainer updates existing source map/digests, not removed components | Actual files/owners and notice/predecessor record; VCC-05 | ≤60 min/shared caps; stop unknown source rights; recheck exact owner candidate |
+| 3. One host fixture and rollback | UI pain unvalidated; consumer maintainer reuses existing views and Design System | VCC-01–04/06 plus 07/08/10 only for admitted surfaces; TTV recorded | One fixture/action first; ≤3 cycles; no renderer/store fork; restore exact pins/artifacts |
+| 4. Internal learning | EXP-01; Product function records evidence, not adoption claims | Named preceding VCCs + two-week observation | ≤45 active min analysis; owner response is wait condition; no paid incentive or outbound message authority |
+| Sheets discovery, deferred | Owner question only; Product separates workbook demand from Base reuse | One reproducible workbook job, independent owner/artifact, and an explicit gate before any package/repository or engine work | ≤30 active minutes, ≤2 maintainer interviews or available subset, no paid incentive/outbound message without authorization; stop if an existing Base view satisfies the job; revisit on evidence |
+| Deferred | Hosted/edge sync, MCP/WebMCP/sigil routes, registry/paid offer, recurrence or new renderers | Won't this increment; concrete pain, owner, cost proof and new criterion required | No implementation or delivery authority from this roadmap |
 
 ### C01–C16 coverage record
 
-Coverage is a decision record, not readiness. `Covered` means the domain and its evidence gap/next check are recorded; it does not mean the market, product, or VCC is proven.
+Coverage is a decision record, not satisfaction or readiness. Each join refers to `SHARED-VIEW-RUNTIME-001@0.4.0` sections and exact evidence IDs above/below.
 
-| ID / domain | Disposition | Join / exact source | Owner | Evidence or explicit gap | Next check |
-|---|---|---|---|---|---|
-| C01 Purpose, customer, pain | covered | PRD problem and users; E-01/E-02 | Product function | Shared layout and fidelity pain is supported by source split and user feedback; frequency and buyer interviews absent | Interview maintainers and measure drift |
-| C02 Market and timing | deferred | GTM segment and market methods; no dated source in E-01–E-08 | Product function | TAM/SAM/SOM and both population estimates unknown | Cite two dated population sources and reconcile methods |
-| C03 Offer and alternatives | covered | GTM offer; ADR-01/03 | Product function | $0 source/pin offer is in scope; alternatives are architectural, WTP absent | Validate need before any expanded offer |
-| C04 Product and experience | covered | PRD stories/VCC-01–04; E-02/E-05 | Product and accessibility functions | Reference and pathways are specified; no runtime comparison or accessibility result | Run same-fixture browser/device checks |
-| C05 Architecture and data | covered | TAD matrix/flows; E-01–E-04 | System architect | Current owners, imports, pins, and data boundaries observed; live performance unknown | Verify typed contract and exact consumer edges |
-| C06 Quality, security, and AI | covered | TAD security and VCC-03–05; E-01 | Quality/security functions | No AI pipeline; local policy callback is not auth; backup/export and quotas have limits | Check input bounds, notices, data recovery, and browser behavior |
-| C07 Decisions and tradeoffs | covered | ADR-01–03; E-01–E-04 | System architect | One grid and token slot boundaries chosen for the spec; runtime choice remains proposed | Revisit after parity fixture and rights checks |
-| C08 Smallest validated slice | covered | MVP and demo skeleton; VCC-01–04 | Product engineering | Fixture and VCCs are defined; none is verified yet | Admit implementation after owner baseline |
-| C09 Acquisition through retention | deferred | GTM funnel and E-01 | Product function | No qualified leads, activation cohort, repeat-use, support, or WTP data | Run bounded internal test; source external population only with evidence |
-| C10 Business operations | covered | GTM operations, TAD release/recovery | Base maintainer | No uptime/support SLA; release and consumer ownership boundaries named | Record actual issue/support and CI receipts at first release |
-| C11 Organization and obligations | deferred | GTM IP/jurisdiction; E-01/E-04 | Product/legal owner | Current Base main is MIT; old pin lacks LICENSE; design-system token rights/owner unresolved | Clear exact source rights/notices and assign owners before public bundle |
-| C12 Financial viability | deferred | GTM financial model | Product function | $0 offer mandated; cost, reach, labor, and statements lack inputs | Instrument actual effort and free quota; only model a paid offer if separately authorized |
-| C13 Capital and milestones | not-applicable | GTM capital | Product owner reviewer | No external ask or paid spend in this increment | Reconsider only if scope changes to a capital decision |
-| C14 ADLC execution | covered | TAD deployment boundaries and this lane's START/RELEASE plan | ADLC operator | Documentation is in one admitted lane; this artifact itself has no deployment authority | Record exact checks/receipt before changing release state |
-| C15 Audience projections | not-applicable | GTM scope | Product owner reviewer | No deck, business plan, financial projection, or external send requested | Revisit when an authorized audience needs a funding/offer decision |
-| C16 Learning and next increment | covered | GTM E-01 and roadmap | Product function | Continue/pivot/stop thresholds and gaps are explicit; no experiment result exists | Create successor Context from observed E-01 results |
-
-**Coverage count:** 16/16 domains dispositioned; 10/14 applicable domains covered; 4 deferred (C02, C09, C11, C12); 2 not applicable (C13, C15). This is specification coverage only. The 4 deferrals block market, public-bundle-rights, commercial, or financial claims as stated above.
-
-## Evidence references and source register
-
-| ID | Reference implementation source / revision | Observation and limit |
-|---|---|---|
-| E-01 | `agentic-base@d7d7bdee978ee0dde35dd279ecf878d6853fc762`: `README.md`, `docs/PRODUCT.md`, `docs/DEVELOPMENT.md`, `docs/DEPLOY.md`, `docs/ROLLBACK.md`, `package.json` | Headless core; shared table/views; private npm package; no hosted deployment; explicit consumer data and rollback boundaries. Repository README still calls itself private while provider readback on 2026-10-23 reports public visibility; reconcile the docs. |
-| E-02 | `agentic-graph@60333d43486537df7b89f46293c58f282b0394f`: `canvas/package.json`, `GraphTableHost.tsx`, `MarkdownDataViewTableView.tsx`, `MultiDimTableSurface.tsx`, `MarkdownWorkspaceDerivedViewer.tsx` | Consumer imports Base React view at Base pin `529f1d…`; Graph host retains Markdown data, toolbar, source edits, and callbacks. Imports/source are not a live parity result. |
-| E-03 | `agentic-commerce-os@b6867b2a79fd609eb4c43df7eeda7fb9f704d616`: `config/agentic-base-data-view.json`, local-first artifact checks | Commerce pins Base `093d259…` and uses a bounded browser artifact; no deployment claim is made here. |
-| E-04 | `agentic-design-system` local branch `agent/design-system-mvp` at HEAD `8e66421aa167f4bf05b1c9f27a95eeb6c94b790f`, dirty on 2026-10-23: `README.md`, `registry/owner-ledger.json`, `site/catalog.json`, `site/index.html`, `site/vendor/` | Current local page uses Base's browser artifact at `529f1d…`; catalog is `0.1.0-draft` with no public records. Its modified files are not a released authority. Owner ledger records local use and publication blocked for the old pin. |
-| E-05 | User-provided Graph Workspace data-view screenshot in this task, 1113×952 viewport, 74% zoom | Reference geometry and visible controls only; it is not a locally captured result, accessibility proof, or grant to copy third-party materials. |
-| E-06 | `huijoohwee.github.io@6b1e7488719b726e979c848dd0078f29d69ca3d0`: `guidelines/prd-tad-adr-mvp-gtm-guidelines.md` and linked planning, VCC, economics, readiness, and venture modules | Authoring/coverage contract for this document; the guideline policy check does not prove product runtime behavior. |
-| E-07 | Provider readback: `gh repo view huijoohwee/agentic-base --json name,visibility,isPrivate`, 2026-10-23 | Reports `PUBLIC`; package manifest remains `private: true`. Repository visibility and package publication are distinct. |
-| E-08 | Base history at `529f1d866974453327977595a457d5065a8dbc45` and `d7d7bdee978ee0dde35dd279ecf878d6853fc762` | `529f1d…:LICENSE` is absent; `d7d7bdee…` contains MIT. Do not infer retroactive license coverage for a different pinned revision. |
-
-No satisfying product VCC Evidence Reference is recorded in this revision. The source register supports architecture and gap statements only. No browser parity, screen-reader, keyboard/touch, quota, or consumer rollback check was run in this documentation task.
-
-## Open risks, dependencies, readiness, and handoff
-
-These rows are product risks and release dependencies, not a completed typed alignment finding set. No formal finding scan was run in this documentation task.
-
-| Risk | Evidence / reason | Owner | Unblock / next check |
+| Domain | Disposition / join | Accountable function | Evidence or reason / revisit trigger |
 |---|---|---|---|
-| R-01 Exact old package pin has no license file | E-02/E-04/E-08; current Base main carries MIT, old Base commit `529f1d…` does not contain `LICENSE` | Rights owner | Select and verify an exact license-bearing revision; consumer maintainers update pins only in separate reviewed changes |
-| R-02 Table fidelity is unverified | E-05 and design-system browser-adapter boundary in E-04 | Base/product UI owners | Run VCC-02 on the same fixture and retain screenshot/result |
-| R-03 Design-system source records are not released | E-04: dirty worktree, draft catalog, 247 review-only rows, empty public catalog, unresolved token/profile owners | Design-system owner | Clear each record's owner, rights, digest, accessibility evidence, and publication decision |
-| R-04 Accessibility and recovery checks are pending | No satisfying VCC-03/VCC-04/VCC-06 result | Quality and consumer owners | Run named checks on exact pins; preserve data and predecessor |
-| R-05 Buyer demand, market, and cost evidence are absent | C02/C09/C12; no population sources, WTP, cohort, or cost ledger | Product function | Run E-01 and separately collect dated market and cost inputs |
-| R-06 Repository visibility wording disagrees | E-01 vs E-07: README says private; provider says public | Base maintainer | Correct in a separate documentation change and read back provider state |
+| C01 Purpose/customer/pain | covered / PRD pain record | Product | E-02/E-04 observed integration gaps; buyer pain/WTP unknown; revisit EXP-01 |
+| C02 Market/timing | deferred / GTM segment | Product | No two dated population sources or conversion evidence; revisit after qualified-owner interviews |
+| C03 Offer/alternatives | covered / GTM offer + ADR-01/03 | Product | Free source offer and explicit alternatives; paid offer excluded; revisit scope change |
+| C04 Product/experience | covered / stories, VCCs and demo | Product/quality | E-01 source, E-03 bounded pass; full UI/device/TTV pending; revisit admitted fixture |
+| C05 Architecture/data | covered / TAD inventory/flows, ADR-05 | Architect | E-01/E-04/E-06/E-12 boundaries, proposed D-03 bridge and gaps; revisit export/pin/source drift |
+| C06 Quality/security/AI | covered / TAD quality + VCC-04/09 | Quality/security | E-03 local proofs; no runtime AI; browser/recovery/CSP proof pending |
+| C07 Decisions/tradeoffs | covered / ADR-01–05 | Architect | Source reuse, direct owners, exact pins and recovery; revisit concrete host failure |
+| C08 Smallest slice | covered / MVP/readiness | Engineering | VCC-09/E-03 locally proven; remaining criteria stated; revisit full check/fixture |
+| C09 Acquisition/retention | deferred / EXP-01 | Product | No qualified leads, cohort or support measurements; prerequisite full check/owner availability |
+| C10 Business operations | covered / GTM operations + TAD boundaries | Base maintainer | Existing issue/release owners; unknown SLA/capacity explicit; revisit first actual integration |
+| C11 Organization/obligations | deferred / ADR-03 + operations | Product/rights | MIT owner source present, exact dependency notice/consumer review incomplete; ADR-04 forbids Univer incorporation/dependency regardless of license; revisit proposed distribution |
+| C12 Financial viability | deferred / economics/scenarios | Product/finance | No price permission, labor/cost/reach inputs; revisit measured receipts and authorized business decision |
+| C13 Capital/milestones | not-applicable / GTM finance | Product reviewer | No funding ask or capital decision; revisit model change |
+| C14 ADLC execution | covered / checkpoint + boundaries | ADLC operator | Exact START lane and check outcomes; source/delivery effects require their own receipts |
+| C15 Audience projections | not-applicable / GTM operations | Product reviewer | No deck/model/external send requested; revisit audience-dependent decision |
+| C16 Learning/next increment | covered / next outcome, EXP-01, roadmap | Product | Continue/stop thresholds and owner explicit; revisit exact repair result or trial observation |
 
-**Coverage and readiness:** all 16 C domains are dispositioned above; artifact-bearing unknowns remain explicit. No product VCC is satisfied by a source citation alone. The current document readiness is `spec-complete` locally and `undocumented` as a delivered product capability. Design-system catalog release, Base package publication, consumer cutover, deployment, production verification, and revenue remain separate statuses.
+**Coverage:** 16/16 dispositioned; 10/14 applicable covered; four deferred (C02/C09/C11/C12); two not applicable (C13/C15). This is domain disposition coverage, not an exhaustive artifact-bearing-rule conformance ratio. Full rule enumeration/alignment and clean-environment TTV remain unperformed; no zero-finding or baseline-sign-off claim follows from policy-check success.
 
-**Next bounded action:** after this PRD is reviewed, the Base maintainer may admit one implementation lane for VCC-01/VCC-02 fixture/host work only after resolving R-01 for the exact candidate. Recheck the source pins, owner ledger, and free-tier constraints at lane start. Completion requires the exact local check outputs, source revision, screenshot and accessibility results, and a successor revision of this artifact. Do not merge, publish, deploy, or migrate consumers under this document alone.
+## Reference implementation — evidence, risks and handoff
 
-## Authoring checkpoint
+### Source and evidence register
 
-This revision is in lane `agent/device-0232231d4a19/agentic-base-prd` from base `6b1e7488719b726e979c848dd0078f29d69ca3d0`. The separate committed planning record landed through PR #297 at canonical `6b1e7488719b726e979c848dd0078f29d69ca3d0`; `adlc-policy-contract` and `guideline-contract-check` both passed. The plan lane finish receipt bound candidate `d824d8275fed084bc12d87597d87d7a3dd7d1722` to that integration; the retained lane remains cleanup-pending and was not removed.
+| ID | Exact source / named check / surface | Observed result and limitation, 2026-11-17 |
+|---|---|---|
+| E-01 | `agentic-base@81e4608280be4ec515c5dd28df7b97d1438a0fc0`: README, `docs/{PRODUCT,DEVELOPMENT,DEPLOY,ROLLBACK}.md`, package/lock/LICENSE and implementation paths in TAD | Native source inspected; no tracked edits, three untracked drafts excluded; current consumer deployments/pins not inspected |
+| E-02 | Same Base source: `npm run check` in actual local checkout | Exit 2 at TypeScript: `DashboardWidgetCards.tsx(1,31): error TS2307: Cannot find module 'agentic-design-system/react/viewer' or its corresponding type declarations.` Syntax (24 JS modules), demo-token, direct-panel and compact-JSON checks passed first; artifact check/Node suite/evidence emitter/OS evaluations were not reached in this command |
+| E-03 | Same Base source: independent `node --test` command, existing repository suite | Exit 0, 37 passed, 0 failed/skipped, TAP duration 322.977083 ms; satisfies VCC-09 only, not the failed intact check, React interaction, live IndexedDB or production |
+| E-04 | Same Base source: compare `migration-source.json` candidateSha256 against SHA-256 of present `packages/views-react/<path>` files | 55 entries; 4 paths absent, 20 existing candidate digests mismatch. Historical source: `agentic-graph@0775c87540cb45d6f19156c4090e851b70c71f07`; current consumer state unverified. Reproducible algorithm: enumerate `contentDigests`, test file existence, SHA-256 actual bytes, compare candidateSha256 |
+| E-05 | Same Base source: `packages/views-react/dist/browser-data-view.manifest.json` | Records browser JS 241,601 B, dropdown JS 22,113 B, CSS 36,658 B; 24 input rows. `npm run check:browser-data-view` independently exits 0, reproducing all four files including manifest; this is not the intact check or a browser interaction result; output digests below |
+| E-06 | Base package/lock declares `agentic-design-system@54229ceed5106c5a44a2cb3731c0deb0f74a1904`; local `node_modules/.package-lock.json` resolves `67a8adb7e0089ddef7403e244f57be1e0842dce8` | Installed package v0.6.0 has no `./react/viewer` export; local install differs from declared source. Generated shared-ui pin separately records registry revision `54229ceed…` and original profile source `e52a52111f52b6af85f99195ec9e59a490548575`; do not collapse source/registry/install identities |
+| E-07 | Documentation source `99ea1f49211361528256045719b54f1634eee41a`: authoring guideline v3.5.0, grounding/readiness/verification companions and `docs/DEPLOY-WORKFLOW.md`; runtime SSOT at `agentic-os@d3430c8da71b0128b644040bfd1ef32d9f36c50e` | Governing source read; docs payload excludes this path; no deployment effect selected |
+| E-08 | Historical 0.2.0 document candidate: affected authoring checks listed in the checkpoint | `npm run check`, PRD policy check and diagram projection check exit 0; two diagrams, 16 nodes/15 edges/3 clusters, no projection findings. Affected `npm test` validation exits 0 for naming, evaluators, guidelines and git-contracts (4/6 owner checks selected for this path); these checks establish bounded document contracts, never Base runtime parity |
+| E-09 | `gh repo view huijoohwee/huijoohwee.github.io --json name,visibility,isPrivate,url`; reviewed repository workflow runner declarations; [official Actions billing contract](https://docs.github.com/en/actions/concepts/billing-and-usage), read 2026-11-17 | Provider reports PUBLIC/isPrivate=false; source checks use standard `ubuntu-latest` runners, whose public-repository usage is free. This scoped compute proof does not cover a different runner, artifact expansion, Base/consumer delivery or authoring-model charges |
+| E-10 | [Univer public overview at `47468eaa654573cd608a954ac8e1774884461576`](https://github.com/dream-num/univer/blob/47468eaa654573cd608a954ac8e1774884461576/README.md), read 2026-11-17; branch identity from `gh api repos/dream-num/univer/commits/dev`; official documentation queried through Context7 | Reference only: workbook/worksheet/range operations, calculation and plugin composition; open-source core and separately licensed extensions. No package/source/artifact consumed; no compatibility, rights, performance or adoption verdict |
+| E-11 | User-supplied local `joohwee/undocumented-draft/prd-tad-adr-mvp-gtm-agentic-base.md`, proposed 0.3.0; SHA-256 `357a9f180415fa3b1e987a8ccf7a6d115472e25317d76e2397584e0afd810e6f` | Untracked proposal, not part of the inspected repository commit or an admitted release; reference-only/no-copy/no-dependency recommendation considered without copying its prose or importing its stale provenance/check claims |
+| E-12 | Native Base source still `81e4608280be4ec515c5dd28df7b97d1438a0fc0`: inspected `src/{index,schema,engine,projectors}.mjs`, PRODUCT and package exports; tracked-source marker scan described below | Record model has five field types and deterministic projections, no workbook/range/recalculation API in the inspected core/exports. Tracked non-Markdown code/config/artifact scan: enumerate `git ls-files`, inspect JSON/JS/MJS/TS/TSX/HTML/CSS/YAML and `.gitmodules` bytes for `@univerjs`/`@univerjs-pro`, Univer Git/codeload and hosted/CDN URL markers; 126 files, zero matching files, exit 0. This marker-only scan proves no copying audit or consumer/transitive-source compliance. Historical E-02–06 are not new test runs; no Sheets implementation proof |
+| E-13 | This 0.4.0 document candidate: current guideline v3.5.1 at `fc53dc02ea98e3119d1d1015fc72e1747a6d5087`; affected authoring checks and lane receipt below | `npm run check`, PRD policy check and the target diagram projection check exit 0; three diagrams project 21 nodes/19 edges/3 clusters with zero projection findings. Final affected validation is recorded in the checkpoint; no product-runtime verdict |
 
-The PRD is 440 lines. `npm run prd-tad-adr-mvp-gtm:policy:check` exited 0 after this revision and reported the guideline contract valid; the checker states that source bytes and runtime/deployment behavior were not evaluated. No Base, Graph, Commerce, or design-system code, package pin, or deployment was changed or live-verified in this lane.
+E-05 recorded SHA-256 outputs: browser JS `43c553b79c27a2e3c6052ad86d68116d2827ecc88aa2fe6e61e26aeea4e87ae1`; dropdown JS `f63919b05314a6a1207b4b9d840aec26961864454909c3cd811d0e27ecf46021`; CSS `924fbfe75ce1564d7172b6905c73be0bcdf2bd097acabfdeddc2f7ca563fb6d7`. The old 148,590/1,883-byte figures are superseded. The standalone rebuild check reproduced these bytes in the current environment; it does not close the remaining VCC-04 browser conditions.
 
-Environment note: `npm ci` completed; `npm audit` reports one high-severity issue in the documentation repository's authoring dependency `js-yaml@4.3.1` (fixed version reported as 4.3.2). It is outside the Base runtime scope; no lockfile or dependency change was made here. Reconcile it in a separate dependency-maintenance lane.
+### Product risks and next action
 
-Next bounded action: user review of this PRD and its explicit gaps. Only after review and resolution of R-01 should a separate implementation lane target VCC-01/VCC-02. Recheck exact source pins, rights, owner ledger, and free-tier constraints at that lane's start; completion requires named local checks, the matched screenshot and accessibility results, and a successor revision of this artifact.
+| Risk / current evidence | Owner | Unblock, recovery and recheck |
+|---|---|---|
+| R-01 Full local check fails under installed dependency drift, E-02/E-06 | Base maintainer | Reconcile install to exact package/lock in an admitted environment; intact check 0; do not add a Viewer shim or infer declared-pin failure from this installation |
+| R-02 Migration map stale, E-04; README/manifest count and PR notes disagree | Base maintainer | Update existing provenance for actual retained/removed owners and current digests; verify source history instead of restoring superseded components |
+| R-03 No matched parity, accessibility, mobile/offline or consumer rollback results | Quality/consumer maintainers | One admitted fixture at exact pins; retain screenshots/checks/previous artifact; no runtime-ready claim yet |
+| R-04 Buyer pain/WTP, market and measured cost remain unknown | Product function | EXP-01 after source gates; obtain dated population and cost inputs only for the dependent decision |
+| R-05 Public distribution rights/notices and provider hard-$0 proof not refreshed | Rights/release operator | Exact candidate notices and current provider proof before dependent publication/CI/deploy effect; preserve predecessor and records |
+| R-06 Domain/reference drift: workbook semantics enter Base or an external reference becomes code/dependency, E-10–12 | Base/Sheets/rights owners | Apply ADR-04/05 and VCC-11/12 at admitted code changes; stop copied/dependent material or implicit sync; preserve record/workbook state on recovery |
+
+These are scoped product/implementation risks, not a fabricated full typed alignment scan. Prior revision had no formal finding set; a regression count is therefore unavailable. The independent Node mechanism supplies a bounded local VCC result; the writer does not self-certify complete alignment or runtime readiness.
+
+**Next bounded action:** Base maintainer reconciles the installed Design System identity and reproduces the intact check, with the exact source, package lock, local environment and result retained. Then repair the existing provenance owner and admit one consumer fixture/rollback. Prerequisites, stop conditions and recheck triggers are in the ranked next outcome. This document update itself neither authorizes those code changes nor asks for a new product feature.
+
+### Authoring checkpoint and task receipt
+
+This 0.4.0 update started from canonical documentation commit `fc53dc02ea98e3119d1d1015fc72e1747a6d5087` in lane `agent/device-0232231d4a19/base-sheets-boundary`, with only this document writable. The parked `canonical-edits-recovery` lane and Base planning drafts remain outside scope. Historical E-02–09 and the 0.2.0 authoring/release record remain available through PR #328 and protected commit `4685f4bd7d6bc93bd6761df40b216b03b1f9ea04`; they are not reissued as 0.4.0 product proof.
+
+| PRD-TAD-ADR-MVP-GTM | CID | RAO | Updated Date |
+|---|---|---|---|
+| All five roles @0.4.0 | Owner asks for external-reference restrictions and a Base/Sheets boundary grounded in existing source | Technical Writer → independently author reference register, ownership/bridge design, ADR-04/05, VCC-11/12 and gated Sheets discovery → one coherent proposed revision without new implementation/dependency | 2026-11-17 |
+
+Task caps: 20 active minutes estimated, one document, <90 KiB/<600 lines, ≤16,000 planning tokens, ≤2 authoring refinement cycles, $0 incremental spend and no new dependencies/always-load bytes. Actual active minutes, model tokens/charges and CI fees are not exposed as measured receipts; do not invent them. Source/runtime test results are reused only within their historical bounds. Affected documentation checks, exact source integration/sync/cleanup and any wait/recheck condition are recorded at handoff; delivery is outside this document's Pages payload. No Base/Sheets implementation, consumer change, migration or deployment is performed.
+
+Current document verification: the joined frontmatter/revision and local links are checked against this candidate; target diagram projection and guideline policy pass. The affected `npm test` receipt covers the selected documentation owners, not Base or Sheets runtime. Source integration/sync/cleanup receipts are supplied at handoff; no deployment effect is selected.

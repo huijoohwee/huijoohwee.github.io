@@ -1,8 +1,8 @@
 ---
 title: "System Design Domain Directives Module"
 doc_type: "Guidelines Module"
-version: "1.0.0"
-date: "2026-08-20"
+version: "1.1.0"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Technical Writer function"
@@ -40,6 +40,12 @@ This module is loaded on demand from [System Design Guidelines](./system-design-
 - Architects assign data ownership
 - Architects maintain backward-compatible interfaces
 - Architects standardize semantic UI structure for observability and accessibility
+
+### Shared UI and Design System Ownership
+
+- For the Agentic suite, `agentic-design-system` is the single owner of shared UI tokens, themes, panel shell, layout, placement, behavior, and semantic icon/control mapping, including Search, Pin, Apply, Reset, Restore, and Close.
+- Consumers use revision- and digest-pinned projections/adapters from that owner. Consumer-local overrides, duplicate shells, and competing MainPanel, FloatingPanel, or BottomPanel variants are nonconformant.
+- Design System and consumer checks reject stale pins, duplicate definitions, overrides, and ownership drift.
 
 **Engineers enforce frontend performance & stability**
 - Engineers debounce heavy computations on user input
@@ -163,6 +169,14 @@ This module is loaded on demand from [System Design Guidelines](./system-design-
 - **Data**: Engineers enable encryption at rest/transit, field-level encryption for PII
 
 **Security Pattern**: Authenticate at edge → authorize at service → audit everywhere
+
+### Browser Content Security Policy
+
+- Production HTML responses enforce a `Content-Security-Policy` response header by default. Scope each policy to the product route and its required resource origins; never disable CSP globally to fix one integration.
+- Use `Content-Security-Policy-Report-Only` to discover violations in Dev. Before promotion, exercise the candidate with its intended enforcing policy in Dev, then verify that policy on the Production response for the same candidate.
+- Avoid `unsafe-inline`, `unsafe-eval`, and broad scheme or wildcard sources. When inline code is required, prefer nonces or hashes. Record any exception with its route, owner, reason, compensating control, and review date.
+- Verify the effective response policy in release readbacks; source configuration or a Report-Only header alone is not enforcement evidence.
+- CSP governs resources loaded and connections initiated by the browser document. It does not replace server authorization or restrict an independent MCP client; browser-side MCP/WebMCP code and its page-initiated requests remain subject to the document policy.
 
 ---
 

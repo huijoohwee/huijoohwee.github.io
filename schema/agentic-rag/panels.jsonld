@@ -1,0 +1,470 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@id": "rag:Panel",
+  "@type": "rdfs:Class",
+  "schemaVersion": "1.0.29",
+  "rdfs:comment": [
+    {
+      "@value": "Defines reusable panel UI surfaces. Controls that combine icons and text must use stable alignment primitives (inline-flex with centered alignment) and shared icon baseline rules to prevent visual drift across themes and density settings.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义可复用的面板 UI 表面。图标与文本组合控件必须使用稳定的对齐原语（inline-flex 居中对齐）与共享图标基线规则，避免在主题与密度设置下出现视觉漂移。",
+      "@language": "zh-cn"
+    }
+  ],
+  "rdfs:label": [
+    { "@value": "Panel", "@language": "en-us" },
+    { "@value": "面板", "@language": "zh-cn" }
+  ],
+  "panelInteractionContracts": {
+    "widgetLiveSync": [
+      {
+        "@value": "Storyboard Widget visibility must live-sync across Canvas (Storyboard Widget) and the host Graph Table Inspector. Visibility gating uses a shared open-id list (e.g., `openWidgetNodeIds`) from the host store, not per-surface local state. Editor Workspace must not mount a second inspector dock; it surfaces Storyboard Widget as bundle codes inside the Markdown editor/viewer (JSON/Markdown) and may auto-focus when a widget node is available. Mode switches (Canvas↔Editor) must preserve the open list unless nodes are removed from GraphData.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Storyboard Widget 的可见性必须在 Canvas（Storyboard Widget）与宿主 Graph Table Inspector 之间实时同步。可见性由宿主存储中的共享打开 ID 列表（例如 `openWidgetNodeIds`）进行控制，而非各表面维护本地状态。Editor 工作区不得挂载第二套 Inspector 停靠栏；应在 Markdown editor/viewer 内以 bundle codes（JSON/Markdown）形式呈现 Storyboard Widget，并可在存在 widget 节点时自动聚焦。工作区模式切换（Canvas↔Editor）必须保留打开列表，除非节点已从 GraphData 移除。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownSsotSectionHeader": [
+      {
+        "@value": "Markdown Editor/Viewer/Presentation must share one-and-only Markdown Section Header implementation. Mode switches may change enabled/disabled state but must not introduce alternate header variants or different button sets.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Editor/Viewer/Presentation 必须共享唯一的 Markdown 区域头部实现。模式切换只允许改变启用/禁用状态，不得引入不同的头部变体或不同的按钮集合。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownSsotSidebarStructure": [
+      {
+        "@value": "Markdown Contents sidebar uses a single SSOT DOM structure (aside/header/nav/sections) with shared micro-label typography. Sidebar section headers are typography-only and must not render action menus; source file actions belong to the section header area only when they are part of the canonical SSOT header contract. Import Folder must be lazy: create file/folder entries + pending stubs without reading contents; clicking a file triggers indexing/loading/parsing/rendering (including on-demand PDF conversion). Forbid showing an Indexing spinner on Import Folder; show the progress pill only while opening a file with shared label formatting (e.g. `Indexing • 1/1 • 123kb`). Workspace file CRUD must sync to the Source Files list (stable IDs keyed by `workspace:<path>`), and file open should reuse cached parsed graphs when text hashes match. GeoJSON/JSON files with geodata must render by converting into graph nodes with `properties.geo.{lat,lng}`. Forbid file switching from toggling frontmatter mode or triggering graph/layout recomputation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Contents 侧边栏必须使用唯一的 SSOT DOM 结构（aside/header/nav/sections）并共享微标签排版。侧边栏分区标题仅用于排版显示，不得渲染动作菜单；Source Files 动作应归属于规范的 SSOT 头部契约。Import Folder 必须惰性执行：创建文件/目录条目与 pending stubs，禁止读取文件内容；点击单个文件才触发 indexing/loading/parsing/rendering（包含按需 PDF 转换）。禁止在 Import Folder 阶段显示 Indexing 转圈；只允许在打开文件阶段显示进度胶囊，并使用共享格式（例如 `Indexing • 1/1 • 123kb`）。Workspace 文件 CRUD 必须同步到 Source Files 列表（使用 `workspace:<path>` 作为稳定 ID 键），并且打开文件时当文本 hash 匹配应复用已缓存的解析图。GeoJSON/包含地理数据的 JSON 必须通过转换为带 `properties.geo.{lat,lng}` 的图节点来渲染。禁止切换文件导致 frontmatter 模式翻转或触发图/布局重算。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownInlineBubbleToolbar": [
+      {
+        "@value": "Markdown Viewer Read mode may enable in-place block editing via a shared MarkdownBlockContainer wrapper: clicking a block enters a contentEditable surface with no extra borders/shadows, and selection within the block surfaces a floating bubble toolbar. The bubble palette reuses SSOT floating menu classes and theme tokens and exposes inline formatting (bold/italic/underline/strike/inline code/link), heading/list/quote transforms, color/highlight palette, checklist/divider insertion, and structural actions (duplicate/delete/comment). All actions operate as bounded Markdown text transforms via the shared formatting pipeline and must not introduce a separate WYSIWYG model, background recomputation loops, or graph/layout mutations. FORBID-copy policy is enforced at the viewer root and in code-block copy buttons so bubble actions cannot bypass copy restrictions.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown Viewer Read 模式可以通过共享的 MarkdownBlockContainer 包装启用原位块编辑：点击块进入无额外边框/阴影的 contentEditable 表面，在块内选择文本时弹出浮动气泡工具条。气泡调色板复用 SSOT 浮动菜单类与主题 token，提供内联格式（粗体/斜体/下划线/删除线/行内代码/链接）、标题/列表/引用变换、颜色/高亮调色板、清单项/分隔线插入以及结构动作（复制块/删除块/注释包裹）。所有动作都通过共享格式化流水线执行为有界的 Markdown 文本变换，不得引入独立的 WYSIWYG 文档模型、后台重算循环或图/布局变更。FORBID‑copy 策略必须在 Viewer 根节点与代码块 Copy 按钮上生效，禁止气泡操作绕过复制限制。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownSlashCommandsAndLinkPopover": [
+      {
+        "@value": "Markdown in-place editor supports a lightweight slash-command palette and inline link edit popover using the same floating-menu SSOT. When the user types \"/\" near the caret at the start of a line (or after whitespace), a slash menu appears near the caret and offers heading/list/quote/code/checklist/section actions; detection must be line-local and must not rescan the entire document on each keystroke, and the menu hides when the trailing slash context disappears. Cmd/Ctrl+K opens an inline link popover near the current selection with a single URL field and Apply/Cancel buttons styled via the shared bubble/popover classes; applying a link wraps the current selection as [label](href) in Markdown, while cancel/empty href leaves the document unchanged. Both features are selection-scoped and view-only: they operate solely on Markdown text and must not modify GraphData or layout, must respect the FORBID-copy policy, and must avoid infinite selection listeners or re-render churn by gating selection updates with requestAnimationFrame and skipping no-op commits.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Markdown 原位编辑器支持轻量级斜杠命令调色板与内联链接编辑弹层，并复用同一套浮动菜单 SSOT。当用户在行首或空白之后输入“/”时，会在光标附近弹出斜杠菜单，提供标题/列表/引用/代码块/清单/分隔线等动作；检测必须局限于当前行，禁止在每次按键时重新扫描整篇文档，且当末尾斜杠上下文消失时菜单需自动隐藏。Cmd/Ctrl+K 会在当前选择附近打开内联链接编辑弹层，包含一个 URL 输入框与 Apply/Cancel 按钮，并使用共享的气泡/弹层样式；应用链接时将当前选择包装为 Markdown 的 [label](href)，而取消或空 URL 必须保持文档不变。两者都严格基于选择并且仅作用于文本层：只能修改 Markdown 文本，不得改变 GraphData 或布局；必须遵守 FORBID‑copy 策略，并通过 requestAnimationFrame 限制选择更新、跳过无变化提交，防止选择监听死循环或渲染抖动。",
+        "@language": "zh-cn"
+      }
+    ],
+    "markdownRightClickShowOnIn": [
+      {
+        "@value": "Right Click opens the app-level \"Show on/in …\" toolbar at the exact pointer position; avoid Monaco default context menus so behavior is consistent across Editor/Viewer/Presentation.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "右键在指针精确位置打开应用级 \"Show on/in …\" 工具条；避免使用 Monaco 默认菜单以保证 Editor/Viewer/Presentation 行为一致。",
+        "@language": "zh-cn"
+      }
+    ],
+    "titleAndEllipsisInlineEdit": [
+      {
+        "@value": "Title and title-like labels that truncate with ellipsis in panel headers (for example, Markdown headings and workspace property names) must reuse the same typography in in-place html editors or rename inputs, reveal full text on focus via horizontal scroll, and forbid per-surface WYSIWYG title variants or layout/spacing drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "在面板头部使用省略号截断的标题与类标题标签（如 Markdown 标题、工作区属性名）在原位 html 编辑或重命名输入时必须复用相同排版，并在获得焦点时通过水平滚动展示完整文本；禁止为单个界面引入独立的 WYSIWYG 标题变体或排版/间距漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "bottomPanelFlowTab": [
+      {
+        "@value": "BottomPanel includes a Flow tab adjacent to Status. ui-path-0: Source File click commits GraphData and D3 renders; Flow button opens BottomPanel and Flow renders the same GraphData in a read-only ReactFlow overview plus Graph Data Table (Nodes/Edges scope). The table must keep sticky header + optional frozen first column aligned with horizontal scroll, share column widths between header/body, support pointer-drag column reordering, and clear to empty state when GraphData is empty. Placement must reuse the host layout position cache (or node x/y) and never inject demo data.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "BottomPanel 包含一个紧邻 Status 的 Flow 标签页。ui-path-0：点击 Source File 提交 GraphData 并由 D3 渲染；点击 Flow 打开 BottomPanel 并以只读方式用 ReactFlow 渲染同一份 GraphData（含 Graph Data Table：Nodes/Edges scope）。表格必须保证 sticky 表头与可选的冻结首列在水平滚动时始终对齐；表头/表体必须共享列宽；支持指针拖拽进行列重排；当 GraphData 为空时必须清空为 empty state。位置必须复用宿主布局位置缓存（或节点 x/y），禁止注入演示数据。",
+        "@language": "zh-cn"
+      }
+    ],
+    "xrPanelSurfaces": [
+      {
+        "@value": "Toolbar → Canvas View Mode → Surface Mode → `XR` owns XR activation and may open the existing FloatingPanel `Motion Control`; there is no separate FloatingPanel `XR` owner. Motion Control reuses the FloatingPanel shell and projects the existing Media `3D for XR` and FloatingPanel `Animation` owners, while BottomPanel `Timeline` remains the sole transport owner. Its page-session Bounding box preference is disabled by default and only projects the already-computed tracked pose ROI into the existing mirrored preview; toggling it never starts capture, its geometry stays transient and private, and it must not add a detector, inference pass, dependency, persisted geometry, or parallel preview state. Existing XR physics/readiness and source-owned spatial manifest rules remain native Agentic Graph responsibilities, and downstream panels must not fork renderer, scene, animation, MCP, or invocation ownership.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar → Canvas View Mode → Surface Mode → `XR` 负责 XR 激活，并可打开现有 FloatingPanel `Motion Control`；不存在独立的 FloatingPanel `XR` 所有者。Motion Control 复用 FloatingPanel 外壳，并投影现有 Media `3D for XR` 与 FloatingPanel `Animation` 所有者；BottomPanel `Timeline` 仍是唯一 transport 所有者。Bounding box 是页面会话级偏好且默认关闭，只把已计算的 tracked pose ROI 投影到现有镜像预览；切换它不得启动 capture，其 geometry 必须保持瞬态与私有，并且不得新增 detector、inference pass、dependency、持久化 geometry 或平行 preview state。现有 XR physics/readiness 与 source-owned spatial manifest 规则仍由 Agentic Graph 原生运行时负责，下游面板不得分叉 renderer、scene、animation、MCP 或 invocation 所有权。",
+        "@language": "zh-cn"
+      },
+      {
+        "@value": "Surface Mode → XR Mode preserves an already-open FloatingPanel Media or Skills & Commands owner. Camera may open only when neither operator panel is open; closed, unrelated, or Game Mode panels enter through Motion Control. Media sends each displayed XR invocation literally, while Media, Animation, and Camera remain disabled or reject mutation until Source Files authority is ready. Downstream panels must not create a fallback scene, token registry, invocation parser, or second mutation owner.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Surface Mode → XR Mode 必须保留已打开的 FloatingPanel Media 或 Skills & Commands 所有者。只有当两个操作面板都未打开时，Camera 才可打开；关闭、无关或 Game Mode 面板统一经 Motion Control 进入。Media 必须逐字发送所显示的 XR invocation；在 Source Files 权威未就绪时，Media、Animation 与 Camera 必须保持禁用或拒绝变更。下游面板不得创建回退场景、token registry、invocation parser 或第二个变更所有者。",
+        "@language": "zh-cn"
+      }
+    ],
+    "timelineVideoSequencePanelSplit": [
+      {
+        "@value": "Video-sequence surfaces split by responsibility: `agenticOsCanvas2dRenderer: \"media\"` previews rich media and playable sequence sources only; BottomPanel `Timeline` owns transport, playhead, cut/splice, selected-clip nudge/trim/snap/split editing, scopes, audio mix, and Mermaid Gantt writeback; FloatingPanel `Timeline` owns parsed row/list inspection only. Playback state must flow through shared timeline transport/controller owners, not panel-local store reads.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视频序列表面必须按职责拆分：`agenticOsCanvas2dRenderer: \"media\"` 仅负责富媒体与可播放序列源的预览；BottomPanel `Timeline` 负责 transport、playhead、cut/splice、selected-clip nudge/trim/snap/split 编辑、scopes、audio mix 与 Mermaid Gantt 回写；FloatingPanel `Timeline` 仅负责解析后的行/列表查看。播放状态必须通过共享 timeline transport/controller owner 流动，禁止面板本地直接读取 store。",
+        "@language": "zh-cn"
+      }
+    ],
+    "timelineVideoSequenceExportBoundary": [
+      {
+        "@value": "Edited-media export is a derived browser-runtime surface over the same compiled sequence plan used by preview/edit. It must reuse shared source/metadata helpers, neutral browser media APIs (`captureStream`, `MediaRecorder`, `createMediaElementSource`), and delayed blob download revocation; it must not introduce a parallel export-specific source registry or success-path probe cleanup. Shared progress/cancel semantics belong to that same helper boundary: preparing/rendering/finalizing labels, shared abort detection, active-button cancellation, abort-safe cleanup, and the structured `kind`/`phase`/`percentage`/`completedSegments`/`totalSegments` payload must not fork into panel-local implementations or label parsing. Shared export-plan validation belongs there too: empty plans or plans without any positive-duration source range must fail through the upstream validator before recorder/runtime work starts, and surface enablement should reuse that same rule. Shared export error taxonomy belongs there too: abort, capability, plan, source, and runtime failures must resolve through shared export error codes/messages and shared feedback mapping so surfaces reuse one canonical message boundary instead of panel-local fallback copy. Shared export outcomes belong there too: downloaded/cancelled/failed results should reuse one structured upstream payload with canonical message, toast kind, filename, and error-code fields. Shared export event telemetry belongs there too: progress events and terminal outcome events should reuse one structured `onEvent` envelope so surfaces/logging subscribe once instead of splitting progress and outcome callbacks. Shared export session history belongs there too: bounded run snapshots should reuse one shared reducer/history model with run id, filename base, timing, progress, and terminal outcome fields so future history/retry/audit surfaces do not rebuild run state from toasts. Shared export retry/replay belongs there too: previous runs should resolve replay through one stale-plan-safe request helper that requires no active export and a matching current compiled plan before retrying. Shared export retry control belongs there too: retry buttons should derive enabled/disabled state and copy from one shared retry-control helper over the latest retryable session instead of panel-local heuristics. Shared export session surface belongs there too: recent-export strips should render from one shared session-surface model with upstream detail labels, empty-state copy, and retry affordances instead of panel-local row formatting. Shared export session tone/style belongs there too: recent-export rows should reuse one shared semantic tone/mode helper so running, downloaded, cancelled, and failed states do not fork into surface-local style mapping. Shared export session selection belongs there too: recent-export surfaces should choose visible runs through one shared ordering/filter helper that can prioritize the latest retryable run, keep active runs visible, apply optional status filters, and then fall back to recency. Export teardown must finalize through one cleanup path so recorder-stop failure or cancellation still releases tracks, disconnects/closes Web Audio, and clears the video element.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "编辑后媒体导出是建立在与预览/编辑相同编译序列计划之上的派生浏览器运行时表面。它必须复用共享 source/metadata helper、中立浏览器媒体 API（`captureStream`、`MediaRecorder`、`createMediaElementSource`）以及延迟 blob 下载 revoke；禁止引入并行的导出专用 source registry 或成功路径 probe cleanup。共享 progress/cancel 语义也属于同一 helper boundary：preparing/rendering/finalizing 标签、共享 abort detection、active-button cancellation、abort-safe cleanup，以及结构化 `kind`/`phase`/`percentage`/`completedSegments`/`totalSegments` payload 均不得分叉成 panel-local 实现或依赖 label parsing。共享 export-plan validation 也属于这里：空计划或不包含任何正时长 source range 的计划，必须在 recorder/runtime work 启动前通过上游 validator 直接失败，surface enablement 也应复用同一规则。共享 export error taxonomy 也属于这里：abort、capability、plan、source 与 runtime failure 必须通过共享 export error code/message 与共享 feedback mapping 统一解析，禁止 surface 侧再发明 panel-local fallback copy。共享 export outcome 也属于这里：downloaded/cancelled/failed 结果必须复用同一份上游结构化 payload，包含 canonical message、toast kind、filename 与 error-code 字段。共享 export event telemetry 也属于这里：progress event 与 terminal outcome event 必须复用同一份结构化 `onEvent` envelope，禁止 surfaces/logging 再拆分成平行 callback shape。共享 export session history 也属于这里：bounded run snapshot 必须复用同一份共享 reducer/history model，包含 run id、filename base、timing、progress 与 terminal outcome 字段，禁止 surfaces 再从 toast 重建 run state。共享 export retry/replay 也属于这里：previous run 必须通过同一份 stale-plan-safe request helper 解析 replay，要求当前没有活动导出且 current compiled plan 仍与前次 run snapshot 匹配。共享 export retry control 也属于这里：retry button 必须从同一份 shared retry-control helper 与 latest retryable session 推导 enabled/disabled state 与 copy，禁止 panel-local heuristic。共享 export session surface 也属于这里：recent-export strip 必须从同一份 shared session-surface model 推导 detail label、empty-state copy 与 retry affordance，禁止 panel-local row formatting。共享 export session tone/style 也属于这里：recent-export row 必须从同一份 shared semantic tone/mode helper 推导 styling metadata，禁止 surfaces 本地映射 running/downloaded/cancelled/failed 状态到样式。共享 export session selection 也属于这里：recent-export row 必须通过同一份 shared ordering/filter helper 解析 visible runs，可优先 latest retryable run、保留 active run、应用 status filter，再退回 recency。导出收尾必须通过单一 cleanup path 完成，因此即使 recorder stop 失败或取消，也仍需释放 tracks、disconnect/close Web Audio，并清理 video element。",
+        "@language": "zh-cn"
+      }
+    ],
+    "timelinePreviewSyncAnimationBoundary": [
+      {
+        "@value": "Selected-row preview alignment, playhead-active family emphasis, ruler activity markers, and native `data-kg-animation-*` timing must flow through one shared preview-sync plan plus shared source-activity models. Media Canvas, BottomPanel `Timeline`, and FloatingPanel `Timeline` must not fork activity or animation heuristics.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "selected-row 预览对齐、playhead 驱动的 family 强调、ruler activity marker 与原生 `data-kg-animation-*` timing 必须通过同一份 shared preview-sync plan 与 shared source-activity model 流动。Media Canvas、BottomPanel `Timeline` 与 FloatingPanel `Timeline` 禁止分叉 activity 或 animation heuristic。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeHarness": [
+      {
+        "@value": "Rich-media browser verification is a Dev-only runtime boundary owned by Agentic Graph source: `RichMediaBrowserSmokePage` plus `npm run test:smoke:rich-media:browser` should validate shared `RichMediaPanel` surfaces for markdown preview/edit, iframe/srcDoc, snapshot iframe, click-to-open overlay, image zoom wheel, video HTML fallback, audio, flow-editor chrome visibility, non-fallback WebGL rendering for raster/SVG `image.to-threejs`, and viewport-centered FloatingPanel Media image/video previews. Uploaded previews must reuse the previous lightbox position and player size through shared expanded-preview geometry, declare parent-owned Rich Media Panel placement, prove bounded native media dimensions while Storyboard/frontmatter mode is active, retain a `fullscreenchange`-aware Enter/Exit fullscreen action without instantiating `MediaLightbox`, and prove visible Previous/Next controls, Left/Up previous plus Right/Down next keys, and horizontal touch swipes all reuse one wraparound owner across the visible image/video sequence; swipe left advances, swipe right returns, vertical gestures are ignored, and audio is excluded. The same owner must select unique adjacent items for image-source and video-metadata preloading, and the harness must prove item changes and panel close remove preload resources while focused component coverage proves video probes are paused and sources cleared. Preload resources must remain one-pixel, transparent, pointer-inert, and `aria-hidden`; effect setup must assign their source so React Strict Mode cleanup replay cannot leave a connected preload empty. The Dev-only harness must also measure the preloaded image transition from navigation action to `complete && naturalWidth > 0`, enforce a 500 ms default budget configurable through `AGENTIC_OS_MEDIA_PREVIEW_READY_BUDGET_MS`, and write `data/outputs/rich-media-catalog-preview-timing.json`; this is validation evidence, not production telemetry. The harness writes its main screenshot plus a dedicated catalog-preview screenshot. Canonical contracts remain `agentic-graph/docs/documents/agentic-graph-image-to-threejs-api.md` and `agentic-graph/docs/documents/agentic-graph-artifact-media-storage-architecture.md`; schema mirrors must not claim Prod or Cloudflare proof. Flow-editor drag/resize callback counters remain covered by focused component regressions until browser drag instrumentation becomes deterministic.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "富媒体浏览器验证是由 Agentic Graph 源码拥有的 Dev-only 运行时边界：`RichMediaBrowserSmokePage` 与 `npm run test:smoke:rich-media:browser` 应验证共享 `RichMediaPanel` 表面上的 markdown preview/edit、iframe/srcDoc、snapshot iframe、click-to-open overlay、image zoom wheel、video HTML fallback、audio、flow-editor chrome visibility、栅格/SVG `image.to-threejs` 的非回退 WebGL 渲染，以及 FloatingPanel Media 在视口居中的图片/视频预览。上传媒体预览必须通过共享 expanded-preview geometry 复用此前 lightbox 的位置与播放器尺寸，声明由父级拥有 Rich Media Panel placement，在 Storyboard/frontmatter mode 激活时证明原生媒体具有有界尺寸，保留跟随 `fullscreenchange` 的 Enter/Exit fullscreen action 且不得实例化 `MediaLightbox`，并证明可见 Previous/Next 控件、Left/Up 上一项与 Right/Down 下一项按键以及水平触摸滑动均复用同一个可见图片/视频序列循环导航 owner；左滑前进、右滑返回、垂直手势忽略，且排除音频。同一 owner 还必须选择不重复的相邻项以预载图片源与视频元数据；harness 必须证明切换项目和关闭面板会移除预载资源，而聚焦组件覆盖应证明视频 probe 被暂停且 source 被清除。预载资源必须保持单像素、透明、禁止指针事件并设置 `aria-hidden`；effect setup 必须分配 source，避免 React Strict Mode cleanup replay 让已连接的预载资源保持空 source。Dev-only harness 还必须测量从导航动作到 `complete && naturalWidth > 0` 的预载图片切换时间，执行默认 500 ms 的预算（可通过 `AGENTIC_OS_MEDIA_PREVIEW_READY_BUDGET_MS` 配置），并写入 `data/outputs/rich-media-catalog-preview-timing.json`；该数据仅为验证证据，不是生产遥测。Harness 应写入主截图与专用 catalog-preview 截图。规范契约仍位于 `agentic-graph/docs/documents/agentic-graph-image-to-threejs-api.md` 与 `agentic-graph/docs/documents/agentic-graph-artifact-media-storage-architecture.md`；schema mirror 不得声称 Prod 或 Cloudflare proof。flow-editor drag/resize callback counter 在浏览器拖拽注入具备确定性之前，仍由聚焦的组件级回归测试覆盖。",
+        "@language": "zh-cn"
+      }
+    ],
+    "storyboardSurfacePortHandleDensity": [
+      {
+        "@value": "A clicked, blue-chrome Card or Rich Media Panel exposes exactly one semantic input handle at left-middle and one semantic output handle at right-middle; handles unmount with the selection chrome. The shared renderer guarantees a 10 px minimum visible glyph while retaining a larger interaction target. The overlay selects the authored handle nearest the center without changing its port key or edge binding. Selected and unselected Card/Rich Media edges retain that centered anchor. Selected Widgets expose their multi-port handles derived from KTV rows; downstream renderers must not flatten Widget ports into the overlay pair. Outer rails and KTV-row handles are mutually exclusive owners.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "点击后带蓝色 chrome 的 Card 与 Rich Media Panel 在左侧中点暴露一个语义输入 handle，并在右侧中点暴露一个语义输出 handle；handle 随选择 chrome 一起卸载。共享 renderer 保证可见 glyph 至少为 10 px，同时保留更大的交互 target。Overlay 选择最接近中点的已创作 handle，且不得更改其 port key 或 edge binding。已选择和未选择的 Card/Rich Media edge 都保留该中点 anchor。已选择的 Widget 暴露从 KTV 行派生的多端口 handle；下游 renderer 不得把 Widget 端口压缩为 overlay 的一对端口。外层 rail 与 KTV 行 handle 是互斥 owner。",
+        "@language": "zh-cn"
+      }
+    ],
+    "imageToThreeJsBrowserProof": [
+      {
+        "@value": "The Dev-only `image.to-threejs` browser matrix must render a PNG Rich Media Panel, runtime-generated JPEG Card, SVG Rich Media Panel, SVG Storyboard Widget, and typed fallback on the visual Canvas. Focused checks separately prove source replacement and texture, geometry, and material disposal. This is runtime-ready Dev evidence only; the schema must not claim protected integration, Prod, or Cloudflare proof.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Dev-only 的 `image.to-threejs` 浏览器矩阵必须在可视 Canvas 上渲染 PNG Rich Media Panel、运行时生成的 JPEG Card、SVG Rich Media Panel、SVG Storyboard Widget 与类型化回退。聚焦检查另行证明源替换以及 texture、geometry 与 material 的释放。这仅是 runtime-ready Dev 证据；schema 不得声称已完成受保护集成、Prod 或 Cloudflare 证明。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeVideoReadiness": [
+      {
+        "@value": "The Dev-only Rich Media smoke uses the repository-owned 1,092-byte H.264 fixture at `/demo/media-preview-metadata-ready.mp4`. `richMediaBrowserSmokeFixtures.json` is the fixture identity SSOT for path, content type, byte size, SHA-256, 160×90 dimensions, 0.4-second duration, and duration tolerance; focused coverage must hash the binary against it. Before navigation, the adjacent video preload must reach `readyState >= HAVE_METADATA` and match that identity; after navigation, the visible shared Rich Media Panel video must match the same identity within the 500 ms `AGENTIC_OS_MEDIA_PREVIEW_READY_BUDGET_MS` budget. `data/outputs/rich-media-catalog-preview-timing.json` must record fixture identity plus expected, preload, and visible metadata alongside separate image/video timing. This evidence is Dev-only validation, not production telemetry.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Dev-only Rich Media smoke 使用仓库自有的 1,092 字节 H.264 fixture `/demo/media-preview-metadata-ready.mp4`。`richMediaBrowserSmokeFixtures.json` 是 path、content type、byte size、SHA-256、160×90 尺寸、0.4 秒时长及容差的 fixture identity SSOT；聚焦测试必须以该清单校验二进制哈希。导航前，相邻视频预载必须达到 `readyState >= HAVE_METADATA` 并匹配该身份；导航后，共享 Rich Media Panel 中可见的视频必须在同一个 500 ms `AGENTIC_OS_MEDIA_PREVIEW_READY_BUDGET_MS` 预算内匹配相同身份。`data/outputs/rich-media-catalog-preview-timing.json` 必须记录 fixture 身份、expected/preload/visible metadata 及独立图片/视频 timing。该证据仅用于 Dev-only 验证，不是生产遥测。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeTimingSchema": [
+      {
+        "@value": "Every generated Rich Media catalog preview timing artifact must declare `schema: rich-media-catalog-preview-timing/v1` and pass the strict Draft 2020-12 contract at `canvas/schemas/rich-media-catalog-preview-timing.v1.schema.json` before the Dev-only browser smoke can pass. The validator must reject unknown legacy fields, missing fixture/image/video evidence, missing expected/preloaded/visible metadata, and invalid scalar constraints. This versioned schema stabilizes validation evidence format; it is not a production telemetry API.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "每个生成的 Rich Media catalog preview timing artifact 必须声明 `schema: rich-media-catalog-preview-timing/v1`，并在 Dev-only browser smoke 通过前符合 `canvas/schemas/rich-media-catalog-preview-timing.v1.schema.json` 中严格的 Draft 2020-12 契约。Validator 必须拒绝未知 legacy fields、缺失的 fixture/image/video evidence、缺失的 expected/preloaded/visible metadata 以及无效 scalar constraints。该版本化 schema 用于稳定验证证据格式，不是生产遥测 API。",
+        "@language": "zh-cn"
+      }
+    ],
+    "richMediaBrowserSmokeAffectedCi": [
+      {
+        "@value": "Agentic Graph must register the Rich Media preview timing schema, validator, fixture manifest, smoke page/runner/verifier, and browser-contract test in one affected-CI ownership scope. A change to any owner must automatically run both `test:smoke:rich-media:timing-schema` and the focused `richMedia.browserSmokeContract` gate; this remains Dev validation and does not authorize deployment.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Agentic Graph 必须把 Rich Media preview timing schema、validator、fixture manifest、smoke page/runner/verifier 与 browser-contract test 注册到同一个 affected-CI ownership scope。任一 owner 发生变更时，必须自动运行 `test:smoke:rich-media:timing-schema` 与聚焦的 `richMedia.browserSmokeContract` gate；该规则仍属于 Dev 验证，不构成部署授权。",
+        "@language": "zh-cn"
+      }
+    ],
+    "storyboardRichMediaDropBrowserSmokeHarness": [
+      {
+        "@value": "Storyboard rich-media drag verification is a Dev-only runtime boundary owned by Agentic Graph source: `StoryboardRichMediaDropSmokePage` plus `npm run test:smoke:storyboard-rich-media-drop:browser` should exercise the real `2D Renderer: Storyboard` drag path, create one image and one video `Rich Media Panel` near pointer release, emit one screenshot artifact, and prove existing storyboard cards and rich-media panels keep their authored world positions. Generic flow-editor drag/resize callback counters outside this path remain covered by focused component regressions.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Storyboard 富媒体拖拽验证是由 Agentic Graph 源码拥有的 Dev-only 运行时边界：`StoryboardRichMediaDropSmokePage` 与 `npm run test:smoke:storyboard-rich-media-drop:browser` 应覆盖真实的 `2D Renderer: Storyboard` 拖拽路径，在指针释放点附近创建一个图片与一个视频 `Rich Media Panel`，产出单张截图工件，并证明现有 storyboard 卡片与富媒体面板保持其已编写的 world position 不变。此路径之外的通用 flow-editor drag/resize callback counter 仍由聚焦的组件级回归测试覆盖。",
+        "@language": "zh-cn"
+      }
+    ],
+    "visualAnnotationE2eRendererBoundary": [
+      {
+        "@value": "`2D Renderer: Flow Editor`, `2D Renderer: Media`, and `2D Renderer: Storyboard` are the renderer surfaces that may reuse the native visual annotation dataset runtime for load/split/merge/save artifacts, frame bounding boxes, and zone-count timelines. External CV projects are inspiration-only references; schema mirrors must not imply copied code, package dependency, or committed validation URLs/docs.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "`2D Renderer: Flow Editor`、`2D Renderer: Media` 与 `2D Renderer: Storyboard` 是可复用原生 visual annotation dataset runtime 的渲染表面，用于 load/split/merge/save 工件、frame bounding boxes 与 zone-count timelines。外部 CV 项目仅作为 inspiration-only reference；schema mirror 不得暗示复制代码、包依赖或提交验证 URL/文档。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarEditorWorkspaceToggle": [
+      {
+        "@value": "Toolbar includes an Editor button left of Status. Clicking Editor toggles a VS Code-like embedded editor workspace that reuses the canonical Markdown Workspace SSOT and shares the same in-app Canvas pane (single Canvas viewport resized into the right split pane). Editor workspace includes layout toggles (Explorer open/closed and Canvas pane open/closed); Canvas pane open state persists via `kg:ui:workspace:canvasPaneOpen` and Canvas pane width persists via `kg:ui:workspace:previewWidthPx`. Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. External embedding may still use a preview-only iframe contract (`data-kg-preview=\"1\"` or `/?kgPreview=1`).",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 在 Status 左侧包含 Editor 按钮。点击 Editor 切换到类 VS Code 的内嵌编辑工作区：复用规范的 Markdown Workspace SSOT，并与同一份宿主 Canvas 画布表面共享（单一 Canvas viewport，缩放后嵌入右侧分栏）。Editor 工作区包含布局开关（Explorer 展开/收起与 Canvas pane 显示/隐藏）；Canvas pane 显示状态通过 `kg:ui:workspace:canvasPaneOpen` 持久化，Canvas pane 宽度通过 `kg:ui:workspace:previewWidthPx` 持久化。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 只能存在于 Graph Table 工作区与 Canvas Floating Panel。外部嵌入仍可使用 preview-only iframe 契约（`data-kg-preview=\"1\"` 或 `/?kgPreview=1`）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarChunkAndMobileResponsiveness": [
+      {
+        "@value": "Toolbar, MainPanel, MarkdownWorkspace, and workspace export/actions panels must treat heavy surfaces as lazy-loaded bundles wired through the Floating Panel and Editor Workspace contracts; behavior must remain identical, but bundles load only when opened, and reintroducing eager monolithic Toolbar/Canvas/Workspace tool stacks is forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar、MainPanel、MarkdownWorkspace 与 Workspace 导出/动作面板必须将重型表面视为通过 Floating Panel 与 Editor Workspace 契约连接的惰性加载 bundle：保持行为一致，仅在面板打开时加载 bundle；禁止重新引入早期的 Toolbar/Canvas/Workspace 单体工具堆栈。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarCanvasInteractionAndSyncModes": [
+      {
+        "@value": "Toolbar includes Canvas Interaction Mode and Workspace Sync Mode toggle buttons adjacent to the Document Mode control. These toggles are thin shells over shared SSOT settings (`infiniteCanvasInteractionMode∈{static,interactive}`, `canvasWorkspaceSyncMode∈{manual,realtime}`) used by MainPanel Settings and the Interaction panel. Static interaction mode runs 2D D3 force layout to a bounded stable state and then freezes simulation, forwarding rich-media/markdown overlay wheel/pan to the canvas so pan/zoom remain primary and Graph Data Table/GraphRecordDb treat position-only updates as non-syncing metadata; Interactive keeps D3 forces running and enables full overlay interactivity while still using the same GraphData/layout keys and revision-gated sync. Manual sync disables automatic GraphRecordDb sync from Canvas and exposes a single 'Sync now' action in the Graph Table header; Real-time enables auto sync keyed by (revision, collapsedGroupIdsKey, viewKey) using structure-only revisions in static mode and full graph revisions in interactive mode, deduped via last-write/last-sync gates. Panel UI must not introduce alternate interaction/sync flags; Toolbar buttons and Settings must always remain in lockstep.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 在 Document Mode 控件旁边包含 Canvas Interaction Mode 与 Workspace Sync Mode 开关按钮。这些开关只是共享 SSOT 设置（`infiniteCanvasInteractionMode∈{static,interactive}`、`canvasWorkspaceSyncMode∈{manual,realtime}`）的轻量外壳，与 MainPanel Settings 与 Interaction 面板共用。static 交互模式会将 2D D3 力导向布局运行到有界稳定状态后冻结模拟，并将富媒体/Markdown 覆盖层的滚轮/平移事件转发给画布，使平移/缩放保持为主交互，并让 Graph Data Table/GraphRecordDb 将纯位置更新视为“非同步元数据”；interactive 模式则保持 D3 力导向布局持续运行，并启用完整覆盖层交互，同时仍复用相同的 GraphData/布局 key 与基于修订号的同步。manual 同步模式禁用从 Canvas 到 GraphRecordDb 的自动同步，仅在 Graph Table 表头提供一次性的“Sync now” 操作；realtime 模式则启用以（修订号、collapsedGroupIdsKey、viewKey）为 key 的自动同步：在 static 模式下仅使用结构修订，在 interactive 模式下使用完整图修订，并通过 last-write/last-sync 门控去重。面板 UI 不得引入平行的交互/同步标志；Toolbar 按钮与 Settings 必须始终保持一致。",
+        "@language": "zh-cn"
+      }
+    ],
+    "mainPanelTabMetadataSsot": [
+      {
+        "@value": "MainPanel must derive tab labels, searchable tabs, search placeholders, and footer copy from one tab metadata path, let header/search/footer plus key-value rows wrap responsively, and keep Settings lazy-load helpers off toolbar-owned init bridges.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "MainPanel 必须从单一 tab 元数据路径推导标签、可搜索 tab、搜索占位文案与页脚文案，并让 header/搜索/页脚与 key-value 行在窄宽度下响应式换行，同时让 Settings 延迟加载辅助逻辑避开 toolbar 所属初始化桥接。",
+        "@language": "zh-cn"
+      }
+    ],
+    "storageConflictActionReuse": [
+      {
+        "@value": "Storage sync conflict UX must reuse the shared toast/log/runtime action path. Toast cards and History log rows may render the same action descriptors (`Keep Local`, `Accept Remote`, `Review Log`) and dispatch through one shared UI action runtime; duplicate conflict-only panels or modals are forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "存储同步冲突 UX 必须复用共享的 toast/log/runtime 动作路径。Toast 卡片与 History 日志行可以渲染同一组动作描述符（`Keep Local`、`Accept Remote`、`Review Log`），并通过同一个共享 UI action runtime 分发；禁止新增专属的冲突面板或模态框。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelChatSessionFileAndMarkdownContract": [
+      {
+        "@value": "FloatingPanel Chat must enforce a markdown-syntax-guidelines-aligned response contract and keep one same-session `chatAgentic Graph` workspace file: write the latest validated `agentic-os-pipeline/v1` base-template AGENTIC_OS document into the active `agenticOs_yyyymmddhhmmss.md` under `chatLocalStorageRootPath` (unless explicitly configured), and do not create per-message chat files. In `chatAgentic Graph` mode, `New Chat` must create/open a fresh `agenticOs_*.md` and route the next turn to that file. Materialize exactly one assistant bubble before the first token, update that same row through pending, live, and final states, and preserve tail-follow until the user scrolls away. The settled content remains concise bullets (≤50 words) plus a workspace link to the current `agenticOs_*.md`. Canonical acceptance must enforce frontmatter↔body linkage (base-template allows dotted `runtime.*` refs) and normalize only `links.self_ref` from the filename. Reserve one optional `response:` YAML block for standard chat responses, not the persisted `chatAgentic Graph` AGENTIC_OS contract.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "FloatingPanel Chat 必须遵循 markdown-syntax-guidelines 对响应格式的约束，并在同一会话内保持单一 `chatAgentic Graph` 工作区文件：将最新通过验证的 `agentic-os-pipeline/v1` base-template AGENTIC_OS 文档写入 `chatLocalStorageRootPath` 下当前 `agenticOs_yyyymmddhhmmss.md`（除非显式配置），不得按消息创建多个聊天文件。在首个 token 到达前创建且仅创建一个助手气泡，在 pending、live 与 final 状态间原位更新；用户主动向上滚动前持续跟随消息尾部。最终内容保持为精炼要点（≤50 词）+ 指向当前 `agenticOs_*.md` 的工作区链接。验收必须保证 frontmatter↔body 变量链接（base-template 允许 `runtime.*` 点号引用），并仅从文件名规范化 `links.self_ref`。可选的 `response:` YAML 块只适用于标准聊天响应，不属于持久化的 `chatAgentic Graph` AGENTIC_OS 合约。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelViewMetadataSsot": [
+      {
+        "@value": "Floating Panel must derive view buttons, shared header status chips, full-height body rules, and renderer-only header actions from one shell metadata path; cap width to the viewport, wrap header/status rows, keep only the active view mounted, and forbid per-view shell drift.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 必须从单一壳层元数据路径推导视图按钮、共享 header 状态 chips、全高正文规则与仅 renderer 可见的 header 动作；宽度需受 viewport 约束、header/状态行需可换行、只挂载当前激活视图并禁止逐视图壳层漂移。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelMediaStorageSync": [
+      {
+        "@value": "FloatingPanel Media is the shared catalog for uploaded and AI/LLM-generated image/audio/video. Upload Media and card-field `@ Upload Media` must reuse one upload helper and one inventory builder, then insert a typography-preserving inline media chip. The same inventory projects through native grid cards and three-row list items, not legacy key/type/value columns. Media thumbnails and Storyboard card/reference media previews use shared hover/focus-appearing translucent kind, info, open-link, and Download Media overlays; thumbnail clicks portal a direct shared Rich Media Panel into the previous centered lightbox position and player size without instantiating `MediaLightbox` or replacing insert/rename/delete/open-link behavior. That direct panel retains the shared native fullscreen action, which follows `fullscreenchange` and switches between Enter and Exit fullscreen states. Visible Previous/Next controls, Left/Up and Right/Down keys, and horizontal touch swipes all reuse one wraparound owner over the currently visible image/video catalog sequence: swipe left advances, swipe right returns, vertical gestures are ignored, and audio is excluded. The sequence owner also selects unique adjacent items for speculative loading: image sources and video metadata preload, while item changes and panel close pause video probes, clear sources, and release obsolete resources. Uploaded media surfaces editable media descriptions and `#` metadata fields rather than storage-status copy. Cloudflare persistence is split by service: R2 stores binary blobs, D1 stores asset metadata and provenance, KV stores short-lived access URL cache entries only when bound, and Durable Objects store collaboration room sync notifications.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "FloatingPanel Media 是上传媒体与 AI/LLM 生成的图片、音频、视频的共享目录。Upload Media 与卡片字段中的 `@ Upload Media` 必须复用同一个上传 helper 与同一个 inventory builder，并插入不改变周围排版的内联媒体 chip。同一个 inventory 通过原生 grid cards 与三行 list items 投影，而不是旧的 key/type/value columns。媒体缩略图以及 Storyboard 卡片/引用媒体预览使用共享的 hover/focus 出现的半透明 kind、info、open-link 与 Download Media 覆层；点击缩略图会把直接共享的 Rich Media Panel portal 到此前 lightbox 的居中位置与播放器尺寸，且不得实例化 `MediaLightbox`，同时不替代 insert/rename/delete/open-link 行为。该直接面板保留共享原生 fullscreen action，并跟随 `fullscreenchange` 在 Enter 与 Exit fullscreen 状态间切换。可见 Previous/Next 控件、Left/Up 与 Right/Down 按键以及水平触摸滑动均复用同一个当前可见图片/视频序列循环导航 owner：左滑前进、右滑返回、垂直手势忽略，且排除音频。序列 owner 还会选择不重复的相邻项目进行推测性加载：图片预载 source，视频预载 metadata；切换项目和关闭面板会暂停视频 probe、清除 source 并释放过时资源。上传媒体展示可编辑媒体描述与 `#` 元数据字段，而不是 storage-status 文案。Cloudflare 持久化按服务拆分：R2 保存二进制 blob，D1 保存资产元数据与 provenance，KV 仅在绑定时保存短期访问 URL 缓存，Durable Objects 保存协作 room 同步通知。",
+        "@language": "zh-cn"
+      }
+    ],
+    "toolbarNavigateMode": [
+      {
+        "@value": "Toolbar includes a Navigate button that clears selection and forces single-select. It replaces any floating mode rail and must reuse the same canonical selection/mode state.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar 包含 Navigate 按钮：清空选择并强制单选模式。它替代任何悬浮模式栏，并且必须复用同一份规范选择/模式状态。",
+        "@language": "zh-cn"
+      }
+    ],
+    "canvasViewportStatusInStatusPanel": [
+      {
+        "@value": "Viewport HUD (zoom %, pan x/y, selection count, renderer) must be single-surface SSOT: it may live in the Status Panel or as a minimal non-interactive in-canvas readout for debugging drift, but must not be duplicated across multiple HUD surfaces or bottom status bars.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "视口 HUD（缩放百分比、平移 x/y、选择数量、渲染器）必须是单一表面的 SSOT：可以放在 Status Panel 内，也可以作为画布内用于排查漂移的最小非交互读数，但禁止在多个 HUD 表面或底部状态栏中重复渲染。",
+        "@language": "zh-cn"
+      }
+    ],
+    "editorWorkspaceGraphTable": [
+      {
+        "@value": "Graph Data Table (Graph Table) is a workspace tool surface for inspecting the active GraphData. It must be implemented as a scroll-stable canvas fast-grid with a single scroll owner and an explicit scroll-extents spacer element sized to the computed layout. The header must remain aligned to the body while horizontally scrolling: use a DOM header overlay that is translated by -scrollLeft from the same scroll owner; clip the canvas so it never draws into the header band. The header supports pointer resize (near right edge) and pointer-drag reorder; header click selects the entire column. Split panes use a vertical hr separator with pointer-drag resize and persisted widths; avoid scroll-jump loops when syncing selection with the shared Canvas pane and TOC.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Graph Data Table（Graph Table）是用于查看当前 GraphData 的工作区工具表面。必须实现为滚动稳定的 Canvas fast-grid：单一滚动宿主 + 与计算布局一致的显式滚动范围 spacer 元素来驱动原生 scrollHeight/scrollWidth。表头必须在水平滚动时与表体保持对齐：使用 DOM 表头覆层，并以同一滚动宿主的 -scrollLeft 进行平移；同时对 canvas 做裁剪，禁止绘制进入表头带。表头支持靠右边缘拖拽调整列宽、指针拖拽进行列重排；点击表头应选中整列。分栏使用可拖拽的垂直 hr 分隔并持久化宽度；与宿主共享的 Canvas 画布表面与 TOC 同步选择时需避免滚动跳动循环。",
+        "@language": "zh-cn"
+      }
+    ],
+    "multiDimTableModeSplit": [
+      {
+        "@value": "Toolbar Document Mode “Multi-dimensional Table Mode” is scoped to Canvas layout and may only toggle graph-level multiDimTableModeEnabled; Workspace Editor “Workspace: Multi-dimensional Table” is scoped to workspaceEditorMode and Graph Data Table panels only. Cross-wiring between these mode families or duplicating SSOT across panel surfaces is forbidden.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Toolbar Document Mode「Multi-dimensional Table Mode」仅作用于 Canvas 布局，只能切换图级 multiDimTableModeEnabled；Workspace Editor「Workspace: Multi-dimensional Table」仅作用于 workspaceEditorMode 与 Graph Data Table 面板。禁止在这两类模式之间交叉连线，或在不同面板表面复制 SSOT。",
+        "@language": "zh-cn"
+      }
+    ],
+    "recordInspectorSsot": [
+      {
+        "@value": "Record/Selection Inspector (dl/header + field inputs) must be a single host-owned SSOT component reused across Graph Table and the Canvas Floating Panel Inspector view (no legacy right SidePanel). Editor Workspace must not mount a standalone inspector dock; inspector surfaces belong to Graph Table workspaces and the Canvas Floating Panel only. When Flow Editor is the active 2D renderer, its inspector must be consolidated into the same Floating Panel Inspector surface (portal slot) rather than rendering a separate inspector panel. The Inspector layout must render even with no active selection; inputs may be disabled but the surface stays visible.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Record/Selection Inspector（dl/header + 字段输入）必须是宿主唯一的 SSOT 组件，并在 Graph Table 与 Canvas 浮动面板（Floating Panel）的 Inspector 视图中复用（禁止遗留右侧 SidePanel）。Editor 工作区不得挂载独立的 Inspector 停靠栏；Inspector 表面仅允许存在于 Graph Table 工作区与 Canvas Floating Panel。 当 Flow Editor 为当前 2D 渲染器时，其 Inspector 必须合并到同一 Floating Panel Inspector 表面（portal slot），禁止渲染独立的 Inspector 面板。Inspector 布局必须在无选择时也保持渲染；输入可禁用但界面需可见。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelShellSsot": [
+      {
+        "@value": "Floating Panel (tool menu) is the only SSOT shell primitive for Canvas panels (semantic structure, header/body structure, and theming). It hosts Props Panel + Inspector/Chat/Geo + Graph Traversal views and forbids any legacy right SidePanel or BottomPanel Orchestrator. Pin disables header drag (locked panel, blue pin icon); unpin enables header drag (floating panel). Only mount the active view to forbid hidden background work.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel（工具菜单）是 Canvas 面板唯一的 SSOT 壳层原语（语义结构、头/体结构、主题）。它承载 Props Panel + Inspector/Chat/Geo + Graph Traversal 视图，并禁止任何遗留右侧 SidePanel 或 BottomPanel Orchestrator。pin=锁定（禁用拖拽，蓝色图钉），unpin=浮动（启用头部拖拽）。只允许挂载当前激活视图，禁止隐藏面板后台运行。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingInteractionPanelSsot": [
+      {
+        "@value": "Infinite-canvas Interaction controls (Viewport readout, pointer mode, layout switching, center/centroid, even distribute, opt-in perf overlay) must be consolidated into one SSOT Interaction tab inside the Canvas Floating Panel. The Interaction tab exposes a read-only Viewport section that groups zoom/transform/zoom modes/wheel/speed/Flow fields derived from schema and settings, plus collapsible Interaction, Centering/Centroid, Even Spread, and Performance sections. It forbids any legacy Arrange panels (canvas overlays, editor tabs, or side panels) that duplicate controls or reintroduce conflicting gesture ownership.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "无限画布的 Interaction 控件（Viewport 只读状态、指针模式、布局切换、居中/重心、均匀分布、可选性能面板）必须统一收敛到 Canvas Floating Panel 内唯一的 SSOT Interaction 选项卡。Interaction 选项卡提供一个只读的 Viewport 区块，用于分组展示从 schema 与设置推导出的缩放/变换/缩放模式/滚轮/速度/Flow 相关字段，并包含可折叠的 Interaction、Centering/Centroid、Even Spread 与 Performance 小节。禁止任何遗留 Arrange 面板（画布覆层、编辑器标签页或侧栏）重复控件或重新引入手势归属冲突。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelLightweightViewPattern": [
+      {
+        "@value": "Floating Panel view bodies must reuse the Props Panel lightweight embedding pattern. Default: the Floating Panel shell owns background + base typography and provides the single scroll container; embedded views must be content-only (no nested h-full/min-h-0/overflow scrollers, no redundant panel bg/borders/shadows, no fixed width constraints). If a view must own an internal scroller (e.g., chat messages), the Floating Panel body must switch to overflow-hidden for that view to prevent double-scroll. Layout-only wrappers should prefer div; reserve section/header/nav/aside for meaningful surface boundaries.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 的视图正文必须复用 Props Panel 的轻量嵌入模式。默认：Floating Panel 壳层负责背景与基础排版，并提供唯一的滚动容器；嵌入视图必须是纯内容（禁止嵌套 h-full/min-h-0/overflow 滚动区、禁止重复的 panel 背景/边框/阴影、禁止固定宽度约束）。如果某视图必须自带内部滚动（例如聊天消息列表），则该视图下 Floating Panel 正文必须切换为 overflow-hidden 以避免双重滚动。仅用于布局的包裹层优先使用 div；section/header/nav/aside 仅用于有语义的表面边界。",
+        "@language": "zh-cn"
+      }
+    ],
+    "floatingPanelTypographySsot": [
+      {
+        "@value": "Floating Panel typography (font family + base text size + micro-label size + monospace size) must be SSOT-driven via the host UI settings and applied at the floating panel content root so Inspector/Props/Orchestrator/Chat/Geo surfaces inherit consistently. MainPanel / Editor workspace / Graph Data Table must use the same ladder (anchor = FloatingPanel Inspector). Cross-repo panels mounted inside Floating Panel (e.g. geospatial panel) must receive the same ladder via a typed `panelTypography` prop (`PanelTypography.keyLabelClass` is the canonical Key label class; `PANEL_TYPOGRAPHY_DEFAULTS` centralizes fallbacks). Record Inspector key labels must use the same key/value text size as inputs (no micro-label sizing on `dt`). Portal content (dropdowns/popovers) must apply `microLabelClass` when it cannot inherit. Forbid hardcoded `text-*`/`font-*` inside panel bodies; only semantic emphasis (e.g. bold) is allowed.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Floating Panel 的排版（字体族 + 基础字号 + 微标签字号 + 等宽字号）必须由宿主 UI 设置驱动，并在浮动面板内容根节点统一应用，使 Inspector/Props/Orchestrator/Chat/Geo 表面一致继承。MainPanel / Editor 工作区 / Graph Data Table 也必须使用同一排版阶梯（锚点 = FloatingPanel Inspector）。Floating Panel 内挂载的跨仓库面板（例如 geospatial panel）必须通过类型化的 `panelTypography` prop 获取同一排版阶梯（`PanelTypography.keyLabelClass` 为 Key 标签的规范 class；`PANEL_TYPOGRAPHY_DEFAULTS` 统一默认回退值）。Record Inspector 的 key 标签必须与输入框使用同一 key/value 字号（`dt` 不得使用微标签字号）。无法继承的 Portal 内容（下拉/弹层）必须显式应用 `microLabelClass`。禁止在面板正文中硬编码 `text-*`/`font-*`；只允许语义强调（如加粗）。",
+        "@language": "zh-cn"
+      }
+    ],
+    "graphTraversalOrchestratorContract": [
+      {
+        "@value": "Graph Traversal (Orchestrator) UI must live only in the Canvas Floating Panel Graph Traversal view. Forbid any duplicate Orchestrator UI/Text editors in BottomPanel. Orchestrator configuration text editing must happen in the Editor workspace via workspace files (e.g. `orchestrator/graphrag-workflow.jsonld`); the panel may provide a jump-to-file button but must not embed a second freeform text editor.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Graph Traversal（Orchestrator）UI 只能存在于 Canvas Floating Panel 的 Graph Traversal 视图中。禁止在 BottomPanel 中保留/新增任何重复的 Orchestrator UI/Text 编辑器。Orchestrator 配置的纯文本编辑必须在 Editor 工作区通过工作区文件完成（例如 `orchestrator/graphrag-workflow.jsonld`）；面板可提供跳转按钮，但不得嵌入第二套自由文本编辑器。",
+        "@language": "zh-cn"
+      }
+    ],
+    "activeGraphRenderViewSsot": [
+      {
+        "@value": "All render surfaces (Editor workspace, Graph Data Table, Graph Fields, Dashboard (Stats), Selection Inspector (Record Inspector), EXPLORER projections, external Canvas Preview embed (if used), Canvas D3/Flow/2D/3D, Document Mode, and Geospatial 2D/3D) must consume the same SSOT-derived active graph render view. Derivation order: keyword base → optional frontmatter Mermaid filter (document mode only) → optional group collapse (`collapsedGroupIds`). Forbid per-surface re-derivation and drift. Graph Table persistence must reflect this derived view (including collapsed groups) and be validated with a bounded host test.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "所有渲染表面（Editor 工作区、Graph Data Table、Graph Fields、Dashboard（Stats）、Selection Inspector（Record Inspector）、EXPLORER 投影、外部 Canvas Preview 嵌入（如有使用）、Canvas D3/Flow/2D/3D、Document Mode、Geospatial 2D/3D）必须消费同一份 SSOT 推导的 active graph render view。推导顺序：keyword 基础图 → 可选 frontmatter Mermaid 过滤（仅 document mode）→ 可选 group collapse（`collapsedGroupIds`）。禁止各表面自行二次推导与漂移。Graph Table 的持久化结果必须反映该推导视图（包含 collapsed groups），并通过有界的 host 测试验证。",
+        "@language": "zh-cn"
+      }
+    ],
+    "parserSchemaWorkflowSsot": [
+      {
+        "@value": "Parser and Schema Configurator UI must live only in MainPanel Workflow Manager. Forbid BottomPanel Parser/Schema tabs and any embedded Monaco Text Editors for parser scripts or schema config. Freeform text editing happens only in the Editor workspace via workspace files: `/parser/parser.py` and `/schema/schema.json`. Workspace autosave may sync `/parser/parser.py` into parser state and apply `/schema/schema.json` to the host schema only when JSON parses.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Parser 与 Schema Configurator UI 只能存在于 MainPanel Workflow Manager。禁止 BottomPanel 中存在 Parser/Schema 标签页，且禁止在其中嵌入任何用于 parser script 或 schema 配置的 Monaco 文本编辑器。自由文本编辑只能在 Editor 工作区通过工作区文件完成：`/parser/parser.py` 与 `/schema/schema.json`。工作区自动保存可将 `/parser/parser.py` 同步到 parser state，并仅在 JSON 可解析时将 `/schema/schema.json` 应用到宿主 schema。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorWidgetSsot": [
+      {
+        "@value": "Storyboard Widget may render an in-canvas widget overlay (positioned near the selected node). The overlay must reuse the host FloatingPanel shell patterns (ARIA + theming) and use semantic HTML only (aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button/table/thead/tbody/tr/th/td), forbidding generic div wrappers. Key/value editing uses schema-like rows with Key/Type/Value columns (SSOT typography + tokens). Pin/unpin semantics are inverted from legacy: pinned locks to node-anchored positioning and allows header drag to adjust anchor offsets (applied collectively to all pinned overlays), while unpinned detaches and enables header drag with a persisted viewport position. Multi-node overlays must avoid overlap by applying a deterministic default placement and persisting detached positions per node id; form control ids must be scoped per node to prevent collisions. The icon toolbar is hidden by default and appears only when the node is selected (hiding on unselect or outside click). Toolbar actions include opening the node in Sidepane, enabling Port Handles for all nodes (set behavior.portHandles.enabled=true and behavior.portHandles.showAllInputs=true; gated by baseline lock), and converting the selected node to a Loop node (set node.type='Loop' and node.properties['workflow:kind']='loop'). Schema nodes may expose row-aligned field ports from node.properties['schema:fields'] and bind edges to ports via edge.properties['flow:sourcePortKey'|'flow:targetPortKey'] (e.g., field:<id>). Port-bound edges may provide a UI label override via edge.properties['flow:displayLabel'] and are subject to schema endpoint/type compatibility validation. The Widget Manager may provide a shared widget Registry that drives additional form fields/ports by node.type (field/port items may set isHidden=true to hide and suppress derived port handles), with optional per-node overrides via node.properties['flow:widgetTypeId'|'flow:widgetFormId']. When enabled registry mappings exist for the node type, the widget surfaces a selector that updates those override keys and emits a lightweight toast for visual confirmation; the selector remains visible even when other fields are collapsed. Connected inputs may be computed from port-bound edges (`flow:sourcePortKey`/`flow:targetPortKey`) and registry port schemaPaths; the UI may surface Connected hints and an explicit Apply action, but the compute pipeline must not silently mutate GraphData. Actions must be idempotent to avoid rerender churn. Field values map to node.properties keys; validation surfaces missing required keys without mutating graph state on failure.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Storyboard Widget 可在画布内渲染 widget 覆层（靠近当前选中节点定位）。该覆层必须复用宿主 FloatingPanel 的壳层模式（ARIA + 主题），并仅使用语义化 HTML（aside/section/header/nav/menu/form/fieldset/legend/label/input/select/textarea/button/table/thead/tbody/tr/th/td），禁止通用 div 包裹。Key/value 编辑应使用类似数据库 schema 的行布局（Key/Type/Value 三列，遵循 SSOT 排版与 token）。pin/unpin 语义与旧版本相反：pinned 表示锁定到节点并允许通过拖拽 header 调整锚点偏移（对所有 pinned 覆层集体应用），unpinned 表示脱离并可拖拽，且需持久化脱离后的 viewport 位置。多节点覆层必须通过确定性默认布局与按 node id 持久化位置来避免重叠；所有 form 控件 id 必须按节点作用域化以避免冲突。图标工具条默认隐藏，仅在节点被选中时显示（取消选择或点击外部时隐藏）。工具条动作包括打开 Sidepane、为所有节点启用 Port Handles（设置 behavior.portHandles.enabled=true 与 behavior.portHandles.showAllInputs=true，受 baseline lock 限制），以及将选中节点转换为 Loop 节点（设置 node.type='Loop' 与 node.properties['workflow:kind']='loop'）。Schema 节点可从 node.properties['schema:fields'] 暴露按行对齐的字段端口，并通过 edge.properties['flow:sourcePortKey'|'flow:targetPortKey']（例如 field:<id>）将边绑定到端口。端口绑定的边可通过 edge.properties['flow:displayLabel'] 提供 UI 标签覆盖，并受 schema endpoint/类型兼容性校验约束。Widget Manager 可提供共享 widget Registry，按 node.type 驱动额外表单字段/端口（field/port 可设置 isHidden=true 以隐藏并抑制派生端口句柄），并支持通过 node.properties['flow:widgetTypeId'|'flow:widgetFormId'] 做节点级覆盖。当节点类型存在已启用映射时，Widget 提供选择器更新上述覆盖键，并弹出轻量 toast 作为可视确认；即使其它字段折叠，选择器也必须可见。Connected inputs 可由端口绑定的边（`flow:sourcePortKey`/`flow:targetPortKey`）与 registry port schemaPath 进行计算；UI 可展示 Connected 提示与显式 Apply 动作，但计算管线不得在后台静默修改 GraphData。动作必须幂等以避免渲染抖动。字段值映射到 node.properties；校验需提示缺失必填键，失败时不得修改图状态。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorEdgeCreationPaths": [
+      {
+        "@value": "Edge creation originates from Flow canvas handles and Storyboard Widget port dots. When a port dot is used, the edge must write flow:sourcePortKey/flow:targetPortKey; when no port is specified, the edge falls back to edge.id. When the Widget is open, its port dots are the edge-creation surface for the selected node and native handles are suppressed.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "边创建可从 Flow 画布句柄与 Storyboard Widget 端口点发起。使用端口点时必须写入 flow:sourcePortKey/flow:targetPortKey；未指定端口时边回退到 edge.id。在 Widget 打开时，其端口点是所选节点的边创建表面，原生句柄被抑制。",
+        "@language": "zh-cn"
+      }
+    ],
+    "flowEditorManagerMappingEditor": [
+      {
+        "@value": "Flow Editor Manager mapping editor must render a single header with the Add Row action and a schema-like table with Key/Type/JSON Key/Direction columns. Direction options are Default (input + output), input-only, and output-only. Apply/Reset in the MainPanel header gates persistence and enables Apply only when edits are dirty.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Flow Editor Manager 的 mapping editor 必须使用单一 header 承载 Add Row 动作，并以 schema 样式表格呈现 Key/Type/JSON Key/Direction 列。Direction 选项为 Default（输入+输出）、input-only、output-only。持久化通过 MainPanel header 的 Apply/Reset，并仅在编辑变更时启用 Apply。",
+        "@language": "zh-cn"
+      }
+    ],
+    "spreadsheetGridStorageBackend": [
+      {
+        "@value": "Spreadsheet grid uses AG Grid for rich Airtable-like interactions and RxDB+Dexie as the local-first persistence layer. Forbid hosted backends and registration/auth flows. Stream row/column changes from RxDB and avoid re-render churn by keeping stable row ids and column ids.",
+        "@language": "en-us"
+      },
+      {
+        "@value": "Spreadsheet 表格使用 AG Grid 提供类 Airtable 的交互能力，并使用 RxDB+Dexie 作为本地优先的持久化层。禁止托管后端与注册/认证流程。行/列变更应从 RxDB 流式推送，并通过稳定的 rowId/columnId 避免渲染抖动。",
+        "@language": "zh-cn"
+      }
+    ]
+  }
+}

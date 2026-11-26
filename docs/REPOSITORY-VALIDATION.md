@@ -51,7 +51,7 @@ parents independently of optional merge metadata in the PR webhook.
 The broad fallback covers all six original test groups exactly once. Validate the
 policy with the shared selector, check script/CI reachability, then run the existing
 checks on the pinned candidate and require `adlc-policy-contract` in protected CI.
-Graph document-map projection remains owned by `schema/AgenticRAG/sync_map.py` and
+Graph document-map projection remains owned by `schema/agentic-rag/sync_map.py` and
 the separate existing `npm run check` path. Regenerate from integrated Graph source;
 never hand-edit generated map contents or treat a source check as deployed parity.
 
@@ -65,7 +65,7 @@ and production runtime readiness are separate and unmeasured by these receipts.
 
 Production verification run `36054392227` found one missing Graph document node.
 Regenerate the existing map from integrated Graph `2bd36eeec85d7f0ffa3b4c68c51129627fab0302`
-with `schema/AgenticRAG/sync_map.py`; accept exactly the Block Editor PRD node,
+with `schema/agentic-rag/sync_map.py`; accept exactly the Block Editor PRD node,
 zero removals, and a clean subsequent `--mode check` across all 302 documents.
 This consumes the existing source owner and generator without a parallel map or checker.
 Protected schema integration unblocks Graph candidate verification; it does not authorize

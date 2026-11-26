@@ -1,0 +1,547 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://huijoohwee.github.io/schema/agentic-rag/v1/",
+    "@language": "en-us",
+    
+    "ast": "https://huijoohwee.github.io/schema/agentic-rag/v1/ast#",
+    "kg": "https://huijoohwee.github.io/schema/agentic-rag/v1/kg#",
+    "rag": "https://huijoohwee.github.io/schema/agentic-rag/v1/rag#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    
+    "ast_module": {
+      "@id": "ast:module",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Module", "@language": "en-us"},
+        {"@value": "AST模块", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Module with UID, purpose, domain, imports, exports", "@language": "en-us"},
+        {"@value": "模块，包含UID、目的、领域、导入、导出", "@language": "zh-cn"}
+      ]
+    },
+    
+    "ast_class": {
+      "@id": "ast:class",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Class", "@language": "en-us"},
+        {"@value": "AST类", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Class with UID, responsibility, inheritance, role, docstring", "@language": "en-us"},
+        {"@value": "类，包含UID、职责、继承、角色、文档字符串", "@language": "zh-cn"}
+      ]
+    },
+    
+    "ast_method": {
+      "@id": "ast:method",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Method", "@language": "en-us"},
+        {"@value": "AST方法", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Method with UID, action verb, signature, control flow, dependencies", "@language": "en-us"},
+        {"@value": "方法，包含UID、动作动词、签名、控制流、依赖关系", "@language": "zh-cn"}
+      ]
+    },
+    
+    "ast_function": {
+      "@id": "ast:function",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Function", "@language": "en-us"},
+        {"@value": "AST函数", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Standalone function with UID, calls, complexity", "@language": "en-us"},
+        {"@value": "独立函数，包含UID、调用、复杂度", "@language": "zh-cn"}
+      ]
+    },
+    
+    "ast_parameter": {
+      "@id": "ast:parameter",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Parameter", "@language": "en-us"},
+        {"@value": "AST参数", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Parameter with position, type, default, constraints, tooltip", "@language": "en-us"},
+        {"@value": "参数，包含位置、类型、默认值、约束、工具提示", "@language": "zh-cn"}
+      ]
+    },
+    
+    "ast_attribute": {
+      "@id": "ast:attribute",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "AST Attribute", "@language": "en-us"},
+        {"@value": "AST属性", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Attribute with UID, type, scope, visibility, governance", "@language": "en-us"},
+        {"@value": "属性，包含UID、类型、作用域、可见性、治理", "@language": "zh-cn"}
+      ]
+    },
+    
+    "governance_metadata": {
+      "@id": "ast:governanceMetadata",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Governance Metadata", "@language": "en-us"},
+        {"@value": "治理元数据", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Key→Type→Value with impact, validation, usage, tooltips", "@language": "en-us"},
+        {"@value": "键→类型→值，包含影响、验证、使用、工具提示", "@language": "zh-cn"}
+      ]
+    },
+    
+    "control_flow": {
+      "@id": "ast:controlFlow",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Control Flow", "@language": "en-us"},
+        {"@value": "控制流", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Branches, loops, conditions, complexity", "@language": "en-us"},
+        {"@value": "分支、循环、条件、复杂度", "@language": "zh-cn"}
+      ]
+    },
+    
+    "data_flow": {
+      "@id": "ast:dataFlow",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Data Flow", "@language": "en-us"},
+        {"@value": "数据流", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Variable def-use chains, data dependencies", "@language": "en-us"},
+        {"@value": "变量定义-使用链、数据依赖", "@language": "zh-cn"}
+      ]
+    },
+    
+    "call_graph": {
+      "@id": "ast:callGraph",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Call Graph", "@language": "en-us"},
+        {"@value": "调用图", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Function calls and callers", "@language": "en-us"},
+        {"@value": "函数调用和调用者", "@language": "zh-cn"}
+      ]
+    },
+    
+    "complexity_metrics": {
+      "@id": "ast:complexityMetrics",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Complexity Metrics", "@language": "en-us"},
+        {"@value": "复杂度指标", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Cyclomatic, cognitive complexity, nesting depth, LOC", "@language": "en-us"},
+        {"@value": "圈复杂度、认知复杂度、嵌套深度、代码行数", "@language": "zh-cn"}
+      ]
+    },
+    
+    "type_annotation": {
+      "@id": "ast:typeAnnotation",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Type Annotation", "@language": "en-us"},
+        {"@value": "类型注解", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Type hints with generics, unions, constraints", "@language": "en-us"},
+        {"@value": "类型提示，包含泛型、联合、约束", "@language": "zh-cn"}
+      ]
+    },
+    
+    "local_variable": {
+      "@id": "ast:localVariable",
+      "@type": "@json",
+      "rdfs:label": [
+        {"@value": "Local Variable", "@language": "en-us"},
+        {"@value": "局部变量", "@language": "zh-cn"}
+      ],
+      "rdfs:comment": [
+        {"@value": "Local variable with data flow and def-use chains", "@language": "en-us"},
+        {"@value": "局部变量，包含数据流和定义-使用链", "@language": "zh-cn"}
+      ]
+    },
+    
+    "uid": {
+      "@id": "ast:uid",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Unique Identifier", "@language": "en-us"},
+        {"@value": "唯一标识符", "@language": "zh-cn"}
+      ]
+    },
+    
+    "action_verb": {
+      "@id": "ast:actionVerb",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Action Verb", "@language": "en-us"},
+        {"@value": "动作动词", "@language": "zh-cn"}
+      ]
+    },
+    
+    "responsibility": {
+      "@id": "ast:responsibility",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Responsibility", "@language": "en-us"},
+        {"@value": "职责", "@language": "zh-cn"}
+      ]
+    },
+    
+    "semantic_role": {
+      "@id": "ast:semanticRole",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Semantic Role", "@language": "en-us"},
+        {"@value": "语义角色", "@language": "zh-cn"}
+      ]
+    },
+    
+    "visibility": {
+      "@id": "ast:visibility",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Visibility (public/private)", "@language": "en-us"},
+        {"@value": "可见性（公共/私有）", "@language": "zh-cn"}
+      ]
+    },
+    
+    "scope": {
+      "@id": "ast:scope",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        {"@value": "Scope (module/class/function)", "@language": "en-us"},
+        {"@value": "作用域（模块/类/函数）", "@language": "zh-cn"}
+      ]
+    }
+  },
+
+  "@id": "rag:ASTTraversal",
+  "@type": "rag:Directive",
+  "schemaVersion": "1.3.0",
+  "rdfs:label": [
+    { "@value": "AST traversal vocabulary (codebase indexing)", "@language": "en-us" },
+    { "@value": "AST 遍历词表（代码库索引）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Defines a bilingual, domain-agnostic vocabulary for representing AST-derived code artifacts (module/class/method/function) as JSON-LD graph nodes, enabling reproducible codebase indexing and traceable reasoning over structure, control flow, and data flow.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "定义用于将 AST 派生的代码构件（模块/类/方法/函数）表示为 JSON-LD 图节点的双语、领域无关词表，以支持可复现的代码库索引与对结构、控制流和数据流的可追溯推理。",
+      "@language": "zh-cn"
+    }
+  ],
+  
+  "ontology": {
+    "@id": "ast:ASTTraversalOntology",
+    "@type": "owl:Ontology",
+    "owl:versionInfo": "1.3.0",
+    "rdfs:label": [
+      {"@value": "AST Code Traversal Ontology", "@language": "en-us"},
+      {"@value": "AST代码遍历本体", "@language": "zh-cn"}
+    ],
+    "rdfs:comment": [
+      {
+        "@value": "Complete AST traversal ontology: Module→Class→Method→Parameter→Governance with bilingual support",
+        "@language": "en-us"
+      },
+      {
+        "@value": "完整的AST遍历本体：模块→类→方法→参数→治理，支持双语",
+        "@language": "zh-cn"
+      }
+    ],
+    
+    "classes": {
+      "ASTModule": {
+        "required": ["uid", "ast_module"],
+        "optional": ["chunk_text", "code_embedding", "complexity_metrics"],
+        "labels": ["ASTModule", "CodeArtifact"]
+      },
+      "ASTClass": {
+        "required": ["uid", "ast_class"],
+        "optional": ["docstring", "complexity_metrics"],
+        "labels": ["ASTClass", "CodeArtifact"]
+      },
+      "ASTMethod": {
+        "required": ["uid", "action_verb", "ast_method"],
+        "optional": ["control_flow", "call_graph", "data_flow"],
+        "labels": ["ASTMethod", "ASTFunction", "CodeArtifact"]
+      },
+      "ASTFunction": {
+        "required": ["uid", "ast_function"],
+        "optional": ["control_flow", "call_graph", "complexity_metrics"],
+        "labels": ["ASTFunction", "CodeArtifact"]
+      },
+      "ASTParameter": {
+        "required": ["name", "position", "ast_parameter"],
+        "optional": ["type_annotation", "governance_metadata"],
+        "labels": ["ASTParameter"]
+      },
+      "ASTAttribute": {
+        "required": ["uid", "ast_attribute"],
+        "optional": ["type_annotation", "governance_metadata"],
+        "labels": ["ASTAttribute"]
+      },
+      "ASTLocalVariable": {
+        "required": ["name", "local_variable"],
+        "optional": ["data_flow", "type_annotation"],
+        "labels": ["ASTLocalVariable"]
+      }
+    },
+    
+    "relationships": {
+      "CONTAINS": "Module/Class contains Class/Method/Function/Attribute",
+      "HAS_PARAMETER": "Method/Function has Parameter",
+      "HAS_LOCAL_VARIABLE": "Method/Function has Local Variable",
+      "CALLS": "Method/Function calls another Method/Function",
+      "ACCESSES": "Method/Function accesses Attribute/Variable",
+      "INHERITS_FROM": "Class inherits from Base Class",
+      "IMPLEMENTS": "Class implements Interface",
+      "IMPORTS": "Module imports Module/Package",
+      "RETURNS": "Method/Function returns Type",
+      "RAISES": "Method/Function raises Exception",
+      "DATA_FLOWS_TO": "Variable flows to another Variable",
+      "CONTROLS": "Condition controls Branch"
+    }
+  },
+  
+  "patterns": {
+    "module_pattern": {
+      "description": {
+        "en-us": "Module with UID, purpose, domain, imports, exports",
+        "zh-cn": "模块，包含UID、目的、领域、导入、导出"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTModule", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "ast_module"],
+        "optional": ["file_path", "line_range", "complexity_metrics", "chunk_text", "embedding"]
+      }
+    },
+    
+    "class_pattern": {
+      "description": {
+        "en-us": "Class with UID, responsibility, inheritance, role, docstring",
+        "zh-cn": "类，包含UID、职责、继承、角色、文档字符串"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTClass", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "ast_class"],
+        "optional": ["file_path", "line_range", "complexity_metrics", "chunk_text", "embedding"]
+      }
+    },
+    
+    "method_pattern": {
+      "description": {
+        "en-us": "Method with UID, action verb, signature, control flow, dependencies",
+        "zh-cn": "方法，包含UID、动作动词、签名、控制流、依赖关系"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTMethod", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "action_verb", "ast_method"],
+        "optional": ["control_flow", "data_flow", "call_graph", "complexity_metrics", "file_path", "line_range", "chunk_text", "embedding"]
+      }
+    },
+    
+    "parameter_pattern": {
+      "description": {
+        "en-us": "Parameter with position, type, default, constraints, tooltip",
+        "zh-cn": "参数，包含位置、类型、默认值、约束、工具提示"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTParameter"],
+        "required": ["@id", "@type", "labels", "name", "position", "ast_parameter"],
+        "optional": ["type_annotation", "governance_metadata", "chunk_text", "embedding"]
+      }
+    },
+    
+    "attribute_pattern": {
+      "description": {
+        "en-us": "Attribute with UID, type, scope, visibility, governance",
+        "zh-cn": "属性，包含UID、类型、作用域、可见性、治理"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTAttribute"],
+        "required": ["@id", "@type", "labels", "uid", "ast_attribute"],
+        "optional": ["type_annotation", "governance_metadata", "semantic_role", "file_path", "line_range", "chunk_text", "embedding"]
+      }
+    },
+    
+    "local_variable_pattern": {
+      "description": {
+        "en-us": "Local variable with data flow and def-use chains",
+        "zh-cn": "局部变量，包含数据流和定义-使用链"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTLocalVariable"],
+        "required": ["@id", "@type", "labels", "name", "local_variable"],
+        "optional": ["type_annotation", "data_flow", "chunk_text", "embedding"]
+      }
+    },
+    
+    "function_pattern": {
+      "description": {
+        "en-us": "Standalone function with UID, calls, complexity",
+        "zh-cn": "独立函数，包含UID、调用、复杂度"
+      },
+      "node_shape": {
+        "@type": "kg:Node",
+        "labels": ["ASTFunction", "CodeArtifact"],
+        "required": ["@id", "@type", "labels", "uid", "ast_function"],
+        "optional": ["call_graph", "complexity_metrics", "type_annotation", "file_path", "line_range", "chunk_text", "embedding"]
+      }
+    }
+  },
+  
+  "relationship_examples": {
+    "module_contains_class": {
+      "@type": "kg:Edge",
+      "@id": "edge:module_contains_class",
+      "source_node": "node:module_ml_pipeline",
+      "target_node": "node:class_training_pipeline",
+      "relation": "CONTAINS",
+      "properties": {
+        "container_type": "module",
+        "member_type": "class",
+        "is_exported": true
+      }
+    },
+    "class_contains_method": {
+      "@type": "kg:Edge",
+      "@id": "edge:class_contains_method",
+      "source_node": "node:class_training_pipeline",
+      "target_node": "node:method_train_epoch",
+      "relation": "CONTAINS",
+      "properties": {
+        "container_type": "class",
+        "member_type": "method",
+        "visibility": "public"
+      }
+    },
+    "method_has_parameter": {
+      "@type": "kg:Edge",
+      "@id": "edge:method_has_param",
+      "source_node": "node:method_train_epoch",
+      "target_node": "node:param_batch_size",
+      "relation": "HAS_PARAMETER",
+      "properties": {
+        "position": 3,
+        "is_required": false
+      }
+    },
+    "method_has_local_variable": {
+      "@type": "kg:Edge",
+      "@id": "edge:method_has_var",
+      "source_node": "node:method_train_epoch",
+      "target_node": "node:var_loss",
+      "relation": "HAS_LOCAL_VARIABLE",
+      "properties": {
+        "definition_line": 134
+      }
+    },
+    "class_contains_attribute": {
+      "@type": "kg:Edge",
+      "@id": "edge:class_contains_attr",
+      "source_node": "node:class_pipeline_config",
+      "target_node": "node:attr_learning_rate",
+      "relation": "CONTAINS",
+      "properties": {
+        "container_type": "class",
+        "member_type": "attribute",
+        "visibility": "public"
+      }
+    },
+    "method_calls_function": {
+      "@type": "kg:Edge",
+      "@id": "edge:method_calls",
+      "source_node": "node:method_train_epoch",
+      "target_node": "node:method_log_metrics",
+      "relation": "CALLS",
+      "properties": {
+        "call_site_line": 144,
+        "in_loop": true
+      }
+    },
+    "method_accesses_attribute": {
+      "@type": "kg:Edge",
+      "@id": "edge:method_accesses",
+      "source_node": "node:method_train_epoch",
+      "target_node": "node:attr_model",
+      "relation": "ACCESSES",
+      "properties": {
+        "access_type": "read_write",
+        "access_count": 3
+      }
+    },
+    "variable_flows_to_variable": {
+      "@type": "kg:Edge",
+      "@id": "edge:var_flows",
+      "source_node": "node:var_loss_def",
+      "target_node": "node:var_loss_use",
+      "relation": "DATA_FLOWS_TO",
+      "properties": {
+        "definition_line": 134,
+        "use_line": 135
+      }
+    },
+    "class_inherits_from": {
+      "@type": "kg:Edge",
+      "@id": "edge:class_inherits",
+      "source_node": "node:class_training_pipeline",
+      "target_node": "node:class_base_trainer",
+      "relation": "INHERITS_FROM",
+      "properties": {
+        "inheritance_type": "single"
+      }
+    }
+  },
+  
+  "usage_notes": {
+    "hierarchy": {
+      "en-us": "Module → Class → Method → Parameter/Local Variable; Class → Attribute",
+      "zh-cn": "模块 → 类 → 方法 → 参数/局部变量；类 → 属性"
+    },
+    "governance_metadata": {
+      "en-us": "Key→Type→Value with Impact, Validation, Usage. Always include bilingual tooltips ≤50 words (key) and ≤15 words (value)",
+      "zh-cn": "键→类型→值，包含影响、验证、使用。始终包含双语工具提示：≤50字（键）和≤15字（值）"
+    },
+    "complexity_tracking": {
+      "en-us": "Track cyclomatic, cognitive complexity, nesting depth, LOC for all functions/methods",
+      "zh-cn": "跟踪所有函数/方法的圈复杂度、认知复杂度、嵌套深度、代码行数"
+    },
+    "data_flow": {
+      "en-us": "Track def-use chains for local variables, essential for refactoring and impact analysis",
+      "zh-cn": "跟踪局部变量的定义-使用链，对重构和影响分析至关重要"
+    },
+    "integration": {
+      "en-us": "Link AST nodes to MCP tools, MLOps models, test cases via custom relationships",
+      "zh-cn": "通过自定义关系将AST节点链接到MCP工具、MLOps模型、测试用例"
+    }
+  }
+}

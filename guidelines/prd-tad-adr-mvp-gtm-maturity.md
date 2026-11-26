@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -98,7 +98,7 @@ support minutes only where they inform the selected job. Link existing telemetry
 
 ## Commerce grounding — reference implementation
 
-The [existing grounding snapshot](../schema/AgenticRAG/prd-tad-adr-mvp-gtm-grounding.json) records source
+The [existing grounding snapshot](../schema/agentic-rag/prd-tad-adr-mvp-gtm-grounding.json) records source
 owners, exact revisions and checks across the seven repositories. Its `maturity` assessment deliberately
 leaves all four ratings unassessed: inspected implementation and tests are reusable starting points,
 but this snapshot contains no evaluator-observed agent experience. Follow the linked

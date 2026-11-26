@@ -22,7 +22,7 @@ const expectedArchiveFiles = [
 const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
 const mapPath = path.join(
   repositoryRoot,
-  "schema/AgenticRAG/agenticrag-guidelines-and-surfaces-map.graph.jsonld",
+  "schema/agentic-rag/agenticrag-guidelines-and-surfaces-map.graph.jsonld",
 );
 const guidelinesDirectoryCandidates = [
   process.env.AGENTICRAG_GUIDELINES_ARCHIVE_DIR,

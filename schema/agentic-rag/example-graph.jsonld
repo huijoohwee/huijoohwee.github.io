@@ -1,0 +1,179 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@type": "kg:Graph",
+  "rdfs:label": [
+    { "@value": "Example AgenticRAG graph (minimal)", "@language": "en-us" },
+    { "@value": "AgenticRAG 示例图（最小示例）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Small, domain-agnostic example graph demonstrating core structural fields (nodes, edges, metadata, chunk_text, embedding, geo, media_url).",
+      "@language": "en-us"
+    },
+    {
+      "@value": "小型、领域无关的示例图，用于展示核心结构字段（节点、边、元数据、chunk_text、embedding、geo、media_url）。",
+      "@language": "zh-cn"
+    }
+  ],
+
+  "metadata": {
+    "schemaVersion": "1.0.0",
+    "exportedAt": "2025-12-19T10:30:00Z",
+    "source": "example_export",
+    "pipeline_phase": "PRODUCE",
+    "graphStatistics": {
+      "nodeCount": 3,
+      "edgeCount": 2,
+      "labelDistribution": {
+        "Entity": 2,
+        "Concept": 1
+      }
+    }
+  },
+  
+  "@graph": [
+    {
+      "@type": "kg:Node",
+      "@id": "node:entity_001",
+      "labels": ["Entity", "Organization"],
+      
+      "properties": {
+        "name": "Example Entity",
+        "category": "Organization"
+      },
+      
+      "chunk_text": "Example node text used for retrieval grounding. This content is dataset-agnostic and may describe any entity or concept.",
+      
+      "embedding": [0.12, -0.34, 0.56, 0.78, -0.23, 0.45],
+      
+      "flow:kind": "input",
+      "flow:value": 1.0,
+      
+      "geo": {
+        "lat": 0.0,
+        "lng": 0.0,
+        "display_name": "Example location"
+      },
+      
+      "media_url": "https://example.com/resource",
+      
+      "metadata": {
+        "source": "system:row_abc123",
+        "confidence": 0.95,
+        "timestamp": "2025-12-19T09:00:00Z",
+        "curator": "curator:example",
+        "validation_status": "verified"
+      }
+    },
+    
+    {
+      "@type": "kg:Node",
+      "@id": "node:concept_001",
+      "labels": ["Concept", "Technology"],
+      "skos:prefLabel": "Example Concept",
+      "skos:altLabel": [
+        "Sample Idea",
+        "Demo Concept"
+      ],
+      "schema:sameAs": [
+        "http://example.org/concept/example-concept"
+      ],
+      "name": [
+        "Example Concept",
+        "Sample Idea",
+        "Demo Concept"
+      ],
+      "properties": {
+        "name": "Example Concept",
+        "category": "Concept"
+      },
+      
+      "chunk_text": "Example concept text used for retrieval grounding. Agents can use this content to support reasoning and summarization.",
+      
+      "embedding": [0.34, 0.12, -0.45, 0.67, 0.89, -0.12],
+      
+      "flow:kind": "compute",
+      "flow:value": 0.0,
+      "flow:op": "sum",
+      
+      "metadata": {
+        "source": "system:row_def456",
+        "confidence": 0.88,
+        "timestamp": "2025-12-19T09:15:00Z",
+        "curator": "curator:example"
+      }
+    },
+    
+    {
+      "@type": "kg:Node",
+      "@id": "node:entity_002",
+      "labels": ["Entity", "Location"],
+      
+      "properties": {
+        "name": "Example Place",
+        "type": "Location"
+      },
+      
+      "chunk_text": "Example place text used for retrieval grounding.",
+      
+      "embedding": [-0.23, 0.45, 0.12, -0.56, 0.34, 0.78],
+      
+      "flow:kind": "input",
+      "flow:value": 1.0,
+      
+      "geo": {
+        "lat": 0.0,
+        "lng": 0.0,
+        "display_name": "Example place"
+      },
+      
+      "metadata": {
+        "source": "system:row_ghi789",
+        "confidence": 1.0,
+        "timestamp": "2025-12-19T09:30:00Z"
+      }
+    },
+    
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:rel_001",
+      "source": "node:entity_001",
+      "target": "node:concept_001",
+      "label": "RELATED_TO",
+      "confidence": 0.9,
+      "sourceSentence": "Example sentence stating that the entity is related to the concept.",
+      
+      "properties": {
+        "strength": 0.92,
+        "since": "2020"
+      },
+      
+      "metadata": {
+        "source": "system:relationship_xyz",
+        "confidence": 0.90,
+        "timestamp": "2025-12-19T09:45:00Z",
+        "derivation": "curator_defined"
+      }
+    },
+    
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:rel_002",
+      "source": "node:entity_001",
+      "target": "node:entity_002",
+      "label": "RELATED_TO",
+      "confidence": 0.95,
+      "sourceSentence": "Example sentence stating that the entity is related to the location.",
+      
+      "properties": {
+        "strength": 0.75
+      },
+      
+      "metadata": {
+        "source": "system:relationship_uvw",
+        "confidence": 0.95,
+        "timestamp": "2025-12-19T10:00:00Z"
+      }
+    }
+  ]
+}

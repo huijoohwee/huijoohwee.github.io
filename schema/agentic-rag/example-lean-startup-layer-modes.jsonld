@@ -1,0 +1,199 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@type": "kg:Graph",
+  "rdfs:label": [
+    { "@value": "Lean Startup layer modes example (property/document/semantic)", "@language": "en-us" },
+    { "@value": "精益创业分层模式示例（属性/文档/语义）", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Tiny, domain-agnostic example graph for demonstrating property mode, document-structure mode, and semantic layer mode sharing a single renderer color palette.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "小型、领域无关的示例图，用于演示在同一套渲染器调色板下的属性模式、文档结构模式与语义层模式。",
+      "@language": "zh-cn"
+    }
+  ],
+  "metadata": {
+    "schemaVersion": "1.1.0",
+    "source": "lean_startup_layer_modes_example",
+    "pipeline_phase": "UI Curation",
+    "description": "Tiny Lean Startup MVP example graph used to demonstrate property vs document-structure vs semantic layer modes with the shared renderer MVP color palette.",
+    "guideline": "../../guidelines/lean-startup-guidelines.md#learning-loop"
+  },
+  "@graph": [
+    {
+      "@id": "doc:lean_mvp",
+      "@type": "kg:Node",
+      "labels": ["Document"],
+      "title": "Lean Startup MVP experiment",
+      "tags": ["idea"],
+      "chunk_text": "Build a minimal viable product to test whether remote teams benefit from a unified project management tool.",
+      "contains": [
+        "sec:hypothesis",
+        "sec:execution",
+        "sec:pivot",
+        "sec:alert"
+      ]
+    },
+    {
+      "@id": "sec:hypothesis",
+      "@type": "kg:Node",
+      "labels": ["Section"],
+      "title": "Hypothesis",
+      "tags": ["hypothesis"],
+      "chunk_text": "If we give remote teams a single place to track work, messaging, and decisions, at least half of one pilot team's weekly work items will close there within four weeks; the threshold is registered before the first observation.",
+      "contains": [
+        "para:hypothesis_1"
+      ]
+    },
+    {
+      "@id": "sec:execution",
+      "@type": "kg:Node",
+      "labels": ["Section"],
+      "title": "MVP execution",
+      "tags": ["execution"],
+      "chunk_text": "Run the cheapest method that can answer: a manual workspace for one team first, then a minimal build with task lists, lightweight kanban, and an activity feed only if the manual pilot passes.",
+      "contains": [
+        "para:execution_1"
+      ]
+    },
+    {
+      "@id": "sec:pivot",
+      "@type": "kg:Node",
+      "labels": ["Section"],
+      "title": "Pivot",
+      "tags": ["pivot"],
+      "chunk_text": "Early adopters ignore the activity feed but overuse cross-team mentions; the pivot-or-persevere record logs a problem-scope pivot toward scoped decision logs and stronger search, opening a successor revision.",
+      "contains": [
+        "para:pivot_1"
+      ]
+    },
+    {
+      "@id": "sec:alert",
+      "@type": "kg:Node",
+      "labels": ["Section"],
+      "title": "Risks and alerts",
+      "tags": ["alert"],
+      "chunk_text": "If teams treat the MVP as a chat replacement, work items will fragment across tools and the experiment will fail to improve delivery speed.",
+      "contains": [
+        "para:alert_1"
+      ]
+    },
+    {
+      "@id": "para:hypothesis_1",
+      "@type": "kg:Node",
+      "labels": ["Paragraph"],
+      "chunk_text": "State the segment, the observable behavior, the threshold and the window, so one observation can refute the hypothesis."
+    },
+    {
+      "@id": "para:execution_1",
+      "@type": "kg:Node",
+      "labels": ["Paragraph"],
+      "chunk_text": "Limit scope to a single team, seed the board with a few real projects, and measure completion per active member with its denominator and window before expanding."
+    },
+    {
+      "@id": "para:pivot_1",
+      "@type": "kg:Node",
+      "labels": ["Paragraph"],
+      "chunk_text": "Reframe the MVP around capturing and querying decisions; record the evidence, the threshold it was judged against and the records needing successors."
+    },
+    {
+      "@id": "para:alert_1",
+      "@type": "kg:Node",
+      "labels": ["Paragraph"],
+      "chunk_text": "Call out failure modes such as low engagement, high message noise, or teams abandoning the tool after the first sprint."
+    },
+    {
+      "@id": "note:semantic_band_1",
+      "@type": "kg:Node",
+      "labels": ["Section"],
+      "title": "Semantic band: idea → hypothesis → execution",
+      "tags": ["idea", "hypothesis", "execution"],
+      "chunk_text": "This band groups the core Lean Startup loop from idea through hypothesis to concrete MVP execution so semantic mode can surface a single cluster of related text blocks.",
+      "contains": [
+        "doc:lean_mvp",
+        "sec:hypothesis",
+        "sec:execution"
+      ]
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:doc_contains_hypothesis",
+      "source": "doc:lean_mvp",
+      "target": "sec:hypothesis",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:doc_contains_execution",
+      "source": "doc:lean_mvp",
+      "target": "sec:execution",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:doc_contains_pivot",
+      "source": "doc:lean_mvp",
+      "target": "sec:pivot",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:doc_contains_alert",
+      "source": "doc:lean_mvp",
+      "target": "sec:alert",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:sec_contains_para_hypothesis",
+      "source": "sec:hypothesis",
+      "target": "para:hypothesis_1",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:sec_contains_para_execution",
+      "source": "sec:execution",
+      "target": "para:execution_1",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:sec_contains_para_pivot",
+      "source": "sec:pivot",
+      "target": "para:pivot_1",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:sec_contains_para_alert",
+      "source": "sec:alert",
+      "target": "para:alert_1",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:semantic_band_contains_doc",
+      "source": "note:semantic_band_1",
+      "target": "doc:lean_mvp",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:semantic_band_contains_hypothesis",
+      "source": "note:semantic_band_1",
+      "target": "sec:hypothesis",
+      "label": "contains"
+    },
+    {
+      "@type": "kg:Edge",
+      "@id": "edge:semantic_band_contains_execution",
+      "source": "note:semantic_band_1",
+      "target": "sec:execution",
+      "label": "contains"
+    }
+  ]
+}

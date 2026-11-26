@@ -1,0 +1,351 @@
+{
+  "@context": "https://huijoohwee.github.io/schema/agentic-rag/v1/context.jsonld",
+  "@id": "rag:GraphMetadata",
+  "@type": "rdfs:Class",
+  "rdfs:label": [
+    { "@value": "Graph Metadata", "@language": "en-us" },
+    { "@value": "图元数据", "@language": "zh-cn" }
+  ],
+  "rdfs:comment": [
+    {
+      "@value": "Top-level metadata for a graph document. Must be dataset-agnostic and optional; downstream components may ignore it without breaking structural parsing.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "图文档的顶层元数据。必须与数据集无关且可选；下游组件可忽略而不影响结构解析。",
+      "@language": "zh-cn"
+    }
+  ],
+  "schemaVersion": "1.0.2",
+  "propertyDefinitions": {
+    "schemaVersion": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Schema Version", "@language": "en-us" },
+        { "@value": "模式版本", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "exportedAt": {
+      "@type": "xsd:dateTime",
+      "rdfs:label": [
+        { "@value": "Export Timestamp", "@language": "en-us" },
+        { "@value": "导出时间戳", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "source": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Identifier", "@language": "en-us" },
+        { "@value": "来源标识", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Opaque identifier for the producing system or pipeline stage (for example: 'spreadsheet-export', 'api-import', 'batch-parser').",
+          "@language": "en-us"
+        },
+        {
+          "@value": "生成系统或流水线阶段的不透明标识（例如：'spreadsheet-export'、'api-import'、'batch-parser'）。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "datasetId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Dataset Identifier", "@language": "en-us" },
+        { "@value": "数据集标识", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "graphId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph Identifier", "@language": "en-us" },
+        { "@value": "图标识", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+    "sourceLayers": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Source Layers", "@language": "en-us" },
+        { "@value": "来源图层", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional list describing the ordered source inputs used to compose the effective graph. This field is structural-only and must remain dataset-agnostic. Recommended shape is a list of objects such as {\"id\":\"src:{uuid}\",\"label\":\"…\",\"enabled\":true,\"source\":{\"kind\":\"url\",\"url\":\"https://…\"},\"format\":\"md|txt|json|jsonld|csv|html|yaml|pdf|youtube|auto\",\"hash\":\"…\"}. Downstream components may ignore this field without breaking ingestion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述构成最终图的有序来源输入列表的可选字段。该字段仅承载结构信息且必须保持数据集无关。推荐形态为对象列表，例如 {\"id\":\"src:{uuid}\",\"label\":\"…\",\"enabled\":true,\"source\":{\"kind\":\"url\",\"url\":\"https://…\"},\"format\":\"md|txt|json|jsonld|csv|html|yaml|pdf|youtube|auto\",\"hash\":\"…\"}。下游组件可忽略该字段而不影响导入。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["id", "label", "enabled", "source", "format", "hash"]
+    },
+    "sourceLayerComposition": {
+      "@type": "xsd:string",
+      "enum": ["compose", "replace"],
+      "rdfs:label": [
+        { "@value": "Source Layer Composition", "@language": "en-us" },
+        { "@value": "来源图层组合方式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional hint describing how source layers produce the effective graph. compose means enabled layers are composed deterministically into one effective graph; replace means only one active source layer is treated as authoritative at a time.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述来源图层如何生成最终图的可选提示。compose 表示启用的图层会按确定性规则组合为一个最终图；replace 表示同一时刻只使用一个激活的来源图层作为权威来源。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "exportPreferences": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Export Preferences", "@language": "en-us" },
+        { "@value": "导出偏好", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, UI-oriented preferences for export defaults. Structural-only; downstream processors may ignore it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "面向 UI 的导出默认值偏好设置，可选。仅承载结构信息；下游处理器可忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["defaultExportFormat"]
+    },
+    "codebaseId": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Codebase Identifier", "@language": "en-us" },
+        { "@value": "代码库标识", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional identifier used when the graph represents a codebase index or software architecture graph.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "当图表示代码库索引或软件架构图时使用的可选标识。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "embeddingConfiguration": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Embedding Configuration", "@language": "en-us" },
+        { "@value": "嵌入配置", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedFields": ["defaultModel", "dimensions", "provider", "method", "seed"]
+    },
+    "jsonLdMapping": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "JSON-LD Mapping Configuration", "@language": "en-us" },
+        { "@value": "JSON-LD 映射配置", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional mapping hints for JSON-LD ingestion. Use jsonLdMapping.contextEdgeProperties (array of strings) as an explicit allow-list of relation keys that should be interpreted as edges when the JSON-LD @context is incomplete or does not mark those keys with @type:@id.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于 JSON-LD 导入的可选映射提示。当 JSON-LD 的 @context 不完整或未将某些键标注为 @type:@id 时，可使用 jsonLdMapping.contextEdgeProperties（字符串数组）作为关系键的显式白名单，以便将其解释为边。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["contextEdgeProperties"]
+    },
+    "graphStatistics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Graph Statistics", "@language": "en-us" },
+        { "@value": "图统计", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedFields": ["nodeCount", "edgeCount", "labelDistribution"]
+    },
+    "ontologies": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Ontologies", "@language": "en-us" },
+        { "@value": "本体", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "rdfs:comment": [
+        {
+          "@value": "Array-valued hint describing ontology bundles associated with the graph. Pipelines should emit an array (possibly empty) so that downstream components can treat this property uniformly. Recommended shape is a list of objects such as {\"prefix\": \"prov\", \"iri\": \"http://www.w3.org/ns/prov#\"}, and markdown frontmatter parsers are encouraged to preserve structured list items instead of collapsing them to strings. Graphs may also use simpler string entries when only labels are needed. No domain-specific semantics are implied.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述与图关联的本体集合的数组值提示字段。流水线应输出数组（可以为空），以便下游组件可以统一处理。推荐形式为对象列表，例如 {\"prefix\": \"prov\", \"iri\": \"http://www.w3.org/ns/prov#\"}，并鼓励 Markdown 前言解析器保留结构化列表项，而不是将其折叠为字符串。在只需标签时也可以使用简单字符串条目。字段本身不携带具体领域语义。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "polygonLayers": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Polygon Layers", "@language": "en-us" },
+        { "@value": "多边形图层", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "rdfs:comment": [
+        {
+          "@value": "Array-valued hint describing configured polygon layers for visualization or traversal presets. Pipelines should emit an array (possibly empty) of strings or objects, keeping the field domain-agnostic so that layer names and grouping remain fully configurable. When graphs originate from markdown with YAML-style frontmatter, structured list entries should be preserved as array elements rather than flattened into a single string.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述可视化或遍历预设中配置的多边形图层的数组值提示字段。流水线应输出字符串或对象组成的数组（可以为空），保持该字段领域无关，使图层名称和分组完全由配置驱动。当图来自带有 YAML 风格前言的 Markdown 时，应保留结构化列表项为数组元素，而不是将其展平为单个字符串。",
+          "@language": "zh-cn"
+        }
+      ]
+    },
+    "graphragTextPipeline": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "GraphRAG Text Pipeline (Demo)", "@language": "en-us" },
+        { "@value": "GraphRAG 文本流水线（演示）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-oriented payload capturing sequential text→entity→triple→graph stage outputs and per-stage metrics. This field is structural-only and intended for debugging and UI progressive disclosure; downstream processors may ignore it without breaking ingestion.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于检查与调试的可选载荷：记录文本→实体→三元组→图的分阶段输出与阶段级指标。该字段仅用于结构与可观察性；下游处理器可忽略而不影响导入。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedFields": ["inputTextPreview", "inputTextHash", "graphMetrics", "stages", "warnings"]
+    },
+    "derived": {
+      "@type": "xsd:boolean",
+      "rdfs:label": [
+        { "@value": "Derived Graph Flag", "@language": "en-us" },
+        { "@value": "派生图标记", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional hint indicating that the graph was derived from another source (for example: keyword mode, semantic enrichment, or frontmatter filtering). Structural-only; no domain semantics implied.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于指示该图是否由其他来源派生（例如：关键词模式、语义增强、前言过滤）的可选提示。仅承载结构信息；不包含领域语义。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "kind": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Graph Kind", "@language": "en-us" },
+        { "@value": "图类型", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional kind discriminator for derived graphs (for example: 'keyword', 'semantic', 'frontmatter'). Must remain configuration-driven and non-normative; downstream processors should not require it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于派生图的可选类型区分字段（例如：'keyword'、'semantic'、'frontmatter'）。必须保持配置驱动与非规范性；下游处理器不应依赖该字段。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "sourceLabel": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Label", "@language": "en-us" },
+        { "@value": "来源标签", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional human-readable label for the source input that produced the graph (for example, a markdown document name). Structural-only.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于描述生成该图的来源输入的人类可读标签（例如 Markdown 文档名）的可选字段。仅承载结构信息。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "sourceLayerHash": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Source Layer Hash", "@language": "en-us" },
+        { "@value": "来源图层哈希", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional stable hash identifying the effective source layer used to derive this graph. Intended for caching and debugging; downstream processors may ignore it.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于标识派生该图所使用的有效来源图层的稳定哈希，可选。用于缓存与调试；下游处理器可忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "ingestionMetrics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Ingestion Metrics", "@language": "en-us" },
+        { "@value": "导入指标", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-only payload capturing parse/ingestion timings and counters for a single document import. Must remain domain-agnostic and safe to ignore.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "记录单次文档导入的解析/导入耗时与计数器的可选载荷，仅用于检查与调试。必须保持领域无关且可安全忽略。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+    "pipelineMetrics": {
+      "@type": "@json",
+      "rdfs:label": [
+        { "@value": "Pipeline Metrics", "@language": "en-us" },
+        { "@value": "流水线指标", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Optional, inspection-only payload capturing multi-stage pipeline metrics (for example, Agentic RAG or text→graph stage telemetry). Must remain domain-agnostic and optional.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "记录多阶段流水线指标（例如 Agentic RAG 或 文本→图 阶段遥测）的可选载荷，仅用于检查与调试。必须保持领域无关且可选。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    }
+  },
+  "validationRules": {
+    "structural_only": true,
+    "no_domain_semantics": true
+  }
+}

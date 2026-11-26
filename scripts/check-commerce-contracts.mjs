@@ -58,7 +58,7 @@ export function checkCommerceContracts(root) {
   for (const file of ['guidelines/token-performance-economics-guidelines.md', 'guidelines/adlc-rapid-prd-tad-adr-mvp-gtm-sprint.md']) {
     failures.push(...validateFrontmatter(readFileSync(path.join(root, file), 'utf8')).map(issue => `${file}: ${issue}`));
   }
-  const file = 'schema/AgenticRAG/roles-actions-outcomes-schema.jsonld';
+  const file = 'schema/agentic-rag/roles-actions-outcomes-schema.jsonld';
   const record = JSON.parse(readFileSync(path.join(root, file), 'utf8'));
   failures.push(...validateProjection(record));
   for (const field of ['semanticAuthority', 'continuityAuthority']) {

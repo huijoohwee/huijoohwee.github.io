@@ -1,8 +1,8 @@
 ---
 title: "ADLC Guidelines"
 doc_type: "Guidelines"
-version: "2.3.1"
-date: "2026-10-26"
+version: "2.3.2"
+date: "2026-11-12"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Orchestrator function"
@@ -75,7 +75,7 @@ The two sets meet at a single seam: **a baselined document pair with derived VCC
 | Execution-to-release handoff | **This set** | Emits an Integration Receipt; never promotes |
 | Release orchestration and delivery adapters | Lifecycle controller | Consumes the receipt only after execution closes |
 | Experiments, audience projections and audience actions ([Lean Startup](./lean-startup-guidelines.md), [Pitch Deck](./pitch-deck-guidelines.md), [Business Plan](./business-plan-guidelines.md), [Financial Model](./financial-model-guidelines.md)) | Authoring set | Executes only tasks derived from their execution-integrity VCCs; never originates a claim, value or decision; sends, publication, contact and charges run at the release seam under Tool Permission classes |
-| ADLC Cost Ledger fields and period attribution ([Venture Record](./prd-tad-adr-mvp-gtm-venture.md#adlc-cost-ledger)) | Authoring set | Emits per-task cost fields in every return, including failed and abandoned work; never estimates where a receipt exists |
+| ADLC Cost Ledger fields and period attribution ([Venture Record](./pd-bp-fm-guidelines.md#adlc-cost-ledger)) | Authoring set | Emits per-task cost fields in every return, including failed and abandoned work; never estimates where a receipt exists |
 **Directives**:
 - Require a baselined document pair with zero open `blocker` findings and a current Codebase Grounding Record for each non-native specification input. A material claim marked `contradicted`, `absent`, or `unverified` blocks only dependent execution; return it to the authoring loop, correct and re-ground within existing authorized scope, and re-derive affected joins before dispatch. Escalate only a product, scope, or authority decision that remains unresolved; never present planned capabilities as existing ones
 - Reuse the authoring set's Rule ID derivation and finding recording contract verbatim; forbid a second, parallel conformance vocabulary

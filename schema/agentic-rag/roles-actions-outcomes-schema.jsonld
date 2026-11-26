@@ -1,0 +1,488 @@
+{
+  "@context": {
+    "@vocab": "https://huijoohwee.github.io/schema/agentic-rag/v1/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rag": "https://huijoohwee.github.io/schema/agentic-rag/v1/",
+    "srp": "https://huijoohwee.github.io/schema/agentic-rag/v1/srp/",
+    "svo": "https://huijoohwee.github.io/schema/agentic-rag/v1/svo/"
+  },
+  "@id": "rag:RoleActionOutcome",
+  "@type": "rdfs:Class",
+
+  "rdfs:label": [
+    { "@value": "AgenticRAG Role → Actions → Outcome spec (SRP/SVO Enhanced)", "@language": "en-us" },
+    { "@value": "AgenticRAG 角色→动作→结果 规范（SRP/SVO 增强版）", "@language": "zh-cn" }
+  ],
+
+  "rdfs:comment": [
+    {
+      "@value": "Schema for Role → Actions → Outcome descriptions with Single Responsibility Principle (SRP) and Subject-Verb-Object (SVO) patterns. Ensures atomic, testable, and traceable workflows across Agentic GraphRAG pipelines and process documentation.",
+      "@language": "en-us"
+    },
+    {
+      "@value": "支持单一职责原则（SRP）和主谓宾（SVO）模式的 角色→动作→结果 描述模式。确保 Agentic GraphRAG 流水线与流程文档中的工作流原子化、可测试、可追溯。",
+      "@language": "zh-cn"
+    }
+  ],
+
+  "schemaVersion": "3.2.0",
+  "extends": "rag:RoleActionOutcome/v1",
+  "semanticAuthority": "../../guidelines/cid-guidelines.md#shared-field-contract",
+  "continuityAuthority": "../../guidelines/adlc-artifact-continuity.md#reference-implementation-projection",
+  "projectionContract": {
+    "kind": "reference-serialization",
+    "loadPolicy": "on-demand",
+    "authorizesEffects": false,
+    "runtimeValidation": "declarative-only",
+    "fieldMapping": {
+      "role": "role",
+      "action": "actions",
+      "outcome": "outcome",
+      "subject": "svo_pattern.subject",
+      "verb": "svo_pattern.verb",
+      "object": "svo_pattern.object"
+    },
+    "actionComposition": "Ordered decomposition of one directive toward one independently checked outcome; split independently closable outcomes into separate records.",
+    "contextBinding": "Context, intent and directive resolve from an exact referenced CID revision; this projection does not redefine them.",
+    "objectBinding": "The scoped target of the action; it is not inferred from the outcome.",
+    "tabularSerialization": {
+      "owner": "../../guidelines/prd-tad-adr-mvp-gtm-planning-record.md#planning-record-row-contract",
+      "cell": "R: [role] · A: [subject verb object] · O: [outcome] · check: [named check]",
+      "note": "The planning record RAO cell is the same projection in one table cell; `check` names the outcome's acceptance check and adds no field to the shared contract."
+    },
+    "migration": "Version 3 corrects the former object-to-outcome mapping. Re-ground existing records against their directive; do not silently reinterpret them. Wire field names remain unchanged.",
+    "roleMapping": {
+      "authority": "../../guidelines/adlc-artifact-continuity.md#role-action-outcome-contract",
+      "rule": "Map every authoring role onto one execution role before dispatch; authors and modelers act as Implementer, reviewers and presenters act under Operator authority, and the Evaluator is always a mechanism distinct from the Implementer."
+    }
+  },
+
+  "required": ["role", "actions", "outcome", "svo_pattern"],
+
+  "propertyDefinitions": {
+    "role": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Role label (Actor/Subject)", "@language": "en-us" },
+        { "@value": "角色标签（行动者/主语）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Accountable function from the shared CID contract. Naming restrictions below belong only to this reference serialization, not to universal role semantics.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "表示 SVO 模式中主语的可读角色名称。必须原子化并遵循 SRP（一个角色、一项职责）。示例：DataLoader、FeatureEngineer、ModelTrainer、Evaluator、SchemaValidator。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": true,
+      "validation": {
+        "pattern": "^[A-Z][a-zA-Z0-9]*$",
+        "maxLength": 50
+      }
+    },
+
+    "actions": {
+      "@container": "@list",
+      "@type": "svo:AtomicAction",
+      "rdfs:label": [
+        { "@value": "Atomic Actions (Verbs)", "@language": "en-us" },
+        { "@value": "原子动作（谓语）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "List of atomic, indivisible actions following SRP. Each action must be a single verb phrase (e.g., 'loads database', 'computes correlation', 'validates schema'). Actions represent the Verb component in SVO pattern.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "遵循 SRP 的原子、不可分割动作列表。每个动作必须是单一动词短语（如'加载数据库'、'计算相关性'、'验证模式'）。动作代表 SVO 模式中的谓语部分。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": true,
+      "minItems": 1,
+      "validation": {
+        "atomic": true,
+        "verb_phrase_only": true,
+        "max_words": 5
+      }
+    },
+
+    "outcome": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Outcome (Object/Product)", "@language": "en-us" },
+        { "@value": "结果（宾语/产物）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Single-sentence observable result, distinct from the scoped SVO target. Must be concrete, measurable, and directly produced by the actions. Examples: 'pandas DataFrame (11,430×15)', 'correlation matrix', 'trained XGBoost model'.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "动作产生的可观察结果，与 SVO 的操作目标分别记录。必须具体、可测量、由动作直接产生。示例：'pandas DataFrame (11,430×15)'、'相关性矩阵'、'训练好的 XGBoost 模型'。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": true,
+      "validation": {
+        "single_sentence": true,
+        "concrete": true,
+        "maxLength": 200
+      }
+    },
+
+    "svo_pattern": {
+      "@type": "svo:StructuredWorkflow",
+      "rdfs:label": [
+        { "@value": "SVO workflow pattern", "@language": "en-us" },
+        { "@value": "SVO 工作流模式", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Structured representation of the Subject-Verb-Object workflow pattern. Required fields: subject (role), verb (primary action), object (scoped target), with optional modifiers for input/output elements and tools.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "主谓宾工作流模式的结构化表示。必填字段：subject（角色）、verb（主要动作）、object（操作目标），可选修饰符用于输入/输出元素和工具。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": true,
+      "properties": {
+        "subject": {
+          "@type": "xsd:string",
+          "description": "The actor/role performing the action (maps to 'role' field)"
+        },
+        "verb": {
+          "@type": "xsd:string",
+          "description": "Primary action verb (extracted from first action in 'actions' list)"
+        },
+        "object": {
+          "@type": "xsd:string",
+          "description": "Scoped input or artifact acted upon; resolve from the same directive, never infer it from outcome"
+        },
+        "input_elements": {
+          "@type": "xsd:string",
+          "@container": "@list",
+          "description": "Required input data/artifacts"
+        },
+        "output_elements": {
+          "@type": "xsd:string",
+          "@container": "@list",
+          "description": "Produced output data/artifacts"
+        },
+        "tools": {
+          "@type": "xsd:string",
+          "@container": "@list",
+          "description": "Specific tools/libraries used (e.g., 'pandas.read_sql()', 'sklearn.StandardScaler')"
+        }
+      }
+    },
+
+    "srp_compliance": {
+      "@type": "srp:ComplianceMetadata",
+      "rdfs:label": [
+        { "@value": "SRP compliance metadata", "@language": "en-us" },
+        { "@value": "SRP 合规元数据", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Metadata ensuring Single Responsibility Principle compliance. Validates that role has exactly one reason to change, actions are atomic, and outcome is measurable.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "确保单一职责原则合规的元数据。验证角色只有一个变更原因、动作原子化、结果可测量。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "properties": {
+        "responsibility_count": {
+          "@type": "xsd:integer",
+          "description": "Number of distinct responsibilities (must equal 1 for SRP compliance)",
+          "validation": { "equals": 1 }
+        },
+        "atomic_actions": {
+          "@type": "xsd:boolean",
+          "description": "All actions are atomic and indivisible"
+        },
+        "testable": {
+          "@type": "xsd:boolean",
+          "description": "Outcome is measurable and testable"
+        },
+        "cohesion_score": {
+          "@type": "xsd:float",
+          "description": "Cohesion score (0.0-1.0, higher = better SRP alignment)",
+          "validation": { "min": 0.0, "max": 1.0 }
+        }
+      }
+    },
+
+    "pipeline_phase": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Pipeline phase", "@language": "en-us" },
+        { "@value": "流水线阶段", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "High-level pipeline phase where this role is Responsible or Accountable. Extended to include ML pipeline phases: EDA, Ingestion, Feature Engineering, Preprocessing, Training, Evaluation, Deployment. Lifecycle values Discover, Specify, Build & Evidence, Project and Learn name rows of the end-to-end lifecycle map in guidelines/prd-tad-adr-mvp-gtm-process-flows.md.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "该角色承担责任或问责的高层流水线阶段。扩展包括 ML 流水线阶段：EDA、Ingestion、Feature Engineering、Preprocessing、Training、Evaluation、Deployment。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "suggestedValues": [
+        "Schema",
+        "EDA",
+        "UI Curation",
+        "Ingest",
+        "Feature Engineering",
+        "Preprocessing",
+        "Data Splitting",
+        "Training",
+        "Hyperparameter Tuning",
+        "Evaluation",
+        "Model Selection",
+        "Deployment",
+        "Enrich",
+        "Index & Store",
+        "Agentic Reasoning",
+        "Produce",
+        "Reuse / Render",
+        "Discover",
+        "Specify",
+        "Build & Evidence",
+        "Project",
+        "Learn"
+      ]
+    },
+
+    "dependencies": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Upstream dependencies", "@language": "en-us" },
+        { "@value": "上游依赖", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "List of role IDs that must complete before this role can execute. Enables DAG construction for pipeline orchestration.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "必须在此角色执行前完成的角色 ID 列表。支持流水线编排的 DAG 构建。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+
+    "produces": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Artifact outputs", "@language": "en-us" },
+        { "@value": "输出制品", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "List of concrete artifacts produced (files, objects, metrics). Examples: 'models/xgboost.pkl', 'results/baseline_metrics.json', 'DataFrame'.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "产生的具体制品列表（文件、对象、指标）。示例：'models/xgboost.pkl'、'results/baseline_metrics.json'、'DataFrame'。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+
+    "consumes": {
+      "@container": "@list",
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Artifact inputs", "@language": "en-us" },
+        { "@value": "输入制品", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "List of concrete artifacts consumed. Must match 'produces' from upstream roles.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "消费的具体制品列表。必须匹配上游角色的 'produces'。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false
+    },
+
+    "ui_anchor": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "UI anchor", "@language": "en-us" },
+        { "@value": "界面锚点", "@language": "zh-cn" }
+      ],
+      "required": false
+    },
+
+    "raci_role": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "RACI role key", "@language": "en-us" },
+        { "@value": "RACI 角色键", "@language": "zh-cn" }
+      ],
+      "required": false,
+      "suggestedValues": [
+        "Responsible",
+        "Accountable",
+        "Consulted",
+        "Informed"
+      ]
+    },
+
+    "step_id": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Pipeline step identifier", "@language": "en-us" },
+        { "@value": "流水线步骤标识符", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Unique identifier for this step in the pipeline (e.g., '1.1', '2.3', '6A.4'). Enables precise traceability and workflow reconstruction.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "流水线中此步骤的唯一标识符（如'1.1'、'2.3'、'6A.4'）。支持精确追溯和工作流重建。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "pattern": "^[0-9]{1,2}[A-Z]?\\.[0-9]{1,3}$"
+      }
+    },
+
+    "key_tooltip_text": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Key tooltip text (RAO)", "@language": "en-us" },
+        { "@value": "键名提示文本（RAO）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Tooltip copy for a setting key label. Must follow Role \u2192 Actions \u2192 Outcome semantics and remain under 50 words.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于设置键名的提示文案。必须遵循 角色 \u2192 动作 \u2192 结果 语义，并限制在 50 词以内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "max_words": 50,
+        "rao_semantics": true
+      }
+    },
+
+    "value_tooltip_text": {
+      "@type": "xsd:string",
+      "rdfs:label": [
+        { "@value": "Value tooltip text (bounds + impact)", "@language": "en-us" },
+        { "@value": "值提示文本（边界 + 影响）", "@language": "zh-cn" }
+      ],
+      "rdfs:comment": [
+        {
+          "@value": "Tooltip copy for a setting value cell. Must follow 'Default; Min; Max; Interval; Impact' semantics and remain under 15 words.",
+          "@language": "en-us"
+        },
+        {
+          "@value": "用于设置值的提示文案。必须遵循“默认值；最小；最大；间隔；影响”语义，并限制在 15 词以内。",
+          "@language": "zh-cn"
+        }
+      ],
+      "required": false,
+      "validation": {
+        "max_words": 15,
+        "bounds_impact_semantics": true
+      }
+    }
+  },
+
+  "validationRules": {
+    "structural_and_semantic": true,
+    "semantic_authority_required": true,
+    "declaration_is_not_runtime_proof": true,
+    "enforce_srp": true,
+    "enforce_svo": true,
+    "atomic_actions_required": true,
+    "dag_validation": true
+  },
+
+  "agenticUseCases": [
+    "ui_tooltips",
+    "raci_alignment",
+    "workflow_copy_generation",
+    "agent_prompting",
+    "pipeline_orchestration",
+    "dag_construction",
+    "test_case_generation",
+    "documentation_synthesis",
+    "chat_explanation",
+    "chat_playback"
+  ],
+
+  "changeLog": [
+    {
+      "version": "3.1.0",
+      "date": "2026-09-10",
+      "changes": [
+        "Name the PRD-TAD-ADR-MVP-GTM planning record RAO cell as the tabular serialization of this projection"
+      ]
+    },
+    {
+      "version": "3.0.0",
+      "date": "2026-09-09",
+      "changes": [
+        "Bind the existing serialization to shared CID and continuity authorities",
+        "Correct SVO object from outcome to scoped target; require explicit re-grounding for prior records",
+        "Keep UI/profile metadata optional and distinguish declarations from runtime evidence"
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2025-01-01",
+      "changes": [
+        "Added SVO pattern structure (subject-verb-object)",
+        "Added SRP compliance metadata",
+        "Extended pipeline_phase values for ML workflows",
+        "Added dependencies/produces/consumes for DAG construction",
+        "Added step_id for precise traceability",
+        "Enhanced validation rules for atomic actions"
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "2026-01-04",
+      "changes": [
+        "Extended agenticUseCases with chat_explanation and chat_playback for Floating Panel Chat integration in markdown-to-rendering pipelines"
+      ]
+    },
+    {
+      "version": "3.2.0",
+      "date": "2026-09-30",
+      "changes": [
+        "Added projectionContract.roleMapping bound to the artifact-continuity Role-Action-Outcome Contract",
+        "Added lifecycle pipeline_phase values from the end-to-end lifecycle map; ML values unchanged"
+      ]
+    }
+  ]
+}

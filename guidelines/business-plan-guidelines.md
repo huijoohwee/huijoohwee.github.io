@@ -1,8 +1,8 @@
 ---
 title: "Business Plan Guidelines"
 doc_type: "Guidelines Module"
-version: "1.1.0"
-date: "2026-09-30"
+version: "1.2.1"
+date: "2026-11-17"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Business plan authoring and delivery contract"
@@ -11,7 +11,7 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 parent: "PRD, TAD & ADR Guidelines"
-parent_version: "3.4.0"
+parent_version: "3.5.1"
 runtime_readiness_policy: "fail-closed"
 lifecycle_status: "proposed"
 ---
@@ -20,7 +20,7 @@ lifecycle_status: "proposed"
 
 A business plan reads the joined `PRD-TAD-ADR-MVP-GTM` artifact as an operating system for one segment:
 who pays, how they are reached and served, what it costs, what could fail and what happens next. The
-[Venture Record](./prd-tad-adr-mvp-gtm-venture.md#business-plan) owns what a plan must cover. This module
+[Venture Record](./pd-bp-fm-guidelines.md#business-plan) owns what a plan must cover. This module
 owns how a plan is scoped, ordered, written, reconciled, reviewed, delivered, operated and learned from.
 It is the plan-side twin of the [Pitch Deck Guidelines](./pitch-deck-guidelines.md): the same revision,
 the same claims, a longer form.
@@ -31,11 +31,11 @@ the same claims, a longer form.
 
 | Concern | Owner | This module |
 |---|---|---|
-| Section roles, market-sizing method, market, acquisition and operating detail | [Venture Record — Section Contract](./prd-tad-adr-mvp-gtm-venture.md#section-contract) | consumes sections by name; never adds, renames or re-sources one |
+| Section roles, market-sizing method, market, acquisition and operating detail | [Venture Record — Section Contract](./pd-bp-fm-guidelines.md#section-contract) | consumes sections by name; never adds, renames or re-sources one |
 | Coverage domains C01–C16 | [From-0-to-1 coverage contract](./prd-tad-adr-mvp-gtm-guidelines.md#from-0-to-1-coverage-contract) | reads dispositions; shows gaps, never re-decides them |
 | Pain, monetization and readiness labels | [Pain-Point Mapping](./prd-tad-adr-mvp-gtm-guidelines.md#pain-point-to-feature-mapping), [Monetization](./prd-tad-adr-mvp-gtm-guidelines.md#monetization), [Readiness Ladder](./prd-tad-adr-mvp-gtm-guidelines.md#readiness-ladder) | prints the owner's label beside the claim |
 | Experiments, hypotheses and pivot decisions | [Lean Startup Guidelines](./lean-startup-guidelines.md) | reports them; never re-scores a result |
-| Numbers, statements, scenarios, headline rows | [Financial Model](./prd-tad-adr-mvp-gtm-venture.md#financial-model), [Financial Model Guidelines](./financial-model-guidelines.md) | cites headline IDs at the same revision |
+| Numbers, statements, scenarios, headline rows | [Financial Model](./pd-bp-fm-guidelines.md#financial-model), [Financial Model Guidelines](./financial-model-guidelines.md) | cites headline IDs at the same revision |
 | Participants, interfaces and value exchange | [Ecosystem](./prd-tad-adr-mvp-gtm-guidelines.md#ecosystem) | cites rows in operations and partnerships |
 | Roadmap phases, thresholds and exit VCCs | [Roadmap](./prd-tad-adr-mvp-gtm-guidelines.md#roadmap) | cites phases as milestones |
 | Deck variants, Claim Manifest, deck delivery | [Pitch Deck Guidelines](./pitch-deck-guidelines.md#deck-lifecycle) | shares the revision, claims and ask; owns no deck rule |
@@ -43,7 +43,7 @@ the same claims, a longer form.
 | Tokens, typography, contrast and reach | [Native design contract](./design-theme-contract.md#ownership-and-adoption) | applies them; no plan-local theme |
 | Finding names and severities | [Finding Enumeration](./prd-tad-adr-mvp-gtm-verification.md#finding-enumeration) | raises existing types only |
 
-The [Projection Contract](./prd-tad-adr-mvp-gtm-venture.md#projection-contract) lets a plan add one
+The [Projection Contract](./pd-bp-fm-guidelines.md#projection-contract) lets a plan add one
 thing: **the arrangement of sourced market, acquisition, legal/IP and capital records**. This module
 owns that arrangement and the surfaces around it — variants, depth, outline, section claims, risk
 presentation, cross-projection reconciliation, review, rendering, distribution, operating use and
@@ -81,7 +81,7 @@ Section Contract @revision + coverage record → Variant Register → Outline �
 
 **Artifact-bearing directives**:
 - Run the steps in order per variant; a later step recorded while an earlier one is missing is `gate-sequence-violation`
-- Start from a baselined revision that passed the [Phase 5 gate](./prd-tad-adr-mvp-gtm-process-flows.md#phase-5--gtm-and-venture-projections); a plan built from an unbaselined or superseded revision is `stale-evidence` for every audience action depending on it
+- Draft a decision-specific view from the current joined discovery or operating record. Before a dependent audience action, satisfy the [projection gate](./prd-tad-adr-mvp-gtm-process-flows.md#phase-5--gtm-and-venture-projections) for the claims used; an unreviewed or superseded claim is `stale-evidence` for that action
 - Keep plan source beside the joined artifact, joined by `continuity_id@revision` in frontmatter; variant, depth and confidentiality live in the Variant Register, not in new frontmatter keys — `artifact-naming-noncompliant`
 - Re-enter at Claim Record when the joined revision changes and at Variant when the audience or decision changes
 
@@ -118,15 +118,18 @@ A plan variant is a view: it selects, orders and sets depth; it never changes a 
 
 ## Depth by Stage
 
-Depth follows the decision, not a page target. The Section Contract applies at every depth; lower depth
-summarizes or defers, it never omits.
+Depth follows the decision and applicable obligation. Stage describes available evidence; it never
+mandates a standard or full plan. Reuse the Section Contract dispositions, with reasons and revisit
+triggers for deferred detail. Missing decision-critical evidence blocks only its dependent action.
 
-| Stage | Depth | Minimum content |
+| Stage | Decision-specific view | Relevant content |
 |---|---|---|
 | 0 — grounded opportunity | one-page | segment and problem, current alternative, offer and price hypothesis, first channel, key decision metric, cost drivers, revenue stream, riskiest hypotheses; every row labelled |
-| MVP evidenced | standard | every section with evidence or gap; model at the revision; experiments and results |
-| First dollar | full | observed unit economics, operations capacity, legal and capital rows complete |
-| Repeat demand | full | cohort evidence, scale plan, hiring triggers, contingency per cash-floor breach |
+| MVP evidenced | one-page or deeper as needed | delivered outcome, experiments and gaps relevant to the next decision |
+| First dollar | delivery and economics review | payment, fulfillment/support effort, contribution and cash timing; applicable obligations |
+| Repeat demand | operating or growth review | cohort evidence, capacity, cash and risk triggers relevant to the chosen next outcome |
+
+A full plan is loaded only when the named decision, audience or applicable obligation requires it.
 
 **Artifact-bearing directives**:
 - Declare each variant's stage from the owners' labels; a stage claimed ahead of its evidence is `unproven-claim`
@@ -178,7 +181,7 @@ The plan's check record, with the same shape as the deck's
 
 ## Risk Presentation
 
-The Venture Record owns the risk fields: likelihood, impact, trigger, mitigation, contingency and owner,
+The [PD-BP-FM module](./pd-bp-fm-guidelines.md) owns the risk fields: likelihood, impact, trigger, mitigation, contingency and owner,
 plus the open finding set. This section fixes how risks are shown.
 
 ```markdown
@@ -258,7 +261,7 @@ An agent may draft, reconcile and check a plan inside the
 - Bound generation by iteration, token and wall-clock ceilings with a circuit-breaker — `unbounded-loop` at `blocker`
 - Ledger generation cost from the harness cost log — `adlc-cost-unledgered`
 - Carry `worktree_id` and `agent_id` when variants are drafted in more than one work tree — `worktree-provenance-missing`
-- Update the joined artifact's GTM and planning records before the session ends — `unimplemented-guideline`
+- Preserve task detail in its execution receipt; update joined GTM/planning records at a material assumption, decision, operating outcome, or delivery handoff, including blocked/failed work when the joined revision is due — `unimplemented-guideline`
 
 ---
 
@@ -330,7 +333,7 @@ tool or platform is named here.
 - [ ] External delivery authorized; publication crossed a named Deploy Boundary; private evidence linked, not copied
 - [ ] Operating reviews at the declared cadence; threshold breaches routed to a pivot-or-persevere decision
 - [ ] Delivery & Outcome Log row per delivery; outcomes routed to a successor Context
-- [ ] Joined artifact's GTM and planning records updated before the session ends
+- [ ] Material business-plan assumptions, decisions, outcomes, and deliveries are joined before dependent use; task receipts retain task-level detail
 
 ---
 
